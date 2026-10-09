@@ -75,6 +75,9 @@ forums:
   software: xenforo
   rss: https://www.thetruckersreport.com/truckingindustryforum/forums/-/index.rss
   robots: allowed
+  terms: allowed
+  terms_url: https://www.thetruckersreport.com/truckingindustryforum/help/terms
+  terms_notes: No clause on automated access, commercial use or AI found. (read 2026-10-09)
 rss_feeds:
 - name: freightwaves
   url: https://www.freightwaves.com/news/feed

@@ -76,6 +76,9 @@ forums:
   software: xenforo
   rss: https://www.practicalmachinist.com/forum/forums/-/index.rss
   robots: allowed
+  terms: forbidden
+  terms_url: https://www.practicalmachinist.com/terms-of-use/
+  terms_notes: 3.1 forbids automated collection for datasets used with AI technologies. (read 2026-10-09)
 - name: Eng-Tips
   url: https://www.eng-tips.com/
   status: search_only
@@ -83,6 +86,7 @@ forums:
   notes: bot challenge page; never bypass (rule 1); use the search route
   software: unknown
   robots: allowed
+  terms: unchecked
 - name: CNCzone
   url: https://www.cnczone.com/forums/
   status: search_only
@@ -90,6 +94,7 @@ forums:
   notes: HTTP 403 to our bot; use the search route
   software: unknown
   robots: allowed
+  terms: unchecked
 - name: PLCtalk
   url: https://www.plctalk.net/forums/
   status: live
@@ -97,6 +102,9 @@ forums:
   software: xenforo
   rss: https://www.plctalk.net/forums/forums/-/index.rss
   robots: allowed
+  terms: allowed
+  terms_url: https://www.plctalk.net/user-agreement/
+  terms_notes: User agreement has no clause on automated access, commercial use or AI. (read 2026-10-09)
 rss_feeds:
 - name: manufacturingdive
   url: https://www.manufacturingdive.com/feeds/news/

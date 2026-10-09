@@ -75,18 +75,23 @@ forums:
   software: discourse
   rss: https://community.shopify.com/latest.rss
   robots: allowed
+  terms: forbidden
+  terms_url: https://community.shopify.com/tos
+  terms_notes: Forbids access "using any robot, spider, scraper, or other automated means". (read 2026-10-09)
 - name: eBay Community
   url: https://community.ebay.com/
   status: live
   checked_at: '2026-10-09'
   software: khoros
   robots: allowed
+  terms: unchecked
 - name: Amazon Seller Forums
   url: https://sellercentral.amazon.com/seller-forums
   status: live
   checked_at: '2026-10-09'
   software: unknown
   robots: allowed
+  terms: unchecked
 rss_feeds:
 - name: modernretail
   url: https://www.modernretail.co/feed/

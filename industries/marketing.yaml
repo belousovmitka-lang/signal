@@ -74,12 +74,16 @@ forums:
   software: discourse
   rss: https://community.hubspot.com/posts.rss
   robots: allowed
+  terms: forbidden
+  terms_url: https://legal.hubspot.com/community-tou
+  terms_notes: Forbids commercially exploiting "Community Content". (read 2026-10-09)
 - name: Warrior Forum
   url: https://www.warriorforum.com/
   status: live
   checked_at: '2026-10-09'
   software: unknown
   robots: allowed
+  terms: unchecked
 - name: Digital Point forums
   url: https://forums.digitalpoint.com/
   status: search_only
@@ -87,6 +91,7 @@ forums:
   notes: HTTP 403 to our bot; use the search route
   software: unknown
   robots: allowed
+  terms: unchecked
 rss_feeds:
 - name: searchenginejournal
   url: https://www.searchenginejournal.com/feed/

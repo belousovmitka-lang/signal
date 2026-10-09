@@ -214,6 +214,20 @@ class SourcesFile(_Strict):
                         source.queries.append(QueryConfig(industry_hint=key,
                                                           params={"feed": feed.url, "name": feed.name}))
 
+    def add_industry_forums(self, industries: dict[str, Industry]) -> None:
+        """Append one query per collectable forum feed to sources with options.industry_forums: true."""
+        for source in self.sources.values():
+            if not source.options.get("industry_forums"):
+                continue
+            have = {q.params.get("feed") for q in source.queries}
+            for key, industry in industries.items():
+                for forum in industry.collectable_forums():
+                    if forum.rss not in have:
+                        have.add(forum.rss)
+                        source.queries.append(QueryConfig(industry_hint=key, params={
+                            "feed": forum.rss, "name": urlsplit(forum.url).netloc.removeprefix("www."),
+                            "community": forum.name, "software": forum.software}))
+
     def add_industry_templates(self, industries: dict[str, Industry]) -> None:
         """Expand options.industry_templates into one query per template per industry."""
         for source in self.sources.values():
@@ -237,5 +251,6 @@ def load_sources(path: Path | str, industries_dir: Path | None = INDUSTRIES_DIR)
     if industries_dir is not None and industries_dir.is_dir():
         industries = load_industries(industries_dir)
         sources.add_industry_feeds(industries)
+        sources.add_industry_forums(industries)
         sources.add_industry_templates(industries)
     return sources

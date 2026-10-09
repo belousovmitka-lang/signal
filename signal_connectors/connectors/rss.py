@@ -66,9 +66,13 @@ class RssConnector(BaseConnector):
             if fields is None:
                 self.invalid += 1
                 continue
-            post = self.make_post(industry_hint=query.industry_hint, **fields)
+            post = self.make_post(industry_hint=query.industry_hint, **self.adapt(fields, entry, query))
             if post is not None:
                 yield post
+
+    def adapt(self, fields: dict[str, Any], entry: Any, query: SourceQuery) -> dict[str, Any]:
+        """Hook for feed-based connectors that refine the fields (see classic_forum)."""
+        return fields
 
 
 def feed_meta(parsed: Any, feed_url: str, community: str | None, name: str) -> tuple[str, str | None, str]:

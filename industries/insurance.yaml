@@ -69,6 +69,9 @@ forums:
   software: xenforo
   rss: https://www.insurance-forums.com/community/forums/-/index.rss
   robots: allowed
+  terms: forbidden
+  terms_url: https://www.insurance-forums.com/community/help/terms/
+  terms_notes: No automated or programmatic access without prior permission. (read 2026-10-09)
 rss_feeds:
 - name: insurancejournal
   url: https://www.insurancejournal.com/rss/news/

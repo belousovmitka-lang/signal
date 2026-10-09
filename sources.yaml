@@ -127,6 +127,25 @@ sources:
         keywords: ["is there a library", "is there a tool"]
         limit: 50
 
+  classic_forum:
+    enabled: true
+    status: done
+    status_date: 2026-10-09
+    route: rss
+    source_type: community
+    cadence: daily
+    access_check:
+      robots: allowed
+      terms: allowed
+      decision: full
+      checked_at: 2026-10-09
+      notes: >-
+        Feeds come only from industry-map forums whose robots.txt allows us AND whose terms were read
+        and allow it (Forum.terms: allowed). 13 forums were read on 2026-10-09; 9 forbid automated or
+        commercial use and are recorded as forbidden with the clause.
+    options:
+      industry_forums: true
+
   bluesky:
     connector: search_api
     enabled: true

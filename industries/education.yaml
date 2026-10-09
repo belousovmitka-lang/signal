@@ -76,6 +76,10 @@ forums:
   software: xenforo
   rss: https://forums.atozteacherstuff.com/index.php?forums/-/index.rss
   robots: allowed
+  terms: allowed
+  terms_url: https://forums.atozteacherstuff.com/index.php?help/terms/
+  terms_notes: Standard XenForo terms; no clause on automated access, commercial use or AI found. (read
+    2026-10-09)
 - name: Instructure Community
   url: https://community.canvaslms.com/
   status: live
@@ -83,6 +87,7 @@ forums:
   notes: redirects to https://community.instructure.com/en
   software: unknown
   robots: allowed
+  terms: unchecked
 rss_feeds:
 - name: edsurge
   url: https://www.edsurge.com/articles_rss

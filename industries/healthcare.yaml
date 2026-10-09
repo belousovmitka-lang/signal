@@ -79,6 +79,7 @@ forums:
   notes: HTTP 403 to our bot; use the search route
   software: unknown
   robots: allowed
+  terms: unchecked
 - name: Student Doctor Network
   url: https://forums.studentdoctor.net/
   status: live
@@ -87,6 +88,9 @@ forums:
   software: xenforo
   rss: https://forums.studentdoctor.net/forums/-/index.rss
   robots: allowed
+  terms: forbidden
+  terms_url: https://www.studentdoctor.net/online-service-agreement/
+  terms_notes: 'Content licensed CC BY-NC-SA 4.0: non-commercial only. (read 2026-10-09)'
 - name: DentalTown
   url: https://www.dentaltown.com/messageboard
   status: blocked
@@ -94,6 +98,7 @@ forums:
   notes: behind a login (https://www.dentaltown.com/login?url=%2fmessageboard%2fsite.aspx)
   software: unknown
   robots: allowed
+  terms: unchecked
 rss_feeds:
 - name: fiercehealthcare
   url: https://www.fiercehealthcare.com/rss/xml

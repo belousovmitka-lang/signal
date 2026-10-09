@@ -77,12 +77,16 @@ forums:
   notes: HTTP 504
   software: unknown
   robots: allowed
+  terms: unchecked
 - name: AccountingWEB Any Answers
   url: https://www.accountingweb.co.uk/any-answers
   status: live
   checked_at: '2026-10-09'
   software: unknown
   robots: allowed
+  terms: forbidden
+  terms_url: https://www.accountingweb.co.uk/terms-and-conditions-of-use
+  terms_notes: No commercial use of site content without a licence. (read 2026-10-09)
 rss_feeds:
 - name: accountingtoday
   url: https://www.accountingtoday.com/feed?rss=true

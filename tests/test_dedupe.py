@@ -12,6 +12,8 @@ from signal_connectors.dedupe import canonical_url, normalize_text, text_hash, u
     ("//example.com/", "https://example.com/"),
     ("https://medium.com/@a/post-50e04eb1e905?source=rss-f40835382ca7------2", "https://medium.com/@a/post-50e04eb1e905"),
     ("https://medium.com/@a/post-50e04eb1e905?source=post_page-----x", "https://medium.com/@a/post-50e04eb1e905"),
+    ("https://forums.example.com/index.php?threads/slug.56498/", "https://forums.example.com/index.php?threads/slug.56498/"),
+    ("https://forums.example.com/index.php?threads/slug.1/&utm_medium=rss", "https://forums.example.com/index.php?threads/slug.1/"),
 ])
 def test_canonical_url(a, b):
     assert canonical_url(a) == b

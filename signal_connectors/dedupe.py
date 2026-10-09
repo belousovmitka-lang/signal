@@ -5,7 +5,7 @@ from __future__ import annotations
 import hashlib
 import re
 import unicodedata
-from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
+from urllib.parse import unquote_plus, urlsplit, urlunsplit
 
 # Query parameters that only track the click and never change the content.
 TRACKING_PARAMS = frozenset({
@@ -52,8 +52,16 @@ def canonical_url(url: str) -> str:
     path = re.sub(r"/{2,}", "/", parts.path) or "/"
     if len(path) > 1 and path.endswith("/"):
         path = path.rstrip("/") or "/"
-    query = sorted((k, v) for k, v in parse_qsl(parts.query, keep_blank_values=True) if not _is_tracking(k, v))
-    return urlunsplit((scheme, netloc, path, urlencode(query), ""))
+    # Keep each query part byte-for-byte (XenForo uses "index.php?threads/slug.123/", with no "=");
+    # only drop tracking parameters and sort, so order differences don't matter.
+    kept = []
+    for part in parts.query.split("&"):
+        if not part:
+            continue
+        key, _, value = part.partition("=")
+        if not _is_tracking(unquote_plus(key), unquote_plus(value)):
+            kept.append(part)
+    return urlunsplit((scheme, netloc, path, "&".join(sorted(kept)), ""))
 
 
 def sha256(value: str) -> str:

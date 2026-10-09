@@ -44,6 +44,14 @@ class Forum(_Entry):
     software: ForumSoftware = "unknown"
     rss: str | None = None           # feed URL found on the page or at the software's default path
     robots: Literal["allowed", "disallowed", "unchecked"] = "unchecked"
+    # Rule 2: read by hand. Only "allowed" forums are collected; verify_industries.py never changes this.
+    terms: Literal["allowed", "forbidden", "unchecked"] = "unchecked"
+    terms_url: str | None = None
+    terms_notes: str | None = None
+
+    @property
+    def collectable(self) -> bool:
+        return self.status == "live" and self.robots == "allowed" and self.terms == "allowed" and bool(self.rss)
 
 
 class Link(_Entry):
@@ -77,6 +85,9 @@ class Industry(BaseModel):
 
     def live_feeds(self) -> list[Feed]:
         return [f for f in self.rss_feeds if f.status == "live"]
+
+    def collectable_forums(self) -> list[Forum]:
+        return [f for f in self.forums if f.collectable]
 
 
 def industry_path(industry: str, directory: Path = INDUSTRIES_DIR) -> Path:

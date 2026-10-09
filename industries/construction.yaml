@@ -80,6 +80,9 @@ forums:
   software: xenforo
   rss: https://www.contractortalk.com/forums/-/index.rss
   robots: allowed
+  terms: forbidden
+  terms_url: https://www.contractortalk.com/help/terms/
+  terms_notes: VerticalScope terms forbid collecting data by any automated means. (read 2026-10-09)
 - name: HVAC-Talk
   url: https://hvac-talk.com/
   status: live
@@ -88,6 +91,9 @@ forums:
   software: xenforo
   rss: https://www.hvac-talk.com/forums/-/index.rss
   robots: allowed
+  terms: forbidden
+  terms_url: https://www.hvac-talk.com/help/terms/
+  terms_notes: VerticalScope terms forbid collecting data by any automated means. (read 2026-10-09)
 - name: Mike Holt forums
   url: https://forums.mikeholt.com/
   status: search_only
@@ -95,6 +101,7 @@ forums:
   notes: HTTP 403 to our bot; use the search route
   software: unknown
   robots: allowed
+  terms: unchecked
 - name: Electrician Talk
   url: https://www.electriciantalk.com/
   status: live
@@ -102,6 +109,9 @@ forums:
   software: xenforo
   rss: https://www.electriciantalk.com/forums/-/index.rss
   robots: allowed
+  terms: forbidden
+  terms_url: https://www.electriciantalk.com/help/terms/
+  terms_notes: VerticalScope terms forbid collecting data by any automated means. (read 2026-10-09)
 - name: PlumbingZone
   url: https://www.plumbingzone.com/
   status: live
@@ -109,6 +119,9 @@ forums:
   software: xenforo
   rss: https://www.plumbingzone.com/forums/-/index.rss
   robots: allowed
+  terms: forbidden
+  terms_url: https://www.plumbingzone.com/help/terms/
+  terms_notes: VerticalScope terms forbid collecting data by any automated means. (read 2026-10-09)
 rss_feeds:
 - name: constructiondive
   url: https://www.constructiondive.com/feeds/news/
