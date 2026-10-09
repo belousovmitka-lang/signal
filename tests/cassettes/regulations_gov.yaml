@@ -1,0 +1,2020 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - api.regulations.gov
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://api.regulations.gov/v4/comments?filter%5BagencyId%5D=SBA&filter%5BpostedDate%5D%5Bge%5D=2026-10-08&page%5Bsize%5D=20&sort=-postedDate
+  response:
+    body:
+      string: '{"data": [{"id": "SBA-2026-0298-0007", "type": "comments", "attributes":
+        {"agencyId": "SBA", "objectId": "09000064b96585fa", "documentType": "Public
+        Submission", "withdrawn": false, "highlightedContent": "", "postedDate": "2026-10-09T04:00:00Z",
+        "lastModifiedDate": "2026-10-09T21:55:12Z", "title": "10-5 SBA Comment 2026-18009"}},
+        {"id": "SBA-2026-0265-0938", "type": "comments", "attributes": {"agencyId":
+        "SBA", "objectId": "09000064b9655a96", "documentType": "Public Submission",
+        "withdrawn": false, "highlightedContent": "", "postedDate": "2026-10-09T04:00:00Z",
+        "lastModifiedDate": "2026-10-09T21:43:30Z", "title": "Comment on FR Doc #
+        2026-17039"}}, {"id": "SBA-2026-0199-2942", "type": "comments", "attributes":
+        {"agencyId": "SBA", "objectId": "09000064b9655ed9", "documentType": "Public
+        Submission", "withdrawn": false, "highlightedContent": "", "postedDate": "2026-10-09T04:00:00Z",
+        "lastModifiedDate": "2026-10-09T21:42:51Z", "title": "Comment on FR Doc #
+        2026-19546"}}, {"id": "SBA-2026-0298-0004", "type": "comments", "attributes":
+        {"agencyId": "SBA", "objectId": "09000064b9656307", "documentType": "Public
+        Submission", "withdrawn": false, "highlightedContent": "", "postedDate": "2026-10-09T04:00:00Z",
+        "lastModifiedDate": "2026-10-09T21:40:02Z", "title": "Comment on FR Doc #
+        N/A"}}, {"id": "SBA-2026-0298-0006", "type": "comments", "attributes": {"agencyId":
+        "SBA", "objectId": "09000064b9656332", "documentType": "Public Submission",
+        "withdrawn": false, "highlightedContent": "", "postedDate": "2026-10-09T04:00:00Z",
+        "lastModifiedDate": "2026-10-09T21:40:14Z", "title": "Comment on FR Doc #
+        N/A"}}, {"id": "SBA-2026-0199-2944", "type": "comments", "attributes": {"agencyId":
+        "SBA", "objectId": "09000064b965807c", "documentType": "Public Submission",
+        "withdrawn": false, "highlightedContent": "", "postedDate": "2026-10-09T04:00:00Z",
+        "lastModifiedDate": "2026-10-09T21:42:56Z", "title": "Comment on FR Doc #
+        2026-19546"}}, {"id": "SBA-2026-0199-2945", "type": "comments", "attributes":
+        {"agencyId": "SBA", "objectId": "09000064b9658921", "documentType": "Public
+        Submission", "withdrawn": false, "highlightedContent": "", "postedDate": "2026-10-09T04:00:00Z",
+        "lastModifiedDate": "2026-10-09T21:42:58Z", "title": "Comment on FR Doc #
+        2026-19546"}}, {"id": "SBA-2026-0298-0002", "type": "comments", "attributes":
+        {"agencyId": "SBA", "objectId": "09000064b964e1ed", "documentType": "Public
+        Submission", "withdrawn": false, "highlightedContent": "", "postedDate": "2026-10-09T04:00:00Z",
+        "lastModifiedDate": "2026-10-09T21:39:54Z", "title": "Comment on FR Doc #
+        N/A"}}, {"id": "SBA-2026-0265-0939", "type": "comments", "attributes": {"agencyId":
+        "SBA", "objectId": "09000064b965646b", "documentType": "Public Submission",
+        "withdrawn": false, "highlightedContent": "", "postedDate": "2026-10-09T04:00:00Z",
+        "lastModifiedDate": "2026-10-09T21:43:32Z", "title": "Comment on FR Doc #
+        2026-17039"}}, {"id": "SBA-2026-0265-0940", "type": "comments", "attributes":
+        {"agencyId": "SBA", "objectId": "09000064b9658cb4", "documentType": "Public
+        Submission", "withdrawn": false, "highlightedContent": "", "postedDate": "2026-10-09T04:00:00Z",
+        "lastModifiedDate": "2026-10-09T21:43:35Z", "title": "Comment on FR Doc #
+        2026-17039"}}, {"id": "SBA-2026-0199-2949", "type": "comments", "attributes":
+        {"agencyId": "SBA", "objectId": "09000064b96591ea", "documentType": "Public
+        Submission", "withdrawn": false, "highlightedContent": "", "postedDate": "2026-10-09T04:00:00Z",
+        "lastModifiedDate": "2026-10-09T21:43:07Z", "title": "Comment on FR Doc #
+        2026-19546"}}, {"id": "SBA-2026-0199-2952", "type": "comments", "attributes":
+        {"agencyId": "SBA", "objectId": "09000064b965950a", "documentType": "Public
+        Submission", "withdrawn": false, "highlightedContent": "", "postedDate": "2026-10-09T04:00:00Z",
+        "lastModifiedDate": "2026-10-09T21:43:13Z", "title": "Comment on FR Doc #
+        2026-19546"}}, {"id": "SBA-2026-0265-0941", "type": "comments", "attributes":
+        {"agencyId": "SBA", "objectId": "09000064b9658f5b", "documentType": "Public
+        Submission", "withdrawn": false, "highlightedContent": "", "postedDate": "2026-10-09T04:00:00Z",
+        "lastModifiedDate": "2026-10-09T21:55:00Z", "title": "Comment on FR Doc #
+        2026-17039"}}, {"id": "SBA-2026-0199-2941", "type": "comments", "attributes":
+        {"agencyId": "SBA", "objectId": "09000064b9655e25", "documentType": "Public
+        Submission", "withdrawn": false, "highlightedContent": "", "postedDate": "2026-10-09T04:00:00Z",
+        "lastModifiedDate": "2026-10-09T21:42:48Z", "title": "Comment on FR Doc #
+        2026-19546"}}, {"id": "SBA-2026-0298-0003", "type": "comments", "attributes":
+        {"agencyId": "SBA", "objectId": "09000064b965629e", "documentType": "Public
+        Submission", "withdrawn": false, "highlightedContent": "", "postedDate": "2026-10-09T04:00:00Z",
+        "lastModifiedDate": "2026-10-09T21:39:57Z", "title": "Comment on FR Doc #
+        N/A"}}, {"id": "SBA-2026-0298-0005", "type": "comments", "attributes": {"agencyId":
+        "SBA", "objectId": "09000064b9656314", "documentType": "Public Submission",
+        "withdrawn": false, "highlightedContent": "", "postedDate": "2026-10-09T04:00:00Z",
+        "lastModifiedDate": "2026-10-09T21:40:12Z", "title": "Comment on FR Doc #
+        N/A"}}, {"id": "SBA-2026-0199-2943", "type": "comments", "attributes": {"agencyId":
+        "SBA", "objectId": "09000064b9657e2d", "documentType": "Public Submission",
+        "withdrawn": false, "highlightedContent": "", "postedDate": "2026-10-09T04:00:00Z",
+        "lastModifiedDate": "2026-10-09T21:42:53Z", "title": "Comment on FR Doc #
+        2026-19546"}}, {"id": "SBA-2026-0199-2946", "type": "comments", "attributes":
+        {"agencyId": "SBA", "objectId": "09000064b9658998", "documentType": "Public
+        Submission", "withdrawn": false, "highlightedContent": "", "postedDate": "2026-10-09T04:00:00Z",
+        "lastModifiedDate": "2026-10-09T21:43:00Z", "title": "Comment on FR Doc #
+        2026-19546"}}, {"id": "SBA-2026-0199-2947", "type": "comments", "attributes":
+        {"agencyId": "SBA", "objectId": "09000064b9658c5c", "documentType": "Public
+        Submission", "withdrawn": false, "highlightedContent": "", "postedDate": "2026-10-09T04:00:00Z",
+        "lastModifiedDate": "2026-10-09T21:43:02Z", "title": "Comment on FR Doc #
+        2026-19546"}}, {"id": "SBA-2026-0199-2948", "type": "comments", "attributes":
+        {"agencyId": "SBA", "objectId": "09000064b9658cf9", "documentType": "Public
+        Submission", "withdrawn": false, "highlightedContent": "", "postedDate": "2026-10-09T04:00:00Z",
+        "lastModifiedDate": "2026-10-09T21:43:05Z", "title": "Comment on FR Doc #
+        2026-19546"}}], "meta": {"aggregations": {"agencyId": [{"docCount": 47, "value":
+        "SBA"}], "postedDate": [{"label": "Today", "fromDate": "2026-10-09 00:00:00",
+        "toDate": "2026-10-09 23:59:59", "docCount": 23}, {"label": "Last 3 Days",
+        "fromDate": "2026-10-07 00:00:00", "toDate": "2026-10-09 23:59:59", "docCount":
+        47}, {"label": "Last 7 Days", "fromDate": "2026-10-03 00:00:00", "toDate":
+        "2026-10-09 23:59:59", "docCount": 47}, {"label": "Last 15 Days", "fromDate":
+        "2026-09-25 00:00:00", "toDate": "2026-10-09 23:59:59", "docCount": 47}, {"label":
+        "Last 30 Days", "fromDate": "2026-09-10 00:00:00", "toDate": "2026-10-09 23:59:59",
+        "docCount": 47}, {"label": "Last 90 Days", "fromDate": "2026-07-12 00:00:00",
+        "toDate": "2026-10-09 23:59:59", "docCount": 47}]}, "filters": {"postedDate":
+        {"fromDate": "2026-10-08", "toDate": null}, "agencyId": [{"label": "SBA",
+        "value": "SBA"}]}, "hasNextPage": true, "hasPreviousPage": false, "numberOfElements":
+        20, "pageNumber": 1, "pageSize": 20, "totalElements": 47, "totalPages": 3,
+        "firstPage": true, "lastPage": false}}'
+    headers:
+      access-control-allow-origin:
+      - '*'
+      age:
+      - '0'
+      connection:
+      - keep-alive
+      content-length:
+      - '7520'
+      content-type:
+      - application/json
+      date:
+      - Fri, 09 Oct 2026 23:33:30 GMT
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - d14c1rql92alikemd0qg
+      x-cache:
+      - MISS
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-ratelimit-limit:
+      - '1000'
+      x-ratelimit-remaining:
+      - '807'
+      x-vcap-request-id:
+      - 960403f1-103e-482a-6f46-545cce2a1954
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - api.regulations.gov
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://api.regulations.gov/v4/comments/SBA-2026-0298-0007
+  response:
+    body:
+      string: '{"data": {"id": "SBA-2026-0298-0007", "type": "comments", "links":
+        {"self": "https://api.regulations.gov/v4/comments/SBA-2026-0298-0007"}, "attributes":
+        {"commentOn": "09000064b951d3b8", "commentOnDocumentId": "SBA-2026-0298-0001",
+        "duplicateComments": 0, "address1": null, "address2": null, "agencyId": "SBA",
+        "city": null, "category": null, "comment": "See Attached", "country": null,
+        "displayProperties": [{"name": "pageCount", "label": "Page Count", "tooltip":
+        "Number of pages In the content file"}], "docAbstract": null, "docketId":
+        "SBA-2026-0298", "documentType": "Public Submission", "email": null, "fax":
+        null, "field1": null, "field2": null, "fileFormats": null, "firstName": null,
+        "govAgency": null, "govAgencyType": null, "objectId": "09000064b96585fa",
+        "lastName": null, "legacyId": null, "modifyDate": "2026-10-09T21:55:12Z",
+        "organization": null, "originalDocumentId": null, "pageCount": 1, "phone":
+        null, "postedDate": "2026-10-09T04:00:00Z", "postmarkDate": null, "reasonWithdrawn":
+        null, "receiveDate": "2026-10-09T04:00:00Z", "restrictReason": null, "restrictReasonType":
+        null, "stateProvinceRegion": null, "submitterRep": null, "submitterRepAddress":
+        null, "submitterRepCityState": null, "subtype": null, "title": "10-5 SBA Comment
+        2026-18009", "trackingNbr": "mv1-95za-9ysg", "withdrawn": false, "zip": null,
+        "openForComment": false}, "relationships": {"attachments": {"links": {"self":
+        "https://api.regulations.gov/v4/comments/SBA-2026-0298-0007/relationships/attachments",
+        "related": "https://api.regulations.gov/v4/comments/SBA-2026-0298-0007/attachments"}}}},
+        "links": {"self": "https://regulations.gov/v4/comments/SBA-2026-0298-0007"}}'
+    headers:
+      access-control-allow-origin:
+      - '*'
+      age:
+      - '0'
+      connection:
+      - keep-alive
+      content-length:
+      - '1662'
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:33:30 GMT
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - d14c1ruqk6k5licqvp7g
+      x-cache:
+      - MISS
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-ratelimit-limit:
+      - '1000'
+      x-ratelimit-remaining:
+      - '806'
+      x-vcap-request-id:
+      - 9c6d4d62-61bf-44ec-5b56-4fff196e10ad
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - api.regulations.gov
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://api.regulations.gov/v4/comments/SBA-2026-0265-0938
+  response:
+    body:
+      string: '{"data": {"id": "SBA-2026-0265-0938", "type": "comments", "links":
+        {"self": "https://api.regulations.gov/v4/comments/SBA-2026-0265-0938"}, "attributes":
+        {"commentOn": "09000064b946e139", "commentOnDocumentId": "SBA-2026-0265-0001",
+        "duplicateComments": 0, "address1": null, "address2": null, "agencyId": "SBA",
+        "city": null, "category": "Private Industry", "comment": "In summary: This
+        kills my spirit as a true small business owner just starting in government
+        contracting. The headwinds individual operators will face starting out will
+        be more difficult, regardless of the assistance resources like apex accel
+        provide. What is needed is deconsolidation of major defense industry players.
+        The idea of 6,000 employees being a small business is absurd, and perpetrated
+        by a woman who&#39;s worth over a billion dollars. That premise alone is indefensible
+        and un-American and borderline comical. <br/><br/>1. Suffocation of True Entry-Level
+        Businesses and Reduced Competition<br/>The SBA&rsquo;s fundamental mandate
+        is to support grassroots entrepreneurs, micro-enterprises, and emerging small
+        businesses as they enter federal contracting. By redefining &quot;small&quot;
+        to include firms generating up to $531 million in revenue or employing 3,600+
+        workers, this rule completely destroys the ramp for new entrants.<br/><br/>When
+        a 5-person startup or 20-person regional contractor bids under a small business
+        set-aside, they will now be forced to compete directly against multi-hundred-million-dollar
+        corporations. These large entities possess dedicated, fully-funded capture
+        teams, extensive corporate overhead, deeply established agency relationships,
+        and decades of past performance data.<br/><br/>Rather than increasing competition,
+        this change shrinks it. Contracting officers will naturally seek to mitigate
+        risk by awarding set-aside dollars to giant &quot;small&quot; firms, locking
+        out genuine emerging businesses and driving new players out of the industrial
+        base entirely.<br/><br/>2. Unjust Subsidies for Massive Corporations Masked
+        as &quot;Small&quot;<br/>Categorizing a company with thousands of employees
+        or half a billion dollars in revenue as a &quot;small business&quot; is an
+        absurd distortion of language and economic reality.<br/><br/>Corporate Welfare:
+        Firms of this magnitude already possess sufficient capital, market access,
+        and operational scale to compete in open, unrestricted procurements alongside
+        traditional prime contractors.<br/><br/>Distortion of Set-Aside Intent: Giving
+        these entities access to small business set-aside dollars, SBA-backed lending
+        programs, specialized subcontracts, and technical assistance provides a massive
+        government-sponsored break to mature corporate entities at the direct expense
+        of taxpayers and actual small business owners.<br/><br/>3. Defense Industrial
+        Base Consolidation and Weakened Supply Chains<br/>A healthy defense industrial
+        base requires deep, decentralized capacity across thousands of agile tier-3
+        and tier-4 suppliers.<br/><br/>Accelerated Industry Roll-Ups: By eliminating
+        upper size caps and raising employee thresholds into the thousands, private
+        equity firms and mid-tier consolidators will be incentivized to execute aggressive
+        roll-up strategies&mdash;buying up smaller, specialized vendors while retaining
+        protected &quot;small business&quot; status.<br/><br/>Brittle Supply Lines:
+        Consolidating federal spending into a smaller number of large &quot;small&quot;
+        contractors creates single points of failure. When true micro-businesses go
+        under or are absorbed, the industrial base loses specialized manufacturing,
+        niche technological expertise, and regional supply chain resilience. This
+        leaves critical defense and civilian supply chains fragile and vulnerable
+        to disruption.<br/><br/>4. Heightened Vulnerability to Foreign Influence and
+        Lobbying<br/>Inflating thresholds allows mid-sized defense contractors and
+        large corporate entities to operate inside protected government set-aside
+        channels while deploying multi-million-dollar government affairs, lobbying,
+        and PAC budgets.<br/><br/>As the threshold expands to engulf major international
+        joint ventures and global firms with complex holding structures, it becomes
+        vastly more difficult for federal regulators to monitor ownership networks.
+        This creates structural backdoors for foreign-backed entities, offshore capital,
+        or compromised supply chains to exploit small business preference programs
+        that were built to protect domestic innovation.<br/><br/>5. Widespread Insolvency
+        and Job Losses Across Micro-Enterprises<br/>The federal government often serves
+        as the primary revenue stream for small, regional, and sub-contracting firms.
+        According to the SBA&#39;s own analysis, these proposed rules will allow over
+        37,000 mid-to-large contractors&mdash;representing $71 billion in federal
+        contract obligations&mdash;to suddenly flood the small business set-aside
+        market.<br/><br/>If these multi-hundred-million-dollar corporations are permitted
+        to capture small business set-aside awards, hundreds of thousands of micro-enterprises
+        (accounting for the vast majority of true small business employment in America)
+        will see their contracting pipelines dry up. As these smaller firms fail to
+        win set-asides and inevitably go out of business, the result will be widespread
+        industry-wide layoffs, destroying local jobs and dismantling the grassroots
+        foundation of the American economy.", "country": null, "displayProperties":
+        [{"name": "pageCount", "label": "Page Count", "tooltip": "Number of pages
+        In the content file"}], "docAbstract": null, "docketId": "SBA-2026-0265",
+        "documentType": "Public Submission", "email": null, "fax": null, "field1":
+        null, "field2": null, "fileFormats": null, "firstName": null, "govAgency":
+        null, "govAgencyType": null, "objectId": "09000064b9655a96", "lastName": null,
+        "legacyId": null, "modifyDate": "2026-10-09T21:43:30Z", "organization": "Mason
+        Industrial Group, LLC", "originalDocumentId": null, "pageCount": 1, "phone":
+        null, "postedDate": "2026-10-09T04:00:00Z", "postmarkDate": null, "reasonWithdrawn":
+        null, "receiveDate": "2026-10-08T04:00:00Z", "restrictReason": null, "restrictReasonType":
+        null, "stateProvinceRegion": null, "submitterRep": null, "submitterRepAddress":
+        null, "submitterRepCityState": null, "subtype": null, "title": "Comment on
+        FR Doc # 2026-17039", "trackingNbr": "mv0-3pwz-8rgx", "withdrawn": false,
+        "zip": null, "openForComment": false}, "relationships": {"attachments": {"links":
+        {"self": "https://api.regulations.gov/v4/comments/SBA-2026-0265-0938/relationships/attachments",
+        "related": "https://api.regulations.gov/v4/comments/SBA-2026-0265-0938/attachments"}}}},
+        "links": {"self": "https://regulations.gov/v4/comments/SBA-2026-0265-0938"}}'
+    headers:
+      access-control-allow-origin:
+      - '*'
+      age:
+      - '0'
+      connection:
+      - keep-alive
+      content-length:
+      - '6743'
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:33:31 GMT
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - d14c1s6l7k3n5trhbrtg
+      x-cache:
+      - MISS
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-ratelimit-limit:
+      - '1000'
+      x-ratelimit-remaining:
+      - '805'
+      x-vcap-request-id:
+      - d41f00c1-45f8-40fc-7029-9d5eae054192
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - api.regulations.gov
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://api.regulations.gov/v4/comments/SBA-2026-0199-2942
+  response:
+    body:
+      string: '{"data": {"id": "SBA-2026-0199-2942", "type": "comments", "links":
+        {"self": "https://api.regulations.gov/v4/comments/SBA-2026-0199-2942"}, "attributes":
+        {"commentOn": "09000064b95b6b08", "commentOnDocumentId": "SBA-2026-0199-2726",
+        "duplicateComments": 0, "address1": null, "address2": null, "agencyId": "SBA",
+        "city": "redacted", "category": "Other", "comment": "As a military veteran
+        who owns three (3) small businesses, I am strongly against this change.   It
+        will greatly disadvantage very small businesses like mine and put us in competition
+        with much larger organizations.  I fully support and echo the opinion submitted
+        by IVMF noted below: <br/><br/>&quot;The D&rsquo;Aniello Institute for Veterans
+        and Military Families (IVMF) opposes the proposed expansion of SBA&rsquo;s
+        small business size standards. With over two decades of research and experience
+        across the military-connected entrepreneurial ecosystem, the IVMF understands
+        the importance of maintaining meaningful pathways for small and emerging firms
+        to enter, compete, and grow in the federal marketplace. We also recognize
+        that businesses graduating from small business status can face significant
+        challenges as they transition to full and open competition. Those challenges
+        deserve thoughtful policy solutions. Substantially expanding eligibility for
+        federal small-business procurement programs, however, is not the appropriate
+        mechanism for addressing the graduation cliff.<br/><br/>Doing so risks solving
+        one problem by creating another. Substantially expanding size standards would
+        require small and emerging businesses to compete within programs specifically
+        designed for them against firms with significantly greater revenue, resources,
+        contracting experience, and access to capital. For businesses seeking to secure
+        their first federal contract or establish the past performance necessary to
+        grow, expanding the pool of larger, more established competitors can make
+        an already difficult path into the federal marketplace even harder.  Federal
+        small-business programs should serve as an on-ramp to the federal marketplace
+        and support a healthy pipeline of businesses that can enter, compete, grow
+        and ultimately graduate into full and open competition.<br/><br/>At the same
+        time, the policy debate should not be framed simply as a choice between small
+        businesses and large corporations. Businesses that have outgrown small-business
+        status occupy an important and often difficult position in the federal marketplace
+        and face distinct challenges as they move into full and open competition.
+        Rather than broadening the definition of &ldquo;small&rdquo; to include increasingly
+        large firms, SBA and policymakers should pursue targeted solutions that support
+        these businesses successfully through that transition while preserving meaningful
+        procurement opportunities for small and emerging firms.<br/><br/>The IVMF
+        opposes this rule because addressing the challenges faced by graduating businesses
+        should not come at the expense of those still working to gain a foothold in
+        the federal marketplace. If enacted as proposed, this rule would make it harder
+        for new and emerging firms to compete for federal contracts, weakening the
+        pipeline of small businesses the federal procurement system should be working
+        to build.&quot;<br/>", "country": "United States", "displayProperties": [{"name":
+        "pageCount", "label": "Page Count", "tooltip": "Number of pages In the content
+        file"}], "docAbstract": null, "docketId": "SBA-2026-0199", "documentType":
+        "Public Submission", "email": null, "fax": null, "field1": null, "field2":
+        null, "fileFormats": null, "firstName": "redacted", "govAgency": null, "govAgencyType":
+        null, "objectId": "09000064b9655ed9", "lastName": "redacted", "legacyId":
+        null, "modifyDate": "2026-10-09T21:42:51Z", "organization": null, "originalDocumentId":
+        null, "pageCount": 1, "phone": null, "postedDate": "2026-10-09T04:00:00Z",
+        "postmarkDate": null, "reasonWithdrawn": null, "receiveDate": "2026-10-08T04:00:00Z",
+        "restrictReason": null, "restrictReasonType": null, "stateProvinceRegion":
+        "AR", "submitterRep": null, "submitterRepAddress": null, "submitterRepCityState":
+        null, "subtype": null, "title": "Comment on FR Doc # 2026-19546", "trackingNbr":
+        "mv0-6if1-em9c", "withdrawn": false, "zip": "redacted", "openForComment":
+        false}, "relationships": {"attachments": {"links": {"self": "https://api.regulations.gov/v4/comments/SBA-2026-0199-2942/relationships/attachments",
+        "related": "https://api.regulations.gov/v4/comments/SBA-2026-0199-2942/attachments"}}}},
+        "links": {"self": "https://regulations.gov/v4/comments/SBA-2026-0199-2942"}}'
+    headers:
+      access-control-allow-origin:
+      - '*'
+      age:
+      - '0'
+      connection:
+      - keep-alive
+      content-length:
+      - '4625'
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:33:32 GMT
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - d14c1sed6ukgdj3i0710
+      x-cache:
+      - MISS
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-ratelimit-limit:
+      - '1000'
+      x-ratelimit-remaining:
+      - '804'
+      x-vcap-request-id:
+      - dc0afff3-18ec-4028-60c2-03616390e241
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - api.regulations.gov
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://api.regulations.gov/v4/comments/SBA-2026-0298-0004
+  response:
+    body:
+      string: '{"data": {"id": "SBA-2026-0298-0004", "type": "comments", "links":
+        {"self": "https://api.regulations.gov/v4/comments/SBA-2026-0298-0004"}, "attributes":
+        {"commentOn": "09000064b951d3b8", "commentOnDocumentId": "SBA-2026-0298-0001",
+        "duplicateComments": 0, "address1": null, "address2": null, "agencyId": "SBA",
+        "city": null, "category": null, "comment": "See attached file(s)", "country":
+        null, "displayProperties": [{"name": "pageCount", "label": "Page Count", "tooltip":
+        "Number of pages In the content file"}], "docAbstract": null, "docketId":
+        "SBA-2026-0298", "documentType": "Public Submission", "email": null, "fax":
+        null, "field1": null, "field2": null, "fileFormats": null, "firstName": "redacted",
+        "govAgency": null, "govAgencyType": null, "objectId": "09000064b9656307",
+        "lastName": "redacted", "legacyId": null, "modifyDate": "2026-10-09T21:40:02Z",
+        "organization": null, "originalDocumentId": null, "pageCount": 1, "phone":
+        null, "postedDate": "2026-10-09T04:00:00Z", "postmarkDate": null, "reasonWithdrawn":
+        null, "receiveDate": "2026-10-08T04:00:00Z", "restrictReason": null, "restrictReasonType":
+        null, "stateProvinceRegion": null, "submitterRep": null, "submitterRepAddress":
+        null, "submitterRepCityState": null, "subtype": null, "title": "Comment on
+        FR Doc # N/A", "trackingNbr": "mv0-fkov-z7v1", "withdrawn": false, "zip":
+        null, "openForComment": false}, "relationships": {"attachments": {"links":
+        {"self": "https://api.regulations.gov/v4/comments/SBA-2026-0298-0004/relationships/attachments",
+        "related": "https://api.regulations.gov/v4/comments/SBA-2026-0298-0004/attachments"}}}},
+        "links": {"self": "https://regulations.gov/v4/comments/SBA-2026-0298-0004"}}'
+    headers:
+      access-control-allow-origin:
+      - '*'
+      age:
+      - '0'
+      connection:
+      - keep-alive
+      content-length:
+      - '1678'
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:33:33 GMT
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - d14c1smet9h1pus3qodg
+      x-cache:
+      - MISS
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-ratelimit-limit:
+      - '1000'
+      x-ratelimit-remaining:
+      - '803'
+      x-vcap-request-id:
+      - c6223ef0-9f48-41aa-66e7-cc05781e9de2
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - api.regulations.gov
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://api.regulations.gov/v4/comments/SBA-2026-0298-0006
+  response:
+    body:
+      string: '{"data": {"id": "SBA-2026-0298-0006", "type": "comments", "links":
+        {"self": "https://api.regulations.gov/v4/comments/SBA-2026-0298-0006"}, "attributes":
+        {"commentOn": "09000064b951d3b8", "commentOnDocumentId": "SBA-2026-0298-0001",
+        "duplicateComments": 0, "address1": null, "address2": null, "agencyId": "SBA",
+        "city": null, "category": null, "comment": "The notice was executed by Douglas
+        Robertson in his capacity as &quot;Deputy Chief Information Officer (Alternate
+        Authorizing Official)&quot; (91 FR 57952). The title &quot;Authorizing Official&quot;
+        is a FISMA/NIST SP 800-37 cybersecurity ATO role that conveys zero statutory
+        authority to promulgate Privacy Act notices or modify System of Records Notice
+        (SORN) routine uses under 5 U.S.C. &sect; 552a or OMB Circular A-108.<br/><br/>OMB
+        Circular A-108 requires Privacy Act matching notices to be executed by the
+        Agency Head or the formally designated Senior Agency Official for Privacy
+        (SAOP). Bypassing the designated Acting Chief Privacy Officer (Michael Post)
+        to have a Deputy <br/>   CIO execute the notice under a FISMA IT security
+        title violates mandatory executive branch <br/>   privacy regulations and
+        renders the notice void ab initio under APA 5 U.S.C. &sect; 706(2)(C) as <br/>   agency
+        action taken in excess of statutory jurisdiction and authority.", "country":
+        null, "displayProperties": [{"name": "pageCount", "label": "Page Count", "tooltip":
+        "Number of pages In the content file"}], "docAbstract": null, "docketId":
+        "SBA-2026-0298", "documentType": "Public Submission", "email": null, "fax":
+        null, "field1": null, "field2": null, "fileFormats": null, "firstName": "redacted",
+        "govAgency": null, "govAgencyType": null, "objectId": "09000064b9656332",
+        "lastName": "redacted", "legacyId": null, "modifyDate": "2026-10-09T21:40:14Z",
+        "organization": null, "originalDocumentId": null, "pageCount": 1, "phone":
+        null, "postedDate": "2026-10-09T04:00:00Z", "postmarkDate": null, "reasonWithdrawn":
+        null, "receiveDate": "2026-10-08T04:00:00Z", "restrictReason": null, "restrictReasonType":
+        null, "stateProvinceRegion": null, "submitterRep": null, "submitterRepAddress":
+        null, "submitterRepCityState": null, "subtype": null, "title": "Comment on
+        FR Doc # N/A", "trackingNbr": "mv0-frs9-njro", "withdrawn": false, "zip":
+        null, "openForComment": false}, "relationships": {"attachments": {"links":
+        {"self": "https://api.regulations.gov/v4/comments/SBA-2026-0298-0006/relationships/attachments",
+        "related": "https://api.regulations.gov/v4/comments/SBA-2026-0298-0006/attachments"}}}},
+        "links": {"self": "https://regulations.gov/v4/comments/SBA-2026-0298-0006"}}'
+    headers:
+      access-control-allow-origin:
+      - '*'
+      age:
+      - '0'
+      connection:
+      - keep-alive
+      content-length:
+      - '2622'
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:33:34 GMT
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - d14c1su2rggoqs4a1r80
+      x-cache:
+      - MISS
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-ratelimit-limit:
+      - '1000'
+      x-ratelimit-remaining:
+      - '802'
+      x-vcap-request-id:
+      - e654cd5c-fbc3-46c1-78ff-af0924a87aae
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - api.regulations.gov
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://api.regulations.gov/v4/comments/SBA-2026-0199-2944
+  response:
+    body:
+      string: '{"data": {"id": "SBA-2026-0199-2944", "type": "comments", "links":
+        {"self": "https://api.regulations.gov/v4/comments/SBA-2026-0199-2944"}, "attributes":
+        {"commentOn": "09000064b95b6b08", "commentOnDocumentId": "SBA-2026-0199-2726",
+        "duplicateComments": 0, "address1": null, "address2": null, "agencyId": "SBA",
+        "city": "redacted", "category": "Advocacy - Natl", "comment": "TY his change
+        is a travesty! My dad&rsquo;s family owned a dry goods &ldquo;small business&rdquo;
+        in Houston for over 60 years. It was a real small business! This change to
+        the definition of small business is a bad joke! Please reconsider the impact
+        of this on middle class Americans across the country! ", "country": "United
+        States", "displayProperties": [{"name": "pageCount", "label": "Page Count",
+        "tooltip": "Number of pages In the content file"}], "docAbstract": null, "docketId":
+        "SBA-2026-0199", "documentType": "Public Submission", "email": null, "fax":
+        null, "field1": null, "field2": null, "fileFormats": null, "firstName": "redacted",
+        "govAgency": null, "govAgencyType": null, "objectId": "09000064b965807c",
+        "lastName": "redacted", "legacyId": null, "modifyDate": "2026-10-09T21:42:56Z",
+        "organization": null, "originalDocumentId": null, "pageCount": 1, "phone":
+        null, "postedDate": "2026-10-09T04:00:00Z", "postmarkDate": null, "reasonWithdrawn":
+        null, "receiveDate": "2026-10-09T04:00:00Z", "restrictReason": null, "restrictReasonType":
+        null, "stateProvinceRegion": "TX", "submitterRep": null, "submitterRepAddress":
+        null, "submitterRepCityState": null, "subtype": null, "title": "Comment on
+        FR Doc # 2026-19546", "trackingNbr": "mv1-0anp-zfs1", "withdrawn": false,
+        "zip": "redacted", "openForComment": false}, "relationships": {"attachments":
+        {"links": {"self": "https://api.regulations.gov/v4/comments/SBA-2026-0199-2944/relationships/attachments",
+        "related": "https://api.regulations.gov/v4/comments/SBA-2026-0199-2944/attachments"}}}},
+        "links": {"self": "https://regulations.gov/v4/comments/SBA-2026-0199-2944"}}'
+    headers:
+      access-control-allow-origin:
+      - '*'
+      age:
+      - '0'
+      connection:
+      - keep-alive
+      content-length:
+      - '2005'
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:33:35 GMT
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - d14c1t5qdn248ggnfjs0
+      x-cache:
+      - MISS
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-ratelimit-limit:
+      - '1000'
+      x-ratelimit-remaining:
+      - '801'
+      x-vcap-request-id:
+      - 6ebaf0e1-5fe1-49a2-5db1-3256390e83e7
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - api.regulations.gov
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://api.regulations.gov/v4/comments/SBA-2026-0199-2945
+  response:
+    body:
+      string: '{"data": {"id": "SBA-2026-0199-2945", "type": "comments", "links":
+        {"self": "https://api.regulations.gov/v4/comments/SBA-2026-0199-2945"}, "attributes":
+        {"commentOn": "09000064b95b6b08", "commentOnDocumentId": "SBA-2026-0199-2726",
+        "duplicateComments": 0, "address1": null, "address2": null, "agencyId": "SBA",
+        "city": null, "category": null, "comment": "I strongly oppose the proposal
+        to increase the size standard for small businesses.  Doing so would allow
+        larger, more established companies to compete for opportunities intended to
+        support genuinely small businesses. These larger firms often have greater
+        financial resources, staffing, and infrastructure, creating an uneven playing
+        field for smaller companies like ours. Raising the thresholds could reduce
+        opportunities for truly small businesses to compete, grow, and establish themselves
+        in the marketplace. Small business programs should remain focused on supporting
+        businesses that face genuine competitive disadvantages, rather than expanding
+        eligibility to firms that already possess significant resources.", "country":
+        null, "displayProperties": [{"name": "pageCount", "label": "Page Count", "tooltip":
+        "Number of pages In the content file"}], "docAbstract": null, "docketId":
+        "SBA-2026-0199", "documentType": "Public Submission", "email": null, "fax":
+        null, "field1": null, "field2": null, "fileFormats": null, "firstName": null,
+        "govAgency": null, "govAgencyType": null, "objectId": "09000064b9658921",
+        "lastName": null, "legacyId": null, "modifyDate": "2026-10-09T21:42:58Z",
+        "organization": "BW Testing and Inspections LLC", "originalDocumentId": null,
+        "pageCount": 1, "phone": null, "postedDate": "2026-10-09T04:00:00Z", "postmarkDate":
+        null, "reasonWithdrawn": null, "receiveDate": "2026-10-09T04:00:00Z", "restrictReason":
+        null, "restrictReasonType": null, "stateProvinceRegion": null, "submitterRep":
+        null, "submitterRepAddress": null, "submitterRepCityState": null, "subtype":
+        null, "title": "Comment on FR Doc # 2026-19546", "trackingNbr": "mv1-18gh-xkvc",
+        "withdrawn": false, "zip": null, "openForComment": false}, "relationships":
+        {"attachments": {"links": {"self": "https://api.regulations.gov/v4/comments/SBA-2026-0199-2945/relationships/attachments",
+        "related": "https://api.regulations.gov/v4/comments/SBA-2026-0199-2945/attachments"}}}},
+        "links": {"self": "https://regulations.gov/v4/comments/SBA-2026-0199-2945"}}'
+    headers:
+      access-control-allow-origin:
+      - '*'
+      age:
+      - '0'
+      connection:
+      - keep-alive
+      content-length:
+      - '2395'
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:33:36 GMT
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - d14c1tdkj2dg703lvrv0
+      x-cache:
+      - MISS
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-ratelimit-limit:
+      - '1000'
+      x-ratelimit-remaining:
+      - '800'
+      x-vcap-request-id:
+      - 12e9fd5d-391b-400d-410a-2b6698b735da
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - api.regulations.gov
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://api.regulations.gov/v4/comments/SBA-2026-0298-0002
+  response:
+    body:
+      string: '{"data": {"id": "SBA-2026-0298-0002", "type": "comments", "links":
+        {"self": "https://api.regulations.gov/v4/comments/SBA-2026-0298-0002"}, "attributes":
+        {"commentOn": "09000064b951d3b8", "commentOnDocumentId": "SBA-2026-0298-0001",
+        "duplicateComments": 0, "address1": null, "address2": null, "agencyId": "SBA",
+        "city": null, "category": null, "comment": "See attached file(s)", "country":
+        null, "displayProperties": [{"name": "pageCount", "label": "Page Count", "tooltip":
+        "Number of pages In the content file"}], "docAbstract": null, "docketId":
+        "SBA-2026-0298", "documentType": "Public Submission", "email": null, "fax":
+        null, "field1": null, "field2": null, "fileFormats": null, "firstName": null,
+        "govAgency": null, "govAgencyType": null, "objectId": "09000064b964e1ed",
+        "lastName": null, "legacyId": null, "modifyDate": "2026-10-09T21:39:54Z",
+        "organization": "Dun & Bradstreet, Inc,", "originalDocumentId": null, "pageCount":
+        1, "phone": null, "postedDate": "2026-10-09T04:00:00Z", "postmarkDate": null,
+        "reasonWithdrawn": null, "receiveDate": "2026-10-07T04:00:00Z", "restrictReason":
+        null, "restrictReasonType": null, "stateProvinceRegion": null, "submitterRep":
+        null, "submitterRepAddress": null, "submitterRepCityState": null, "subtype":
+        null, "title": "Comment on FR Doc # N/A", "trackingNbr": "muy-6i3j-sbdu",
+        "withdrawn": false, "zip": null, "openForComment": false}, "relationships":
+        {"attachments": {"links": {"self": "https://api.regulations.gov/v4/comments/SBA-2026-0298-0002/relationships/attachments",
+        "related": "https://api.regulations.gov/v4/comments/SBA-2026-0298-0002/attachments"}}}},
+        "links": {"self": "https://regulations.gov/v4/comments/SBA-2026-0298-0002"}}'
+    headers:
+      access-control-allow-origin:
+      - '*'
+      age:
+      - '0'
+      connection:
+      - keep-alive
+      content-length:
+      - '1686'
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:33:37 GMT
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - d14c1tlfdlqevnj105f0
+      x-cache:
+      - MISS
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-ratelimit-limit:
+      - '1000'
+      x-ratelimit-remaining:
+      - '799'
+      x-vcap-request-id:
+      - b0c6816d-2673-436e-485d-3d11cbeca280
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - api.regulations.gov
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://api.regulations.gov/v4/comments/SBA-2026-0265-0939
+  response:
+    body:
+      string: '{"data": {"id": "SBA-2026-0265-0939", "type": "comments", "links":
+        {"self": "https://api.regulations.gov/v4/comments/SBA-2026-0265-0939"}, "attributes":
+        {"commentOn": "09000064b946e139", "commentOnDocumentId": "SBA-2026-0265-0001",
+        "duplicateComments": 0, "address1": null, "address2": null, "agencyId": "SBA",
+        "city": null, "category": "Private Industry", "comment": "Docket No.: SBA-2026-0265
+        / RIN 3245-AI67<br/><br/>Rule: Small Business Size Standards: Revised Size
+        Standards Methodology<br/><br/>STRONG OPPOSITION TO REVISED SIZE STANDARDS
+        METHODOLOGY (DOCKET NO. SBA-2026-0265)<br/><br/>To the Small Business Administration:<br/><br/>I
+        am writing as an active small business owner and federal contractor to register
+        my strong opposition to the SBA&rsquo;s proposed Revised Size Standards Methodology.<br/><br/>While
+        the SBA frames this methodology as a modernization and simplification of standards,
+        its real-world effect will severely disadvantage genuine small enterprises.
+        By collapsing distinct 6-digit NAICS codes into broad industry groupings,
+        drastically elevating revenue caps, and switching industries to massive headcount
+        standards (minimums of 500 employees), this rule invites mid-market enterprises
+        and well-capitalized corporations directly into small business set-asides.<br/><br/>I
+        strongly oppose this methodology for the following core reasons:<br/>Direct
+        Dilution of Small Business Set-Asides: The SBA&#39;s own analysis indicates
+        this change reclassifies tens of thousands of large and mid-tier firms&mdash;holding
+        tens of billions in existing contracts&mdash;as &quot;small.&quot; When firms
+        generating tens or hundreds of millions in revenue compete under the exact
+        same set-aside banner as true small enterprises, set-asides cease to serve
+        their statutory purpose under the Small Business Act.<br/><br/>Disproportionate
+        Competitive Imbalance: True small businesses operate with lean margins, self-funded
+        infrastructure, and local labor. Forcing true small concerns to bid against
+        near-conglomerate entities with corporate balance sheets, extensive proposal-writing
+        machinery, and massive bonding capacity creates an unlevel playing field.<br/><br/>Loss
+        of Industry Granularity (6-Digit to 4/5-Digit NAICS): Eliminating the specific
+        6-digit industry codes in favor of broad 4- and 5-digit aggregates erases
+        operational realities. Specialized sectors require tailored revenue ceilings,
+        not sweeping multi-hundred-million-dollar thresholds that only serve large
+        market aggregators.<br/><br/>Flawed Formula: Replacing proven competitive
+        health factors with broad &quot;average market size&quot; formulas ignores
+        the barriers to capital, labor access, and contract entry that bona fide small
+        firms face every day.<br/><br/>The Small Business Administration must protect
+        the growth engine of the American economy&mdash;actual small businesses&mdash;not
+        artificially expand the definition to make agency set-aside quotas easier
+        to meet on paper by awarding contracts to near-large competitors.<br/><br/>I
+        urge the SBA to withdraw this methodology revision and maintain standards
+        that protect true small business participation.<br/><br/>Respectfully submitted,<br/>An
+        Active Small Business Owner &amp; Federal Contractor", "country": null, "displayProperties":
+        [{"name": "pageCount", "label": "Page Count", "tooltip": "Number of pages
+        In the content file"}], "docAbstract": null, "docketId": "SBA-2026-0265",
+        "documentType": "Public Submission", "email": null, "fax": null, "field1":
+        null, "field2": null, "fileFormats": null, "firstName": "redacted", "govAgency":
+        null, "govAgencyType": null, "objectId": "09000064b965646b", "lastName": "redacted",
+        "legacyId": null, "modifyDate": "2026-10-09T21:43:32Z", "organization": null,
+        "originalDocumentId": null, "pageCount": 1, "phone": null, "postedDate": "2026-10-09T04:00:00Z",
+        "postmarkDate": null, "reasonWithdrawn": null, "receiveDate": "2026-10-09T04:00:00Z",
+        "restrictReason": null, "restrictReasonType": null, "stateProvinceRegion":
+        null, "submitterRep": null, "submitterRepAddress": null, "submitterRepCityState":
+        null, "subtype": null, "title": "Comment on FR Doc # 2026-17039", "trackingNbr":
+        "mv0-i52k-mpas", "withdrawn": false, "zip": null, "openForComment": false},
+        "relationships": {"attachments": {"links": {"self": "https://api.regulations.gov/v4/comments/SBA-2026-0265-0939/relationships/attachments",
+        "related": "https://api.regulations.gov/v4/comments/SBA-2026-0265-0939/attachments"}}}},
+        "links": {"self": "https://regulations.gov/v4/comments/SBA-2026-0265-0939"}}'
+    headers:
+      access-control-allow-origin:
+      - '*'
+      age:
+      - '0'
+      connection:
+      - keep-alive
+      content-length:
+      - '4551'
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:33:38 GMT
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - d14c1tt8nvaao9jsfq6g
+      x-cache:
+      - MISS
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-ratelimit-limit:
+      - '1000'
+      x-ratelimit-remaining:
+      - '798'
+      x-vcap-request-id:
+      - a0cc0adc-a605-4189-5a76-6b0ea06df8ca
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - api.regulations.gov
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://api.regulations.gov/v4/comments/SBA-2026-0265-0940
+  response:
+    body:
+      string: '{"data": {"id": "SBA-2026-0265-0940", "type": "comments", "links":
+        {"self": "https://api.regulations.gov/v4/comments/SBA-2026-0265-0940"}, "attributes":
+        {"commentOn": "09000064b946e139", "commentOnDocumentId": "SBA-2026-0265-0001",
+        "duplicateComments": 0, "address1": null, "address2": null, "agencyId": "SBA",
+        "city": null, "category": null, "comment": "Re: Opposition to Proposed Small
+        Business Size Standards  <br/>Docket SBA-2026-0199; RIN 3245-AI67<br/><br/>To
+        the U.S. Small Business Administration:<br/><br/>I oppose the proposed increases
+        to small-business size standards and request that SBA withdraw the proposed
+        rule as drafted.<br/><br/>As a veteran entrepreneur working in emergency management,
+        drone services, training, and emergency preparedness technology, I am concerned
+        that these changes would weaken access to federal opportunities for smaller
+        businesses trying to establish themselves.<br/><br/>The proposed increases
+        are substantial. The management consulting threshold would rise from $24.5
+        million to $295 million, computer systems design from $34 million to $531
+        million, and professional and management development training from $15 million
+        to $157 million. These changes would place emerging firms in the same small-business
+        contracting category as companies with vastly greater resources.<br/><br/>My
+        concern is practical: larger firms can maintain dedicated proposal teams,
+        extensive past performance, greater working capital, and the capacity to pursue
+        multiple contracts simultaneously. Calling both firms &ldquo;small&rdquo;
+        does not eliminate those competitive differences. Expanding eligibility could
+        make it harder for smaller firms to win the contracts they need to grow.<br/><br/>SBA&rsquo;s
+        stated goal of avoiding a growth cliff deserves consideration. However, moving
+        that cliff to hundreds of millions of dollars risks transferring the disadvantage
+        to businesses at the beginning of their growth journey. SBA should demonstrate
+        how its approach protects their competitive position.<br/><br/>I also oppose
+        removing an explicit maximum from the size-standard methodology without adequate
+        safeguards. Broad industry groupings and employee-based tests should not obscure
+        meaningful differences in revenue, resources, and contracting capacity.<br/><br/>Before
+        adopting any replacement proposal, I request that SBA:<br/><br/>1. Publish
+        an industry-specific analysis of the likely effects on existing small businesses,
+        including startups and veteran-owned firms.<br/>2. Measure expected changes
+        in contract dollars, award concentration, and opportunities for new entrants&mdash;not
+        simply the number of companies qualifying as small.<br/>3. Evaluate smaller
+        adjustments supported by current industry evidence rather than the proposed
+        increases.<br/>4. Explore separate transition mechanisms for growing midsized
+        firms, including seeking congressional authority where necessary.<br/>5. Preserve
+        meaningful industry distinctions and publish safeguards against concentrating
+        small-business awards among the largest eligible firms.<br/><br/>Federal small-business
+        goals should reflect meaningful opportunities for smaller enterprises. Reclassifying
+        larger contractors should not substitute for expanding access for emerging
+        businesses.<br/><br/>Please withdraw the proposed rule as drafted and develop
+        an approach that preserves a realistic path into federal contracting for smaller
+        businesses.<br/><br/>Respectfully,<br/><br/>Jae S. Brown", "country": null,
+        "displayProperties": [{"name": "pageCount", "label": "Page Count", "tooltip":
+        "Number of pages In the content file"}], "docAbstract": null, "docketId":
+        "SBA-2026-0265", "documentType": "Public Submission", "email": null, "fax":
+        null, "field1": null, "field2": null, "fileFormats": null, "firstName": null,
+        "govAgency": null, "govAgencyType": null, "objectId": "09000064b9658cb4",
+        "lastName": null, "legacyId": null, "modifyDate": "2026-10-09T21:43:35Z",
+        "organization": "Fly Vekter, LLC", "originalDocumentId": null, "pageCount":
+        1, "phone": null, "postedDate": "2026-10-09T04:00:00Z", "postmarkDate": null,
+        "reasonWithdrawn": null, "receiveDate": "2026-10-09T04:00:00Z", "restrictReason":
+        null, "restrictReasonType": null, "stateProvinceRegion": null, "submitterRep":
+        null, "submitterRepAddress": null, "submitterRepCityState": null, "subtype":
+        null, "title": "Comment on FR Doc # 2026-17039", "trackingNbr": "mv1-3p6x-2f0c",
+        "withdrawn": false, "zip": null, "openForComment": false}, "relationships":
+        {"attachments": {"links": {"self": "https://api.regulations.gov/v4/comments/SBA-2026-0265-0940/relationships/attachments",
+        "related": "https://api.regulations.gov/v4/comments/SBA-2026-0265-0940/attachments"}}}},
+        "links": {"self": "https://regulations.gov/v4/comments/SBA-2026-0265-0940"}}'
+    headers:
+      access-control-allow-origin:
+      - '*'
+      age:
+      - '0'
+      connection:
+      - keep-alive
+      content-length:
+      - '4780'
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:33:39 GMT
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - d14c1u52ariu3bu3h2e0
+      x-cache:
+      - MISS
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-ratelimit-limit:
+      - '1000'
+      x-ratelimit-remaining:
+      - '797'
+      x-vcap-request-id:
+      - da75013f-a8b8-4d68-73ff-e895782e31b8
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - api.regulations.gov
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://api.regulations.gov/v4/comments/SBA-2026-0199-2949
+  response:
+    body:
+      string: '{"data": {"id": "SBA-2026-0199-2949", "type": "comments", "links":
+        {"self": "https://api.regulations.gov/v4/comments/SBA-2026-0199-2949"}, "attributes":
+        {"commentOn": "09000064b95b6b08", "commentOnDocumentId": "SBA-2026-0199-2726",
+        "duplicateComments": 0, "address1": null, "address2": null, "agencyId": "SBA",
+        "city": null, "category": "Private Industry", "comment": "2379/237990 Dredging
+        and Surface Cleanup:<br/><br/>Cottrell Contracting Corporation wishes to reaffirm
+        its position regarding SBA&rsquo;s newly proposed size standards, as we firmly
+        believe the proposed 900-employee threshold is excessively high and inappropriate
+        for the Dredging and Surface Cleanup Activities industry under NAICS 237990.
+        We strongly urge SBA to reduce the proposed employee-based size standard to
+        200 employees, or, should SBA return to a receipts-based standard, establish
+        a threshold of $100 million in annual receipts. Additionally, Cottrell Contracting
+        Corporation strongly supports retaining the existing dredging industry footnote
+        to ensure the size standards continue to appropriately reflect the unique
+        characteristics of the dredging industry.", "country": null, "displayProperties":
+        [{"name": "pageCount", "label": "Page Count", "tooltip": "Number of pages
+        In the content file"}], "docAbstract": null, "docketId": "SBA-2026-0199",
+        "documentType": "Public Submission", "email": null, "fax": null, "field1":
+        null, "field2": null, "fileFormats": null, "firstName": null, "govAgency":
+        null, "govAgencyType": null, "objectId": "09000064b96591ea", "lastName": null,
+        "legacyId": null, "modifyDate": "2026-10-09T21:43:07Z", "organization": "Cottrell
+        Contracting Corp.", "originalDocumentId": null, "pageCount": 1, "phone": null,
+        "postedDate": "2026-10-09T04:00:00Z", "postmarkDate": null, "reasonWithdrawn":
+        null, "receiveDate": "2026-10-09T04:00:00Z", "restrictReason": null, "restrictReasonType":
+        null, "stateProvinceRegion": null, "submitterRep": null, "submitterRepAddress":
+        null, "submitterRepCityState": null, "subtype": null, "title": "Comment on
+        FR Doc # 2026-19546", "trackingNbr": "mv1-5j6d-rguw", "withdrawn": false,
+        "zip": null, "openForComment": false}, "relationships": {"attachments": {"links":
+        {"self": "https://api.regulations.gov/v4/comments/SBA-2026-0199-2949/relationships/attachments",
+        "related": "https://api.regulations.gov/v4/comments/SBA-2026-0199-2949/attachments"}}}},
+        "links": {"self": "https://regulations.gov/v4/comments/SBA-2026-0199-2949"}}'
+    headers:
+      access-control-allow-origin:
+      - '*'
+      age:
+      - '0'
+      connection:
+      - keep-alive
+      content-length:
+      - '2463'
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:33:40 GMT
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - d14c1ucsu60tv8lsjagg
+      x-cache:
+      - MISS
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-ratelimit-limit:
+      - '1000'
+      x-ratelimit-remaining:
+      - '796'
+      x-vcap-request-id:
+      - 1fef82cf-e9e9-433e-60f1-1d568c23b72b
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - api.regulations.gov
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://api.regulations.gov/v4/comments/SBA-2026-0199-2952
+  response:
+    body:
+      string: '{"data": {"id": "SBA-2026-0199-2952", "type": "comments", "links":
+        {"self": "https://api.regulations.gov/v4/comments/SBA-2026-0199-2952"}, "attributes":
+        {"commentOn": "09000064b95b6b08", "commentOnDocumentId": "SBA-2026-0199-2726",
+        "duplicateComments": 0, "address1": null, "address2": null, "agencyId": "SBA",
+        "city": null, "category": null, "comment": "SBA-2026-0199 is unfair to small
+        businesses. A company that nets $500 million plus in revenue is not a small
+        business by any means. Please protect the smaller businesses - we may be big
+        eventually, but not if we are competing with giant corporations. Do not approve
+        these new rules!", "country": null, "displayProperties": [{"name": "pageCount",
+        "label": "Page Count", "tooltip": "Number of pages In the content file"}],
+        "docAbstract": null, "docketId": "SBA-2026-0199", "documentType": "Public
+        Submission", "email": null, "fax": null, "field1": null, "field2": null, "fileFormats":
+        null, "firstName": null, "govAgency": null, "govAgencyType": null, "objectId":
+        "09000064b965950a", "lastName": null, "legacyId": null, "modifyDate": "2026-10-09T21:43:13Z",
+        "organization": "Searle Creative Group", "originalDocumentId": null, "pageCount":
+        1, "phone": null, "postedDate": "2026-10-09T04:00:00Z", "postmarkDate": null,
+        "reasonWithdrawn": null, "receiveDate": "2026-10-09T04:00:00Z", "restrictReason":
+        null, "restrictReasonType": null, "stateProvinceRegion": null, "submitterRep":
+        null, "submitterRepAddress": null, "submitterRepCityState": null, "subtype":
+        null, "title": "Comment on FR Doc # 2026-19546", "trackingNbr": "mv1-7p4o-0q56",
+        "withdrawn": false, "zip": null, "openForComment": false}, "relationships":
+        {"attachments": {"links": {"self": "https://api.regulations.gov/v4/comments/SBA-2026-0199-2952/relationships/attachments",
+        "related": "https://api.regulations.gov/v4/comments/SBA-2026-0199-2952/attachments"}}}},
+        "links": {"self": "https://regulations.gov/v4/comments/SBA-2026-0199-2952"}}'
+    headers:
+      access-control-allow-origin:
+      - '*'
+      age:
+      - '0'
+      connection:
+      - keep-alive
+      content-length:
+      - '1954'
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:33:41 GMT
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - d14c1ukmrripgs7j02t0
+      x-cache:
+      - MISS
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-ratelimit-limit:
+      - '1000'
+      x-ratelimit-remaining:
+      - '795'
+      x-vcap-request-id:
+      - 0a80986e-012d-4755-7ec1-9e846e233d5e
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - api.regulations.gov
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://api.regulations.gov/v4/comments/SBA-2026-0265-0941
+  response:
+    body:
+      string: '{"data": {"id": "SBA-2026-0265-0941", "type": "comments", "links":
+        {"self": "https://api.regulations.gov/v4/comments/SBA-2026-0265-0941"}, "attributes":
+        {"commentOn": "09000064b946e139", "commentOnDocumentId": "SBA-2026-0265-0001",
+        "duplicateComments": 0, "address1": null, "address2": null, "agencyId": "SBA",
+        "city": "redacted", "category": "Private Industry", "comment": "Dear Administrator
+        Kelly Loeffler,<br/><br/>I am submitting these comments in response to SBA&#39;s
+        extension of its proposed revisions to small business size standards.<br/><br/>As
+        an architect with 15 years of experience, a sole proprietorship owner since
+        2021, and the Board Secretary of the Boston Society of Architects, my local
+        chapter of the American Institute of Architects (AIA), I appreciate the opportunity
+        to comment. Architecture is overwhelmingly a small-business profession.<br/><br/>An
+        upcoming 2026 AIA Firm Survey found more than 19,000 U.S. architecture firms:
+        28% are sole practitioners, 32% have two to four employees, and 15% have five
+        to nine, so a substantial majority have fewer than ten employees. <br/><br/>Under
+        NAICS 541310 (Architectural Services), the current size standard is $12.5
+        million in receipts. SBA now proposes $135 million, a 980% increase and 10.8
+        times the current standard. Its August 2025 proposal, by comparison, was $16
+        million.<br/><br/>I encourage SBA to consider merely adjusting the amount
+        in receipts to reflect inflation. On behalf of myself/my firm and AIA, thank
+        you for your time.<br/><br/>Sincerely,<br/>Kyle Barker<br/>Primary Projects,
+        Principal<br/>Boston Society of Architects, Board Secretary", "country": "United
+        States", "displayProperties": [{"name": "pageCount", "label": "Page Count",
+        "tooltip": "Number of pages In the content file"}], "docAbstract": null, "docketId":
+        "SBA-2026-0265", "documentType": "Public Submission", "email": null, "fax":
+        null, "field1": null, "field2": null, "fileFormats": null, "firstName": "redacted",
+        "govAgency": null, "govAgencyType": null, "objectId": "09000064b9658f5b",
+        "lastName": "redacted", "legacyId": null, "modifyDate": "2026-10-09T21:55:00Z",
+        "organization": null, "originalDocumentId": null, "pageCount": 1, "phone":
+        null, "postedDate": "2026-10-09T04:00:00Z", "postmarkDate": null, "reasonWithdrawn":
+        null, "receiveDate": "2026-10-09T04:00:00Z", "restrictReason": null, "restrictReasonType":
+        null, "stateProvinceRegion": "MA", "submitterRep": null, "submitterRepAddress":
+        null, "submitterRepCityState": null, "subtype": null, "title": "Comment on
+        FR Doc # 2026-17039", "trackingNbr": "mv1-9kzu-ftsk", "withdrawn": false,
+        "zip": "redacted", "openForComment": false}, "relationships": {"attachments":
+        {"links": {"self": "https://api.regulations.gov/v4/comments/SBA-2026-0265-0941/relationships/attachments",
+        "related": "https://api.regulations.gov/v4/comments/SBA-2026-0265-0941/attachments"}}}},
+        "links": {"self": "https://regulations.gov/v4/comments/SBA-2026-0265-0941"}}'
+    headers:
+      access-control-allow-origin:
+      - '*'
+      age:
+      - '0'
+      connection:
+      - keep-alive
+      content-length:
+      - '2957'
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:33:42 GMT
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - d14c1ushjs5qesbmi2k0
+      x-cache:
+      - MISS
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-ratelimit-limit:
+      - '1000'
+      x-ratelimit-remaining:
+      - '794'
+      x-vcap-request-id:
+      - d992174f-3866-4185-6526-2034e40553fa
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - api.regulations.gov
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://api.regulations.gov/v4/comments/SBA-2026-0199-2941
+  response:
+    body:
+      string: '{"data": {"id": "SBA-2026-0199-2941", "type": "comments", "links":
+        {"self": "https://api.regulations.gov/v4/comments/SBA-2026-0199-2941"}, "attributes":
+        {"commentOn": "09000064b95b6b08", "commentOnDocumentId": "SBA-2026-0199-2726",
+        "duplicateComments": 0, "address1": null, "address2": null, "agencyId": "SBA",
+        "city": null, "category": "Govt-Other", "comment": "I am the Vice President
+        of Finance at Pinnacle Petroleum, Inc., a fuel distributor that competes for
+        federal set-aside work under NAICS 324110 and NAICS 424720. I write in opposition
+        to the proposed changes as applied to these codes, for two reasons I believe
+        are specific enough to warrant the SBA&rsquo;s attention.<br/><br/>First,
+        employee count is a poor measure of size in this industry.<br/><br/>Fuel supply
+        is capital and asset intensive, not labor intensive. What determines whether
+        a company can win a federal fuel contract is refining capacity, terminal and
+        rack access, storage, and the supply agreements that come with volume. None
+        of that appears in a headcount. A refiner and a distributor employing the
+        same number of people are not peers in any sense relevant to a procurement
+        outcome. The refiner has a structurally lower cost of goods, and no amount
+        of operational discipline on the distributor&rsquo;s side closes that gap.<br/><br/>This
+        makes an employee ceiling an unusually weak constraint in petroleum. It admits
+        firms whose entire competitive advantage lies in the dimension the headcount
+        test does not measure. Raising the threshold for industry group 3241 to 1,500
+        employees understates, considerably, how much larger in operational terms
+        the newly eligible competitors would be.<br/><br/>Second, consolidating to
+        four digit industry groups erases a distinction that matters here.<br/><br/>Under
+        the proposal, NAICS 324110 would be governed by the standard for group 3241,
+        Petroleum and Coal Products Manufacturing, and NAICS 424720 by the standard
+        for group 4247, which also contains NAICS 424710, Bulk Stations and Terminals.<br/><br/>These
+        are not interchangeable businesses. A distributor that buys at the rack and
+        delivers to the end customer operates on a fundamentally different cost structure
+        than a company that owns the terminal, and a refiner is different again. Setting
+        a single threshold across the group means the firms sitting at the top of
+        each bracket are structurally advantaged against precisely the businesses
+        the set-aside program was created to support. Consolidation may reduce administrative
+        complexity, but in this sector it achieves that by grouping firms that do
+        not compete on comparable terms.<br/><br/>Request<br/><br/>I respectfully
+        ask that the SBA retain six digit size standards for NAICS 324110 and NAICS
+        424720 rather than folding them into their four digit groups, and retain the
+        current employee thresholds for those codes.<br/><br/>If the SBA proceeds
+        with consolidation, I would ask that it consider pairing the employee threshold
+        in petroleum industries with a capacity or asset based qualifier, such as
+        refining throughput or owned terminal capacity. A measure of that kind would
+        capture what actually determines competitiveness in fuel supply, which an
+        employee count on its own does not.<br/><br/>Respectfully,<br/>Nicholas Byers<br/>Vice
+        President of Finance<br/>Pinnacle Petroleum, Inc.", "country": null, "displayProperties":
+        [{"name": "pageCount", "label": "Page Count", "tooltip": "Number of pages
+        In the content file"}], "docAbstract": null, "docketId": "SBA-2026-0199",
+        "documentType": "Public Submission", "email": null, "fax": null, "field1":
+        null, "field2": null, "fileFormats": null, "firstName": null, "govAgency":
+        null, "govAgencyType": null, "objectId": "09000064b9655e25", "lastName": null,
+        "legacyId": null, "modifyDate": "2026-10-09T21:42:48Z", "organization": "Pinnacle
+        Petroleum, Inc.", "originalDocumentId": null, "pageCount": 1, "phone": null,
+        "postedDate": "2026-10-09T04:00:00Z", "postmarkDate": null, "reasonWithdrawn":
+        null, "receiveDate": "2026-10-08T04:00:00Z", "restrictReason": null, "restrictReasonType":
+        null, "stateProvinceRegion": null, "submitterRep": null, "submitterRepAddress":
+        null, "submitterRepCityState": null, "subtype": null, "title": "Comment on
+        FR Doc # 2026-19546", "trackingNbr": "mv0-63e0-wy2j", "withdrawn": false,
+        "zip": null, "openForComment": false}, "relationships": {"attachments": {"links":
+        {"self": "https://api.regulations.gov/v4/comments/SBA-2026-0199-2941/relationships/attachments",
+        "related": "https://api.regulations.gov/v4/comments/SBA-2026-0199-2941/attachments"}}}},
+        "links": {"self": "https://regulations.gov/v4/comments/SBA-2026-0199-2941"}}'
+    headers:
+      access-control-allow-origin:
+      - '*'
+      age:
+      - '0'
+      connection:
+      - keep-alive
+      content-length:
+      - '4641'
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:33:43 GMT
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - d14c1v4bt43d0qccihmg
+      x-cache:
+      - MISS
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-ratelimit-limit:
+      - '1000'
+      x-ratelimit-remaining:
+      - '793'
+      x-vcap-request-id:
+      - 172e033a-4d00-4ff5-4b74-05a90ae6637a
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - api.regulations.gov
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://api.regulations.gov/v4/comments/SBA-2026-0298-0003
+  response:
+    body:
+      string: '{"data": {"id": "SBA-2026-0298-0003", "type": "comments", "links":
+        {"self": "https://api.regulations.gov/v4/comments/SBA-2026-0298-0003"}, "attributes":
+        {"commentOn": "09000064b951d3b8", "commentOnDocumentId": "SBA-2026-0298-0001",
+        "duplicateComments": 0, "address1": null, "address2": null, "agencyId": "SBA",
+        "city": null, "category": null, "comment": "Under Mathews v. Eldridge, 424
+        U.S. 319 (1976), evaluating whether agency procedures satisfy <br/>Fifth Amendment
+        Procedural Due Process requires balancing three distinct factors:<br/>1. The
+        Private Interest at Stake: Borrowers and participating financial institutions
+        across <br/>   15 SBA programs hold protected property interests in approved
+        financial assistance and <br/>   executed guaranty commitments (Board of Regents
+        v. Roth, 408 U.S. 564). Freezing capital or <br/>   revoking guaranties causes
+        immediate insolvency, capital interruption, and irreparable <br/>   commercial
+        harm.<br/>2. The Risk of Erroneous Deprivation: Automated clearance against
+        Treasury&rsquo;s DNP Working System <br/>   carries a high risk of false-positive
+        matches due to stale data, name collisions, and TIN <br/>   transposition
+        errors. Executing adverse flags without mandatory independent verification
+        and <br/>   a pre-deprivation contest period maximizes the probability of
+        arbitrary deprivation. The <br/>   probable value of substitute safeguards,
+        specifically a mandatory 30-day written contest <br/>   window under 5 U.S.C.
+        &sect; 552a(p), is overwhelming, as it enables rapid resolution of database
+        <br/>   errors prior to financial injury.<br/>3. The Government&#39;s Burden:
+        Establishing an automated 30-day pre-adverse action notice and contest <br/>   protocol
+        imposes de minimis administrative or fiscal burdens on the SBA. Holding loan
+        approvals <br/>   in abeyance during the 30-day window preserves federal funds
+        while fulfilling both PIIA payment <br/>   integrity mandates and constitutional
+        due process commands.<br/>Because the weight of Prongs 1 and 2 vastly exceeds
+        the minimal administrative burden under Prong 3, <br/>operating this matching
+        program without binding &sect; 552a(p) 30-day pre-adverse action contest <br/>protocols
+        violates the Fifth Amendment to the United States Constitution.<br/><br/>Need
+        for Data Integrity Board Statutory Oversight (5 U.S.C. &sect; 552a(u))<br/>While
+        31 U.S.C. &sect; 3354 authorizes Treasury and OMB to waive 5 U.S.C. &sect;
+        552a(o) (the bilateral Computer Matching Agreement text), it contains no statutory
+        authorization to waive or suspend 5 U.S.C. &sect; 552a(u). The SBA Data Integrity
+        Board (DIB) remains bound by non-waivable statutory duties to oversee, review,
+        and certify all agency matching activities. Under &sect; 552a(u)(3)(B), the
+        SBA DIB is required to review all matching programs to guarantee compliance
+        with applicable privacy laws and OMB guidelines. Releasing a modified matching
+        notice violating &sect; 552a(e)(12)), an unpromulgated routine use &sect;
+        552a(e)(11), and an overbroad qualitative record payload violating &sect;
+        552a(e)(1) demonstrates that the DIB either failed to perform its mandatory
+        statutory review or issued an ultra vires approval of an illegal program.
+        To the extent the SBA DIB has omitted this expanded 15-program DNP matching
+        program from its annual DIB Reports submitted to OMB, the Senate Committee
+        on Homeland Security and Governmental Affairs, and the House Committee on
+        Oversight and Accountability pursuant to 5 U.S.C. &sect; 552a(u)(3)(G), the
+        agency is operating an unvetted, unreported matching infrastructure in violation
+        of federal statutory reporting mandates and federal law. ", "country": null,
+        "displayProperties": [{"name": "pageCount", "label": "Page Count", "tooltip":
+        "Number of pages In the content file"}], "docAbstract": null, "docketId":
+        "SBA-2026-0298", "documentType": "Public Submission", "email": null, "fax":
+        null, "field1": null, "field2": null, "fileFormats": null, "firstName": "redacted",
+        "govAgency": null, "govAgencyType": null, "objectId": "09000064b965629e",
+        "lastName": "redacted", "legacyId": null, "modifyDate": "2026-10-09T21:39:57Z",
+        "organization": null, "originalDocumentId": null, "pageCount": 1, "phone":
+        null, "postedDate": "2026-10-09T04:00:00Z", "postmarkDate": null, "reasonWithdrawn":
+        null, "receiveDate": "2026-10-08T04:00:00Z", "restrictReason": null, "restrictReasonType":
+        null, "stateProvinceRegion": null, "submitterRep": null, "submitterRepAddress":
+        null, "submitterRepCityState": null, "subtype": null, "title": "Comment on
+        FR Doc # N/A", "trackingNbr": "mv0-f4g6-jof4", "withdrawn": false, "zip":
+        null, "openForComment": false}, "relationships": {"attachments": {"links":
+        {"self": "https://api.regulations.gov/v4/comments/SBA-2026-0298-0003/relationships/attachments",
+        "related": "https://api.regulations.gov/v4/comments/SBA-2026-0298-0003/attachments"}}}},
+        "links": {"self": "https://regulations.gov/v4/comments/SBA-2026-0298-0003"}}'
+    headers:
+      access-control-allow-origin:
+      - '*'
+      age:
+      - '0'
+      connection:
+      - keep-alive
+      content-length:
+      - '4947'
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:33:44 GMT
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - d14c1vc4j3tm0fgo5kpg
+      x-cache:
+      - MISS
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-ratelimit-limit:
+      - '1000'
+      x-ratelimit-remaining:
+      - '792'
+      x-vcap-request-id:
+      - 83cd00bf-576e-4f9f-6fc3-22dc6a4417d2
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - api.regulations.gov
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://api.regulations.gov/v4/comments/SBA-2026-0298-0005
+  response:
+    body:
+      string: '{"data": {"id": "SBA-2026-0298-0005", "type": "comments", "links":
+        {"self": "https://api.regulations.gov/v4/comments/SBA-2026-0298-0005"}, "attributes":
+        {"commentOn": "09000064b951d3b8", "commentOnDocumentId": "SBA-2026-0298-0001",
+        "duplicateComments": 0, "address1": null, "address2": null, "agencyId": "SBA",
+        "city": null, "category": null, "comment": "The notice was executed by Douglas
+        Robertson in his capacity as &quot;Deputy Chief Information Officer (Alternate
+        Authorizing Official)&quot; (91 FR 57952). The title &quot;Authorizing Official&quot;
+        is a FISMA/NIST SP 800-37 cybersecurity ATO role that conveys zero statutory
+        authority to promulgate Privacy Act notices or modify System of Records Notice
+        (SORN) routine uses under 5 U.S.C. &sect; 552a or OMB Circular A-108.<br/><br/>Violation
+        of OMB Circular A-108 &sect; 6: OMB Circular A-108 requires Privacy Act matching
+        notices to be executed by the Agency Head or the formally designated Senior
+        Agency Official for Privacy (SAOP). Bypassing the designated Acting Chief
+        Privacy Officer (Michael Post) to have a Deputy CIO execute the notice under
+        a FISMA IT security title violates mandatory executive branch privacy regulations
+        and renders the notice void ab initio under APA 5 U.S.C. &sect; 706(2)(C)
+        as    agency action taken in excess of statutory jurisdiction and authority.",
+        "country": null, "displayProperties": [{"name": "pageCount", "label": "Page
+        Count", "tooltip": "Number of pages In the content file"}], "docAbstract":
+        null, "docketId": "SBA-2026-0298", "documentType": "Public Submission", "email":
+        null, "fax": null, "field1": null, "field2": null, "fileFormats": null, "firstName":
+        "redacted", "govAgency": null, "govAgencyType": null, "objectId": "09000064b9656314",
+        "lastName": "redacted", "legacyId": null, "modifyDate": "2026-10-09T21:40:12Z",
+        "organization": null, "originalDocumentId": null, "pageCount": 1, "phone":
+        null, "postedDate": "2026-10-09T04:00:00Z", "postmarkDate": null, "reasonWithdrawn":
+        null, "receiveDate": "2026-10-08T04:00:00Z", "restrictReason": null, "restrictReasonType":
+        null, "stateProvinceRegion": null, "submitterRep": null, "submitterRepAddress":
+        null, "submitterRepCityState": null, "subtype": null, "title": "Comment on
+        FR Doc # N/A", "trackingNbr": "mv0-foh2-pbda", "withdrawn": false, "zip":
+        null, "openForComment": false}, "relationships": {"attachments": {"links":
+        {"self": "https://api.regulations.gov/v4/comments/SBA-2026-0298-0005/relationships/attachments",
+        "related": "https://api.regulations.gov/v4/comments/SBA-2026-0298-0005/attachments"}}}},
+        "links": {"self": "https://regulations.gov/v4/comments/SBA-2026-0298-0005"}}'
+    headers:
+      access-control-allow-origin:
+      - '*'
+      age:
+      - '0'
+      connection:
+      - keep-alive
+      content-length:
+      - '2643'
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:33:45 GMT
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - d14c1vjujga0mhmc1okg
+      x-cache:
+      - MISS
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-ratelimit-limit:
+      - '1000'
+      x-ratelimit-remaining:
+      - '791'
+      x-vcap-request-id:
+      - 35b56f42-9ba1-45ba-686e-5a9136944cfe
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - api.regulations.gov
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://api.regulations.gov/v4/comments/SBA-2026-0199-2943
+  response:
+    body:
+      string: '{"data": {"id": "SBA-2026-0199-2943", "type": "comments", "links":
+        {"self": "https://api.regulations.gov/v4/comments/SBA-2026-0199-2943"}, "attributes":
+        {"commentOn": "09000064b95b6b08", "commentOnDocumentId": "SBA-2026-0199-2726",
+        "duplicateComments": 0, "address1": null, "address2": null, "agencyId": "SBA",
+        "city": null, "category": "Govt-Other", "comment": "To the Small Business
+        Administration:<br/><br/>As a concerned citizen and shareholder in a West
+        Virginia-based small business, I strongly oppose the proposed small business
+        size rule. This proposal threatens the survival of authentic small businesses
+        and distorts the definition of a small business entirely. I urge the Small
+        Business Administration (SBA) to withdraw this rule immediately for the following
+        reasons.<br/><br/>Flawed Impact Projections<br/>The SBA recently revised its
+        impact projections, estimating that 4,000 to 6,000 mid-size contractors will
+        newly gain small business status. This is a drastic reduction from the initial
+        estimate of over 115,000. This severe discrepancy demonstrates a lack of reliable
+        data and raises fundamental questions about the SBA&#39;s understanding of
+        how this rule will impact the federal contractor community. <br/><br/>Extreme
+        Threshold Jumps<br/>The proposed threshold increases are extreme. For example,
+        under North American Industry Classification System (NAICS) code 541512, the
+        size standard jumps from $34 million to $431 million in annual receipts, representing
+        a 15-fold increase. Similarly, computer facilities management jumps from $37
+        million to $531 million. A company generating $431 million annually possesses
+        infrastructure and financial backing that do not exist at a $30 million company.
+        These changes stretch the definition of &quot;small&quot; beyond logical limits.<br/><br/>Market
+        Dilution and Increased Competition<br/>Authentic small businesses lack the
+        massive business development resources, extensive past performance, and deep
+        financial reserves of these much larger companies. The expansion punishes
+        current small businesses by forcing them to compete against well-funded, mid-tier
+        corporations for the same set-aside contracts. This creates a severe and insurmountable
+        competitive imbalance.<br/><br/>Ignoring Pre-existing Declines<br/>The federal
+        government has lost thousands of small business prime contractors over recent
+        years. Opening small business programs to larger entities does nothing to
+        reverse this trend. Artificially inflating small business participation numbers
+        by relabeling mid-size companies ignores the structural loss of authentic
+        small-scale innovators.<br/><br/>The federal government must protect authentic
+        small businesses rather than redefine the market to accommodate large companies.
+        I strongly urge the SBA to withdraw this proposed rule. <br/>", "country":
+        "United States", "displayProperties": [{"name": "pageCount", "label": "Page
+        Count", "tooltip": "Number of pages In the content file"}], "docAbstract":
+        null, "docketId": "SBA-2026-0199", "documentType": "Public Submission", "email":
+        null, "fax": null, "field1": null, "field2": null, "fileFormats": null, "firstName":
+        "redacted", "govAgency": null, "govAgencyType": null, "objectId": "09000064b9657e2d",
+        "lastName": "redacted", "legacyId": null, "modifyDate": "2026-10-09T21:42:53Z",
+        "organization": null, "originalDocumentId": null, "pageCount": 1, "phone":
+        null, "postedDate": "2026-10-09T04:00:00Z", "postmarkDate": null, "reasonWithdrawn":
+        null, "receiveDate": "2026-10-09T04:00:00Z", "restrictReason": null, "restrictReasonType":
+        null, "stateProvinceRegion": null, "submitterRep": null, "submitterRepAddress":
+        null, "submitterRepCityState": null, "subtype": null, "title": "Comment on
+        FR Doc # 2026-19546", "trackingNbr": "mv0-y6wt-884p", "withdrawn": false,
+        "zip": null, "openForComment": false}, "relationships": {"attachments": {"links":
+        {"self": "https://api.regulations.gov/v4/comments/SBA-2026-0199-2943/relationships/attachments",
+        "related": "https://api.regulations.gov/v4/comments/SBA-2026-0199-2943/attachments"}}}},
+        "links": {"self": "https://regulations.gov/v4/comments/SBA-2026-0199-2943"}}'
+    headers:
+      access-control-allow-origin:
+      - '*'
+      age:
+      - '0'
+      connection:
+      - keep-alive
+      content-length:
+      - '4137'
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:33:46 GMT
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - d14c1vrprv16ttsueua0
+      x-cache:
+      - MISS
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-ratelimit-limit:
+      - '1000'
+      x-ratelimit-remaining:
+      - '790'
+      x-vcap-request-id:
+      - 6deb85b5-a52c-4cec-5229-25aafd2439d8
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - api.regulations.gov
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://api.regulations.gov/v4/comments/SBA-2026-0199-2946
+  response:
+    body:
+      string: '{"data": {"id": "SBA-2026-0199-2946", "type": "comments", "links":
+        {"self": "https://api.regulations.gov/v4/comments/SBA-2026-0199-2946"}, "attributes":
+        {"commentOn": "09000064b95b6b08", "commentOnDocumentId": "SBA-2026-0199-2726",
+        "duplicateComments": 0, "address1": null, "address2": null, "agencyId": "SBA",
+        "city": null, "category": "Govt-Other", "comment": "On behalf of Woman-Owned
+        Small Businesses (WOSB) and HUBZone-certified software development and IT
+        services firms, I am writing to express our strong concerns regarding the
+        Small Business Administration&rsquo;s (SBA) proposed rule regarding Small
+        Business Size Standards (91 FR 53741) and the underlying Revised Size Standards
+        Methodology (91 FR 54096).<br/>While we appreciate the SBA extending the comment
+        period to November 20, 2026, to allow for comprehensive industry evaluation,
+        we believe the proposed adjustments risk harming small businesses in the federal
+        technology sector and weakening the federal industrial base.<br/>Specifically,
+        we oppose these proposed changes on the following grounds:<br/>1. Premature
+        &quot;Graduation&quot; Creates an Unfair &quot;Mid-Tier Trap&quot;<br/>For
+        small IT and software development contractors operating under primary NAICS
+        codes such as 541512 (Computer Systems Design Services) and 541511 (Custom
+        Computer Programming Services), small business status is essential to securing
+        set-aside contracts that allow us to build capacity, invest in technical talent,
+        and earn advanced industry credentials (such as CMMI and ISO certifications).
+        Restrictive or inadequate size standard adjustments force growing small businesses
+        out of set-aside eligibility before they have built the capital, infrastructure,
+        or scale necessary to compete against billion-dollar defense and IT integrators
+        in full-and-open competition.<br/>2. Disproportionate Impact on Socioeconomic
+        Programs (WOSB &amp; HUBZone)<br/>We take pride in driving high-tech economic
+        growth and bringing software engineering opportunities to HUBZone areas. Socioeconomic
+        programs like WOSB and HUBZone rely on realistic, stable size thresholds to
+        foster equitable federal contracting opportunities. Lowering thresholds or
+        under-adjusting for real-world cost increases directly penalizes firms operating
+        in designated development zones and risks shrinking the overall pool of qualified,
+        small socioeconomic prime contractors available to federal agencies.<br/>3.
+        Failure to Account for Inflation and Technical Labor Costs<br/>The cost of
+        technical talent, cloud infrastructure, DevSecOps tools, and cybersecurity
+        compliance (e.g., CMMC requirements) has escalated significantly over recent
+        years. Size standard calculations based purely on top-line revenue&mdash;without
+        fully accounting for input cost inflation&mdash;distort a company&#39;s true
+        scale. Revenue increases driven primarily by inflation and labor rate increases
+        do not reflect structural corporate growth, yet they place small businesses
+        at risk of prematurely exceeding size thresholds.<br/>4. Harm to Federal Agency
+        Innovation and Competition<br/>Restricting the small business pipeline reduces
+        agency access to agile, innovative, and cost-effective IT providers. When
+        mid-tier small businesses are forced into unrestricted procurements prematurely,
+        agencies lose the niche technical expertise, responsiveness, and specialized
+        capabilities that specialized small businesses provide.<br/>Conclusion &amp;
+        Recommendation<br/>We urge the SBA to reassess its proposed methodology and
+        refrain from implementing any reduction or overly restrictive adjustments
+        to size standards within the IT, software engineering, and technical services
+        sectors (NAICS 541511, 541512, 541519). We recommend that the SBA adopt a
+        methodology that incorporates higher baseline thresholds, accounts for persistent
+        technical labor inflation, and provides a smoother transition bridge for growing
+        small businesses entering the mid-tier market.<br/>Thank you for your consideration
+        of these comments and your continued support of small business contractors.",
+        "country": null, "displayProperties": [{"name": "pageCount", "label": "Page
+        Count", "tooltip": "Number of pages In the content file"}], "docAbstract":
+        null, "docketId": "SBA-2026-0199", "documentType": "Public Submission", "email":
+        null, "fax": null, "field1": null, "field2": null, "fileFormats": null, "firstName":
+        "redacted", "govAgency": null, "govAgencyType": null, "objectId": "09000064b9658998",
+        "lastName": "redacted", "legacyId": null, "modifyDate": "2026-10-09T21:43:00Z",
+        "organization": null, "originalDocumentId": null, "pageCount": 1, "phone":
+        null, "postedDate": "2026-10-09T04:00:00Z", "postmarkDate": null, "reasonWithdrawn":
+        null, "receiveDate": "2026-10-09T04:00:00Z", "restrictReason": null, "restrictReasonType":
+        null, "stateProvinceRegion": null, "submitterRep": null, "submitterRepAddress":
+        null, "submitterRepCityState": null, "subtype": null, "title": "Comment on
+        FR Doc # 2026-19546", "trackingNbr": "mv1-1kjr-qrqm", "withdrawn": false,
+        "zip": null, "openForComment": false}, "relationships": {"attachments": {"links":
+        {"self": "https://api.regulations.gov/v4/comments/SBA-2026-0199-2946/relationships/attachments",
+        "related": "https://api.regulations.gov/v4/comments/SBA-2026-0199-2946/attachments"}}}},
+        "links": {"self": "https://regulations.gov/v4/comments/SBA-2026-0199-2946"}}'
+    headers:
+      access-control-allow-origin:
+      - '*'
+      age:
+      - '0'
+      connection:
+      - keep-alive
+      content-length:
+      - '5369'
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:33:47 GMT
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - d14c203jfj372qlmoq40
+      x-cache:
+      - MISS
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-ratelimit-limit:
+      - '1000'
+      x-ratelimit-remaining:
+      - '789'
+      x-vcap-request-id:
+      - 67c69a4e-01f1-4790-5166-0832274c4d75
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - api.regulations.gov
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://api.regulations.gov/v4/comments/SBA-2026-0199-2947
+  response:
+    body:
+      string: '{"data": {"id": "SBA-2026-0199-2947", "type": "comments", "links":
+        {"self": "https://api.regulations.gov/v4/comments/SBA-2026-0199-2947"}, "attributes":
+        {"commentOn": "09000064b95b6b08", "commentOnDocumentId": "SBA-2026-0199-2726",
+        "duplicateComments": 0, "address1": null, "address2": null, "agencyId": "SBA",
+        "city": null, "category": "Private Industry", "comment": "We are a ~100-employee
+        certified federal IT services firm in a rural HUBZone, commenting for ourselves
+        and similarly situated small businesses. See attached. Our points: (1) Raising
+        5415 from $34M to $531M puts 100-person and ~2,500-person firms in one set-aside
+        pool; we propose a two-tier standard separating set-aside eligibility from
+        mid-tier relief. (2) Dropping the federal contracting factors ignores where
+        dominance operates; restore a federal market factor where obligations exceed
+        $20M. (3) Removing the 150-employee 541519 IT VAR exception makes volume resellers
+        small on SEWP small business categories; retain it. (4) The IRFA counts firms
+        losing status (&lt;200) but not dollars shifting away from firms under $34M.
+        (5) $71B in newly small obligations lets agencies meet the 23% goal under
+        15 U.S.C. 644(g) with no new dollars to today&#39;s small firms; require split
+        reporting for five years. (6) Girth and Brown (2018) reflects survivors, not
+        entrants. (7) Cap protege eligibility; set explicit transition rules for multiple-award
+        vehicle on-ramps. We request SBA publish 5415 set-aside dollars by receipts
+        band before finalizing.<br/>Sources: Extension notice, 91 FR 60524 &middot;
+        NPRM, 91 FR 53741 &middot; Thompson Hine summary &middot; Sidley summary &middot;
+        Hunton summary<br/>", "country": null, "displayProperties": [{"name": "pageCount",
+        "label": "Page Count", "tooltip": "Number of pages In the content file"}],
+        "docAbstract": null, "docketId": "SBA-2026-0199", "documentType": "Public
+        Submission", "email": null, "fax": null, "field1": null, "field2": null, "fileFormats":
+        null, "firstName": "redacted", "govAgency": null, "govAgencyType": null, "objectId":
+        "09000064b9658c5c", "lastName": "redacted", "legacyId": null, "modifyDate":
+        "2026-10-09T21:43:02Z", "organization": null, "originalDocumentId": null,
+        "pageCount": 1, "phone": null, "postedDate": "2026-10-09T04:00:00Z", "postmarkDate":
+        null, "reasonWithdrawn": null, "receiveDate": "2026-10-09T04:00:00Z", "restrictReason":
+        null, "restrictReasonType": null, "stateProvinceRegion": null, "submitterRep":
+        null, "submitterRepAddress": null, "submitterRepCityState": null, "subtype":
+        null, "title": "Comment on FR Doc # 2026-19546", "trackingNbr": "mv1-3icn-p4eh",
+        "withdrawn": false, "zip": null, "openForComment": false}, "relationships":
+        {"attachments": {"links": {"self": "https://api.regulations.gov/v4/comments/SBA-2026-0199-2947/relationships/attachments",
+        "related": "https://api.regulations.gov/v4/comments/SBA-2026-0199-2947/attachments"}}}},
+        "links": {"self": "https://regulations.gov/v4/comments/SBA-2026-0199-2947"}}'
+    headers:
+      access-control-allow-origin:
+      - '*'
+      age:
+      - '0'
+      connection:
+      - keep-alive
+      content-length:
+      - '2979'
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:33:48 GMT
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - d14c20bcdar5pfgprb90
+      x-cache:
+      - MISS
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-ratelimit-limit:
+      - '1000'
+      x-ratelimit-remaining:
+      - '788'
+      x-vcap-request-id:
+      - 38a47a01-6cd0-45a4-401c-2431cbc3e735
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - api.regulations.gov
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://api.regulations.gov/v4/comments/SBA-2026-0199-2948
+  response:
+    body:
+      string: '{"data": {"id": "SBA-2026-0199-2948", "type": "comments", "links":
+        {"self": "https://api.regulations.gov/v4/comments/SBA-2026-0199-2948"}, "attributes":
+        {"commentOn": "09000064b95b6b08", "commentOnDocumentId": "SBA-2026-0199-2726",
+        "duplicateComments": 0, "address1": null, "address2": null, "agencyId": "SBA",
+        "city": "redacted", "category": "Other", "comment": "I oppose this proposal.  I&#39;d
+        just like to say, I think it is great if someone wants to expand their business
+        to the sizes mentioned in the proposal changes, and businesses should be encouraged
+        to do so - but it should not work to penalize those starting out.  These systems
+        are put in place to protect small businesses, and this proposed change would
+        be antithetical to the purpose of the Small Business Administration and its
+        existence by rendering its services to actual small businesses far less effective.  Furthermore,
+        the businesses that will take advantage of these changes are not small businesses,
+        nor do they actually even need the support of the SBA to begin with.  These
+        changes seem to be designed for the purpose of enabling frictionless sole
+        sourcing to larger corporations that would not have previously been considered
+        small businesses and will certainly erode opportunity for actual small businesses
+        attempting to gain a foothold.  I plead that the original reasons these existing
+        policies were created in the first place be heavily considered.", "country":
+        "United States", "displayProperties": [{"name": "pageCount", "label": "Page
+        Count", "tooltip": "Number of pages In the content file"}], "docAbstract":
+        null, "docketId": "SBA-2026-0199", "documentType": "Public Submission", "email":
+        null, "fax": null, "field1": null, "field2": null, "fileFormats": null, "firstName":
+        "redacted", "govAgency": null, "govAgencyType": null, "objectId": "09000064b9658cf9",
+        "lastName": "redacted", "legacyId": null, "modifyDate": "2026-10-09T21:43:05Z",
+        "organization": null, "originalDocumentId": null, "pageCount": 1, "phone":
+        null, "postedDate": "2026-10-09T04:00:00Z", "postmarkDate": null, "reasonWithdrawn":
+        null, "receiveDate": "2026-10-09T04:00:00Z", "restrictReason": null, "restrictReasonType":
+        null, "stateProvinceRegion": "CA", "submitterRep": null, "submitterRepAddress":
+        null, "submitterRepCityState": null, "subtype": null, "title": "Comment on
+        FR Doc # 2026-19546", "trackingNbr": "mv1-3vgb-ydzb", "withdrawn": false,
+        "zip": "redacted", "openForComment": false}, "relationships": {"attachments":
+        {"links": {"self": "https://api.regulations.gov/v4/comments/SBA-2026-0199-2948/relationships/attachments",
+        "related": "https://api.regulations.gov/v4/comments/SBA-2026-0199-2948/attachments"}}}},
+        "links": {"self": "https://regulations.gov/v4/comments/SBA-2026-0199-2948"}}'
+    headers:
+      access-control-allow-origin:
+      - '*'
+      age:
+      - '0'
+      connection:
+      - keep-alive
+      content-length:
+      - '2757'
+      content-type:
+      - application/vnd.api+json;charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:33:49 GMT
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      via:
+      - https/1.1 api-umbrella (ApacheTrafficServer [cMsSf ])
+      x-api-umbrella-request-id:
+      - d14c20j6kalv569n0ivg
+      x-cache:
+      - MISS
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-ratelimit-limit:
+      - '1000'
+      x-ratelimit-remaining:
+      - '787'
+      x-vcap-request-id:
+      - 09f985d2-9234-4233-612c-71f291b98d6f
+    status:
+      code: 200
+      message: OK
+version: 1

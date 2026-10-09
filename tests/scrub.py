@@ -21,6 +21,7 @@ PERSONAL_KEYS = {
     "email", "phone", "phone_number", "firstname", "lastname", "first_name", "last_name", "middle_name",
     "avatar", "avatar_static", "profile_image", "bio", "zip_code", "zipcode", "incident_zip", "incident_address",
     "street", "street1", "street2", "street_name", "street_number", "building", "author_flair_text",
+    "zip", "city", "address1", "address2", "fax", "submitterrep", "submitterrepaddress", "submitterrepcitystate",
 }
 # Dropped whole: these hold nothing connectors need.
 DROPPED_CONTAINERS = {"pointofcontact", "relatedpersonslist", "patient"}

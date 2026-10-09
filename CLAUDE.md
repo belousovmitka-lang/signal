@@ -307,7 +307,7 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 | FTC published complaint datasets | G9 / downloads | public_pages | published datasets only | monthly | todo |
 | OSHA enforcement data | `osha` | own_api | DOL data API (apiprod.dol.gov v4) requires a free API key from dataportal.dol.gov (`DOL_API_KEY`) | monthly | todo (needs key) |
 | Federal Register | `federal_register` | own_api | `federalregister.gov/api/v1/documents.json`: every new rule and proposed rule, plus keyword notices; comment deadlines and agencies kept; no key, public domain | daily | done (2026-10-09) |
-| Regulations.gov | `regulations_gov` | own_api | API v4 (documents and public comments) | daily | todo |
+| Regulations.gov | `regulations_gov` | own_api | API v4 public comments per agency (SBA, FMCSA, CMS, OSHA, FDA, IRS, FTC, HHS), detail call per comment; 1,000 req/hour. Titles rebuilt (they name the commenter); no submitter names, addresses, emails, phones; organization and category kept | daily | done (2026-10-09) |
 | EU and national official journals | `eurlex` + G2 | own_api | eur-lex.europa.eu answers bots with an empty HTTP 202 challenge (2026-10-09): never bypass. Routes: EUR-Lex SOAP web service (registration) or the Publications Office CELLAR SPARQL endpoint | weekly | todo |
 | State legislature trackers | `legiscan` / `openstates` | own_api | LegiScan API, Open States API | daily | todo |
 | CourtListener (incl. RECAP copies of PACER filings) | `courtlistener` | own_api | REST API v4 search + opinions + dockets | daily | todo |

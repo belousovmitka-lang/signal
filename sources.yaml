@@ -606,6 +606,33 @@ sources:
     queries:
       - {params: {ptype: "o,k,p,r"}, limit: 1000}     # solicitations, combined, pre-solicitations, sources sought
 
+  regulations_gov:
+    enabled: true
+    status: done
+    status_date: 2026-10-09
+    route: own_api
+    source_type: government
+    cadence: daily
+    env: [REGULATIONS_GOV_API_KEY]
+    access_check:
+      robots: allowed
+      terms: allowed
+      decision: full
+      terms_url: https://open.gsa.gov/api/regulationsgov/
+      checked_at: 2026-10-09
+      notes: >-
+        Public comments (public records). Commenter names, addresses, emails, phones and zip codes are
+        not stored; titles are rebuilt because they name the commenter. 1,000 requests/hour per key.
+    queries:
+      - {industry_hint: accounting, params: {agency: SBA}, limit: 25}
+      - {industry_hint: logistics, params: {agency: FMCSA}, limit: 25}
+      - {industry_hint: healthcare, params: {agency: CMS}, limit: 25}
+      - {industry_hint: manufacturing, params: {agency: OSHA}, limit: 25}
+      - {industry_hint: healthcare, params: {agency: FDA}, limit: 25}
+      - {industry_hint: accounting, params: {agency: IRS}, limit: 25}
+      - {industry_hint: ecommerce, params: {agency: FTC}, limit: 25}
+      - {industry_hint: healthcare, params: {agency: HHS}, limit: 25}
+
   bluesky:
     connector: search_api
     enabled: true
