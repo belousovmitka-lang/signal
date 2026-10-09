@@ -63,47 +63,14 @@ sources:
       decision: full
       checked_at: 2026-10-09
       notes: >-
-        robots.txt is checked for every feed URL at run time; a disallowed feed fails alone.
+        Feeds come from industries/*.yaml (status: live, set by scripts/verify_industries.py) plus the
+        cross-industry feeds below. robots.txt is checked for every feed URL at run time.
         Feeds are published for syndication; we keep text internally and show summaries with links (rule 5).
-        Per-publisher terms not reviewed one by one. Probed 2026-10-09; left out: Becker's and
-        The Register (robots disallow), Healthcare IT News, The Real Deal, Going Concern,
-        Search Engine Land (403 to bots), Marketplace Pulse, IndustryWeek, Agriculture.com,
-        EdWeek (feed URL 404 or empty).
+        Per-publisher terms not reviewed one by one; feeds that disallow us or answer 403 are
+        marked blocked in the industry files and skipped.
+    options:
+      industry_feeds: true           # add every live feed from industries/*.yaml
     queries:
-      - {industry_hint: legal, params: {feed: "https://abovethelaw.com/feed/", name: abovethelaw}}
-      - {industry_hint: legal, params: {feed: "https://www.artificiallawyer.com/feed/", name: artificiallawyer}}
-      - {industry_hint: legal, params: {feed: "https://www.lawnext.com/feed", name: lawsites}}
-      - {industry_hint: healthcare, params: {feed: "https://www.fiercehealthcare.com/rss/xml", name: fiercehealthcare}}
-      - {industry_hint: healthcare, params: {feed: "https://www.statnews.com/feed/", name: statnews}}
-      - {industry_hint: construction, params: {feed: "https://www.constructiondive.com/feeds/news/", name: constructiondive}}
-      - {industry_hint: construction, params: {feed: "https://www.enr.com/rss/articles", name: enr}}
-      - {industry_hint: construction, params: {feed: "https://www.jlconline.com/feed/", name: jlc}}
-      - {industry_hint: real_estate, params: {feed: "https://www.inman.com/feed/", name: inman}}
-      - {industry_hint: real_estate, params: {feed: "https://www.housingwire.com/feed/", name: housingwire}}
-      - {industry_hint: logistics, params: {feed: "https://www.freightwaves.com/news/feed", name: freightwaves}}
-      - {industry_hint: logistics, params: {feed: "https://www.supplychaindive.com/feeds/news/", name: supplychaindive}}
-      - {industry_hint: logistics, params: {feed: "https://www.dcvelocity.com/feeds/feed.rss", name: dcvelocity}}
-      - {industry_hint: ecommerce, params: {feed: "https://www.modernretail.co/feed/", name: modernretail}}
-      - {industry_hint: ecommerce, params: {feed: "https://www.retaildive.com/feeds/news/", name: retaildive}}
-      - {industry_hint: restaurants, params: {feed: "https://www.restaurantdive.com/feeds/news/", name: restaurantdive}}
-      - {industry_hint: restaurants, params: {feed: "https://www.nrn.com/rss.xml", name: nrn}}
-      - {industry_hint: restaurants, params: {feed: "https://skift.com/feed/", name: skift}}
-      - {industry_hint: accounting, params: {feed: "https://www.accountingtoday.com/feed?rss=true", name: accountingtoday}}
-      - {industry_hint: accounting, params: {feed: "https://www.cpapracticeadvisor.com/feed/", name: cpapracticeadvisor}}
-      - {industry_hint: education, params: {feed: "https://www.edsurge.com/articles_rss", name: edsurge}}
-      - {industry_hint: education, params: {feed: "https://www.insidehighered.com/rss.xml", name: insidehighered}}
-      - {industry_hint: marketing, params: {feed: "https://www.searchenginejournal.com/feed/", name: searchenginejournal}}
-      - {industry_hint: marketing, params: {feed: "https://www.adweek.com/feed/", name: adweek}}
-      - {industry_hint: hr, params: {feed: "https://www.hrdive.com/feeds/news/", name: hrdive}}
-      - {industry_hint: hr, params: {feed: "https://www.ere.net/rss.xml", name: ere}}
-      - {industry_hint: insurance, params: {feed: "https://www.insurancejournal.com/rss/news/", name: insurancejournal}}
-      - {industry_hint: insurance, params: {feed: "https://www.carriermanagement.com/feed/", name: carriermanagement}}
-      - {industry_hint: insurance, params: {feed: "https://www.dig-in.com/feed?rss=true", name: digitalinsurance}}
-      - {industry_hint: manufacturing, params: {feed: "https://www.manufacturingdive.com/feeds/news/", name: manufacturingdive}}
-      - {industry_hint: manufacturing, params: {feed: "https://www.mmsonline.com/rss/blog", name: modernmachineshop}}
-      - {industry_hint: agriculture, params: {feed: "https://agfundernews.com/feed", name: agfundernews}}
-      - {industry_hint: it_devtools, params: {feed: "https://feed.infoq.com/", name: infoq}}
-      - {industry_hint: it_devtools, params: {feed: "https://thenewstack.io/feed/", name: thenewstack}}
       - {params: {feed: "https://medium.com/feed/tag/small-business", name: medium-small-business}}
       - {params: {feed: "https://www.lennysnewsletter.com/feed", name: lennysnewsletter}}
 

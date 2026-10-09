@@ -9,6 +9,7 @@ from typing import Any, Literal
 import yaml
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
+from .industries import INDUSTRIES_DIR, Industry, load_industries
 from .models import Cadence, Route, SourceQuery, SourceType
 from .settings import env_flag
 
@@ -152,6 +153,19 @@ class SourcesFile(_Strict):
     def budgets(self) -> dict[str, float]:
         return {name: s.monthly_budget_usd for name, s in self.sources.items()}
 
+    def add_industry_feeds(self, industries: dict[str, Industry]) -> None:
+        """Append one query per live industry feed to sources with options.industry_feeds: true."""
+        for source in self.sources.values():
+            if not source.options.get("industry_feeds"):
+                continue
+            have = {q.params.get("feed") for q in source.queries}
+            for key, industry in industries.items():
+                for feed in industry.live_feeds():
+                    if feed.url not in have:
+                        have.add(feed.url)
+                        source.queries.append(QueryConfig(industry_hint=key,
+                                                          params={"feed": feed.url, "name": feed.name}))
+
     def get(self, name: str) -> SourceConfig:
         try:
             return self.sources[name]
@@ -159,6 +173,9 @@ class SourcesFile(_Strict):
             raise KeyError(f"no source named {name!r} in sources.yaml") from None
 
 
-def load_sources(path: Path | str) -> SourcesFile:
+def load_sources(path: Path | str, industries_dir: Path | None = INDUSTRIES_DIR) -> SourcesFile:
     data = yaml.safe_load(Path(path).read_text(encoding="utf-8")) or {}
-    return SourcesFile.model_validate(data)
+    sources = SourcesFile.model_validate(data)
+    if industries_dir is not None and industries_dir.is_dir():
+        sources.add_industry_feeds(load_industries(industries_dir))
+    return sources

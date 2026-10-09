@@ -1,0 +1,154 @@
+industry: marketing
+name: Marketing and agencies
+vocabulary:
+  roles:
+  - marketing manager
+  - agency owner
+  - SEO specialist
+  - PPC manager
+  - social media manager
+  - content marketer
+  - copywriter
+  - growth marketer
+  - freelance marketer
+  tasks:
+  - client reporting
+  - keyword research
+  - campaign setup
+  - content calendar
+  - attribution
+  - link building
+  - ad creative
+  - proposals
+  - onboarding clients
+  pain_phrases:
+  - client reporting takes
+  - attribution is broken
+  - scope creep
+  - algorithm update
+  - ad account banned
+  - is there a tool
+  - is there software
+  - so tired of
+  - takes forever
+  - manually
+  - spreadsheet
+  - double entry
+  - wish there was
+  - how do you handle
+  - nightmare
+  jargon:
+  - ROAS
+  - CPC
+  - CPA
+  - CTR
+  - SERP
+  - backlinks
+  - UTM
+  - MQL
+  - attribution
+  - retainer
+  tools:
+  - Google Ads
+  - Meta Ads Manager
+  - HubSpot
+  - Semrush
+  - Ahrefs
+  - Looker Studio
+  - Hootsuite
+  - AgencyAnalytics
+subreddits:
+- marketing
+- PPC
+- SEO
+- agency
+- socialmedia
+- content_marketing
+- digital_marketing
+stackexchange_sites: []
+forums:
+- name: HubSpot Community
+  url: https://community.hubspot.com/
+  status: live
+  checked_at: '2026-10-09'
+  software: discourse
+  rss: https://community.hubspot.com/posts.rss
+  robots: allowed
+- name: Warrior Forum
+  url: https://www.warriorforum.com/
+  status: live
+  checked_at: '2026-10-09'
+  software: unknown
+  robots: allowed
+- name: Digital Point forums
+  url: https://forums.digitalpoint.com/
+  status: search_only
+  checked_at: '2026-10-09'
+  notes: HTTP 403 to our bot; use the search route
+  software: unknown
+  robots: allowed
+rss_feeds:
+- name: searchenginejournal
+  url: https://www.searchenginejournal.com/feed/
+  status: live
+  checked_at: '2026-10-09'
+  entries: 20
+  full_text: false
+- name: adweek
+  url: https://www.adweek.com/feed/
+  status: live
+  checked_at: '2026-10-09'
+  entries: 10
+  full_text: false
+- name: searchengineland
+  url: https://searchengineland.com/feed
+  status: blocked
+  checked_at: '2026-10-09'
+  notes: HTTP 403 to our bot
+  entries: 10
+  full_text: true
+- name: marketingdive
+  url: https://www.marketingdive.com/feeds/news/
+  status: live
+  checked_at: '2026-10-09'
+  entries: 10
+  full_text: false
+- name: martech
+  url: https://martech.org/feed/
+  status: live
+  checked_at: '2026-10-09'
+  entries: 10
+  full_text: true
+- name: ppcland
+  url: https://ppc.land/rss/
+  status: live
+  checked_at: '2026-10-09'
+  entries: 100
+  full_text: true
+associations:
+- name: American Marketing Association
+  url: https://www.ama.org/
+  status: live
+  checked_at: '2026-10-09'
+- name: MarketingProfs
+  url: https://www.marketingprofs.com/
+  status: live
+  checked_at: '2026-10-09'
+job_boards:
+- name: AMA career center
+  url: https://careers.ama.org/
+  status: dead
+  checked_at: '2026-10-09'
+  notes: site unreachable (ConnectError)
+podcasts:
+- name: Marketing School
+  status: unverified
+- name: Everyone Hates Marketers
+  status: unverified
+- name: Search Engine Journal Show
+  status: unverified
+youtube_channels:
+- name: Ahrefs
+  status: unverified
+- name: Neil Patel
+  status: unverified

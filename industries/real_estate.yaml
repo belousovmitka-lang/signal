@@ -1,0 +1,135 @@
+industry: real_estate
+name: Real estate
+vocabulary:
+  roles:
+  - realtor
+  - real estate agent
+  - broker
+  - property manager
+  - landlord
+  - investor
+  - transaction coordinator
+  - loan officer
+  - appraiser
+  tasks:
+  - lead follow-up
+  - showings
+  - listings
+  - transaction management
+  - tenant screening
+  - rent collection
+  - maintenance requests
+  - comps
+  - underwriting
+  pain_phrases:
+  - chasing leads
+  - tenant turnover
+  - late rent
+  - paperwork
+  - commission split
+  - is there a tool
+  - is there software
+  - so tired of
+  - takes forever
+  - manually
+  - spreadsheet
+  - double entry
+  - wish there was
+  - how do you handle
+  - nightmare
+  jargon:
+  - MLS
+  - CMA
+  - escrow
+  - cap rate
+  - NOI
+  - BRRRR
+  - 1031 exchange
+  - HOA
+  - DOM
+  tools:
+  - Follow Up Boss
+  - kvCORE
+  - AppFolio
+  - Buildium
+  - Zillow Premier Agent
+  - Dotloop
+  - SkySlope
+subreddits:
+- realtors
+- CommercialRealEstate
+- realestateinvesting
+- PropertyManagement
+- landlord
+stackexchange_sites: []
+forums:
+- name: BiggerPockets
+  url: https://www.biggerpockets.com/forums
+  status: live
+  checked_at: '2026-10-09'
+  software: unknown
+  robots: allowed
+- name: ActiveRain
+  url: https://activerain.com/
+  status: live
+  checked_at: '2026-10-09'
+  software: unknown
+  robots: allowed
+rss_feeds:
+- name: inman
+  url: https://www.inman.com/feed/
+  status: live
+  checked_at: '2026-10-09'
+  notes: redirects to http://feeds.feedburner.com/inmannews
+  entries: 18
+  full_text: true
+- name: housingwire
+  url: https://www.housingwire.com/feed/
+  status: live
+  checked_at: '2026-10-09'
+  entries: 10
+  full_text: false
+- name: therealdeal
+  url: https://therealdeal.com/feed/
+  status: blocked
+  checked_at: '2026-10-09'
+  notes: HTTP 403 to our bot
+- name: globest
+  url: https://www.globest.com/feed/
+  status: blocked
+  checked_at: '2026-10-09'
+  notes: HTTP 403 to our bot
+- name: realestatenews
+  url: https://www.realestatenews.com/feed
+  status: dead
+  checked_at: '2026-10-09'
+  notes: not a feed
+  entries: 0
+  full_text: false
+associations:
+- name: National Association of Realtors
+  url: https://www.nar.realtor/
+  status: live
+  checked_at: '2026-10-09'
+- name: NARPM
+  url: https://www.narpm.org/
+  status: live
+  checked_at: '2026-10-09'
+job_boards:
+- name: NAR career center
+  url: https://careers.nar.realtor/
+  status: dead
+  checked_at: '2026-10-09'
+  notes: site unreachable (ConnectError)
+podcasts:
+- name: BiggerPockets Real Estate Podcast
+  status: unverified
+- name: Real Estate Rookie
+  status: unverified
+- name: Inman Access
+  status: unverified
+youtube_channels:
+- name: BiggerPockets
+  status: unverified
+- name: Inman
+  status: unverified

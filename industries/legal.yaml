@@ -1,0 +1,151 @@
+industry: legal
+name: Legal
+vocabulary:
+  roles:
+  - paralegal
+  - legal assistant
+  - associate
+  - partner
+  - solo practitioner
+  - law firm administrator
+  - legal secretary
+  - in-house counsel
+  - litigation support
+  - legal ops
+  tasks:
+  - billing
+  - time tracking
+  - client intake
+  - conflict check
+  - e-discovery
+  - document review
+  - docketing
+  - calendaring
+  - e-filing
+  - contract review
+  - trust accounting
+  pain_phrases:
+  - billable hours
+  - chasing clients
+  - write-offs
+  - missed deadline
+  - redlining
+  - is there a tool
+  - is there software
+  - so tired of
+  - takes forever
+  - manually
+  - spreadsheet
+  - double entry
+  - wish there was
+  - how do you handle
+  - nightmare
+  jargon:
+  - IOLTA
+  - e-discovery
+  - Bates numbering
+  - privilege log
+  - matter management
+  - retainer
+  - PACER
+  - CLE
+  tools:
+  - Clio
+  - MyCase
+  - PracticePanther
+  - Westlaw
+  - LexisNexis
+  - Relativity
+  - NetDocuments
+  - iManage
+  - Smokeball
+subreddits:
+- Lawyertalk
+- paralegal
+- LawFirm
+- LawSchool
+- biglaw
+- legaltech
+stackexchange_sites:
+- law
+forums:
+- name: Lawyerist community
+  url: https://lawyerist.com/community/
+  status: dead
+  checked_at: '2026-10-09'
+  notes: community page now redirects to a podcast episode; the community appears to be gone (checked
+    2026-10-09)
+  software: unknown
+  robots: allowed
+rss_feeds:
+- name: abovethelaw
+  url: https://abovethelaw.com/feed/
+  status: live
+  checked_at: '2026-10-09'
+  entries: 30
+  full_text: true
+- name: artificiallawyer
+  url: https://www.artificiallawyer.com/feed/
+  status: live
+  checked_at: '2026-10-09'
+  entries: 10
+  full_text: false
+- name: lawsites
+  url: https://www.lawnext.com/feed
+  status: live
+  checked_at: '2026-10-09'
+  entries: 100
+  full_text: false
+- name: lawdotcom
+  url: https://www.law.com/rss/
+  status: dead
+  checked_at: '2026-10-09'
+  notes: HTTP 404
+- name: abajournal
+  url: https://www.abajournal.com/feed
+  status: dead
+  checked_at: '2026-10-09'
+  notes: HTTP 404
+- name: legaltalknetwork
+  url: https://legaltalknetwork.com/feed/
+  status: live
+  checked_at: '2026-10-09'
+  entries: 100
+  full_text: true
+associations:
+- name: American Bar Association
+  url: https://www.americanbar.org/
+  status: search_only
+  checked_at: '2026-10-09'
+  notes: HTTP 403 to our bot
+- name: NALA
+  url: https://www.nala.org/
+  status: live
+  checked_at: '2026-10-09'
+- name: Clio Legal Trends Report
+  url: https://www.clio.com/resources/legal-trends/
+  status: search_only
+  checked_at: '2026-10-09'
+  notes: HTTP 403 to our bot
+job_boards:
+- name: ABA Career Center
+  url: https://careers.americanbar.org/
+  status: dead
+  checked_at: '2026-10-09'
+  notes: site unreachable (ConnectError)
+- name: LawCrossing
+  url: https://www.lawcrossing.com/
+  status: live
+  checked_at: '2026-10-09'
+podcasts:
+- name: Legal Talk Network
+  status: unverified
+- name: Lawyerist Podcast
+  status: unverified
+- name: The Legal Toolkit
+  status: unverified
+youtube_channels:
+- name: Clio
+  status: unverified
+- name: Legal Eagle
+  status: unverified

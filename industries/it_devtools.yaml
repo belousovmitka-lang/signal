@@ -1,0 +1,182 @@
+industry: it_devtools
+name: IT and developer tools
+vocabulary:
+  roles:
+  - sysadmin
+  - devops engineer
+  - SRE
+  - MSP owner
+  - IT manager
+  - help desk
+  - platform engineer
+  - backend developer
+  - security engineer
+  - network engineer
+  tasks:
+  - patching
+  - on-call
+  - incident response
+  - ticket triage
+  - onboarding users
+  - backups
+  - monitoring
+  - CI/CD
+  - cost optimization
+  - asset inventory
+  - documentation
+  pain_phrases:
+  - alert fatigue
+  - toil
+  - flaky tests
+  - vendor lock-in
+  - documentation is outdated
+  - cloud bill
+  - is there a tool
+  - is there software
+  - so tired of
+  - takes forever
+  - manually
+  - spreadsheet
+  - double entry
+  - wish there was
+  - how do you handle
+  - nightmare
+  jargon:
+  - RMM
+  - PSA
+  - SLA
+  - MTTR
+  - IaC
+  - Kubernetes
+  - SSO
+  - SIEM
+  - runbook
+  - on-call
+  tools:
+  - ConnectWise
+  - Datto
+  - NinjaOne
+  - Jira
+  - ServiceNow
+  - PagerDuty
+  - Terraform
+  - Datadog
+subreddits:
+- sysadmin
+- devops
+- msp
+- ITManagers
+- kubernetes
+- networking
+- selfhosted
+stackexchange_sites:
+- serverfault
+- superuser
+- devops
+- softwarerecs
+forums:
+- name: Spiceworks Community
+  url: https://community.spiceworks.com/
+  status: live
+  checked_at: '2026-10-09'
+  software: discourse
+  rss: https://community.spiceworks.com/posts.rss
+  robots: allowed
+- name: Lobsters
+  url: https://lobste.rs/
+  status: search_only
+  checked_at: '2026-10-09'
+  notes: robots.txt disallows; use the search route
+  software: unknown
+  robots: disallowed
+- name: DEV Community
+  url: https://dev.to/
+  status: live
+  checked_at: '2026-10-09'
+  software: unknown
+  rss: https://dev.to/feed
+  robots: allowed
+- name: Cloudflare Community
+  url: https://community.cloudflare.com/
+  status: search_only
+  checked_at: '2026-10-09'
+  notes: HTTP 403 to our bot; use the search route
+  software: unknown
+  robots: allowed
+- name: HashiCorp Discuss
+  url: https://discuss.hashicorp.com/
+  status: live
+  checked_at: '2026-10-09'
+  software: discourse
+  rss: https://discuss.hashicorp.com/latest.rss
+  robots: allowed
+- name: ServeTheHome forums
+  url: https://forums.servethehome.com/
+  status: live
+  checked_at: '2026-10-09'
+  notes: redirects to https://forums.servethehome.com/index.php
+  software: xenforo
+  rss: https://forums.servethehome.com/index.php?forums/-/index.rss
+  robots: allowed
+rss_feeds:
+- name: infoq
+  url: https://feed.infoq.com/
+  status: live
+  checked_at: '2026-10-09'
+  entries: 15
+  full_text: false
+- name: thenewstack
+  url: https://thenewstack.io/feed/
+  status: live
+  checked_at: '2026-10-09'
+  entries: 26
+  full_text: true
+- name: theregister
+  url: https://www.theregister.com/headlines.atom
+  status: blocked
+  checked_at: '2026-10-09'
+  notes: robots.txt disallows
+- name: bleepingcomputer
+  url: https://www.bleepingcomputer.com/feed/
+  status: live
+  checked_at: '2026-10-09'
+  entries: 15
+  full_text: false
+- name: devops-com
+  url: https://devops.com/feed/
+  status: live
+  checked_at: '2026-10-09'
+  entries: 10
+  full_text: true
+- name: arstechnica
+  url: https://feeds.arstechnica.com/arstechnica/index
+  status: live
+  checked_at: '2026-10-09'
+  entries: 20
+  full_text: true
+associations:
+- name: CompTIA
+  url: https://www.comptia.org/
+  status: live
+  checked_at: '2026-10-09'
+- name: LISA / USENIX
+  url: https://www.usenix.org/
+  status: live
+  checked_at: '2026-10-09'
+job_boards:
+- name: Dice
+  url: https://www.dice.com/
+  status: live
+  checked_at: '2026-10-09'
+podcasts:
+- name: MSP Radio
+  status: unverified
+- name: Ship It!
+  status: unverified
+- name: The Changelog
+  status: unverified
+youtube_channels:
+- name: NetworkChuck
+  status: unverified
+- name: TechWorld with Nana
+  status: unverified

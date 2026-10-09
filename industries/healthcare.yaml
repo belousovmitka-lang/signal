@@ -1,0 +1,167 @@
+industry: healthcare
+name: Healthcare
+vocabulary:
+  roles:
+  - nurse
+  - RN
+  - nurse practitioner
+  - physician
+  - resident
+  - practice manager
+  - medical biller
+  - medical coder
+  - front desk
+  - dental hygienist
+  - office manager
+  - CNA
+  tasks:
+  - charting
+  - prior authorization
+  - billing
+  - coding
+  - scheduling
+  - patient intake
+  - insurance verification
+  - credentialing
+  - discharge planning
+  - handoff
+  pain_phrases:
+  - prior auth
+  - pajama time
+  - denied claims
+  - short staffed
+  - EHR clicks
+  - faxing
+  - is there a tool
+  - is there software
+  - so tired of
+  - takes forever
+  - manually
+  - spreadsheet
+  - double entry
+  - wish there was
+  - how do you handle
+  - nightmare
+  jargon:
+  - EHR
+  - EMR
+  - CPT
+  - ICD-10
+  - HIPAA
+  - RCM
+  - SOAP note
+  - MAR
+  - census
+  - PRN
+  tools:
+  - Epic
+  - Cerner
+  - athenahealth
+  - eClinicalWorks
+  - Dentrix
+  - Kareo
+  - NextGen
+subreddits:
+- medicine
+- nursing
+- healthIT
+- Residency
+- Dentistry
+- medicalcoding
+- physicianassistant
+stackexchange_sites:
+- medicalsciences
+forums:
+- name: AllNurses
+  url: https://allnurses.com/
+  status: search_only
+  checked_at: '2026-10-09'
+  notes: HTTP 403 to our bot; use the search route
+  software: unknown
+  robots: allowed
+- name: Student Doctor Network
+  url: https://forums.studentdoctor.net/
+  status: live
+  checked_at: '2026-10-09'
+  notes: redirects to https://forums.studentdoctor.net/forums/
+  software: xenforo
+  rss: https://forums.studentdoctor.net/forums/-/index.rss
+  robots: allowed
+- name: DentalTown
+  url: https://www.dentaltown.com/messageboard
+  status: blocked
+  checked_at: '2026-10-09'
+  notes: behind a login (https://www.dentaltown.com/login?url=%2fmessageboard%2fsite.aspx)
+  software: unknown
+  robots: allowed
+rss_feeds:
+- name: fiercehealthcare
+  url: https://www.fiercehealthcare.com/rss/xml
+  status: live
+  checked_at: '2026-10-09'
+  entries: 25
+  full_text: false
+- name: statnews
+  url: https://www.statnews.com/feed/
+  status: live
+  checked_at: '2026-10-09'
+  entries: 20
+  full_text: true
+- name: healthcaredive
+  url: https://www.healthcaredive.com/feeds/news/
+  status: live
+  checked_at: '2026-10-09'
+  entries: 10
+  full_text: false
+- name: medcitynews
+  url: https://medcitynews.com/feed/
+  status: live
+  checked_at: '2026-10-09'
+  entries: 30
+  full_text: false
+- name: healthcareitnews
+  url: https://www.healthcareitnews.com/home/feed
+  status: blocked
+  checked_at: '2026-10-09'
+  notes: HTTP 403 to our bot
+- name: beckershospitalreview
+  url: https://www.beckershospitalreview.com/feed/
+  status: blocked
+  checked_at: '2026-10-09'
+  notes: robots.txt disallows
+associations:
+- name: HIMSS
+  url: https://www.himss.org/
+  status: search_only
+  checked_at: '2026-10-09'
+  notes: HTTP 403 to our bot
+- name: MGMA
+  url: https://www.mgma.com/
+  status: live
+  checked_at: '2026-10-09'
+- name: AANP
+  url: https://www.aanp.org/
+  status: live
+  checked_at: '2026-10-09'
+job_boards:
+- name: Health eCareers
+  url: https://www.healthecareers.com/
+  status: live
+  checked_at: '2026-10-09'
+- name: Nurse.com jobs
+  url: https://www.nurse.com/jobs
+  status: search_only
+  checked_at: '2026-10-09'
+  notes: HTTP 403 to our bot
+podcasts:
+- name: This Week Health
+  status: unverified
+- name: Becker's Healthcare Podcast
+  status: unverified
+- name: The Nurse Keith Show
+  status: unverified
+youtube_channels:
+- name: HIMSS
+  status: unverified
+- name: Medical Group Management Association
+  status: unverified

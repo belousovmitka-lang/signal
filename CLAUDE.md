@@ -47,7 +47,11 @@ signal-connectors/
     config.py               # sources.yaml schema (pydantic) and loader
     settings.py             # env settings (.env)
     services.py             # bundle of shared services handed to every connector
-    runner.py               # run one source: fetch, store, meter, record run
+    runner.py               # run one source: fetch, store, meter, record run; per-query cursors
+    industries.py           # industry seed map schema and loader
+    forum_detect.py         # detect forum software + feeds from a logged-out page
+    verify.py               # live checks for seed maps (liveness, robots, login walls, moved feeds)
+    parsing.py              # HTML to text, lenient dates
     smoke.py                # smoke CLI logic (scripts/smoke.py is the entry point)
     connectors/
       search_api.py         # Brave + Exa, site-limited search profiles
@@ -64,6 +68,7 @@ signal-connectors/
   scripts/
     run.py                  # run due connectors on schedule
     smoke.py                # run one connector live: python scripts/smoke.py rss --limit 20
+    verify_industries.py    # check every seed-map site and write statuses back
   tests/
     cassettes/
 ```
@@ -448,7 +453,7 @@ Work top to bottom. Finish each connector to its definition of done before start
 5. `hackernews`, `stackexchange`
 6. `x` (once credits are bought), `bluesky`, `threads`
 7. ~~G7 `youtube`~~ blocked by YouTube developer policies (2026-10-09); covered by a G1 search profile
-8. Industry seed maps for all 15 industries (section 8)
+8. Industry seed maps for all 15 industries (section 8) — done (2026-10-09): 15 files, 68 live feeds, 19 live forums (9 XenForo, 4 Discourse with feeds); subreddits unverified until G1 checks them
 
 **Phase 2 — forums and paid demand**
 9. G4 `discourse`, G5 `classic_forum`

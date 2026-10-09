@@ -1,0 +1,142 @@
+industry: agriculture
+name: Agriculture
+vocabulary:
+  roles:
+  - farmer
+  - rancher
+  - grower
+  - agronomist
+  - farm manager
+  - crop consultant
+  - dairy farmer
+  - grain elevator manager
+  tasks:
+  - record keeping
+  - field mapping
+  - spraying
+  - grain marketing
+  - equipment maintenance
+  - herd management
+  - crop planning
+  - compliance reporting
+  - labor management
+  pain_phrases:
+  - paperwork
+  - commodity prices
+  - equipment downtime
+  - right to repair
+  - labor shortage
+  - is there a tool
+  - is there software
+  - so tired of
+  - takes forever
+  - manually
+  - spreadsheet
+  - double entry
+  - wish there was
+  - how do you handle
+  - nightmare
+  jargon:
+  - yield map
+  - agronomy
+  - precision ag
+  - FSA
+  - crop insurance
+  - basis
+  - bushels per acre
+  - NRCS
+  - CAFO
+  tools:
+  - John Deere Operations Center
+  - Climate FieldView
+  - Granular
+  - FarmLogs
+  - Trimble
+subreddits:
+- farming
+- agriculture
+- ranching
+- homestead
+- AgTech
+stackexchange_sites: []
+forums:
+- name: New Ag Talk
+  url: https://talk.newagtalk.com/
+  status: search_only
+  checked_at: '2026-10-09'
+  notes: HTTP 403 to our bot; use the search route
+  software: unknown
+  robots: allowed
+- name: The Farming Forum
+  url: https://thefarmingforum.co.uk/
+  status: live
+  checked_at: '2026-10-09'
+  software: unknown
+  robots: allowed
+- name: Yesterday's Tractors forums
+  url: https://www.yesterdaystractors.com/forums/
+  status: search_only
+  checked_at: '2026-10-09'
+  notes: HTTP 403 to our bot; use the search route
+  software: unknown
+  robots: allowed
+rss_feeds:
+- name: agfundernews
+  url: https://agfundernews.com/feed
+  status: live
+  checked_at: '2026-10-09'
+  entries: 50
+  full_text: true
+- name: agriculture-com
+  url: https://feeds-api.dotdashmeredith.com/v1/rss/google/77cb61c1-0387-45bf-80e6-3f2976e90672
+  status: live
+  checked_at: '2026-10-09'
+  notes: moved from https://www.agriculture.com/rss (found on homepage)
+  entries: 50
+  full_text: false
+- name: farmprogress
+  url: https://www.farmprogress.com/rss.xml
+  status: live
+  checked_at: '2026-10-09'
+  entries: 50
+  full_text: false
+- name: fooddive
+  url: https://www.fooddive.com/feeds/news/
+  status: live
+  checked_at: '2026-10-09'
+  entries: 10
+  full_text: false
+- name: agweb
+  url: https://www.agweb.com/index.rss
+  status: live
+  checked_at: '2026-10-09'
+  notes: moved from https://www.agweb.com/rss (found on homepage)
+  entries: 1
+  full_text: false
+associations:
+- name: American Farm Bureau
+  url: https://www.fb.org/
+  status: live
+  checked_at: '2026-10-09'
+- name: USDA newsroom
+  url: https://www.usda.gov/media/press-releases
+  status: search_only
+  checked_at: '2026-10-09'
+  notes: HTTP 403 to our bot
+job_boards:
+- name: AgCareers.com
+  url: https://www.agcareers.com/
+  status: live
+  checked_at: '2026-10-09'
+podcasts:
+- name: Future of Agriculture
+  status: unverified
+- name: AgriTalk
+  status: unverified
+- name: Farm4Profit
+  status: unverified
+youtube_channels:
+- name: Millennial Farmer
+  status: unverified
+- name: How Farms Work
+  status: unverified

@@ -1,0 +1,159 @@
+industry: accounting
+name: Accounting and finance
+vocabulary:
+  roles:
+  - CPA
+  - accountant
+  - bookkeeper
+  - tax preparer
+  - enrolled agent
+  - controller
+  - CFO
+  - staff accountant
+  - audit senior
+  - AP clerk
+  tasks:
+  - month-end close
+  - reconciliation
+  - tax prep
+  - payroll
+  - accounts payable
+  - accounts receivable
+  - audit
+  - client document collection
+  - sales tax
+  - 1099s
+  pain_phrases:
+  - busy season
+  - chasing clients for documents
+  - manual reconciliation
+  - extension
+  - data entry
+  - is there a tool
+  - is there software
+  - so tired of
+  - takes forever
+  - manually
+  - spreadsheet
+  - double entry
+  - wish there was
+  - how do you handle
+  - nightmare
+  jargon:
+  - GAAP
+  - accrual
+  - '1099'
+  - K-1
+  - trial balance
+  - journal entry
+  - AP
+  - AR
+  - close
+  - SOX
+  - engagement letter
+  tools:
+  - QuickBooks
+  - Xero
+  - NetSuite
+  - Bill.com
+  - Drake
+  - Lacerte
+  - UltraTax
+  - Karbon
+  - TaxDome
+subreddits:
+- Accounting
+- taxpros
+- Bookkeeping
+- CPA
+- FinancialCareers
+stackexchange_sites:
+- money
+forums:
+- name: QuickBooks Community
+  url: https://quickbooks.intuit.com/learn-support/en-us/community
+  status: dead
+  checked_at: '2026-10-09'
+  notes: HTTP 504
+  software: unknown
+  robots: allowed
+- name: AccountingWEB Any Answers
+  url: https://www.accountingweb.co.uk/any-answers
+  status: live
+  checked_at: '2026-10-09'
+  software: unknown
+  robots: allowed
+rss_feeds:
+- name: accountingtoday
+  url: https://www.accountingtoday.com/feed?rss=true
+  status: live
+  checked_at: '2026-10-09'
+  entries: 10
+  full_text: false
+- name: cpapracticeadvisor
+  url: https://www.cpapracticeadvisor.com/feed/
+  status: live
+  checked_at: '2026-10-09'
+  entries: 16
+  full_text: false
+- name: goingconcern
+  url: https://www.goingconcern.com/feed/
+  status: live
+  checked_at: '2026-10-09'
+  entries: 100
+  full_text: true
+- name: journalofaccountancy
+  url: https://www.journalofaccountancy.com/news.xml
+  status: dead
+  checked_at: '2026-10-09'
+  notes: HTTP 404
+- name: cpajournal
+  url: https://www.cpajournal.com/feed/
+  status: live
+  checked_at: '2026-10-09'
+  entries: 30
+  full_text: true
+- name: accountingweb
+  url: https://www.accountingweb.co.uk/rss
+  status: dead
+  checked_at: '2026-10-09'
+  notes: not a feed
+  entries: 0
+  full_text: false
+associations:
+- name: AICPA
+  url: https://www.aicpa-cima.com/
+  status: live
+  checked_at: '2026-10-09'
+- name: NATP
+  url: https://www.natptax.com/
+  status: search_only
+  checked_at: '2026-10-09'
+  notes: HTTP 403 to our bot
+- name: IRS newsroom
+  url: https://www.irs.gov/newsroom
+  status: live
+  checked_at: '2026-10-09'
+job_boards:
+- name: AICPA career center
+  url: https://jobs.aicpa-cima.com/
+  status: dead
+  checked_at: '2026-10-09'
+  notes: site unreachable (ConnectError)
+- name: AccountingJobsToday
+  url: https://www.accountingjobstoday.com/
+  status: search_only
+  checked_at: '2026-10-09'
+  notes: HTTP 403 to our bot
+podcasts:
+- name: Earmark
+  status: unverified
+- name: Cloud Accounting Podcast
+  status: unverified
+- name: Accounting Today Podcast
+  status: unverified
+youtube_channels:
+- name: Hector Garcia CPA
+  status: unverified
+- name: Karbon
+  status: unverified

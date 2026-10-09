@@ -1,0 +1,138 @@
+industry: restaurants
+name: Restaurants and hospitality
+vocabulary:
+  roles:
+  - restaurant owner
+  - general manager
+  - chef
+  - line cook
+  - server
+  - bartender
+  - kitchen manager
+  - hotel manager
+  - front of house
+  - sous chef
+  tasks:
+  - scheduling
+  - inventory
+  - food costing
+  - ordering
+  - tip pooling
+  - payroll
+  - menu engineering
+  - reservations
+  - health inspection
+  - prep lists
+  pain_phrases:
+  - no-show
+  - food waste
+  - third party delivery fees
+  - turnover
+  - 86'd
+  - labor cost
+  - is there a tool
+  - is there software
+  - so tired of
+  - takes forever
+  - manually
+  - spreadsheet
+  - double entry
+  - wish there was
+  - how do you handle
+  - nightmare
+  jargon:
+  - BOH
+  - FOH
+  - covers
+  - food cost percentage
+  - par levels
+  - POS
+  - tip out
+  - comps
+  - RevPAR
+  - ADR
+  tools:
+  - Toast
+  - Square
+  - 7shifts
+  - OpenTable
+  - Resy
+  - MarketMan
+  - Restaurant365
+subreddits:
+- KitchenConfidential
+- restaurateur
+- TalesFromYourServer
+- BarOwners
+- hotels
+stackexchange_sites: []
+forums: []
+rss_feeds:
+- name: restaurantdive
+  url: https://www.restaurantdive.com/feeds/news/
+  status: live
+  checked_at: '2026-10-09'
+  entries: 10
+  full_text: false
+- name: nrn
+  url: https://www.nrn.com/rss.xml
+  status: live
+  checked_at: '2026-10-09'
+  entries: 50
+  full_text: false
+- name: skift
+  url: https://skift.com/feed/
+  status: live
+  checked_at: '2026-10-09'
+  entries: 10
+  full_text: true
+- name: qsrmagazine
+  url: https://www.qsrmagazine.com/feed/
+  status: live
+  checked_at: '2026-10-09'
+  entries: 25
+  full_text: true
+- name: fsrmagazine
+  url: https://www.fsrmagazine.com/feed/
+  status: live
+  checked_at: '2026-10-09'
+  entries: 25
+  full_text: true
+- name: hospitalitynet
+  url: https://www.hospitalitynet.org/news/global.xml
+  status: live
+  checked_at: '2026-10-09'
+  notes: redirects to https://www.hospitalitynet.org/rss/news.xml
+  entries: 20
+  full_text: false
+associations:
+- name: National Restaurant Association
+  url: https://restaurant.org/
+  status: live
+  checked_at: '2026-10-09'
+- name: AHLA
+  url: https://www.ahla.com/
+  status: live
+  checked_at: '2026-10-09'
+job_boards:
+- name: Culinary Agents
+  url: https://culinaryagents.com/
+  status: live
+  checked_at: '2026-10-09'
+- name: Poached
+  url: https://poachedjobs.com/
+  status: search_only
+  checked_at: '2026-10-09'
+  notes: HTTP 403 to our bot
+podcasts:
+- name: Restaurant Unstoppable
+  status: unverified
+- name: The Restaurant Prosperity Formula
+  status: unverified
+- name: Skift Podcast
+  status: unverified
+youtube_channels:
+- name: Toast
+  status: unverified
+- name: Chef Jean-Pierre
+  status: unverified

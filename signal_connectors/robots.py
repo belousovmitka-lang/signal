@@ -58,6 +58,7 @@ class RobotsRules:
     crawl_delay: float | None = None
     allow_all: bool = False
     disallow_all: bool = False
+    unavailable: str | None = None   # why robots.txt couldn't be read, when that forced disallow-all
 
     def allowed(self, path_and_query: str) -> bool:
         if self.disallow_all:
@@ -151,10 +152,10 @@ class RobotsChecker:
             response = await self.http.get(url)
         except httpx.HTTPError as exc:
             log.warning("robots.txt unreachable at %s (%s): treating as disallow-all", url, exc)
-            return RobotsRules(disallow_all=True), ERROR_TTL
+            return RobotsRules(disallow_all=True, unavailable=type(exc).__name__), ERROR_TTL
         if response.status_code >= 500:
             log.warning("robots.txt at %s returned %s: treating as disallow-all", url, response.status_code)
-            return RobotsRules(disallow_all=True), ERROR_TTL
+            return RobotsRules(disallow_all=True, unavailable=f"HTTP {response.status_code}"), ERROR_TTL
         if response.status_code >= 400:
             return RobotsRules(allow_all=True), self.ttl
         return parse_robots(response.text[:MAX_ROBOTS_BYTES], self.agent), self.ttl
