@@ -1,0 +1,53 @@
+# Every source Signal collects from. One entry per connector instance or search profile.
+# Schema: signal_connectors/config.py (SourcesFile / SourceConfig). Validated on load.
+#
+# Rules the loader enforces:
+#   - a public_pages source can be enabled only after access_check.decision is "full" (rule 2)
+#   - a paid source must name a feature_flag env var and runs only when it is set (rule 6)
+#   - blocked sources and access_check "skip" sources cannot be enabled
+#   - monthly_budget_usd defaults to 0: the source may make free calls only
+#
+# Entry reference (all keys except route and source_type are optional):
+#
+#   <name>:                          # key; used as RawPost.source, cost ledger and run history name
+#     connector: rss                 # module in signal_connectors/connectors/ (defaults to the key)
+#     enabled: false
+#     status: todo                   # todo | done | awaiting_approval | paid_flag_off | blocked
+#     status_date: 2026-10-09
+#     route: rss                     # own_api | search_api | rss | public_pages
+#     source_type: news              # community | social | paid_demand | review | news | government | media | startup | research
+#     cadence: daily                 # hourly | daily | weekly | monthly
+#     monthly_budget_usd: 0
+#     paid: false
+#     feature_flag: ENABLE_X         # required when paid: true
+#     env: [BRAVE_API_KEY]           # keys the connector needs
+#     access_check:                  # rule 2; required before enabling public_pages
+#       robots: unchecked            # allowed | partial | disallowed | not_applicable | unchecked
+#       terms: unchecked             # allowed | unclear | forbidden | not_applicable | unchecked
+#       decision: pending            # full | search_only | skip | pending
+#       terms_url: https://...
+#       checked_at: 2026-10-09
+#       notes: ""
+#     rate_limit: {requests_per_second: 1, domains: [example.com]}
+#     quota: {units: 10000, window_days: 1}
+#     deletion_recheck_days: 2       # Reddit and X: re-check stored items for deletion
+#     queries:
+#       - keywords: ["is there a tool"]
+#         communities: [paralegal]
+#         domains: [reddit.com]
+#         limit: 50
+#         industry_hint: legal
+#         params: {}
+#     options: {}                    # connector-specific settings
+
+version: 1
+
+defaults:
+  requests_per_second: 1.0           # per domain, rule 3
+  timeout_seconds: 20
+  max_attempts: 5                    # retries on 429/5xx with exponential backoff
+  initial_lookback_days: 7           # first run of a source fetches this far back
+  limit: 50                          # default results per query
+
+# Phase 1 adds entries here, starting with search_api.
+sources: {}
