@@ -130,6 +130,54 @@ sources:
       - {params: {tags: ask_hn}, limit: 100}          # every new Ask HN
       - {params: {list: jobstories}, limit: 60}        # YC company job posts (paid demand)
 
+  stackexchange:
+    enabled: true
+    status: done
+    status_date: 2026-10-09
+    route: own_api
+    source_type: community
+    cadence: daily
+    env: [STACKEXCHANGE_KEY]        # optional; 300 requests/day without it, 10,000 with it
+    access_check:
+      robots: not_applicable
+      terms: allowed
+      decision: full
+      terms_url: https://stackoverflow.com/legal/api-terms-of-use
+      checked_at: 2026-10-09
+      notes: >-
+        Official API. The ToS non-commercial limit excludes content obtained via the API; content is
+        CC BY-SA 4.0. Obligation for the app: visibly credit Stack Exchange and link to each question
+        (API Attribution rules). Author names are not stored (rule 4); the link carries attribution.
+    queries:
+      # tool gaps and professional Q&A: low-volume sites, so take every new question
+      # (one call per site; keyword searches here cost 5x the quota for a fraction of the posts)
+      - communities: [softwarerecs, webapps, law, workplace, money, academia, diy, pm, freelancing]
+        limit: 100
+      - communities: [stackoverflow]
+        keywords: ["is there a library", "is there a tool"]
+        limit: 50
+
+  youtube:
+    enabled: false
+    status: blocked
+    status_date: 2026-10-09
+    route: own_api
+    source_type: media
+    cadence: daily
+    env: [YOUTUBE_API_KEY]
+    access_check:
+      robots: not_applicable
+      terms: forbidden
+      decision: skip
+      terms_url: https://developers.google.com/youtube/terms/developer-policies
+      checked_at: 2026-10-09
+      notes: >-
+        Developer Policies III.E: "Do not aggregate API Data" except per single content owner;
+        "must not ... access or use API Data to create new or derived data or metrics"; non-statistics
+        data stored at most 30 days. Signal's cross-channel feed, ranking and idea extraction conflict
+        with all three. Covered via search_api profile youtube.com/watch instead. Unblock path: YouTube
+        API compliance audit + derived-metrics permission (policy section L).
+
   google_news:
     connector: rss
     enabled: false
