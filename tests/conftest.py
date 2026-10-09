@@ -24,7 +24,9 @@ SECRET_RESPONSE_HEADERS = {"set-cookie", "authorization", "x-api-key"}
 def _scrub_response(response: dict[str, Any]) -> dict[str, Any]:
     headers = response.get("headers", {})
     for name in list(headers):
-        if name.lower() in SECRET_RESPONSE_HEADERS:
+        values = headers[name] if isinstance(headers[name], list) else [headers[name]]
+        # Drop secrets, and headers httpx can't replay (WordPress.org sends "X-Olaf: ⛄").
+        if name.lower() in SECRET_RESPONSE_HEADERS or not all(str(v).isascii() for v in values):
             del headers[name]
     return response
 

@@ -216,7 +216,7 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 | G7 | `youtube` — **blocked (2026-10-09)** | YouTube videos, comments, conference talks, webinars posted to YouTube | own_api → G1 | YouTube API Developer Policies III.E forbid aggregating API Data across channels not owned by one content owner, using API Data "to create new or derived data or metrics", and storing non-statistics data over 30 days. Signal's cross-channel feed, ranking and idea generation do all three. Until then: G1 search profile `youtube.com/watch` (titles + snippets). Unblocks with: YouTube API compliance audit and the derived-metrics permission (policy section L, via the quota extension form, since June 2026). |
 | G8 | `podcasts` | Industry podcasts | rss + own_api | Podcast Index API to discover shows; RSS for episodes; transcribe audio with a speech-to-text service (cost-metered) or use publisher transcripts when provided. |
 | G9 | `open_data` | City/state open data portals, data.gov, FCC data | own_api | Socrata SODA API and CKAN API. Datasets: 311 requests, permits, inspections, complaints. |
-| G10 | `app_reviews` | App Store, app marketplaces | own_api / public_pages | App Store reviews feed: `https://itunes.apple.com/<country>/rss/customerreviews/id=<appId>/sortBy=mostRecent/json`. WordPress plugins: `api.wordpress.org` plugin info + support forum RSS. Atlassian Marketplace REST API. Shopify App Store, Salesforce AppExchange, Chrome Web Store: public pages if allowed, else G1. |
+| G10 | `app_reviews` — **done (2026-10-09): WordPress.org** | App Store, app marketplaces | rss | WordPress.org plugin review + support feeds (`/support/plugin/<slug>/reviews/feed/`); rating and reply counts parsed. Blocked 2026-10-09: Apple reviews feed (itunes.apple.com robots.txt `Disallow: /*/rss/*`), Chrome Web Store and Atlassian Marketplace REST API (robots.txt), Shopify App Store (ToS forbids robots). api.wordpress.org plugin info API is robots-disallowed. Google Play allows robots-compliant access but serves reviews via internal APIs: not used. |
 
 ### 7.2 Platform-specific connectors (own API or public data)
 
@@ -272,10 +272,10 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 
 | Platform | Connector | Route | Endpoint / method | Cadence | Status |
 |---|---|---|---|---|---|
-| Apple App Store | G10 | own_api | customer reviews feed per app and country | daily | todo |
-| Chrome Web Store | G10 | public_pages, else G1 | public listing pages | weekly | todo |
-| Shopify App Store, Salesforce AppExchange, Atlassian Marketplace, WordPress plugins | G10 | own_api / public_pages | Atlassian REST API, WordPress.org API + support RSS, others public pages or G1 | weekly | todo |
-| Public feature boards (Canny, UserVoice, Productboard portals) | `feature_boards` | public_pages | public board pages; detect vendor per site | weekly | todo |
+| Apple App Store | G10 | — | itunes.apple.com robots.txt disallows `/*/rss/*` (reviews feed); App Store Connect API covers own apps only | daily | blocked (2026-10-09) |
+| Chrome Web Store | G10 | — | robots.txt disallows review pages | weekly | blocked (2026-10-09) |
+| Shopify App Store, Salesforce AppExchange, Atlassian Marketplace, WordPress plugins | G10 | rss | WordPress plugins: done (2026-10-09). Shopify: ToS forbids robots. Atlassian: REST API disallowed by robots.txt. AppExchange: reviews load via internal APIs, no clean route | weekly | partly done |
+| Public feature boards (Canny, UserVoice, Productboard portals) | `feature_boards` | public_pages | robots.txt and terms allow reading; but Canny boards ship data only as an embedded JS object (not JSON, not a published interface) and UserVoice needs JavaScript. Revisit if a vendor offers a public feed or API | weekly | todo (deferred 2026-10-09) |
 | GitHub issues and discussions | `github` | own_api | REST/GraphQL search issues and discussions | daily | todo |
 | Better Business Bureau | G5, else G1 | public_pages | check terms; default G1 | weekly | todo |
 
@@ -464,7 +464,7 @@ Work top to bottom. Finish each connector to its definition of done before start
 12. `instagram`, `facebook_pages` (after Meta review), `pinterest`, `telegram`, `lemmy`, `mastodon`
 
 **Phase 3 — tool gaps and change signals**
-13. G10 `app_reviews`, `feature_boards`
+13. G10 `app_reviews` — done (2026-10-09, WordPress.org); `feature_boards` deferred (no stable public interface)
 14. `gdelt`, `edgar`, procurement (`sam_gov`, `ted`, `uk_tenders`)
 15. Regulatory and legal: `federal_register`, `regulations_gov`, `legiscan`/`openstates`, `courtlistener`, `cfpb`, `openfda`, `nhtsa`, `osha`, `eurlex`
 16. G9 `open_data`

@@ -203,6 +203,56 @@ sources:
       - keywords: ["is there a tool", "is there an app", "is there software", "so tired of", "takes forever"]
         limit: 50
 
+  app_reviews:
+    enabled: true
+    status: done
+    status_date: 2026-10-09
+    route: rss
+    source_type: review
+    cadence: daily
+    access_check:
+      robots: allowed
+      terms: allowed
+      decision: full
+      terms_url: https://wordpress.org/support/guidelines/
+      checked_at: 2026-10-09
+      notes: >-
+        WordPress.org plugin review and support-forum feeds; robots.txt allows them (the api.wordpress.org
+        plugin info API is disallowed and unused); no restriction found in WordPress.org's policies.
+        Not usable (2026-10-09): Apple reviews feed, Chrome Web Store, Atlassian Marketplace API (robots.txt),
+        Shopify App Store (ToS forbids robots).
+    queries:
+      - {industry_hint: ecommerce, params: {plugin: woocommerce, kind: reviews}, limit: 30}
+      - {industry_hint: ecommerce, params: {plugin: woocommerce, kind: support}, limit: 30}
+      - {industry_hint: ecommerce, params: {plugin: mailpoet, kind: reviews}, limit: 30}
+      - {industry_hint: ecommerce, params: {plugin: mailpoet, kind: support}, limit: 30}
+      - {industry_hint: restaurants, params: {plugin: restaurant-reservations, kind: reviews}, limit: 30}
+      - {industry_hint: restaurants, params: {plugin: restaurant-reservations, kind: support}, limit: 30}
+      - {industry_hint: education, params: {plugin: tutor, kind: reviews}, limit: 30}
+      - {industry_hint: education, params: {plugin: tutor, kind: support}, limit: 30}
+      - {industry_hint: education, params: {plugin: learnpress, kind: reviews}, limit: 30}
+      - {industry_hint: education, params: {plugin: learnpress, kind: support}, limit: 30}
+      - {industry_hint: healthcare, params: {plugin: bookly-responsive-appointment-booking-tool, kind: reviews}, limit: 30}
+      - {industry_hint: healthcare, params: {plugin: bookly-responsive-appointment-booking-tool, kind: support}, limit: 30}
+      - {industry_hint: healthcare, params: {plugin: ameliabooking, kind: reviews}, limit: 30}
+      - {industry_hint: healthcare, params: {plugin: ameliabooking, kind: support}, limit: 30}
+      - {industry_hint: marketing, params: {plugin: wordpress-seo, kind: reviews}, limit: 30}
+      - {industry_hint: marketing, params: {plugin: wordpress-seo, kind: support}, limit: 30}
+      - {industry_hint: marketing, params: {plugin: seo-by-rank-math, kind: reviews}, limit: 30}
+      - {industry_hint: marketing, params: {plugin: seo-by-rank-math, kind: support}, limit: 30}
+      - {industry_hint: hr, params: {plugin: wp-job-manager, kind: reviews}, limit: 30}
+      - {industry_hint: hr, params: {plugin: wp-job-manager, kind: support}, limit: 30}
+      - {industry_hint: accounting, params: {plugin: sliced-invoices, kind: reviews}, limit: 30}
+      - {industry_hint: accounting, params: {plugin: sliced-invoices, kind: support}, limit: 30}
+      - {industry_hint: real_estate, params: {plugin: essential-real-estate, kind: reviews}, limit: 30}
+      - {industry_hint: real_estate, params: {plugin: essential-real-estate, kind: support}, limit: 30}
+      - {industry_hint: it_devtools, params: {plugin: wordfence, kind: reviews}, limit: 30}
+      - {industry_hint: it_devtools, params: {plugin: wordfence, kind: support}, limit: 30}
+      - {industry_hint: it_devtools, params: {plugin: updraftplus, kind: reviews}, limit: 30}
+      - {industry_hint: it_devtools, params: {plugin: updraftplus, kind: support}, limit: 30}
+      - {industry_hint: legal, params: {plugin: contact-form-7, kind: reviews}, limit: 30}
+      - {industry_hint: legal, params: {plugin: contact-form-7, kind: support}, limit: 30}
+
   bluesky:
     connector: search_api
     enabled: true
