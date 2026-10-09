@@ -45,9 +45,7 @@ async def run_source(
     spent_before = services.costs.spent_this_month(source.name)
 
     defaults = services.sources.defaults
-    if since is None:
-        last = services.store.last_success(source.name) if incremental else None
-        since = last or started - timedelta(days=defaults.initial_lookback_days)
+    lookback = started - timedelta(days=defaults.initial_lookback_days)
 
     try:
         connector = get_connector_class(source.connector)(source, services)
@@ -63,7 +61,10 @@ async def run_source(
         queries = [q.model_copy(update={"keywords": keywords}) for q in queries[:1]]
     failed_queries = 0
     for query in queries:
-        query = query.model_copy(update={"since": since, **({"limit": limit} if limit else {})})
+        # Each query has its own cursor, so one failing feed or search never holds back the rest.
+        cursor = services.store.get_cursor(source.name, query.key) if incremental else None
+        query_since = since or cursor or lookback
+        query = query.model_copy(update={"since": query_since, **({"limit": limit} if limit else {})})
         batch: list[RawPost] = []
 
         def flush() -> None:
@@ -78,7 +79,7 @@ async def run_source(
             agen = connector.fetch(query)
             try:
                 async for post in agen:
-                    if post.published_at < since:
+                    if post.published_at < query_since:
                         continue
                     result.fetched += 1
                     count += 1
@@ -92,6 +93,8 @@ async def run_source(
             finally:
                 await agen.aclose()
             flush()
+            if save:
+                services.store.set_cursor(source.name, query.key, started)
         except (BudgetExceeded, QuotaExceeded) as exc:
             flush()
             log.warning("%s: stopping, %s", source.name, exc)

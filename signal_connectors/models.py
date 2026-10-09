@@ -150,6 +150,11 @@ class SourceQuery(BaseModel):
     def query_text(self) -> str | None:
         return " ".join(self.keywords) or None
 
+    @property
+    def key(self) -> str:
+        """Stable identity of what this query fetches (ignores since and limit)."""
+        return sha256(self.model_dump_json(exclude={"since", "limit"}))
+
 
 class FetchResult(BaseModel):
     """Summary of one run of one source."""

@@ -100,6 +100,16 @@ class CostEventRow(Base):
     note: Mapped[str | None] = mapped_column(Text)
 
 
+class CursorRow(Base):
+    """Per-query incremental cursor: the start time of that query's last successful fetch."""
+
+    __tablename__ = "query_cursors"
+
+    source: Mapped[str] = mapped_column(String(200), primary_key=True)
+    query_key: Mapped[str] = mapped_column(String(64), primary_key=True)
+    last_success: Mapped[datetime] = mapped_column(UTCDateTime)
+
+
 @dataclass
 class SaveResult:
     new: int = 0
@@ -186,15 +196,24 @@ class Store:
             s.add(RunRow(**result.model_dump()))
 
     def last_success(self, source: str) -> datetime | None:
-        """Start time of the last fully successful run; the next incremental run fetches from here.
-
-        Partial runs don't count, so a query that failed is retried over the same window
-        (dedupe absorbs the overlap).
-        """
+        """Start time of the last fully successful run (health reporting; fetching uses query cursors)."""
         stmt = select(func.max(RunRow.started_at)).where(RunRow.source == source, RunRow.status == "ok")
         with self.session() as s:
             value = s.scalar(stmt)
             return to_utc(value) if value else None
+
+    def get_cursor(self, source: str, query_key: str) -> datetime | None:
+        with self.session() as s:
+            row = s.get(CursorRow, (source, query_key))
+            return row.last_success if row else None
+
+    def set_cursor(self, source: str, query_key: str, when: datetime) -> None:
+        with self.session() as s, s.begin():
+            row = s.get(CursorRow, (source, query_key))
+            if row is None:
+                s.add(CursorRow(source=source, query_key=query_key, last_success=when))
+            else:
+                row.last_success = when
 
     # --- costs ---------------------------------------------------------------
 

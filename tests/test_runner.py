@@ -73,3 +73,23 @@ def test_smoke_cli(settings, tmp_path, capsys):
     assert smoke_main(["fake"], settings=settings) == 0  # ran dry at 7 with no errors
     assert smoke_main(["--list"], settings=settings) == 0
     assert "runnable" in capsys.readouterr().out
+
+
+async def test_cursors_are_per_query(make_services):
+    cfg = fake(fail_on="bad", queries=[{"keywords": ["bad"]}, {"keywords": ["good"]}])
+    async with make_services({"sources": {"fake": cfg}}) as svc:
+        src = svc.sources.get("fake")
+        first = (await run_source(svc, src)).result
+        good, bad = (q.key for q in reversed(src.build_queries(svc.sources.defaults)))
+        assert svc.store.get_cursor("fake", good) == first.started_at
+        assert svc.store.get_cursor("fake", bad) is None  # failed: retried over the same window
+        second = (await run_source(svc, src)).result
+        # good query resumes from its cursor: only the post stamped after the first run comes back
+        assert second.fetched <= 1 and second.new == 0
+        assert svc.store.get_cursor("fake", good) == second.started_at
+
+
+def test_query_key_ignores_since_and_limit():
+    from signal_connectors.models import SourceQuery
+    a = SourceQuery(keywords=["x"], limit=5)
+    assert a.key == SourceQuery(keywords=["x"], limit=50, since=utcnow()).key != SourceQuery(keywords=["y"]).key
