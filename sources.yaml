@@ -107,6 +107,29 @@ sources:
       - {params: {feed: "https://medium.com/feed/tag/small-business", name: medium-small-business}}
       - {params: {feed: "https://www.lennysnewsletter.com/feed", name: lennysnewsletter}}
 
+  hackernews:
+    enabled: true
+    status: done
+    status_date: 2026-10-09
+    route: own_api
+    source_type: community
+    cadence: hourly
+    access_check:
+      robots: not_applicable
+      terms: allowed
+      decision: full
+      terms_url: https://github.com/HackerNews/API
+      checked_at: 2026-10-09
+      notes: Official APIs. Firebase API is MIT-licensed with no rate limit; Algolia HN Search is public and keyless.
+    rate_limit: {requests_per_second: 5, domains: [hacker-news.firebaseio.com]}
+    queries:
+      # cross-industry pain phrases; industry maps add role-specific ones
+      - keywords: ["is there a tool", "is there an app", "is there software", "I would pay for",
+                   "so tired of", "takes forever", "wish there was", "looking for a tool"]
+        limit: 100
+      - {params: {tags: ask_hn}, limit: 100}          # every new Ask HN
+      - {params: {list: jobstories}, limit: 60}        # YC company job posts (paid demand)
+
   google_news:
     connector: rss
     enabled: false
