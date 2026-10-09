@@ -10,6 +10,8 @@ import pytest
 import vcr
 
 from signal_connectors.config import SourcesFile
+
+from .scrub import scrub_body
 from signal_connectors.services import Services
 from signal_connectors.settings import Settings
 from signal_connectors.store import Store
@@ -28,11 +30,12 @@ def _scrub_response(response: dict[str, Any]) -> dict[str, Any]:
         # Drop secrets, and headers httpx can't replay (WordPress.org sends "X-Olaf: ⛄").
         if name.lower() in SECRET_RESPONSE_HEADERS or not all(str(v).isascii() for v in values):
             del headers[name]
-    return response
+    return scrub_body(response)   # personal data never reaches a committed cassette
 
 
 # Recorded-response tests. Re-record with: VCR_RECORD_MODE=once (delete the cassette first).
-# Auth headers and key-like query params are scrubbed before anything is written to disk.
+# Auth headers, key-like query params and personal fields in bodies are scrubbed before
+# anything is written to disk (tests/scrub.py).
 signal_vcr = vcr.VCR(
     cassette_library_dir=str(CASSETTES),
     record_mode=os.environ.get("VCR_RECORD_MODE", "none"),

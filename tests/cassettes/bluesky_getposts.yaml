@@ -1,0 +1,337 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - public.api.bsky.app
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://public.api.bsky.app/xrpc/com.atproto.identity.resolveHandle?handle=bsky.app
+  response:
+    body:
+      string: '{"did": "did:plc:z72i7hdynmk6r22z27h6tvur"}'
+    headers:
+      access-control-allow-origin:
+      - '*'
+      cache-control:
+      - public, max-age=30
+      cdn-cache:
+      - REVALIDATED
+      cdn-cachedat:
+      - 10/09/2026 23:16:26
+      cdn-edgestorageid:
+      - '925'
+      cdn-proxyver:
+      - '1.71'
+      cdn-pullzone:
+      - '1816608'
+      cdn-requestcountrycode:
+      - US
+      cdn-requestid:
+      - a861f32792792cceb8fc3fcf38adcc40
+      cdn-requestpullcode:
+      - '200'
+      cdn-requestpullsuccess:
+      - 'True'
+      cdn-requesttime:
+      - '0'
+      cdn-status:
+      - '200'
+      connection:
+      - keep-alive
+      content-length:
+      - '43'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:27:54 GMT
+      server:
+      - BunnyCDN-ASB1-1310
+      strict-transport-security:
+      - max-age=63072000
+      x-powered-by:
+      - Express
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - public.api.bsky.app
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://public.api.bsky.app/robots.txt
+  response:
+    body:
+      string: '# Hello Friends!
+
+
+        # Crawling the public parts of the API is allowed. HTTP 429 ("backoff") status
+        codes are used for rate-limiting. Up to a handful concurrent requests should
+        be ok.
+
+        User-agent: *
+
+        Allow: /'
+    headers:
+      access-control-allow-origin:
+      - '*'
+      cache-control:
+      - public, max-age=30
+      cdn-cache:
+      - REVALIDATED
+      cdn-cachedat:
+      - 10/09/2026 17:41:57
+      cdn-edgestorageid:
+      - '925'
+      cdn-proxyver:
+      - '1.70'
+      cdn-pullzone:
+      - '1816608'
+      cdn-requestcountrycode:
+      - US
+      cdn-requestid:
+      - e3187d22df7cf14fbc538ae66daee5a6
+      cdn-requestpullcode:
+      - '200'
+      cdn-requestpullsuccess:
+      - 'True'
+      cdn-requesttime:
+      - '0'
+      cdn-status:
+      - '200'
+      connection:
+      - keep-alive
+      content-length:
+      - '203'
+      content-type:
+      - text/plain; charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:27:55 GMT
+      server:
+      - BunnyCDN-ASB1-1310
+      strict-transport-security:
+      - max-age=63072000
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-powered-by:
+      - Express
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - public.api.bsky.app
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://public.api.bsky.app/xrpc/app.bsky.feed.getPosts?uris=at%3A%2F%2Fdid%3Aplc%3Az72i7hdynmk6r22z27h6tvur%2Fapp.bsky.feed.post%2F3mx5e63uvns2d&uris=at%3A%2F%2Fdid%3Aplc%3Az72i7hdynmk6r22z27h6tvur%2Fapp.bsky.feed.post%2F3mxhdhodv222n
+  response:
+    body:
+      string: "{\"posts\": [{\"uri\": \"at://did:plc:z72i7hdynmk6r22z27h6tvur/app.bsky.feed.post/3mxhdhodv222n\",
+        \"cid\": \"bafyreiguowippsvmump7jfcfqtghlwd6rftalwndc2ctl7wknwtnnh5ddq\",
+        \"author\": {\"did\": \"did:plc:z72i7hdynmk6r22z27h6tvur\", \"handle\": \"redacted\",
+        \"displayName\": \"redacted\", \"avatar\": \"redacted\", \"associated\": {\"chat\":
+        {\"allowIncoming\": \"none\"}, \"activitySubscription\": {\"allowSubscriptions\":
+        \"followers\"}}, \"labels\": [], \"createdAt\": \"2023-04-12T04:53:57.057Z\",
+        \"verification\": {\"verifications\": [], \"verifiedStatus\": \"none\", \"trustedVerifierStatus\":
+        \"valid\"}}, \"record\": {\"$type\": \"app.bsky.feed.post\", \"createdAt\":
+        \"2026-10-09T15:53:59.424Z\", \"embed\": {\"$type\": \"app.bsky.embed.record\",
+        \"record\": {\"cid\": \"bafyreihfqrbkfwrqvhrxiubonvhss7fazauxbxg565q5slst6k5p6xlzhq\",
+        \"uri\": \"at://did:plc:hkxtqxfvk4xh2roqbkebmoiq/app.bsky.feed.post/3mxfldtvy522k\"}},
+        \"langs\": [\"en\"], \"text\": \"a masterclass in alt text\"}, \"embed\":
+        {\"record\": {\"uri\": \"at://did:plc:hkxtqxfvk4xh2roqbkebmoiq/app.bsky.feed.post/3mxfldtvy522k\",
+        \"cid\": \"bafyreihfqrbkfwrqvhrxiubonvhss7fazauxbxg565q5slst6k5p6xlzhq\",
+        \"author\": {\"did\": \"did:plc:hkxtqxfvk4xh2roqbkebmoiq\", \"handle\": \"redacted\",
+        \"displayName\": \"redacted\", \"avatar\": \"redacted\", \"associated\": {\"chat\":
+        {\"allowIncoming\": \"all\"}, \"activitySubscription\": {\"allowSubscriptions\":
+        \"followers\"}}, \"labels\": [], \"createdAt\": \"2024-10-19T12:15:11.611Z\"},
+        \"value\": {\"$type\": \"app.bsky.feed.post\", \"createdAt\": \"2026-10-08T23:09:41.497Z\",
+        \"embed\": {\"$type\": \"app.bsky.embed.images\", \"images\": [{\"alt\": \"Pen
+        and watercolor \\n\\nCowboys again. This time one of our boys has lost his
+        boots. Standing in a field of long grass the cowboy points towards the ground
+        and shouts back to his colleague, \u201CLil bone people got muh boots.\u201D
+        This makes no sense to the other cowboy who sits atop his horse away from
+        the action. He responds, \u201CLil wut?\u201D Sure enough in the foreground
+        we see a squad of little bone people scampering through the grass with the
+        stolen cowboy boots. They\u2019re thrilled. How the bone people got the boots
+        off the cowboy is unclear.\\n\\nArtist\u2019s note: I tend to draw drawings
+        from the same perspective (straight on) most of the time. This idea came about
+        when I was goofin around trying to draw a character from a lower angle. I
+        like that the story unfolds with the foreground, mid-ground, and background
+        all working together. There\u2019s a draft of this one included in the Spooky
+        Pants book. Coming out next week! \", \"aspectRatio\": {\"height\": 4000,
+        \"width\": 3200}, \"image\": {\"$type\": \"blob\", \"ref\": {\"$link\": \"bafkreiamoq7vfjobkai4hv2q2vnv6ufkrqnduvlv4j3azkqzhrt4nohd7i\"},
+        \"mimeType\": \"image/jpeg\", \"size\": 1969698}}]}, \"langs\": [\"en\"],
+        \"text\": \"\"}, \"labels\": [], \"likeCount\": 5255, \"replyCount\": 37,
+        \"repostCount\": 1005, \"quoteCount\": 34, \"indexedAt\": \"2026-10-08T23:10:08.763Z\",
+        \"embeds\": [{\"images\": [{\"thumb\": \"https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:hkxtqxfvk4xh2roqbkebmoiq/bafkreiamoq7vfjobkai4hv2q2vnv6ufkrqnduvlv4j3azkqzhrt4nohd7i\",
+        \"fullsize\": \"https://cdn.bsky.app/img/feed_fullsize/plain/did:plc:hkxtqxfvk4xh2roqbkebmoiq/bafkreiamoq7vfjobkai4hv2q2vnv6ufkrqnduvlv4j3azkqzhrt4nohd7i\",
+        \"alt\": \"Pen and watercolor \\n\\nCowboys again. This time one of our boys
+        has lost his boots. Standing in a field of long grass the cowboy points towards
+        the ground and shouts back to his colleague, \u201CLil bone people got muh
+        boots.\u201D This makes no sense to the other cowboy who sits atop his horse
+        away from the action. He responds, \u201CLil wut?\u201D Sure enough in the
+        foreground we see a squad of little bone people scampering through the grass
+        with the stolen cowboy boots. They\u2019re thrilled. How the bone people got
+        the boots off the cowboy is unclear.\\n\\nArtist\u2019s note: I tend to draw
+        drawings from the same perspective (straight on) most of the time. This idea
+        came about when I was goofin around trying to draw a character from a lower
+        angle. I like that the story unfolds with the foreground, mid-ground, and
+        background all working together. There\u2019s a draft of this one included
+        in the Spooky Pants book. Coming out next week! \", \"aspectRatio\": {\"height\":
+        4000, \"width\": 3200}}], \"$type\": \"app.bsky.embed.images#view\"}], \"$type\":
+        \"app.bsky.embed.record#viewRecord\"}, \"$type\": \"app.bsky.embed.record#view\"},
+        \"bookmarkCount\": 76, \"replyCount\": 26, \"repostCount\": 177, \"likeCount\":
+        1837, \"quoteCount\": 6, \"indexedAt\": \"2026-10-09T15:53:59.892Z\", \"labels\":
+        [], \"threadgate\": {\"uri\": \"at://did:plc:z72i7hdynmk6r22z27h6tvur/app.bsky.feed.threadgate/3mxhdhodv222n\",
+        \"cid\": \"bafyreigu42puwx52d4z2objsthgx4bxqm4u4gpqvq4mxz24l7yz5ve746i\",
+        \"record\": {\"$type\": \"app.bsky.feed.threadgate\", \"createdAt\": \"2026-10-09T18:43:05.858Z\",
+        \"hiddenReplies\": [\"at://did:plc:jqfi36j76oxk52gaqx2tem66/app.bsky.feed.post/3mxhmr7xdyk22\",
+        \"at://did:plc:a6g23vezflvebvmaqngfwcmn/app.bsky.feed.post/3mxhelg3ngc2v\"],
+        \"post\": \"at://did:plc:z72i7hdynmk6r22z27h6tvur/app.bsky.feed.post/3mxhdhodv222n\"},
+        \"lists\": []}}, {\"uri\": \"at://did:plc:z72i7hdynmk6r22z27h6tvur/app.bsky.feed.post/3mx5e63uvns2d\",
+        \"cid\": \"bafyreicnhzopqetyqko7bcc2gul2dkgtyxgnl3creeklgugdagxp7anaxe\",
+        \"author\": {\"did\": \"did:plc:z72i7hdynmk6r22z27h6tvur\", \"handle\": \"redacted\",
+        \"displayName\": \"redacted\", \"avatar\": \"redacted\", \"associated\": {\"chat\":
+        {\"allowIncoming\": \"none\"}, \"activitySubscription\": {\"allowSubscriptions\":
+        \"followers\"}}, \"labels\": [], \"createdAt\": \"2023-04-12T04:53:57.057Z\",
+        \"verification\": {\"verifications\": [], \"verifiedStatus\": \"none\", \"trustedVerifierStatus\":
+        \"valid\"}}, \"record\": {\"$type\": \"app.bsky.feed.post\", \"createdAt\":
+        \"2026-10-05T16:39:54.426Z\", \"embed\": {\"$type\": \"app.bsky.embed.record\",
+        \"record\": {\"cid\": \"bafyreify4yfgnmeoalta6jkgs23ro7mphst2jr7luhggazluukvfpx5iva\",
+        \"uri\": \"at://did:plc:ilmbc32kos5zwmkqh2nxamwc/app.bsky.feed.post/3mx4smdh4el2k\"}},
+        \"facets\": [{\"$type\": \"app.bsky.richtext.facet\", \"features\": [{\"$type\":
+        \"app.bsky.richtext.facet#mention\", \"did\": \"did:plc:qmmohi6hskhsvqbw46eflibx\"}],
+        \"index\": {\"byteEnd\": 61, \"byteStart\": 38}}, {\"$type\": \"app.bsky.richtext.facet\",
+        \"features\": [{\"$type\": \"app.bsky.richtext.facet#mention\", \"did\": \"did:plc:ilmbc32kos5zwmkqh2nxamwc\"}],
+        \"index\": {\"byteEnd\": 133, \"byteStart\": 118}}], \"langs\": [\"en\"],
+        \"text\": \"Congratulations to Nobel Prize winner @deisseroth.bsky.social!
+        Follow along with the prize announcements all week via @nobelprize.org\"},
+        \"embed\": {\"record\": {\"uri\": \"at://did:plc:ilmbc32kos5zwmkqh2nxamwc/app.bsky.feed.post/3mx4smdh4el2k\",
+        \"cid\": \"bafyreify4yfgnmeoalta6jkgs23ro7mphst2jr7luhggazluukvfpx5iva\",
+        \"author\": {\"did\": \"did:plc:ilmbc32kos5zwmkqh2nxamwc\", \"handle\": \"redacted\",
+        \"displayName\": \"redacted\", \"avatar\": \"redacted\", \"associated\": {\"activitySubscription\":
+        {\"allowSubscriptions\": \"followers\"}}, \"labels\": [], \"createdAt\": \"2024-11-14T07:35:01.775Z\",
+        \"verification\": {\"verifications\": [{\"issuer\": \"did:plc:z72i7hdynmk6r22z27h6tvur\",
+        \"issuerDisplayName\": \"Bluesky\", \"issuerHandle\": \"bsky.app\", \"uri\":
+        \"at://did:plc:z72i7hdynmk6r22z27h6tvur/app.bsky.graph.verification/3mtvo3rh2a62f\",
+        \"isValid\": true, \"createdAt\": \"2026-08-25T11:00:40.747Z\"}], \"verifiedStatus\":
+        \"valid\", \"trustedVerifierStatus\": \"none\"}, \"status\": {\"uri\": \"at://did:plc:ilmbc32kos5zwmkqh2nxamwc/app.bsky.actor.status/self\",
+        \"cid\": \"bafyreihqvarxnlcfeleyc4yta3x4pwcttuo5qdd4m4nco6pcyvsid4b6xy\",
+        \"record\": {\"$type\": \"app.bsky.actor.status\", \"createdAt\": \"2026-10-09T08:56:15.126Z\",
+        \"durationMinutes\": 60, \"embed\": {\"$type\": \"app.bsky.embed.external\",
+        \"external\": {\"$type\": \"app.bsky.embed.external#external\", \"description\":
+        \"YouTube video by Nobel Prize\", \"thumb\": {\"$type\": \"blob\", \"ref\":
+        {\"$link\": \"bafkreie6cj4avizzfozhna4flypim6u5t35y4ge4uu74tu43febvvb7kfa\"},
+        \"mimeType\": \"image/jpeg\", \"size\": 112477}, \"title\": \"Announcement
+        of the 2026 Nobel Peace Prize\", \"uri\": \"https://youtube.com/live/X006qYLS-xU\"}},
+        \"status\": \"app.bsky.actor.status#live\"}, \"status\": \"app.bsky.actor.status#live\",
+        \"embed\": {\"external\": {\"uri\": \"https://youtube.com/live/X006qYLS-xU\",
+        \"title\": \"Announcement of the 2026 Nobel Peace Prize\", \"description\":
+        \"YouTube video by Nobel Prize\", \"thumb\": \"https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:ilmbc32kos5zwmkqh2nxamwc/bafkreie6cj4avizzfozhna4flypim6u5t35y4ge4uu74tu43febvvb7kfa\"},
+        \"$type\": \"app.bsky.embed.external#view\"}, \"labels\": [], \"expiresAt\":
+        \"2026-10-09T09:56:15.126Z\", \"isActive\": false}}, \"value\": {\"$type\":
+        \"app.bsky.feed.post\", \"allow\": [], \"createdAt\": \"2026-10-05T11:25:44.646658738Z\",
+        \"embed\": {\"$type\": \"app.bsky.embed.images\", \"captions\": [], \"external\":
+        null, \"images\": [{\"alt\": \"Karl Deisseroth on the phone looking happy\",
+        \"aspectRatio\": {\"height\": 2000, \"width\": 1302}, \"image\": {\"$type\":
+        \"blob\", \"ref\": {\"$link\": \"bafkreien7j3vwlmjyu56t7hrp2hs5exlur5mzc4jwnbyxzfkt5tgt2qzqa\"},
+        \"mimeType\": \"image/jpeg\", \"size\": 242696}}], \"record\": null, \"video\":
+        null}, \"hiddenReplies\": [], \"text\": \"Congratulations to our first Nobel
+        Prize laureate of 2026 \U0001F389\\n\\nEarly this morning Karl Deisseroth
+        found out he was awarded this year's Nobel Prize in Physiology or Medicine.\\n\\nHe
+        seems very happy with the news!\"}, \"labels\": [], \"likeCount\": 1178, \"replyCount\":
+        14, \"repostCount\": 138, \"quoteCount\": 44, \"indexedAt\": \"2026-10-05T11:25:45.464Z\",
+        \"embeds\": [{\"images\": [{\"thumb\": \"https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:ilmbc32kos5zwmkqh2nxamwc/bafkreien7j3vwlmjyu56t7hrp2hs5exlur5mzc4jwnbyxzfkt5tgt2qzqa\",
+        \"fullsize\": \"https://cdn.bsky.app/img/feed_fullsize/plain/did:plc:ilmbc32kos5zwmkqh2nxamwc/bafkreien7j3vwlmjyu56t7hrp2hs5exlur5mzc4jwnbyxzfkt5tgt2qzqa\",
+        \"alt\": \"Karl Deisseroth on the phone looking happy\", \"aspectRatio\":
+        {\"height\": 2000, \"width\": 1302}}], \"$type\": \"app.bsky.embed.images#view\"}],
+        \"$type\": \"app.bsky.embed.record#viewRecord\"}, \"$type\": \"app.bsky.embed.record#view\"},
+        \"bookmarkCount\": 33, \"replyCount\": 41, \"repostCount\": 185, \"likeCount\":
+        2262, \"quoteCount\": 8, \"indexedAt\": \"2026-10-05T16:39:54.860Z\", \"labels\":
+        [], \"threadgate\": {\"uri\": \"at://did:plc:z72i7hdynmk6r22z27h6tvur/app.bsky.feed.threadgate/3mx5e63uvns2d\",
+        \"cid\": \"bafyreidhcpihhenqyczgtwuy77vfjxh2mx7q64z6ypacvoapro4trb47sq\",
+        \"record\": {\"$type\": \"app.bsky.feed.threadgate\", \"createdAt\": \"2026-10-05T20:08:12.570Z\",
+        \"hiddenReplies\": [\"at://did:plc:osg2vzhifd2tjfsvfwua7scy/app.bsky.feed.post/3mx5jquevnk2n\",
+        \"at://did:plc:wehzvrzgteo4ff3jo264hx6r/app.bsky.feed.post/3mx5lzpfpes2r\",
+        \"at://did:plc:36zxdslw62m745v54pjaphtt/app.bsky.feed.post/3mx5ppldifs2t\",
+        \"at://did:plc:jl5xwwm7vkaxkg5z4ehpmne6/app.bsky.feed.post/3mx5oodbjrk2b\"],
+        \"post\": \"at://did:plc:z72i7hdynmk6r22z27h6tvur/app.bsky.feed.post/3mx5e63uvns2d\"},
+        \"lists\": []}}]}"
+    headers:
+      access-control-allow-origin:
+      - '*'
+      atproto-content-labelers:
+      - did:plc:ar7c4by46qjdydhdevvrndac;redact
+      cache-control:
+      - public, max-age=30
+      cdn-cache:
+      - EXPIRED
+      cdn-cachedat:
+      - 10/09/2026 23:27:56
+      cdn-edgestorageid:
+      - '1310'
+      cdn-proxyver:
+      - '1.70'
+      cdn-pullzone:
+      - '1816608'
+      cdn-requestcountrycode:
+      - US
+      cdn-requestid:
+      - fbf0d0eb31290726539286fe78b52c35
+      cdn-requestpullcode:
+      - '200'
+      cdn-requestpullsuccess:
+      - 'True'
+      cdn-requesttime:
+      - '0'
+      cdn-status:
+      - '200'
+      connection:
+      - keep-alive
+      content-length:
+      - '10521'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:27:56 GMT
+      server:
+      - BunnyCDN-ASB1-1310
+      strict-transport-security:
+      - max-age=63072000
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-powered-by:
+      - Express
+    status:
+      code: 200
+      message: OK
+version: 1

@@ -587,6 +587,25 @@ sources:
     queries:
       - {limit: 400}
 
+  sam_gov:
+    enabled: true
+    status: done
+    status_date: 2026-10-09
+    route: own_api
+    source_type: government
+    cadence: daily
+    env: [SAM_GOV_API_KEY]
+    quota: {units: 10, window_days: 1}     # lowest published tier; one request returns 1,000 notices
+    access_check:
+      robots: allowed
+      terms: allowed
+      decision: full
+      terms_url: https://open.gsa.gov/api/get-opportunities-public-api/
+      checked_at: 2026-10-09
+      notes: Federal contract opportunities, public data. pointOfContact (names, emails, phones) not stored.
+    queries:
+      - {params: {ptype: "o,k,p,r"}, limit: 1000}     # solicitations, combined, pre-solicitations, sources sought
+
   bluesky:
     connector: search_api
     enabled: true

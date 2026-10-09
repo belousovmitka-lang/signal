@@ -1,0 +1,787 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - hn.algolia.com
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://hn.algolia.com/api/v1/search_by_date?hitsPerPage=10&numericFilters=created_at_i%3E1790812800&page=0&query=%22is+there+a+tool%22&tags=%28story%2Ccomment%29
+  response:
+    body:
+      string: '{"exhaustive": {"nbHits": true, "typo": true}, "exhaustiveNbHits":
+        true, "exhaustiveTypo": true, "hits": [{"_highlightResult": {"author": {"matchLevel":
+        "none", "matchedWords": [], "value": "ajmt"}, "story_text": {"fullyHighlighted":
+        false, "matchLevel": "full", "matchedWords": ["is", "there", "a", "tool"],
+        "value": "In 2026, it almost feels like there''s a tool for absolutely every
+        conceivable problem or pain point. <em>Is there a tool</em> out there for
+        anyone, that doesn''t already exist, that you would pay for?"}, "title": {"matchLevel":
+        "none", "matchedWords": [], "value": "What tools do you wish existed?"}},
+        "_tags": ["story", "author_redacted", "story_49937618", "ask_hn"], "author":
+        "redacted", "children": [49938510, 49938454], "created_at": "2026-10-02T19:36:13Z",
+        "created_at_i": 1790969773, "num_comments": 1, "objectID": "49937618", "points":
+        1, "story_id": 49937618, "story_text": "In 2026, it almost feels like there&#x27;s
+        a tool for absolutely every conceivable problem or pain point. Is there a
+        tool out there for anyone, that doesn&#x27;t already exist, that you would
+        pay for?", "title": "What tools do you wish existed?", "updated_at": "2026-10-02T23:55:04Z"}],
+        "hitsPerPage": 10, "nbHits": 1, "nbPages": 1, "page": 0, "params": "query=%22is+there+a+tool%22&tags=%28story%2Ccomment%29&numericFilters=created_at_i%3E1790812800&hitsPerPage=10&page=0&advancedSyntax=true&analyticsTags=backend",
+        "processingTimeMS": 2, "processingTimingsMS": {"_request": {"roundTrip": 26},
+        "fetch": {"total": 1}, "total": 2}, "query": "\"is there a tool\"", "serverTimeMS":
+        2}'
+    headers:
+      access-control-allow-origin:
+      - '*'
+      alt-svc:
+      - h3=":443"; ma=2592000
+      content-length:
+      - '1583'
+      content-type:
+      - application/json
+      date:
+      - Fri, 09 Oct 2026 23:27:42 GMT
+      server:
+      - Google Frontend
+      via:
+      - 1.1 google
+      x-cloud-trace-context:
+      - cee038e35791c2dcddd41a2061da1aa7
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - hn.algolia.com
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://hn.algolia.com/api/v1/search_by_date?hitsPerPage=10&numericFilters=created_at_i%3E1790812800&page=0&query=%22wish+there+was%22&tags=%28story%2Ccomment%29
+  response:
+    body:
+      string: "{\"exhaustive\": {\"nbHits\": true, \"typo\": true}, \"exhaustiveNbHits\":
+        true, \"exhaustiveTypo\": true, \"hits\": [{\"_highlightResult\": {\"author\":
+        {\"matchLevel\": \"none\", \"matchedWords\": [], \"value\": \"rock_artist\"},
+        \"comment_text\": {\"fullyHighlighted\": false, \"matchLevel\": \"full\",
+        \"matchedWords\": [\"wish\", \"there\", \"was\"], \"value\": \"That\u2019s
+        exactly it.\\nThere should be some permission logic for delegating.<p>But
+        as always, there are rivals trying to set their tone on what\u2019s the standard.
+        We all <em>wish there was</em> one unified agreed concept that will work but
+        I guess the most common one will eventually survive.<p>Just as Microsoft in
+        a sense embraces Linux with WSL and also Apple has their virtualization framework.<p>I
+        hope we\u2019ll eventually get unified model management system to include
+        also permissions designed properly\"}, \"story_title\": {\"matchLevel\": \"none\",
+        \"matchedWords\": [], \"value\": \"MXC - a sandboxed code execution system\"},
+        \"story_url\": {\"matchLevel\": \"none\", \"matchedWords\": [], \"value\":
+        \"https://github.com/microsoft/mxc\"}}, \"_tags\": [\"comment\", \"author_redacted\",
+        \"story_50016489\"], \"author\": \"redacted\", \"comment_text\": \"That\u2019s
+        exactly it.\\nThere should be some permission logic for delegating.<p>But
+        as always, there are rivals trying to set their tone on what\u2019s the standard.
+        We all wish there was one unified agreed concept that will work but I guess
+        the most common one will eventually survive.<p>Just as Microsoft in a sense
+        embraces Linux with WSL and also Apple has their virtualization framework.<p>I
+        hope we\u2019ll eventually get unified model management system to include
+        also permissions designed properly\", \"created_at\": \"2026-10-09T09:10:25Z\",
+        \"created_at_i\": 1791537025, \"objectID\": \"50017998\", \"parent_id\": 50017731,
+        \"story_id\": 50016489, \"story_title\": \"MXC - a sandboxed code execution
+        system\", \"story_url\": \"https://github.com/microsoft/mxc\", \"updated_at\":
+        \"2026-10-09T09:14:41Z\"}, {\"_highlightResult\": {\"author\": {\"matchLevel\":
+        \"none\", \"matchedWords\": [], \"value\": \"where-group-by\"}, \"comment_text\":
+        {\"fullyHighlighted\": false, \"matchLevel\": \"full\", \"matchedWords\":
+        [\"wish\", \"there\", \"was\"], \"value\": \"I have been using Mac since 2018
+        daily on my day job and I still get confused by the symbols. I <em>wish there
+        was</em> some system option to always display them as words or abbreviations
+        (CMD etc) instead.<p>But I did get used to the navigation and basic shortcuts
+        after a while. Using the terminal/keyboard/IDE shortcuts (which I can set
+        up myself) for most of the work helps a lot.<p>Finder is still terrible though.\"},
+        \"story_title\": {\"matchLevel\": \"none\", \"matchedWords\": [], \"value\":
+        \"Keyboard differences between Windows and Macs\"}, \"story_url\": {\"matchLevel\":
+        \"none\", \"matchedWords\": [], \"value\": \"https://unsung.aresluna.org/deeper-dive-keyboard-differences-between-windows-and-macs/\"}},
+        \"_tags\": [\"comment\", \"author_redacted\", \"story_50015515\"], \"author\":
+        \"redacted\", \"children\": [50018074, 50019702], \"comment_text\": \"I have
+        been using Mac since 2018 daily on my day job and I still get confused by
+        the symbols. I wish there was some system option to always display them as
+        words or abbreviations (CMD etc) instead.<p>But I did get used to the navigation
+        and basic shortcuts after a while. Using the terminal&#x2F;keyboard&#x2F;IDE
+        shortcuts (which I can set up myself) for most of the work helps a lot.<p>Finder
+        is still terrible though.\", \"created_at\": \"2026-10-09T08:45:37Z\", \"created_at_i\":
+        1791535537, \"objectID\": \"50017797\", \"parent_id\": 50017051, \"story_id\":
+        50015515, \"story_title\": \"Keyboard differences between Windows and Macs\",
+        \"story_url\": \"https://unsung.aresluna.org/deeper-dive-keyboard-differences-between-windows-and-macs/\",
+        \"updated_at\": \"2026-10-09T15:00:18Z\"}, {\"_highlightResult\": {\"author\":
+        {\"matchLevel\": \"none\", \"matchedWords\": [], \"value\": \"nine_k\"}, \"comment_text\":
+        {\"fullyHighlighted\": false, \"matchLevel\": \"full\", \"matchedWords\":
+        [\"wish\", \"there\", \"was\"], \"value\": \"I frankly find the situation
+        around UB puzzling. AFAICT the idea was born in the times of very anemic compilers
+        which would translate things that don't make definite sense, or work unpredictably
+        on certain architectures. But why is it still a thing now, 50 years later?<p>If
+        a compiler can <i>detect</i> UB, I think the only reasonable way for it is
+        to have the program terminate immediately, not release &quot;nasal demons&quot;.
+        (And, of course, many bugs get smashed against the -Wall which should be the
+        default.)<p>Of course, not all UB can be detected at compile time, like reading
+        the padding bytes in a struct mentioned in the article. I <em>wish there was</em>
+        a way to opt out of <i>all</i> UB, in an arbitrary but predictable way (an
+        immediate crash would be fine), something like -fsanitize but for any UB at
+        all that might happen at runtime. In quite some important code, I'd agree
+        to tolerate the performance hit, it may be cheaper than dealing with the aftermath
+        or an RCE exploited. I see that it's not entirely realistic though.\"}, \"story_title\":
+        {\"matchLevel\": \"none\", \"matchedWords\": [], \"value\": \"Reducing undefined
+        behavior in the C language\"}, \"story_url\": {\"matchLevel\": \"none\", \"matchedWords\":
+        [], \"value\": \"https://lwn.net/Articles/1095811/\"}}, \"_tags\": [\"comment\",
+        \"author_redacted\", \"story_50015074\"], \"author\": \"redacted\", \"children\":
+        [50016938, 50018749, 50018440, 50016874, 50017814], \"comment_text\": \"I
+        frankly find the situation around UB puzzling. AFAICT the idea was born in
+        the times of very anemic compilers which would translate things that don&#x27;t
+        make definite sense, or work unpredictably on certain architectures. But why
+        is it still a thing now, 50 years later?<p>If a compiler can <i>detect</i>
+        UB, I think the only reasonable way for it is to have the program terminate
+        immediately, not release &quot;nasal demons&quot;. (And, of course, many bugs
+        get smashed against the -Wall which should be the default.)<p>Of course, not
+        all UB can be detected at compile time, like reading the padding bytes in
+        a struct mentioned in the article. I wish there was a way to opt out of <i>all</i>
+        UB, in an arbitrary but predictable way (an immediate crash would be fine),
+        something like -fsanitize but for any UB at all that might happen at runtime.
+        In quite some important code, I&#x27;d agree to tolerate the performance hit,
+        it may be cheaper than dealing with the aftermath or an RCE exploited. I see
+        that it&#x27;s not entirely realistic though.\", \"created_at\": \"2026-10-09T06:26:54Z\",
+        \"created_at_i\": 1791527214, \"objectID\": \"50016735\", \"parent_id\": 50015074,
+        \"story_id\": 50015074, \"story_title\": \"Reducing undefined behavior in
+        the C language\", \"story_url\": \"https://lwn.net/Articles/1095811/\", \"updated_at\":
+        \"2026-10-09T11:49:26Z\"}, {\"_highlightResult\": {\"author\": {\"matchLevel\":
+        \"none\", \"matchedWords\": [], \"value\": \"atum47\"}, \"story_text\": {\"fullyHighlighted\":
+        false, \"matchLevel\": \"full\", \"matchedWords\": [\"wish\", \"there\", \"was\"],
+        \"value\": \"In 2019 I posted Aim and Shoot here, a browser shooter where
+        every enemy is a neural network evolved by a genetic algorithm between rounds:
+        <a href=\\\"https://news.ycombinator.com/item?id=21353123\\\">https://news.ycombinator.com/item?id=21353123</a><p>The
+        thread had a lot of good feedback that I never got around to. This year I
+        gave Claude Code the thread and the repo and worked through it:<p>- &quot;Give
+        the player full health every round&quot; (four of you asked): done.<p>- &quot;I
+        <em>wish there was</em> a scoreboard, I wanted a screenshot of how far I got&quot;:
+        the game-over screen now shows the round you reached and your best.<p>- &quot;The
+        gun sound is jarring&quot;: quieter, and M mutes it.<p>- &quot;Enemies spawn
+        on top of you and drag you around&quot;: bots now spawn at a safe distance,
+        collisions are fixed, and there's a short grace period at the start of each
+        round.<p>- &quot;The bots all aim at the top-left corner, so camp bottom-right&quot;:
+        this was a bug. Each bot only saw part of the game state. They now see every
+        player, and aim, mutation and elitism are fixed too.<p>- &quot;Kill the shooters
+        first and the GA breeds pacifists&quot; (by generation 8 they were running
+        into walls): the fitness rewarded bots for living long, so your kill order
+        picked who reproduced. It now rewards hitting you.<p>The biggest change came
+        from a problem nobody quite named: evolution reset every time you died, so
+        the bots never got far. Now there's one shared population on the server, and
+        every round anyone plays moves it forward. Your browser only reports raw stats
+        per bot; the server checks them, scores and breeds. It's PHP + SQLite on a
+        small VPS, with a local fallback if the server is down.<p>It's at generation
+        1 right now. Whatever the bots are by tonight, you bred them.<p>Code: <a href=\\\"https://github.com/victorqribeiro/aimAndShoot\\\"
+        rel=\\\"nofollow\\\">https://github.com/victorqribeiro/aimAndShoot</a>\"},
+        \"title\": {\"matchLevel\": \"none\", \"matchedWords\": [], \"value\": \"Show
+        HN: I used Claude Code to address the HN comments on my 2019 game\"}, \"url\":
+        {\"matchLevel\": \"none\", \"matchedWords\": [], \"value\": \"https://victorribeiro.com/aimAndShoot/\"}},
+        \"_tags\": [\"story\", \"author_redacted\", \"story_50008086\", \"show_hn\"],
+        \"author\": \"redacted\", \"children\": [50024721], \"created_at\": \"2026-10-08T16:40:14Z\",
+        \"created_at_i\": 1791477614, \"num_comments\": 1, \"objectID\": \"50008086\",
+        \"points\": 1, \"story_id\": 50008086, \"story_text\": \"In 2019 I posted
+        Aim and Shoot here, a browser shooter where every enemy is a neural network
+        evolved by a genetic algorithm between rounds: <a href=\\\"https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id=21353123\\\">https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id=21353123</a><p>The
+        thread had a lot of good feedback that I never got around to. This year I
+        gave Claude Code the thread and the repo and worked through it:<p>- &quot;Give
+        the player full health every round&quot; (four of you asked): done.<p>- &quot;I
+        wish there was a scoreboard, I wanted a screenshot of how far I got&quot;:
+        the game-over screen now shows the round you reached and your best.<p>- &quot;The
+        gun sound is jarring&quot;: quieter, and M mutes it.<p>- &quot;Enemies spawn
+        on top of you and drag you around&quot;: bots now spawn at a safe distance,
+        collisions are fixed, and there&#x27;s a short grace period at the start of
+        each round.<p>- &quot;The bots all aim at the top-left corner, so camp bottom-right&quot;:
+        this was a bug. Each bot only saw part of the game state. They now see every
+        player, and aim, mutation and elitism are fixed too.<p>- &quot;Kill the shooters
+        first and the GA breeds pacifists&quot; (by generation 8 they were running
+        into walls): the fitness rewarded bots for living long, so your kill order
+        picked who reproduced. It now rewards hitting you.<p>The biggest change came
+        from a problem nobody quite named: evolution reset every time you died, so
+        the bots never got far. Now there&#x27;s one shared population on the server,
+        and every round anyone plays moves it forward. Your browser only reports raw
+        stats per bot; the server checks them, scores and breeds. It&#x27;s PHP +
+        SQLite on a small VPS, with a local fallback if the server is down.<p>It&#x27;s
+        at generation 1 right now. Whatever the bots are by tonight, you bred them.<p>Code:
+        <a href=\\\"https:&#x2F;&#x2F;github.com&#x2F;victorqribeiro&#x2F;aimAndShoot\\\"
+        rel=\\\"nofollow\\\">https:&#x2F;&#x2F;github.com&#x2F;victorqribeiro&#x2F;aimAndShoot</a>\",
+        \"title\": \"Show HN: I used Claude Code to address the HN comments on my
+        2019 game\", \"updated_at\": \"2026-10-09T18:26:43Z\", \"url\": \"https://victorribeiro.com/aimAndShoot/\"},
+        {\"_highlightResult\": {\"author\": {\"matchLevel\": \"none\", \"matchedWords\":
+        [], \"value\": \"shimman\"}, \"comment_text\": {\"fullyHighlighted\": false,
+        \"matchLevel\": \"full\", \"matchedWords\": [\"wish\", \"there\", \"was\"],
+        \"value\": \"ah this is what I do too, I understand there are things like
+        woodpecker but <em>wish there was</em> just some community docker image that
+        handles this all for you.\"}, \"story_title\": {\"matchLevel\": \"none\",
+        \"matchedWords\": [], \"value\": \"Incident with Git Operations, Pull Requests
+        and Actions \u2013 Resolved\"}, \"story_url\": {\"matchLevel\": \"none\",
+        \"matchedWords\": [], \"value\": \"https://www.githubstatus.com/incidents/djlmxz2zd0j7\"}},
+        \"_tags\": [\"comment\", \"author_redacted\", \"story_49994027\"], \"author\":
+        \"redacted\", \"comment_text\": \"ah this is what I do too, I understand there
+        are things like woodpecker but wish there was just some community docker image
+        that handles this all for you.\", \"created_at\": \"2026-10-07T19:24:44Z\",
+        \"created_at_i\": 1791401084, \"objectID\": \"49997594\", \"parent_id\": 49995800,
+        \"story_id\": 49994027, \"story_title\": \"Incident with Git Operations, Pull
+        Requests and Actions \u2013 Resolved\", \"story_url\": \"https://www.githubstatus.com/incidents/djlmxz2zd0j7\",
+        \"updated_at\": \"2026-10-07T19:29:21Z\"}, {\"_highlightResult\": {\"author\":
+        {\"matchLevel\": \"none\", \"matchedWords\": [], \"value\": \"anakaine\"},
+        \"comment_text\": {\"fullyHighlighted\": false, \"matchLevel\": \"full\",
+        \"matchedWords\": [\"wish\", \"there\", \"was\"], \"value\": \"Because I learned
+        on this, it made learning everything else that much harder. Even today I <em>wish
+        there was</em> something as functional, basic, and intuitive, even though
+        I well.understand the reasons for doing things different ways.\"}, \"story_title\":
+        {\"matchLevel\": \"none\", \"matchedWords\": [], \"value\": \"A browser-native
+        classic Visual Basic VB6 IDE\"}, \"story_url\": {\"matchLevel\": \"none\",
+        \"matchedWords\": [], \"value\": \"https://wieslawsoltes.github.io/VB6/\"}},
+        \"_tags\": [\"comment\", \"author_redacted\", \"story_49956681\"], \"author\":
+        \"redacted\", \"comment_text\": \"Because I learned on this, it made learning
+        everything else that much harder. Even today I wish there was something as
+        functional, basic, and intuitive, even though I well.understand the reasons
+        for doing things different ways.\", \"created_at\": \"2026-10-05T10:20:06Z\",
+        \"created_at_i\": 1791195606, \"objectID\": \"49962967\", \"parent_id\": 49961077,
+        \"story_id\": 49956681, \"story_title\": \"A browser-native classic Visual
+        Basic VB6 IDE\", \"story_url\": \"https://wieslawsoltes.github.io/VB6/\",
+        \"updated_at\": \"2026-10-05T14:27:58Z\"}, {\"_highlightResult\": {\"author\":
+        {\"matchLevel\": \"none\", \"matchedWords\": [], \"value\": \"freecodeio\"},
+        \"comment_text\": {\"fullyHighlighted\": false, \"matchLevel\": \"full\",
+        \"matchedWords\": [\"wish\", \"there\", \"was\"], \"value\": \"I <em>wish
+        there was</em> a millenial version of &quot;too old to click around for 99
+        hours&quot; where they just allow bots. Maybe they can be certain servers
+        or certain account types, like ironman. We can call it botman.\"}, \"story_title\":
+        {\"matchLevel\": \"none\", \"matchedWords\": [], \"value\": \"We're working
+        on a new RuneScape MMO\"}, \"story_url\": {\"matchLevel\": \"none\", \"matchedWords\":
+        [], \"value\": \"https://play.runescape.com/4\"}}, \"_tags\": [\"comment\",
+        \"author_redacted\", \"story_49949588\"], \"author\": \"redacted\", \"children\":
+        [49956348, 49953907, 49974077, 49957590, 49981599, 49954142], \"comment_text\":
+        \"I wish there was a millenial version of &quot;too old to click around for
+        99 hours&quot; where they just allow bots. Maybe they can be certain servers
+        or certain account types, like ironman. We can call it botman.\", \"created_at\":
+        \"2026-10-04T13:38:19Z\", \"created_at_i\": 1791121099, \"objectID\": \"49953837\",
+        \"parent_id\": 49953739, \"story_id\": 49949588, \"story_title\": \"We're
+        working on a new RuneScape MMO\", \"story_url\": \"https://play.runescape.com/4\",
+        \"updated_at\": \"2026-10-08T17:10:41Z\"}, {\"_highlightResult\": {\"author\":
+        {\"matchLevel\": \"none\", \"matchedWords\": [], \"value\": \"codedokode\"},
+        \"comment_text\": {\"fullyHighlighted\": false, \"matchLevel\": \"full\",
+        \"matchedWords\": [\"wish\", \"there\", \"was\"], \"value\": \"I am not sure
+        if solar panel are worth using in places where the sky is clear only several
+        months a year. A desert (for example, in Africa or Emirates) would be a better
+        place for them.<p>Wouldn't it be better to have thousands of traditional natural
+        gas, coal or diesel-powered generators to replace large centralized plants?
+        They are compact (easier to hide). A 2 MW generator is a size of a truck.
+        And portable 24 MW generator is a size of several trucks. Before the war,
+        they had ~44 GW of generation (~1 kW per person), so one needs thousands of
+        mobile generators to replace the system, and I doubt anyone provided them.<p>I
+        <em>wish there was</em> a comparison of installation costs and generation
+        costs for traditional and renewable energy. Without comparison, it might be
+        that renewables are simply not worth investing yet.<p>One company advertises
+        solar panels [1] and claims that 1 MW scale array requires 3000 panels and
+        costs over $1M. While used diesel-powered 2MW generator costs several hundreds
+        thousands USD. Why would someone buy one array when for that price several
+        diesel generators can be bought?<p>Traditional energy is cheap. For example,
+        Russia has 240 GW of generation, almost no solar and wind, and electricity
+        costs 8 cents per kWh and in the West the energy is super expensive despite
+        using solar and wind power. Also, diesel costs 65 RUB/liter, or 2.94 USD/US
+        gallon (if 1 US gallon = 3.78 L) and again in the West for some reason it
+        is overpriced. Maybe the renewables are only profitable with overpriced natural
+        resources and government subsidies, without a comparison it is difficult to
+        say.<p>[1] <a href=\\\"https://solartechonline.com/blog/what-is-a-solar-array/\\\"
+        rel=\\\"nofollow\\\">https://solartechonline.com/blog/what-is-a-solar-array/</a>\"},
+        \"story_title\": {\"matchLevel\": \"none\", \"matchedWords\": [], \"value\":
+        \"In Ukraine, distributed renewables foil Russia's assaults\"}, \"story_url\":
+        {\"matchLevel\": \"none\", \"matchedWords\": [], \"value\": \"https://energytransition.org/2026/09/in-ukraine-distributed-renewables-foil-russias-assaults/\"}},
+        \"_tags\": [\"comment\", \"author_redacted\", \"story_49951881\"], \"author\":
+        \"redacted\", \"children\": [49953686, 49958316, 49954114], \"comment_text\":
+        \"I am not sure if solar panel are worth using in places where the sky is
+        clear only several months a year. A desert (for example, in Africa or Emirates)
+        would be a better place for them.<p>Wouldn&#x27;t it be better to have thousands
+        of traditional natural gas, coal or diesel-powered generators to replace large
+        centralized plants? They are compact (easier to hide). A 2 MW generator is
+        a size of a truck. And portable 24 MW generator is a size of several trucks.
+        Before the war, they had ~44 GW of generation (~1 kW per person), so one needs
+        thousands of mobile generators to replace the system, and I doubt anyone provided
+        them.<p>I wish there was a comparison of installation costs and generation
+        costs for traditional and renewable energy. Without comparison, it might be
+        that renewables are simply not worth investing yet.<p>One company advertises
+        solar panels [1] and claims that 1 MW scale array requires 3000 panels and
+        costs over $1M. While used diesel-powered 2MW generator costs several hundreds
+        thousands USD. Why would someone buy one array when for that price several
+        diesel generators can be bought?<p>Traditional energy is cheap. For example,
+        Russia has 240 GW of generation, almost no solar and wind, and electricity
+        costs 8 cents per kWh and in the West the energy is super expensive despite
+        using solar and wind power. Also, diesel costs 65 RUB&#x2F;liter, or 2.94
+        USD&#x2F;US gallon (if 1 US gallon = 3.78 L) and again in the West for some
+        reason it is overpriced. Maybe the renewables are only profitable with overpriced
+        natural resources and government subsidies, without a comparison it is difficult
+        to say.<p>[1] <a href=\\\"https:&#x2F;&#x2F;solartechonline.com&#x2F;blog&#x2F;what-is-a-solar-array&#x2F;\\\"
+        rel=\\\"nofollow\\\">https:&#x2F;&#x2F;solartechonline.com&#x2F;blog&#x2F;what-is-a-solar-array&#x2F;</a>\",
+        \"created_at\": \"2026-10-04T13:14:21Z\", \"created_at_i\": 1791119661, \"objectID\":
+        \"49953653\", \"parent_id\": 49951881, \"story_id\": 49951881, \"story_title\":
+        \"In Ukraine, distributed renewables foil Russia's assaults\", \"story_url\":
+        \"https://energytransition.org/2026/09/in-ukraine-distributed-renewables-foil-russias-assaults/\",
+        \"updated_at\": \"2026-10-05T09:52:42Z\"}, {\"_highlightResult\": {\"author\":
+        {\"matchLevel\": \"none\", \"matchedWords\": [], \"value\": \"illini1\"},
+        \"comment_text\": {\"fullyHighlighted\": false, \"matchLevel\": \"full\",
+        \"matchedWords\": [\"wish\", \"there\", \"was\"], \"value\": \"It\u2019s hard
+        to take the article seriously when there\u2019s no real discussion about how
+        consciousness is defined and it takes Anthropic\u2019s views of Claude and
+        their software at face value. I <em>wish there was</em> more critique from
+        journalists about how technocrats talk about their products.\"}, \"story_title\":
+        {\"matchLevel\": \"none\", \"matchedWords\": [], \"value\": \"Religious scholars
+        met with Anthropic\"}, \"story_url\": {\"matchLevel\": \"none\", \"matchedWords\":
+        [], \"value\": \"https://www.nytimes.com/2026/09/29/us/anthropic-claude-morals-ai.html\"}},
+        \"_tags\": [\"comment\", \"author_redacted\", \"story_49950052\"], \"author\":
+        \"redacted\", \"children\": [49950452, 49950402], \"comment_text\": \"It\u2019s
+        hard to take the article seriously when there\u2019s no real discussion about
+        how consciousness is defined and it takes Anthropic\u2019s views of Claude
+        and their software at face value. I wish there was more critique from journalists
+        about how technocrats talk about their products.\", \"created_at\": \"2026-10-04T03:39:41Z\",
+        \"created_at_i\": 1791085181, \"objectID\": \"49950360\", \"parent_id\": 49950052,
+        \"story_id\": 49950052, \"story_title\": \"Religious scholars met with Anthropic\",
+        \"story_url\": \"https://www.nytimes.com/2026/09/29/us/anthropic-claude-morals-ai.html\",
+        \"updated_at\": \"2026-10-07T04:56:03Z\"}, {\"_highlightResult\": {\"author\":
+        {\"matchLevel\": \"none\", \"matchedWords\": [], \"value\": \"deweywsu\"},
+        \"comment_text\": {\"fullyHighlighted\": false, \"matchLevel\": \"full\",
+        \"matchedWords\": [\"wish\", \"there\", \"was\"], \"value\": \"I <em>wish
+        there was</em> a &quot;Reasons I didn't become a manager, ranked&quot; to
+        help my career decisions.\"}, \"story_title\": {\"matchLevel\": \"none\",
+        \"matchedWords\": [], \"value\": \"Reasons I didn't become an EMT, ranked\"},
+        \"story_url\": {\"matchLevel\": \"none\", \"matchedWords\": [], \"value\":
+        \"https://ben.stolovitz.com/posts/reasons-not-emt-ranked/\"}}, \"_tags\":
+        [\"comment\", \"author_redacted\", \"story_49947631\"], \"author\": \"redacted\",
+        \"comment_text\": \"I wish there was a &quot;Reasons I didn&#x27;t become
+        a manager, ranked&quot; to help my career decisions.\", \"created_at\": \"2026-10-04T03:35:10Z\",
+        \"created_at_i\": 1791084910, \"objectID\": \"49950337\", \"parent_id\": 49947631,
+        \"story_id\": 49947631, \"story_title\": \"Reasons I didn't become an EMT,
+        ranked\", \"story_url\": \"https://ben.stolovitz.com/posts/reasons-not-emt-ranked/\",
+        \"updated_at\": \"2026-10-04T13:24:09Z\"}], \"hitsPerPage\": 10, \"nbHits\":
+        16, \"nbPages\": 2, \"page\": 0, \"params\": \"query=%22wish+there+was%22&tags=%28story%2Ccomment%29&numericFilters=created_at_i%3E1790812800&hitsPerPage=10&page=0&advancedSyntax=true&analyticsTags=backend\",
+        \"processingTimeMS\": 1, \"processingTimingsMS\": {\"_request\": {\"roundTrip\":
+        19}, \"total\": 1}, \"query\": \"\\\"wish there was\\\"\", \"serverTimeMS\":
+        2}"
+    headers:
+      access-control-allow-origin:
+      - '*'
+      alt-svc:
+      - h3=":443"; ma=2592000
+      content-length:
+      - '22973'
+      content-type:
+      - application/json
+      date:
+      - Fri, 09 Oct 2026 23:27:43 GMT
+      server:
+      - Google Frontend
+      via:
+      - 1.1 google
+      x-cloud-trace-context:
+      - 6cc8ced00943911cddd41a2061da169b
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - hn.algolia.com
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://hn.algolia.com/api/v1/search_by_date?hitsPerPage=10&numericFilters=created_at_i%3E1790812800&page=0&tags=ask_hn
+  response:
+    body:
+      string: "{\"exhaustive\": {\"nbHits\": true, \"typo\": true}, \"exhaustiveNbHits\":
+        true, \"exhaustiveTypo\": true, \"hits\": [{\"_highlightResult\": {\"author\":
+        {\"matchLevel\": \"none\", \"matchedWords\": [], \"value\": \"fragmede\"},
+        \"story_text\": {\"matchLevel\": \"none\", \"matchedWords\": [], \"value\":
+        \"When you get access to a new server via ssh, what's the <i>first</i> command
+        you run? ls? nproc? lsb_release -a? uname -a?\"}, \"title\": {\"matchLevel\":
+        \"none\", \"matchedWords\": [], \"value\": \"Ask HN: Whats the first command
+        you run on a new server?\"}}, \"_tags\": [\"story\", \"author_redacted\",
+        \"story_50027624\", \"ask_hn\"], \"author\": \"redacted\", \"created_at\":
+        \"2026-10-09T22:58:18Z\", \"created_at_i\": 1791586698, \"num_comments\":
+        0, \"objectID\": \"50027624\", \"points\": 1, \"story_id\": 50027624, \"story_text\":
+        \"When you get access to a new server via ssh, what&#x27;s the <i>first</i>
+        command you run? ls? nproc? lsb_release -a? uname -a?\", \"title\": \"Ask
+        HN: Whats the first command you run on a new server?\", \"updated_at\": \"2026-10-09T23:03:00Z\"},
+        {\"_highlightResult\": {\"author\": {\"matchLevel\": \"none\", \"matchedWords\":
+        [], \"value\": \"chistev\"}, \"title\": {\"matchLevel\": \"none\", \"matchedWords\":
+        [], \"value\": \"Ask HN: What is your favorite book of all time, and why?\"}},
+        \"_tags\": [\"story\", \"author_redacted\", \"story_50025816\", \"ask_hn\"],
+        \"author\": \"redacted\", \"children\": [50025986, 50026000, 50026206], \"created_at\":
+        \"2026-10-09T19:54:18Z\", \"created_at_i\": 1791575658, \"num_comments\":
+        2, \"objectID\": \"50025816\", \"points\": 3, \"story_id\": 50025816, \"title\":
+        \"Ask HN: What is your favorite book of all time, and why?\", \"updated_at\":
+        \"2026-10-09T22:29:58Z\"}, {\"_highlightResult\": {\"author\": {\"matchLevel\":
+        \"none\", \"matchedWords\": [], \"value\": \"karimelgazar\"}, \"story_text\":
+        {\"matchLevel\": \"none\", \"matchedWords\": [], \"value\": \"Aaron Swartz's
+        personal site now shows an expired-domain page. WHOIS says it expired Sept
+        29 (registered via Hover/Tucows). It's probably still in the grace period,
+        so his family or estate can still renew it. If anyone is connected to them,
+        please inform them. I read his blogs often, they mean a lot to me and I am
+        upset about this.<p>Archive: https://web.archive.org/web/*/aaronsw.com\"},
+        \"title\": {\"matchLevel\": \"none\", \"matchedWords\": [], \"value\": \"Aaron
+        Swartz's domain aaronsw.com has expired\"}}, \"_tags\": [\"story\", \"author_redacted\",
+        \"story_50025682\", \"ask_hn\"], \"author\": \"redacted\", \"children\": [50025795],
+        \"created_at\": \"2026-10-09T19:41:54Z\", \"created_at_i\": 1791574914, \"num_comments\":
+        1, \"objectID\": \"50025682\", \"points\": 6, \"story_id\": 50025682, \"story_text\":
+        \"Aaron Swartz&#x27;s personal site now shows an expired-domain page. WHOIS
+        says it expired Sept 29 (registered via Hover&#x2F;Tucows). It&#x27;s probably
+        still in the grace period, so his family or estate can still renew it. If
+        anyone is connected to them, please inform them. I read his blogs often, they
+        mean a lot to me and I am upset about this.<p>Archive: https:&#x2F;&#x2F;web.archive.org&#x2F;web&#x2F;*&#x2F;aaronsw.com\",
+        \"title\": \"Aaron Swartz's domain aaronsw.com has expired\", \"updated_at\":
+        \"2026-10-09T23:01:44Z\"}, {\"_highlightResult\": {\"author\": {\"matchLevel\":
+        \"none\", \"matchedWords\": [], \"value\": \"rfmoz\"}, \"title\": {\"matchLevel\":
+        \"none\", \"matchedWords\": [], \"value\": \"What do you do while waiting
+        for a prompt response?\"}}, \"_tags\": [\"story\", \"author_redacted\", \"story_50025616\",
+        \"ask_hn\"], \"author\": \"redacted\", \"children\": [50025751, 50026026],
+        \"created_at\": \"2026-10-09T19:35:57Z\", \"created_at_i\": 1791574557, \"num_comments\":
+        2, \"objectID\": \"50025616\", \"points\": 2, \"story_id\": 50025616, \"title\":
+        \"What do you do while waiting for a prompt response?\", \"updated_at\": \"2026-10-09T20:28:00Z\"},
+        {\"_highlightResult\": {\"author\": {\"matchLevel\": \"none\", \"matchedWords\":
+        [], \"value\": \"pcvetkovski\"}, \"story_text\": {\"matchLevel\": \"none\",
+        \"matchedWords\": [], \"value\": \"We are open-sourcing an earlier version
+        of Finsight, based on Qwen3-14B, adapted for financial reasoning.<p>One interesting
+        result was the trade-off:\\n- FinQA accuracy improved from 1.9% to 12.6%\\n-
+        Six-benchmark average declined from 0.441 to 0.399<p>Finsight is the personal
+        financial analyst powering Maxint, the financial OS.<p>The model, checkpoints
+        and training methodology are made available for anyone to reproduce and build
+        on the work.<p>These are experimental models and we do not consider the results
+        and evidence of production readiness for financial applications.<p>Source:
+        https://maxint.com/blog/open-sourcing-finsight-qwen3-14b\"}, \"title\": {\"matchLevel\":
+        \"none\", \"matchedWords\": [], \"value\": \"Open-sourcing Finsight, based
+        on Qwen3-14B for financial reasoning\"}}, \"_tags\": [\"story\", \"author_redacted\",
+        \"story_50025273\", \"ask_hn\"], \"author\": \"redacted\", \"created_at\":
+        \"2026-10-09T19:08:15Z\", \"created_at_i\": 1791572895, \"num_comments\":
+        0, \"objectID\": \"50025273\", \"points\": 1, \"story_id\": 50025273, \"story_text\":
+        \"We are open-sourcing an earlier version of Finsight, based on Qwen3-14B,
+        adapted for financial reasoning.<p>One interesting result was the trade-off:\\n-
+        FinQA accuracy improved from 1.9% to 12.6%\\n- Six-benchmark average declined
+        from 0.441 to 0.399<p>Finsight is the personal financial analyst powering
+        Maxint, the financial OS.<p>The model, checkpoints and training methodology
+        are made available for anyone to reproduce and build on the work.<p>These
+        are experimental models and we do not consider the results and evidence of
+        production readiness for financial applications.<p>Source: https:&#x2F;&#x2F;maxint.com&#x2F;blog&#x2F;open-sourcing-finsight-qwen3-14b\",
+        \"title\": \"Open-sourcing Finsight, based on Qwen3-14B for financial reasoning\",
+        \"updated_at\": \"2026-10-09T19:12:14Z\"}, {\"_highlightResult\": {\"author\":
+        {\"matchLevel\": \"none\", \"matchedWords\": [], \"value\": \"nigatron\"},
+        \"story_text\": {\"matchLevel\": \"none\", \"matchedWords\": [], \"value\":
+        \"I have hit a wall on ways to find full stack project ideas i could build,
+        I could not come up with something that excites me.\"}, \"title\": {\"matchLevel\":
+        \"none\", \"matchedWords\": [], \"value\": \"Project Ideas Recomendations\"}},
+        \"_tags\": [\"story\", \"author_redacted\", \"story_50024713\", \"ask_hn\"],
+        \"author\": \"redacted\", \"children\": [50026909], \"created_at\": \"2026-10-09T18:25:47Z\",
+        \"created_at_i\": 1791570347, \"num_comments\": 1, \"objectID\": \"50024713\",
+        \"points\": 1, \"story_id\": 50024713, \"story_text\": \"I have hit a wall
+        on ways to find full stack project ideas i could build, I could not come up
+        with something that excites me.\", \"title\": \"Project Ideas Recomendations\",
+        \"updated_at\": \"2026-10-09T21:41:04Z\"}, {\"_highlightResult\": {\"author\":
+        {\"matchLevel\": \"none\", \"matchedWords\": [], \"value\": \"uimik\"}, \"story_text\":
+        {\"matchLevel\": \"none\", \"matchedWords\": [], \"value\": \"Prompt injection
+        is not solved. Not by them, not by anyone. If someone tells you they\u2019ve
+        solved it, they are either lying to you or they don\u2019t understand the
+        problem. There is no polite third option.\"}, \"title\": {\"matchLevel\":
+        \"none\", \"matchedWords\": [], \"value\": \"Prompt Injection will always
+        be unsolved\"}}, \"_tags\": [\"story\", \"author_redacted\", \"story_50024585\",
+        \"ask_hn\"], \"author\": \"redacted\", \"created_at\": \"2026-10-09T18:16:39Z\",
+        \"created_at_i\": 1791569799, \"num_comments\": 0, \"objectID\": \"50024585\",
+        \"points\": 2, \"story_id\": 50024585, \"story_text\": \"Prompt injection
+        is not solved. Not by them, not by anyone. If someone tells you they\u2019ve
+        solved it, they are either lying to you or they don\u2019t understand the
+        problem. There is no polite third option.\", \"title\": \"Prompt Injection
+        will always be unsolved\", \"updated_at\": \"2026-10-09T18:19:44Z\"}, {\"_highlightResult\":
+        {\"author\": {\"matchLevel\": \"none\", \"matchedWords\": [], \"value\": \"wvlia5\"},
+        \"story_text\": {\"matchLevel\": \"none\", \"matchedWords\": [], \"value\":
+        \"LLMs have an internal language that they translate English into before predicting
+        the next token. Like 'king' is translated into a word of an internal language
+        that corresponds to vector [monarch, man], which allows king-man+woman=queen.
+        Spanish is similar for the case 'queen'=reina, -ina suffix means female, but
+        becomes irregular for king=rey.<p>We have tried to create regular, consistent
+        languages (loglan, lojban, ithkuil), and there seems to be one in the first
+        layers of LLMs, derived from all text ever written. This internal language
+        is currently expressed as vectors, but we could devise a lexicon to map them,
+        and if we could learn it we could communicate more directly with machines,
+        dispensing with some layers and getting rid of language ambiguities.<p>Makes
+        sense? Is someone working on this?<p>It's like Arrival but with AI instead
+        of aliens.\"}, \"title\": {\"matchLevel\": \"none\", \"matchedWords\": [],
+        \"value\": \"Ask HN: Internal AI Language\"}}, \"_tags\": [\"story\", \"author_redacted\",
+        \"story_50023533\", \"ask_hn\"], \"author\": \"redacted\", \"created_at\":
+        \"2026-10-09T17:07:38Z\", \"created_at_i\": 1791565658, \"num_comments\":
+        0, \"objectID\": \"50023533\", \"points\": 1, \"story_id\": 50023533, \"story_text\":
+        \"LLMs have an internal language that they translate English into before predicting
+        the next token. Like &#x27;king&#x27; is translated into a word of an internal
+        language that corresponds to vector [monarch, man], which allows king-man+woman=queen.
+        Spanish is similar for the case &#x27;queen&#x27;=reina, -ina suffix means
+        female, but becomes irregular for king=rey.<p>We have tried to create regular,
+        consistent languages (loglan, lojban, ithkuil), and there seems to be one
+        in the first layers of LLMs, derived from all text ever written. This internal
+        language is currently expressed as vectors, but we could devise a lexicon
+        to map them, and if we could learn it we could communicate more directly with
+        machines, dispensing with some layers and getting rid of language ambiguities.<p>Makes
+        sense? Is someone working on this?<p>It&#x27;s like Arrival but with AI instead
+        of aliens.\", \"title\": \"Ask HN: Internal AI Language\", \"updated_at\":
+        \"2026-10-09T17:11:58Z\"}, {\"_highlightResult\": {\"author\": {\"matchLevel\":
+        \"none\", \"matchedWords\": [], \"value\": \"ymarkov\"}, \"story_text\": {\"matchLevel\":
+        \"none\", \"matchedWords\": [], \"value\": \"We ran an experiment for SF Tech
+        Week trying to understand how SF businesses are ready for AI. Very soon, every
+        personal assistant like Muse, Instinct, Dots is going to call local places
+        for us, so we wanted to understand what happens.<p>Our AI called the businesses
+        across different categories - vets, bars, cafes, dentists, hair salons etc.
+        It was introducing itself as AI on every call and then asked a question which
+        fits the business like \u201CAre you taking new patients\u201D for dental
+        places. We called only during business hours.<p>What we found:\\n- Only 1
+        out of 3 businesses kept talking after picking the phone\\n- Vets were 79%,
+        dentists 61%, bars and dry cleaners - around 20%\\n- Most people did not argue,
+        but silently hung up after listening to the intro\\n- 1 out 25 businesses
+        already had AI reception answering the phone<p>Caveats - it is just one city
+        and one week, so small differences between neighbourhoods could be a noise.<p>We
+        would really love to hear how you are handling this if you are building AI
+        voice agents calling places for people\"}, \"title\": {\"matchLevel\": \"none\",
+        \"matchedWords\": [], \"value\": \"We gave an AI a phone and asked 1000 SF
+        businesses a question\"}}, \"_tags\": [\"story\", \"author_redacted\", \"story_50022739\",
+        \"ask_hn\"], \"author\": \"redacted\", \"children\": [50023052, 50022756,
+        50023053], \"created_at\": \"2026-10-09T16:18:03Z\", \"created_at_i\": 1791562683,
+        \"num_comments\": 2, \"objectID\": \"50022739\", \"points\": 2, \"story_id\":
+        50022739, \"story_text\": \"We ran an experiment for SF Tech Week trying to
+        understand how SF businesses are ready for AI. Very soon, every personal assistant
+        like Muse, Instinct, Dots is going to call local places for us, so we wanted
+        to understand what happens.<p>Our AI called the businesses across different
+        categories - vets, bars, cafes, dentists, hair salons etc. It was introducing
+        itself as AI on every call and then asked a question which fits the business
+        like \u201CAre you taking new patients\u201D for dental places. We called
+        only during business hours.<p>What we found:\\n- Only 1 out of 3 businesses
+        kept talking after picking the phone\\n- Vets were 79%, dentists 61%, bars
+        and dry cleaners - around 20%\\n- Most people did not argue, but silently
+        hung up after listening to the intro\\n- 1 out 25 businesses already had AI
+        reception answering the phone<p>Caveats - it is just one city and one week,
+        so small differences between neighbourhoods could be a noise.<p>We would really
+        love to hear how you are handling this if you are building AI voice agents
+        calling places for people\", \"title\": \"We gave an AI a phone and asked
+        1000 SF businesses a question\", \"updated_at\": \"2026-10-09T19:48:43Z\"},
+        {\"_highlightResult\": {\"author\": {\"matchLevel\": \"none\", \"matchedWords\":
+        [], \"value\": \"chrisjj\"}, \"story_text\": {\"matchLevel\": \"none\", \"matchedWords\":
+        [], \"value\": \"Local pharmacy phoneline is answered by &quot;Caroline&quot;
+        with convincing voice, mannerisms and even background typing noise. You only
+        realise she's fake at the first stochastic parrotese.<p>My bank sends emailed
+        query responses signed by e.g. Sarah. No disclaimer, e.g. &quot;AI can make
+        mistakes&quot;. Again starts convincing but can degenerate into parrotese.
+        If I politely ask bot/human?, I get &quot;human&quot;... but if I query nonsensical
+        advice, I get a non-resolving answer classic of ChatGPT. The reverse centauar
+        in all its ugly glory.\"}, \"title\": {\"matchLevel\": \"none\", \"matchedWords\":
+        [], \"value\": \"Meatpupptry is far creepier than pure \\\"AI\\\" fakery\"}},
+        \"_tags\": [\"story\", \"author_redacted\", \"story_50021296\", \"ask_hn\"],
+        \"author\": \"redacted\", \"created_at\": \"2026-10-09T14:48:01Z\", \"created_at_i\":
+        1791557281, \"num_comments\": 0, \"objectID\": \"50021296\", \"points\": 5,
+        \"story_id\": 50021296, \"story_text\": \"Local pharmacy phoneline is answered
+        by &quot;Caroline&quot; with convincing voice, mannerisms and even background
+        typing noise. You only realise she&#x27;s fake at the first stochastic parrotese.<p>My
+        bank sends emailed query responses signed by e.g. Sarah. No disclaimer, e.g.
+        &quot;AI can make mistakes&quot;. Again starts convincing but can degenerate
+        into parrotese. If I politely ask bot&#x2F;human?, I get &quot;human&quot;...
+        but if I query nonsensical advice, I get a non-resolving answer classic of
+        ChatGPT. The reverse centauar in all its ugly glory.\", \"title\": \"Meatpupptry
+        is far creepier than pure \\\"AI\\\" fakery\", \"updated_at\": \"2026-10-09T18:22:13Z\"}],
+        \"hitsPerPage\": 10, \"nbHits\": 266, \"nbPages\": 27, \"page\": 0, \"params\":
+        \"tags=ask_hn&numericFilters=created_at_i%3E1790812800&hitsPerPage=10&page=0&advancedSyntax=true&analyticsTags=backend\",
+        \"processingTimeMS\": 1, \"processingTimingsMS\": {\"_request\": {\"queue\":
+        4, \"roundTrip\": 14}, \"total\": 1}, \"query\": \"\", \"serverTimeMS\": 5}"
+    headers:
+      access-control-allow-origin:
+      - '*'
+      alt-svc:
+      - h3=":443"; ma=2592000
+      content-length:
+      - '14763'
+      content-type:
+      - application/json
+      date:
+      - Fri, 09 Oct 2026 23:27:43 GMT
+      server:
+      - Google Frontend
+      via:
+      - 1.1 google
+      x-cloud-trace-context:
+      - 1ca2a3ec73f95806ddd41a2061da1fa8
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - hacker-news.firebaseio.com
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://hacker-news.firebaseio.com/v0/jobstories.json
+  response:
+    body:
+      string: '[49945904, 49943524, 49919680, 49911531, 49834893, 49814780, 49768220,
+        49753131, 49743567, 49725541, 49715446, 49708774, 49700218, 49661645, 49625110,
+        49588466, 49563415, 49556922, 49553173, 49548864, 49542486, 49533557, 49524704,
+        49518877, 49514781, 49512895, 49500471, 49481423, 49474060, 49467837, 49463361]'
+    headers:
+      access-control-allow-origin:
+      - '*'
+      cache-control:
+      - no-cache
+      connection:
+      - keep-alive
+      content-length:
+      - '310'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:27:43 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31556926; includeSubDomains; preload
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - hacker-news.firebaseio.com
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://hacker-news.firebaseio.com/v0/item/49945904.json
+  response:
+    body:
+      string: '{"by": "redacted", "id": 49945904, "score": 1, "time": 1791046812,
+        "title": "RetailReady (YC W24) Is Hiring", "type": "job", "url": "https://www.ycombinator.com/companies/retailready/jobs/bFcgIe4-implementations"}'
+    headers:
+      access-control-allow-origin:
+      - '*'
+      cache-control:
+      - no-cache
+      connection:
+      - keep-alive
+      content-length:
+      - '213'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:27:43 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31556926; includeSubDomains; preload
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - hacker-news.firebaseio.com
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://hacker-news.firebaseio.com/v0/item/49943524.json
+  response:
+    body:
+      string: '{"by": "redacted", "id": 49943524, "score": 1, "time": 1791028930,
+        "title": "Great Question (YC W21) Is Hiring Product Engineers in Canada (Remote)",
+        "type": "job", "url": "https://www.ycombinator.com/companies/great-question/jobs/agEqBYD-product-engineer-ai-full-stack"}'
+    headers:
+      access-control-allow-origin:
+      - '*'
+      cache-control:
+      - no-cache
+      connection:
+      - keep-alive
+      content-length:
+      - '271'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:27:43 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31556926; includeSubDomains; preload
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - hacker-news.firebaseio.com
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://hacker-news.firebaseio.com/v0/item/49919680.json
+  response:
+    body:
+      string: '{"by": "redacted", "id": 49919680, "score": 1, "time": 1790848098,
+        "title": "Truemetrics (YC S23) Is Hiring a GTM Founder''s Associate", "type":
+        "job", "url": "https://www.ycombinator.com/companies/truemetrics/jobs/THLEzXI-gtm-founder-s-associate"}'
+    headers:
+      access-control-allow-origin:
+      - '*'
+      cache-control:
+      - no-cache
+      connection:
+      - keep-alive
+      content-length:
+      - '247'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:27:43 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31556926; includeSubDomains; preload
+    status:
+      code: 200
+      message: OK
+version: 1

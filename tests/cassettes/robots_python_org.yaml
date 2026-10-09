@@ -1,0 +1,104 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - www.python.org
+      user-agent:
+      - SignalBot/0.1 (+mailto:tests@example.org)
+    method: GET
+    uri: https://www.python.org/robots.txt
+  response:
+    body:
+      string: '# Directions for robots.  See this URL:
+
+        # http://www.robotstxt.org/robotstxt.html
+
+        # for a description of the file format.
+
+
+        User-agent: HTTrack
+
+        User-agent: puf
+
+        User-agent: MSIECrawler
+
+        Disallow: /
+
+
+        # The Krugle web crawler (though based on Nutch) is OK.
+
+        User-agent: Krugle
+
+        Allow: /
+
+        Disallow: /~guido/orlijn/
+
+        Disallow: /webstats/
+
+
+        # No one should be crawling us with Nutch.
+
+        User-agent: Nutch
+
+        Disallow: /
+
+
+        # Hide old versions of the documentation and various large sets of files.
+
+        User-agent: *
+
+        Disallow: /~guido/orlijn/
+
+        Disallow: /webstats/
+
+        '
+    headers:
+      accept-ranges:
+      - bytes
+      age:
+      - '2847'
+      connection:
+      - keep-alive
+      content-length:
+      - '537'
+      content-security-policy-report-only:
+      - 'frame-ancestors ''self''; connect-src ''self'' https://console.python.org
+        https://analytics.python.org https://server.ethicalads.io https://2p66nmmycsj3.statuspage.io;
+        font-src ''self'' data:; default-src ''self''; style-src ''self'' ''unsafe-inline''
+        https://ajax.googleapis.com; script-src ''self'' https://analytics.python.org
+        https://media.ethicalads.io https://server.ethicalads.io https://ajax.googleapis.com;
+        img-src ''self'' data: https:; frame-src ''self'' https://console.python.org;
+        form-action ''self''; base-uri ''self''; object-src ''none''; report-uri https://o20004.ingest.us.sentry.io/api/39935/security/?sentry_key=95f826ce8a6d47e9ab5dbb055c24eb74'
+      content-type:
+      - text/plain
+      date:
+      - Fri, 09 Oct 2026 23:27:51 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=63072000; includeSubDomains; preload
+      vary:
+      - Cookie, Accept-Encoding
+      via:
+      - 1.1 varnish, 1.1 varnish
+      x-cache:
+      - MISS, HIT
+      x-cache-hits:
+      - 0, 0
+      x-frame-options:
+      - SAMEORIGIN
+      x-served-by:
+      - cache-iad-kcgs7200089-IAD, cache-iad-kcgs7200089-IAD, cache-iad-kiad7000208-IAD
+      x-timer:
+      - S1791588472.640382,VS0,VE1
+    status:
+      code: 200
+      message: OK
+version: 1

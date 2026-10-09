@@ -1,0 +1,990 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - www.thetruckersreport.com
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://www.thetruckersreport.com/robots.txt
+  response:
+    body:
+      string: '####### robots file for www.TheTruckersReport.com #######
+
+
+        User-agent: *
+
+
+        ####### Global Trucker Removal #######
+
+        Disallow: /*?p=
+
+        Disallow: /*?ua=
+
+        Disallow: /*?oa=
+
+        Disallow: /*?sid=
+
+        ####### Other Problems #######
+
+        Disallow: /*?nojs=
+
+        Disallow: /*?vbseourl=
+
+        ####### vbClassified Removal #######
+
+        Disallow: /*?do=ad&id=
+
+        Disallow: /*?do=category&categoryid=
+
+        Disallow: /*?do=user&userid=
+
+        Disallow: /*?do=search&memberid=
+
+        ####### Normal Site Files/Folders #######
+
+        Disallow: /music/
+
+        Disallow: /wmamusic/
+
+        Disallow: /truckinglinks2/rate.php
+
+        Disallow: /truckingindustryforum/ajax.php
+
+        Disallow: /truckingindustryforum/attachment.php
+
+        Disallow: /truckingindustryforum/calendar.php
+
+        Disallow: /truckingindustryforum/cron.php
+
+        Disallow: /truckingindustryforum/editpost.php
+
+        Disallow: /truckingindustryforum/external.php
+
+        Disallow: /truckingindustryforum/faq.php
+
+        Disallow: /truckingindustryforum/global.php
+
+        Disallow: /truckingindustryforum/image.php
+
+        Disallow: /truckingindustryforum/inlinemod.php
+
+        Disallow: /truckingindustryforum/joinrequests.php
+
+        Disallow: /truckingindustryforum/login.php
+
+        Disallow: /truckingindustryforum/member.php
+
+        Disallow: /truckingindustryforum/members/
+
+        Disallow: /truckingindustryforum/memberlist.php
+
+        Disallow: /truckingindustryforum/misc.php
+
+        Disallow: /truckingindustryforum/moderator.php
+
+        Disallow: /truckingindustryforum/newattachment.php
+
+        Disallow: /truckingindustryforum/newreply.php
+
+        Disallow: /truckingindustryforum/newthread.php
+
+        Disallow: /truckingindustryforum/online.php
+
+        Disallow: /truckingindustryforum/poll.php
+
+        Disallow: /truckingindustryforum/postings.php
+
+        Disallow: /truckingindustryforum/printthread.php
+
+        Disallow: /truckingindustryforum/private.php
+
+        Disallow: /truckingindustryforum/profile.php
+
+        Disallow: /truckingindustryforum/register.php
+
+        Disallow: /truckingindustryforum/report.php
+
+        Disallow: /truckingindustryforum/reputation.php
+
+        Disallow: /truckingindustryforum/search.php
+
+        Disallow: /truckingindustryforum/sendmessage.php
+
+        Disallow: /truckingindustryforum/showgroups.php
+
+        Disallow: /truckingindustryforum/subscription.php
+
+        Disallow: /truckingindustryforum/threadrate.php
+
+        Disallow: /truckingindustryforum/usercp.php
+
+        Disallow: /truckingindustryforum/usernote.php
+
+        #######  After 3.7.2 #######
+
+        Disallow: /truckingindustryforum/posthistory.php
+
+        Disallow: /truckingindustryforum/tags/
+
+        Disallow: /*-print.html
+
+        ####### Yahoo #######
+
+        User-agent: Slurp
+
+        Crawl-delay: 1
+
+        ####### Majestic #######
+
+        User-Agent: MJ12bot
+
+        Disallow:
+
+        ####### Grapeshot #######
+
+        User-agent: grapeshot
+
+        Disallow: /
+
+        '
+    headers:
+      age:
+      - '4452'
+      alt-svc:
+      - h3=":443"; ma=86400
+      cf-cache-status:
+      - HIT
+      cf-ray:
+      - a48127ab4e12d695-IAD
+      connection:
+      - keep-alive
+      content-length:
+      - '2483'
+      content-type:
+      - text/plain
+      date:
+      - Fri, 09 Oct 2026 23:27:15 GMT
+      etag:
+      - ''
+      last-modified:
+      - Tue, 10 Mar 2015 05:25:11 GMT
+      server:
+      - cloudflare
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-turbo-charged-by:
+      - LiteSpeed
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - application/rss+xml, application/atom+xml, application/xml;q=0.9, text/xml;q=0.8,
+        */*;q=0.5
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - www.thetruckersreport.com
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://www.thetruckersreport.com/truckingindustryforum/forums/-/index.rss
+  response:
+    body:
+      string: "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<rss version=\"2.0\" xmlns:atom=\"http://www.w3.org/2005/Atom\"
+        xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:content=\"http://purl.org/rss/1.0/modules/content/\"
+        xmlns:slash=\"http://purl.org/rss/1.0/modules/slash/\">\n  <channel>\n    <title>TruckersReport.com
+        Trucking Forum | #1 CDL Truck Driver Message Board</title>\n    <description>Join
+        the largest trucking forum! All your questions about the best truck driver
+        jobs and training answered by thousands of experienced truckers</description>\n
+        \   <pubDate>Fri, 09 Oct 2026 23:27:16 +0000</pubDate>\n    <lastBuildDate>Fri,
+        09 Oct 2026 23:27:16 +0000</lastBuildDate>\n    <generator>TruckersReport.com
+        Trucking Forum | #1 CDL Truck Driver Message Board</generator>\n    <link>https://www.thetruckersreport.com/truckingindustryforum/</link>\n
+        \   <atom:link rel=\"self\" type=\"application/rss+xml\" href=\"https://www.thetruckersreport.com/truckingindustryforum/forums/-/index.rss\"/>\n
+        \   <item>\n      <title>What if it Snows?</title>\n      <pubDate>Fri, 09
+        Oct 2026 23:25:28 +0000</pubDate>\n      <link>https://www.thetruckersreport.com/truckingindustryforum/threads/what-if-it-snows.798509/</link>\n
+        \     <guid>https://www.thetruckersreport.com/truckingindustryforum/threads/what-if-it-snows.798509/</guid>\n
+        \     <author>redacted</author>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[Well, I was going to take another day or two,
+        but just like in The Godfather, &quot; They pulled me back in.&quot; With
+        a high enough paying load going way, way, way up in the forested regions of
+        Washington.<br />\nWhat if it snows? You gotta carry more chains than tires
+        up there you know.<br />\n<br />\nIf this thread doesn&#039;t get as much
+        exposure as IluvCATS Colorado thread, I&#039;m going to feel really bad.<br
+        />\n<br />\nRemember when I had Blackie? But now I&#039;m old and decrepit.<br
+        />\n<br />\n\n\n\t<a href=\"https://www.thetruckersreport.com/truckingindustryforum/attachments/216823/\"
+        target=\"_blank\">View attachment 216823</a>]]></content:encoded>\n      <slash:comments>273603</slash:comments>\n
+        \   </item>\n    <item>\n      <title>Anybody run?</title>\n      <pubDate>Fri,
+        09 Oct 2026 23:19:51 +0000</pubDate>\n      <link>https://www.thetruckersreport.com/truckingindustryforum/threads/anybody-run.2481271/</link>\n
+        \     <guid>https://www.thetruckersreport.com/truckingindustryforum/threads/anybody-run.2481271/</guid>\n
+        \     <author>redacted</author>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[Lookin around today for a challenging hike
+        and found this. It has piqued my interest, but I&#039;m not a runner. I am
+        a solid 3-4 MPH hiker, but I ain&#039;t pounded out 35 hours either. My biggest
+        days are 24-27 miles depending on elevation gains.<br />\n<a href=\"https://www.haremountain100.com/\"
+        target=\"_blank\" class=\"externalLink\" rel=\"nofollow\">Hare Mountain 100</a><br
+        />\n<br />\nWhat&#039;s the chances an old fat dude can get in shape for this
+        in a couple months?<br />\n<br />\nHere&#039;s my first mile since grade school.<br
+        />\n<br />\n<br />\n\n\n\t<a href=\"https://www.thetruckersreport.com/truckingindustryforum/attachments/474352/\"
+        target=\"_blank\">View attachment 474352</a>\n\t\n \n\n\t<a href=\"https://www.thetruckersreport.com/truckingindustryforum/attachments/474353/\"
+        target=\"_blank\">View attachment 474353</a>]]></content:encoded>\n      <slash:comments>243</slash:comments>\n
+        \   </item>\n    <item>\n      <title>FCC--Fremont Contract Carriers</title>\n
+        \     <pubDate>Fri, 09 Oct 2026 23:18:02 +0000</pubDate>\n      <link>https://www.thetruckersreport.com/truckingindustryforum/threads/fcc-fremont-contract-carriers.462104/</link>\n
+        \     <guid>https://www.thetruckersreport.com/truckingindustryforum/threads/fcc-fremont-contract-carriers.462104/</guid>\n
+        \     <author>redacted</author>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[FCC is based out of Fremont, Nebraska. The
+        have a dry van and a flatbed division, with  three different divisions,  Mid-West
+        regional, South West regional, and the long haul fleet. Living in SC I am
+        only eligible for the long haul division. They have approximately 360 tractors,
+        almost 2/3 of those are either O/O&#039;s or L/P drivers,  with the rest being
+        straight company drivers. I started here 3 months ago, and wanted to wait
+        at least 90 days before starting this thread to get a decent feel for...<br
+        />\n<br />\n<a href=\"https://www.thetruckersreport.com/truckingindustryforum/threads/fcc-fremont-contract-carriers.462104/\"
+        class=\"internalLink\">FCC--Fremont Contract Carriers</a>]]></content:encoded>\n
+        \     <slash:comments>23878</slash:comments>\n    </item>\n    <item>\n      <title>Warrant
+        Issued For 4 Wheeler For Causing Road Rage</title>\n      <pubDate>Fri, 09
+        Oct 2026 23:09:28 +0000</pubDate>\n      <link>https://www.thetruckersreport.com/truckingindustryforum/threads/warrant-issued-for-4-wheeler-for-causing-road-rage.2546523/</link>\n
+        \     <guid>https://www.thetruckersreport.com/truckingindustryforum/threads/warrant-issued-for-4-wheeler-for-causing-road-rage.2546523/</guid>\n
+        \     <author>redacted</author>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[<a href=\"https://cdllife.com/2026/motorist-evades-warrant-after-police-use-dash-cam-to-catch-him-falsely-accusing-trucker-of-causing-road-rage-incident/?utm_source=cbo-cdllife-kevel&amp;utm_campaign=recommended-widget\"
+        target=\"_blank\" class=\"externalLink\" rel=\"nofollow\">Motorist evades
+        warrant after police use dash cam to catch him falsely accusing trucker of
+        causing road rage incident</a>]]></content:encoded>\n      <slash:comments>8</slash:comments>\n
+        \   </item>\n    <item>\n      <title>Muck Boots 'n' Slickers - Life of a
+        Livestock Hauler</title>\n      <pubDate>Fri, 09 Oct 2026 23:09:14 +0000</pubDate>\n
+        \     <link>https://www.thetruckersreport.com/truckingindustryforum/threads/muck-boots-n-slickers-life-of-a-livestock-hauler.2332754/</link>\n
+        \     <guid>https://www.thetruckersreport.com/truckingindustryforum/threads/muck-boots-n-slickers-life-of-a-livestock-hauler.2332754/</guid>\n
+        \     <author>redacted</author>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[So having noticed a thread a few months old
+        again come to the top of the pile, I decided to start this thread and see
+        where I goes.<br />\n<br />\nAnyone who does, or has, hauled livestock...
+        Please join the conversation with stories, advise, qualifications, regulations,
+        or anything else specific to hauling livestock. Those who havent been in this
+        segment of the industry are welcome to comment and ask questions. But, please,
+        let&#039;s not piss off or belittle each other.<br />\n<br />\nI no longer
+        haul livestock, but have...<br />\n<br />\n<a href=\"https://www.thetruckersreport.com/truckingindustryforum/threads/muck-boots-n-slickers-life-of-a-livestock-hauler.2332754/\"
+        class=\"internalLink\">Muck Boots &#039;n&#039; Slickers - Life of a Livestock
+        Hauler</a>]]></content:encoded>\n      <slash:comments>19104</slash:comments>\n
+        \   </item>\n    <item>\n      <title>Where is everyone #5</title>\n      <pubDate>Fri,
+        09 Oct 2026 23:08:09 +0000</pubDate>\n      <link>https://www.thetruckersreport.com/truckingindustryforum/threads/where-is-everyone-5.486218/</link>\n
+        \     <guid>https://www.thetruckersreport.com/truckingindustryforum/threads/where-is-everyone-5.486218/</guid>\n
+        \     <author>redacted</author>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[Edmonton, AB for the night. <br />\n<br />\nWhere&#039;s
+        y&#039;all at?]]></content:encoded>\n      <slash:comments>223536</slash:comments>\n
+        \   </item>\n    <item>\n      <title>Want to avoid getting burned by a lease-purchase
+        agreement?</title>\n      <pubDate>Fri, 09 Oct 2026 22:54:40 +0000</pubDate>\n
+        \     <link>https://www.thetruckersreport.com/truckingindustryforum/threads/want-to-avoid-getting-burned-by-a-lease-purchase-agreement.97250/</link>\n
+        \     <guid>https://www.thetruckersreport.com/truckingindustryforum/threads/want-to-avoid-getting-burned-by-a-lease-purchase-agreement.97250/</guid>\n
+        \     <author>redacted</author>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[<span style=\"font-family: 'Georgia'\"><span
+        style=\"font-size: 22px\"><span style=\"font-size: 18px\">Want to avoid getting
+        burned by a lease-purchase agreement?</span><br />\n<span style=\"font-size:
+        15px\"><br />\n</span></span></span><span style=\"font-size: 15px\">It&#039;s
+        simple. Just don&#039;t sign on.</span><br />\n\n\n\n<div class=\"bbCodeBlock
+        bbCodeQuote\">\n\t<aside>\n\t\t\n\t\t<blockquote class=\"quoteContainer\"><div
+        class=\"quote\">Recently, OOIDA&#039;s Business Assistance Department has
+        noticed an   alarming increase in people signing on to lease-purchase programs
+        with  large  motor carriers. Our experience in reviewing these contracts and
+        \ receiving  numerous complaints over the years tells us these programs  almost
+        never benefit  anyone...</div><div class=\"quoteExpand\">Click to expand...</div></blockquote>\n\t</aside>\n</div><a
+        href=\"https://www.thetruckersreport.com/truckingindustryforum/threads/want-to-avoid-getting-burned-by-a-lease-purchase-agreement.97250/\"
+        class=\"internalLink\">Want to avoid getting burned by a lease-purchase agreement?</a>]]></content:encoded>\n
+        \     <slash:comments>742</slash:comments>\n    </item>\n    <item>\n      <title>My
+        move to Bruce Oakley (Oakley trucking inc)</title>\n      <pubDate>Fri, 09
+        Oct 2026 22:52:36 +0000</pubDate>\n      <link>https://www.thetruckersreport.com/truckingindustryforum/threads/my-move-to-bruce-oakley-oakley-trucking-inc.2538481/</link>\n
+        \     <guid>https://www.thetruckersreport.com/truckingindustryforum/threads/my-move-to-bruce-oakley-oakley-trucking-inc.2538481/</guid>\n
+        \     <author>redacted</author>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[After 7 years leased to FCC I made the decision
+        about a month ago to make the move to Oakley to pull an end dump. They have
+        three divisions Hopper bottom, end dump, and pneumatic tanks. This is a 100%
+        owner operator company.<br />\n<br />\nI showed up in N. Little Rock, Arkansas
+        Sunday, they provided a nice hotel for four days (Wyndham) breakfast buffet
+        paid for and lunch provided. You fend for yourself for dinner. Orientation
+        is not paid. <br />\n<br />\nThe orientation is very thorough, three days
+        in the classroom,...<br />\n<br />\n<a href=\"https://www.thetruckersreport.com/truckingindustryforum/threads/my-move-to-bruce-oakley-oakley-trucking-inc.2538481/\"
+        class=\"internalLink\">My move to Bruce Oakley (Oakley trucking inc)</a>]]></content:encoded>\n
+        \     <slash:comments>190</slash:comments>\n    </item>\n    <item>\n      <title>Post
+        flatbed load photos here V2.0</title>\n      <pubDate>Fri, 09 Oct 2026 22:48:56
+        +0000</pubDate>\n      <link>https://www.thetruckersreport.com/truckingindustryforum/threads/post-flatbed-load-photos-here-v2-0.242058/</link>\n
+        \     <guid>https://www.thetruckersreport.com/truckingindustryforum/threads/post-flatbed-load-photos-here-v2-0.242058/</guid>\n
+        \     <author>redacted</author>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[Here we go, per BHW request]]></content:encoded>\n
+        \     <slash:comments>29355</slash:comments>\n    </item>\n    <item>\n      <title>What
+        should I do, stay or leave for Old Dominion?</title>\n      <pubDate>Fri,
+        09 Oct 2026 22:46:30 +0000</pubDate>\n      <link>https://www.thetruckersreport.com/truckingindustryforum/threads/what-should-i-do-stay-or-leave-for-old-dominion.2545117/</link>\n
+        \     <guid>https://www.thetruckersreport.com/truckingindustryforum/threads/what-should-i-do-stay-or-leave-for-old-dominion.2545117/</guid>\n
+        \     <author>redacted</author>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[Would you stay where you\u2019re at and keep
+        building CDL experience or try to get your foot in the door at Old Dominion?<br
+        />\n<br />\nI\u2019m a newer CDL driver and currently doing beverage delivery.
+        I\u2019m making $28/hr right now and go to $30/hr after 6 months. Usually
+        work less than 60 hours a week, good benefits and PTO, and it\u2019s pretty
+        stable. The job is definitely physical but I\u2019m getting driving experience.<br
+        />\n<br />\nI have a friend who is a dock supervisor at Old Dominion, so I
+        have an opportunity to get in there...<br />\n<br />\n<a href=\"https://www.thetruckersreport.com/truckingindustryforum/threads/what-should-i-do-stay-or-leave-for-old-dominion.2545117/\"
+        class=\"internalLink\">What should I do, stay or leave for Old Dominion?</a>]]></content:encoded>\n
+        \     <slash:comments>30</slash:comments>\n    </item>\n    <item>\n      <title>Indian
+        River</title>\n      <pubDate>Fri, 09 Oct 2026 22:36:20 +0000</pubDate>\n
+        \     <link>https://www.thetruckersreport.com/truckingindustryforum/threads/indian-river.327671/</link>\n
+        \     <guid>https://www.thetruckersreport.com/truckingindustryforum/threads/indian-river.327671/</guid>\n
+        \     <author>redacted</author>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[I drove for IRT in 2014 and was pretty happy
+        there. I always averaged 3000 miles per week and got along with everyone in
+        the offices. I ended up leaving and have been at the same local job ever since
+        (last 2 years). Here lately I&#039;ve been kicking it around about going back
+        OTR and I always told myself if I ever did, IRT is who I would go back to.
+        Just wanted to get some feedback from anyone on here who is currently working
+        there or has in the last 2 years since I&#039;ve left. What kind of miles...<br
+        />\n<br />\n<a href=\"https://www.thetruckersreport.com/truckingindustryforum/threads/indian-river.327671/\"
+        class=\"internalLink\">Indian River</a>]]></content:encoded>\n      <slash:comments>4314</slash:comments>\n
+        \   </item>\n    <item>\n      <title>Wth??..not paying attention??\u2026Flatbed
+        rear ends cryogenic truck in Houston..</title>\n      <pubDate>Fri, 09 Oct
+        2026 22:31:21 +0000</pubDate>\n      <link>https://www.thetruckersreport.com/truckingindustryforum/threads/wth-not-paying-attention-%E2%80%A6flatbed-rear-ends-cryogenic-truck-in-houston.2546472/</link>\n
+        \     <guid>https://www.thetruckersreport.com/truckingindustryforum/threads/wth-not-paying-attention-%E2%80%A6flatbed-rear-ends-cryogenic-truck-in-houston.2546472/</guid>\n
+        \     <author>redacted</author>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[<iframe width=\"500\" height=\"300\" src=\"https://www.youtube.com/embed/RF5E_3SCVbc?wmode=opaque\"
+        frameborder=\"0\" allowfullscreen></iframe>]]></content:encoded>\n      <slash:comments>9</slash:comments>\n
+        \   </item>\n    <item>\n      <title>2001 Freightliner FL 70 Service truck
+        wont start</title>\n      <pubDate>Fri, 09 Oct 2026 22:16:22 +0000</pubDate>\n
+        \     <link>https://www.thetruckersreport.com/truckingindustryforum/threads/2001-freightliner-fl-70-service-truck-wont-start.2437073/</link>\n
+        \     <guid>https://www.thetruckersreport.com/truckingindustryforum/threads/2001-freightliner-fl-70-service-truck-wont-start.2437073/</guid>\n
+        \     <author>redacted</author>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[So  I have a 2001 Freightliner FL 70 service
+        truck. Serial # 1FVABSAK52HJ65268. It has a Cat 3126. Serial # 9SZ06948. It
+        will turn over but will not start. Our laptop will not communicate with the
+        ECU. With the key on, the message on the LED screen on the dash reads:<br
+        />\n<br />\n<br />\nNo Engine<br />\n<br />\nSID 254<br />\n<br />\nFail 07<br
+        />\n<br />\n<br />\nWhen I turn the key to start, the message reads:<br />\n<br
+        />\n<br />\nNo engine<br />\n<br />\nICU 140<br />\n<br />\nABS 136<br />\n<br
+        />\n<br />\nI have changed fuel filters, HEUI pump, and swapped out ECUs with
+        a like known running service truck. I have...<br />\n<br />\n<a href=\"https://www.thetruckersreport.com/truckingindustryforum/threads/2001-freightliner-fl-70-service-truck-wont-start.2437073/\"
+        class=\"internalLink\">2001 Freightliner FL 70 Service truck wont start</a>]]></content:encoded>\n
+        \     <slash:comments>9</slash:comments>\n    </item>\n    <item>\n      <title>GP
+        Transco</title>\n      <pubDate>Fri, 09 Oct 2026 21:25:44 +0000</pubDate>\n
+        \     <link>https://www.thetruckersreport.com/truckingindustryforum/threads/gp-transco.2546532/</link>\n
+        \     <guid>https://www.thetruckersreport.com/truckingindustryforum/threads/gp-transco.2546532/</guid>\n
+        \     <author>redacted</author>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[If you have ever worked for GP Transco out
+        of Juliet, IL I have a question.<br />\nHow was it when you quit, if you quit,
+        did you have to get yourself home? Did they help you get home? I need to know.]]></content:encoded>\n
+        \     <slash:comments>4</slash:comments>\n    </item>\n    <item>\n      <title>Las
+        Vegas Strip showgirls charged in battery over $20 tip dispute</title>\n      <pubDate>Fri,
+        09 Oct 2026 20:36:31 +0000</pubDate>\n      <link>https://www.thetruckersreport.com/truckingindustryforum/threads/las-vegas-strip-showgirls-charged-in-battery-over-20-tip-dispute.2546538/</link>\n
+        \     <guid>https://www.thetruckersreport.com/truckingindustryforum/threads/las-vegas-strip-showgirls-charged-in-battery-over-20-tip-dispute.2546538/</guid>\n
+        \     <author>redacted</author>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[<a href=\"https://www.foxnews.com/us/las-vegas-showgirl-allegedly-beats-tourist-high-heel-20-photo-tip-sparks-brawl\"
+        target=\"_blank\" class=\"externalLink\" rel=\"nofollow\">Las Vegas Strip
+        showgirls charged in battery over $20 tip dispute </a>]]></content:encoded>\n
+        \     <slash:comments>7</slash:comments>\n    </item>\n    <item>\n      <title>Mike
+        Ditka, legendary Chicago Bears coach and Super Bowl champion, dead at 86</title>\n
+        \     <pubDate>Fri, 09 Oct 2026 19:39:37 +0000</pubDate>\n      <link>https://www.thetruckersreport.com/truckingindustryforum/threads/mike-ditka-legendary-chicago-bears-coach-and-super-bowl-champion-dead-at-86.2546545/</link>\n
+        \     <guid>https://www.thetruckersreport.com/truckingindustryforum/threads/mike-ditka-legendary-chicago-bears-coach-and-super-bowl-champion-dead-at-86.2546545/</guid>\n
+        \     <author>redacted</author>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[<a href=\"https://www.foxnews.com/outkick-sports/bears-mike-ditka-dead\"
+        target=\"_blank\" class=\"externalLink\" rel=\"nofollow\"><img src=\"https://a57.foxnews.com/assets.foxnews.com/hp/fn/prod/images/2026/10/343/193/970ea11caff124fa61675ab8d28a621a.png?tl=1&amp;ve=1\"
+        class=\"bbCodeImage LbImage\" alt=\"[&#x200B;IMG]\" data-url=\"https://a57.foxnews.com/assets.foxnews.com/hp/fn/prod/images/2026/10/343/193/970ea11caff124fa61675ab8d28a621a.png?tl=1&amp;ve=1\"
+        /><br />\nSIDELINE TITAN</a><br />\n<span style=\"font-size: 15px\"><b><a
+        href=\"https://www.foxnews.com/outkick-sports/bears-mike-ditka-dead#&amp;_intcmp=fnhpbt5\"
+        target=\"_blank\" class=\"externalLink\" rel=\"nofollow\">Mike Ditka, legendary
+        Chicago Bears coach and Super Bowl champion, dead at 86</a></b></span>]]></content:encoded>\n
+        \     <slash:comments>1</slash:comments>\n    </item>\n    <item>\n      <title>Rates
+        are crashing and fuel to the moon!</title>\n      <pubDate>Fri, 09 Oct 2026
+        19:16:39 +0000</pubDate>\n      <link>https://www.thetruckersreport.com/truckingindustryforum/threads/rates-are-crashing-and-fuel-to-the-moon.2415942/</link>\n
+        \     <guid>https://www.thetruckersreport.com/truckingindustryforum/threads/rates-are-crashing-and-fuel-to-the-moon.2415942/</guid>\n
+        \     <author>redacted</author>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[Wouldn&#039;t want to have one of those $150,000
+        half million mile trucks right about now.<br />\n<br />\nFreight volume dropping
+        and brokers don&#039;t want to pay]]></content:encoded>\n      <slash:comments>11361</slash:comments>\n
+        \   </item>\n    <item>\n      <title>Need help shopping for a 2nd fridge
+        for my sleeper</title>\n      <pubDate>Fri, 09 Oct 2026 18:46:41 +0000</pubDate>\n
+        \     <link>https://www.thetruckersreport.com/truckingindustryforum/threads/need-help-shopping-for-a-2nd-fridge-for-my-sleeper.2546405/</link>\n
+        \     <guid>https://www.thetruckersreport.com/truckingindustryforum/threads/need-help-shopping-for-a-2nd-fridge-for-my-sleeper.2546405/</guid>\n
+        \     <author>redacted</author>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[i&#039;m trying to lose weight and trying
+        to reduce my eating expenses as an OTR solo company driver. i recently got
+        moved into a new company truck, a 2027 cascadia and it has a nice big fridge
+        that came with it. <br />\n<br />\ni purchased a second fridge that i have
+        ratched strapped to my top bunk to fill up with cottage cheese because im
+        experimenting with a cottage cheese diet. basically cottage cheese and quinoa
+        is the base and i mix other food with it to have a balanced diet. <br />\n<br
+        />\nanyway i got this...<br />\n<br />\n<a href=\"https://www.thetruckersreport.com/truckingindustryforum/threads/need-help-shopping-for-a-2nd-fridge-for-my-sleeper.2546405/\"
+        class=\"internalLink\">Need help shopping for a 2nd fridge for my sleeper</a>]]></content:encoded>\n
+        \     <slash:comments>26</slash:comments>\n    </item>\n    <item>\n      <title>Eagle
+        trucking Tucson AZ</title>\n      <pubDate>Fri, 09 Oct 2026 18:39:34 +0000</pubDate>\n
+        \     <link>https://www.thetruckersreport.com/truckingindustryforum/threads/eagle-trucking-tucson-az.2546512/</link>\n
+        \     <guid>https://www.thetruckersreport.com/truckingindustryforum/threads/eagle-trucking-tucson-az.2546512/</guid>\n
+        \     <author>redacted</author>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[Hello anybody know if Eagle trucking out of
+        Tucson AZ is still operating?]]></content:encoded>\n      <slash:comments>6</slash:comments>\n
+        \   </item>\n    <item>\n      <title>Trailer Brake Lock Up Blocking Taffic</title>\n
+        \     <pubDate>Fri, 09 Oct 2026 18:37:03 +0000</pubDate>\n      <link>https://www.thetruckersreport.com/truckingindustryforum/threads/trailer-brake-lock-up-blocking-taffic.2546483/</link>\n
+        \     <guid>https://www.thetruckersreport.com/truckingindustryforum/threads/trailer-brake-lock-up-blocking-taffic.2546483/</guid>\n
+        \     <author>redacted</author>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[It&#039;s not me, but this rig is blocking
+        the lane at the truck wash.  He said his brakes are locked up.  <br />\n<br
+        />\n\n\n\t<a href=\"https://www.thetruckersreport.com/truckingindustryforum/attachments/604722/\"
+        target=\"_blank\">View attachment 604722</a>]]></content:encoded>\n      <slash:comments>8</slash:comments>\n
+        \   </item>\n  </channel>\n</rss>\n"
+    headers:
+      alt-svc:
+      - h3=":443"; ma=86400
+      cache-control:
+      - private, max-age=0
+      cf-cache-status:
+      - DYNAMIC
+      cf-ray:
+      - a48127b12a40d695-IAD
+      connection:
+      - keep-alive
+      content-length:
+      - '22450'
+      content-type:
+      - text/xml; charset=UTF-8
+      date:
+      - Fri, 09 Oct 2026 23:27:16 GMT
+      expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      last-modified:
+      - Fri, 09 Oct 2026 23:27:16 GMT
+      server:
+      - cloudflare
+      vary:
+      - Accept-Encoding
+      x-frame-options:
+      - SAMEORIGIN
+      x-turbo-charged-by:
+      - LiteSpeed
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - www.plctalk.net
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://www.plctalk.net/robots.txt
+  response:
+    body:
+      string: 'User-agent: *
+
+        Disallow: /forums/whats-new/
+
+        Disallow: /forums/account/
+
+        Disallow: /forums/attachments/
+
+        Disallow: /forums/goto/
+
+        Disallow: /forums/login/
+
+        Disallow: /forums/admin.php
+
+        Disallow: /forums/search
+
+        Disallow: /search
+
+        Disallow: /preview/
+
+        Allow: /
+
+
+        User-agent: AhrefsBot
+
+        User-agent: PetalBot
+
+        User-agent: AspiegelBot
+
+        User-agent: DotBot
+
+        User-agent: MauiBot
+
+        User-agent: MJ12bot
+
+        User-agent: DataForSeoBot
+
+        User-agent: Meltwater
+
+        Disallow: /
+
+
+        Sitemap: https://www.plctalk.net/forums/sitemap.xml'
+    headers:
+      age:
+      - '307'
+      cache-control:
+      - max-age=14400
+      cf-cache-status:
+      - HIT
+      cf-ray:
+      - a48127b38bad91f9-IAD
+      connection:
+      - keep-alive
+      content-length:
+      - '489'
+      content-type:
+      - text/plain; charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:27:17 GMT
+      etag:
+      - '"687be505-1e9"'
+      last-modified:
+      - Sat, 19 Jul 2025 18:33:41 GMT
+      nel:
+      - '{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'
+      report-to:
+      - '{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=hNwAP0cCZHk3OIFCz01HdbTTfFOXDLxJxHRWpGzJ%2FitvQyNjuCpalEPxVDlubCc36C4e%2BgB04Nha89GFWKdmWNFyBgPDPPlAutBCCHY6uVpUeL%2Bzgd6cKoxe9zu1QNMPZg%3D%3D"}]}'
+      server:
+      - cloudflare
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - application/rss+xml, application/atom+xml, application/xml;q=0.9, text/xml;q=0.8,
+        */*;q=0.5
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - www.plctalk.net
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://www.plctalk.net/forums/forums/-/index.rss
+  response:
+    body:
+      string: "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<rss version=\"2.0\" xmlns:atom=\"http://www.w3.org/2005/Atom\"
+        xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:content=\"http://purl.org/rss/1.0/modules/content/\"
+        xmlns:slash=\"http://purl.org/rss/1.0/modules/slash/\">\n  <channel>\n    <title>PLCtalk
+        - Interactive Q &amp; A</title>\n    <description>The world\u2019s leading
+        community of PLC experts. Join other automation professionals exchanging PLC
+        design and troubleshooting solutions.</description>\n    <pubDate>Fri, 09
+        Oct 2026 23:27:17 +0000</pubDate>\n    <lastBuildDate>Fri, 09 Oct 2026 23:27:17
+        +0000</lastBuildDate>\n    <generator>PLCtalk - Interactive Q &amp; A</generator>\n
+        \   <link>https://www.plctalk.net/forums/</link>\n    <atom:link rel=\"self\"
+        type=\"application/rss+xml\" href=\"https://www.plctalk.net/forums/forums/-/index.rss\"/>\n
+        \   <item>\n      <title>How to do change Bootloader Version :V00.01.02  to
+        V00.03.41</title>\n      <pubDate>Fri, 09 Oct 2026 18:09:13 +0000</pubDate>\n
+        \     <link>https://www.plctalk.net/forums/threads/how-to-do-change-bootloader-version-v00-01-02-to-v00-03-41.150119/</link>\n
+        \     <guid isPermaLink=\"false\">150119</guid>\n      <author>redacted</author>\n
+        \     <category domain=\"https://www.plctalk.net/forums/forums/plc-questions-and-answers.2/\"><![CDATA[PLC
+        Questions and Answers]]></category>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[<div class=\"bbWrapper\">Dear all I need your
+        advice can you advice me how can i change Bootloader version from New derive
+        .Please see attached <br />\n<br />\nWaiting for your reply,<br />\nThank
+        you very much,<br />\nBest regard,<br />\nSohedullah</div>]]></content:encoded>\n
+        \     <slash:comments>3</slash:comments>\n    </item>\n    <item>\n      <title>Siemens
+        S7-1212C/TIA Portal: On HMI, #### appears instead of real values...</title>\n
+        \     <pubDate>Fri, 09 Oct 2026 15:46:24 +0000</pubDate>\n      <link>https://www.plctalk.net/forums/threads/siemens-s7-1212c-tia-portal-on-hmi-appears-instead-of-real-values.150120/</link>\n
+        \     <guid isPermaLink=\"false\">150120</guid>\n      <author>redacted</author>\n
+        \     <category domain=\"https://www.plctalk.net/forums/forums/plc-questions-and-answers.2/\"><![CDATA[PLC
+        Questions and Answers]]></category>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[<div class=\"bbWrapper\">Hi All<br />\n<br
+        />\nIt&#039;s been a while since I posted on here - mainly because the PLC
+        that I delivered to a customer site a few years ago has been behaving itself
+        (no news is good news, I guess...). Basically, the PLC system uses laser sensors
+        to measure the perimeter of a machined part, it then compares it to &quot;the
+        ideal artefact&quot; and decides whether the machined part is within tolerance
+        and acceptable for installation.<br />\n<br />\nHowever, I got an email from
+        the customer the other day. He told me that my PLC...<br />\n<br />\n<a href=\"https://www.plctalk.net/forums/threads/siemens-s7-1212c-tia-portal-on-hmi-appears-instead-of-real-values.150120/\"
+        class=\"link link--internal\">Read more</a></div>]]></content:encoded>\n      <slash:comments>13</slash:comments>\n
+        \   </item>\n    <item>\n      <title>Fluke meter to Analog Input channel</title>\n
+        \     <pubDate>Fri, 09 Oct 2026 15:20:47 +0000</pubDate>\n      <link>https://www.plctalk.net/forums/threads/fluke-meter-to-analog-input-channel.146070/</link>\n
+        \     <guid isPermaLink=\"false\">146070</guid>\n      <author>redacted</author>\n
+        \     <category domain=\"https://www.plctalk.net/forums/forums/plc-questions-and-answers.2/\"><![CDATA[PLC
+        Questions and Answers]]></category>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[<div class=\"bbWrapper\">Hi, I have some trouble
+        on injecting 4-20mA to one of the ET200SP Analog Input module 6es7134-6gf00-0aa1
+        with base unit 6es7193-6bp00-0ba0. When I tried to inject current to AI Channel,
+        I am not able to receive any reading in TIA portal. I have configured the
+        Channel to 2 Wire Mode. My question is for the pin 9 (UV), is it necessary
+        to connect 24VDC to it instead of 0VDC? Your feedback is greatly appreciated.
+        Thank you.  <br />\n<a href=\"https://www.plctalk.net/forums/attachments/1746205630881-png.77775/\"\n\t\ttarget=\"_blank\"><img
+        src=\"https://www.plctalk.net/forums/data/attachments/77/77775-42aa270961ccb939008f0c9520cd81b1.jpg\"\n\t\tclass=\"bbImage
+        \"\n\t\tstyle=\"\"\n\t\talt=\"1746205630881.png\"\n\t\ttitle=\"1746205630881.png\"\n\t\twidth=\"150\"
+        height=\"243\" loading=\"lazy\" /></a></div>]]></content:encoded>\n      <slash:comments>6</slash:comments>\n
+        \   </item>\n    <item>\n      <title>Need input on inputs</title>\n      <pubDate>Fri,
+        09 Oct 2026 14:05:35 +0000</pubDate>\n      <link>https://www.plctalk.net/forums/threads/need-input-on-inputs.150110/</link>\n
+        \     <guid isPermaLink=\"false\">150110</guid>\n      <author>redacted</author>\n
+        \     <category domain=\"https://www.plctalk.net/forums/forums/plc-questions-and-answers.2/\"><![CDATA[PLC
+        Questions and Answers]]></category>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[<div class=\"bbWrapper\">I\u2019m sure this
+        is a simple question for most of you, but I\u2019m hoping to get an answer
+        for it.<br />\n<br />\nI need to setup the input up on this power monitor
+        as a trigger for a waveform capture. Looking at the wiring diagram it looks
+        like the input gets pulled down on the common terminal. I need it to get triggered
+        from this power supply fault alarm output. Would I be able to just run a wire
+        from the input 1 terminal 19 of the power monitor to the output alarm terminal
+        16 on the power supply? It shows...<br />\n<br />\n<a href=\"https://www.plctalk.net/forums/threads/need-input-on-inputs.150110/\"
+        class=\"link link--internal\">Read more</a></div>]]></content:encoded>\n      <slash:comments>10</slash:comments>\n
+        \   </item>\n    <item>\n      <title>Any experience with PLC AI</title>\n
+        \     <pubDate>Fri, 09 Oct 2026 12:21:40 +0000</pubDate>\n      <link>https://www.plctalk.net/forums/threads/any-experience-with-plc-ai.149122/</link>\n
+        \     <guid isPermaLink=\"false\">149122</guid>\n      <author>redacted</author>\n
+        \     <category domain=\"https://www.plctalk.net/forums/forums/plc-questions-and-answers.2/\"><![CDATA[PLC
+        Questions and Answers]]></category>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[<div class=\"bbWrapper\">Hi, gurus<br />\n<br
+        />\nAnybody has experience with PLC AI? What stage are they?</div>]]></content:encoded>\n
+        \     <slash:comments>36</slash:comments>\n    </item>\n    <item>\n      <title>Looking
+        at Converting Air Handlers to PLC System</title>\n      <pubDate>Fri, 09 Oct
+        2026 09:36:25 +0000</pubDate>\n      <link>https://www.plctalk.net/forums/threads/looking-at-converting-air-handlers-to-plc-system.150106/</link>\n
+        \     <guid isPermaLink=\"false\">150106</guid>\n      <author>redacted</author>\n
+        \     <category domain=\"https://www.plctalk.net/forums/forums/plc-questions-and-answers.2/\"><![CDATA[PLC
+        Questions and Answers]]></category>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[<div class=\"bbWrapper\">Hi All<br />\n<br
+        />\nI make small air handlers for lab use. The air handlers are for creating
+        and maintaining certain air pressure and air flow to what its hooked up to.
+        \ I am looking at converting them from our PCB and SBC system to a PLC setup.
+        \ The previous setup is an AC/DC power supply supplying 24vdc to a control
+        board that controls 4 64W dc fans via PWM signals. The control board also
+        has inputs for air pressure sensors, air flow sensors, gas sensors, and temperature
+        sensors.  The sensors we&#039;ve...<br />\n<br />\n<a href=\"https://www.plctalk.net/forums/threads/looking-at-converting-air-handlers-to-plc-system.150106/\"
+        class=\"link link--internal\">Read more</a></div>]]></content:encoded>\n      <slash:comments>7</slash:comments>\n
+        \   </item>\n    <item>\n      <title>Bosch Rexroth [VT-HMC-2-10/M-0-00/00]
+        Two-Axis Hydraulic Press Project</title>\n      <pubDate>Fri, 09 Oct 2026
+        08:01:15 +0000</pubDate>\n      <link>https://www.plctalk.net/forums/threads/bosch-rexroth-vt-hmc-2-10-m-0-00-00-two-axis-hydraulic-press-project.150118/</link>\n
+        \     <guid isPermaLink=\"false\">150118</guid>\n      <author>redacted</author>\n
+        \     <category domain=\"https://www.plctalk.net/forums/forums/plc-questions-and-answers.2/\"><![CDATA[PLC
+        Questions and Answers]]></category>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[<div class=\"bbWrapper\">Hello,<br />\n<br
+        />\nI have a new project involving a hydraulic press with two-axis control.
+        The system consists of an S7-1200 G2 PLC, a Bosch Rexroth VT-HMC-2-10/M-0-00/00,
+        and an SD card (synchronization card) with IndraWorks DS software.<br />\n<br
+        />\nThis is my first project working with the VT-HMC and IndraWorks DS.<br
+        />\n<br />\nWe have two hydraulic axes, and I would like to know how they
+        should be configured and synchronized with each other.<br />\ninside the Tia
+        portal and Indraworks DS<br />\n<br />\nCould you please support me with this...<br
+        />\n<br />\n<a href=\"https://www.plctalk.net/forums/threads/bosch-rexroth-vt-hmc-2-10-m-0-00-00-two-axis-hydraulic-press-project.150118/\"
+        class=\"link link--internal\">Read more</a></div>]]></content:encoded>\n      <slash:comments>0</slash:comments>\n
+        \   </item>\n    <item>\n      <title>How to control a web accumulator at
+        a constant level on an S7-1500 winder?</title>\n      <pubDate>Fri, 09 Oct
+        2026 03:15:23 +0000</pubDate>\n      <link>https://www.plctalk.net/forums/threads/how-to-control-a-web-accumulator-at-a-constant-level-on-an-s7-1500-winder.150098/</link>\n
+        \     <guid isPermaLink=\"false\">150098</guid>\n      <author>redacted</author>\n
+        \     <category domain=\"https://www.plctalk.net/forums/forums/plc-questions-and-answers.2/\"><![CDATA[PLC
+        Questions and Answers]]></category>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[<div class=\"bbWrapper\">Hello everyone,<br
+        />\n<br />\nI am working on a <b>winder machine for extruded plastic film</b>
+        using an <b>S7-1500 PLC and SINAMICS S120</b>.<br />\nI have a web accumulator
+        between the extrusion line and the winder. The accumulator position is measured
+        as a percentage.<br />\n<br />\nMy current control strategy is:<br />\n<ul>\n<li
+        data-xf-list-type=\"ul\">Normal accumulator setpoint: <b>12%</b></li>\n<li
+        data-xf-list-type=\"ul\">If the accumulator rises above <b>20%</b>, I increase
+        the winder speed to <b>1.3 \xD7 the normal speed</b> until the accumulator
+        drops back to around 12%.</li>\n<li data-xf-list-type=\"ul\">If the...</li>\n</ul><br
+        />\n<a href=\"https://www.plctalk.net/forums/threads/how-to-control-a-web-accumulator-at-a-constant-level-on-an-s7-1500-winder.150098/\"
+        class=\"link link--internal\">Read more</a></div>]]></content:encoded>\n      <slash:comments>17</slash:comments>\n
+        \   </item>\n    <item>\n      <title>PanelView Plus 7 - Info Needed on ActiveX
+        Controls</title>\n      <pubDate>Fri, 09 Oct 2026 00:29:11 +0000</pubDate>\n
+        \     <link>https://www.plctalk.net/forums/threads/panelview-plus-7-info-needed-on-activex-controls.150113/</link>\n
+        \     <guid isPermaLink=\"false\">150113</guid>\n      <author>redacted</author>\n
+        \     <category domain=\"https://www.plctalk.net/forums/forums/plc-questions-and-answers.2/\"><![CDATA[PLC
+        Questions and Answers]]></category>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[<div class=\"bbWrapper\">Hi All,<br />\nI&#039;m
+        new to working with PanelView HMI&#039;s.  Every other company I&#039;ve worked
+        with, we simply ripped these things out and replaced them with C-More.  I
+        don&#039;t have that option now, so I am forced to get more involved with
+        them.  I came across one that needs to be replaced, and it seems to be more
+        complicated than the usual Firmware update, network config and .MER load.
+        \ This one has some sort of ActiveX controls along with it.  The integrator
+        has everything running off of an SD card...<br />\n<br />\n<a href=\"https://www.plctalk.net/forums/threads/panelview-plus-7-info-needed-on-activex-controls.150113/\"
+        class=\"link link--internal\">Read more</a></div>]]></content:encoded>\n      <slash:comments>7</slash:comments>\n
+        \   </item>\n    <item>\n      <title>Rexroth Visual Motion 11</title>\n      <pubDate>Thu,
+        08 Oct 2026 21:41:09 +0000</pubDate>\n      <link>https://www.plctalk.net/forums/threads/rexroth-visual-motion-11.147558/</link>\n
+        \     <guid isPermaLink=\"false\">147558</guid>\n      <author>redacted</author>\n
+        \     <category domain=\"https://www.plctalk.net/forums/forums/plc-questions-and-answers.2/\"><![CDATA[PLC
+        Questions and Answers]]></category>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[<div class=\"bbWrapper\">Anyone have experience
+        locating or purchasing the Rexroth Visual Motion software?  One of our OEMs
+        used their PPC controllers, we have at least a dozen of them.<br />\n<br />\nHad
+        an experience last where one failed and we didn\u2019t have a backup, had
+        to fly in a rep to fix it.<br />\n<br />\nWe\u2019re not trying to commission
+        anything new, just be able to take a backup and then be able to write that
+        backup if the firmware card fails again.<br />\n<br />\nMy attempts to contact
+        Rexroth so far have not been answered, and they don\u2019t seem to...<br />\n<br
+        />\n<a href=\"https://www.plctalk.net/forums/threads/rexroth-visual-motion-11.147558/\"
+        class=\"link link--internal\">Read more</a></div>]]></content:encoded>\n      <slash:comments>18</slash:comments>\n
+        \   </item>\n    <item>\n      <title>Codesys to 1794-AENT WORKING! Still
+        Inconvenient for Hot Swapping.</title>\n      <pubDate>Thu, 08 Oct 2026 18:48:20
+        +0000</pubDate>\n      <link>https://www.plctalk.net/forums/threads/codesys-to-1794-aent-working-still-inconvenient-for-hot-swapping.150117/</link>\n
+        \     <guid isPermaLink=\"false\">150117</guid>\n      <author>redacted</author>\n
+        \     <category domain=\"https://www.plctalk.net/forums/forums/plc-questions-and-answers.2/\"><![CDATA[PLC
+        Questions and Answers]]></category>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[<div class=\"bbWrapper\">Hi everyone!<br />\n<br
+        />\nI&#039;m not going to lie and claim this is my work at all or that I was
+        the one to figure this out. Definitely all ChatGPT lol.<br />\nBut I saw quite
+        a few Posts about simply connecting to an AENT from a non AB Controller, that
+        I thought I&#039;d share!<br />\n<br />\nSimply needed to Incorporate a 1794-AENT
+        Rack into a homemade Test Station that had space enough to fit 2 Cards. Already
+        had a Wago PFC100 running Codesys, and would rather not throw in an AB Controller
+        just to connect to an AENT...<br />\n<br />\n<a href=\"https://www.plctalk.net/forums/threads/codesys-to-1794-aent-working-still-inconvenient-for-hot-swapping.150117/\"
+        class=\"link link--internal\">Read more</a></div>]]></content:encoded>\n      <slash:comments>0</slash:comments>\n
+        \   </item>\n    <item>\n      <title>Honeywell HC900 lost program while running</title>\n
+        \     <pubDate>Thu, 08 Oct 2026 18:20:07 +0000</pubDate>\n      <link>https://www.plctalk.net/forums/threads/honeywell-hc900-lost-program-while-running.73364/</link>\n
+        \     <guid isPermaLink=\"false\">73364</guid>\n      <author>redacted</author>\n
+        \     <category domain=\"https://www.plctalk.net/forums/forums/plc-questions-and-answers.2/\"><![CDATA[PLC
+        Questions and Answers]]></category>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[<div class=\"bbWrapper\">Good morning, I am
+        trying to figure out the root cause for an issue we had yesterday.  We have
+        a Honeywell HC900 running a brazing furnace, yesterday out of the blue, without
+        a power flicker, the entire running program cleared, taking $8000 worth of
+        prototypes with it.  The controller runs off of a battery backup, so a power
+        flicker shouldn&#039;t have affected it.  no work was being performed on the
+        furnace at the time either, and the operators we at lunch.<br />\n<br />\nI
+        am still trying to get onto...<br />\n<br />\n<a href=\"https://www.plctalk.net/forums/threads/honeywell-hc900-lost-program-while-running.73364/\"
+        class=\"link link--internal\">Read more</a></div>]]></content:encoded>\n      <slash:comments>5</slash:comments>\n
+        \   </item>\n    <item>\n      <title>Experiences buying second hand automation
+        equipment?</title>\n      <pubDate>Thu, 08 Oct 2026 17:52:07 +0000</pubDate>\n
+        \     <link>https://www.plctalk.net/forums/threads/experiences-buying-second-hand-automation-equipment.137368/</link>\n
+        \     <guid isPermaLink=\"false\">137368</guid>\n      <author>redacted</author>\n
+        \     <category domain=\"https://www.plctalk.net/forums/forums/plc-questions-and-answers.2/\"><![CDATA[PLC
+        Questions and Answers]]></category>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[<div class=\"bbWrapper\">Hello all<br />\n<br
+        />\nI have the opportunity to buy some second hand unused components, they
+        are Siemens motor modules, a CPU, inputs and outputs. <br />\n<br />\nI have
+        used the Siemens QR scanner and the items appear perfectly legitimate. <br
+        />\n<br />\nThe value new of these items is around $15,000 but they are being
+        offered around $2500 as they are apparently surplus to requirements. Some
+        of the items are up to 9 years old.<br />\n<br />\nMy question is, how can
+        I tell how reliable to source is for these components? Is there a way to...<br
+        />\n<br />\n<a href=\"https://www.plctalk.net/forums/threads/experiences-buying-second-hand-automation-equipment.137368/\"
+        class=\"link link--internal\">Read more</a></div>]]></content:encoded>\n      <slash:comments>18</slash:comments>\n
+        \   </item>\n    <item>\n      <title>PLC 5 BTR/BRW Question</title>\n      <pubDate>Thu,
+        08 Oct 2026 17:24:49 +0000</pubDate>\n      <link>https://www.plctalk.net/forums/threads/plc-5-btr-brw-question.150116/</link>\n
+        \     <guid isPermaLink=\"false\">150116</guid>\n      <author>redacted</author>\n
+        \     <category domain=\"https://www.plctalk.net/forums/forums/plc-questions-and-answers.2/\"><![CDATA[PLC
+        Questions and Answers]]></category>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[<div class=\"bbWrapper\">Currently this system
+        isn&#039;t having any issues, but I ran across this and now I am questioning
+        how these BTR/BTW work. How is this working with a Lenth of 0 for both the
+        BTW and BTR. How does it know how many Config words to Send??? Is the configuration
+        strictly writing from the BTW GUI??.  <br />\n<br />\n<a href=\"https://www.plctalk.net/forums/attachments/1791476821360-png.83783/\"\n\t\ttarget=\"_blank\"><img
+        src=\"https://www.plctalk.net/forums/data/attachments/83/83783-f6a8782b2d1cef5091b56fea3ced3685.jpg\"\n\t\tclass=\"bbImage
+        \"\n\t\tstyle=\"\"\n\t\talt=\"1791476821360.png\"\n\t\ttitle=\"1791476821360.png\"\n\t\twidth=\"360\"
+        height=\"150\" loading=\"lazy\" /></a></div>]]></content:encoded>\n      <slash:comments>3</slash:comments>\n
+        \   </item>\n    <item>\n      <title>Issues with Factory Talk activation
+        manager</title>\n      <pubDate>Thu, 08 Oct 2026 15:31:58 +0000</pubDate>\n
+        \     <link>https://www.plctalk.net/forums/threads/issues-with-factory-talk-activation-manager.150115/</link>\n
+        \     <guid isPermaLink=\"false\">150115</guid>\n      <author>redacted</author>\n
+        \     <category domain=\"https://www.plctalk.net/forums/forums/plc-questions-and-answers.2/\"><![CDATA[PLC
+        Questions and Answers]]></category>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[<div class=\"bbWrapper\">One of my Engineers
+        keeps getting this fault when he tries to open Activation manager;<br />\n<a
+        href=\"https://www.plctalk.net/forums/attachments/1791471583419-png.83781/\"\n\t\ttarget=\"_blank\"><img
+        src=\"https://www.plctalk.net/forums/data/attachments/83/83781-d3a8399ee3b1a16c0ac1755ffead0f9a.jpg\"\n\t\tclass=\"bbImage
+        \"\n\t\tstyle=\"\"\n\t\talt=\"1791471583419.png\"\n\t\ttitle=\"1791471583419.png\"\n\t\twidth=\"278\"
+        height=\"150\" loading=\"lazy\" /></a><br />\n<br />\nI&#039;ve fixed this
+        before but don&#039;t remember how.  Can you all help me out?</div>]]></content:encoded>\n
+        \     <slash:comments>1</slash:comments>\n    </item>\n    <item>\n      <title>Produced
+        exchanges PAC RX3i to a NIU IC200EBI001</title>\n      <pubDate>Thu, 08 Oct
+        2026 13:46:51 +0000</pubDate>\n      <link>https://www.plctalk.net/forums/threads/produced-exchanges-pac-rx3i-to-a-niu-ic200ebi001.150111/</link>\n
+        \     <guid isPermaLink=\"false\">150111</guid>\n      <author>redacted</author>\n
+        \     <category domain=\"https://www.plctalk.net/forums/forums/plc-questions-and-answers.2/\"><![CDATA[PLC
+        Questions and Answers]]></category>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[<div class=\"bbWrapper\">Hi everyone,<br />\nPlease
+        i apreciate your help<br />\n<br />\nI have a Versamax NIU IC200EBI001 to
+        communicate using EGD to a PAC rx3i. The slots are as follows:<br />\n1. Digital
+        output 8CH IC200MDL730<br />\n2. Digital input 16CH IC200MDL640<br />\n3.
+        Analog input 8CH IC200ALG240<br />\n4. Analog input 8CH IC200ALG240<br />\n5.
+        Analog output 8CH IC200ALG326<br />\n<br />\nThe consumed exchanges in PAC
+        rx3i from the NIU (IC200EBI001) are ok, i can read all inputs analog and digital,
+        but produced exchange to the NIU is not working, is not possible to operate...<br
+        />\n<br />\n<a href=\"https://www.plctalk.net/forums/threads/produced-exchanges-pac-rx3i-to-a-niu-ic200ebi001.150111/\"
+        class=\"link link--internal\">Read more</a></div>]]></content:encoded>\n      <slash:comments>1</slash:comments>\n
+        \   </item>\n    <item>\n      <title>S7-1200 1d barcode scanner suggestions</title>\n
+        \     <pubDate>Thu, 08 Oct 2026 13:21:44 +0000</pubDate>\n      <link>https://www.plctalk.net/forums/threads/s7-1200-1d-barcode-scanner-suggestions.150114/</link>\n
+        \     <guid isPermaLink=\"false\">150114</guid>\n      <author>redacted</author>\n
+        \     <category domain=\"https://www.plctalk.net/forums/forums/plc-questions-and-answers.2/\"><![CDATA[PLC
+        Questions and Answers]]></category>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[<div class=\"bbWrapper\">Greetings all. Not
+        having a ton of experience with Siemens PLC&#039;s, I was hoping to get some
+        advice selecting a mid-budget (about $500), cordless 1d barcode scanner that
+        will communicate with a Siemens G1 S7-1200 PLC. Thank you</div>]]></content:encoded>\n
+        \     <slash:comments>0</slash:comments>\n    </item>\n    <item>\n      <title>Prosave
+        decoder software</title>\n      <pubDate>Thu, 08 Oct 2026 13:00:01 +0000</pubDate>\n
+        \     <link>https://www.plctalk.net/forums/threads/prosave-decoder-software.126438/</link>\n
+        \     <guid isPermaLink=\"false\">126438</guid>\n      <author>redacted</author>\n
+        \     <category domain=\"https://www.plctalk.net/forums/forums/plc-questions-and-answers.2/\"><![CDATA[PLC
+        Questions and Answers]]></category>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[<div class=\"bbWrapper\">Hi guys, <br />\n<br
+        />\nI&#039;m looking for a scetchy piece of software called DecoderProsave.<br
+        />\nI saw it being mentioned a couple of times on this and other forums.<br
+        />\n<br />\nI know it&#039;s been made by some Russian programmer and it should
+        be able to extract tag lists and some other data from a Siemens Prosave image.<br
+        />\n<br />\nThe websites that claim to have it available for download are
+        a mess and most of them are just looking for credit card data.<br />\n<br
+        />\nIf someone can send me a copy I would be very thankful.<br />\n<br />\nAndy</div>]]></content:encoded>\n
+        \     <slash:comments>46</slash:comments>\n    </item>\n    <item>\n      <title>Non-contact
+        transmitter</title>\n      <pubDate>Thu, 08 Oct 2026 12:59:32 +0000</pubDate>\n
+        \     <link>https://www.plctalk.net/forums/threads/non-contact-transmitter.150093/</link>\n
+        \     <guid isPermaLink=\"false\">150093</guid>\n      <author>redacted</author>\n
+        \     <category domain=\"https://www.plctalk.net/forums/forums/plc-questions-and-answers.2/\"><![CDATA[PLC
+        Questions and Answers]]></category>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[<div class=\"bbWrapper\">Does anyone know
+        who makes non-contact transmiter/receivers for remote pallet monitoring?<br
+        />\n<br />\nI&#039;ve never used one but seen them used on shuttles where
+        one side of the shuttle has 24V power to the receiver and the other side has
+        no power. The reciever side (non voltage side) has a prox connected to it
+        and as the transmitter passes under it it can read the status of the non-voltage
+        side. <br />\n<br />\nThese devices look like M18 proximity sensors. <br />\n<br
+        />\nI cant find them with google searching, I do not think I am...<br />\n<br
+        />\n<a href=\"https://www.plctalk.net/forums/threads/non-contact-transmitter.150093/\"
+        class=\"link link--internal\">Read more</a></div>]]></content:encoded>\n      <slash:comments>18</slash:comments>\n
+        \   </item>\n    <item>\n      <title>Schneider LCA423-SCM-01 \u2014 reading
+        and changing CANopen Node-ID using USB\u2013CAN</title>\n      <pubDate>Thu,
+        08 Oct 2026 09:17:34 +0000</pubDate>\n      <link>https://www.plctalk.net/forums/threads/schneider-lca423-scm-01-reading-and-changing-canopen-node-id-using-usb-can.150112/</link>\n
+        \     <guid isPermaLink=\"false\">150112</guid>\n      <author>redacted</author>\n
+        \     <category domain=\"https://www.plctalk.net/forums/forums/plc-questions-and-answers.2/\"><![CDATA[PLC
+        Questions and Answers]]></category>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[<div class=\"bbWrapper\">Hi everyone,<br />\n<br
+        />\nThe stepper motor in my project failed, so I bought a Schneider Electric
+        LCA423-SCM-01 with an integrated controller (48 V DC, 2 A, 0.39 Nm). However,
+        I don\u2019t know its current CANopen Node-ID. I would like to read the existing
+        address and change it using a laptop.<br />\n<br />\nMy proposed setup is:<br
+        />\n<br />\n<ol>\n<li data-xf-list-type=\"ol\">Laptop \u2192 USB \u2192 Makerbase
+        CANable V2.0 PRO with galvanic isolation.</li>\n<li data-xf-list-type=\"ol\">CANable
+        \u2192 cable with a female 5-pin M12 connector \u2192 the motor\u2019s circular
+        connector. On the adapter side, I would...</li>\n</ol><br />\n<a href=\"https://www.plctalk.net/forums/threads/schneider-lca423-scm-01-reading-and-changing-canopen-node-id-using-usb-can.150112/\"
+        class=\"link link--internal\">Read more</a></div>]]></content:encoded>\n      <slash:comments>0</slash:comments>\n
+        \   </item>\n    <item>\n      <title>KTP700 Basic Start/Stop buttons not
+        writing to S7-1200 M bits \u2013 TIA Portal V21</title>\n      <pubDate>Thu,
+        08 Oct 2026 08:15:52 +0000</pubDate>\n      <link>https://www.plctalk.net/forums/threads/ktp700-basic-start-stop-buttons-not-writing-to-s7-1200-m-bits-tia-portal-v21.150089/</link>\n
+        \     <guid isPermaLink=\"false\">150089</guid>\n      <author>redacted</author>\n
+        \     <category domain=\"https://www.plctalk.net/forums/forums/plc-questions-and-answers.2/\"><![CDATA[PLC
+        Questions and Answers]]></category>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[<div class=\"bbWrapper\">I have an S7-1200
+        CPU 1214C DC/DC/DC, FW V4.2.2, connected to a KTP700 Basic PN using TIA Portal
+        V21.<br />\n<br />\n<br />\nPLC IP = 192.168.0.100<br />\nHMI IP = 192.168.0.2<br
+        />\n<br />\n<br />\nHMI and PLC are reachable by ping and visible in TIA Portal
+        Accessible Devices.<br />\n<br />\n<br />\nHMI Start button configuration
+        is:<br />\nRelease \u2192 SetBit \u2192 Auto_Start<br />\n<br />\n<br />\nPLC
+        tag:<br />\nAuto_Start = %M1.3 BOOL<br />\n<br />\n<br />\nHMI Stop button:<br
+        />\nRelease \u2192 ResetBit \u2192 Auto_Start<br />\n<br />\n<br />\nHowever,
+        when I press Start/Stop on the physical HMI, %M1.3 remains FALSE in an online
+        PLC Watch Table...<br />\n<br />\n<a href=\"https://www.plctalk.net/forums/threads/ktp700-basic-start-stop-buttons-not-writing-to-s7-1200-m-bits-tia-portal-v21.150089/\"
+        class=\"link link--internal\">Read more</a></div>]]></content:encoded>\n      <slash:comments>5</slash:comments>\n
+        \   </item>\n    <item>\n      <title>Need help with communication btwn Micrologix
+        1500 and Nematron hmi</title>\n      <pubDate>Wed, 07 Oct 2026 19:26:32 +0000</pubDate>\n
+        \     <link>https://www.plctalk.net/forums/threads/need-help-with-communication-btwn-micrologix-1500-and-nematron-hmi.42861/</link>\n
+        \     <guid isPermaLink=\"false\">42861</guid>\n      <author>redacted</author>\n
+        \     <category domain=\"https://www.plctalk.net/forums/forums/plc-questions-and-answers.2/\"><![CDATA[PLC
+        Questions and Answers]]></category>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[<div class=\"bbWrapper\">Hey Guys,<br />\n
+        <br />\nI need help with configuring the communications between a micrologix
+        1500 and a nematron hmi.  I&#039;m trying to connect it to channel 1.  The
+        plc and hmi work that I have done in the past, the machines have already been
+        established and I just edited them as need.  So I need info from the ground
+        up on this!<br />\n <br />\nThanks in advance</div>]]></content:encoded>\n
+        \     <slash:comments>9</slash:comments>\n    </item>\n    <item>\n      <title>PowerFlex
+        525: First time set-up using external RUN and Preset Speed: Settings?</title>\n
+        \     <pubDate>Wed, 07 Oct 2026 19:24:56 +0000</pubDate>\n      <link>https://www.plctalk.net/forums/threads/powerflex-525-first-time-set-up-using-external-run-and-preset-speed-settings.150058/</link>\n
+        \     <guid isPermaLink=\"false\">150058</guid>\n      <author>redacted</author>\n
+        \     <category domain=\"https://www.plctalk.net/forums/forums/plc-questions-and-answers.2/\"><![CDATA[PLC
+        Questions and Answers]]></category>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[<div class=\"bbWrapper\">Reaching out to the
+        extended cerebellum....<br />\n<br />\nI have replaced a PowerFlex40E with
+        PF525.  Same ratings.  I have set up what I believe to be the neccesary and
+        sufficient parameters for this drive to work, but obviously I&#039;m missing
+        something as it just sits there similing at me with 0.0Hz output....<br />\n<br
+        />\nThe previous unit functioned perfectly such that an external RUN and Preset
+        Speed selection signal on the Terminals started it.<br />\n<br />\nI&#039;ve
+        reconnected the same wiring for Terminal Block (I know there&#039;s...<br
+        />\n<br />\n<a href=\"https://www.plctalk.net/forums/threads/powerflex-525-first-time-set-up-using-external-run-and-preset-speed-settings.150058/\"
+        class=\"link link--internal\">Read more</a></div>]]></content:encoded>\n      <slash:comments>13</slash:comments>\n
+        \   </item>\n    <item>\n      <title>PAC Machine Edition V10.6 SIMs (Service
+        Improvement Modules)</title>\n      <pubDate>Wed, 07 Oct 2026 18:55:55 +0000</pubDate>\n
+        \     <link>https://www.plctalk.net/forums/threads/pac-machine-edition-v10-6-sims-service-improvement-modules.150078/</link>\n
+        \     <guid isPermaLink=\"false\">150078</guid>\n      <author>redacted</author>\n
+        \     <category domain=\"https://www.plctalk.net/forums/forums/plc-questions-and-answers.2/\"><![CDATA[PLC
+        Questions and Answers]]></category>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[<div class=\"bbWrapper\">Hello everyone!<br
+        />\n<br />\nI don&#039;t have an active support contract with Emerson and
+        I need a SIM for PME version 10.6; can anyone help me?<br />\n<br />\nThanks,<br
+        />\n<br />\nMarco</div>]]></content:encoded>\n      <slash:comments>2</slash:comments>\n
+        \   </item>\n    <item>\n      <title>HMI small text after update</title>\n
+        \     <pubDate>Wed, 07 Oct 2026 18:36:25 +0000</pubDate>\n      <link>https://www.plctalk.net/forums/threads/hmi-small-text-after-update.150107/</link>\n
+        \     <guid isPermaLink=\"false\">150107</guid>\n      <author>redacted</author>\n
+        \     <category domain=\"https://www.plctalk.net/forums/forums/plc-questions-and-answers.2/\"><![CDATA[PLC
+        Questions and Answers]]></category>\n      <dc:creator>redacted</dc:creator>\n
+        \     <content:encoded><![CDATA[<div class=\"bbWrapper\">Hi,<br />\n<br />\nI
+        am using a CPU 1516F-3 PN/DP with four TP1200 Comfort HMIs. I was going to
+        do a minor update to a faceplate controlling just one specific popup screen.
+        I added one I/O field and one text field, saved it and downloaded it to one
+        of the HMIs. After said download all numerical values became hashtags(###).<br
+        />\n<br />\nI started to search for the problem and found that the date and
+        time had been resetted. I fixed that and then every number was correct, but
+        there was a new problem. Now most of the...<br />\n<br />\n<a href=\"https://www.plctalk.net/forums/threads/hmi-small-text-after-update.150107/\"
+        class=\"link link--internal\">Read more</a></div>]]></content:encoded>\n      <slash:comments>9</slash:comments>\n
+        \   </item>\n  </channel>\n</rss>\n"
+    headers:
+      cache-control:
+      - private, no-cache, max-age=0
+      cf-cache-status:
+      - DYNAMIC
+      cf-ray:
+      - a48127b958c591f9-IAD
+      connection:
+      - keep-alive
+      content-length:
+      - '32041'
+      content-type:
+      - application/rss+xml; charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:27:18 GMT
+      expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      last-modified:
+      - Fri, 09 Oct 2026 23:27:17 GMT
+      nel:
+      - '{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'
+      report-to:
+      - '{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=yl30RozCFG51z6Ci5MZlfTuFt%2FrFXEyCVLM%2F%2BN2QQY4v5A0kCtAr5rJuwsw%2FjfhE4B2o8%2B36mfkBdyuBkAei0EQcffnisxr%2BwDTnAm3X4nIgvk6LD4wOGQNIshAowsUIdw%3D%3D"}]}'
+      server:
+      - cloudflare
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1

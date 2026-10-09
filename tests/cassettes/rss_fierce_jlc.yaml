@@ -1,0 +1,1194 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - www.fiercehealthcare.com
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://www.fiercehealthcare.com/robots.txt
+  response:
+    body:
+      string: '#
+
+        # robots.txt
+
+        #
+
+        # This file is to prevent the crawling and indexing of certain parts
+
+        # of your site by web crawlers and spiders run by sites like Yahoo!
+
+        # and Google. By telling these "robots" where not to go on your site,
+
+        # you save bandwidth and server resources.
+
+        #
+
+        # This file will be ignored unless it is at the root of your host:
+
+        # Used:    http://example.com/robots.txt
+
+        # Ignored: http://example.com/site/robots.txt
+
+        #
+
+        # For more information about the robots.txt standard, see:
+
+        # http://www.robotstxt.org/robotstxt.html
+
+
+        User-agent: *
+
+        # CSS, JS, Images
+
+        Allow: /core/*.css$
+
+        Allow: /core/*.css?
+
+        Allow: /core/*.js$
+
+        Allow: /core/*.js?
+
+        Allow: /core/*.gif
+
+        Allow: /core/*.jpg
+
+        Allow: /core/*.jpeg
+
+        Allow: /core/*.png
+
+        Allow: /core/*.svg
+
+        Allow: /profiles/*.css$
+
+        Allow: /profiles/*.css?
+
+        Allow: /profiles/*.js$
+
+        Allow: /profiles/*.js?
+
+        Allow: /profiles/*.gif
+
+        Allow: /profiles/*.jpg
+
+        Allow: /profiles/*.jpeg
+
+        Allow: /profiles/*.png
+
+        Allow: /profiles/*.svg
+
+        # Directories
+
+        Disallow: /core/
+
+        Disallow: /profiles/
+
+        # Files
+
+        Disallow: /README.txt
+
+        Disallow: /web.config
+
+        # Paths (clean URLs)
+
+        Disallow: /admin/
+
+        Disallow: /comment/reply/
+
+        Disallow: /filter/tips
+
+        Disallow: /node/add/
+
+        Disallow: /search/
+
+        Disallow: /user/register/
+
+        Disallow: /user/password/
+
+        Disallow: /user/login/
+
+        Disallow: /user/logout/
+
+        Disallow: /taxonomy/term/
+
+        # Paths (no clean URLs)
+
+        Disallow: /index.php/admin/
+
+        Disallow: /index.php/comment/reply/
+
+        Disallow: /index.php/filter/tips
+
+        Disallow: /index.php/node/add/
+
+        Disallow: /index.php/search/
+
+        Disallow: /index.php/user/password/
+
+        Disallow: /index.php/user/register/
+
+        Disallow: /index.php/user/login/
+
+        Disallow: /index.php/user/logout/
+
+        '
+    headers:
+      age:
+      - '479509'
+      alt-svc:
+      - h3=":443"; ma=86400
+      cf-cache-status:
+      - HIT
+      cf-ray:
+      - a481288c8d636ac6-IAD
+      connection:
+      - keep-alive
+      content-length:
+      - '1620'
+      content-type:
+      - text/plain; charset=UTF-8
+      date:
+      - Fri, 09 Oct 2026 23:27:51 GMT
+      etag:
+      - W/"6a930fcd-654"
+      last-modified:
+      - Sat, 29 Aug 2026 16:58:53 GMT
+      server:
+      - cloudflare
+      transfer-encoding:
+      - chunked
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - application/rss+xml, application/atom+xml, application/xml;q=0.9, text/xml;q=0.8,
+        */*;q=0.5
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - www.fiercehealthcare.com
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://www.fiercehealthcare.com/rss/xml
+  response:
+    body:
+      string: "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<rss xmlns:dc=\"http://purl.org/dc/elements/1.1/\"
+        version=\"2.0\" xml:base=\"https://www.fiercehealthcare.com/\">\n  <channel>\n
+        \   <title>Fierce Healthcare</title>\n    <link>https://www.fiercehealthcare.com/</link>\n
+        \   <description>a feed of the latest articles on our website</description>\n
+        \   <language>en</language>\n    \n    <item>\n  <title><a href=\"/regulatory/rep-pallone-introduces-bill-replacing-no-surprises-acts-arbitration-process\"
+        hreflang=\"en\">Rep. Pallone introduces bill replacing No Surprises Act's
+        arbitration process</a></title>\n  <link>https://www.fiercehealthcare.com/regulatory/rep-pallone-introduces-bill-replacing-no-surprises-acts-arbitration-process</link>\n
+        \ <description>One of the No Surprises Act\u2019s chief authors wants to replace
+        the \"broken\" system for settling out-of-network pay disputes with market-based
+        benchmarks.</description>\n  <pubDate>Oct 9, 2026 3:57pm</pubDate>\n    <dc:creator>redacted</dc:creator>\n
+        \   <guid isPermaLink=\"true\">https://www.fiercehealthcare.com/6b5f3ea7-c45a-4f66-ab48-3df85d9c0206</guid>\n
+        \   </item>\n<item>\n  <title><a href=\"/health-tech/oracle-health-data-breach-2025-compromised-data-20m-people-report\"
+        hreflang=\"en\">Oracle Health data breach in 2025 compromised data of 20M
+        people: report</a></title>\n  <link>https://www.fiercehealthcare.com/health-tech/oracle-health-data-breach-2025-compromised-data-20m-people-report</link>\n
+        \ <description>In a report issued October 2, the Texas attorney general said
+        the company disclosed that Social Security numbers, addresses and medical
+        information of almost 20 million people, including about 3 million Texans,
+        Bloomberg reported.</description>\n  <pubDate>Oct 9, 2026 3:15pm</pubDate>\n
+        \   <dc:creator>redacted</dc:creator>\n    <guid isPermaLink=\"true\">https://www.fiercehealthcare.com/e890ecf9-5648-4a8e-831e-cb8299977386</guid>\n
+        \   </item>\n<item>\n  <title><a href=\"/finance/industry-voices-why-health-system-cfos-cant-budget-their-way-out-coverage-disruption\"
+        hreflang=\"en\">Industry Voices\u2014Why health system CFOs can't budget their
+        way out of coverage disruption</a></title>\n  <link>https://www.fiercehealthcare.com/finance/industry-voices-why-health-system-cfos-cant-budget-their-way-out-coverage-disruption</link>\n
+        \ <description>Semi-annual redeterminations and work requirements will test
+        payer-mix assumptions across the industry over the next two years. Now is
+        the time for health systems to prepare, writes Ensemble SVP Matthew Ennen.
+        </description>\n  <pubDate>Oct 9, 2026 12:38pm</pubDate>\n    <dc:creator>redacted</dc:creator>\n
+        \   <guid isPermaLink=\"true\">https://www.fiercehealthcare.com/00085658-8a8b-4108-aa08-0bf968b85e1d</guid>\n
+        \   </item>\n<item>\n  <title><a href=\"/regulatory/fierce-healthcare-regulatory-recap-cms-releases-2027-ma-star-ratings-hhs-launches\"
+        hreflang=\"en\">Fierce Healthcare Regulatory Recap: CMS releases 2027 MA star
+        ratings; HHS awards $28M for falls prevention</a></title>\n  <link>https://www.fiercehealthcare.com/regulatory/fierce-healthcare-regulatory-recap-cms-releases-2027-ma-star-ratings-hhs-launches</link>\n
+        \ <description>The latest news from CMS, HHS and more across Washington, D.C.</description>\n
+        \ <pubDate>Oct 9, 2026 12:58pm</pubDate>\n    <dc:creator>redacted</dc:creator>\n
+        \   <guid isPermaLink=\"true\">https://www.fiercehealthcare.com/55a846a5-918f-45ad-ab53-4e463051eb9a</guid>\n
+        \   </item>\n<item>\n  <title><a href=\"/health-tech/weekly-rundown-hhs-awards-15m-ai-projects-arcadia-launches-portfolio-solutions\"
+        hreflang=\"en\">Weekly Rundown: Nextech taps Assort Health, EliseAI for agentic
+        AI; Elsevier rolls out clinical AI tool for nurses</a></title>\n  <link>https://www.fiercehealthcare.com/health-tech/weekly-rundown-hhs-awards-15m-ai-projects-arcadia-launches-portfolio-solutions</link>\n
+        \ <description>The latest news from Nextech, Assort Health, EliseAI, Elsevier,
+        Arcadia, Solera Health and more.</description>\n  <pubDate>Oct 8, 2026 12:01pm</pubDate>\n
+        \   <dc:creator>redacted</dc:creator>\n    <guid isPermaLink=\"true\">https://www.fiercehealthcare.com/0310107e-5a01-4ac7-87d5-8a4e6791a091</guid>\n
+        \   </item>\n<item>\n  <title><a href=\"/ai-and-machine-learning/abridge-university-texas-system-enter-enterprise-wide-agreement-expanded-ai\"
+        hreflang=\"en\">Abridge, University of Texas System enter enterprise-wide
+        agreement for expanded AI-enabled care</a></title>\n  <link>https://www.fiercehealthcare.com/ai-and-machine-learning/abridge-university-texas-system-enter-enterprise-wide-agreement-expanded-ai</link>\n
+        \ <description>The partnership establishes a systemwide framework for the
+        eight UT health institutions to access Abridge. </description>\n  <pubDate>Oct
+        9, 2026 11:15am</pubDate>\n    <dc:creator>redacted</dc:creator>\n    <guid
+        isPermaLink=\"true\">https://www.fiercehealthcare.com/d3028ce5-f8cd-4ad7-a6f6-56407bdf7753</guid>\n
+        \   </item>\n<item>\n  <title><a href=\"/providers/hospital-industry-files-lawsuit-block-hhs-340b-rebate-pilot-again\"
+        hreflang=\"en\">Hospital industry sues to block HHS' 340B rebate pilot (again)</a></title>\n
+        \ <link>https://www.fiercehealthcare.com/providers/hospital-industry-files-lawsuit-block-hhs-340b-rebate-pilot-again</link>\n
+        \ <description>The American Hospital Association and others have launched
+        a legal rematch with the federal government over the second iteration of a
+        pilot program swapping out safety-net hospitals\u2019 upfront drug discounts
+        for after-the-fact rebates.</description>\n  <pubDate>Oct 9, 2026 11:01am</pubDate>\n
+        \   <dc:creator>redacted</dc:creator>\n    <guid isPermaLink=\"true\">https://www.fiercehealthcare.com/d4c32a59-9f2a-4729-afd4-f14560375784</guid>\n
+        \   </item>\n<item>\n  <title><a href=\"/payers/humana-rebounds-aetna-slips-winners-and-losers-2027-ma-star-ratings\"
+        hreflang=\"en\">Humana rebounds, Aetna slips: Winners and losers in the 2027
+        MA star ratings</a></title>\n  <link>https://www.fiercehealthcare.com/payers/humana-rebounds-aetna-slips-winners-and-losers-2027-ma-star-ratings</link>\n
+        \ <description>Federal regulators released the hotly anticipated star ratings
+        for the 2027 Medicare Advantage plan year, and winners and losers emerged
+        in the data.</description>\n  <pubDate>Oct 9, 2026 11:08am</pubDate>\n    <dc:creator>redacted</dc:creator>\n
+        \   <guid isPermaLink=\"true\">https://www.fiercehealthcare.com/7af916c8-4a71-4099-891b-515f9f2bcaa7</guid>\n
+        \   </item>\n<item>\n  <title><a href=\"/providers/hospital-closures-accelerated-2010-rates-similar-among-rural-urban-facilities\"
+        hreflang=\"en\">Urban hospitals face closure rates similar to rural facilities,
+        study finds</a></title>\n  <link>https://www.fiercehealthcare.com/providers/hospital-closures-accelerated-2010-rates-similar-among-rural-urban-facilities</link>\n
+        \ <description>There were 432 acute hospital closures and 216 openings across
+        the country from 2010 through 2025, with the former accelerating over time
+        and the latter slowing, according to a new study. Closure rates were statistically
+        similar between rural and urban hospitals, and generally increased among safety
+        net facilities and for-profits.</description>\n  <pubDate>Oct 8, 2026 3:46pm</pubDate>\n
+        \   <dc:creator>redacted</dc:creator>\n    <guid isPermaLink=\"true\">https://www.fiercehealthcare.com/62887cec-3688-4666-9f20-9935b9f464ea</guid>\n
+        \   </item>\n<item>\n  <title><a href=\"/regulatory/look-stakeholder-perspectives-medicare-advantage-reform\"
+        hreflang=\"en\">Little room for stakeholder consensus among potential Medicare
+        Advantage reforms</a></title>\n  <link>https://www.fiercehealthcare.com/regulatory/look-stakeholder-perspectives-medicare-advantage-reform</link>\n
+        \ <description>A survey of 52 experts spanning researchers, the Medicare Advantage
+        industry, patient advocates and policymakers wasn't able to identify a single
+        policy proposal that would be received wholeheartedly by all three groups.</description>\n
+        \ <pubDate>Oct 8, 2026 4:10pm</pubDate>\n    <dc:creator>redacted</dc:creator>\n
+        \   <guid isPermaLink=\"true\">https://www.fiercehealthcare.com/ed6c614c-7044-44bd-92ad-7fb647d5f1cd</guid>\n
+        \   </item>\n<item>\n  <title><a href=\"/payers/cms-about-71-mapd-plan-enrollees-coverage-four-or-more-stars-2027\"
+        hreflang=\"en\">CMS: About 71% of MAPD plan enrollees in coverage with four
+        or more stars for 2027</a></title>\n  <link>https://www.fiercehealthcare.com/payers/cms-about-71-mapd-plan-enrollees-coverage-four-or-more-stars-2027</link>\n
+        \ <description>The Trump administration has released the 2027 Medicare Advantage
+        star ratings, with many enrollees in plans that earned at least four stars.</description>\n
+        \ <pubDate>Oct 8, 2026 5:05pm</pubDate>\n    <dc:creator>redacted</dc:creator>\n
+        \   <guid isPermaLink=\"true\">https://www.fiercehealthcare.com/83a33800-906f-404d-882f-84ac7b7c0795</guid>\n
+        \   </item>\n<item>\n  <title><a href=\"/regulatory/hhs-launches-4-new-vaccine-injury-research-reporting-initiatives\"
+        hreflang=\"en\">HHS launches 4 new vaccine injury research, reporting initiatives</a></title>\n
+        \ <link>https://www.fiercehealthcare.com/regulatory/hhs-launches-4-new-vaccine-injury-research-reporting-initiatives</link>\n
+        \ <description>The U.S. Department of Health and Human Services (HHS) on Thursday
+        announced a series of actions aimed at strengthening the federal government's
+        response to vaccine-related health concerns.</description>\n  <pubDate>Oct
+        8, 2026 3:36pm</pubDate>\n    <dc:creator>redacted</dc:creator>\n    <guid
+        isPermaLink=\"true\">https://www.fiercehealthcare.com/ce268fef-50ca-41ca-941f-077a1ac34ca0</guid>\n
+        \   </item>\n<item>\n  <title><a href=\"/regulatory/hhs-340b-expanded-beyond-its-original-intent-incentivizes-consolidation\"
+        hreflang=\"en\">HHS: 340B 'expanded beyond its original intent,' incentivizes
+        consolidation</a></title>\n  <link>https://www.fiercehealthcare.com/regulatory/hhs-340b-expanded-beyond-its-original-intent-incentivizes-consolidation</link>\n
+        \ <description>A new brief lays out the administration's views and critiques
+        of the controversial hospital subsidy program, and includes a data analysis
+        suggesting that a proposed reimbursement cut will limit spending growth.</description>\n
+        \ <pubDate>Oct 8, 2026 12:53pm</pubDate>\n    <dc:creator>redacted</dc:creator>\n
+        \   <guid isPermaLink=\"true\">https://www.fiercehealthcare.com/69956c9e-70e7-4990-bca1-6399ffb29757</guid>\n
+        \   </item>\n<item>\n  <title><a href=\"/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare\"
+        hreflang=\"en\">Chutes &amp; Ladders\u2014WellSpan, Beth Israel Lahey unveil
+        next CEOs</a></title>\n  <link>https://www.fiercehealthcare.com/providers/chutes-ladders-2026-hires-departures-firings-retirements-ceo-executives-healthcare</link>\n
+        \ <description>Welcome to this week's Chutes &amp;amp; Ladders, our roundup
+        of hirings, firings and retirings throughout the industry. Please submit the
+        good news\u2014or the bad\u2014from your shop, and we will feature it here
+        at the end of each week.</description>\n  <pubDate>Jan 7, 2026 3:20pm</pubDate>\n
+        \   <dc:creator>redacted</dc:creator>\n    <guid isPermaLink=\"true\">https://www.fiercehealthcare.com/4a7ec9ad-bbfd-476b-80ed-e10df7d7b1d7</guid>\n
+        \   </item>\n<item>\n  <title><a href=\"/payers/michigan-ag-hits-bcbsm-antitrust-suit\"
+        hreflang=\"en\">'Blue Conspiracy'\u2014Michigan attorney general hits BCBSM
+        with antitrust suit</a></title>\n  <link>https://www.fiercehealthcare.com/payers/michigan-ag-hits-bcbsm-antitrust-suit</link>\n
+        \ <description>Michigan Attorney General Dana Nessel has filed suit against
+        Blue Cross Blue Shield of Michigan, alleging that the insurer operated as
+        a monopoly in the state.</description>\n  <pubDate>Oct 8, 2026 2:54pm</pubDate>\n
+        \   <dc:creator>redacted</dc:creator>\n    <guid isPermaLink=\"true\">https://www.fiercehealthcare.com/68c32092-320a-4cbf-b070-89168c016840</guid>\n
+        \   </item>\n<item>\n  <title><a href=\"/health-tech/fierce-healthcare-fundraising-tracker-26\"
+        hreflang=\"en\">Fierce Healthcare Fundraising Tracker '26: Outro clinches
+        $7M for deprescribing; Rightway pulls in $155M to expand pharmacy benefits
+        tech</a></title>\n  <link>https://www.fiercehealthcare.com/health-tech/fierce-healthcare-fundraising-tracker-26</link>\n
+        \ <description>Keep up with all the venture capital&amp;nbsp;dollars being
+        funneled into the health tech and digital health industries.</description>\n
+        \ <pubDate>Feb 6, 2026 8:13am</pubDate>\n    <dc:creator>redacted</dc:creator>\n
+        \   <guid isPermaLink=\"true\">https://www.fiercehealthcare.com/f4620aeb-e992-4e22-8ae3-c906c22ecbbd</guid>\n
+        \   </item>\n<item>\n  <title><a href=\"/ai-and-machine-learning/suki-launches-ask-feature-clinical-decision-support-driven-wolters-kluwer\"
+        hreflang=\"en\">Suki launches \u2018Ask\u2019 feature for clinical decision
+        support driven by Wolters Kluwer UpToDate AI API</a></title>\n  <link>https://www.fiercehealthcare.com/ai-and-machine-learning/suki-launches-ask-feature-clinical-decision-support-driven-wolters-kluwer</link>\n
+        \ <description>Ask integrates evidence-based clinical reasoning directly into
+        workflows and can provide answers grounded in UpToDate\u2019s proprietary
+        content.</description>\n  <pubDate>Oct 7, 2026 2:40pm</pubDate>\n    <dc:creator>redacted</dc:creator>\n
+        \   <guid isPermaLink=\"true\">https://www.fiercehealthcare.com/c8482536-6973-4ecb-8137-7a50603c8b1c</guid>\n
+        \   </item>\n<item>\n  <title><a href=\"/finance/healthleap-banks-38m-funding-backed-sequoia-capital-first-round-capital-and-hummingbird\"
+        hreflang=\"en\">Healthleap banks $38M for AI screening platform that catches
+        undiagnosed conditions</a></title>\n  <link>https://www.fiercehealthcare.com/finance/healthleap-banks-38m-funding-backed-sequoia-capital-first-round-capital-and-hummingbird</link>\n
+        \ <description>Healthleap says its platform is the first and only validated
+        AI malnutrition screening tool that contains EHR-integrated screening layers,
+        executives say.</description>\n  <pubDate>Oct 7, 2026 4:19pm</pubDate>\n    <dc:creator>redacted</dc:creator>\n
+        \   <guid isPermaLink=\"true\">https://www.fiercehealthcare.com/953d4b02-8b2b-4686-b533-e339dea9e62f</guid>\n
+        \   </item>\n<item>\n  <title><a href=\"/pharma/phrma-launches-new-legal-challenge-cms-brings-most-favored-nation-pricing-medicare-part-b\"
+        hreflang=\"en\">PhRMA launches new legal challenge as CMS brings 'most favored
+        nation' pricing to Medicare Part B</a></title>\n  <link>https://www.fiercehealthcare.com/pharma/phrma-launches-new-legal-challenge-cms-brings-most-favored-nation-pricing-medicare-part-b</link>\n
+        \ <description>As the Trump administration advances plans to bring its \u201Cmost
+        favored nation\u201D drug pricing model to Medicare Part B, the pharmaceutical
+        industry\u2019s top lobbying group is pushing back in court. </description>\n
+        \ <pubDate>Oct 8, 2026 8:07am</pubDate>\n    <dc:creator>redacted</dc:creator>\n
+        \   <guid isPermaLink=\"true\">https://www.fiercehealthcare.com/ef324f19-785b-4251-8c4a-57e0c85e6015</guid>\n
+        \   </item>\n<item>\n  <title><a href=\"/providers/kaiser-permanente-repay-nurses-potentially-tens-millions-mistakenly-withheld-wages\"
+        hreflang=\"en\">Kaiser Permanente to repay nurses 'potentially tens of millions'
+        in mistakenly withheld wages</a></title>\n  <link>https://www.fiercehealthcare.com/providers/kaiser-permanente-repay-nurses-potentially-tens-millions-mistakenly-withheld-wages</link>\n
+        \ <description>Following an arbitration agreement, more than 1,000 nurses
+        will be compensated for a payment error that began in 2021, the California
+        Nurses Association said. The major nonprofit confirmed the plans but did not
+        comment on the total amount.</description>\n  <pubDate>Oct 7, 2026 4:29pm</pubDate>\n
+        \   <dc:creator>redacted</dc:creator>\n    <guid isPermaLink=\"true\">https://www.fiercehealthcare.com/147d1eb2-ce72-4d40-b7b4-aaf5eecc7502</guid>\n
+        \   </item>\n<item>\n  <title><a href=\"/providers/after-ice-raids-hospitals-saw-fewer-ed-visits-more-admissions-among-foreign-born-study\"
+        hreflang=\"en\">After ICE raids, hospitals saw fewer ED visits, more admissions
+        among foreign-born: study</a></title>\n  <link>https://www.fiercehealthcare.com/providers/after-ice-raids-hospitals-saw-fewer-ed-visits-more-admissions-among-foreign-born-study</link>\n
+        \ <description>Studies published this week outline changes in care-seeking
+        behavior tied to heightened federal immigration policy and rhetoric, with
+        ramifications for patient outcomes and healthcare spending.</description>\n
+        \ <pubDate>Oct 7, 2026 1:30pm</pubDate>\n    <dc:creator>redacted</dc:creator>\n
+        \   <guid isPermaLink=\"true\">https://www.fiercehealthcare.com/4fae57c1-3b81-452b-98fe-f0af4d832d97</guid>\n
+        \   </item>\n<item>\n  <title><a href=\"/payers/cigna-unveils-new-customer-experience-platform-health-sense\"
+        hreflang=\"en\">Cigna unveils new customer experience platform, Health Sense</a></title>\n
+        \ <link>https://www.fiercehealthcare.com/payers/cigna-unveils-new-customer-experience-platform-health-sense</link>\n
+        \ <description>Cigna is rolling out a new patient experience platform that
+        aims to harness the power of data to drive greater personalization.</description>\n
+        \ <pubDate>Oct 7, 2026 3:32pm</pubDate>\n    <dc:creator>redacted</dc:creator>\n
+        \   <guid isPermaLink=\"true\">https://www.fiercehealthcare.com/71afbad6-86ce-41d4-93cb-04f57fc5004b</guid>\n
+        \   </item>\n<item>\n  <title><a href=\"/health-tech/general-medicine-banks-120m-backed-a16z-eli-lilly-and-mercy-health\"
+        hreflang=\"en\">General Medicine banks $120M backed by a16z, Eli Lilly and
+        Mercy Health to build out healthcare storefront</a></title>\n  <link>https://www.fiercehealthcare.com/health-tech/general-medicine-banks-120m-backed-a16z-eli-lilly-and-mercy-health</link>\n
+        \ <description>General Medicine, started by the founding team that built PillPack
+        and Amazon Pharmacy, is an online marketplace where customers can search,
+        compare and buy care, see insurance and cash prices before deciding, and get
+        guidance from a licensed clinician.</description>\n  <pubDate>Oct 7, 2026
+        12:41pm</pubDate>\n    <dc:creator>redacted</dc:creator>\n    <guid isPermaLink=\"true\">https://www.fiercehealthcare.com/2241e27d-84c9-46dd-b5ec-1f7d11b1b691</guid>\n
+        \   </item>\n<item>\n  <title><a href=\"/ai-and-machine-learning/utah-taps-august-ai-nolla-health-healthcare-ai-sandbox-program-adds-third\"
+        hreflang=\"en\">Utah expands healthcare AI sandbox with August AI, Nolla Health
+        pilots, adds third-party evaluators</a></title>\n  <link>https://www.fiercehealthcare.com/ai-and-machine-learning/utah-taps-august-ai-nolla-health-healthcare-ai-sandbox-program-adds-third</link>\n
+        \ <description>Utah is expanding the state's AI regulatory sandbox program
+        with new pilots to test AI-supported prescription renewals, dermatology and
+        physical therapy, while adding physician oversight and independent third-party
+        evaluators.</description>\n  <pubDate>Oct 5, 2026 5:37pm</pubDate>\n    <dc:creator>redacted</dc:creator>\n
+        \   <guid isPermaLink=\"true\">https://www.fiercehealthcare.com/f55ac86f-51b0-48e0-bb64-a8c82b14847f</guid>\n
+        \   </item>\n<item>\n  <title><a href=\"/regulatory/senators-express-concerns-over-new-uspstf-appointments-seek-information-rfk-jr\"
+        hreflang=\"en\">Senators question Kennedy on 'major break' from USPSTF appointment
+        norms</a></title>\n  <link>https://www.fiercehealthcare.com/regulatory/senators-express-concerns-over-new-uspstf-appointments-seek-information-rfk-jr</link>\n
+        \ <description>The lawmakers expressed concerns over the panel\u2019s ability
+        to make recommendations, the transparency of the application process and more.</description>\n
+        \ <pubDate>Oct 7, 2026 10:43am</pubDate>\n    <dc:creator>redacted</dc:creator>\n
+        \   <guid isPermaLink=\"true\">https://www.fiercehealthcare.com/540b3c7d-c6da-45dd-aa96-5f00b02ab0db</guid>\n
+        \   </item>\n\n  </channel>\n</rss>\n"
+    headers:
+      age:
+      - '5735'
+      alt-svc:
+      - h3=":443"; ma=86400
+      cache-control:
+      - no-cache
+      cf-cache-status:
+      - HIT
+      cf-ray:
+      - a48128926a906ac6-IAD
+      connection:
+      - keep-alive
+      content-language:
+      - en
+      content-length:
+      - '19429'
+      content-security-policy:
+      - frame-ancestors 'self' https://*.qtx.dev https://*.dev.qtxquartz.com https://*.stage.qtxquartz.com
+        https://www.fiercewireless.com https://www.fiercetelecom.com https://sample.dragonforms.com
+        https://*.questexinfo.com http://resources.questex.com https://resources.questex.com
+      content-type:
+      - application/rss+xml; charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:27:52 GMT
+      etag:
+      - W/"1791582736"
+      expires:
+      - Thu, 01 Jan 1970 00:00:01 GMT
+      last-modified:
+      - Fri, 09 Oct 2026 21:52:16 GMT
+      referrer-policy:
+      - no-referrer-when-downgrade
+      server:
+      - cloudflare
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Cookie
+      x-content-type-options:
+      - nosniff
+      x-drupal-dynamic-cache:
+      - UNCACHEABLE (poor cacheability)
+      x-micro-cache:
+      - EXPIRED
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - www.jlconline.com
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://www.jlconline.com/robots.txt
+  response:
+    body:
+      string: '# START YOAST BLOCK
+
+        # ---------------------------
+
+        User-agent: *
+
+        Disallow:
+
+
+        Sitemap: https://www.jlconline.com/sitemap_index.xml
+
+        Sitemap: https://prd.zonda.onl/sitemap_index.xml
+
+        Sitemap: https://www.builderonline.com/sitemap_index.xml
+
+        Sitemap: https://www.multifamilyexecutive.com/sitemap_index.xml
+
+        Sitemap: https://www.architectmagazine.com/sitemap_index.xml
+
+        Sitemap: https://www.housingfinance.com/sitemap_index.xml
+
+        Sitemap: https://www.poolspanews.com/sitemap_index.xml
+
+        Sitemap: https://www.aquaticsintl.com/sitemap_index.xml
+
+        Sitemap: https://zonda.go-vip.net/prosales/sitemap_index.xml
+
+        Sitemap: https://zonda.go-vip.net/concrete-construction/sitemap_index.xml
+
+        # ---------------------------
+
+        # END YOAST BLOCK'
+    headers:
+      age:
+      - '70'
+      cache-control:
+      - public, max-age=14400
+      cf-cache-status:
+      - HIT
+      cf-ray:
+      - a4812893ee0c3c2f-IAD
+      connection:
+      - keep-alive
+      content-length:
+      - '710'
+      content-security-policy:
+      - frame-ancestors 'self' https://cms.hanleywood.com
+      content-type:
+      - text/plain; charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:27:52 GMT
+      expires:
+      - Sat, 10 Oct 2026 03:27:52 GMT
+      host-header:
+      - a9130478a60e5f9135f765b23f26593b
+      last-modified:
+      - Fri, 09 Oct 2026 23:26:42 GMT
+      link:
+      - <https://www.jlconline.com/wp-json/>; rel="https://api.w.org/"
+      permissions-policy:
+      - battery=(), camera=(), microphone=(), midi=(), usb=()
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - cloudflare
+      strict-transport-security:
+      - max-age=31536000
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding, accept, content-type
+      x-cache:
+      - HIT
+      x-content-type-options:
+      - nosniff
+      x-distributor:
+      - 'yes'
+      x-frame-options:
+      - SAMEORIGIN
+      x-hacker:
+      - If you're reading this, you should visit https://join.a8c.com/viphacker and
+        apply to join the fun, mention this header.
+      x-powered-by:
+      - WordPress VIP <https://wpvip.com>
+      x-robots-tag:
+      - noindex, follow
+      x-rq:
+      - atl4 0 30 9980
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - application/rss+xml, application/atom+xml, application/xml;q=0.9, text/xml;q=0.8,
+        */*;q=0.5
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - www.jlconline.com
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://www.jlconline.com/feed/
+  response:
+    body:
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?><rss version=\"2.0\"\n\txmlns:content=\"http://purl.org/rss/1.0/modules/content/\"\n\txmlns:wfw=\"http://wellformedweb.org/CommentAPI/\"\n\txmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n\txmlns:atom=\"http://www.w3.org/2005/Atom\"\n\txmlns:sy=\"http://purl.org/rss/1.0/modules/syndication/\"\n\txmlns:slash=\"http://purl.org/rss/1.0/modules/slash/\"\n\t>\n\n<channel>\n\t<title>Journal
+        of Light Construction</title>\n\t<atom:link href=\"https://www.jlconline.com/feed/\"
+        rel=\"self\" type=\"application/rss+xml\" />\n\t<link>https://www.jlconline.com/</link>\n\t<description>journal
+        of light construction residential remodeling custom homebuilding</description>\n\t<lastBuildDate>Fri,
+        09 Oct 2026 19:57:41 +0000</lastBuildDate>\n\t<language>en-US</language>\n\t<sy:updatePeriod>\n\thourly\t</sy:updatePeriod>\n\t<sy:updateFrequency>\n\t1\t</sy:updateFrequency>\n\t<generator>https://wordpress.org/?v=7.1.3</generator>\n\n<image>\n\t<url>https://www.jlconline.com/wp-content/uploads/sites/4/2025/06/cropped-favicon_jlc-1.png?w=32</url>\n\t<title>Journal
+        of Light Construction</title>\n\t<link>https://www.jlconline.com/</link>\n\t<width>32</width>\n\t<height>32</height>\n</image>
+        \n<site xmlns=\"com-wordpress:feed-additions:1\">238909177</site>\t<item>\n\t\t<title>Undermount
+        Drawer Slides</title>\n\t\t<link>https://www.jlconline.com/products-tools/undermount-drawer-slides/</link>\n\t\t\t\t\t<comments>https://www.jlconline.com/products-tools/undermount-drawer-slides/#respond</comments>\n\t\t\n\t\t<dc:creator>redacted</dc:creator>\n\t\t<pubDate>Fri,
+        09 Oct 2026 19:57:40 +0000</pubDate>\n\t\t\t\t<category><![CDATA[cabinet making]]></category>\n\t\t<category><![CDATA[Hardware]]></category>\n\t\t<category><![CDATA[Innovative
+        Kitchen Design]]></category>\n\t\t<guid isPermaLink=\"false\">https://www.jlconline.com/?p=188610</guid>\n\n\t\t\t\t\t<description><![CDATA[<p>Grass
+        America says that its Dynapro undermount drawer slides can be moved with just
+        a slight pull or gentle push. They also claim that the glide is smooth enough
+        to reduce noise and prevent the drawer from binding when being closed. Offered
+        in both 2D and 3D versions, the latter supports tilt adjustment via an [&#8230;]</p>\n<p>The
+        post <a href=\"https://www.jlconline.com/products-tools/undermount-drawer-slides/\">Undermount
+        Drawer Slides</a> appeared first on <a href=\"https://www.jlconline.com\">Journal
+        of Light Construction</a>.</p>\n]]></description>\n\t\t\t\t\t\t\t\t\t\t<content:encoded><![CDATA[\n<p
+        class=\"wp-block-paragraph\">Grass America says that its Dynapro undermount
+        drawer slides can be moved with just a slight pull or gentle push. They also
+        claim that the glide is smooth enough to reduce noise and prevent the drawer
+        from binding when being closed. Offered in both 2D and 3D versions, the latter
+        supports tilt adjustment via an additional rear adapter. The slides are designed
+        for wooden drawers up to 48 inches wide and according to the company will
+        move in sync without the need for connecting hardware. <a href=\"https://www.grassusa.com/\"
+        data-type=\"link\" data-id=\"https://www.grassusa.com/\" target=\"_blank\"
+        rel=\"noreferrer noopener\">grassusa.com</a></p>\n\n\n\n<p class=\"wp-block-paragraph\"></p>\n<p>The
+        post <a href=\"https://www.jlconline.com/products-tools/undermount-drawer-slides/\">Undermount
+        Drawer Slides</a> appeared first on <a href=\"https://www.jlconline.com\">Journal
+        of Light Construction</a>.</p>\n]]></content:encoded>\n\t\t\t\t\t\n\t\t\t\t\t<wfw:commentRss>https://www.jlconline.com/products-tools/undermount-drawer-slides/feed/</wfw:commentRss>\n\t\t\t<slash:comments>0</slash:comments>\n\t\t\n\t\t\n\t\t<post-id
+        xmlns=\"com-wordpress:feed-additions:1\">188610</post-id>\t</item>\n\t\t<item>\n\t\t<title>Latest
+        Product Roundup</title>\n\t\t<link>https://www.jlconline.com/products-tools/latest-product-roundup-3/</link>\n\t\t\t\t\t<comments>https://www.jlconline.com/products-tools/latest-product-roundup-3/#respond</comments>\n\t\t\n\t\t<dc:creator>redacted</dc:creator>\n\t\t<pubDate>Thu,
+        08 Oct 2026 22:22:15 +0000</pubDate>\n\t\t\t\t<category><![CDATA[Remodeling]]></category>\n\t\t<guid
+        isPermaLink=\"false\">https://www.jlconline.com/?p=188621</guid>\n\n\t\t\t\t\t<description><![CDATA[<p>The
+        post <a href=\"https://www.jlconline.com/products-tools/latest-product-roundup-3/\">Latest
+        Product Roundup</a> appeared first on <a href=\"https://www.jlconline.com\">Journal
+        of Light Construction</a>.</p>\n]]></description>\n\t\t\t\t\t\t\t\t\t\t<content:encoded><![CDATA[<ul
+        class=\"content-cards u-bt-1 wp-block-zonda-promo-list\" data-layout=\"default\"><li>\n<article\n\tclass=\"content-card
+        is-clickable-card\"\n\tdata-card-type=\"promo-list\"\n\tdata-native-sponsor=\"\"\n>\n\n\t<div
+        class=\"content-card__body\">\n\t\t<h2 class=\"content-card__headline\"><a
+        href=\"https://www.jlconline.com/products-tools/windows-doors/smart-tech-entry-door/\">Smart
+        Tech Entry Door</a></h2><p class=\"content-card__subheadline\"></p>\t</div>\n\n\t\t\t<figure
+        class=\"content-card__image-wrap u-visual-wrap\">\n\t\t\t<img fetchpriority=\"high\"
+        decoding=\"async\" width=\"1000\" height=\"1238\" src=\"https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/DOMA-Kolbe-Door1_Interior.jpg?w=1000\"
+        class=\"attachment-card-thumb-promo-list size-card-thumb-promo-list\" alt=\"\"
+        srcset=\"https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/DOMA-Kolbe-Door1_Interior.jpg
+        3101w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/DOMA-Kolbe-Door1_Interior.jpg?resize=242,300
+        242w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/DOMA-Kolbe-Door1_Interior.jpg?resize=768,951
+        768w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/DOMA-Kolbe-Door1_Interior.jpg?resize=827,1024
+        827w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/DOMA-Kolbe-Door1_Interior.jpg?resize=1240,1536
+        1240w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/DOMA-Kolbe-Door1_Interior.jpg?resize=1654,2048
+        1654w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/DOMA-Kolbe-Door1_Interior.jpg?resize=296,367
+        296w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/DOMA-Kolbe-Door1_Interior.jpg?resize=143,177
+        143w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/DOMA-Kolbe-Door1_Interior.jpg?resize=92,114
+        92w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/DOMA-Kolbe-Door1_Interior.jpg?resize=106,131
+        106w\" sizes=\"(max-width: 1000px) 100vw, 1000px\" />\t\t</figure>\n\t</article>\n</li><li>\n<article\n\tclass=\"content-card
+        is-clickable-card\"\n\tdata-card-type=\"promo-list\"\n\tdata-native-sponsor=\"\"\n>\n\n\t<div
+        class=\"content-card__body\">\n\t\t<h2 class=\"content-card__headline\"><a
+        href=\"https://www.jlconline.com/products-tools/exteriors-roofing/self-adhering-roof-tape/\">Self-Adhering
+        Roof Tape</a></h2><p class=\"content-card__subheadline\"></p>\t</div>\n\n\t\t\t<figure
+        class=\"content-card__image-wrap u-visual-wrap\">\n\t\t\t<img decoding=\"async\"
+        width=\"800\" height=\"533\" src=\"https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/certaseam-roll-roof-tape-roll-01494-copy.jpg?w=800\"
+        class=\"attachment-card-thumb-promo-list size-card-thumb-promo-list\" alt=\"\"
+        srcset=\"https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/certaseam-roll-roof-tape-roll-01494-copy.jpg
+        800w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/certaseam-roll-roof-tape-roll-01494-copy.jpg?resize=300,200
+        300w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/certaseam-roll-roof-tape-roll-01494-copy.jpg?resize=768,512
+        768w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/certaseam-roll-roof-tape-roll-01494-copy.jpg?resize=551,367
+        551w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/certaseam-roll-roof-tape-roll-01494-copy.jpg?resize=266,177
+        266w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/certaseam-roll-roof-tape-roll-01494-copy.jpg?resize=171,114
+        171w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/certaseam-roll-roof-tape-roll-01494-copy.jpg?resize=197,131
+        197w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/certaseam-roll-roof-tape-roll-01494-copy.jpg?resize=160,107
+        160w\" sizes=\"(max-width: 800px) 100vw, 800px\" />\t\t</figure>\n\t</article>\n</li><li>\n<article\n\tclass=\"content-card
+        is-clickable-card\"\n\tdata-card-type=\"promo-list\"\n\tdata-native-sponsor=\"\"\n>\n\n\t<div
+        class=\"content-card__body\">\n\t\t<h2 class=\"content-card__headline\"><a
+        href=\"https://www.jlconline.com/products-tools/windows-doors/large-swinging-doors/\">Large
+        Swinging Doors</a></h2><p class=\"content-card__subheadline\"></p>\t</div>\n\n\t\t\t<figure
+        class=\"content-card__image-wrap u-visual-wrap\">\n\t\t\t<img decoding=\"async\"
+        width=\"1000\" height=\"1000\" src=\"https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/JPG-Marvin_Vivid_Outswing-French-Door_Exterior_Ebony.jpg?w=1000\"
+        class=\"attachment-card-thumb-promo-list size-card-thumb-promo-list\" alt=\"\"
+        srcset=\"https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/JPG-Marvin_Vivid_Outswing-French-Door_Exterior_Ebony.jpg
+        5000w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/JPG-Marvin_Vivid_Outswing-French-Door_Exterior_Ebony.jpg?resize=150,150
+        150w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/JPG-Marvin_Vivid_Outswing-French-Door_Exterior_Ebony.jpg?resize=300,300
+        300w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/JPG-Marvin_Vivid_Outswing-French-Door_Exterior_Ebony.jpg?resize=768,768
+        768w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/JPG-Marvin_Vivid_Outswing-French-Door_Exterior_Ebony.jpg?resize=1024,1024
+        1024w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/JPG-Marvin_Vivid_Outswing-French-Door_Exterior_Ebony.jpg?resize=1536,1536
+        1536w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/JPG-Marvin_Vivid_Outswing-French-Door_Exterior_Ebony.jpg?resize=2048,2048
+        2048w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/JPG-Marvin_Vivid_Outswing-French-Door_Exterior_Ebony.jpg?resize=367,367
+        367w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/JPG-Marvin_Vivid_Outswing-French-Door_Exterior_Ebony.jpg?resize=177,177
+        177w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/JPG-Marvin_Vivid_Outswing-French-Door_Exterior_Ebony.jpg?resize=114,114
+        114w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/JPG-Marvin_Vivid_Outswing-French-Door_Exterior_Ebony.jpg?resize=131,131
+        131w\" sizes=\"(max-width: 1000px) 100vw, 1000px\" />\t\t</figure>\n\t</article>\n</li><li>\n<article\n\tclass=\"content-card
+        is-clickable-card\"\n\tdata-card-type=\"promo-list\"\n\tdata-native-sponsor=\"\"\n>\n\n\t<div
+        class=\"content-card__body\">\n\t\t<h2 class=\"content-card__headline\"><a
+        href=\"https://www.jlconline.com/products-tools/foundations-framing/joist-repair-reinforcer/\">Joist
+        Repair Reinforcer</a></h2><p class=\"content-card__subheadline\"></p>\t</div>\n\n\t\t\t<figure
+        class=\"content-card__image-wrap u-visual-wrap\">\n\t\t\t<img loading=\"lazy\"
+        decoding=\"async\" width=\"1000\" height=\"722\" src=\"https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/Metwood-1.png?w=1000\"
+        class=\"attachment-card-thumb-promo-list size-card-thumb-promo-list\" alt=\"\"
+        srcset=\"https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/Metwood-1.png
+        1606w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/Metwood-1.png?resize=300,217
+        300w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/Metwood-1.png?resize=768,555
+        768w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/Metwood-1.png?resize=1024,740
+        1024w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/Metwood-1.png?resize=1536,1109
+        1536w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/Metwood-1.png?resize=508,367
+        508w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/Metwood-1.png?resize=245,177
+        245w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/Metwood-1.png?resize=158,114
+        158w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/Metwood-1.png?resize=181,131
+        181w\" sizes=\"auto, (max-width: 1000px) 100vw, 1000px\" />\t\t</figure>\n\t</article>\n</li><li>\n<article\n\tclass=\"content-card
+        is-clickable-card\"\n\tdata-card-type=\"promo-list\"\n\tdata-native-sponsor=\"\"\n>\n\n\t<div
+        class=\"content-card__body\">\n\t\t<h2 class=\"content-card__headline\"><a
+        href=\"https://www.jlconline.com/products-tools/easy-install-recessed-lighting-hoods/\">Easy
+        Install Recessed Lighting Hoods</a></h2><p class=\"content-card__subheadline\"></p>\t</div>\n\n\t\t\t<figure
+        class=\"content-card__image-wrap u-visual-wrap\">\n\t\t\t<img loading=\"lazy\"
+        decoding=\"async\" width=\"1000\" height=\"834\" src=\"https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/TH125-10-Pack-Thermahood-copy.jpg?w=1000\"
+        class=\"attachment-card-thumb-promo-list size-card-thumb-promo-list\" alt=\"\"
+        srcset=\"https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/TH125-10-Pack-Thermahood-copy.jpg
+        1738w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/TH125-10-Pack-Thermahood-copy.jpg?resize=300,250
+        300w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/TH125-10-Pack-Thermahood-copy.jpg?resize=768,641
+        768w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/TH125-10-Pack-Thermahood-copy.jpg?resize=1024,854
+        1024w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/TH125-10-Pack-Thermahood-copy.jpg?resize=1536,1281
+        1536w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/TH125-10-Pack-Thermahood-copy.jpg?resize=440,367
+        440w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/TH125-10-Pack-Thermahood-copy.jpg?resize=212,177
+        212w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/TH125-10-Pack-Thermahood-copy.jpg?resize=137,114
+        137w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/TH125-10-Pack-Thermahood-copy.jpg?resize=157,131
+        157w\" sizes=\"auto, (max-width: 1000px) 100vw, 1000px\" />\t\t</figure>\n\t</article>\n</li><li>\n<article\n\tclass=\"content-card
+        is-clickable-card\"\n\tdata-card-type=\"promo-list\"\n\tdata-native-sponsor=\"\"\n>\n\n\t<div
+        class=\"content-card__body\">\n\t\t<h2 class=\"content-card__headline\"><a
+        href=\"https://www.jlconline.com/products-tools/windows-doors/small-profile-garage-opener/\">Small
+        Profile Garage Opener</a></h2><p class=\"content-card__subheadline\"></p>\t</div>\n\n\t\t\t<figure
+        class=\"content-card__image-wrap u-visual-wrap\">\n\t\t\t<img loading=\"lazy\"
+        decoding=\"async\" width=\"1000\" height=\"1778\" src=\"https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/SMO-in-Small-Space.png?w=1000\"
+        class=\"attachment-card-thumb-promo-list size-card-thumb-promo-list\" alt=\"\"
+        srcset=\"https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/SMO-in-Small-Space.png
+        1134w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/SMO-in-Small-Space.png?resize=169,300
+        169w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/SMO-in-Small-Space.png?resize=768,1365
+        768w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/SMO-in-Small-Space.png?resize=576,1024
+        576w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/SMO-in-Small-Space.png?resize=864,1536
+        864w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/SMO-in-Small-Space.png?resize=206,367
+        206w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/SMO-in-Small-Space.png?resize=100,177
+        100w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/SMO-in-Small-Space.png?resize=64,114
+        64w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/SMO-in-Small-Space.png?resize=74,131
+        74w\" sizes=\"auto, (max-width: 1000px) 100vw, 1000px\" />\t\t</figure>\n\t</article>\n</li></ul><p>The
+        post <a href=\"https://www.jlconline.com/products-tools/latest-product-roundup-3/\">Latest
+        Product Roundup</a> appeared first on <a href=\"https://www.jlconline.com\">Journal
+        of Light Construction</a>.</p>\n]]></content:encoded>\n\t\t\t\t\t\n\t\t\t\t\t<wfw:commentRss>https://www.jlconline.com/products-tools/latest-product-roundup-3/feed/</wfw:commentRss>\n\t\t\t<slash:comments>0</slash:comments>\n\t\t\n\t\t\n\t\t<post-id
+        xmlns=\"com-wordpress:feed-additions:1\">188621</post-id>\t</item>\n\t\t<item>\n\t\t<title>Header
+        Design for Large Glass Doors</title>\n\t\t<link>https://www.jlconline.com/how-to/framing/header-design-for-large-glass-doors/</link>\n\t\t\t\t\t<comments>https://www.jlconline.com/how-to/framing/header-design-for-large-glass-doors/#respond</comments>\n\t\t\n\t\t<dc:creator>redacted</dc:creator>\n\t\t<pubDate>Thu,
+        08 Oct 2026 22:18:57 +0000</pubDate>\n\t\t\t\t<category><![CDATA[Practical
+        Engineering]]></category>\n\t\t<guid isPermaLink=\"false\">https://www.jlconline.com/?p=188630</guid>\n\n\t\t\t\t\t<description><![CDATA[<p>The
+        header for a typical residential sliding or folding glass door is an example
+        of a \u201Cdeflection-critical\u201D structural member that requires special
+        design considerations over and above other common residential wood framing
+        elements. If a sliding glass door is difficult to open, or inoperable, it
+        may require a contractor to investigate and repair. Frustrating for [&#8230;]</p>\n<p>The
+        post <a href=\"https://www.jlconline.com/how-to/framing/header-design-for-large-glass-doors/\">Header
+        Design for Large Glass Doors</a> appeared first on <a href=\"https://www.jlconline.com\">Journal
+        of Light Construction</a>.</p>\n]]></description>\n\t\t\t\t\t\t\t\t\t\t<content:encoded><![CDATA[\n<p
+        class=\"wp-block-paragraph\">The header for a typical residential sliding
+        or folding glass door is an example of a \u201Cdeflection-critical\u201D structural
+        member that requires special design considerations over and above other common
+        residential wood framing elements. If a sliding glass door is difficult to
+        open, or inoperable, it may require a contractor to investigate and repair.
+        Frustrating for a homeowner, the same issue may emerge again within a couple
+        of years of repair if the repairs don\u2019t address the root cause.</p>\n\n\n\n<p
+        class=\"wp-block-paragraph\">Difficulty operating a sliding glass door can
+        stem from several causes. While a lack of homeowner maintenance is one common
+        cause, problems are often due to a change in the size and shape of the rough
+        opening, as well. Such a change may result from differential movement of the
+        foundation, seasonal shrinkage or swelling of the wall framing, or, as we\u2019ll
+        examine in this article, deflection of the header.</p>\n\n\n\n<p class=\"wp-block-paragraph\">To
+        understand how deflection impacts the long-term performance of a sliding door,
+        we will examine: 1) the influence of design loads (live load and dead load)
+        on headers; 2) the impact of the natural variability of lumber, glulams, and
+        structural composite lumber (SCL, aka engineered lumber used for constructing
+        headers); and 3) the effect on deflection of a header assembly based on its
+        installed moisture content (MC). We will also discuss measures a builder or
+        framing contractor can take to guard against header deflection that could
+        limit the door\u2019s function.</p>\n\n\n\n<figure class=\"zonda-image-block
+        full-width \">\n\t<div class=\"zonda-image-wrap\">\n\t\t\n\t\t<img loading=\"lazy\"
+        decoding=\"async\" width=\"653\" height=\"335\" src=\"https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/Screenshot-2026-10-08-180604.png?w=653\"
+        class=\"attachment-card-thumb-lg size-card-thumb-lg\" alt=\"\" srcset=\"https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/Screenshot-2026-10-08-180604.png
+        756w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/Screenshot-2026-10-08-180604.png?resize=300,154
+        300w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/Screenshot-2026-10-08-180604.png?resize=653,335
+        653w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/Screenshot-2026-10-08-180604.png?resize=315,162
+        315w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/Screenshot-2026-10-08-180604.png?resize=202,104
+        202w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/Screenshot-2026-10-08-180604.png?resize=232,119
+        232w\" sizes=\"auto, (max-width: 653px) 100vw, 653px\" />\n\t\t\t</div>\n\n\t\t\t<figcaption
+        class=\"zonda-image-caption\">\n\t\t\t<p class=\"zonda-image-caption-text\">The
+        authors\u2019 case study example assumes a dropped header. This is the more
+        stringent framing condition because the header\u2019s compression edge (the
+        top edge, which is loaded in compression) is not braced by the floor or roof
+        framing above in the same way it would be for a raised header. If a builder
+        assumes a raised header with a braced compression edge but does not apply
+        the appropriate IRC reduction or does not use the correct WFCM table for the
+        actual framing condition, the selected header span could be longer than appropriate.
+        Longer allowable spans can result in greater header deflection.  </p>\t\t</figcaption>\n\t</figure>\n\n\n\n\n<h2
+        id=\"h-dropped-header-case-study\" class=\"wp-block-heading\"><strong>Dropped
+        Header Case Study</strong></h2>\n\n\n\n<p class=\"wp-block-paragraph\">To
+        delve into the nuts and bolts of the issues, let\u2019s take for an example
+        the construction of an addition that includes a sliding glass door opening
+        onto a large deck. For this project the design-builder is using a dropped
+        header supporting roof and ceiling loads that must be designed to the following
+        specifications:</p>\n\n\n\n<ol class=\"wp-block-list\">\n<li>Clear-span, 36-foot
+        roof trusses with 2-foot overhangs</li>\n\n\n\n<li>A roof live load (LL) of
+        20 psf</li>\n\n\n\n<li>A roof ceiling assembly dead load (DL) of 20 psf</li>\n\n\n\n<li>Live
+        load deflection of L/240</li>\n</ol>\n\n\n\n<p class=\"wp-block-paragraph\">Based
+        on these specs we will select a 6-foot, two-ply header.</p>\n\n\n\n<p class=\"wp-block-paragraph\">The
+        first step is to determine the header size required for a 6-foot dropped header.
+        The contractor has several options, starting with the 2024 International Residential
+        Code (IRC) Table R602.7(1), which provides the allowable spans for girders
+        and headers used in exterior bearing walls when the header is laterally braced
+        on the top compression edge (commonly referred to as a raised header).</p>\n\n\n\n<p
+        class=\"wp-block-paragraph\">The top edge of a dropped header is not laterally
+        braced by horizontal framing (see illustration, previous page). Footnote \u201Cf\u201D
+        for Table R602.7(1) of the IRC guides builders to multiply the allowable span
+        in the Table by 0.70 for 2&#215;8, 2&#215;10, or 2&#215;12 dropped headers.
+        Alternatively, footnote \u201Cf\u201D adds, the header \u201Cshall be designed.\u201D
+        Depending on the application, the 0.70 factor can be overly conservative,
+        so for this sliding glass door header we are choosing the Wood Frame Construction
+        Manual (WFCM) instead, which is referenced in the 2024 IRC as one \u201Cdesign
+        option.\u201D</p>\n\n\n\n<p class=\"wp-block-paragraph\">By using the WFCM
+        Table 3.22A1 for spans based on No. 2 Grade Douglas fir-larch (DFL), hem-fir
+        (HF), southern pine (SP), and spruce-pine-fir (SPF), roof/ceiling assembly
+        dead load of 20 psf, and live-load deflection of L/240, we determined that
+        a two-ply 2&#215;12 header would be adequate for a 6-foot dropped header with
+        a live-load deflection of no more than 0.3 inch (72 inches/240).</p>\n\n\n\n<p
+        class=\"wp-block-paragraph\">Most major sliding glass door manufacturers specify
+        rough openings that are approximately door-frame-width plus 1/2 inch and door-frame-height
+        plus 1/2 inch. If the header deflects more than 1/2 inch, it can impinge on
+        the function of the door. As we will demonstrate below, the deflection of
+        a header designed in accordance with IRC and WFCM may exceed this recommended
+        vertical clearance space if you consider the impact of design dead loads.</p>\n\n\n\n<h2
+        id=\"h-analyses-of-header-deflection\" class=\"wp-block-heading\"><strong>Analyses
+        of Header Deflection</strong></h2>\n\n\n\n<p class=\"wp-block-paragraph\">To
+        determine an allowable header span, both the IRC and WFCM call for a strength
+        check (using LL plus DL) and a LL deflection check only.</p>\n\n\n\n<p class=\"wp-block-paragraph\">LL
+        deflection check. The deflection, \u2206LL, for residential headers with framing
+        2 feet on-center or less is calculated using this formula:</p>\n\n\n\n<p class=\"wp-block-paragraph\">where:</p>\n\n\n\n<ul
+        class=\"wp-block-list\">\n<li>w is the loading in pounds per inch</li>\n\n\n\n<li>L
+        is the clear span in inches</li>\n\n\n\n<li>E is the Modulus of Elasticity,
+        in pounds per square inch</li>\n\n\n\n<li>I is the moment of inertia (for
+        a rectangular beam section this equals bd\xB3/12 in inches to the fourth power).</li>\n</ul>\n\n\n\n<p
+        class=\"wp-block-paragraph\"><strong>Role of LL deflection. </strong>While
+        wood framing can be affected by a combination of LL and DL, the LL duration
+        would typically be short, such as for a wind event or loading due to maintenance
+        work. Short-term loading or transient live loads are not likely to have a
+        substantial impact on a \u201Cdeflection-critical\u201D structural member.</p>\n\n\n\n<p
+        class=\"wp-block-paragraph\"><strong>Role of DL deflection.</strong> Dead
+        loads are \u201Csustained loads\u201D imposed by the static weight of materials
+        used in structural and nonstructural building components. This weight can
+        have a decided impact on the deflection of a header\u2014starting as soon
+        as construction of the roof, ceilings, and floors are completed.</p>\n\n\n\n<p
+        class=\"wp-block-paragraph\">The extent of the deflection varies, depending
+        on the moisture content and on the \u201CE\u201D of the lumber used for building
+        the header. \u201CE\u201D is a measure of wood\u2019s stiffness while bending
+        under a load.<br>Impact of E variability. For discussion purposes, it is assumed
+        that the clearance height between the top of the door and the frame above
+        it is \xBD inch. For our 6-foot door header, each of the three possible header
+        designs are shown in Table 1, Column A (facing page) and each has the same
+        dead-load-deflection limit of 0.30 inch based on L/240.</p>\n\n\n\n<figure
+        class=\"zonda-image-block full-width \">\n\t<div class=\"zonda-image-wrap\">\n\t\t\n\t\t<img
+        loading=\"lazy\" decoding=\"async\" width=\"491\" height=\"367\" src=\"https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/Screenshot-2026-10-08-180639.png?w=491\"
+        class=\"attachment-card-thumb-lg size-card-thumb-lg\" alt=\"\" srcset=\"https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/Screenshot-2026-10-08-180639.png
+        507w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/Screenshot-2026-10-08-180639.png?resize=300,224
+        300w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/Screenshot-2026-10-08-180639.png?resize=491,367
+        491w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/Screenshot-2026-10-08-180639.png?resize=237,177
+        237w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/Screenshot-2026-10-08-180639.png?resize=153,114
+        153w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/Screenshot-2026-10-08-180639.png?resize=175,131
+        175w\" sizes=\"auto, (max-width: 491px) 100vw, 491px\" />\n\t\t\t</div>\n\n\t</figure>\n\n\n\n\n<p
+        class=\"wp-block-paragraph\">In the graph, \u201CVariability of E\u201D (above),
+        the assumed E for the tabulated spans is based on the E-Grade of 1.3 million
+        psi, the lowest value for the four species groups referenced in the IRC and
+        WFCM (DFL, HF, SP, and SPF). It is important to note that the E-values published
+        in the 2024 NDS Supplement: Design Values for Wood Construction for different
+        species groups and grades are average values, not the E of a single piece
+        (or pieces) of lumber selected from a species group and grade.</p>\n\n\n\n<p
+        class=\"wp-block-paragraph\">As depicted by the Red curve, the range of possible
+        E values in a 1.3 E-Grade when used as a 1-ply header is plus or minus 50%
+        of 1.3 (0.65 to 1.95). The range of possible E values when two pieces of lumber
+        (from different boards) are used in a 2-ply header (Green curve) is plus or
+        minus 35% (0.84 to 1.76). When both pieces of a 2-ply header are cut from
+        the same board, the Red curve would apply. And for a 3.5-inch-thick SCL header
+        (Blue curve), the range of possible E values would be plus or minus 20% (1.04
+        to 1.56).</p>\n\n\n\n<figure class=\"zonda-image-block full-width \">\n\t<div
+        class=\"zonda-image-wrap\">\n\t\t\n\t\t<img loading=\"lazy\" decoding=\"async\"
+        width=\"499\" height=\"311\" src=\"https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/Screenshot-2026-10-08-180625.png?w=499\"
+        class=\"attachment-card-thumb-lg size-card-thumb-lg\" alt=\"\" srcset=\"https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/Screenshot-2026-10-08-180625.png
+        499w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/Screenshot-2026-10-08-180625.png?resize=300,187
+        300w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/Screenshot-2026-10-08-180625.png?resize=284,177
+        284w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/Screenshot-2026-10-08-180625.png?resize=183,114
+        183w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/Screenshot-2026-10-08-180625.png?resize=210,131
+        210w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/Screenshot-2026-10-08-180625.png?resize=360,225
+        360w\" sizes=\"auto, (max-width: 499px) 100vw, 499px\" />\n\t\t\t</div>\n\n\t</figure>\n\n\n\n\n<p
+        class=\"wp-block-paragraph\">The \u201CLikely Lowest Header E\u201D values
+        (Table 1, Column B; above) are the lowest values in the respective E ranges.
+        \u201CInitial Dead Load Deflection\u201D (Column C) was calculated by using
+        Column B values and the header deflection formula (see calculation for \u2206LL
+        above). Based on 100% of the design dead load (20 psf for the case study),
+        the tabulated values (Column C) overestimate the apparent dead load deflection
+        because, by engineering practice, design dead loads are greater than actual
+        dead loads.<br>Impact of long-term loading on deflection. \u201CLong-Term
+        Deflection Dry Header\u201D (Table 1, Column D) is the predicted deflection
+        due to sustained loads (dead loads) when dry framing (less than or equal to
+        19% MC) is installed and loaded by all sustained loads present when the structure
+        is completed. While the deflection increase is 50% for dry lumber or SCL used
+        in dry-service conditions, for partially or unseasoned lumber the initial
+        dead load deflection can double (Column E). In the 2024 National Design Specification
+        (NDS) for Wood Construction, Section 3.5.2 Long-Term Loading states, \u201CWhere
+        total deflection under long-term loading must be limited, increasing member
+        size is one way to provide extra stiffness to allow for this time dependent
+        deformation\u2026\u201D and references the 1.5 and 2.0 time-dependent creep
+        deflection factors used in this article.</p>\n\n\n\n<p class=\"wp-block-paragraph\">Deflection-critical
+        elements require attention. The 6-foot sliding door header in our case study
+        demonstrates the uncertainties of header stiffness (E) and MC at the time
+        of installation. To avoid installing a risky header, intervention by the header
+        designer and framing contractor may be required. To compensate for E being
+        below the grade average for 1-ply and 2-ply headers, the designer can specify
+        one size deeper than given in the IRC or WFCM header design tables. In addition,
+        the framing contractor can use a hand-held meter to test the MC of the individual
+        pieces of lumber used for the header to ensure that it is below 19%; this
+        will eliminate the possibility of an additional 50% deflection. Without implementing
+        these measures, satisfactory header performance is a matter of chance and
+        provides an explanation for how a contractor may have a mixture of good and
+        problematic sliding door header outcomes, even when complying with allowable
+        IRC and WFCM designs.</p>\n\n\n\n<h2 id=\"h-avoiding-excessive-header-deflection\"
+        class=\"wp-block-heading\"><strong>Avoiding Excessive Header Deflection</strong></h2>\n\n\n\n<p
+        class=\"wp-block-paragraph\"><strong>Method 1: </strong>One size deeper. When
+        using solid-sawn lumber, the simplest way to protect against excessive header
+        deflection is to use one size deeper than required per code, yielding a large
+        decrease in likely deflection. In addition to using one size deeper, framers
+        can cut lumber pieces for a multi-ply header from different boards to greatly
+        reduce the likelihood of having an extremely low effective stiffness (E) of
+        the header assembly. This benefit stems from the \u201Caveraging effect\u201D
+        wherein the variation of the average is much less than the variation of a
+        single element. The variation difference in two versus one element is demonstrated
+        by the Green versus Red curves on the graph \u201CVariability of E.\u201D</p>\n\n\n\n<p
+        class=\"wp-block-paragraph\"><strong>Method 2: </strong>Higher E-grade. Alternatively,
+        designers can specify a higher E-Grade than the 1.3 E that was assumed in
+        the preparation of the IRC and WFCM span tables. For example, southern pine
+        (SP) grades (No. 2, No. 1, and SS) have E-values (million psi) of 1.4, 1.6,
+        and 1.8, respectively. Choosing a No. 2 SP grade for door headers in lieu
+        of a 1.3 E-grade shifts the entire curve to the right (see graph, \u201CVariability
+        of E\u201D). The shift yields additional protection against excessive deflection
+        by simultaneously increasing the \u201CLikely Lowest Header E\u201D and decreasing
+        the \u201CInitial Dead Load Deflection\u201D values (Table 1, Columns B and
+        C, respectively). In addition, this approach may better accommodate perpendicular-to-grain
+        stress at the header reactions as the allowable value is 565 psi for SP No.
+        2 grade versus 405 psi for hem-fir. In general, however, choosing a higher
+        E-Grade is a less efficient measure than specifying plies that are one size
+        deeper and cutting them from different boards.</p>\n\n\n\n<p class=\"wp-block-paragraph\"><strong>Method
+        3:</strong> Checking MC of lumber. As demonstrated by our case study header,
+        framers (or the project manager overseeing the framing contractor) can substantially
+        improve the performance of sliding door headers by checking the MC of the
+        lumber or only using header lumber with a KD19 grade mark. Based on industry
+        testing standards, the average MC of KD19 lumber is assumed to be 15%, which
+        is a recommended target for deflection-critical framing components. Careful
+        selection of header lumber in the range of 15 to 19% eliminates the worst-case
+        scenario for potential header deflection (creep factor of 2.0, Table 1, Column
+        E).</p>\n\n\n\n<p class=\"wp-block-paragraph\">Determining the MC of framing
+        lumber requires a hand-held moisture meter. \u201CFeeling\u201D the weight
+        is not a reliable method for checking the MC of a piece of lumber, as the
+        density of a grade of lumber is widely variable. When testing lumber in a
+        laboratory setting, for example, oven-dry lumber density can vary by as much
+        as plus or minus 30%. The density of the material masks one\u2019s ability
+        to sense the actual MC of a piece of lumber when the MC is in the vicinity
+        of 19%.</p>\n\n\n\n<h2 id=\"h-benefit-of-a-deeper-header-size\" class=\"wp-block-heading\"><strong>Benefit
+        of a Deeper Header Size</strong></h2>\n\n\n\n<p class=\"wp-block-paragraph\">When
+        comparing methods, the most practical is Method 1. As demonstrated in Table
+        2 (below), the \u201CAdded DL Deflection Protection\u201D shown in Column
+        4 is approximately 50%. This can compensate for a header assembly having,
+        for example, an effective E-value less than the published average for the
+        grade and species of lumber.</p>\n\n\n\n<figure class=\"zonda-image-block
+        full-width \">\n\t<div class=\"zonda-image-wrap\">\n\t\t\n\t\t<img loading=\"lazy\"
+        decoding=\"async\" width=\"509\" height=\"244\" src=\"https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/Screenshot-2026-10-08-180652.png?w=509\"
+        class=\"attachment-card-thumb-lg size-card-thumb-lg\" alt=\"\" srcset=\"https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/Screenshot-2026-10-08-180652.png
+        509w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/Screenshot-2026-10-08-180652.png?resize=300,144
+        300w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/Screenshot-2026-10-08-180652.png?resize=315,151
+        315w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/Screenshot-2026-10-08-180652.png?resize=202,97
+        202w, https://www.jlconline.com/wp-content/uploads/sites/4/2026/10/Screenshot-2026-10-08-180652.png?resize=232,111
+        232w\" sizes=\"auto, (max-width: 509px) 100vw, 509px\" />\n\t\t\t</div>\n\n\t</figure>\n\n\n\n\n<p
+        class=\"wp-block-paragraph\">Referring to the graph, \u201CVariability of
+        E,\u201D the \u201Cone-size-deeper\u201D practice is the simplest way to manage
+        the natural variability of E of visually graded lumber at a minimal additional
+        cost. In general, for deflection-critical headers and beams, design professionals
+        are encouraged to adopt a more conservative member depth than the minimum
+        code-determined depth.</p>\n\n\n\n<h2 id=\"h-safest-option-scl-headers\" class=\"wp-block-heading\"><strong>Safest
+        Option: SCL Headers</strong></h2>\n\n\n\n<p class=\"wp-block-paragraph\">The
+        more reliable option for sliding glass door header performance is the use
+        of SCL headers designed per the SCL manufacturer\u2019s criteria and conformance
+        to the door manufacturer\u2019s installation tolerances. The solid-sawn option
+        requires coordination between the framing contractor and the door installer
+        regarding the MC of the header lumber at the time of installation, rough opening
+        of the wood framing, and conformance to the door manufacturer\u2019s installation
+        tolerances.</p>\n\n\n\n<p class=\"wp-block-paragraph\">For all headers over
+        sliding glass doors, regardless of the lumber type used, there should be close
+        coordination between the header designer and the framer on where the header
+        will be located in the wall\u2014either as a braced, raised header or an unbraced
+        dropped header, as this condition critically determines a header\u2019s deflection
+        potential. If a builder assumes a raised header with a braced compression
+        edge but does not apply the appropriate IRC reduction or does not use the
+        correct WFCM table for the actual framing condition, the header span could
+        be longer than appropriate. Longer spans can result in greater header deflection.
+        For this reason, building inspectors should be on the lookout for properly
+        spanned dropped installations, as well.</p>\n\n\n\n<p class=\"wp-block-paragraph\"></p>\n<p>The
+        post <a href=\"https://www.jlconline.com/how-to/framing/header-design-for-large-glass-doors/\">Header
+        Design for Large Glass Doors</a> appeared first on <a href=\"https://www.jlconline.com\">Journal
+        of Light Construction</a>.</p>\n]]></content:encoded>\n\t\t\t\t\t\n\t\t\t\t\t<wfw:commentRss>https://www.jlconline.com/how-to/framing/header-design-for-large-glass-doors/feed/</wfw:commentRss>\n\t\t\t<slash:comments>0</slash:comments>\n\t\t\n\t\t\n\t\t<post-id
+        xmlns=\"com-wordpress:feed-additions:1\">188630</post-id>\t</item>\n\t\t<item>\n\t\t<title>Smart
+        Tech Entry Door</title>\n\t\t<link>https://www.jlconline.com/products-tools/windows-doors/smart-tech-entry-door/</link>\n\t\t\t\t\t<comments>https://www.jlconline.com/products-tools/windows-doors/smart-tech-entry-door/#respond</comments>\n\t\t\n\t\t<dc:creator>redacted</dc:creator>\n\t\t<pubDate>Thu,
+        08 Oct 2026 13:56:54 +0000</pubDate>\n\t\t\t\t<category><![CDATA[Design and
+        Trends]]></category>\n\t\t<category><![CDATA[Exterior doors]]></category>\n\t\t<guid
+        isPermaLink=\"false\">https://www.jlconline.com/?p=188595</guid>\n\n\t\t\t\t\t<description><![CDATA[<p>Doma
+        Intelligent Doors by Kolbe Windows &#38; Doors are custom-crafted, wooden
+        entry doors with automated technology. The Doma WelcomeDrive is a motorized
+        opener and closer that, according to the company, authenticates the homeowner
+        and automatically opens the door as they approach. It does this via advanced
+        radar, motion, and facial recognition sensors that detect movement [&#8230;]</p>\n<p>The
+        post <a href=\"https://www.jlconline.com/products-tools/windows-doors/smart-tech-entry-door/\">Smart
+        Tech Entry Door</a> appeared first on <a href=\"https://www.jlconline.com\">Journal
+        of Light Construction</a>.</p>\n]]></description>\n\t\t\t\t\t\t\t\t\t\t<content:encoded><![CDATA[\n<p
+        class=\"wp-block-paragraph\">Doma Intelligent Doors by Kolbe Windows &amp;
+        Doors are custom-crafted, wooden entry doors with automated technology. The
+        Doma WelcomeDrive is a motorized opener and closer that, according to the
+        company, authenticates the homeowner and automatically opens the door as they
+        approach. It does this via advanced radar, motion, and facial recognition
+        sensors that detect movement and identity for secure access with no batteries,
+        bridges, or external components required. Kolbe\u2019s spectrum of wood species
+        and glass options make it possible to match doors to just about any architectural
+        design.<br><a href=\"https://domahome.com/\" data-type=\"link\" data-id=\"https://domahome.com/\"
+        target=\"_blank\" rel=\"noreferrer noopener\">domahome.com</a></p>\n\n\n\n<p
+        class=\"wp-block-paragraph\"></p>\n<p>The post <a href=\"https://www.jlconline.com/products-tools/windows-doors/smart-tech-entry-door/\">Smart
+        Tech Entry Door</a> appeared first on <a href=\"https://www.jlconline.com\">Journal
+        of Light Construction</a>.</p>\n]]></content:encoded>\n\t\t\t\t\t\n\t\t\t\t\t<wfw:commentRss>https://www.jlconline.com/products-tools/windows-doors/smart-tech-entry-door/feed/</wfw:commentRss>\n\t\t\t<slash:comments>0</slash:comments>\n\t\t\n\t\t\n\t\t<post-id
+        xmlns=\"com-wordpress:feed-additions:1\">188595</post-id>\t</item>\n\t\t<item>\n\t\t<title>Joist
+        Repair Reinforcer</title>\n\t\t<link>https://www.jlconline.com/products-tools/foundations-framing/joist-repair-reinforcer/</link>\n\t\t\t\t\t<comments>https://www.jlconline.com/products-tools/foundations-framing/joist-repair-reinforcer/#respond</comments>\n\t\t\n\t\t<dc:creator>redacted</dc:creator>\n\t\t<pubDate>Thu,
+        08 Oct 2026 13:54:53 +0000</pubDate>\n\t\t\t\t<category><![CDATA[Advanced
+        Framing]]></category>\n\t\t<category><![CDATA[Joists]]></category>\n\t\t<guid
+        isPermaLink=\"false\">https://www.jlconline.com/?p=188607</guid>\n\n\t\t\t\t\t<description><![CDATA[<p>The
+        28NR Joist Repair Notch Reinforcer from Metwood allows users to reinforce
+        5-inch-wide by 3-inch-deep notch cuts into 2&#215;8 joists and does not require
+        glue. It\u2019s made from engineered light-gauge steel and can be used on
+        engineered I-joists or conventional framing. By allowing larger openings in
+        floor joists, the joist reinforcer simplifies the routing and [&#8230;]</p>\n<p>The
+        post <a href=\"https://www.jlconline.com/products-tools/foundations-framing/joist-repair-reinforcer/\">Joist
+        Repair Reinforcer</a> appeared first on <a href=\"https://www.jlconline.com\">Journal
+        of Light Construction</a>.</p>\n]]></description>\n\t\t\t\t\t\t\t\t\t\t<content:encoded><![CDATA[\n<p
+        class=\"wp-block-paragraph\">The 28NR Joist Repair Notch Reinforcer from Metwood
+        allows users to reinforce 5-inch-wide by 3-inch-deep notch cuts into 2&#215;8
+        joists and does not require glue. It\u2019s made from engineered light-gauge
+        steel and can be used on engineered I-joists or conventional framing. By allowing
+        larger openings in floor joists, the joist reinforcer simplifies the routing
+        and installation of utilities. The reinforcers help restore the strength of
+        floor joists weakened by the placement of large holes or cut-outs. <a href=\"https://metwood.com/contact-us/?msclkid=38bbb0b51d5a182b84d2da7293f6a376&amp;utm_source=bing&amp;utm_medium=cpc&amp;utm_campaign=Bing%20Performance%20Max-3%20Merchant%20Center%20Direct&amp;utm_term=metwood.com&amp;utm_content=Performance%20Max-3%20Merchant%20Center%20Direct\"
+        data-type=\"link\" data-id=\"https://metwood.com/contact-us/?msclkid=38bbb0b51d5a182b84d2da7293f6a376&amp;utm_source=bing&amp;utm_medium=cpc&amp;utm_campaign=Bing%20Performance%20Max-3%20Merchant%20Center%20Direct&amp;utm_term=metwood.com&amp;utm_content=Performance%20Max-3%20Merchant%20Center%20Direct\"
+        target=\"_blank\" rel=\"noreferrer noopener\">metwood.com</a></p>\n\n\n\n<p
+        class=\"wp-block-paragraph\"></p>\n<p>The post <a href=\"https://www.jlconline.com/products-tools/foundations-framing/joist-repair-reinforcer/\">Joist
+        Repair Reinforcer</a> appeared first on <a href=\"https://www.jlconline.com\">Journal
+        of Light Construction</a>.</p>\n]]></content:encoded>\n\t\t\t\t\t\n\t\t\t\t\t<wfw:commentRss>https://www.jlconline.com/products-tools/foundations-framing/joist-repair-reinforcer/feed/</wfw:commentRss>\n\t\t\t<slash:comments>0</slash:comments>\n\t\t\n\t\t\n\t\t<post-id
+        xmlns=\"com-wordpress:feed-additions:1\">188607</post-id>\t</item>\n\t\t<item>\n\t\t<title>Large
+        Swinging Doors</title>\n\t\t<link>https://www.jlconline.com/products-tools/windows-doors/large-swinging-doors/</link>\n\t\t\t\t\t<comments>https://www.jlconline.com/products-tools/windows-doors/large-swinging-doors/#respond</comments>\n\t\t\n\t\t<dc:creator>redacted</dc:creator>\n\t\t<pubDate>Thu,
+        08 Oct 2026 13:50:51 +0000</pubDate>\n\t\t\t\t<category><![CDATA[Exterior
+        doors]]></category>\n\t\t<guid isPermaLink=\"false\">https://www.jlconline.com/?p=188613</guid>\n\n\t\t\t\t\t<description><![CDATA[<p>Marvin\u2019s
+        Vivid Swinging Door is a part of the manufacturer\u2019s Vivid Collection,
+        a line of windows and doors with large-format sizes and design-forward color
+        palettes. The Swinging Door is available in up to three panels for a maximum
+        width of 9 feet with a performance rating up to PG40 for air, water, and structural
+        integrity. [&#8230;]</p>\n<p>The post <a href=\"https://www.jlconline.com/products-tools/windows-doors/large-swinging-doors/\">Large
+        Swinging Doors</a> appeared first on <a href=\"https://www.jlconline.com\">Journal
+        of Light Construction</a>.</p>\n]]></description>\n\t\t\t\t\t\t\t\t\t\t<content:encoded><![CDATA[\n<p
+        class=\"wp-block-paragraph\">Marvin\u2019s Vivid Swinging Door is a part of
+        the manufacturer\u2019s Vivid Collection, a line of windows and doors with
+        large-format sizes and design-forward color palettes. The Swinging Door is
+        available in up to three panels for a maximum width of 9 feet with a performance
+        rating up to PG40 for air, water, and structural integrity. The collection
+        features durable, low-maintenance Ultrex fiberglass inside and out with either
+        an inswing or outswing option. <a href=\"https://www.marvin.com/\" data-type=\"link\"
+        data-id=\"https://www.marvin.com/\" target=\"_blank\" rel=\"noreferrer noopener\">marvin.com</a></p>\n\n\n\n<p
+        class=\"wp-block-paragraph\"></p>\n<p>The post <a href=\"https://www.jlconline.com/products-tools/windows-doors/large-swinging-doors/\">Large
+        Swinging Doors</a> appeared first on <a href=\"https://www.jlconline.com\">Journal
+        of Light Construction</a>.</p>\n]]></content:encoded>\n\t\t\t\t\t\n\t\t\t\t\t<wfw:commentRss>https://www.jlconline.com/products-tools/windows-doors/large-swinging-doors/feed/</wfw:commentRss>\n\t\t\t<slash:comments>0</slash:comments>\n\t\t\n\t\t\n\t\t<post-id
+        xmlns=\"com-wordpress:feed-additions:1\">188613</post-id>\t</item>\n\t\t<item>\n\t\t<title>Easy
+        Install Recessed Lighting Hoods</title>\n\t\t<link>https://www.jlconline.com/products-tools/easy-install-recessed-lighting-hoods/</link>\n\t\t\t\t\t<comments>https://www.jlconline.com/products-tools/easy-install-recessed-lighting-hoods/#respond</comments>\n\t\t\n\t\t<dc:creator>redacted</dc:creator>\n\t\t<pubDate>Thu,
+        08 Oct 2026 13:47:14 +0000</pubDate>\n\t\t\t\t<category><![CDATA[Lighting
+        Specifications]]></category>\n\t\t<guid isPermaLink=\"false\">https://www.jlconline.com/?p=188598</guid>\n\n\t\t\t\t\t<description><![CDATA[<p>Thermahood
+        says that its downlight hoods and lids help reduce the amount of heat lost
+        during use by creating an airtight seal around the lamp. The seal also minimizes
+        condensation risk and reduces sound transmission to the floor above. Made
+        from flame retardant materials, the TH125 hoods require little to no maintenance
+        after installation and [&#8230;]</p>\n<p>The post <a href=\"https://www.jlconline.com/products-tools/easy-install-recessed-lighting-hoods/\">Easy
+        Install Recessed Lighting Hoods</a> appeared first on <a href=\"https://www.jlconline.com\">Journal
+        of Light Construction</a>.</p>\n]]></description>\n\t\t\t\t\t\t\t\t\t\t<content:encoded><![CDATA[\n<p
+        class=\"wp-block-paragraph\">Thermahood says that its downlight hoods and
+        lids help reduce the amount of heat lost during use by creating an airtight
+        seal around the lamp. The seal also minimizes condensation risk and reduces
+        sound transmission to the floor above. Made from flame retardant materials,
+        the TH125 hoods require little to no maintenance after installation and are
+        available online in packs of ten priced at $99. <a href=\"https://www.thermahooddirect.com/\"
+        data-type=\"link\" data-id=\"https://www.thermahooddirect.com/\" target=\"_blank\"
+        rel=\"noreferrer noopener\">thermahooddirect.com</a></p>\n\n\n\n<p class=\"wp-block-paragraph\"></p>\n<p>The
+        post <a href=\"https://www.jlconline.com/products-tools/easy-install-recessed-lighting-hoods/\">Easy
+        Install Recessed Lighting Hoods</a> appeared first on <a href=\"https://www.jlconline.com\">Journal
+        of Light Construction</a>.</p>\n]]></content:encoded>\n\t\t\t\t\t\n\t\t\t\t\t<wfw:commentRss>https://www.jlconline.com/products-tools/easy-install-recessed-lighting-hoods/feed/</wfw:commentRss>\n\t\t\t<slash:comments>0</slash:comments>\n\t\t\n\t\t\n\t\t<post-id
+        xmlns=\"com-wordpress:feed-additions:1\">188598</post-id>\t</item>\n\t\t<item>\n\t\t<title>Self-Adhering
+        Roof Tape</title>\n\t\t<link>https://www.jlconline.com/products-tools/exteriors-roofing/self-adhering-roof-tape/</link>\n\t\t\t\t\t<comments>https://www.jlconline.com/products-tools/exteriors-roofing/self-adhering-roof-tape/#respond</comments>\n\t\t\n\t\t<dc:creator>redacted</dc:creator>\n\t\t<pubDate>Thu,
+        08 Oct 2026 13:38:33 +0000</pubDate>\n\t\t\t\t<category><![CDATA[Roofing material]]></category>\n\t\t<guid
+        isPermaLink=\"false\">https://www.jlconline.com/?p=188616</guid>\n\n\t\t\t\t\t<description><![CDATA[<p>CertaSeam
+        Roof Tape from CertainTeed is composed of two waterproofing materials: an
+        aggressive rubberized asphalt adhesive backed by a layer of slip-resistant
+        film. A roll of CertaSeam is 50 feet long, with one roll covering a 16-square-foot
+        area. According to Certainteed, the rubberized asphalt layer seals around
+        fasteners while protecting the roof from leaks caused [&#8230;]</p>\n<p>The
+        post <a href=\"https://www.jlconline.com/products-tools/exteriors-roofing/self-adhering-roof-tape/\">Self-Adhering
+        Roof Tape</a> appeared first on <a href=\"https://www.jlconline.com\">Journal
+        of Light Construction</a>.</p>\n]]></description>\n\t\t\t\t\t\t\t\t\t\t<content:encoded><![CDATA[\n<p
+        class=\"wp-block-paragraph\">CertaSeam Roof Tape from CertainTeed is composed
+        of two waterproofing materials: an aggressive rubberized asphalt adhesive
+        backed by a layer of slip-resistant film. A roll of CertaSeam is 50 feet long,
+        with one roll covering a 16-square-foot area. According to Certainteed, the
+        rubberized asphalt layer seals around fasteners while protecting the roof
+        from leaks caused by water backup. The membrane forms watertight overlaps
+        and protects asphalt shingles, slate, tile, cedar shakes, or metal roofing.
+        It\u2019s self-adhesive and bonds firmly to the roof deck without the need
+        for heat or special adhesives. <a href=\"https://www.certainteed.com/\" data-type=\"link\"
+        data-id=\"https://www.certainteed.com/\" target=\"_blank\" rel=\"noreferrer
+        noopener\">certainteed.com</a></p>\n<p>The post <a href=\"https://www.jlconline.com/products-tools/exteriors-roofing/self-adhering-roof-tape/\">Self-Adhering
+        Roof Tape</a> appeared first on <a href=\"https://www.jlconline.com\">Journal
+        of Light Construction</a>.</p>\n]]></content:encoded>\n\t\t\t\t\t\n\t\t\t\t\t<wfw:commentRss>https://www.jlconline.com/products-tools/exteriors-roofing/self-adhering-roof-tape/feed/</wfw:commentRss>\n\t\t\t<slash:comments>0</slash:comments>\n\t\t\n\t\t\n\t\t<post-id
+        xmlns=\"com-wordpress:feed-additions:1\">188616</post-id>\t</item>\n\t\t<item>\n\t\t<title>Small
+        Profile Garage Opener</title>\n\t\t<link>https://www.jlconline.com/products-tools/windows-doors/small-profile-garage-opener/</link>\n\t\t\t\t\t<comments>https://www.jlconline.com/products-tools/windows-doors/small-profile-garage-opener/#respond</comments>\n\t\t\n\t\t<dc:creator>redacted</dc:creator>\n\t\t<pubDate>Thu,
+        08 Oct 2026 13:32:20 +0000</pubDate>\n\t\t\t\t<category><![CDATA[Remodeling]]></category>\n\t\t<guid
+        isPermaLink=\"false\">https://www.jlconline.com/?p=188592</guid>\n\n\t\t\t\t\t<description><![CDATA[<p>The
+        Side Mount Garage Door Opener (SMO) from Skylink features a DC motor, soft
+        start and stop technology, and built-in LED lighting to illuminate the garage
+        without additional fixtures. The unit connects to the home\u2019s Wi-Fi and
+        is compatible with Amazon Alexa, allowing users to remotely control their
+        garage door. As with all garage doors, [&#8230;]</p>\n<p>The post <a href=\"https://www.jlconline.com/products-tools/windows-doors/small-profile-garage-opener/\">Small
+        Profile Garage Opener</a> appeared first on <a href=\"https://www.jlconline.com\">Journal
+        of Light Construction</a>.</p>\n]]></description>\n\t\t\t\t\t\t\t\t\t\t<content:encoded><![CDATA[\n<p
+        class=\"wp-block-paragraph\">The Side Mount Garage Door Opener (SMO) from
+        Skylink features a DC motor, soft start and stop technology, and built-in
+        LED lighting to illuminate the garage without additional fixtures. The unit
+        connects to the home\u2019s Wi-Fi and is compatible with Amazon Alexa, allowing
+        users to remotely control their garage door. As with all garage doors, the
+        automatic safety reversal system stops and reverses the door when obstructions
+        are detected. The SMO comes with a backup battery that keeps it functional
+        during power outages. <a href=\"https://www.skylinkhome.com/product-category/side-mount-garage-door-opener-smo/\"
+        data-type=\"link\" data-id=\"https://www.skylinkhome.com/product-category/side-mount-garage-door-opener-smo/\"
+        target=\"_blank\" rel=\"noreferrer noopener\">skylinkhome.com</a></p>\n\n\n\n<p
+        class=\"wp-block-paragraph\"></p>\n<p>The post <a href=\"https://www.jlconline.com/products-tools/windows-doors/small-profile-garage-opener/\">Small
+        Profile Garage Opener</a> appeared first on <a href=\"https://www.jlconline.com\">Journal
+        of Light Construction</a>.</p>\n]]></content:encoded>\n\t\t\t\t\t\n\t\t\t\t\t<wfw:commentRss>https://www.jlconline.com/products-tools/windows-doors/small-profile-garage-opener/feed/</wfw:commentRss>\n\t\t\t<slash:comments>0</slash:comments>\n\t\t\n\t\t\n\t\t<post-id
+        xmlns=\"com-wordpress:feed-additions:1\">188592</post-id>\t</item>\n\t\t<item>\n\t\t<title>Load
+        Testing</title>\n\t\t<link>https://www.jlconline.com/deck-builder/load-testing/</link>\n\t\t\t\t\t<comments>https://www.jlconline.com/deck-builder/load-testing/#respond</comments>\n\t\t\n\t\t<dc:creator>redacted</dc:creator>\n\t\t<pubDate>Thu,
+        01 Oct 2026 21:00:01 +0000</pubDate>\n\t\t\t\t<guid isPermaLink=\"false\">https://www.jlconline.com/?p=188561</guid>\n\n\t\t\t\t\t<description><![CDATA[<p>Load
+        testing a helical pile is far simpler than it sounds. The height of the pile
+        above grade is measured (A). Next, a cap is inserted into the pile to protect
+        its top. This cap is slammed five times with a sledge hammer (B), and the
+        pile\u2019s height is measured again. The sledge\u2019s weight is [&#8230;]</p>\n<p>The
+        post <a href=\"https://www.jlconline.com/deck-builder/load-testing/\">Load
+        Testing</a> appeared first on <a href=\"https://www.jlconline.com\">Journal
+        of Light Construction</a>.</p>\n]]></description>\n\t\t\t\t\t\t\t\t\t\t<content:encoded><![CDATA[\n<p
+        class=\"wp-block-paragraph\">Load testing a helical pile is far simpler than
+        it sounds. The height of the pile above grade is measured (A). Next, a cap
+        is inserted into the pile to protect its top. This cap is slammed five times
+        with a sledge hammer (B), and the pile\u2019s height is measured again. The
+        sledge\u2019s weight is specific to the size of the pile \u2014 a heavier
+        hammer is used with bigger piles. The amount that the pile sinks indicates
+        the soil bearing capacity, which an engineer will verify. </p>\n\n\n\n<p class=\"wp-block-paragraph\">The
+        dynamic loading imposed by an impact load is surprisingly large and correlates
+        to the static load a pile can handle. Load testing, as opposed to taking a
+        torque reading, is done in several instances. One is when the pile bottoms
+        out on a large rock. Another is when the soil is particularly slippery \u2014
+        wet clay, for instance. With slippery soil, the bearing capacity can be higher
+        than torque readings would suggest because the soil is lubricating the helix
+        and reducing the force required to turn it. </p>\n\n\n\n<p class=\"wp-block-paragraph\">Return
+        to <a href=\"https://www.jlconline.com/how-to/foundations/helical-pile-deck-foundations_s/\"
+        data-type=\"link\" data-id=\"https://www.jlconline.com/how-to/foundations/helical-pile-deck-foundations_s/\">main
+        article</a>.</p>\n<p>The post <a href=\"https://www.jlconline.com/deck-builder/load-testing/\">Load
+        Testing</a> appeared first on <a href=\"https://www.jlconline.com\">Journal
+        of Light Construction</a>.</p>\n]]></content:encoded>\n\t\t\t\t\t\n\t\t\t\t\t<wfw:commentRss>https://www.jlconline.com/deck-builder/load-testing/feed/</wfw:commentRss>\n\t\t\t<slash:comments>0</slash:comments>\n\t\t\n\t\t\n\t\t<post-id
+        xmlns=\"com-wordpress:feed-additions:1\">188561</post-id>\t</item>\n\t</channel>\n</rss>\n"
+    headers:
+      cache-control:
+      - max-age=300, must-revalidate
+      cf-cache-status:
+      - DYNAMIC
+      cf-ray:
+      - a48128991a8e3c2f-IAD
+      connection:
+      - keep-alive
+      content-length:
+      - '55662'
+      content-security-policy:
+      - frame-ancestors 'self' https://cms.hanleywood.com
+      content-type:
+      - application/rss+xml; charset=UTF-8
+      date:
+      - Fri, 09 Oct 2026 23:27:53 GMT
+      etag:
+      - W/"dcbe861e5917a9e2c120da3044a6bd70"
+      host-header:
+      - a9130478a60e5f9135f765b23f26593b
+      last-modified:
+      - Fri, 09 Oct 2026 19:57:40 GMT
+      link:
+      - <https://www.jlconline.com/wp-json/>; rel="https://api.w.org/"
+      - <https://www.jlconline.com/>; rel="canonical"
+      permissions-policy:
+      - battery=(), camera=(), microphone=(), midi=(), usb=()
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - cloudflare
+      strict-transport-security:
+      - max-age=31536000
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding, accept, content-type
+      x-cache:
+      - HIT
+      x-content-type-options:
+      - nosniff
+      x-distributor:
+      - 'yes'
+      x-frame-options:
+      - SAMEORIGIN
+      x-hacker:
+      - If you're reading this, you should visit https://join.a8c.com/viphacker and
+        apply to join the fun, mention this header.
+      x-powered-by:
+      - WordPress VIP <https://wpvip.com>
+      x-rq:
+      - dca8 181 249 80
+    status:
+      code: 200
+      message: OK
+version: 1

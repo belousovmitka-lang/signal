@@ -295,7 +295,7 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 
 | Platform | Connector | Route | Endpoint / method | Cadence | Status |
 |---|---|---|---|---|---|
-| SAM.gov | `sam_gov` | own_api | Opportunities API | daily | todo |
+| SAM.gov | `sam_gov` | own_api | Opportunities API v2, free key; daily limits by role aren't published, so capped at 10 requests/day (1 request = 1,000 notices). Links to the public `sam.gov/opp/<id>/view` page (uiLink points into the logged-in workspace). pointOfContact not stored | daily | done (2026-10-09) |
 | State/city procurement portals, BidNet, DemandStar | G5 / G2, else G1 | public_pages | per portal; many publish RSS | daily | todo |
 | EU TED | `ted` | own_api | TED API v3 `POST /v3/notices/search`, anonymous; CPV filter, `SORT BY publication-date DESC`; reuse under Decision 2011/833/EU | daily | done (2026-10-09) |
 | UK Contracts Finder / Find a Tender | `uk_tenders` | own_api | OCDS APIs (Contracts Finder search, Find a Tender release packages), no key, cursor paging; Open Government Licence v3.0 | daily | done (2026-10-09) |
@@ -349,7 +349,7 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 | Google autocomplete / "People also ask" | G1 | search_api | via search API results | weekly | todo |
 | Industry association surveys, vendor benchmark reports, analyst firms' free reports | G2 / G5 | rss / public_pages | per publisher | monthly | todo |
 | Government statistics (BLS, Census, Eurostat) | `stats` | own_api | Checked 2026-10-09: api.bls.gov robots.txt `Disallow: /` (blocked); Census API now requires a key (`CENSUS_API_KEY`; Business Formation Statistics = new business applications by industry); Eurostat API allowed by robots, not built yet | monthly | todo |
-| Academic papers | `papers` | rss (arXiv) / own_api | arXiv via RSS category feeds (rss.arxiv.org, 1 request/3s; metadata CC0): done (2026-10-09). export.arxiv.org (query API) is robots-disallowed for all agents: not used. PubMed E-utilities waits for SIGNAL_CONTACT_EMAIL (NCBI asks for tool + email). Semantic Scholar: key optional, todo | daily | partly done |
+| Academic papers | `papers` | rss (arXiv) / own_api | arXiv via RSS category feeds (rss.arxiv.org, 1 request/3s; metadata CC0): done (2026-10-09). export.arxiv.org (query API) is robots-disallowed for all agents: not used. PubMed E-utilities: eutils.ncbi.nlm.nih.gov robots.txt disallows our path (2026-10-09): blocked. Semantic Scholar: key optional, todo | daily | partly done |
 | Wikipedia | `wikipedia` | own_api | en.wikipedia.org robots.txt disallows `/api/`; Wikimedia pageviews API (wikimedia.org) requires a User-Agent with real contact info: waits for SIGNAL_CONTACT_EMAIL | weekly | todo |
 
 **Paid connectors (build, keep behind a feature flag, off by default)**
@@ -488,6 +488,6 @@ Work top to bottom. Finish each connector to its definition of done before start
 
 - Before building a connector, read the platform's official docs and terms, then update its row in section 7 if anything differs.
 - One connector per pull request or commit series; include its cassette test and a smoke-run log.
-- Never commit `.env`, cassettes containing secrets, or raw personal data.
+- Never commit `.env`, cassettes containing secrets, or raw personal data. `tests/scrub.py` redacts personal fields (authors, handles, contact names, emails, phones, addresses) from every recorded body; check new cassettes with a grep before committing.
 - If a platform's terms forbid the planned route, stop, mark the row **blocked** with the reason, and move it to the search route if allowed.
 - Keep this file current: it is the source of truth for what exists and what's next.

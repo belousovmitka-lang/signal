@@ -1,0 +1,1058 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - wordpress.org
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://wordpress.org/robots.txt
+  response:
+    body:
+      string: 'Sitemap: https://wordpress.org/sitemap.xml
+
+        Sitemap: https://wordpress.org/news-sitemap.xml
+
+        Sitemap: https://wordpress.org/themes/sitemap.xml
+
+        Sitemap: https://wordpress.org/plugins/sitemap.xml
+
+        Sitemap: https://wordpress.org/news/sitemap.xml
+
+        Sitemap: https://wordpress.org/showcase/sitemap.xml
+
+        Sitemap: https://wordpress.org/documentation/sitemap.xml
+
+        Sitemap: https://wordpress.org/patterns/sitemap.xml
+
+        Sitemap: https://wordpress.org/photos/sitemap.xml
+
+        User-agent: *
+
+        Disallow: /wp-admin/
+
+        Allow: /wp-admin/admin-ajax.php
+
+        Allow: /wp-admin/load-scripts.php
+
+        Allow: /wp-admin/load-styles.php
+
+
+        User-agent: *
+
+        Disallow: /search
+
+        Disallow: /?s=
+
+
+        User-agent: GPTBot
+
+        Allow: /
+
+
+        User-agent: ClaudeBot
+
+        Allow: /
+
+
+        User-agent: anthropic-ai
+
+        Allow: /
+
+
+        User-agent: Google-Extended
+
+        Allow: /
+
+
+        User-agent: Applebot-Extended
+
+        Allow: /
+
+
+        User-agent: PerplexityBot
+
+        Allow: /
+
+
+        User-agent: Bytespider
+
+        Allow: /
+
+
+        User-agent: CCBot
+
+        Allow: /
+
+
+        User-agent: Copilot
+
+        Allow: /
+
+
+        User-agent: *
+
+        Disallow: /plugins/search/
+
+        '
+    headers:
+      alt-svc:
+      - clear
+      connection:
+      - keep-alive
+      content-length:
+      - '976'
+      content-type:
+      - text/plain; charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:27:04 GMT
+      link:
+      - <https://wordpress.org/wp-json/>; rel="https://api.w.org/"
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=3600
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      - accept, content-type
+      x-frame-options:
+      - SAMEORIGIN
+      x-nc:
+      - HIT dca 2
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - application/rss+xml, application/atom+xml, application/xml;q=0.9, text/xml;q=0.8,
+        */*;q=0.5
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - wordpress.org
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://wordpress.org/support/plugin/woocommerce/reviews/feed/
+  response:
+    body:
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\t<rss version=\"2.0\"\n\t\txmlns:content=\"http://purl.org/rss/1.0/modules/content/\"\n\t\txmlns:wfw=\"http://wellformedweb.org/CommentAPI/\"\n\t\txmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n\t\txmlns:atom=\"http://www.w3.org/2005/Atom\"\n\n\t\t\t>\n\n\t<channel>\n\n\t\t<title>WordPress.org
+        Forums &#187; [WooCommerce] Reviews</title>\n\t\t<atom:link href=\"https://wordpress.org/support/plugin/woocommerce/reviews/feed/\"
+        rel=\"self\" type=\"application/rss+xml\" />\n\t\t<link>https://wordpress.org/support/plugin/woocommerce/reviews/feed/</link>\n\t\t<description></description>\t\t<lastBuildDate>Fri,
+        09 Oct 2026 23:07:42 +0000</lastBuildDate>\n\t\t<generator>https://bbpress.org/?v=2.7.0-alpha-4</generator>\n\t\t<language>en-US</language>\n\n\t\t\n\t\t\n\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/geweldig-18/</guid>\n\t\t\t\t\t<title>Geweldig
+        (5 stars)</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/geweldig-18/</link>\n\t\t\t\t\t<pubDate>Sat,
+        26 Sep 2026 16:07:25 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        1\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p>Rating: 5 stars</p>\n<p class=\"wp-block-paragraph\">Ik
+        vind Woocommerce echt geweldig. </p>\n\n\n\n<p class=\"wp-block-paragraph\"></p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/i-have-almost-everything-i-need/</guid>\n\t\t\t\t\t<title>I
+        have almost everything I need. (5 stars)</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/i-have-almost-everything-i-need/</link>\n\t\t\t\t\t<pubDate>Thu,
+        24 Sep 2026 14:23:33 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        1\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p>Rating: 5 stars</p>\n<p class=\"wp-block-paragraph\">I
+        really enjoy using it; it makes my job much easier in every way. However,
+        I would like more features for promotions\u2014such as &#8220;Buy X, Pay for
+        Y&#8221; or an &#8220;x% discount on the second item.&#8221;</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/everything-is-hard/</guid>\n\t\t\t\t\t<title>Everything
+        is hard (1 star)</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/everything-is-hard/</link>\n\t\t\t\t\t<pubDate>Wed,
+        09 Sep 2026 16:52:17 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        2\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p>Rating: 1 star</p>\n<p class=\"wp-block-paragraph\">It
+        works&#8230; But I dread having to add or change anything. Simple bulk editing
+        like changing tags of more than 5 products leads to gateway timeout, with
+        some being changed and some not. Editing them one-by-one takes about as much
+        time as waiting for the timeout. Setting up shipping categories-zones-costs
+        is a confusing and convoluted nightmare of multiple screens, tabs, and settings.
+        Misleading warning popups like &#8220;all of these items will be deleted&#8221;
+        instead of &#8220;clicking OK will delete this category name&#8221;. And too
+        much of what seems like basic functionality requires paid third-party plugins.
+        It&#8217;s always like that, these examples are just from the last two hours
+        of struggle.</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/its-good-281/</guid>\n\t\t\t\t\t<title>It&#8217;s
+        good (5 stars)</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/its-good-281/</link>\n\t\t\t\t\t<pubDate>Wed,
+        09 Sep 2026 16:31:29 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        1\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p>Rating: 5 stars</p>\n<p class=\"wp-block-paragraph\">It&#8217;s
+        good and so much flexible&#8230;</p>\n\n\n\n<p class=\"wp-block-paragraph\">thanks</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/every-release-is-a-new-surprise-on-how-it-breaks-my-website/</guid>\n\t\t\t\t\t<title>Every
+        release is a new surprise on how it breaks my website. (2 stars)</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/every-release-is-a-new-surprise-on-how-it-breaks-my-website/</link>\n\t\t\t\t\t<pubDate>Thu,
+        03 Sep 2026 17:58:29 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        6\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p>Rating: 2 stars</p>\n<p class=\"wp-block-paragraph\">WooCommerce
+        update 11.1.0 \u2013 Endless scroll of fixes \u2013 because of the endless
+        bugs.<br />They have NO concept of Quality!</p>\n\n\n\n<p class=\"wp-block-paragraph\">Woo
+        was once pretty good. Now, it is endless bugs and abysmal quality.</p>\n\n\n\n<p
+        class=\"wp-block-paragraph\">4 Stars for function (when it is working).<br
+        />1 Star for quality releases.<br />1 Star for Support.</p>\n\n\n\n<p class=\"wp-block-paragraph\">The
+        worst experience I have ever had with any WordPress related support. 5 weeks
+        of misdirection! So bad, they even sent me an apology.</p>\n\n\n\n<p class=\"wp-block-paragraph\">It&#8217;s
+        bad that they rely so heavily on AI for support &#8211; worse that humans
+        don&#8217;t even look to oversee it &#8211; and disastrous that they don&#8217;t
+        give the AI current version information. That is totally bone-headed!</p>\n\n\n\n<p
+        class=\"wp-block-paragraph\">I should not be surprised because the software
+        too is released without thinking. Just look at the endless scroll of fixes
+        with release 11.1.0   What will break on my site this time?</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/great-support-6722/</guid>\n\t\t\t\t\t<title>Great
+        support (5 stars)</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/great-support-6722/</link>\n\t\t\t\t\t<pubDate>Wed,
+        26 Aug 2026 06:27:55 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        1\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p>Rating: 5 stars</p>\n<p class=\"wp-block-paragraph\">I
+        needed support for some errors in the e-commerce site I manage for our clients.
+        They helped us understand the problem so we could fix it.</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/great-plugin-41727/</guid>\n\t\t\t\t\t<title>Great
+        Plugin (5 stars)</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/great-plugin-41727/</link>\n\t\t\t\t\t<pubDate>Sun,
+        23 Aug 2026 13:18:20 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        1\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p>Rating: 5 stars</p>\n<p class=\"wp-block-paragraph\">This
+        is very <strong><em>Great</em></strong> plugin for <strong><em>ecommerce</em></strong>
+        store.</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/great-plugin-great-support-2064/</guid>\n\t\t\t\t\t<title>Great
+        plugin, great support (5 stars)</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/great-plugin-great-support-2064/</link>\n\t\t\t\t\t<pubDate>Mon,
+        17 Aug 2026 22:26:44 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        1\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p>Rating: 5 stars</p>\n<p class=\"wp-block-paragraph\">Glad
+        I chose WooCommerce for my first webshop ever.</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/defunct-mcp-shipped-with-latest-woocommerce-11-0-1-autoloads-and-breaks-site/</guid>\n\t\t\t\t\t<title>Defunct
+        MCP shipped with latest WooCommerce (11.0.1) autoloads and breaks site (3
+        stars)</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/defunct-mcp-shipped-with-latest-woocommerce-11-0-1-autoloads-and-breaks-site/</link>\n\t\t\t\t\t<pubDate>Sat,
+        15 Aug 2026 17:04:28 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        3\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p>Rating: 3 stars</p>\n<p class=\"wp-block-paragraph\">I
+        don&#8217;t have any idea why you&#8217;d ship a defunct MCP adapter (0.1)
+        and have it autoload, even if someone has the feature turned off in settings.<br
+        /><br />However, you&#8217;ve broken one of my client&#8217;s sites&#8217;
+        ability to utilize Zapier with their Formidable Forms because Formidable ships
+        its own MCP that is REQUIRED for their Formidable API use (they are currently
+        requiring 5.0&lt;=6.0).<br /><br />Who knows what other API needs other sites
+        have that your darned autoloading is breaking.</p>\n\n\n<ul id=\"bbp-topic-revision-log-18994483\"
+        class=\"bbp-topic-revision-log\">\n\n\t<li id=\"bbp-topic-revision-log-18994483-item-18994484\"
+        class=\"bbp-topic-revision-log-item\">\n\t\tThis topic was modified 1 month,
+        3 weeks ago by <a href=\"https://wordpress.org/support/users/egsteam/\" title=\"View
+        egsteam&#039;s profile\" class=\"bbp-author-link\"><span class=\"bbp-author-name\">egsteam</span></a>.\n\t</li>\n\n</ul>\n\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/thanks-2616/</guid>\n\t\t\t\t\t<title>Thanks!
+        (5 stars)</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/thanks-2616/</link>\n\t\t\t\t\t<pubDate>Fri,
+        14 Aug 2026 13:01:32 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        1\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p>Rating: 5 stars</p>\n<p class=\"wp-block-paragraph\">Thanks
+        for helping me out!</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/billing-region-not-found-woo-commerce-issue-resolved/</guid>\n\t\t\t\t\t<title>Billing
+        Region Not Found Woo Commerce &#8211; Issue Resolved (4 stars)</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/billing-region-not-found-woo-commerce-issue-resolved/</link>\n\t\t\t\t\t<pubDate>Thu,
+        13 Aug 2026 21:54:06 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        1\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p>Rating: 4 stars</p>\n<p class=\"wp-block-paragraph\">Representative
+        was friendly and provided timely responses.</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/powerful-flexible-and-easy-to-customize/</guid>\n\t\t\t\t\t<title>Powerful,
+        Flexible, and Easy to Customize (5 stars)</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/powerful-flexible-and-easy-to-customize/</link>\n\t\t\t\t\t<pubDate>Thu,
+        13 Aug 2026 09:50:14 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        1\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p>Rating: 5 stars</p>\n<p class=\"wp-block-paragraph\">I
+        have been using WooCommerce for around 1.5 years for my business, and overall,
+        it has been a very positive experience. The platform gives me a good level
+        of flexibility and control over my online store. Managing products, orders,
+        customers, payments, and store updates has become quite convenient. I also
+        appreciate the wide range of plugins and integrations available, which makes
+        it easier to add new features as the business grows. The customization options
+        are another major advantage, allowing me to create a store that fits my business
+        requirements. Overall, WooCommerce has been a reliable and practical e-commerce
+        solution for my business.</p>\n\n\n\n<p class=\"wp-block-paragraph\">Thanks
+        to WordPress Team \U0001F642</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/a-real-ace-up-the-sleeve-for-business/</guid>\n\t\t\t\t\t<title>A
+        real ace up the sleeve for business! (5 stars)</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/a-real-ace-up-the-sleeve-for-business/</link>\n\t\t\t\t\t<pubDate>Sun,
+        09 Aug 2026 19:13:22 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        1\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p>Rating: 5 stars</p>\n<p class=\"wp-block-paragraph\">WooCommerce
+        is, without a doubt, the best sales plugin for WordPress. It helps us market
+        our products and services in a simple, straightforward, and no-nonsense way.
+        Its ease of integration with other tools and vast array of extra features
+        give us true autonomy to manage and scale our own business. It is the ultimate
+        solution for anyone seeking technological and financial independence, allowing
+        you to break free from the grip of rigid e-commerce platforms that charge
+        exorbitant fees and unaffordable monthly rates. I recommend it wholeheartedly!</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/very-helpful-guidance/</guid>\n\t\t\t\t\t<title>Very
+        helpful guidance (5 stars)</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/very-helpful-guidance/</link>\n\t\t\t\t\t<pubDate>Wed,
+        05 Aug 2026 10:20:46 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        1\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p>Rating: 5 stars</p>\n<p class=\"wp-block-paragraph\">I
+        was met in a helpful and nice way.</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/disappointing-latest-woocommerce-release/</guid>\n\t\t\t\t\t<title>Disappointing
+        Latest WooCommerce Release (1 star)</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/disappointing-latest-woocommerce-release/</link>\n\t\t\t\t\t<pubDate>Wed,
+        05 Aug 2026 04:20:32 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        1\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p>Rating: 1 star</p>\n<p class=\"wp-block-paragraph\">Unfortunately,
+        the latest WooCommerce update has been one of the worst experiences we&#8217;ve
+        had in quite some time.</p>\n\n\n\n<p class=\"wp-block-paragraph\">Immediately
+        after updating, our site became almost unusable. Page load times increased
+        dramatically, both the frontend and admin became painfully slow, and overall
+        server load skyrocketed. Tasks that previously completed in seconds were taking
+        an extremely long time, making it impossible to manage orders or provide a
+        good customer experience.</p>\n\n\n\n<p class=\"wp-block-paragraph\">After
+        spending considerable time troubleshooting plugins, themes, caching, and server
+        configuration, it became clear that the issues began with the WooCommerce
+        update itself. Rolling back to the previous version immediately restored normal
+        performance.</p>\n\n\n\n<p class=\"wp-block-paragraph\">Updates should improve
+        stability and performance, not bring production websites to a standstill.
+        Hopefully the development team investigates these performance regressions
+        quickly, as they have the potential to impact many store owners.</p>\n\n\n\n<p
+        class=\"wp-block-paragraph\">For anyone experiencing similar symptoms, rolling
+        back to the previous stable release may be the quickest way to get your store
+        operational again while waiting for a fix.</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/it-destroyed-my-pages/</guid>\n\t\t\t\t\t<title>It
+        destroyed my pages (5 stars)</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/it-destroyed-my-pages/</link>\n\t\t\t\t\t<pubDate>Tue,
+        04 Aug 2026 22:07:45 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        1\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p>Rating: 5 stars</p>\n<p class=\"wp-block-paragraph\">I
+        am removing everything Woocommerce but still there is PLUGIN that is impossible
+        to delete.</p>\n\n\n\n<p class=\"wp-block-paragraph\">I HAVE THIS APP.</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/overall-good-cost-effective/</guid>\n\t\t\t\t\t<title>overall
+        good &#038; cost-effective (5 stars)</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/overall-good-cost-effective/</link>\n\t\t\t\t\t<pubDate>Mon,
+        03 Aug 2026 10:06:22 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        1\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p>Rating: 5 stars</p>\n<p class=\"wp-block-paragraph\">Have
+        seen shopify costs &amp; felt woocommerce gives far more control</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/excellent-plugin-et-excellent-support-4/</guid>\n\t\t\t\t\t<title>Excellent
+        plugin et excellent support ! (5 stars)</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/excellent-plugin-et-excellent-support-4/</link>\n\t\t\t\t\t<pubDate>Sun,
+        02 Aug 2026 10:08:45 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        1\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p>Rating: 5 stars</p>\n<p class=\"wp-block-paragraph\">Le
+        plugin fonctionne parfaitement avec WooCommerce et Yalidine. Les wilayas et
+        communes sont bien affich\xE9es, avec le choix entre livraison \xE0 domicile
+        et Stop Desk, et les frais de livraison sont calcul\xE9s correctement.</p>\n\n\n\n<p
+        class=\"wp-block-paragraph\">J&#8217;ai rencontr\xE9 un petit probl\xE8me
+        au d\xE9part, mais le d\xE9veloppeur a \xE9t\xE9 tr\xE8s r\xE9actif et a rapidement
+        publi\xE9 une mise \xE0 jour qui a corrig\xE9 le probl\xE8me.</p>\n\n\n\n<p
+        class=\"wp-block-paragraph\"><strong>Merci pour votre excellent travail et
+        votre r\xE9activit\xE9 ! Je recommande vivement ce plugin.</strong></p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/supper-cute/</guid>\n\t\t\t\t\t<title>Supper
+        Cute (5 stars)</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/supper-cute/</link>\n\t\t\t\t\t<pubDate>Fri,
+        31 Jul 2026 05:13:45 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        1\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p>Rating: 5 stars</p>\n<p class=\"wp-block-paragraph\">wow!
+        SupperCute.</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/excellent-and-free-10/</guid>\n\t\t\t\t\t<title>Excellent
+        and free (5 stars)</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/excellent-and-free-10/</link>\n\t\t\t\t\t<pubDate>Mon,
+        27 Jul 2026 09:45:39 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        1\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p>Rating: 5 stars</p>\n<p class=\"wp-block-paragraph\">The
+        undisputed king. Best solution on WordPress, it transforms a standard site
+        into a fully customizable online store, offers complete control over code,
+        data, and checkout flow without platform sales commissions. Hands down a 5-star
+        platform. You simply can&#8217;t rate it lower.</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/solution-for-shipping-option-problems/</guid>\n\t\t\t\t\t<title>Solution
+        for shipping option problems (5 stars)</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/solution-for-shipping-option-problems/</link>\n\t\t\t\t\t<pubDate>Mon,
+        20 Jul 2026 12:03:11 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        1\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p>Rating: 5 stars</p>\n<p class=\"wp-block-paragraph\">I&#8217;m
+        so happy with this forum. If you have a problem you get help from people who
+        know what they are talking about. Not from someone who &#8216;thinks&#8217;
+        they know, but from the professionals.<br />Thanks to you, shahzeen, for your
+        support \U0001F642<br /></p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/searching-all-products-on-dashboard-2/</guid>\n\t\t\t\t\t<title>Searching
+        All Products on Dashboard (5 stars)</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/searching-all-products-on-dashboard-2/</link>\n\t\t\t\t\t<pubDate>Wed,
+        15 Jul 2026 07:46:03 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        1\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p>Rating: 5 stars</p>\n<p class=\"wp-block-paragraph\">Absolutley
+        excellent feedback, I spoke with our admin team and there was a filter applied
+        in the background that was not allowing me to search.</p>\n\n\n\n<p class=\"wp-block-paragraph\"></p>\n\n\n\n<p
+        class=\"wp-block-paragraph\">Thank you for all of your help</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/quick-support-153/</guid>\n\t\t\t\t\t<title>Quick
+        Support (5 stars)</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/quick-support-153/</link>\n\t\t\t\t\t<pubDate>Mon,
+        06 Jul 2026 19:19:27 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        1\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p>Rating: 5 stars</p>\n<p class=\"wp-block-paragraph\">very
+        quick and reliable support if you have any issues</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/great-support-6671/</guid>\n\t\t\t\t\t<title>Great
+        support (5 stars)</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/great-support-6671/</link>\n\t\t\t\t\t<pubDate>Thu,
+        02 Jul 2026 05:28:01 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        1\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p>Rating: 5 stars</p>\n<p class=\"wp-block-paragraph\">Extremely
+        helpful and fast support.<br />Greatly appreciated!</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/great-support-6664/</guid>\n\t\t\t\t\t<title>Great
+        support (5 stars)</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/great-support-6664/</link>\n\t\t\t\t\t<pubDate>Mon,
+        29 Jun 2026 06:14:37 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        1\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p>Rating: 5 stars</p>\n<p class=\"wp-block-paragraph\">Woocommerce
+        offers a great support team, the can help you if you have any trouble or issue
+        with wordpress or woocommerce. They answer in short time, in my case in 1
+        days. 5 stars</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/great-support-6661/</guid>\n\t\t\t\t\t<title>Great
+        support (5 stars)</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/great-support-6661/</link>\n\t\t\t\t\t<pubDate>Fri,
+        26 Jun 2026 05:21:39 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        1\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p>Rating: 5 stars</p>\n<p class=\"wp-block-paragraph\">Thanks
+        Frank Remmy for his support on 25/05/2026 for our issue!</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/great-plugin-41595/</guid>\n\t\t\t\t\t<title>Great
+        Plugin (5 stars)</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/great-plugin-41595/</link>\n\t\t\t\t\t<pubDate>Wed,
+        24 Jun 2026 21:03:23 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        1\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p>Rating: 5 stars</p>\n<p class=\"wp-block-paragraph\">Great
+        Plugin</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/%d1%83%d1%81%d1%82%d0%b0%d1%80%d0%b5%d0%b2%d1%88%d0%b8%d0%b9-%d0%b7%d0%b0%d0%b1%d0%b0%d0%b3%d0%be%d0%b2%d0%b0%d0%bd%d0%bd%d1%8b%d0%b9-%d0%ba%d1%83%d1%81%d0%be%d0%ba-%d1%83%d0%b3/</guid>\n\t\t\t\t\t<title>\u0423\u0441\u0442\u0430\u0440\u0435\u0432\u0448\u0438\u0439
+        \u0437\u0430\u0431\u0430\u0433\u043E\u0432\u0430\u043D\u043D\u044B\u0439 \u043A\u0443\u0441\u043E\u043A
+        \u0423\u0413 (1 star)</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/%d1%83%d1%81%d1%82%d0%b0%d1%80%d0%b5%d0%b2%d1%88%d0%b8%d0%b9-%d0%b7%d0%b0%d0%b1%d0%b0%d0%b3%d0%be%d0%b2%d0%b0%d0%bd%d0%bd%d1%8b%d0%b9-%d0%ba%d1%83%d1%81%d0%be%d0%ba-%d1%83%d0%b3/</link>\n\t\t\t\t\t<pubDate>Wed,
+        24 Jun 2026 07:50:26 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        1\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p>Rating: 1 star</p>\n<p class=\"wp-block-paragraph\">\u041F\u043B\u0430\u0433\u0438\u043D
+        \u0441\u0442\u0430\u0431\u0438\u043B\u044C\u043D\u043E \u043E\u0431\u043D\u043E\u0432\u043B\u044F\u0435\u0442\u0441\u044F
+        \u043A\u0430\u0436\u0434\u044B\u0439 \u043C\u0435\u0441\u044F\u0446, \u0430
+        \u0447\u0442\u043E \u0432 \u043D\u0435\u043C \u043C\u0435\u043D\u044F\u0435\u0442\u0441\u044F
+        &#8211; \u041D\u0418\u0427\u0415\u0413\u041E! \u041A\u0440\u043E\u043C\u0435
+        \u043C\u0443\u0441\u043E\u0440\u043D\u044B\u0445 \u0444\u0443\u043D\u043A\u0446\u0438\u0439
+        \u0438\u043B\u0438 \u043E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0439
+        \u0440\u0430\u0434\u0438 \u043E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0439
+        \u043D\u0438\u0447\u0435\u0433\u043E \u043D\u0435 \u043C\u0435\u043D\u044F\u0435\u0442\u0441\u044F.
+        \u0411\u0430\u0433\u0438 \u043D\u0435 \u0438\u0441\u043F\u0440\u0430\u0432\u043B\u044F\u044E\u0442\u0441\u044F
+        \u043A\u043E\u0438\u0445 \u043D\u0435 \u043C\u0430\u043B\u043E\u0435 \u043A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E,
+        \u0437\u0430\u0442\u043E \u0441 \u043B\u0438\u0445\u0432\u043E\u0439 \u0437\u0430\u043D\u043E\u0441\u044F\u0442\u0441\u044F
+        \u043D\u043E\u0432\u044B\u0435. \u0414\u0435\u0441\u044F\u0442\u044C \u0440\u0430\u0437
+        \u043F\u043E\u0434\u0443\u043C\u0430\u0439\u0442\u0435 \u043F\u0440\u0435\u0436\u0434\u0435
+        \u0447\u0435\u043C \u0434\u0435\u043B\u0430\u0442\u044C \u0438\u043D\u0442\u0435\u0440\u043D\u0435\u0442-\u043C\u0430\u0433\u0430\u0437\u0438\u043D
+        \u043D\u0430 WooCommerce. \u041B\u0443\u0447\u0448\u0435 \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u044C
+        \u0434\u0440\u0443\u0433\u043E\u0439 \u0438\u043D\u0441\u0442\u0440\u0443\u043C\u0435\u043D\u0442
+        \u0434\u043B\u044F \u0441\u043E\u0437\u0434\u0430\u043D\u0438\u044F \u043C\u0430\u0433\u0430\u0437\u0438\u043D\u0430,
+        \u0431\u043B\u0430\u0433\u043E \u0441\u0435\u0439\u0447\u0430\u0441 \u0438\u0445
+        \u0434\u043E\u0441\u0442\u0430\u0442\u043E\u0447\u043D\u043E\u0435 \u043A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E,
+        \u0432 \u0442\u043E\u043C \u0447\u0438\u0441\u043B\u0435 open-source.</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/woo-support-sympathetic-timely-effective/</guid>\n\t\t\t\t\t<title>Woo
+        Support Sympathetic, Timely, Effective (5 stars)</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/woo-support-sympathetic-timely-effective/</link>\n\t\t\t\t\t<pubDate>Thu,
+        18 Jun 2026 18:10:11 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        1\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p>Rating: 5 stars</p>\n<p class=\"wp-block-paragraph\">I
+        ran into a problem with my site that my theme&#8217;s developers weren&#8217;t
+        able to help me solve, so I tried the WooCommerce support forum.</p>\n\n\n\n<p
+        class=\"wp-block-paragraph\">Within a day I received a thoughtful, detailed
+        response&#8230; which also gave me enough info to solve the problem.</p>\n\n\n\n<p
+        class=\"wp-block-paragraph\">Much appreciated!</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/better-and-better-9/</guid>\n\t\t\t\t\t<title>Better
+        and better (5 stars)</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/better-and-better-9/</link>\n\t\t\t\t\t<pubDate>Mon,
+        08 Jun 2026 16:58:26 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        1\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p>Rating: 5 stars</p>\n<p class=\"wp-block-paragraph\">With
+        every update it gets better and better !</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\t\t\t\n\t\t\n\t</channel>\n\t</rss>\n\n"
+    headers:
+      alt-svc:
+      - clear
+      connection:
+      - keep-alive
+      content-length:
+      - '26491'
+      content-type:
+      - application/rss+xml; charset=UTF-8
+      date:
+      - Fri, 09 Oct 2026 23:27:06 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=3600
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      - accept, content-type
+      x-frame-options:
+      - SAMEORIGIN
+      x-nc:
+      - MISS dca 2
+      x-robots-tag:
+      - noindex, follow
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - application/rss+xml, application/atom+xml, application/xml;q=0.9, text/xml;q=0.8,
+        */*;q=0.5
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - wordpress.org
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://wordpress.org/support/plugin/woocommerce/feed/
+  response:
+    body:
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\t<rss version=\"2.0\"\n\t\txmlns:content=\"http://purl.org/rss/1.0/modules/content/\"\n\t\txmlns:wfw=\"http://wellformedweb.org/CommentAPI/\"\n\t\txmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n\t\txmlns:atom=\"http://www.w3.org/2005/Atom\"\n\n\t\t\t>\n\n\t<channel>\n\n\t\t<title>WordPress.org
+        Forums &#187; [WooCommerce] Support</title>\n\t\t<atom:link href=\"https://wordpress.org/support/plugin/woocommerce/feed/\"
+        rel=\"self\" type=\"application/rss+xml\" />\n\t\t<link>https://wordpress.org/support/plugin/woocommerce/feed/</link>\n\t\t<description></description>\t\t<lastBuildDate>Fri,
+        09 Oct 2026 23:07:42 +0000</lastBuildDate>\n\t\t<generator>https://bbpress.org/?v=2.7.0-alpha-4</generator>\n\t\t<language>en-US</language>\n\n\t\t\n\t\t\n\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/woocommerce-customer-profile-shows-incorrect-number-of-purchased-products/</guid>\n\t\t\t\t\t<title>WooCommerce
+        Customer Profile Shows Incorrect Number of Purchased Products</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/woocommerce-customer-profile-shows-incorrect-number-of-purchased-products/</link>\n\t\t\t\t\t<pubDate>Fri,
+        09 Oct 2026 19:47:28 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        0\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p class=\"wp-block-paragraph\">Hello,</p>\n\n\n\n<p
+        class=\"wp-block-paragraph\">I have an issue with WooCommerce regarding the
+        number of purchased products displayed in a customer&#8217;s profile.</p>\n\n\n\n<p
+        class=\"wp-block-paragraph\">One of my customers has purchased approximately
+        <strong>150 product units across multiple orders</strong>, but the customer
+        profile shows only <strong>26 purchased products</strong>.</p>\n\n\n\n<p class=\"wp-block-paragraph\">I
+        would like to understand why the number of purchased products in the customer
+        profile does not match the actual total quantity purchased.</p>\n\n\n\n<p
+        class=\"wp-block-paragraph\">Has anyone experienced a similar issue? Could
+        this be related to how WooCommerce calculates purchased products, order statuses,
+        product quantities, or HPOS (High-Performance Order Storage)?</p>\n\n\n\n<p
+        class=\"wp-block-paragraph\">I would appreciate any suggestions on how to
+        troubleshoot and fix this issue.</p>\n\n\n\n<p class=\"wp-block-paragraph\">Thank
+        you!</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/store_email-placeholder-should-use-reply-email-not-from-email/</guid>\n\t\t\t\t\t<title>{store_email}
+        placeholder should use Reply email, not From email</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/store_email-placeholder-should-use-reply-email-not-from-email/</link>\n\t\t\t\t\t<pubDate>Fri,
+        09 Oct 2026 17:04:10 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        0\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p class=\"wp-block-paragraph\">The &#8220;Additional
+        Content&#8221; setting for email notifications includes support for the placeholder
+        {store_email}. This uses the From address.</p>\n\n\n\n<p class=\"wp-block-paragraph\">When
+        a Reply-To address is configured (&#8220;Add a different email address to
+        receive replies.&#8221;), the placeholder should probably be replaced with
+        <em>that</em> address, not the From.</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/elementor-keeps-loading-when-i-install-woocommerce/</guid>\n\t\t\t\t\t<title>elementor
+        keeps loading when i install woocommerce</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/elementor-keeps-loading-when-i-install-woocommerce/</link>\n\t\t\t\t\t<pubDate>Fri,
+        09 Oct 2026 14:44:40 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        0\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p class=\"wp-block-paragraph\">hi i need help
+        whenever i install the woocommerce the elementor just keeps loading and tells
+        me to enable safe mode, once i enable safe mode it still just keeps loading</p>\n\n\n\n<p
+        class=\"wp-block-paragraph\">and never loads it stops and works fine once
+        i delete/deactivate the woocommerce plugin please help!</p>\n\n\n\n<p class=\"wp-block-paragraph\">Thankyou</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/problems-with-checkout-after-last-update-to-11-2-0/</guid>\n\t\t\t\t\t<title>Problems
+        with checkout after last Update to 11.2.0</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/problems-with-checkout-after-last-update-to-11-2-0/</link>\n\t\t\t\t\t<pubDate>Fri,
+        09 Oct 2026 08:04:38 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        3\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p class=\"wp-block-paragraph\">When finalizing
+        the order, an error message appears stating that an address needs to be entered,
+        even though all address fields have been filled in. I believe we encountered
+        this issue once before following an update, which was subsequently fixed.
+        Please look into this as soon as possible. Thanks.</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/view-cart-and-checkout-not-properly-showing-in-message/</guid>\n\t\t\t\t\t<title>View
+        Cart and checkout not properly showing in message</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/view-cart-and-checkout-not-properly-showing-in-message/</link>\n\t\t\t\t\t<pubDate>Fri,
+        09 Oct 2026 06:58:04 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        0\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p class=\"wp-block-paragraph\">See screenshot
+        <a href=\"https://postimg.cc/Z96FW8sz\" rel=\"nofollow ugc\">https://postimg.cc/Z96FW8sz</a></p>\n\n\n\n<figure
+        class=\"wp-block-image size-large\"><img alt=\"\" src=\"https://kommodo.ai/i/eDfERwae9nriHmGsm4TK\"/></figure>\n\n\n\n<figure
+        class=\"wp-block-image size-large\"><img alt=\"\" src=\"https://postimg.cc/Z96FW8sz\"/></figure>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/v11-2-causes-issues-with-the-product-image-gallery/</guid>\n\t\t\t\t\t<title>v11.2
+        causes issues with the product image gallery</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/v11-2-causes-issues-with-the-product-image-gallery/</link>\n\t\t\t\t\t<pubDate>Fri,
+        09 Oct 2026 03:18:03 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        1\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p class=\"wp-block-paragraph\">v11.2 causes
+        issues with the product image gallery.</p>\n\n\n\n<p class=\"wp-block-paragraph\">After
+        applying the update, the primary image for the default product variation has
+        been removed from the gallery. If there were 2 images, the 2nd image becomes
+        primary, if there was only 1 image, then there is no primary image. This is
+        true for every product. In addition it randomly inserts an unrelated product
+        image into the gallery as well, it seems like the same image, into multiple
+        products, and not the default variation, at least I can see no pattern with
+        the 2nd issue.</p>\n\n\n\n<p class=\"wp-block-paragraph\">I had to restore
+        my site from backup, since a rollback didn&#8217;t fix the issue it caused
+        with the gallery.</p>\n\n\n\n<p class=\"wp-block-paragraph\">We use the Additional
+        Variation Images Gallery for WooCommerce By Emran Ahmed along side WooCommerce
+        </p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/%da%86%d9%be-%da%86%db%8c%d9%86-%d8%b4%d8%af%d9%85-%d9%88%d8%a7%d8%ad%d8%af-%d9%be%d9%88%d9%84/</guid>\n\t\t\t\t\t<title>\u0686\u067E
+        \u0686\u06CC\u0646 \u0634\u062F\u0645 \u0648\u0627\u062D\u062F \u067E\u0648\u0644</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/%da%86%d9%be-%da%86%db%8c%d9%86-%d8%b4%d8%af%d9%85-%d9%88%d8%a7%d8%ad%d8%af-%d9%be%d9%88%d9%84/</link>\n\t\t\t\t\t<pubDate>Fri,
+        09 Oct 2026 02:13:21 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        0\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p class=\"wp-block-paragraph\">\u062F\u0631
+        \u0627\u067E\u062F\u06CC\u062A \u062C\u062F\u06CC\u062F \u0648\u0627\u062D\u062F
+        \u067E\u0648\u0644 \u062A\u0648\u0645\u0627\u0646 \u0631\u0627 \u0628\u0627\u06CC\u062F
+        \u0628\u0647 \u0686\u067E \u0628\u0627 \u0641\u0627\u0635\u0644\u0647 \u062A\u063A\u06CC\u06CC\u0631
+        \u062F\u0647\u06CC\u062F \u062A\u0627 \u062F\u0631 \u0633\u0627\u06CC\u062A
+        \u0628\u0647 \u062F\u0631\u0633\u062A\u06CC \u0646\u0645\u0627\u06CC\u0634
+        \u062F\u0627\u062F\u0647 \u0634\u0648\u062F .</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/feature-request-control-external-product-link-target/</guid>\n\t\t\t\t\t<title>Feature
+        Request: Control External Product Link Target</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/feature-request-control-external-product-link-target/</link>\n\t\t\t\t\t<pubDate>Thu,
+        08 Oct 2026 22:28:26 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        0\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p class=\"wp-block-paragraph\">Currently,
+        <strong>External/Affiliate product</strong> buttons open URLs in a new tab
+        by default.<br />This behavior makes sense for affiliate links but isn&#8217;t
+        always desirable for products linking to booking forms, registration pages,
+        or other destinations within the same website.<br />Could you add a simple
+        checkbox beneath the Product URL field:<br /><strong>\u2611 Open product link
+        in a new tab</strong><br />Ideally, the checkbox would be enabled by default
+        to preserve existing behavior, but store owners could disable it when appropriate.<br
+        />This would eliminate the need for custom code or template overrides for
+        a fairly common use case.</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/woocommerce-11-2-0-hides-add-order-button/</guid>\n\t\t\t\t\t<title>Woocommerce
+        11.2.0 Hides &#8220;Add Order&#8221; Button</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/woocommerce-11-2-0-hides-add-order-button/</link>\n\t\t\t\t\t<pubDate>Thu,
+        08 Oct 2026 17:03:49 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        1\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p class=\"wp-block-paragraph\">Apparently
+        it&#8217;s more important for Woo to advertise their &#8220;Automate Woo&#8221;
+        plugin than to have the &#8220;Add Order&#8221; button because after the update
+        there&#8217;s a banner advertisement for that plugin that automatically hides
+        the ability to manually add an order in the Orders dashboard. I see the button
+        flash there for a second before some kind of CSS or whatever hides it and
+        after dismissing the ad, this behavior continues.</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/modified-meta-php-with-child-theme-not-working/</guid>\n\t\t\t\t\t<title>Modified
+        meta.php with Child Theme Not Working</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/modified-meta-php-with-child-theme-not-working/</link>\n\t\t\t\t\t<pubDate>Thu,
+        08 Oct 2026 14:24:19 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        2\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p class=\"wp-block-paragraph\">I&#8217;ve
+        modified meta.php and placed it in my child theme (/public_html/wp-content/themes/CHILDTHEME/woocommerce),
+        but it doesn&#8217;t work.  I&#8217;ve also tried placing the modified meta.php
+        within a fully parallel structure (/public_html/wp-content/themes/CHILDTHEME/woocommerce/templates/single-product),
+        but that also doesn&#8217;t work.  I know my modifications to the file work,
+        because they implement just fine when I copy them directly to the plugin folder.
+        \ So any ideas how I might get the child theme version to work?</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/shipping-method-disappears-in-classic-checkout-after-woocommerce-11-2-0/</guid>\n\t\t\t\t\t<title>Shipping
+        method disappears in Classic Checkout after WooCommerce 11.2.0</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/shipping-method-disappears-in-classic-checkout-after-woocommerce-11-2-0/</link>\n\t\t\t\t\t<pubDate>Thu,
+        08 Oct 2026 12:27:32 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        3\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p class=\"wp-block-paragraph\">After updating
+        WooCommerce from <strong>11.1.2 to 11.2.0</strong>, a third-party shipping
+        method stopped displaying correctly in<strong> </strong>Classic Checkout.
+        The same configuration works normally after reverting to WooCommerce 11.1.2.</p>\n\n\n\n<p
+        class=\"wp-block-paragraph\"><strong>Environment:</strong></p>\n\n\n\n<ul>\n<li>WordPress
+        7.1.3</li>\n\n\n\n<li>WooCommerce 11.2.0 \u2014 affected</li>\n\n\n\n<li>WooCommerce
+        11.1.2 \u2014 works</li>\n\n\n\n<li>Classic Checkout (shortcode)</li>\n\n\n\n<li>Theme:
+        Hestia</li>\n\n\n\n<li>Shipping plugin: Shipping Nova Poshta for WooCommerce
+        1.5.9</li>\n</ul>\n\n\n\n<p class=\"wp-block-paragraph\"><strong></strong><strong>Shipping
+        method:</strong></p>\n\n\n\n<p class=\"wp-block-paragraph\">The plugin uses
+        the standard <code>WC_Shipping_Method</code> API:</p>\n\n\n\n<pre class=\"wp-block-code\"><code>class
+        NovaPoshta extends WC_Shipping_Method</code></pre>\n\n\n\n<p class=\"wp-block-paragraph\">and
+        adds the shipping rate through:</p>\n\n\n\n<pre class=\"wp-block-code\"><code>$this-&gt;add_rate($args);</code></pre>\n\n\n\n<p
+        class=\"wp-block-paragraph\">It uses the classic checkout AJAX flow and does
+        not use the Store API or Checkout Blocks.</p>\n\n\n\n<p class=\"wp-block-paragraph\">With
+        WooCommerce 11.1.2:</p>\n\n\n\n<ul>\n<li><code>update_order_review</code>
+        returns HTTP 200.</li>\n\n\n\n<li>The response contains <code>shipping_nova_poshta_for_woocommerce</code>.</li>\n\n\n\n<li>The
+        response contains the plugin&#8217;s city/warehouse checkout fragments.</li>\n\n\n\n<li><code>updated_checkout</code>
+        fires normally.</li>\n\n\n\n<li>The shipping fields remain present after checkout
+        updates.</li>\n</ul>\n\n\n\n<p class=\"wp-block-paragraph\">With WooCommerce
+        11.2.0, the shipping method is no longer displayed correctly. No changes were
+        made to the shipping plugin or its configuration between the two versions.</p>\n\n\n\n<p
+        class=\"wp-block-paragraph\">There is also a separate:</p>\n\n\n\n<pre class=\"wp-block-code\"><code>/checkout/undefinedwc/store/v1/cart
+        404</code></pre>\n\n\n\n<p class=\"wp-block-paragraph\">error from WooCommerce
+        Blocks <code>cart.js</code>, but this error is also present on 11.1.2 and
+        therefore does not appear to be the cause of the shipping regression.<br /><br
+        />Can you please check what&#8217;s wrong.</p>\n\n\n<ul id=\"bbp-topic-revision-log-19039823\"
+        class=\"bbp-topic-revision-log\">\n\n\t<li id=\"bbp-topic-revision-log-19039823-item-19039838\"
+        class=\"bbp-topic-revision-log-item\">\n\t\tThis topic was modified 1 day,
+        10 hours ago by <a href=\"https://wordpress.org/support/users/exdred/\" title=\"View
+        exdred&#039;s profile\" class=\"bbp-author-link\"><span class=\"bbp-author-name\">exdred</span></a>.\n\t</li>\n\n</ul>\n\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/how-to-make-the-sidebar-product-categories-look-better-for-sub-categories/</guid>\n\t\t\t\t\t<title>How
+        to make the sidebar Product Categories look better for sub-categories</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/how-to-make-the-sidebar-product-categories-look-better-for-sub-categories/</link>\n\t\t\t\t\t<pubDate>Thu,
+        08 Oct 2026 11:26:18 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        1\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p class=\"wp-block-paragraph\">Hi</p>\n\n\n\n<p
+        class=\"wp-block-paragraph\">How do make the sidebar Product Categories look
+        better for sub-categories?  Currently the sub category is only indented slightly
+        from the main Categories so its not obvious or nice.  Is there a plugin or
+        something that we can use to open and close with a + symbol maybe to view
+        subcategories?  So it would stay closed on sidebar to show all the Categories
+        and they could click on the + sign to view sub categories?  Or something like
+        that?  I just need some nice formatting for customer site.</p>\n\n\n\n<p class=\"wp-block-paragraph\">If
+        anyone has any recommendations or what you&#8217;ve done for your site, I&#8217;d
+        be keen to hear what you have used or done.</p>\n\n\n\n<p class=\"wp-block-paragraph\">Thanks
+        Kristin</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/woocommerce-shortcodes-for-single-product-page/</guid>\n\t\t\t\t\t<title>woocommerce
+        shortcodes for single product page</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/woocommerce-shortcodes-for-single-product-page/</link>\n\t\t\t\t\t<pubDate>Thu,
+        08 Oct 2026 10:58:09 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        1\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p class=\"wp-block-paragraph\">Hi</p>\n\n\n\n<p
+        class=\"wp-block-paragraph\">I&#8217;ve got a site I&#8217;m doing for a customer
+        using Divi Theme with Woocommerce.  I need to add some Woocommerce codes for
+        the single product page to show standard woocommerce page and the related
+        products.  I need to ensure that it shows the related products relevant to
+        that sub category that the product is in.</p>\n\n\n\n<p class=\"wp-block-paragraph\">Currently
+        I will have Divi Theme as template for the single product page as I need some
+        specific formatting required on the top of the single product page , hence
+        editing in Divi BUT the whole site and all pages are still using Woocommerce
+        for all products.</p>\n\n\n\n<p class=\"wp-block-paragraph\">So I just need
+        Woocommerce code for single product page to show &amp; Related Products. Like
+        the gallery on left, Product title, price, description on right like normal,
+        and then the RELATED PRODUCTS underneath.</p>\n\n\n\n<p class=\"wp-block-paragraph\">Thanks
+        in advance. Kristin</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/woocommerce-analytics-25/</guid>\n\t\t\t\t\t<title>WooCommerce
+        Analytics</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/woocommerce-analytics-25/</link>\n\t\t\t\t\t<pubDate>Wed,
+        07 Oct 2026 07:34:50 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        3\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p class=\"wp-block-paragraph\">Unfortunately,
+        I am having a problem with WooCommerce Analytics. The order chart shows the
+        right amount of orders, but the total sales, net sales and items sold don&#8217;t
+        match the right amount. </p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/paging-error-in-woocommerce-products-page/</guid>\n\t\t\t\t\t<title>Paging
+        error in Woocommerce Products page</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/paging-error-in-woocommerce-products-page/</link>\n\t\t\t\t\t<pubDate>Mon,
+        05 Oct 2026 19:08:29 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        3\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p class=\"wp-block-paragraph\">I have 662
+        pages of products (it&#8217;s a record store).  Suddenly I can no longer page
+        directly to, for example, page 300.   I have to hit the right arrow key 300
+        times to page there.    I use to be able to put the number 300 in the PAGE
+        of 662 box and go directly there.   Can you help please?</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/flat-rate-shipping-cost-550-incorrectly-saved-as-550/</guid>\n\t\t\t\t\t<title>Flat
+        rate shipping cost 5,50 incorrectly saved as 550</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/flat-rate-shipping-cost-550-incorrectly-saved-as-550/</link>\n\t\t\t\t\t<pubDate>Mon,
+        05 Oct 2026 14:31:11 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        1\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p class=\"wp-block-paragraph\">I was investigating
+        issue #69235 and PR #69293 about free shipping minimum bug.<br /><a target=\"_blank\"
+        href=\"https://github.com/woocommerce/woocommerce/issues/69235\" rel=\"noreferrer
+        noopener nofollow ugc\">https://github.com/woocommerce/woocommerce/issues/69235</a></p>\n\n\n\n<p
+        class=\"wp-block-paragraph\">(summary: if the free shipping minimum is saved
+        in a comma format like &#8220;100,00&#8221; on a dot-decimal store, small
+        carts get free shipping. No error, the shop just stops collecting shipping
+        on those orders. PR #69293 fixes it, and I tested trunk vs the PR head and
+        can confirm the fix.)</p>\n\n\n\n<p class=\"wp-block-paragraph\">While testing
+        I found something nearby that might be new. Saving the flat rate cost as &#8220;5,50&#8221;
+        through the REST API ( v3 and v4 ) stores &#8220;550&#8221; on both trunk
+        and the PR, so a cart would be charged 550 for shipping. The PR doesn&#8217;t
+        touch it. I don&#8217;t know if that&#8217;s intended. Does anyone know if
+        it&#8217;s been reported?</p>\n\n\n\n<p class=\"wp-block-paragraph\">Has anyone
+        seen it on a client store, especially after locale change, migration or an
+        import?</p>\n\n\n<ul id=\"bbp-topic-revision-log-19036874\" class=\"bbp-topic-revision-log\">\n\n\t<li
+        id=\"bbp-topic-revision-log-19036874-item-19036877\" class=\"bbp-topic-revision-log-item\">\n\t\tThis
+        topic was modified 4 days, 8 hours ago by <a href=\"https://wordpress.org/support/users/pranjalsharma01/\"
+        title=\"View pranjalsharma01&#039;s profile\" class=\"bbp-author-link\"><span
+        class=\"bbp-author-name\">pranjalsharma01</span></a>.\n\t</li>\n\n</ul>\n\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/flat-rate-shipping-cost-550-incorrectly-saved-as-550-in-wc-v3-v4/</guid>\n\t\t\t\t\t<title>Flat
+        Rate Shipping Cost 5,50 Incorrectly Saved as 550 in wc/v3 &#038; v4</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/flat-rate-shipping-cost-550-incorrectly-saved-as-550-in-wc-v3-v4/</link>\n\t\t\t\t\t<pubDate>Mon,
+        05 Oct 2026 14:09:55 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        1\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p class=\"wp-block-paragraph\">I was investigating
+        issue #69235 and PR #69293 about free shipping minimum bug.<br /><a target=\"_blank\"
+        href=\"https://github.com/woocommerce/woocommerce/issues/69235\" rel=\"noreferrer
+        noopener nofollow ugc\">https://github.com/woocommerce/woocommerce/issues/69235</a></p>\n\n\n\n<p
+        class=\"wp-block-paragraph\">(summary: if the free shipping minimum is saved
+        in a comma format like &#8220;100,00&#8221; on a dot-decimal store, small
+        carts get free shipping. No error, the shop just stops collecting shipping
+        on those orders. PR #69293 fixes it, and I tested trunk vs the PR head and
+        can confirm the fix.)</p>\n\n\n\n<ol>\n<li>While testing I found something
+        nearby that might be new. Saving the flat rate cost as &#8220;5,50&#8221;
+        through the REST API wc/v3 and wc/v4 stores &#8220;550&#8221; on both trunk
+        and the PR, so a cart would be charged 550 for shipping. The PR doesn&#8217;t
+        touch it. I don&#8217;t know if that&#8217;s intended. Does anyone know if
+        it&#8217;s been reported?</li>\n\n\n\n<li>Has anyone seen it on a client store,
+        especially after locale change, migration or an import?</li>\n</ol>\n\n\n\n<p
+        class=\"wp-block-paragraph\"></p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/administrative-division-change-in-nepal-2/</guid>\n\t\t\t\t\t<title>Administrative
+        division change in Nepal</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/administrative-division-change-in-nepal-2/</link>\n\t\t\t\t\t<pubDate>Sun,
+        04 Oct 2026 16:37:04 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        1\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p class=\"wp-block-paragraph\">&lt;span style=&#8221;background-color:
+        rgb(251, 251, 251); font-family: Inter, sans-serif; white-space: normal;&#8221;&gt;Due
+        to political revolution administrative division system has changed in Nepal.
+        I\u2019m creating this topic because WooCommerce plugins shows the old administrative
+        divisions(Zone) by default. Now the administrative division has changed to
+        Province and Local level.&lt;/span&gt;</p><p>There is no option to override
+        the default zones.</p><p><a href=\"https://en.wikipedia.org/wiki/Administrative_divisions_of_Nepal\"
+        rel=\"nofollow ugc\">https://en.wikipedia.org/wiki/Administrative_divisions_of_Nepal</a></p>\n\n\n\n<p
+        class=\"wp-block-paragraph\">Also, unlike other countries the shipping rates
+        for local delivery services vary significantly by location in Nepal. In some
+        cases, rates can differ even between two places within the same district.
+        Nepal has 77 districts, and most shipping providers have 100+ different pricing
+        levels.</p>\n\n\n\n<p class=\"wp-block-paragraph\">I would like to request
+        a feature that allows me to define custom locations and assign shipping rates
+        using comma-separated lists.</p>\n\n\n\n<p class=\"wp-block-paragraph\">For
+        example:</p>\n\n\n\n<ul>\n<li>20 local levels \u2014 NPR 100 per KG</li>\n\n\n\n<li>50
+        local levels \u2014 NPR 150 per KG</li>\n\n\n\n<li>30 local levels \u2014
+        NPR 200 per KG</li>\n</ul>\n\n\n\n<p class=\"wp-block-paragraph\">I would
+        like to customize the existing State/Zone structure:</p>\n\n\n\n<ol>\n<li><strong>Province/Zone:</strong>
+        The user first selects a province/zone (7 provinces of Nepal).</li>\n\n\n\n<li><strong>District:</strong>
+        Based on the selected province, a second dropdown displays the relevant districts.
+        I should be able to add these districts as a comma-separated list.</li>\n\n\n\n<li><strong>Local
+        Level:</strong> After selecting a district, a third dropdown displays the
+        corresponding local levels (municipalities, rural municipalities, etc.), also
+        added as a comma-separated list.</li>\n\n\n\n<li><strong>Shipping Rate:</strong>
+        Each local level can be assigned a specific shipping charge, and the applicable
+        rate is automatically calculated based on the customer&#8217;s selection.</li>\n</ol>\n\n\n\n<p
+        class=\"wp-block-paragraph\">The key requirement is the ability to <strong>edit/customize
+        the predefined WooCommerce State/Zone options and create a hierarchical Province
+        \u2192 District \u2192 Local Level structure</strong>, with individual shipping
+        rates assigned to each local level.</p>\n\n\n\n<p class=\"wp-block-paragraph\"><a
+        href=\"https://wordpress.org/support/topic/administrative-division-change-in-nepal/#post-15940763\"
+        rel=\"ugc\">https://wordpress.org/support/topic/administrative-division-change-in-nepal/#post-15940763</a></p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/dynamic-checkout-fields-expanded-block-editor-suppor/</guid>\n\t\t\t\t\t<title>Dynamic
+        Checkout Fields &#038; Expanded Block Editor Suppor</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/dynamic-checkout-fields-expanded-block-editor-suppor/</link>\n\t\t\t\t\t<pubDate>Sun,
+        04 Oct 2026 15:26:05 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        1\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p class=\"wp-block-paragraph\"><strong><br
+        />Hello WooCommerce Team and Community,</strong></p>\n\n\n\n<p class=\"wp-block-paragraph\">I
+        am writing to submit a feature request that I believe would significantly
+        improve the user experience and conversion rates for thousands of WooCommerce
+        store owners, particularly those selling digital products.</p>\n\n\n\n<p class=\"wp-block-paragraph\">While
+        WooCommerce is an incredibly powerful platform, the checkout process has become
+        increasingly rigid and unnecessarily long. I would like to propose the following
+        enhancements for future updates:</p>\n\n\n\n<p class=\"wp-block-paragraph\"><strong>1.
+        Differentiate Checkout Fields for Virtual/Downloadable vs. Physical Products:</strong><br
+        />Currently, customers purchasing only virtual or downloadable products (like
+        software, e-books, or courses) are still presented with shipping-related fields
+        at checkout. This creates unnecessary friction and cognitive load, leading
+        to cart abandonment.</p>\n\n\n\n<ul>\n<li><strong>The Request:</strong> We
+        need native, dynamic conditional logic that automatically detects if the cart
+        contains only virtual/downloadable items and seamlessly hides all shipping-related
+        fields.</li>\n</ul>\n\n\n\n<p class=\"wp-block-paragraph\"><strong>2. Expanded
+        Customization for Cart &amp; Checkout Blocks:</strong><br />The introduction
+        of Cart and Checkout blocks was a massive step in the right direction. However,
+        store owners still lack granular control over the layout and styling of these
+        pages.</p>\n\n\n\n<ul>\n<li><strong>The Request:</strong> Please expand the
+        capabilities of the Block Editor for WooCommerce. Give us the ability to rearrange
+        the checkout fields, apply conditional visibility (e.g., hiding company name
+        for B2C), and deeply customize the styling of the cart and checkout pages
+        without relying on heavy third-party plugins or custom code snippets.</li>\n</ul>\n\n\n\n<p
+        class=\"wp-block-paragraph\"><strong>3. A Shorter, Simpler Checkout Flow:</strong><br
+        />The default checkout process is notoriously long. Modern e-commerce platforms
+        are moving toward frictionless, one-page, or smart multi-step checkouts.</p>\n\n\n\n<ul>\n<li><strong>The
+        Request:</strong> We need a streamlined, modern checkout layout out-of-the-box
+        that reduces the number of steps and simplifies the process for the customer,
+        ultimately increasing conversions for store owners.</li>\n</ul>\n\n\n\n<p
+        class=\"wp-block-paragraph\">By implementing these changes, WooCommerce can
+        provide a much more competitive, modern, and user-friendly shopping experience.</p>\n\n\n\n<p
+        class=\"wp-block-paragraph\">I\u2019d love to hear what the rest of the community
+        thinks about these suggestions. Thank you for your continuous work on this
+        amazing platform!</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/order-payment-error-no-such-paymentmethod/</guid>\n\t\t\t\t\t<title>Order
+        Payment Error: No Such PaymentMethod</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/order-payment-error-no-such-paymentmethod/</link>\n\t\t\t\t\t<pubDate>Sun,
+        04 Oct 2026 14:51:10 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        2\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p class=\"wp-block-paragraph\">Hi,</p>\n\n\n\n<p
+        class=\"wp-block-paragraph\">I had my first website order but the payment
+        failed. </p>\n\n\n\n<p class=\"wp-block-paragraph\">Its said:<br /><br />&#8220;A
+        payment od \xA312.48 failed to complete with the following message: &#8216;pm_1UM2c5FuiXB5oUVx4qsCRW9g&#8217;:
+        OAuth key or stripe-Accounte headr was used but API request was provided with
+        a platform-owned payment methodID. Please ensure that the provided payment
+        method matches the specified account.&#8221;</p>\n\n\n\n<p class=\"wp-block-paragraph\">I
+        have since tested and ordered something and the order and payment has gone
+        through fine using mastercard. </p>\n\n\n\n<p class=\"wp-block-paragraph\">Can
+        you help explain the reason this payment might have failed and how to fix
+        it?</p>\n\n\n\n<p class=\"wp-block-paragraph\">Shortly after the order came
+        through on the website, I received an email to say an email to the customers
+        email address had not been delivered. Not sure if this is a related problem
+        or just the customer entering the email wrong.</p>\n\n\n\n<p class=\"wp-block-paragraph\">Thanks</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/allow-backorder-not-working-as-designed/</guid>\n\t\t\t\t\t<title>allow
+        backorder not working as designed</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/allow-backorder-not-working-as-designed/</link>\n\t\t\t\t\t<pubDate>Sun,
+        04 Oct 2026 06:34:08 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        1\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p class=\"wp-block-paragraph\">I wish to use
+        the setting &#8220;allow backorders&#8221; &#8211; the one that DOESN&#8217;T
+        notify customers but whether I select that or &#8220;allow, but notify customer&#8221;
+        &#8211; it is the same &#8211; on the front end it says &#8220;available on
+        backorder&#8221; which gives a false impression that customers will have to
+        wait days for it. It used to work properly. Don&#8217;t know when it changed.</p>\n\n\n\n<p
+        class=\"wp-block-paragraph\">Thanks for any advice</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/select-phone-orders-among-all-orders/</guid>\n\t\t\t\t\t<title>Select
+        phone orders among all orders</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/select-phone-orders-among-all-orders/</link>\n\t\t\t\t\t<pubDate>Sat,
+        03 Oct 2026 15:01:49 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        3\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p class=\"wp-block-paragraph\">I want to be
+        able to select all phone orders made among all orders.<br />I have not seen
+        that one can do that. So it is maybe room for improvement.</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/woocommerce-downloadable-pdf-files-disappear-after-product-update/</guid>\n\t\t\t\t\t<title>WooCommerce
+        downloadable PDF files disappear after product update</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/woocommerce-downloadable-pdf-files-disappear-after-product-update/</link>\n\t\t\t\t\t<pubDate>Fri,
+        02 Oct 2026 11:09:20 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        3\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p class=\"wp-block-paragraph\">Hello,</p>\n\n\n\n<p
+        class=\"wp-block-paragraph\">I am having a problem with downloadable files
+        not being retained in a WooCommerce product.</p>\n\n\n\n<p class=\"wp-block-paragraph\">I
+        created a Simple Product and checked both Virtual and Downloadable. The product
+        is The Organized Dog Parent \u2013 Essential Care Collection, priced at $7.99.</p>\n\n\n\n<p
+        class=\"wp-block-paragraph\">I need to include two PDF files with the same
+        product purchase:</p>\n\n\n\n<ol start=\"1\">\n<li>Essential Care Collection
+        \u2013 Printable PDF</li>\n\n\n\n<li>Essential Care Collection \u2013 Fillable
+        PDF</li>\n</ol>\n\n\n\n<p class=\"wp-block-paragraph\">I add both PDFs under
+        Product data \u2192 General \u2192 Downloadable files, and both file URLs
+        populate correctly. I set the Download limit to Unlimited and the Download
+        expiry to Never.</p>\n\n\n\n<p class=\"wp-block-paragraph\">The rest of the
+        product information saves correctly, including the title, descriptions, price,
+        product image, category, tags, and brand.</p>\n\n\n\n<p class=\"wp-block-paragraph\">However,
+        when I Save Draft, Publish, or Update the product, WordPress/WooCommerce confirms
+        that the product was saved or updated successfully, but after the page reloads,
+        both downloadable file rows disappear.</p>\n\n\n\n<p class=\"wp-block-paragraph\">I
+        have repeated the process several times with the same result. My hosting provider,
+        Network Solutions, has advised me to contact WooCommerce support because the
+        issue appears to be specific to the WooCommerce downloadable-product settings.</p>\n\n\n\n<p
+        class=\"wp-block-paragraph\">Could you please help me determine why the downloadable
+        PDF files are not being retained and what I should check or change to correct
+        this?</p>\n\n\n\n<p class=\"wp-block-paragraph\">Thank you.</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/short-thank-you-page/</guid>\n\t\t\t\t\t<title>short
+        thank you page</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/short-thank-you-page/</link>\n\t\t\t\t\t<pubDate>Thu,
+        01 Oct 2026 23:39:14 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        2\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p class=\"wp-block-paragraph\">Hi, is there
+        a way to have a thank you page after someone makes a purchase?  </p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/products-not-showing-up-in-store-catalog-but-show-up-with-direct-link-2/</guid>\n\t\t\t\t\t<title>Products
+        not showing up in store catalog but show up with direct link</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/products-not-showing-up-in-store-catalog-but-show-up-with-direct-link-2/</link>\n\t\t\t\t\t<pubDate>Thu,
+        01 Oct 2026 17:45:37 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        2\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p class=\"wp-block-paragraph\">I am having
+        an issue with products not showing up in my store. They will come up via a
+        direct link, but will not come up when you click on the category. The link
+        is to just one product that I\u2019m having a problem with \u2013 there is
+        many missing from different categories. For example under \u2018Sprint Cars\u2019
+        and \u2018Steering\u201D categories there are 2 products that show up, the
+        site says there should be 16 products on the page. <a href=\"https://panchosracingproducts.com/product-category/sprint/spsteering/\"
+        rel=\"nofollow ugc\">https://panchosracingproducts.com/product-category/sprint/spsteering/</a></p>\n\n\n\n<p
+        class=\"wp-block-paragraph\">I have checked the products catalog visibility
+        and it is set to shop and search results.</p>\n\n\n\n<p class=\"wp-block-paragraph\">I
+        have checked the stock and inventory settings.</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/subscription-renewal-card-charged-but-payment-missing-from-payments-and-payouts/</guid>\n\t\t\t\t\t<title>Subscription
+        renewal card charged but payment missing from Payments and payouts</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/subscription-renewal-card-charged-but-payment-missing-from-payments-and-payouts/</link>\n\t\t\t\t\t<pubDate>Thu,
+        01 Oct 2026 14:04:32 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        1\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p class=\"wp-block-paragraph\">Hi,</p>\n\n\n\n<p
+        class=\"wp-block-paragraph\">On one of our client&#8217;s stores we have a
+        subscription renewal that was charged to the customer&#8217;s card, but the
+        payment doesn&#8217;t appear in WooCommerce.</p>\n\n\n\n<p class=\"wp-block-paragraph\">Details:</p>\n\n\n\n<ul>\n<li>Site
+        URL: <a href=\"https://visologiq.com/\" rel=\"nofollow ugc\">https://visologiq.com/</a></li>\n\n\n\n<li>Renewal
+        order ID: #23195</li>\n\n\n\n<li>Subscription ID: #21235</li>\n\n\n\n<li>Renewal
+        date: 14/09/2026</li>\n\n\n\n<li>Amount: 80\u20AC</li>\n\n\n\n<li>Payment
+        gateway: WooPayments</li>\n\n\n\n<li>Transaction/charge ID (from the card
+        processor): seti_1UIl2F2HKigXvad01xTKT2bn</li>\n</ul>\n\n\n\n<p class=\"wp-block-paragraph\">What
+        happened:</p>\n\n\n\n<ol>\n<li>The subscription renewal order was created
+        and the customer was charged. We can see the card transaction on our side</li>\n\n\n\n<li>The
+        order is stuck on &#8220;Processing&#8221; and was never marked as completed.</li>\n\n\n\n<li>The
+        transaction does NOT appear under WooCommerce &gt; Payments &gt; Transactions.</li>\n\n\n\n<li>The
+        amount was NOT included in any payout to the merchant&#8217;s bank account.</li>\n</ol>\n\n\n\n<p
+        class=\"wp-block-paragraph\">What we expected:<br />The charge should be recorded
+        under Payments &gt; Transactions, and the funds should be included in the
+        next payout. The order should also have progressed to the correct status.</p>\n\n\n\n<p
+        class=\"wp-block-paragraph\">What we&#8217;ve checked WooCommerce &gt; Status
+        &gt; Logs but we could not find any errors for the gateway or Action Scheduler
+        around the renewal time</p>\n\n\n\n<p class=\"wp-block-paragraph\">Could you
+        please:</p>\n\n\n\n<ol>\n<li>Check whether this charge was actually captured
+        and where the funds are.</li>\n\n\n\n<li>Tell us why it isn&#8217;t showing
+        in Payments &gt; Transactions or in the payouts.</li>\n\n\n\n<li>Advise on
+        how to fix the order status and make sure the merchant receives the funds.
+        We&#8217;d like to avoid refunding and re-charging the customer if possible.</li>\n</ol>\n\n\n\n<p
+        class=\"wp-block-paragraph\">Thank you,<br />Fabio</p>\n\n\n\n<p class=\"wp-block-paragraph\">System
+        Status Report</p>\n\n\n\n<pre class=\"wp-block-code\"><code>### WordPress
+        Environment ###\n\nWordPress address (URL): &#091;Redacted]\nSite address
+        (URL): &#091;Redacted]\nWC Version: 10.9.4\nAction Scheduler Version: \u2714
+        4.0.0\nLog Directory Writable: \u2714\nWP Version: 7.1.2\nWP Multisite: \u2013\nWP
+        Memory Limit: 2 GB\nWP Debug Mode: \u2013\nWP Cron: \u2714\nWP Environment
+        Type: production\nLanguage: it_IT\nExternal object cache: \u2013\n\n### Server
+        Environment ###\n\nServer Info: LiteSpeed\nServer Architecture: Linux 4.18.0-553.157.1.lve.el8.x86_64
+        x86_64\nPHP Version: 8.3.33\nPHP Post Max Size: 2 GB\nPHP Time Limit: 360\nPHP
+        Max Input Vars: 5000\ncURL Version: 8.21.0\nOpenSSL/1.1.1w\n\nSUHOSIN Installed:
+        \u2013\nMySQL Version: 11.8.9-MariaDB-log\nMax Upload Size: 2 GB\nDefault
+        Timezone is UTC: \u2714\nfsockopen/cURL: \u2714\nSoapClient: \u2714\nDOMDocument:
+        \u2714\nGZip: \u2714\nMultibyte String: \u2714\nRemote Post: \u2714\nRemote
+        Get: \u2714\n\n### Database ###\n\n&#091;REDACTED]\n\n### Post Type Counts
+        ###\n\nattachment: 557\ncookielawinfo: 6\ncustom_css: 2\ndmmenu: 2\net_footer_layout:
+        5\net_header_layout: 6\net_pb_layout: 7\net_template: 12\net_theme_builder:
+        1\ngift_card: 2\ngiftcard: 4\nnav_menu_item: 23\noembed_cache: 1\npage: 33\npost:
+        7\nproduct: 106\nproduct_variation: 96\nrevision: 1300\nshop_coupon: 7206\nshop_order:
+        11143\nshop_order_refund: 57\nshop_subscription: 890\nshopmagic_automation:
+        2\nshortcoder: 18\nstore: 6\ntreatment: 12\nwc_push_token: 1\nwcpa_pt_forms:
+        1\nwp_global_styles: 3\nwp_navigation: 1\nwp_template: 2\nwpcf7_contact_form:
+        1\nwpdesk-coupons: 12\n\n### Security ###\n\nSecure connection (HTTPS): \u2714\nHide
+        errors from visitors: \u2714\n\n### Active Plugins (36) ###\n\nAdvanced Custom
+        Fields PRO: di WP Engine \u2013 6.8.6\nAdvanced Dynamic Pricing and Discount
+        Rules for WooCommerce: di AlgolPlus \u2013 4.13.2\nAkismet Anti-spam: Spam
+        Protection: di Automattic - Squadra antispam \u2013 5.7\nUpsellWP \u2013 Upsell
+        and Related Products Offers for WooCommerce: di UpsellWP \u2013 2.2.8\nContact
+        Form 7: di Rock Lobster Inc. \u2013 6.1.6\nJoinchat - Enhanced \"click to
+        chat\": di Creame \u2013 6.3.2\nDomain Based Role Assignment: di WAV \u2013
+        1.0.0\nMeta for WooCommerce: di Meta \u2013 3.7.6\nFlexible PDF Coupons PRO
+        for WooCommerce: di WP Desk \u2013 2.5.7\nGoogle for WooCommerce: di WooCommerce
+        \u2013 3.8.1\nTag Pilot PRO - Google Tag Manager Integration for WooCommerce:
+        di Tag Concierge \u2013 1.18.1\nHeader Footer Code Manager: di DraftPress
+        \u2013 1.1.46\nJetpack: di Automattic \u2013 16.0.2\nKlaviyo: di Klaviyo\nInc.
+        \u2013 3.8.3\n\nMicrosoft Clarity: di Microsoft \u2013 0.10.27\nReaktion:
+        di Reaktion.com ApS \u2013 2.5.0\nreCaptcha for WooCommerce: di I Thirteen
+        Web Solution \u2013 2.79 (aggiornamento alla versione 2.80 disponibile)\nRedirection:
+        di John Godley \u2013 5.9.0\nSendCloud | Smart Shipping Service: di Sendcloud
+        B.V. \u2013 2.4.5\nShortcoder: di Aakash Chakravarthy \u2013 6.5.4\nSVG Support:
+        di  \u2013 2.6.1\nTextyess WooCommerce Bridge: di TextYess \u2013 0.1.0\nTikTok:
+        di TikTok \u2013 1.4.0\nTransients Manager: di WPBeginner \u2013 2.0.7\nUser
+        Role Editor: di Vladimir Garagulya \u2013 4.65\nAdvanced Order Export For
+        WooCommerce: di AlgolPlus \u2013 4.1.0\nWooCommerce.com Update Manager: di
+        Automattic \u2013 1.0.3\nWooCommerce Legacy REST API: di WooCommerce \u2013
+        1.0.5\nWooPayments: di WooCommerce \u2013 10.9.0 (aggiornamento alla versione
+        11.1.0 disponibile)\nPDF Invoices Italian Add-on for WooCommerce: di laboratorio
+        d'Avanguardia \u2013 0.7.7.4\nPDF Invoices &amp; Packing Slips for WooCommerce:
+        di WP Overnight \u2013 5.15.2\nWooCommerce Subscriptions: di WooCommerce \u2013
+        9.0.1 (aggiornamento alla versione 9.2.0 disponibile)\nWooCommerce: di Automattic
+        \u2013 10.9.4 (aggiornamento alla versione 11.1.2 disponibile)\nWP Mail SMTP:
+        di WP Mail SMTP \u2013 4.9.0\nSmart Coupons For WooCommerce Coupons: di WebToffee
+        \u2013 2.3.0\nYITH WooCommerce Wishlist: di YITH \u2013 4.17.0\n\n### Inactive
+        Plugins (5) ###\n\nDuplicator Pro: di Duplicator \u2013 4.6.8\nFlexible PDF
+        Coupons PRO for WooCommerce: di WP Desk \u2013 2.5.3\niubenda | All-in-one
+        Compliance for GDPR / CCPA Cookie Consent + more: di iubenda \u2013 3.13.3\nWebToffee
+        WooCommerce PDF Invoices, Packing Slips, Delivery Notes and Shipping Labels:
+        di WebToffee \u2013 4.9.8\nWooCommerce PayPal Payments: di PayPal \u2013 4.1.1
+        (aggiornamento alla versione 4.1.3 disponibile)\n\n### Must Use Plugins (1)
+        ###\n\nHostinger Smart Auto Updates: di Hostinger \u2013 1.0.8\n\n### Settings
+        ###\n\nForce SSL: \u2013\nCurrency: EUR (\u20AC)\nCurrency Position: left\nThousand
+        Separator: ,\nDecimal Separator: .\nNumber of Decimals: 2\nTaxonomies: Product
+        Types: external (external)\ngift-card (gift-card)\ngrouped (grouped)\npw gift
+        card (pw-gift-card)\nsimple (simple)\nsubscription (subscription)\nvariable
+        (variable)\nvariable subscription (variable-subscription)\nwgm_gift_card (wgm_gift_card)\n\nTaxonomies:
+        Product Visibility: exclude-from-catalog (exclude-from-catalog)\nexclude-from-search
+        (exclude-from-search)\nfeatured (featured)\noutofstock (outofstock)\nrated-1
+        (rated-1)\nrated-2 (rated-2)\nrated-3 (rated-3)\nrated-4 (rated-4)\nrated-5
+        (rated-5)\n\nConnected to WooCommerce.com: \u2714\nEnforce Approved Product
+        Download Directories: \u2013\nHPOS feature enabled: \u2013\nOrder datastore:
+        WC_Order_Data_Store_CPT\nHPOS data sync enabled: \u2013\nEnabled Features:
+        analytics\nmarketplace\norder_attribution\nsite_visibility_badge\nremote_logging\nblueprint\npoint_of_sale\npush_notifications\n\n\n###
+        Logging ###\n\nEnabled: \u2714\nHandler: Automattic\\WooCommerce\\Internal\\Admin\\Logging\\LogHandlerFileV2\nRetention
+        period: 30 giorni\nLevel threshold: \u2013\nLog directory size: 39 MB\n\n###
+        WC Pages ###\n\nShop base: #6 - /negozio/\nCarrello: #7 - /carrello/ -  Contiene
+        lo shortcode &#091;woocommerce_cart]\nPagamento: #8 - /check-out/ -  Contiene
+        lo shortcode &#091;woocommerce_checkout]\nIl mio account: #9 - /mio-account/
+        -  Contiene lo shortcode &#091;woocommerce_my_account]\nTermini e condizioni:
+        \u274C La pagina non \xE8 impostata\n\n### Theme ###\n\nName: Qtheme x Visologiq\nVersion:
+        2.3.6\nAuthor URL: https://craqdesignstudio.it/\nChild Theme: \u2714\nParent
+        Theme Name: Qtheme Framework\nParent Theme Version: 2.3.17\nParent Theme Author
+        URL: https://craqdesignstudio.it/\nTheme type: Tema classico\nWooCommerce
+        Support: \u2714\n\n### Templates ###\n\nOverride: wp-content/themes/cliq-visologiq/template-parts/woocommerce/archive-product.php\nOverride:
+        wp-content/themes/qtheme/template-parts/woocommerce/cart/cart-empty.php\nOverride:
+        wp-content/themes/qtheme/template-parts/woocommerce/cart/proceed-to-checkout-button.php\nOverride:
+        wp-content/themes/qtheme/template-parts/woocommerce/content-product-cat.php\nOverride:
+        wp-content/themes/qtheme/template-parts/woocommerce/content-product.php\nOverride:
+        wp-content/themes/cliq-visologiq/template-parts/woocommerce/emails/customer-new-account.php
+        \u274C La versione 9.7.0 non \xE8 aggiornata. La versione di base \xE8 10.9.0\nOverride:
+        wp-content/themes/qtheme/template-parts/woocommerce/emails/email-addresses.php
+        \u274C La versione 9.7.0 non \xE8 aggiornata. La versione di base \xE8 10.6.0\nOverride:
+        wp-content/themes/qtheme/template-parts/woocommerce/emails/email-styles.php
+        \u274C La versione 9.7.0 non \xE8 aggiornata. La versione di base \xE8 10.8.0\nOverride:
+        wp-content/themes/qtheme/template-parts/woocommerce/loop/add-to-cart.php\nOverride:
+        wp-content/themes/qtheme/template-parts/woocommerce/loop/loop-end.php\nOverride:
+        wp-content/themes/qtheme/template-parts/woocommerce/loop/loop-start.php\nOverride:
+        wp-content/themes/qtheme/template-parts/woocommerce/loop/orderby.php\nOverride:
+        wp-content/themes/qtheme/template-parts/woocommerce/loop/pagination.php\nOverride:
+        wp-content/themes/qtheme/template-parts/woocommerce/loop/price.php\nOverride:
+        wp-content/themes/qtheme/template-parts/woocommerce/loop/rating.php\nOverride:
+        wp-content/themes/qtheme/template-parts/woocommerce/myaccount/navigation.php\nOverride:
+        wp-content/themes/qtheme/template-parts/woocommerce/order/order-again.php\nOverride:
+        wp-content/themes/cliq-visologiq/template-parts/woocommerce/single-product/meta.php\nOverride:
+        wp-content/themes/qtheme/template-parts/woocommerce/single-product/product-image.php
+        \u274C La versione 9.7.0 non \xE8 aggiornata. La versione di base \xE8 10.5.0\nOverride:
+        wp-content/themes/qtheme/template-parts/woocommerce/single-product/product-thumbnails.php
+        \u274C La versione 9.5.0 non \xE8 aggiornata. La versione di base \xE8 9.8.0\nOverride:
+        wp-content/themes/qtheme/template-parts/woocommerce/single-product/tabs/tabs.php
+        \u274C La versione 9.6.0 non \xE8 aggiornata. La versione di base \xE8 9.8.0\nOverride:
+        wp-content/themes/qtheme/template-parts/woocommerce/content-product-cat.php\n\n###
+        WooPayments ###\n\nVersion: 10.9.0\nConnected to WPCOM: S\xEC\nWPCOM Blog
+        ID: 206833523\nAccount ID: acct_1L1YcP2HKigXvad0\nPayment Gateway: Abilitato\nTest
+        Mode: Disabilitato\nDev Mode: Disabilitato\nEnabled APMs: card\nWooPay: Non
+        idoneo\nApple Pay / Google Pay: Disabilitato\nFraud Protection Level: basic\nMulti-currency:
+        Abilitato\nAuth and Capture: Disabilitato\nSupport Phone: +390249427419\nDocuments:
+        Abilitato\nLogging: Disabilitato\n\n### Abbonamenti ###\n\nWCS_DEBUG: \u2714
+        No\nSubscriptions Mode: \u2714 Live\nSubscriptions Live URL: https://visologiq.com\nSubscriptions-core
+        Library Version: 8.3.0\nSubscriptions Template Theme Overrides: cliq-visologiq/template-parts/woocommerce/checkout/form-change-payment-method.php\ncliq-visologiq/template-parts/woocommerce/myaccount/related-subscriptions.php\ncliq-visologiq/template-parts/woocommerce/myaccount/subscription-details.php\ncliq-visologiq/template-parts/woocommerce/myaccount/subscription-totals-table.php\ncliq-visologiq/template-parts/woocommerce/myaccount/view-subscription.php\n\nSubscription
+        Statuses: wc-active: 188\nwc-expired: 415\nwc-pending-cancel: 9\nwc-pending:
+        7\nwc-on-hold: 94\nwc-cancelled: 177\n\nWooCommerce Account Connected: \u2714
+        Yes\nActive Product Key: \u2714 Yes\nReport Cache Enabled: \u2714 S\xEC\nCache
+        Update Failures: \u2714 0 non riuscito\n\n### Impostazione del negozio ###\n\nCountry
+        / State: Italia \u2014 Milano\n\n### Abbonamenti per gateway di pagamento
+        ###\n\nWooPayments: wc-active: 188\nwc-cancelled: 177\nwc-expired: 415\nwc-on-hold:
+        92\nwc-pending: 7\nwc-pending-cancel: 9\n\n\n### Supporto gateway di pagamento
+        ###\n\nWooPayments: products\nrefunds\nmultiple_subscriptions\nsubscription_cancellation\nsubscription_payment_method_change_admin\nsubscription_payment_method_change_customer\nsubscription_payment_method_change\nsubscription_reactivation\nsubscription_suspension\nsubscriptions\nsubscription_amount_changes\nsubscription_date_changes\ntokenization\nadd_payment_method\n\n\n###
+        Gifting for Subscriptions ###\n\nConteggio degli abbonamenti regalati: 0\n\n###
+        Admin ###\n\nEnabled Features: activity-panels\nanalytics\nanalytics-scheduled-import\nproduct-block-editor\nexperimental-iapi-mini-cart\ncoupons\ncore-profiler\ncustomize-store\ncustomer-effort-score-tracks\nimport-products-task\nexperimental-fashion-sample-products\nshipping-smart-defaults\nshipping-setting-tour\nhomescreen\nmarketing\nmobile-app-banner\nonboarding\nonboarding-tasks\npattern-toolkit-full-composability\nproduct-custom-fields\nremote-inbox-notifications\nremote-free-extensions\npayment-gateway-suggestions\nprintful\nshipping-label-banner\nsubscriptions\nstore-alerts\ntransient-notices\nwoo-mobile-welcome\nwc-pay-promotion\nwc-pay-welcome-page\nlaunch-your-store\n\nDisabled
+        Features: product-data-views\nexperimental-blocks\ncoming-soon-newsletter-template\nminified-js\nproducts-catalog-api\nsettings-ui\nasync-product-editor-category-field\nuse-wp-horizon\nrest-api-v4\norder-detail-redesign\nproduct-variations-classic-redesign\n\nDaily
+        Cron: \u2714 Next scheduled: 2026-10-02 07:59:06 +02:00\nOptions: \u2714\nNotes:
+        272\nOnboarding: skipped\n\n### All Products for WooCommerce Subscriptions
+        ###\n\nTemplate Overrides: \u2013\n\n### Action Scheduler ###\n\nCanceled:
+        502\nOldest: 2026-08-31 09:41:39 +0200\nNewest: -0001-11-30 00:49:56 +0049\n\nComplete:
+        30.974\nOldest: 2026-08-31 04:14:22 +0200\nNewest: 2026-10-01 15:45:00 +0200\n\nFailed:
+        113\nOldest: 2026-07-03 14:18:03 +0200\nNewest: 2026-10-01 13:08:00 +0200\n\nPending:
+        234\nOldest: 2026-10-01 15:45:57 +0200\nNewest: 2027-01-25 15:04:00 +0100\n\n\n###
+        Status report information ###\n\nGenerated at: 2026-10-01 15:45:25 +02:00</code></pre>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/falta-de-pedidos/</guid>\n\t\t\t\t\t<title>Falta
+        de Pedidos</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/falta-de-pedidos/</link>\n\t\t\t\t\t<pubDate>Thu,
+        01 Oct 2026 08:33:37 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        2\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p class=\"wp-block-paragraph\">La tienda estaba
+        recibiendo pedidos de forma estable y desde hace 5 d\xEDas no entra ninguno.
+        Hemos hecho pruebas y no falla ninguna pasarela de pago. Tampoco hay descenso
+        en el tr\xE1fico, en analytics todo est\xE1 correcto \xBFqu\xE9 podr\xEDa
+        estar fallando?</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/calif-sales-tax-on-digital-downloads-for-in-state-sales/</guid>\n\t\t\t\t\t<title>Calif
+        sales tax on digital downloads for in-state sales</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/calif-sales-tax-on-digital-downloads-for-in-state-sales/</link>\n\t\t\t\t\t<pubDate>Thu,
+        01 Oct 2026 02:49:28 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        1\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p class=\"wp-block-paragraph\">hello &#8211;
+        the more i use WooCommerce, the more i just absolutely LOVE IT.  </p>\n\n\n\n<p
+        class=\"wp-block-paragraph\">Apparently Calif is going to start charging a
+        state sales tax on digital downloads if purchased in the same state (California).</p>\n\n\n\n<p
+        class=\"wp-block-paragraph\">Has anybody else considered this?   Is this a
+        simple matter of changing a tax code or similar?</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/fetch_patterns-fails-via-wp-cron-on-woocommerce-11-1-2-issue-68409/</guid>\n\t\t\t\t\t<title>fetch_patterns
+        fails via WP Cron on WooCommerce 11.1.2 \u2014 issue #68409</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/fetch_patterns-fails-via-wp-cron-on-woocommerce-11-1-2-issue-68409/</link>\n\t\t\t\t\t<pubDate>Wed,
+        30 Sep 2026 19:27:23 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        1\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p class=\"wp-block-paragraph\">My live site,
+        <a href=\"https://rudysribs.com\" rel=\"nofollow ugc\">https://rudysribs.com</a>,
+        is hosted on Kinsta and runs WooCommerce 11.1.2.</p>\n\n\n\n<p class=\"wp-block-paragraph\">The
+        recurring fetch_patterns action continues to fail via WP Cron. The latest
+        example is action ID 72889, which failed on September 30, 2026 at 18:53:09
+        UTC.</p>\n\n\n\n<p class=\"wp-block-paragraph\">Exact error:<br />\u201CScheduled
+        action for fetch_patterns will not be executed as no callbacks are registered.\u201D</p>\n\n\n\n<p
+        class=\"wp-block-paragraph\">This matches confirmed WooCommerce issue #68409:<br
+        /><a href=\"https://github.com/woocommerce/woocommerce/issues/68409\" rel=\"nofollow
+        ugc\">https://github.com/woocommerce/woocommerce/issues/68409</a></p>\n\n\n\n<p
+        class=\"wp-block-paragraph\">Is there a supported workaround or a release
+        planned to fix this on 11.1.2? I have preserved the failed records and have
+        not rerun, cancelled, or deleted the actions.</p>\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\n\t\t\t\t<item>\n\t\t\t\t\t<guid>https://wordpress.org/support/topic/woocommerce-payments-card-errors/</guid>\n\t\t\t\t\t<title>Woocommerce
+        payments/card errors</title>\n\t\t\t\t\t<link>https://wordpress.org/support/topic/woocommerce-payments-card-errors/</link>\n\t\t\t\t\t<pubDate>Wed,
+        30 Sep 2026 08:14:58 +0000</pubDate>\n\t\t\t\t\t<dc:creator>redacted</dc:creator>\n\n\t\t\t\t\t\n\t\t\t\t\t<description>\n\t\t\t\t\t\t<![CDATA[\n\t\t\t\t\t\t<p>\n\t\t\t\t\t\t\tReplies:
+        3\t\t\t\t\t\t</p>\n\t\t\t\t\t\t<p class=\"wp-block-paragraph\">Hello,<br />I
+        have issues on my website : <br />1 &#8211; logo on header does not appear
+        (apart from the outline of the frame) </p>\n\n\n\n<p class=\"wp-block-paragraph\">2
+        &#8211; mobile, items on categories take a long time to be visible. <br /><br
+        />So in my admin back office, i go to Apperance=&gt; Customize and it give
+        me this error message below. No wait to access to the CCS editor.<br />If
+        can help me on this issue showed, thanks in advance :</p>\n\n\n\n<p class=\"wp-block-paragraph\"><em><strong>Fatal
+        error</strong>:</em> <em>Uncaught Error: Call to a member function get() on
+        null in /home/clients/1ad70947204e8c183277aef186ddd353/web/wp-content/plugins/booked/includes/add-ons/woocommerce-payments/lib/woocommerce/class-wc-cart.php:152
+        Stack trace: #0 /home/clients/1ad70947204e8c183277aef186ddd353/web/wp-includes/class-wp-hook.php(353):
+        Booked_WC_Cart_Hooks::woocommerce_checkout_fields(Array) #1 /home/clients/1ad70947204e8c183277aef186ddd353/web/wp-includes/plugin.php(206):
+        WP_Hook-&gt;apply_filters(Array, Array) #2 /home/clients/1ad70947204e8c183277aef186ddd353/web/wp-content/plugins/woocommerce/includes/class-wc-checkout.php(310):
+        apply_filters(&#8216;woocommerce_che&#8230;&#8217;, Array) #3 /home/clients/1ad70947204e8c183277aef186ddd353/web/wp-content/plugins/woocommerce/includes/class-wc-checkout.php(334):
+        WC_Checkout-&gt;initialize_checkout_fields() #4 /home/clients/1ad70947204e8c183277aef186ddd353/web/wp-content/plugins/woocommerce-gateway-stripe/includes/payment-methods/class-wc-stripe-upe-payment-gateway.php(573):
+        WC_Checkout-&gt;get_checkout_fields(&#8216;billing&#8217;) #5 /home/clients/1ad70947204e8c183277aef186ddd353/web/wp-content/plugins/woocommerce-gateway-stripe/includes/class-wc-stripe-blocks-support.php(358):
+        WC_Stripe_UPE_Payment_Gateway-&gt;javascript_params() #6 /home/clients/1ad70947204e8c183277aef186ddd353/web/wp-content/plugins/woocommerce-gateway-stripe/includes/class-wc-stripe-blocks-support.php(305):
+        WC_Stripe_Blocks_Support-&gt;get_gateway_javascript_params() #7 /home/clients/1ad70947204e8c183277aef186ddd353/web/wp-content/plugins/woocommerce/src/Blocks/Payments/PaymentMethodRegistry.php(62):
+        WC_Stripe_Blocks_Support-&gt;get_payment_method_data() #8 /home/clients/1ad70947204e8c183277aef186ddd353/web/wp-content/plugins/woocommerce/src/Blocks/Payments/Api.php(116):
+        Automattic\\WooCommerce\\Blocks\\Payments\\PaymentMethodRegistry-&gt;get_all_registered_script_data()
+        #9 /home/clients/1ad70947204e8c183277aef186ddd353/web/wp-includes/class-wp-hook.php(353):
+        Automattic\\WooCommerce\\Blocks\\Payments\\Api-&gt;add_payment_method_script_data(&#8221;)
+        #10 /home/clients/1ad70947204e8c183277aef186ddd353/web/wp-includes/class-wp-hook.php(377):
+        WP_Hook-&gt;apply_filters(&#8221;, Array) #11 /home/clients/1ad70947204e8c183277aef186ddd353/web/wp-includes/plugin.php(523):
+        WP_Hook-&gt;do_action(Array) #12 /home/clients/1ad70947204e8c183277aef186ddd353/web/wp-content/plugins/woocommerce/src/Blocks/BlockTypes/MiniCart.php(221):
+        do_action(&#8216;woocommerce_blo&#8230;&#8217;) #13 /home/clients/1ad70947204e8c183277aef186ddd353/web/wp-content/plugins/woocommerce/src/Blocks/BlockTypes/AbstractBlock.php(114):
+        Automattic\\WooCommerce\\Blocks\\BlockTypes\\MiniCart-&gt;enqueue_data() #14
+        /home/clients/1ad70947204e8c183277aef186ddd353/web/wp-includes/class-wp-hook.php(353):
+        Automattic\\WooCommerce\\Blocks\\BlockTypes\\AbstractBlock-&gt;enqueue_editor_assets(&#8221;)
+        #15 /home/clients/1ad70947204e8c183277aef186ddd353/web/wp-includes/class-wp-hook.php(377):
+        WP_Hook-&gt;apply_filters(NULL, Array) #16 /home/clients/1ad70947204e8c183277aef186ddd353/web/wp-includes/plugin.php(523):
+        WP_Hook-&gt;do_action(Array) #17 /home/clients/1ad70947204e8c183277aef186ddd353/web/wp-includes/class-wp-customize-widgets.php(899):
+        do_action(&#8216;enqueue_block_e&#8230;&#8217;) #18 /home/clients/1ad70947204e8c183277aef186ddd353/web/wp-includes/class-wp-hook.php(353):
+        WP_Customize_Widgets-&gt;enqueue_scripts(&#8221;) #19 /home/clients/1ad70947204e8c183277aef186ddd353/web/wp-includes/class-wp-hook.php(377):
+        WP_Hook-&gt;apply_filters(NULL, Array) #20 /home/clients/1ad70947204e8c183277aef186ddd353/web/wp-includes/plugin.php(523):
+        WP_Hook-&gt;do_action(Array) #21 /home/clients/1ad70947204e8c183277aef186ddd353/web/wp-admin/customize.php(133):
+        do_action(&#8216;customize_contr&#8230;&#8217;) #22 {main} thrown in <strong>/home/clients/1ad70947204e8c183277aef186ddd353/web/wp-content/plugins/booked/includes/add-ons/woocommerce-payments/lib/woocommerce/class-wc-cart.php</strong>
+        on line <strong>152</strong></em></p>\n\n\n<ul id=\"bbp-topic-revision-log-19032924\"
+        class=\"bbp-topic-revision-log\">\n\n\t<li id=\"bbp-topic-revision-log-19032924-item-19032931\"
+        class=\"bbp-topic-revision-log-item\">\n\t\tThis topic was modified 1 week,
+        2 days ago by <a href=\"https://wordpress.org/support/users/mdadvent/\" title=\"View
+        mdadvent&#039;s profile\" class=\"bbp-author-link\"><span class=\"bbp-author-name\">mdadvent</span></a>.\n\t</li>\n\n</ul>\n\n\t\t\t\t\t\t]]>\n\t\t\t\t\t</description>\n\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t</item>\n\n\t\t\t\t\t\t\t\n\t\t\n\t</channel>\n\t</rss>\n\n"
+    headers:
+      alt-svc:
+      - clear
+      connection:
+      - keep-alive
+      content-length:
+      - '60635'
+      content-type:
+      - application/rss+xml; charset=UTF-8
+      date:
+      - Fri, 09 Oct 2026 23:27:14 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=3600
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      - accept, content-type
+      x-frame-options:
+      - SAMEORIGIN
+      x-nc:
+      - MISS dca 2
+      x-robots-tag:
+      - noindex, follow
+    status:
+      code: 200
+      message: OK
+version: 1

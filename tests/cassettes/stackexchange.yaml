@@ -1,0 +1,869 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - api.stackexchange.com
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://api.stackexchange.com/2.3/search/advanced?filter=withbody&fromdate=1790294400&order=desc&page=1&pagesize=15&site=softwarerecs&sort=creation
+  response:
+    body:
+      string: '{"items": [{"tags": ["automation", "windows-10", "touchscreen"], "owner":
+        {"account_id": 28955962, "reputation": 1, "user_id": 109190, "user_type":
+        "registered", "profile_image": "redacted", "display_name": "redacted", "link":
+        "redacted"}, "is_answered": false, "view_count": 7, "answer_count": 0, "score":
+        0, "last_activity_date": 1791506940, "creation_date": 1791506940, "question_id":
+        95671, "content_license": "CC BY-SA 4.0", "link": "https://softwarerecs.stackexchange.com/questions/95671/software-that-converts-pen-hovering-mode-to-pen-contact-down-down-mode",
+        "title": "Software that converts pen hovering mode to pen contact/down down
+        mode", "body": "<p>I am looking for a Windows utility or tool capable of remapping
+        or converting stylus hover (proximity) events into an active contact/press
+        event system-wide.</p>\n<h3>Requirement</h3>\n<p>On a Windows 10 touchscreen
+        laptop (Lenovo Yoga with active stylus), I want the system to treat the pen''s
+        hover state (when the nib is close to the screen without touching) as if it
+        were a physical pen press or click.</p>\n<h3>Key Criteria</h3>\n<ul>\n<li><strong>Platform:</strong>
+        Windows 10 64-bit.</li>\n<li><strong>Core Feature:</strong> Automatically
+        trigger a pen down / touch event as soon as the stylus enters hover range,
+        or allow toggling this behavior.</li>\n<li><strong>Type of Software:</strong>
+        Background utility, input remapper, custom driver filter, or tablet configuration
+        tool.</li>\n</ul>\n<p>I tried to code it with autohotkey v2 but it can''t
+        suppress the native pen and stylus inputs hover mode. So, the stylus pen switched
+        between hover mode and contact mode and it caused instabilities.</p>\n<p>Is
+        there any other existing software or input remapper or a better code autohotkey
+        v2 that can perform this hover-to-touch transformation for active styluses
+        ?</p>\n"}, {"tags": ["android", "window-manager"], "owner": {"account_id":
+        2932158, "reputation": 157, "user_id": 107803, "user_type": "registered",
+        "profile_image": "redacted", "display_name": "redacted", "link": "redacted"},
+        "is_answered": false, "view_count": 9, "answer_count": 0, "score": -2, "last_activity_date":
+        1791490159, "creation_date": 1791490159, "question_id": 95670, "content_license":
+        "CC BY-SA 4.0", "link": "https://softwarerecs.stackexchange.com/questions/95670/is-there-an-android-shell-program-to-switch-to-any-open-application-according-to",
+        "title": "Is there an Android shell program to switch to any open application
+        according to some criteria?", "body": "<p>I''d like to get recommended an
+        Android program to switch to any open\napplication window according to a set
+        of criteria.</p>\n<p>For example I''d like to be able to type</p>\n<pre><code>window-select
+        \\\n  &quot;throw google out of the window&quot;\n</code></pre>\n<p>or more
+        like</p>\n<pre><code>wm \\\n  focus \\\n    &quot;throw google out of the
+        window&quot;\n</code></pre>\n<p>to bring to focus the last focused browser
+        window opened\non any webpage whose browser window title contains the text\n<em>throw
+        google out of the window</em>.</p>\n<p>I am aware Google puts its <code>wm</code>
+        window manager command,\nwhich of course has no <code>focus</code> sub-command,\nin
+        <code>/system/bin/wm</code>, so I suppose a proper <code>wm</code>\nprogram
+        to be placed in\n<code>/data/data/why-on-hell/bin/wm</code> or <em>GASP</em>
+        in\n<code>/usr/bin/wm</code> could very\nmuch be appropriate as an answer
+        to this question.</p>\n"}, {"tags": ["android", "android-app", "window-manager"],
+        "owner": {"account_id": 2932158, "reputation": 157, "user_id": 107803, "user_type":
+        "registered", "profile_image": "redacted", "display_name": "redacted", "link":
+        "redacted"}, "is_answered": false, "view_count": 18, "answer_count": 1, "score":
+        0, "last_activity_date": 1791479117, "creation_date": 1791477482, "question_id":
+        95668, "content_license": "CC BY-SA 4.0", "link": "https://softwarerecs.stackexchange.com/questions/95668/is-there-an-android-shell-program-which-returns-open-windows-titles-in-last-focu",
+        "title": "Is there an Android shell program which returns open windows titles
+        in last focus sorting?", "body": "<p>On all popular operating systems are
+        available system programs\nwhich return open windows titles sorted by some
+        criteria.</p>\n<p>In the last 20 years or so though I''ve never seen or heard\nabout
+        one for Android, so I was wondering if it existed at all.</p>\n"}, {"tags":
+        ["android", "ios", "api", "web-services", "package-manager"], "owner": {"account_id":
+        47179869, "reputation": 11, "user_id": 109157, "user_type": "registered",
+        "profile_image": "redacted", "display_name": "redacted", "link": "redacted"},
+        "is_answered": false, "view_count": 9, "answer_count": 0, "score": 1, "last_activity_date":
+        1791277244, "creation_date": 1791277244, "question_id": 95656, "content_license":
+        "CC BY-SA 4.0", "link": "https://softwarerecs.stackexchange.com/questions/95656/tool-or-service-that-tracks-deprecations-and-breaking-changes-per-library-versio",
+        "title": "Tool or service that tracks deprecations and breaking changes per
+        library version, with an API or feed", "body": "<p>I need a tool or service
+        that tells me, for a given library and version, whether it has been\ndeprecated
+        or whether newer releases contain breaking changes, before I upgrade.</p>\n<p>Requirements:</p>\n<ul>\n<li>Ecosystems:
+        npm and Maven/Gradle (Android) at least; CocoaPods and Swift Package Manager
+        would be a big plus</li>\n<li>Reports deprecations (with dates when available)
+        and breaking changes, not only new versions</li>\n<li>Machine-readable access:
+        REST API, RSS/Atom feed or downloadable data</li>\n<li>Free or open source
+        preferred; a self-hostable tool is fine</li>\n<li>Works from a list of dependencies
+        (e.g. an SBOM or package.json), without uploading source code</li>\n</ul>\n<p>What
+        I already tried:</p>\n<ul>\n<li>Dependabot / Renovate: they open update PRs,
+        but don''t say what breaks before upgrading</li>\n<li>OSV and deps.dev: great
+        for vulnerabilities and the npm &quot;deprecated&quot; flag, but no breaking
+        changes</li>\n<li>GitHub releases.atom: works, but it''s free text per repository,
+        not structured</li>\n<li>ChangeRadar: covers developer platforms and AI tools,
+        not libraries</li>\n</ul>\n<p>Is there anything that covers this, even partially?</p>\n"},
+        {"tags": ["windows", "backup", "file-synchronization", "windows-server", "sharepoint"],
+        "owner": {"account_id": 47176422, "reputation": 21, "user_id": 109144, "user_type":
+        "registered", "profile_image": "redacted", "display_name": "redacted", "link":
+        "redacted"}, "is_answered": false, "view_count": 30, "answer_count": 0, "score":
+        1, "last_activity_date": 1791527260, "creation_date": 1791217053, "last_edit_date":
+        1791277844, "question_id": 95655, "content_license": "CC BY-SA 4.0", "link":
+        "https://softwarerecs.stackexchange.com/questions/95655/tool-recommendation-to-sync-backup-local-file-server-to-sharepoint-online",
+        "title": "Tool recommendation to sync/backup local File Server to SharePoint
+        Online", "body": "<p>I''m looking for a reliable tool to back up and migrate
+        files from our local Windows File Server to SharePoint Online.</p>\n<p>We
+        need something that preserves folder structure, timestamps, and handles long
+        file paths well without crashing. Incremental sync support is essential for
+        us.</p>\n"}, {"tags": ["search", "search-engine", "internet", "text-search",
+        "google"], "owner": {"account_id": 47172465, "reputation": 11, "user_id":
+        109137, "user_type": "unregistered", "profile_image": "redacted", "display_name":
+        "redacted", "link": "redacted"}, "is_answered": false, "view_count": 20, "answer_count":
+        0, "score": 0, "last_activity_date": 1791450485, "creation_date": 1791127384,
+        "last_edit_date": 1791450485, "question_id": 95654, "content_license": "CC
+        BY-SA 4.0", "link": "https://softwarerecs.stackexchange.com/questions/95654/using-google-or-any-other-search-engine-to-search-for-pdfs-with-fixed-page-ran",
+        "title": "Using Google (or any other search engine) to search for PDFs with
+        fixed page range", "body": "<p>I would like to search the internet for a PDF
+        with a fixed range of pages, e.g.</p>\n<p>&quot;Title of the PDF filetype:pdf
+        pages:50-120&quot;</p>\n<p>should search for pdf files called &quot;Title
+        of the PDF&quot; with a page count/number of pages of the PDF between 50 and
+        120.</p>\n<p>Is there any search engine for which this is possible or any
+        other way to do this?</p>\n"}, {"tags": ["web-apps", "cross-platform", "self-hosted",
+        "android-app"], "owner": {"account_id": 2932158, "reputation": 157, "user_id":
+        107803, "user_type": "registered", "profile_image": "redacted", "display_name":
+        "redacted", "link": "redacted"}, "is_answered": true, "view_count": 43, "accepted_answer_id":
+        95650, "answer_count": 1, "score": -2, "last_activity_date": 1791479498, "creation_date":
+        1790911763, "last_edit_date": 1791479498, "question_id": 95649, "content_license":
+        "CC BY-SA 4.0", "link": "https://softwarerecs.stackexchange.com/questions/95649/is-there-an-app-store-from-which-applications-cant-be-taken-down-by-anybody-no",
+        "title": "Is there an app store from which applications can&#39;t be taken
+        down by anybody, not even by myself?", "body": "<p>This question of mine is
+        about whether it exists\nan application store from which applications\ncan''t
+        be deleted from after published independently\nfrom one''s will and even after
+        the developer has\ndeceased.</p>\n"}, {"tags": ["android", "software-development",
+        "json", "shell-scripting", "adb"], "owner": {"account_id": 2932158, "reputation":
+        157, "user_id": 107803, "user_type": "registered", "profile_image": "redacted",
+        "display_name": "redacted", "link": "redacted"}, "is_answered": true, "view_count":
+        29, "accepted_answer_id": 95651, "answer_count": 1, "score": 0, "last_activity_date":
+        1791367036, "creation_date": 1790818304, "last_edit_date": 1791367036, "question_id":
+        95646, "content_license": "CC BY-SA 4.0", "link": "https://softwarerecs.stackexchange.com/questions/95646/is-there-a-program-which-returns-the-output-of-dumpsys-activity-activities-as",
+        "title": "Is there a program which returns the output of `dumpsys activity
+        activities` as a JSON?", "body": "<p>I need to parse Android Debug Bridge''s
+        <code>dumpsys activity activities</code>\ninto JSON.</p>\n<p>Do you know if
+        there already exists a program which does it?</p>\n"}, {"tags": ["android",
+        "software-development", "json", "adb"], "owner": {"account_id": 2932158, "reputation":
+        157, "user_id": 107803, "user_type": "registered", "profile_image": "redacted",
+        "display_name": "redacted", "link": "redacted"}, "is_answered": true, "view_count":
+        46, "accepted_answer_id": 95645, "answer_count": 1, "score": -1, "last_activity_date":
+        1791179792, "creation_date": 1790694851, "last_edit_date": 1791179792, "question_id":
+        95640, "content_license": "CC BY-SA 4.0", "link": "https://softwarerecs.stackexchange.com/questions/95640/is-there-a-program-which-returns-the-output-of-dumpsys-window-windows-as-a-jso",
+        "title": "Is there a program which returns the output of `dumpsys window windows`
+        as a JSON?", "body": "<p>I would like\nto know if it exists a program which\nreturns
+        the output of Android Debug Bridge''s <code>dumpsys window windows</code>\nas
+        a JSON for easier parsing.</p>\n"}], "has_more": false, "quota_max": 300,
+        "quota_remaining": 237}'
+    headers:
+      access-control-allow-credentials:
+      - 'false'
+      access-control-allow-methods:
+      - GET, POST
+      access-control-allow-origin:
+      - '*'
+      cache-control:
+      - private
+      cf-cache-status:
+      - DYNAMIC
+      cf-ray:
+      - a48128aaca1815e8-IAD
+      connection:
+      - keep-alive
+      content-length:
+      - '11299'
+      content-security-policy:
+      - upgrade-insecure-requests; frame-ancestors 'self' https://stackexchange.com
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:27:56 GMT
+      server:
+      - cloudflare
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      vary:
+      - accept-encoding
+      x-clacks-overhead:
+      - GNU Terry Pratchett
+      x-content-type-options:
+      - nosniff
+      x-providence-cookie:
+      - 57b76fe6-42ce-4237-91c5-b4e9fbaf803d
+      x-request-guid:
+      - 5712f1f3-4e86-4885-9ab2-1f61f95fbc64
+      x-worker-origin-response-time:
+      - '59000000'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - api.stackexchange.com
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://api.stackexchange.com/2.3/search/advanced?filter=withbody&fromdate=1790294400&order=desc&page=1&pagesize=15&site=law&sort=creation
+  response:
+    body:
+      string: "{\"items\": [{\"tags\": [\"intellectual-property\", \"youtube\"], \"owner\":
+        {\"account_id\": 31972705, \"reputation\": 291, \"user_id\": 105884, \"user_type\":
+        \"registered\", \"profile_image\": \"redacted\", \"display_name\": \"redacted\",
+        \"link\": \"redacted\"}, \"is_answered\": false, \"view_count\": 13, \"answer_count\":
+        0, \"score\": 0, \"last_activity_date\": 1791584189, \"creation_date\": 1791582022,
+        \"last_edit_date\": 1791584189, \"question_id\": 115711, \"content_license\":
+        \"CC BY-SA 4.0\", \"link\": \"https://law.stackexchange.com/questions/115711/can-a-youtube-channel-claim-intellectual-property-protection-over-their-thumbnai\",
+        \"title\": \"Can a YouTube channel claim intellectual property protection
+        over their thumbnail styles?\", \"body\": \"<p>Can a YouTube channel claim
+        intellectual property protection over the style of their custom thumbnails,
+        including the overall layout (including arrangement, text transform effects
+        like rotations and tilts) and artistic style? Note that this covers all elements
+        of the style together, not individual elements.</p>\\n\"}, {\"tags\": [\"criminal-law\",
+        \"georgia\", \"sentencing\", \"sexual-offences\", \"prison\"], \"owner\":
+        {\"account_id\": 47196067, \"reputation\": 1, \"user_id\": 106600, \"user_type\":
+        \"registered\", \"profile_image\": \"redacted\", \"display_name\": \"redacted\",
+        \"link\": \"redacted\"}, \"is_answered\": false, \"view_count\": 41, \"answer_count\":
+        2, \"score\": 0, \"last_activity_date\": 1791586941, \"creation_date\": 1791567627,
+        \"last_edit_date\": 1791586941, \"question_id\": 115708, \"content_license\":
+        \"CC BY-SA 4.0\", \"link\": \"https://law.stackexchange.com/questions/115708/what-is-the-time-actually-served-on-5-life-sentences-in-georgia\",
+        \"title\": \"What is the time actually served on 5 life sentences in Georgia?\",
+        \"body\": \"<p>If a defendant is found guilty of child molestation in the
+        State of Georgia, and he is sentenced to 5 life sentences; how much time will
+        they actually serve?</p>\\n\"}, {\"tags\": [\"government-officers\", \"notary-public\"],
+        \"owner\": {\"account_id\": 510067, \"reputation\": 5132, \"user_id\": 3423,
+        \"user_type\": \"registered\", \"accept_rate\": 32, \"profile_image\": \"redacted\",
+        \"display_name\": \"redacted\", \"link\": \"redacted\"}, \"is_answered\":
+        true, \"view_count\": 108, \"answer_count\": 2, \"score\": 2, \"last_activity_date\":
+        1791583597, \"creation_date\": 1791509006, \"last_edit_date\": 1791583597,
+        \"question_id\": 115705, \"content_license\": \"CC BY-SA 4.0\", \"link\":
+        \"https://law.stackexchange.com/questions/115705/is-a-notary-public-an-official-or-an-officer-of-the-state\",
+        \"title\": \"Is a notary public an &quot;official&quot; or an &quot;officer&quot;
+        of the state?\", \"body\": \"<p>To what degree and in what manner is a notary
+        public an official/officer/etc. of the state?</p>\\n\"}, {\"tags\": [\"capital-punishment\",
+        \"tennessee\"], \"owner\": {\"account_id\": 11028054, \"reputation\": 5963,
+        \"user_id\": 35478, \"user_type\": \"registered\", \"profile_image\": \"redacted\",
+        \"display_name\": \"redacted\", \"link\": \"redacted\"}, \"is_answered\":
+        true, \"view_count\": 1182, \"answer_count\": 1, \"score\": 22, \"last_activity_date\":
+        1791555561, \"creation_date\": 1791383636, \"last_edit_date\": 1791386158,
+        \"question_id\": 115700, \"content_license\": \"CC BY-SA 4.0\", \"link\":
+        \"https://law.stackexchange.com/questions/115700/what-is-the-legal-threshold-for-switching-from-execution-to-life-saving-medical\",
+        \"title\": \"What is the legal threshold for switching from execution to life
+        saving medical intervention?\", \"body\": \"<p>In the recent case of Christa
+        Pike a &quot;botched&quot; execution turned into an emergency life saving
+        exercise.  The result was that she was placed on a mechanical ventilator to
+        sustain her life.</p>\\n<p>It would be one thing if she was able to survive
+        and keep breathing on her own, but it seems rather odd that the state that
+        fully intended to end her life would instead suddenly go to extraordinary
+        lengths to extend it by artificial means.</p>\\n<p>Obviously the drugs did
+        not have the immediate intended effect, (<em>presumably by meeting the criteria
+        of stopping her heart...</em>) but it seems that if she was unconscious and
+        had stopped breathing the net result would have been a successful execution,
+        albeit with a short unplanned process delay while waiting for the heart to
+        stop next.</p>\\n<p>Is there a legal standard that describes specifically
+        <strong>at which point the state must switch</strong> from ending a life to
+        attempting to revive the &quot;patient&quot; they intended to kill mere moments
+        before?</p>\\n\"}, {\"tags\": [\"capital-punishment\", \"tennessee\"], \"owner\":
+        {\"account_id\": 3083041, \"reputation\": 1954, \"user_id\": 34620, \"user_type\":
+        \"registered\", \"profile_image\": \"redacted\", \"display_name\": \"redacted\",
+        \"link\": \"redacted\"}, \"is_answered\": true, \"view_count\": 858, \"accepted_answer_id\":
+        115698, \"answer_count\": 1, \"score\": 13, \"last_activity_date\": 1791359188,
+        \"creation_date\": 1791276868, \"last_edit_date\": 1791296039, \"question_id\":
+        115697, \"content_license\": \"CC BY-SA 4.0\", \"link\": \"https://law.stackexchange.com/questions/115697/what-next-in-a-failed-execution\",
+        \"title\": \"What next in a failed execution?\", \"body\": \"<p>What is the
+        status of Christa Pike, who at this moment is in a hospital after \u201Csurviving
+        \u201C an execution attempt by the State of Tennessee?</p>\\n<ol>\\n<li>Assuming
+        she recovers, may the State try again? Or is the sentence deemed to have been
+        carried out?</li>\\n<li>If she remains unconscious, is there a limit to how
+        long she is hospitalized?</li>\\n<li>If she is left with a permanent disability
+        as a result of the execution attempt, would the State have some liability?</li>\\n</ol>\\n\"},
+        {\"tags\": [\"contract-law\", \"banking\", \"debt\", \"nigeria\"], \"owner\":
+        {\"account_id\": 47179845, \"reputation\": 17, \"user_id\": 106550, \"user_type\":
+        \"registered\", \"profile_image\": \"redacted\", \"display_name\": \"redacted\",
+        \"link\": \"redacted\"}, \"is_answered\": false, \"view_count\": 69, \"closed_date\":
+        1791319684, \"answer_count\": 0, \"score\": -2, \"last_activity_date\": 1791276657,
+        \"creation_date\": 1791276657, \"question_id\": 115696, \"link\": \"https://law.stackexchange.com/questions/115696/i-need-an-authority-on-the-sufficiency-of-a-bank-statement-of-account-to-prove-a\",
+        \"closed_reason\": \"Not suitable for this site\", \"title\": \"I need an
+        authority on the sufficiency of a bank statement of account to prove a loan\",
+        \"body\": \"<p>Where a loan agreement is missing, I need a Nigerian authority
+        in support of sufficiency of a statement of account to prove the loan and
+        accruable imterest</p>\\n\"}, {\"tags\": [\"copyright\", \"software\"], \"owner\":
+        {\"account_id\": 31972705, \"reputation\": 291, \"user_id\": 105884, \"user_type\":
+        \"registered\", \"profile_image\": \"redacted\", \"display_name\": \"redacted\",
+        \"link\": \"redacted\"}, \"is_answered\": true, \"view_count\": 93, \"closed_date\":
+        1791101938, \"accepted_answer_id\": 115692, \"answer_count\": 1, \"score\":
+        -2, \"last_activity_date\": 1791076353, \"creation_date\": 1791075217, \"last_edit_date\":
+        1791076353, \"question_id\": 115691, \"link\": \"https://law.stackexchange.com/questions/115691/is-the-feature-set-of-computer-software-subject-to-copyright\",
+        \"closed_reason\": \"Duplicate\", \"title\": \"Is the feature set of computer
+        software subject to copyright?\", \"body\": \"<p>Is the feature set* of computer
+        software subject to copyright (or part of a software's copyright), so a second
+        program can have the <em>exact</em> feature set (without &quot;more&quot;
+        or &quot;less&quot; features) with original UI and code? (This is a follow
+        up to my <a href=\\\"https://law.stackexchange.com/questions/115689/is-cloning-functionality-of-a-software-exactly-as-is-without-adding-or-removing\\\">previous
+        question</a>)</p>\\n<hr />\\n<p><sup>* By &quot;feature set,&quot; I mean
+        the functionality of the software, and the amount of such functions.</sup></p>\\n\"},
+        {\"tags\": [\"copyright\", \"software\"], \"owner\": {\"account_id\": 31972705,
+        \"reputation\": 291, \"user_id\": 105884, \"user_type\": \"registered\", \"profile_image\":
+        \"redacted\", \"display_name\": \"redacted\", \"link\": \"redacted\"}, \"is_answered\":
+        true, \"view_count\": 112, \"accepted_answer_id\": 115690, \"answer_count\":
+        1, \"score\": -4, \"last_activity_date\": 1791059714, \"creation_date\": 1791053734,
+        \"last_edit_date\": 1791058085, \"question_id\": 115689, \"content_license\":
+        \"CC BY-SA 4.0\", \"link\": \"https://law.stackexchange.com/questions/115689/is-cloning-functionality-of-a-software-exactly-as-is-without-adding-or-removing\",
+        \"title\": \"Is cloning functionality of a software exactly as is, without
+        adding or removing functionality compared to the original, a copyright violation?\",
+        \"body\": \"<p>An example of this can be found on the audio and music production
+        market, as an example, the Logic Pro DAW contains various built-in plugins.
+        If these plugins' functionality is cloned with the same exact set of functionality
+        and controls, but with original UI etc. is this a copyright violation? The
+        same thing can be said if another DAW happens to have the same set of plugins
+        found in Logic Pro, but with different names and UI. Some sources say that
+        adding new functionality is essential.</p>\\n\"}, {\"tags\": [\"patents\"],
+        \"owner\": {\"account_id\": 7100267, \"reputation\": 543, \"user_id\": 46457,
+        \"user_type\": \"registered\", \"profile_image\": \"redacted\", \"display_name\":
+        \"redacted\", \"link\": \"redacted\"}, \"is_answered\": false, \"view_count\":
+        82, \"closed_date\": 1791404561, \"answer_count\": 0, \"score\": -3, \"last_activity_date\":
+        1790999248, \"creation_date\": 1790999248, \"question_id\": 115685, \"link\":
+        \"https://law.stackexchange.com/questions/115685/gated-network-communication-in-regards-to-101-abstract-idea\",
+        \"closed_reason\": \"Not suitable for this site\", \"title\": \"Gated network
+        communication in regards to 101 abstract idea\", \"body\": \"<p><a href=\\\"https://patents.google.com/patent/US12015615B2/en?oq=US-12015615-B2\\\"
+        rel=\\\"nofollow noreferrer\\\">https://patents.google.com/patent/US12015615B2/en?oq=US-12015615-B2</a></p>\\n<p>Regarding
+        the patent above, it is clearly directed to an abstract idea of managing human
+        interactions and communications.</p>\\n<p>Yet it is allowed. This must mean
+        that it clears Step 2A Prong Two (integrated into a practical application)
+        or Step 2B (non-conventional inventive step).</p>\\n<p>My guess is that it
+        cleared Step 2A Pron Two.</p>\\n<p>The only conceivable additional element
+        that is non-generic is this:</p>\\n<p><code>enabling network communication
+        between the first individual and the second individual in response to the
+        match.</code></p>\\n<p>Questions:</p>\\n<ol>\\n<li>Do you agree that enabling
+        network communications in response to some rule is what got it to clear the
+        101 rejection?</li>\\n<li>If so, why? Is there precedent in how courts rule
+        on gated network communications?</li>\\n<li>Does it need the &quot;in response
+        to something&quot; trigger?</li>\\n<li>What if it just recites <code>enabling
+        network communication between the first individual and the second individual</code>?</li>\\n</ol>\\n<p>In
+        plain English, two electronic devices communicating over a network definitely
+        sounds like a &quot;practical application&quot; to me. But if you leave out
+        the &quot;in response to the abstract idea&quot;, would it be a practical
+        application but not integrated with the abstract idea?</p>\\n\"}, {\"tags\":
+        [\"copyright\", \"music\"], \"owner\": {\"account_id\": 31972705, \"reputation\":
+        291, \"user_id\": 105884, \"user_type\": \"registered\", \"profile_image\":
+        \"redacted\", \"display_name\": \"redacted\", \"link\": \"redacted\"}, \"is_answered\":
+        false, \"view_count\": 146, \"answer_count\": 1, \"score\": 0, \"last_activity_date\":
+        1790891621, \"creation_date\": 1790885367, \"question_id\": 115679, \"content_license\":
+        \"CC BY-SA 4.0\", \"link\": \"https://law.stackexchange.com/questions/115679/is-the-handpans-basic-structure-copyrighted\",
+        \"title\": \"Is the handpan&#39;s basic structure copyrighted?\", \"body\":
+        \"<p>I heard that the basic structure of the Handpan (a musical instrument
+        based on the Hang, manufactured in the 2000s and early 2010s) has been copyright-claimed
+        by the creators of the Hang, and there were multiple cases where instruments
+        have been seized, including a case in the Netherlands. Is this true?</p>\\n\"},
+        {\"tags\": [\"england-and-wales\"], \"owner\": {\"account_id\": 1225542, \"reputation\":
+        385, \"user_id\": 16021, \"user_type\": \"registered\", \"profile_image\":
+        \"redacted\", \"display_name\": \"redacted\", \"link\": \"redacted\"}, \"is_answered\":
+        true, \"view_count\": 1111, \"accepted_answer_id\": 115688, \"answer_count\":
+        3, \"score\": 5, \"last_activity_date\": 1791054063, \"creation_date\": 1790867654,
+        \"last_edit_date\": 1790951102, \"question_id\": 115676, \"content_license\":
+        \"CC BY-SA 4.0\", \"link\": \"https://law.stackexchange.com/questions/115676/are-there-any-other-obstacles-to-registering-a-company-in-someone-elses-name\",
+        \"title\": \"Are there any other obstacles to registering a company in someone
+        else&#39;s name?\", \"body\": \"<p>A few years ago footballer Achraf Hakimi
+        made headlines because his wife of 5 years wanted 50% of his estimated $40
+        million fortune, and this was refused by the Spanish courts because he had
+        registered the majority of his assets in his mother's name, giving him on
+        paper a lower net worth than hers. <a href=\\\"https://www.acumenlaw.co.uk/news/before-you-all-go-and-do-a-hakimi\\\"
+        rel=\\\"noreferrer\\\">This UK law company</a> does a good job of summarising
+        the case and the disadvantages. Namely, these are:</p>\\n<ul>\\n<li>That most
+        of those assets would be given to his siblings if they were named in his mother's
+        will</li>\\n<li>That his mother might turn against him, be financially irresponsible,
+        manipulated, scammed, hacked, etc.</li>\\n<li>That any assets &quot;deliberately&quot;
+        transferred to his mother within three years of the divorce filing are still
+        likely to be considered his</li>\\n</ul>\\n<p>Let's hypothetically assume
+        that none of these apply to me: I fully trust my mother now and forever, am
+        named as her sole beneficiary, and I want to set up a limited company with
+        her as the sole director. What other obstacles or risks would there be to
+        setting a company up in this way?</p>\\n<p>Primarily looking for <a href=\\\"/questions/tagged/england-and-wales\\\"
+        class=\\\"s-tag post-tag\\\" title=\\\"show questions tagged &#39;england-and-wales&#39;\\\"
+        aria-label=\\\"show questions tagged &#39;england-and-wales&#39;\\\" rel=\\\"tag\\\"
+        aria-describedby=\\\"tag-england-and-wales-tooltip-container\\\" data-tag-menu-origin=\\\"Unknown\\\">england-and-wales</a>
+        but also interested in other jurisdictions.</p>\\n\"}, {\"tags\": [\"united-states\",
+        \"texas\", \"bankruptcy\"], \"owner\": {\"account_id\": 16044632, \"reputation\":
+        3240, \"user_id\": 41285, \"user_type\": \"registered\", \"profile_image\":
+        \"redacted\", \"display_name\": \"redacted\", \"link\": \"redacted\"}, \"is_answered\":
+        true, \"view_count\": 635, \"accepted_answer_id\": 115675, \"answer_count\":
+        1, \"score\": 7, \"last_activity_date\": 1791405479, \"creation_date\": 1790865949,
+        \"last_edit_date\": 1791405479, \"question_id\": 115674, \"content_license\":
+        \"CC BY-SA 4.0\", \"link\": \"https://law.stackexchange.com/questions/115674/bankruptcy-vs-partially-owned-assets\",
+        \"title\": \"Bankruptcy vs. partially-owned assets\", \"body\": \"<p>An individual
+        (let's call him &quot;John Schmidt&quot;) files for bankruptcy. He owns a
+        champion show dog. As is common in the dog showing world, he is technically
+        only a part-owner of the dog. In this case, the dog's breeder retains a 50%
+        stake, and the dog was sold to John under the condition that it cannot be
+        sold or re-homed without the breeder's explicit written permission.</p>\\n<p>Assuming
+        that his other assets are insufficient to cover the debt, what happens to
+        the dog?</p>\\n<p>(Yes, I am aware of <a href=\\\"https://law.stackexchange.com/q/100953/41285\\\">a
+        similar question</a>; it only considers the no-resale clause.)</p>\\n\"},
+        {\"tags\": [\"copyright\", \"patents\"], \"owner\": {\"account_id\": 31972705,
+        \"reputation\": 291, \"user_id\": 105884, \"user_type\": \"registered\", \"profile_image\":
+        \"redacted\", \"display_name\": \"redacted\", \"link\": \"redacted\"}, \"is_answered\":
+        true, \"view_count\": 214, \"accepted_answer_id\": 115670, \"answer_count\":
+        2, \"score\": 0, \"last_activity_date\": 1790944680, \"creation_date\": 1790788162,
+        \"question_id\": 115669, \"content_license\": \"CC BY-SA 4.0\", \"link\":
+        \"https://law.stackexchange.com/questions/115669/are-screen-resolutions-and-sizes-copyrightable-or-patentable\",
+        \"title\": \"Are screen resolutions and sizes copyrightable or patentable?\",
+        \"body\": \"<p>Are screen resolutions and sizes copyrightable or patentable?</p>\\n<p>As
+        an example, the 11-inch iPad Pro models have an 11-inch screen and a screen
+        resolution of 2360 x 1640 pixels, while the 12.9-inch models have a screen
+        resolution of 2732 x 2048 pixels. Can a competing mobile device manufacturer
+        use these resolutions, with or without the same screen size?</p>\\n\"}, {\"tags\":
+        [\"united-states\", \"us-constitution\", \"third-amendment\"], \"owner\":
+        {\"account_id\": 10284051, \"reputation\": 1144, \"user_id\": 12499, \"user_type\":
+        \"registered\", \"profile_image\": \"redacted\", \"display_name\": \"redacted\",
+        \"link\": \"redacted\"}, \"is_answered\": true, \"view_count\": 2409, \"answer_count\":
+        2, \"score\": 16, \"last_activity_date\": 1790964124, \"creation_date\": 1790727012,
+        \"question_id\": 115667, \"content_license\": \"CC BY-SA 4.0\", \"link\":
+        \"https://law.stackexchange.com/questions/115667/can-the-government-quarter-troops-in-your-yard-without-your-permission\",
+        \"title\": \"Can the government quarter troops in your yard without your permission?\",
+        \"body\": \"<p>The <a href=\\\"https://en.wikipedia.org/wiki/Third_Amendment_to_the_United_States_Constitution\\\"
+        rel=\\\"noreferrer\\\">Third Amendment to the Constitution of the United States</a>
+        reads, in full:</p>\\n<blockquote>\\n<p>No Soldier shall, in time of peace
+        be quartered in any <strong>house</strong>, without the consent of the Owner,
+        nor in time of war, but in a manner to be prescribed by law. <em>[Emphasis
+        added.]</em></p>\\n</blockquote>\\n<p>On the one hand, the Amendment specifically
+        mentions <em>houses</em> (and, more specifically, houses <em>with owners</em>).
+        \ On the other hand, the grievances James Madison et al. had in mind when
+        they wrote it involved the quartering of British troops in barns, outbuildings,
+        and vacant residences, rather than owned houses, and it would, thus, be a
+        rather odd oversight if the Third Amendment left the government a free hand
+        to quarter troops anywhere that isn't a house with an owner; and the word
+        &quot;house&quot; in law often actually refers to the whole property, not
+        just the physical house building itself.</p>\\n<p>So, does the Third Amendment
+        apply only to your physical house building?  Or can the government require
+        you to let troops be quartered in tents in your yard, as long as they don't
+        go in your house?</p>\\n\"}, {\"tags\": [\"copyright\", \"contract-law\"],
+        \"owner\": {\"account_id\": 47138903, \"reputation\": 3, \"user_id\": 106407,
+        \"user_type\": \"registered\", \"profile_image\": \"redacted\", \"display_name\":
+        \"redacted\", \"link\": \"redacted\"}, \"is_answered\": true, \"view_count\":
+        235, \"answer_count\": 4, \"score\": -4, \"last_activity_date\": 1790825474,
+        \"creation_date\": 1790618113, \"last_edit_date\": 1790825474, \"question_id\":
+        115656, \"content_license\": \"CC BY-SA 4.0\", \"link\": \"https://law.stackexchange.com/questions/115656/copyright-of-final-draft\",
+        \"title\": \"Copyright of Final Draft\", \"body\": \"<p>If an author contains
+        a final draft where all current contains were created with personal equipment
+        and personal time but deleted contents were not (author still has copy of
+        deleted contents just not in the final draft) basically author has copy of
+        previous work , deleted work, and final work.\\nIf contract says something
+        \u2018copyright is transferred if made with company time and company equipment\u2019
+        does that only pertain to the deleted content or does it somehow affect the
+        final/precious content?</p>\\n<p>Previous content means content made before
+        employment.</p>\\n<p>Deleted content means content that was made during company
+        time but got deleted.</p>\\n<p>Final content means content that does not include
+        deleted content but still includes some or most  elements of previous content.</p>\\n<p>the
+        similarities between each content is main characters or something like one
+        character being only mentioned in previous version but having different versions
+        of first speaking line appearances in deleted and final content.</p>\\n<p>Location:
+        Texas</p>\\n\"}], \"has_more\": true, \"quota_max\": 300, \"quota_remaining\":
+        237}"
+    headers:
+      access-control-allow-credentials:
+      - 'false'
+      access-control-allow-methods:
+      - GET, POST
+      access-control-allow-origin:
+      - '*'
+      cache-control:
+      - private
+      cf-cache-status:
+      - DYNAMIC
+      cf-ray:
+      - a48128ab6c8715e8-IAD
+      connection:
+      - keep-alive
+      content-length:
+      - '20170'
+      content-security-policy:
+      - upgrade-insecure-requests; frame-ancestors 'self' https://stackexchange.com
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:27:56 GMT
+      server:
+      - cloudflare
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      vary:
+      - accept-encoding
+      x-clacks-overhead:
+      - GNU Terry Pratchett
+      x-content-type-options:
+      - nosniff
+      x-providence-cookie:
+      - 57b76fe6-42ce-4237-91c5-b4e9fbaf803d
+      x-request-guid:
+      - b7a27ab4-2b24-4d55-a2f3-66a09b265834
+      x-worker-origin-response-time:
+      - '64000000'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - api.stackexchange.com
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://api.stackexchange.com/2.3/search/advanced?filter=withbody&fromdate=1790294400&order=desc&page=1&pagesize=10&q=is+there+a+tool&site=stackoverflow&sort=creation
+  response:
+    body:
+      string: '{"items": [{"tags": ["postgresql", "data-recovery"], "owner": {"account_id":
+        40239326, "reputation": 27, "user_id": 29678989, "user_type": "registered",
+        "profile_image": "redacted", "display_name": "redacted", "link": "redacted"},
+        "is_answered": false, "view_count": 72, "closed_date": 1791569773, "answer_count":
+        1, "score": 0, "last_activity_date": 1791578196, "creation_date": 1791563960,
+        "question_id": 80008957, "link": "https://stackoverflow.com/questions/80008957/is-postgresql-data-recoverable-after-an-accidental-truncate-cascade-when-the-sch",
+        "closed_reason": "Not suitable for this site", "title": "Is PostgreSQL data
+        recoverable after an accidental TRUNCATE CASCADE when the schema and tables
+        still exist but are empty?", "body": "<h3></h3>\n<p>Suppose a PostgreSQL 12
+        database contains a schema with multiple related tables.</p>\n<p>Data was
+        accidentally removed by executing <code>TRUNCATE ... CASCADE</code>. The schema
+        and table definitions still exist, including their columns, data types, indexes,
+        and relationships. However, the rows in the affected tables are gone, and
+        queries such as <code>SELECT COUNT(*)</code> return zero.</p>\n<p>No usable
+        backup from before the incident is available, and WAL archiving was disabled.
+        However, the underlying disk may still contain remnants of old PostgreSQL
+        heap pages or previous relation files.</p>\n<p><strong>Questions:</strong></p>\n<ol>\n<li><p>Is
+        it possible to recover rows from raw disk pages after <code>TRUNCATE CASCADE</code>?</p>\n</li>\n<li><p>Can
+        remaining WAL segments help reconstruct the deleted data if the required segments
+        are still available?</p>\n</li>\n<li><p>How can historical relation files
+        or raw heap tuples be reliably associated with their original schema and tables?</p>\n</li>\n<li><p>Which
+        tools and recovery techniques are recommended for extracting surviving records
+        without overwriting potentially recoverable data?</p>\n</li>\n<li><p>What
+        are the realistic recovery chances after <code>TRUNCATE CASCADE</code>, and
+        which technical factors determine whether recovery is possible?</p>\n</li>\n</ol>\n<p>I
+        am looking for a safe, evidence-based recovery approach that does not rely
+        on a backup and minimizes the risk of overwriting any remaining recoverable
+        data.</p>\n"}, {"tags": ["rust", "linux-kernel", "rust-bindgen"], "owner":
+        {"account_id": 180353, "reputation": 1934, "user_id": 1718761, "user_type":
+        "registered", "accept_rate": 87, "profile_image": "redacted", "display_name":
+        "redacted", "link": "redacted"}, "is_answered": false, "view_count": 55, "answer_count":
+        0, "score": 0, "last_activity_date": 1791566007, "creation_date": 1791511158,
+        "last_edit_date": 1791566007, "question_id": 80008811, "content_license":
+        "CC BY-SA 4.0", "link": "https://stackoverflow.com/questions/80008811/how-to-make-use-of-rust-functions-structs-in-rust-bindings-bindings-generated-rs",
+        "title": "How to make use of Rust functions/structs in rust/bindings/bindings_generated.rs?",
+        "body": "<p>I am working on a Rust LKM. My kernel is Rust enabled and the
+        Rust tool-chain is in working order. There are functions and structs from
+        the <code>net</code> framework that I need to make use of in <em>rust/bindings/bindings_generated.rs</em>
+        of the kernel sources on my machine.</p>\n<p>Though, if I change directory
+        into <em>rust/kernel</em> and recursively grep for the function or struct,
+        it''s not in use anywhere. So my understanding is, these functions are not
+        available in crate kernel. And of course if I look in crate kernel, I do not
+        see them listed.</p>\n<p>My question is, how can I start making use of (including)
+        these functions or struct''s that appear to exist in the bindings file for
+        my LKM?</p>\n"}, {"tags": ["bixby"], "owner": {"account_id": 25708503, "reputation":
+        1, "user_id": 19467424, "user_type": "registered", "profile_image": "redacted",
+        "display_name": "redacted", "link": "redacted"}, "is_answered": false, "view_count":
+        54, "answer_count": 0, "score": -6, "last_activity_date": 1791538029, "creation_date":
+        1791435580, "last_edit_date": 1791513248, "question_id": 80008604, "content_license":
+        "CC BY-SA 4.0", "link": "https://stackoverflow.com/questions/80008604/bixby-home-studio-voice-intent-list-is-empty-and-intent-params-returns-500",
+        "title": "Bixby Home Studio: voice intent list is empty and /intent/params
+        returns 500", "body": "<p><strong>Clarification:</strong> The failing interface
+        is Samsung''s hosted Bixby Home Studio web editor, not a page or HTTP client
+        implemented by me. The URL below is requested by that editor when I open its
+        intent selector. I do not have the source code for this editor or its <code>/intent/params</code>
+        backend. I am asking about configuring this developer tool for a SmartThings
+        Schema integration.</p>\n<p>I''m trying to set up an action flow for a SmartThings
+        Schema device in <a href=\"https://bhs.bixbydevelopers.com/\" rel=\"nofollow
+        noreferrer\">Bixby Home Studio</a>. I can sign in and see my SmartThings devices,
+        but I get stuck when choosing a voice intent.</p>\n<p>The UI steps are:</p>\n<ol>\n<li>Open
+        <code>https://bhs.bixbydevelopers.com/</code> and sign in with the Samsung
+        account that owns the connected SmartThings device.</li>\n<li>Let the SmartThings
+        location/device list load, then select the location/device.</li>\n<li>Start
+        creating a project/action flow <strong>from scratch</strong>.</li>\n<li>Open
+        the Bixby Voice Category / voice intent selector.</li>\n</ol>\n<p>Expected:
+        a list of categories/intents to choose from. Actual: an empty list and the
+        following failed request from the hosted editor:</p>\n<pre><code>https://bhs.bixbydevelopers.com/intent/params?locale=en-US&amp;visibility=DEVICE&amp;offset=0&amp;limit=100\n</code></pre>\n<p>The
+        error shown in the log is:</p>\n<pre><code>Failed to load intent\nHttp failure
+        response for https://bhs.bixbydevelopers.com/intent/params?locale=en-US&amp;visibility=DEVICE&amp;offset=0&amp;limit=100:
+        500 OK\nPlease contact Bixby Home Studio Team if you face this issue continually\n</code></pre>\n<p>The
+        device lookup still succeeds:</p>\n<pre><code>smartthings location / devices
+        fetched successfully [PRD]\n</code></pre>\n<p>I''ve tried en-US and ko-KR,
+        Chrome and an embedded browser on Windows, reloading, and signing out and
+        back in. I get the same result. The last reproduction I recorded was October
+        2, 2026, at 08:19 KST. I haven''t tested with another account.</p>\n<p>This
+        fails during setup, before I run any device command. Creating a flow from
+        capabilities gives me switch on/off/status, but I can''t use the from-scratch
+        intent selection described in the <a href=\"https://bixbydevelopers.com/dev/docs/bhs-dev-guide/developers/using-bhs\"
+        rel=\"nofollow noreferrer\">guide</a>.</p>\n<p>Does loading this list require
+        an extra account permission or Schema setting? If so, where can I check it?
+        If there isn''t an extra requirement, is there another way to select the intent
+        while this request is failing?</p>\n"}, {"tags": ["javascript", "audio", "applescript",
+        "spotify"], "owner": {"account_id": 47075026, "reputation": 9, "user_id":
+        33126434, "user_type": "registered", "profile_image": "redacted", "display_name":
+        "redacted", "link": "redacted"}, "is_answered": false, "view_count": 97, "closed_date":
+        1791405097, "answer_count": 0, "score": -7, "last_activity_date": 1791404126,
+        "creation_date": 1791404053, "last_edit_date": 1791404126, "question_id":
+        80008550, "link": "https://stackoverflow.com/questions/80008550/how-to-split-and-name-audio-hijack-recordings-based-on-spotify-metadata",
+        "closed_reason": "Needs more focus", "title": "How to split and name Audio
+        Hijack Recordings based on Spotify Metadata", "body": "<p>I''m looking for
+        a way to split audio recordings in Audio Hijack Pro and rename them based
+        on Spotify track changes and the according metadata.</p>\n<p>There was a similar
+        thread some years ago but unfortunately all these scripts seem to no longer
+        work with current software versions. Same for <a href=\"https://alexj.org/07/spotijack-0.6-released/\"
+        rel=\"nofollow noreferrer\">Spotijack</a>, a tool which did exactly that.</p>\n<p>I''m
+        using Audio Hijack Pro Vers. 4.6.0, Mac OS 26.7 and Spotify 1.3.3.264. Since
+        Audio Hijack offers a way to execute custom javascript scripts I think this
+        should be easily possible but unfortunately I have no knowledge about coding.
+        Not sure but I think Audio Hijack also supports Applescripts, right?</p>\n<p>Does
+        anybody have suggestions or functional scripts regarding this topic?</p>\n<p>Similar
+        thread: <a href=\"https://stackoverflow.com/questions/8567783/splitting-recording-in-audio-hijack-pro-on-spotify-track-change-applescript\">Splitting
+        recording in Audio Hijack Pro on spotify track change (Applescript)</a></p>\n"},
+        {"tags": ["advice", "c++", "datetime", "licensing"], "owner": {"account_id":
+        20649409, "reputation": 196, "user_id": 15160086, "user_type": "registered",
+        "profile_image": "redacted", "display_name": "redacted", "link": "redacted"},
+        "is_answered": false, "view_count": 157, "answer_count": 1, "score": -4, "last_activity_date":
+        1791555439, "creation_date": 1791383826, "last_edit_date": 1791555439, "question_id":
+        80008492, "content_license": "CC BY-SA 4.0", "link": "https://stackoverflow.com/questions/80008492/can-a-c-desktop-application-reliably-detect-system-clock-rollback-without-a-tr",
+        "title": "Can a C++ desktop application reliably detect system clock rollback
+        without a trusted external time source?", "body": "<p>I have a C++ desktop
+        application with a simple expiry-date license check based on the local system
+        clock.</p>\n<p>The application is normally used with an external device/modem,
+        but I cannot rely on that device as a time source: the tool may legitimately
+        be used while the device is disconnected, malfunctioning, not yet initialized,
+        or replaced by a simulator. Requiring permanent Internet access is also undesirable
+        because the tool may need to operate offline during testing.</p>\n<p>At startup
+        I currently do something like:</p>\n<pre class=\"lang-cpp prettyprint-override\"><code>bool
+        LicenseManager::IsDateValid()\n{\n    return wxDateTime::Now() &lt;= GetExpiryDate();\n}\n</code></pre>\n<p>I
+        understand that this is not specific to wxWidgets: the issue is that the local
+        wall clock is controlled by the machine running the application.</p>\n<p>I
+        considered persisting the maximum timestamp previously observed by the application.
+        This would allow detection of some rollbacks:</p>\n<pre class=\"lang-none
+        prettyprint-override\"><code>stored maximum:       2027-01-10\ncurrent system
+        time:  2026-12-01\n</code></pre>\n<p>However, this does not prove that the
+        current clock is correct. For example, if the stored maximum were <code>2026-11-01</code>,
+        setting the clock to <code>2026-12-01</code> would still pass the local check
+        even if the real date were in 2027.</p>\n<p>There is also no local baseline
+        on the first run.</p>\n<p>Am I correct that, without a trusted external time
+        source, an application cannot reliably determine that the system wall clock
+        has been manipulated?</p>\n<p>If that is the case, is persisting the maximum
+        observed timestamp only useful as a heuristic for detecting obvious rollback,
+        while stronger expiry validation requires an authenticated external time source?</p>\n"},
+        {"tags": ["javascript", "css", "reactjs", "webpack", "yarnpkg"], "owner":
+        {"account_id": 4640755, "reputation": 12920, "user_id": 3935035, "user_type":
+        "registered", "accept_rate": 86, "profile_image": "redacted", "display_name":
+        "redacted", "link": "redacted"}, "is_answered": false, "view_count": 114,
+        "closed_date": 1791383713, "answer_count": 0, "score": -3, "last_activity_date":
+        1791382394, "creation_date": 1791381198, "last_edit_date": 1791382394, "question_id":
+        80008484, "link": "https://stackoverflow.com/questions/80008484/when-building-and-serving-a-react-project-css-classes-are-loaded-in-the-wrong-o",
+        "closed_reason": "Not suitable for this site", "title": "When building and
+        serving a React project, CSS classes are loaded in the wrong order", "body":
+        "<p>I have a React/-DOM (both ^18.2.0) project which I build with Yarn (1.22.19)
+        and <code>react-scripts</code> (5.0.1).</p>\n<p>Within this project, I have
+        a self-written UI library, which is also written in React (only depending
+        on React-DOM). The UI library is compiled using Rollup (^4.0.2):</p>\n<pre
+        class=\"lang-json prettyprint-override\"><code>&quot;scripts&quot;: {\n  &quot;build&quot;:
+        &quot;rollup -c --bundleConfigAsCjs&quot;,\n  &quot;storybook&quot;: &quot;storybook
+        dev -p 6006&quot;,\n  &quot;build-storybook&quot;: &quot;storybook build&quot;\n},\n</code></pre>\n<p>Rollup
+        also depends on:</p>\n<pre class=\"lang-json prettyprint-override\"><code>&quot;rollup-plugin-dts&quot;:
+        &quot;^6.1.0&quot;,\n&quot;rollup-plugin-peer-deps-external&quot;: &quot;^2.2.4&quot;,\n&quot;rollup-plugin-postcss&quot;:
+        &quot;^4.0.2&quot;,\n&quot;@rollup/plugin-commonjs&quot;: &quot;^25.0.5&quot;,\n&quot;@rollup/plugin-image&quot;:
+        &quot;^3.0.3&quot;,\n&quot;@rollup/plugin-node-resolve&quot;: &quot;^15.2.3&quot;,\n&quot;@rollup/plugin-terser&quot;:
+        &quot;^0.4.4&quot;,\n&quot;@rollup/plugin-typescript&quot;: &quot;^11.1.5&quot;,\n</code></pre>\n<p>Within
+        the UI library, I use only vanilla CSS.</p>\n<p>When building (<code>yarn
+        build</code>) and serving the project that depends on the UI library, the
+        CSS classes are apparently loaded in the wrong order. Classes and styles I
+        inject via code (i.e. through an <code>additionalClasses</code> prop) from
+        the project into the UI library are no applied, because the classes from the
+        UI library get the higher specificity. This means</p>\n<pre class=\"lang-js
+        prettyprint-override\"><code>// Text coming from UI library, used in the project
+        (simplified)\n&lt;Text \n    variant={&quot;mb&quot;}\n    color={&quot;black&quot;}\n    onChange={event
+        =&gt; ...}\n    additionalClasses={&quot;exceptional-text&quot;}&gt;\nSome
+        Text\n&lt;/Text&gt;\n\n// UI Library implementation (simplified)\n&lt;p\n   className={clsx(_setVariantStyles(variant),
+        _setColor(color), additionalClasses)}\n&gt;\n{children}\n&lt;/p&gt;\n</code></pre>\n<p>The
+        result in the DOM is</p>\n<pre class=\"lang-html prettyprint-override\"><code>&lt;p
+        class=&quot;text-variant-medium font-weight-bold font-color-black exceptional-text&quot;&gt;Some
+        Text&lt;/p&gt;\n</code></pre>\n<p>But, when inspecting with the Dev tools,
+        I can see that styles applied via <code>exceptional-text</code> are overwritten
+        by <code>text-variant-medium font-weight-bold font-color-black</code> . I
+        also see, that in the order, in which the browser displays the classes, <code>expectional-text</code>
+        is all the way at the bottom.</p>\n<p>When I run the project with <code>yarn
+        start</code> , everything works fine. The styles from <code>exceptional-text</code>
+        get applied as expected. As soon as I build the project with <code>yarn build</code>,
+        the class and the styles are written into the DOM node, but, the specificity
+        gets changed.</p>\n<p>To rule out a few things:</p>\n<pre><code>text-variant-medium
+        font-weight-bold font-color-black\n</code></pre>\n<p>don''t use <code>!important</code>
+        in their styles or any other selector that could increase the specificity.</p>\n<p>In
+        my React project, I have a lot of different components which use the UI library.
+        In the components file, I load the component specific CSS files on the first
+        line.</p>\n<p>There are other, global project related CSS files, which I load
+        in <code>index.tsx</code></p>\n<p>I do not understand why this happens. Why
+        does the class I pass from my React project to the UI library get &quot;loaded&quot;
+        after the UI library styles? Why is this not happening with other UI libraries?
+        How to prevent that?</p>\n"}, {"tags": ["material-ui", "treeview"], "owner":
+        {"account_id": 1017239, "reputation": 1931, "user_id": 1028527, "user_type":
+        "registered", "profile_image": "redacted", "display_name": "redacted", "link":
+        "redacted"}, "is_answered": false, "view_count": 33, "answer_count": 0, "score":
+        0, "last_activity_date": 1791378265, "creation_date": 1791378265, "question_id":
+        80008469, "content_license": "CC BY-SA 4.0", "link": "https://stackoverflow.com/questions/80008469/the-example-of-an-mui-treeview-gives-a-blank-page",
+        "title": "The example of an MUI TreeView gives a blank page", "body": "<p>I''m
+        having problems getting the example of a RichTreeView to work. As far as I
+        can see, the code is exactly that of the given example <a href=\"https://mui.com/x/react-tree-view/rich-tree-view/items/\"
+        rel=\"nofollow noreferrer\">https://mui.com/x/react-tree-view/rich-tree-view/items/</a>
+        although I changed the relative position of the files a bit. But note, <em>no
+        complaints on files not being found</em>, so I assume they all are where they
+        ought to be.</p>\n<p>What am I seeing? A completely blank page! Moreover,
+        opening the Web Developer browser tool, I don''t see any message in the console
+        tab, except for the confirmation that the connection to the vite development
+        server was established. Prior to this, I have successfully written another
+        component (React Select) in the same fashion, but when I include the BasicRichTreeView
+        component as descrived (or use standalone) the blank screen appears.</p>\n<p>I
+        really need advice to take this further.</p>\n<p>This is what I do:</p>\n<p>The
+        treeview component is defined as:</p>\n<p><code>`</code></p>\n<pre><code>file:
+        ./components/BasicTreeView.jsx\n------------------------------------\nimport
+        Box from ''@mui/material/Box'';\nimport { RichTreeView } from ''@mui/x-tree-view/RichTreeView'';\nimport
+        { MUI_X_PRODUCTS } from ''./datasets/products'';\n\nexport default function
+        BasicRichTreeView() {\n  return (\n    &lt;Box sx={{ minHeight: 352, minWidth:
+        250 }}&gt;\n      &lt;RichTreeView items={MUI_X_PRODUCTS} /&gt;\n    &lt;/Box&gt;\n  );\n}`\n</code></pre>\n<p>This
+        component is being invoked in App.jsx, as follows</p>\n<p>`</p>\n<pre><code>file:
+        ./App.jsx\n---------------\nimport {BasicRichTreeView} from &quot;./components/BasicRichTreeView&quot;\nimport
+        &quot;./App.css&quot;;\n\nfunction App() {\n    return (\n        &lt;div
+        className=&quot;App&quot;&gt;\n            &lt;BasicRichTreeView /&gt;\n        &lt;/div&gt;\n    );\n}\n\nexport
+        default App;\n</code></pre>\n<p>`<br />\nThe element &lt;App&gt; is invoked
+        creating the root element</p>\n<p>`</p>\n<pre><code>file: main.jsx\n--------------\nimport
+        { StrictMode } from ''react''\nimport { createRoot } from ''react-dom/client''\nimport
+        ''./index.css''\nimport App from ''./App.jsx''\n\ncreateRoot( document.getElementById(
+        ''root'' ) ).render(\n  &lt;StrictMode&gt;\n    &lt;App /&gt;\n  &lt;/StrictMode&gt;,\n)\n</code></pre>\n<p>`</p>\n<p>Finally,
+        the sample data is also taken from the example (but moved to another location).
+        There are no complaints of these data not being found.</p>\n<p>`</p>\n<pre><code>file:
+        ./components/datasets/products.js\n---------------------------------------\nexport
+        const MUI_X_PRODUCTS = [\n    {\n      id: ''grid'',\n      label: ''Data
+        Grid'',\n      children: [\n        { id: ''grid-community'', label: ''@mui/x-data-grid''
+        },\n        { id: ''grid-pro'', label: ''@mui/x-data-grid-pro'' },\n        {
+        id: ''grid-premium'', label: ''@mui/x-data-grid-premium'' },\n      ],\n    },\n    {\n      id:
+        ''pickers'',\n      label: ''Date and Time Pickers'',\n      children: [\n        {
+        id: ''pickers-community'', label: ''@mui/x-date-pickers'' },\n        { id:
+        ''pickers-pro'', label: ''@mui/x-date-pickers-pro'' },\n      ],\n    },\n    {\n      id:
+        ''charts'',\n      label: ''Charts'',\n      children: [{ id: ''charts-community'',
+        label: ''@mui/x-charts'' }],\n    },\n    {\n      id: ''tree-view'',\n      label:
+        ''Tree View'',\n      children: [{ id: ''tree-view-community'', label: ''@mui/x-tree-view''
+        }],\n    },\n  ];\n</code></pre>\n<p>`</p>\n"}, {"tags": ["vs-code", "github-copilot",
+        "figma", "model-context-protocol"], "owner": {"account_id": 43775653, "reputation":
+        1, "user_id": 31410800, "user_type": "registered", "profile_image": "redacted",
+        "display_name": "redacted", "link": "redacted"}, "is_answered": false, "view_count":
+        73, "answer_count": 0, "score": -1, "last_activity_date": 1791374585, "creation_date":
+        1791371431, "last_edit_date": 1791374585, "question_id": 80008444, "content_license":
+        "CC BY-SA 4.0", "link": "https://stackoverflow.com/questions/80008444/vs-code-does-not-expose-figma-mcp-tools-even-though-the-server-is-configured",
+        "title": "VS Code does not expose Figma MCP tools even though the server is
+        configured", "body": "<p>I''m trying to use Figma''s MCP server from GitHub
+        Copilot in VS Code. I followed the setup steps and added the server configuration,
+        but Copilot still cannot access the Figma tools.</p>\n<p>My configuration
+        is:</p>\n<pre><code>{\n&quot;servers&quot;:{ \n&quot;com.figma.mcp/mcp&quot;:
+        {\n&quot;type&quot;: &quot;http&quot;, &quot;url&quot;: &quot;https://mcp.figma.com/mcp&quot;,
+        &quot;gallery&quot;: &quot;https://api.mcp.github.com&quot;, &quot;version&quot;:
+        &quot;1.0.3&quot;\n}\n}\n}\n</code></pre>\n<p>Expected: Copilot discovers
+        the Figma MCP tools and can read the design frame.</p>\n<p>Actual: The Figma
+        tools are not available to Copilot. Trying to retrieve the design link through
+        a web fetch also returns HTTP 403.</p>\n<p>I''ve followed the setup instructions,
+        checked that the MCP configuration is present, and restarted/reloaded VS Code,
+        but I''m still seeing this issue. What should I check to get the Figma tools
+        discovered and authenticated correctly?</p>\n"}, {"tags": ["html", "css",
+        "business-objects", "webi"], "owner": {"account_id": 47164945, "reputation":
+        11, "user_id": 33179305, "user_type": "registered", "profile_image": "redacted",
+        "display_name": "redacted", "link": "redacted"}, "is_answered": false, "view_count":
+        74, "answer_count": 0, "score": 1, "last_activity_date": 1791360613, "creation_date":
+        1791360613, "question_id": 80008413, "content_license": "CC BY-SA 4.0", "link":
+        "https://stackoverflow.com/questions/80008413/why-is-the-content-of-a-style-element-emptied-webi",
+        "title": "Why is the content of a &lt;style&gt; element emptied (WebI)?",
+        "body": "<p>In SAP BusinessObjects BI Platform 2025 (Web Intelligence), I
+        use a cell with &quot;Read contents as&quot; set to <strong>HTML</strong>.
+        The server only renders HTML elements that are on an allow list of permitted
+        elements. I added <code>style</code> to that list, but the content of the
+        <code>&lt;style&gt;</code> element is stripped.</p>\n<p><strong>Minimal reproduction</strong></p>\n<ol>\n<li><p>In
+        a Web Intelligence report, create a blank cell and set &quot;Read contents
+        as&quot; to <strong>HTML</strong>.</p>\n</li>\n<li><p>Set the cell''s formula/content
+        to:</p>\n</li>\n</ol>\n<p>html</p>\n<pre><code>&lt;style&gt;\n  a.export {
+        background-color: #346187; color: #fff; padding: 5px; }\n  a.export:hover
+        { background-color: #ddd; color: #346187; }\n&lt;/style&gt;\n&lt;a class=&quot;export&quot;&gt;Test&lt;/a&gt;\n</code></pre>\n<ol
+        start=\"3\">\n<li>Add <code>style</code> to the allowed HTML elements list,
+        then reopen the report.</li>\n</ol>\n<p><strong>Expected:</strong> the CSS
+        rules are applied to the link.</p>\n<p><strong>Actual:</strong> a <code>&lt;style&gt;</code>
+        element is present in the DOM (visible in the browser dev tools), but it is
+        completely empty, so none of the rules reach the browser.</p>\n<p><strong>What
+        I tested</strong></p>\n<p>Allowed elementsResult in DOMstyle allowed&lt;style&gt;
+        exists, content emptyscript also allowed&lt;script&gt; exists, content preservedscript
+        removed again&lt;script&gt; disappears entirely</p>\n<p>So <code>&lt;style&gt;</code>
+        behaves differently from both states: the element survives, but its text content
+        is removed.</p>\n<p><strong>Why not inline styles or JavaScript?</strong></p>\n<ul>\n<li><p>Inline
+        <code>style</code> attributes can''t express <code>:hover</code>, pseudo-elements,
+        or shared rules across several buttons.</p>\n</li>\n<li><p>I could apply the
+        styling through JavaScript, but that means permanently allowing <code>&lt;script&gt;</code>,
+        which I (and the SecDep) would like to avoid for security reasons (XSS/HTML
+        injection).</p>\n</li>\n</ul>\n<p><strong>Question</strong></p>\n<p>What controls
+        whether the text content of a <code>&lt;style&gt;</code> element is kept in
+        a Web Intelligence HTML cell? Is there a separate sanitizer or setting (CMC,
+        Web Intelligence Processing Server properties, or a config file) besides the
+        allowed HTML elements list? And is there a supported way to allow <code>&lt;style&gt;</code>
+        content?</p>\n"}, {"tags": ["c#", "dependency-injection", "interface"], "owner":
+        {"account_id": 3156754, "reputation": 1564, "user_id": 2668996, "user_type":
+        "registered", "accept_rate": 95, "profile_image": "redacted", "display_name":
+        "redacted", "link": "redacted"}, "is_answered": true, "view_count": 227, "closed_date":
+        1791433287, "answer_count": 2, "score": -1, "last_activity_date": 1791297682,
+        "creation_date": 1791166189, "last_edit_date": 1791297682, "question_id":
+        80007896, "link": "https://stackoverflow.com/questions/80007896/how-to-pass-dependencies-using-interfaces-while-retaining-functionality",
+        "closed_reason": "Needs details or clarity", "title": "How to pass dependencies
+        using interfaces while retaining functionality?", "body": "<p>I''m struggling
+        with dependency injection, here is an example: I have a builder class that
+        needs to accept a generic &quot;tool&quot; type.</p>\n<p>I do constructor
+        injection where my method accepts an <code>ITool</code> type. If I pass it
+        a hammer which implements the <code>ITool</code> interface, everything is
+        great and the builder has its tool until the minute it goes to call the <code>hammer.swing()</code>
+        function. The method signature for <code>Swing()</code> doesn''t exist in
+        the <code>ITool</code> interface.</p>\n<p>How can the builder use any of the
+        special tool functions like <code>hammer.swing</code> or <code>screwdriver.turn</code>
+        if it can never access them?</p>\n"}], "has_more": true, "quota_max": 300,
+        "quota_remaining": 237}'
+    headers:
+      access-control-allow-credentials:
+      - 'false'
+      access-control-allow-methods:
+      - GET, POST
+      access-control-allow-origin:
+      - '*'
+      cache-control:
+      - private
+      cf-cache-status:
+      - DYNAMIC
+      cf-ray:
+      - a48128ac2f0015e8-IAD
+      connection:
+      - keep-alive
+      content-length:
+      - '25990'
+      content-security-policy:
+      - upgrade-insecure-requests; frame-ancestors 'self' https://stackexchange.com
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:27:56 GMT
+      server:
+      - cloudflare
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      vary:
+      - accept-encoding
+      x-clacks-overhead:
+      - GNU Terry Pratchett
+      x-content-type-options:
+      - nosniff
+      x-providence-cookie:
+      - 57b76fe6-42ce-4237-91c5-b4e9fbaf803d
+      x-request-guid:
+      - cd771deb-e47a-461b-8a71-8256760994ae
+      x-worker-origin-response-time:
+      - '71000000'
+    status:
+      code: 200
+      message: OK
+version: 1

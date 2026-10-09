@@ -1,0 +1,530 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - api.sam.gov
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://api.sam.gov/opportunities/v2/search?limit=25&offset=0&postedFrom=10%2F08%2F2026&postedTo=10%2F09%2F2026&ptype=o%2Ck
+  response:
+    body:
+      string: '{"totalRecords": 1095, "limit": 25, "offset": 0, "opportunitiesData":
+        [{"active": "Yes", "additionalInfoLink": null, "archiveDate": "2026-11-18",
+        "archiveType": "autocustom", "award": null, "baseType": "Combined Synopsis/Solicitation",
+        "classificationCode": "25", "description": "https://api.sam.gov/prod/opportunities/v1/noticedesc?noticeid=ffcb4b91a150449eb42899a053502b77",
+        "fullParentPathCode": "097.97AS.DLA LAND.DLA LAND COLUMBUS.SPE7L3", "fullParentPathName":
+        "DEPT OF DEFENSE.DEFENSE LOGISTICS AGENCY.DLA LAND.DLA LAND COLUMBUS.DLA WEAPONS
+        SUPPORT", "links": [{"rel": "self", "href": "https://api.sam.gov/prod/opportunities/v2/search?noticeid=ffcb4b91a150449eb42899a053502b77&limit=1"}],
+        "naicsCode": "336350", "naicsCodes": ["336350"], "noticeId": "ffcb4b91a150449eb42899a053502b77",
+        "officeAddress": {"zipcode": "redacted", "city": "COLUMBUS", "countryCode":
+        "USA", "state": "OH"}, "organizationType": "OFFICE", "placeOfPerformance":
+        null, "pointOfContact": "redacted", "postedDate": "2026-10-09", "resourceLinks":
+        null, "responseDeadLine": "2026-10-19", "solicitationNumber": "SPE7L327T0436",
+        "title": "25--AXLE,VEHICULAR,NONDRIV", "type": "Combined Synopsis/Solicitation",
+        "typeOfSetAside": "HZC", "typeOfSetAsideDescription": "Historically Underutilized
+        Business (HUBZone) Set-Aside (FAR 19.13)", "uiLink": "https://sam.gov/workspace/contract/opp/ffcb4b91a150449eb42899a053502b77/view"},
+        {"active": "Yes", "additionalInfoLink": null, "archiveDate": "2026-10-31",
+        "archiveType": "auto15", "award": null, "baseType": "Solicitation", "classificationCode":
+        "M1NE", "description": "https://api.sam.gov/prod/opportunities/v1/noticedesc?noticeid=ff6bf3ef44234623917aaea833fbcc2d",
+        "fullParentPathCode": "014.1406.140RR0", "fullParentPathName": "INTERIOR,
+        DEPARTMENT OF THE.DEPARTMENTAL OFFICES.RECLAMATION CONTRACTING ACTIVITY",
+        "links": [{"rel": "self", "href": "https://api.sam.gov/prod/opportunities/v2/search?noticeid=ff6bf3ef44234623917aaea833fbcc2d&limit=1"}],
+        "naicsCode": "561210", "naicsCodes": ["561210"], "noticeId": "ff6bf3ef44234623917aaea833fbcc2d",
+        "officeAddress": {"zipcode": "redacted", "city": "Denver", "countryCode":
+        "USA", "state": "CO"}, "organizationType": "OFFICE", "placeOfPerformance":
+        {"city": {}, "state": {}, "country": {}}, "pointOfContact": "redacted", "postedDate":
+        "2026-10-09", "resourceLinks": ["https://sam.gov/api/prod/opps/v3/opportunities/resources/files/01a359fc0ccd4c57b8eee67d00fa7088/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/05857cf1d27741018e2810f3aca6b628/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/1234c2d42083417e9f354ba48c859bd2/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/1640f3831aca4f75b0f7aaca7efc9f98/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/19854d3a9acf431bbb2d71926dde1aaf/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/1f777ab213ef41d3a54397ebcad8fa65/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/2596e7f5d141424fa319b1bc8be71dbe/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/2b8b22f3aa6e42398a4aaf5fbab91521/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/2cc7dbacd8ef4624a44e274de217035c/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/3ba69728e94d4fc892a69162b45b08a2/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/3f335b3ef0ff48d498247759dc7fa5f5/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/5821fc65f31b4fd5be95ed625f8300d9/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/5aa6cf3045c149dea5cb10375602fa65/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/5ab336d0572042b4b737443c1a08186e/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/6e8a773f29134a00b7c8c3b9327f610e/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/6f0d0847f784464894c17c523ebf620b/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/73263da8fb324bfc901746df3dc1d55e/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/756fb11117274ea3a9fb223eebeac215/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/757f311f782547b18e3ebbe256733825/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/781e6f987ae14754b37bafec6de532d2/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/7947a0e6c7174647af27f275b551f38e/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/922be33ff7a64d9b8ca5cb978986c14e/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/97a0e283d4a840bcb531fde28b22e410/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/a31742296d5f44879182962269de5617/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/a99c15d35170497893cfb59e63b98df9/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/ac5961400e004296a38b9b395720b207/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/ae05ba2d38574ae19e959385d8660155/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/c2687a60c1324c70b5ca0f3fce016531/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/c4ce07019ca4407491b666c67e0eeb07/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/cd6417a91acf4a3ea22c39143f78173b/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/ce4a6462962a44c08026254d89e73373/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/d298d49b64484e5bb4b19622d1fe35e7/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/d57983b570244ffcb523225451edc4c9/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/dab8d2a55cdb4f79955d7768da6ef7ff/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/ecaa281b4fc64a20928bf06fed9959e0/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/f0d72eb776844c389115420d71ca7caa/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/f2e3cef9f40f46589133d4ca6741a5fb/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/f4a7d6917d434a09b3e8ecf5db784666/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/f67c1f13781a4362a0d6307775fc0c5e/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/fa14c81335594f7d9938880f31ca8d78/download"],
+        "responseDeadLine": "2026-10-16T10:00:00-07:00", "solicitationNumber": "140R3026R0012",
+        "title": "M--OPERATION AND MAINTENANCE OF YDP, IDIQ", "type": "Solicitation",
+        "typeOfSetAside": "8A", "typeOfSetAsideDescription": "8(a) Set-Aside (FAR
+        19.8)", "uiLink": "https://sam.gov/workspace/contract/opp/ff6bf3ef44234623917aaea833fbcc2d/view"},
+        {"active": "Yes", "additionalInfoLink": null, "archiveDate": "2027-04-02",
+        "archiveType": "autocustom", "award": null, "baseType": "Solicitation", "classificationCode":
+        "9545", "description": "https://api.sam.gov/prod/opportunities/v1/noticedesc?noticeid=ff44ebc597aa4ecca36693311839ae37",
+        "fullParentPathCode": "017.1700.NAVSEA.NAVSEA WARFARE CTR.N63394", "fullParentPathName":
+        "DEPT OF DEFENSE.DEPT OF THE NAVY.NAVSEA.NAVSEA WARFARE CENTER.COMMANDING
+        OFFICER", "links": [{"rel": "self", "href": "https://api.sam.gov/prod/opportunities/v2/search?noticeid=ff44ebc597aa4ecca36693311839ae37&limit=1"}],
+        "naicsCode": "332999", "naicsCodes": ["332999"], "noticeId": "ff44ebc597aa4ecca36693311839ae37",
+        "officeAddress": {"zipcode": "redacted", "city": "PORT HUENEME", "countryCode":
+        "USA", "state": "CA"}, "organizationType": "OFFICE", "placeOfPerformance":
+        {"streetAddress": "NAVAL SURFACE WARFARE CENTER PORT HUENEME, 4363 MISSILE
+        WAY PORT HUENEME, CA 93043-5007", "zip": "93043"}, "pointOfContact": "redacted",
+        "postedDate": "2026-10-09", "resourceLinks": null, "responseDeadLine": "2026-10-26T17:00:00-08:00",
+        "solicitationNumber": "N6339426R4002", "title": "Vertical Launching System
+        (VLS) Deck and Hatch Assembly", "type": "Solicitation", "typeOfSetAside":
+        null, "typeOfSetAsideDescription": null, "uiLink": "https://sam.gov/workspace/contract/opp/ff44ebc597aa4ecca36693311839ae37/view"},
+        {"active": "Yes", "additionalInfoLink": null, "archiveDate": "2026-11-18",
+        "archiveType": "auto15", "award": null, "baseType": "Solicitation", "classificationCode":
+        "Y1LB", "description": "https://api.sam.gov/prod/opportunities/v1/noticedesc?noticeid=feea12a77455408e9e35bdad978f6569",
+        "fullParentPathCode": "069.6925.6982AF", "fullParentPathName": "TRANSPORTATION,
+        DEPARTMENT OF.FEDERAL HIGHWAY ADMINISTRATION.6982AF CENTRAL FEDERAL LANDS
+        DIVISI", "links": [{"rel": "self", "href": "https://api.sam.gov/prod/opportunities/v2/search?noticeid=feea12a77455408e9e35bdad978f6569&limit=1"}],
+        "naicsCode": "237310", "naicsCodes": ["237310"], "noticeId": "feea12a77455408e9e35bdad978f6569",
+        "officeAddress": {"zipcode": "redacted", "city": "LAKEWOOD", "countryCode":
+        "USA", "state": "CO"}, "organizationType": "OFFICE", "placeOfPerformance":
+        {"city": {"code": "44116", "name": "Los Fresnos"}, "state": {"code": "TX",
+        "name": "Texas"}, "zip": "78566", "country": {"code": "USA", "name": "UNITED
+        STATES"}}, "pointOfContact": "redacted", "postedDate": "2026-10-09", "resourceLinks":
+        ["https://sam.gov/api/prod/opps/v3/opportunities/resources/files/0cf2082534f743d6a49a997d10528920/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/1bd8f6837f9c4ad88c500131ca0201a2/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/93fb81b9973a49de9cb66228b0687255/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/9869fdbf8ee54efeb2099317a04ad688/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/f0ec623cbc3c49cb8a0a8449e06dc9b2/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/f163a3917b374af4b89430975a2c5438/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/f49ce3399cb14fb4859311cd17367a76/download"],
+        "responseDeadLine": "2026-11-03T14:00:00-07:00", "solicitationNumber": "6982AF27B000006",
+        "title": "TX FW LGA 10(5) Steve Thompson Wildlife Drive", "type": "Solicitation",
+        "typeOfSetAside": "SBA", "typeOfSetAsideDescription": "Small Business Set
+        Aside - Total", "uiLink": "https://sam.gov/workspace/contract/opp/feea12a77455408e9e35bdad978f6569/view"},
+        {"active": "Yes", "additionalInfoLink": null, "archiveDate": "2026-11-15",
+        "archiveType": "autocustom", "award": null, "baseType": "Combined Synopsis/Solicitation",
+        "classificationCode": "15", "description": "https://api.sam.gov/prod/opportunities/v1/noticedesc?noticeid=fe9b17631b6c4ff2a2134f6cf5a93bd8",
+        "fullParentPathCode": "097.97AS.DLA AVIATION.DLA AV RICHMOND.SPE4A7", "fullParentPathName":
+        "DEPT OF DEFENSE.DEFENSE LOGISTICS AGENCY.DLA AVIATION.DLA AV RICHMOND.DLA
+        AVIATION", "links": [{"rel": "self", "href": "https://api.sam.gov/prod/opportunities/v2/search?noticeid=fe9b17631b6c4ff2a2134f6cf5a93bd8&limit=1"}],
+        "naicsCode": "336413", "naicsCodes": ["336413"], "noticeId": "fe9b17631b6c4ff2a2134f6cf5a93bd8",
+        "officeAddress": {"zipcode": "redacted", "city": "RICHMOND", "countryCode":
+        "USA", "state": "VA"}, "organizationType": "OFFICE", "placeOfPerformance":
+        null, "pointOfContact": "redacted", "postedDate": "2026-10-09", "resourceLinks":
+        null, "responseDeadLine": "2026-10-16", "solicitationNumber": "SPE4A727T0457",
+        "title": "15--FAIRING,AIRCRAFT", "type": "Combined Synopsis/Solicitation",
+        "typeOfSetAside": null, "typeOfSetAsideDescription": null, "uiLink": "https://sam.gov/workspace/contract/opp/fe9b17631b6c4ff2a2134f6cf5a93bd8/view"},
+        {"active": "Yes", "additionalInfoLink": null, "archiveDate": "2027-10-09",
+        "archiveType": "autocustom", "award": null, "baseType": "Solicitation", "classificationCode":
+        "Z1KF", "description": "https://api.sam.gov/prod/opportunities/v1/noticedesc?noticeid=fe80de482ae8458595a489b627766117",
+        "fullParentPathCode": "017.1700.NAVFAC.NAVFAC ATLANTIC CMD.NAVFAC MID-ATLANTIC.N40085",
+        "fullParentPathName": "DEPT OF DEFENSE.DEPT OF THE NAVY.NAVFAC.NAVFAC ATLANTIC
+        CMD.NAVFAC MID-ATLANTIC.NAVFACSYSCOM MID-ATLANTIC", "links": [{"rel": "self",
+        "href": "https://api.sam.gov/prod/opportunities/v2/search?noticeid=fe80de482ae8458595a489b627766117&limit=1"}],
+        "naicsCode": "237990", "naicsCodes": ["237990"], "noticeId": "fe80de482ae8458595a489b627766117",
+        "officeAddress": {"zipcode": "redacted", "city": "NORFOLK", "countryCode":
+        "USA", "state": "VA"}, "organizationType": "OFFICE", "placeOfPerformance":
+        {"streetAddress": "", "city": {"code": "60000", "name": "Philadelphia"}, "state":
+        {"code": "PA", "name": "Pennsylvania"}, "zip": "19112", "country": {"code":
+        "USA", "name": "UNITED STATES"}}, "pointOfContact": "redacted", "postedDate":
+        "2026-10-09", "resourceLinks": ["https://sam.gov/api/prod/opps/v3/opportunities/resources/files/091079f353904834bd805367496d28ac/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/0bf2940c72ec42feb258d9e002af5669/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/337c8ee5b6d841a78382c7b849cc70f3/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/4208455d29764b7d88ebc9f9fa0c5055/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/56bed84cc8da4bb69b5be3253acd666a/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/5c5f2e1a39614631834765ecb5713b02/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/65aa672c5a964c1eb755b84ff772f334/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/72d50d82b9b44efa9c4dde8529aa4f8e/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/734b46d739934d8684c05f69e0e3e692/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/77348bbd9da9472fbc33cf92e08f5fc8/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/7b2719f626714753a7911c416fb6d607/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/7d3cadf82e944bfe9b043e9b363338a2/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/7d991c7446de4498bebff6258294a49a/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/840436cd732b4c7faec189ab9f421fb6/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/8fd0e0b6e17e4f949fdef0fd4b1fe911/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/a007efd8cc544b39967d6ca64784f246/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/a39e7d6a20fc4bd58efc79c066e03b39/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/a9830526f6fb4eb39124947289fe8e03/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/c23fa0b5e1d4461fbe9dd935653f05f4/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/d23eb11c776141119791a78eda1da79b/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/db2de9e7fde848a58f477a629bd392bb/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/e016b91ce01f4ab08b1e5bc288bcc939/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/fd90d112de8f41e4bf7025419489c4ba/download"],
+        "responseDeadLine": "2027-01-15T14:00:00-05:00", "solicitationNumber": "N4008526B0002",
+        "title": "RESERVE BASIN MAINTENANCE DREDGING CONTRACT FOR SITES AT THE PHILDELPHIA
+        NAVY YARD IN THE PUBLIC WORKS DEPARTMENT PENNSYLVANIA AREA OF RESPONSIBILIY",
+        "type": "Solicitation", "typeOfSetAside": "NONE", "typeOfSetAsideDescription":
+        "No Set aside used", "uiLink": "https://sam.gov/workspace/contract/opp/fe80de482ae8458595a489b627766117/view"},
+        {"active": "Yes", "additionalInfoLink": null, "archiveDate": "2026-11-07",
+        "archiveType": "auto15", "award": null, "baseType": "Solicitation", "classificationCode":
+        "U009", "description": "https://api.sam.gov/prod/opportunities/v1/noticedesc?noticeid=fe5abe4e2ece43fb807721f64ed2d4ef",
+        "fullParentPathCode": "069.6920.6973GH", "fullParentPathName": "TRANSPORTATION,
+        DEPARTMENT OF.FEDERAL AVIATION ADMINISTRATION.6973GH FRANCHISE ACQUISITION
+        SVCS", "links": [{"rel": "self", "href": "https://api.sam.gov/prod/opportunities/v2/search?noticeid=fe5abe4e2ece43fb807721f64ed2d4ef&limit=1"}],
+        "naicsCode": "611512", "naicsCodes": ["611512"], "noticeId": "fe5abe4e2ece43fb807721f64ed2d4ef",
+        "officeAddress": {"zipcode": "redacted", "city": "OKLAHOMA CITY", "countryCode":
+        "USA", "state": "OK"}, "organizationType": "OFFICE", "placeOfPerformance":
+        {}, "pointOfContact": "redacted", "postedDate": "2026-10-09", "resourceLinks":
+        ["https://sam.gov/api/prod/opps/v3/opportunities/resources/files/9410026e39b1411aae32070d47474e4c/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/98752d07abf049a1aa3d18836d56d1c3/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/a52513fad23b40f5bb8eae34a00f97bb/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/dcb2c0f2141440528d4d1ed8a3f3617c/download"],
+        "responseDeadLine": "2026-10-23T14:00:00-05:00", "solicitationNumber": "6973GH-27-R-00013",
+        "title": "Initial and Recurrent Ground School and Simulator Training on Airbus
+        A-330", "type": "Solicitation", "typeOfSetAside": null, "typeOfSetAsideDescription":
+        null, "uiLink": "https://sam.gov/workspace/contract/opp/fe5abe4e2ece43fb807721f64ed2d4ef/view"},
+        {"active": "Yes", "additionalInfoLink": null, "archiveDate": "2026-11-18",
+        "archiveType": "autocustom", "award": null, "baseType": "Combined Synopsis/Solicitation",
+        "classificationCode": "20", "description": "https://api.sam.gov/prod/opportunities/v1/noticedesc?noticeid=fd6177d6f14e43728084c06b67d18790",
+        "fullParentPathCode": "097.97AS.DLA MARITIME.DLA MARITIME COLUMBS.SPE7M4",
+        "fullParentPathName": "DEPT OF DEFENSE.DEFENSE LOGISTICS AGENCY.DLA MARITIME.DLA
+        MARITIME COLUMBUS.DLA WEAPONS SUPPORT", "links": [{"rel": "self", "href":
+        "https://api.sam.gov/prod/opportunities/v2/search?noticeid=fd6177d6f14e43728084c06b67d18790&limit=1"}],
+        "naicsCode": "114119", "naicsCodes": ["114119"], "noticeId": "fd6177d6f14e43728084c06b67d18790",
+        "officeAddress": {"zipcode": "redacted", "city": "COLUMBUS", "countryCode":
+        "USA", "state": "OH"}, "organizationType": "OFFICE", "placeOfPerformance":
+        null, "pointOfContact": "redacted", "postedDate": "2026-10-09", "resourceLinks":
+        null, "responseDeadLine": "2026-10-19", "solicitationNumber": "SPE7M427T0545",
+        "title": "20--WINDOW,MARINE", "type": "Combined Synopsis/Solicitation", "typeOfSetAside":
+        "SBA", "typeOfSetAsideDescription": "Small Business Set Aside - Total", "uiLink":
+        "https://sam.gov/workspace/contract/opp/fd6177d6f14e43728084c06b67d18790/view"},
+        {"active": "Yes", "additionalInfoLink": null, "archiveDate": "2026-12-15",
+        "archiveType": "autocustom", "award": null, "baseType": "Combined Synopsis/Solicitation",
+        "classificationCode": "W065", "description": "https://api.sam.gov/prod/opportunities/v1/noticedesc?noticeid=fcd5ff957fa74ba8820af7d6f1d603fe",
+        "fullParentPathCode": "036.3600.36C248", "fullParentPathName": "VETERANS AFFAIRS,
+        DEPARTMENT OF.VETERANS AFFAIRS, DEPARTMENT OF.248-NETWORK CONTRACT OFFICE
+        8 (36C248)", "links": [{"rel": "self", "href": "https://api.sam.gov/prod/opportunities/v2/search?noticeid=fcd5ff957fa74ba8820af7d6f1d603fe&limit=1"}],
+        "naicsCode": "532490", "naicsCodes": ["532490"], "noticeId": "fcd5ff957fa74ba8820af7d6f1d603fe",
+        "officeAddress": {"zipcode": "redacted", "city": "TAMPA", "countryCode": "USA",
+        "state": "FL"}, "organizationType": "OFFICE", "placeOfPerformance": {"city":
+        {"code": "71000", "name": "Tampa"}, "state": {"code": "FL", "name": "Florida"},
+        "zip": "33612", "country": {"code": "USA", "name": "UNITED STATES"}}, "pointOfContact":
+        "redacted", "postedDate": "2026-10-09", "resourceLinks": ["https://sam.gov/api/prod/opps/v3/opportunities/resources/files/886b28a9edc641e8ad53a87249af413b/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/9dd3a42ff6824c608833f990d343e9ad/download"],
+        "responseDeadLine": "2026-10-21T12:00:00-04:00", "solicitationNumber": "36C24827Q0025",
+        "title": "Critical Care Hospital Bed Rental Services (Hill-Rom OR EQUAL)",
+        "type": "Combined Synopsis/Solicitation", "typeOfSetAside": "NONE", "typeOfSetAsideDescription":
+        "No Set aside used", "uiLink": "https://sam.gov/workspace/contract/opp/fcd5ff957fa74ba8820af7d6f1d603fe/view"},
+        {"active": "Yes", "additionalInfoLink": null, "archiveDate": "2026-11-03",
+        "archiveType": "auto15", "award": null, "baseType": "Solicitation", "classificationCode":
+        "4820", "description": "https://api.sam.gov/prod/opportunities/v1/noticedesc?noticeid=fc56940a7575448795b3ce91c000ef82",
+        "fullParentPathCode": "097.97AS.DLA AVIATION.DLA AV PHILADELPHIA.SPRPA1",
+        "fullParentPathName": "DEPT OF DEFENSE.DEFENSE LOGISTICS AGENCY.DLA AVIATION.DLA
+        AVIATION PHILADELPHIA.DLA AVIATION AT PHILADELPHIA, PA", "links": [{"rel":
+        "self", "href": "https://api.sam.gov/prod/opportunities/v2/search?noticeid=fc56940a7575448795b3ce91c000ef82&limit=1"}],
+        "naicsCode": "332919", "naicsCodes": ["332919"], "noticeId": "fc56940a7575448795b3ce91c000ef82",
+        "officeAddress": {"zipcode": "redacted", "city": "PHILADELPHIA", "countryCode":
+        "USA", "state": "PA"}, "organizationType": "OFFICE", "placeOfPerformance":
+        null, "pointOfContact": "redacted", "postedDate": "2026-10-09", "resourceLinks":
+        null, "responseDeadLine": "2026-10-19T23:59:00-04:00", "solicitationNumber":
+        "SPRPA126RYD15", "title": "VALVE,REGULATING,FL", "type": "Solicitation", "typeOfSetAside":
+        "", "typeOfSetAsideDescription": null, "uiLink": "https://sam.gov/workspace/contract/opp/fc56940a7575448795b3ce91c000ef82/view"},
+        {"active": "Yes", "additionalInfoLink": null, "archiveDate": "2026-12-31",
+        "archiveType": "autocustom", "award": null, "baseType": "Solicitation", "classificationCode":
+        "J028", "description": "https://api.sam.gov/prod/opportunities/v1/noticedesc?noticeid=fbe29660a0624f889188762635f14f14",
+        "fullParentPathCode": "021.2100.USACE.SAD.SAW.W912PM", "fullParentPathName":
+        "DEPT OF DEFENSE.DEPT OF THE ARMY.US ARMY CORPS OF ENGINEERS.ENGINEER DIVISION
+        SOUTH ATLANTIC.ENDIST WILMINGTON.W074 ENDIST WILMINGTON", "links": [{"rel":
+        "self", "href": "https://api.sam.gov/prod/opportunities/v2/search?noticeid=fbe29660a0624f889188762635f14f14&limit=1"}],
+        "naicsCode": "811310", "naicsCodes": ["811310"], "noticeId": "fbe29660a0624f889188762635f14f14",
+        "officeAddress": {"zipcode": "redacted", "city": "WILMINGTON", "countryCode":
+        "USA", "state": "NC"}, "organizationType": "OFFICE", "placeOfPerformance":
+        {"streetAddress": "69 DARLINGTON AVENUE, WILMINGTON, NC 28403-1343", "zip":
+        "28403"}, "pointOfContact": "redacted", "postedDate": "2026-10-09", "resourceLinks":
+        null, "responseDeadLine": "2026-11-11T14:00:00-05:00", "solicitationNumber":
+        "W912PM27QA001", "title": "Brandy Station Engine Rebuild", "type": "Solicitation",
+        "typeOfSetAside": null, "typeOfSetAsideDescription": null, "uiLink": "https://sam.gov/workspace/contract/opp/fbe29660a0624f889188762635f14f14/view"},
+        {"active": "Yes", "additionalInfoLink": null, "archiveDate": "2026-11-15",
+        "archiveType": "autocustom", "award": null, "baseType": "Combined Synopsis/Solicitation",
+        "classificationCode": "61", "description": "https://api.sam.gov/prod/opportunities/v1/noticedesc?noticeid=fb5f5f1a1810406da7bb31885a2da493",
+        "fullParentPathCode": "097.97AS.DLA LAND.DLA LAND COLUMBUS.SPE7L0", "fullParentPathName":
+        "DEPT OF DEFENSE.DEFENSE LOGISTICS AGENCY.DLA LAND.DLA LAND COLUMBUS.DLA WEAPONS
+        SUPPORT", "links": [{"rel": "self", "href": "https://api.sam.gov/prod/opportunities/v2/search?noticeid=fb5f5f1a1810406da7bb31885a2da493&limit=1"}],
+        "naicsCode": "334519", "naicsCodes": ["334519"], "noticeId": "fb5f5f1a1810406da7bb31885a2da493",
+        "officeAddress": {"zipcode": "redacted", "city": "COLUMBUS", "countryCode":
+        "USA", "state": "OH"}, "organizationType": "OFFICE", "placeOfPerformance":
+        null, "pointOfContact": "redacted", "postedDate": "2026-10-09", "resourceLinks":
+        null, "responseDeadLine": "2026-10-16", "solicitationNumber": "SPE7L027Q0015",
+        "title": "61--CONTACTOR,MAGNETIC", "type": "Combined Synopsis/Solicitation",
+        "typeOfSetAside": null, "typeOfSetAsideDescription": null, "uiLink": "https://sam.gov/workspace/contract/opp/fb5f5f1a1810406da7bb31885a2da493/view"},
+        {"active": "Yes", "additionalInfoLink": null, "archiveDate": "2026-11-18",
+        "archiveType": "autocustom", "award": null, "baseType": "Combined Synopsis/Solicitation",
+        "classificationCode": "59", "description": "https://api.sam.gov/prod/opportunities/v1/noticedesc?noticeid=fa08221e41bd407eb82e4f31a67064d4",
+        "fullParentPathCode": "097.97AS.DLA MARITIME.DLA MARITIME COLUMBS.SPE7M1",
+        "fullParentPathName": "DEPT OF DEFENSE.DEFENSE LOGISTICS AGENCY.DLA MARITIME.DLA
+        MARITIME COLUMBUS.DLA WEAPONS SUPPORT", "links": [{"rel": "self", "href":
+        "https://api.sam.gov/prod/opportunities/v2/search?noticeid=fa08221e41bd407eb82e4f31a67064d4&limit=1"}],
+        "naicsCode": "335314", "naicsCodes": ["335314"], "noticeId": "fa08221e41bd407eb82e4f31a67064d4",
+        "officeAddress": {"zipcode": "redacted", "city": "COLUMBUS", "countryCode":
+        "USA", "state": "OH"}, "organizationType": "OFFICE", "placeOfPerformance":
+        null, "pointOfContact": "redacted", "postedDate": "2026-10-09", "resourceLinks":
+        null, "responseDeadLine": "2026-10-19", "solicitationNumber": "SPE7M127T0457",
+        "title": "59--RELAY,ELECTROMAGNET", "type": "Combined Synopsis/Solicitation",
+        "typeOfSetAside": "SBA", "typeOfSetAsideDescription": "Small Business Set
+        Aside - Total", "uiLink": "https://sam.gov/workspace/contract/opp/fa08221e41bd407eb82e4f31a67064d4/view"},
+        {"active": "Yes", "additionalInfoLink": null, "archiveDate": "2026-11-21",
+        "archiveType": "auto15", "award": null, "baseType": "Solicitation", "classificationCode":
+        "C1NE", "description": "https://api.sam.gov/prod/opportunities/v1/noticedesc?noticeid=f9e68136af22498ca21fbcf44712af39",
+        "fullParentPathCode": "014.1425.140R43", "fullParentPathName": "INTERIOR,
+        DEPARTMENT OF THE.BUREAU OF RECLAMATION.ALBUQUERQUE AREA OFFICE", "links":
+        [{"rel": "self", "href": "https://api.sam.gov/prod/opportunities/v2/search?noticeid=f9e68136af22498ca21fbcf44712af39&limit=1"}],
+        "naicsCode": "237110", "naicsCodes": ["237110"], "noticeId": "f9e68136af22498ca21fbcf44712af39",
+        "officeAddress": {"zipcode": "redacted", "city": "ALBUQUERQUE", "countryCode":
+        "USA", "state": "NM"}, "organizationType": "OFFICE", "placeOfPerformance":
+        {"city": {}, "state": {}, "country": {}}, "pointOfContact": "redacted", "postedDate":
+        "2026-10-09", "resourceLinks": ["https://sam.gov/api/prod/opps/v3/opportunities/resources/files/04d0b8b2e4ad43b695068c9767185a6f/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/551a361a73244539a4b7d3fb2163df61/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/664c263a5ff94e608bf34309aef7ba84/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/8d847f39841a4f1b9e4f0209cf47447e/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/a7ab7bf7a9394612b6c97505140a5905/download"],
+        "responseDeadLine": "2026-11-06T16:00:00-07:00", "solicitationNumber": "140R4025R0017",
+        "title": "C--BGNDRF PIPING UPGRADES", "type": "Solicitation", "typeOfSetAside":
+        "SBA", "typeOfSetAsideDescription": "Small Business Set Aside - Total", "uiLink":
+        "https://sam.gov/workspace/contract/opp/f9e68136af22498ca21fbcf44712af39/view"},
+        {"active": "Yes", "additionalInfoLink": null, "archiveDate": "2027-02-16",
+        "archiveType": "autocustom", "award": {"awardee": {}}, "baseType": "Solicitation",
+        "classificationCode": "J061", "description": "https://api.sam.gov/prod/opportunities/v1/noticedesc?noticeid=f99134b67e8346fa9009156ee48b604f",
+        "fullParentPathCode": "036.3600.36C261", "fullParentPathName": "VETERANS AFFAIRS,
+        DEPARTMENT OF.VETERANS AFFAIRS, DEPARTMENT OF.261-NETWORK CONTRACT OFFICE
+        21 (36C261)", "links": [{"rel": "self", "href": "https://api.sam.gov/prod/opportunities/v2/search?noticeid=f99134b67e8346fa9009156ee48b604f&limit=1"}],
+        "naicsCode": "238210", "naicsCodes": ["238210"], "noticeId": "f99134b67e8346fa9009156ee48b604f",
+        "officeAddress": {"zipcode": "redacted", "city": "MATHER", "countryCode":
+        "USA", "state": "CA"}, "organizationType": "OFFICE", "placeOfPerformance":
+        {"city": {}, "state": {}, "country": {}}, "pointOfContact": "redacted", "postedDate":
+        "2026-10-09", "resourceLinks": ["https://sam.gov/api/prod/opps/v3/opportunities/resources/files/0441b69e040146e094b650e859f5d03e/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/5e4495194b7246c397fec3189b428464/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/74afc04b6a5541fb9f257d8cef89d2f6/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/fb2e4048697d4b1db48ec8d32e9504f0/download"],
+        "responseDeadLine": "2026-11-09T12:00:00-08:00", "solicitationNumber": "36C26127Q0067",
+        "title": "J061--Triennial Circuit Breaker and Feeder Testing", "type": "Solicitation",
+        "typeOfSetAside": null, "typeOfSetAsideDescription": null, "uiLink": "https://sam.gov/workspace/contract/opp/f99134b67e8346fa9009156ee48b604f/view"},
+        {"active": "Yes", "additionalInfoLink": null, "archiveDate": "2026-11-22",
+        "archiveType": "autocustom", "award": null, "baseType": "Combined Synopsis/Solicitation",
+        "classificationCode": "59", "description": "https://api.sam.gov/prod/opportunities/v1/noticedesc?noticeid=f9382c49afc94dea8ead4aa8031130d5",
+        "fullParentPathCode": "097.97AS.DLA MARITIME.DLA MARITIME COLUMBS.SPE7M5",
+        "fullParentPathName": "DEPT OF DEFENSE.DEFENSE LOGISTICS AGENCY.DLA MARITIME.DLA
+        MARITIME COLUMBUS.DLA WEAPONS SUPPORT", "links": [{"rel": "self", "href":
+        "https://api.sam.gov/prod/opportunities/v2/search?noticeid=f9382c49afc94dea8ead4aa8031130d5&limit=1"}],
+        "naicsCode": "334419", "naicsCodes": ["334419"], "noticeId": "f9382c49afc94dea8ead4aa8031130d5",
+        "officeAddress": {"zipcode": "redacted", "city": "COLUMBUS", "countryCode":
+        "USA", "state": "OH"}, "organizationType": "OFFICE", "placeOfPerformance":
+        null, "pointOfContact": "redacted", "postedDate": "2026-10-09", "resourceLinks":
+        null, "responseDeadLine": "2026-10-23", "solicitationNumber": "SPE7M527U0003",
+        "title": "59--OSCILLATOR,CRYSTAL CON", "type": "Combined Synopsis/Solicitation",
+        "typeOfSetAside": "WOSB", "typeOfSetAsideDescription": "SBA Certified Women-Owned
+        Small Business (WOSB) Program Set-Aside (FAR 19.15)", "uiLink": "https://sam.gov/workspace/contract/opp/f9382c49afc94dea8ead4aa8031130d5/view"},
+        {"active": "Yes", "additionalInfoLink": null, "archiveDate": "2026-11-13",
+        "archiveType": "auto15", "award": null, "baseType": "Solicitation", "classificationCode":
+        "99", "description": "https://api.sam.gov/prod/opportunities/v1/noticedesc?noticeid=f8fd8ff275384a409cdbbec603a03a84",
+        "fullParentPathCode": "017.1700.NAVSUP.NAVSUP WSS.NAVSUP WSS PHIL.N00383",
+        "fullParentPathName": "DEPT OF DEFENSE.DEPT OF THE NAVY.NAVSUP.NAVSUP WEAPON
+        SYSTEMS SUPPORT.NAVSUP WSS PHILADELPHIA.NAVSUP WEAPON SYSTEMS SUPPORT", "links":
+        [{"rel": "self", "href": "https://api.sam.gov/prod/opportunities/v2/search?noticeid=f8fd8ff275384a409cdbbec603a03a84&limit=1"}],
+        "naicsCode": "333998", "naicsCodes": ["333998"], "noticeId": "f8fd8ff275384a409cdbbec603a03a84",
+        "officeAddress": {"zipcode": "redacted", "city": "PHILADELPHIA", "countryCode":
+        "USA", "state": "PA"}, "organizationType": "OFFICE", "placeOfPerformance":
+        null, "pointOfContact": "redacted", "postedDate": "2026-10-09", "resourceLinks":
+        null, "responseDeadLine": "2026-10-29T16:30:00-04:00", "solicitationNumber":
+        "N0038325QT423", "title": "PLUG COVER", "type": "Solicitation", "typeOfSetAside":
+        "", "typeOfSetAsideDescription": null, "uiLink": "https://sam.gov/workspace/contract/opp/f8fd8ff275384a409cdbbec603a03a84/view"},
+        {"active": "Yes", "additionalInfoLink": null, "archiveDate": "2026-11-18",
+        "archiveType": "autocustom", "award": null, "baseType": "Combined Synopsis/Solicitation",
+        "classificationCode": "20", "description": "https://api.sam.gov/prod/opportunities/v1/noticedesc?noticeid=f8639f719f0a4ca4af45e0cf1c43b768",
+        "fullParentPathCode": "097.97AS.DLA MARITIME.DLA MARITIME COLUMBS.SPE7M4",
+        "fullParentPathName": "DEPT OF DEFENSE.DEFENSE LOGISTICS AGENCY.DLA MARITIME.DLA
+        MARITIME COLUMBUS.DLA WEAPONS SUPPORT", "links": [{"rel": "self", "href":
+        "https://api.sam.gov/prod/opportunities/v2/search?noticeid=f8639f719f0a4ca4af45e0cf1c43b768&limit=1"}],
+        "naicsCode": "114119", "naicsCodes": ["114119"], "noticeId": "f8639f719f0a4ca4af45e0cf1c43b768",
+        "officeAddress": {"zipcode": "redacted", "city": "COLUMBUS", "countryCode":
+        "USA", "state": "OH"}, "organizationType": "OFFICE", "placeOfPerformance":
+        null, "pointOfContact": "redacted", "postedDate": "2026-10-09", "resourceLinks":
+        null, "responseDeadLine": "2026-10-19", "solicitationNumber": "SPE7M427T0595",
+        "title": "20--BLADDER,BOAT", "type": "Combined Synopsis/Solicitation", "typeOfSetAside":
+        "SBA", "typeOfSetAsideDescription": "Small Business Set Aside - Total", "uiLink":
+        "https://sam.gov/workspace/contract/opp/f8639f719f0a4ca4af45e0cf1c43b768/view"},
+        {"active": "Yes", "additionalInfoLink": null, "archiveDate": "2026-11-06",
+        "archiveType": "auto15", "award": null, "baseType": "Solicitation", "classificationCode":
+        "7G20", "description": "https://api.sam.gov/prod/opportunities/v1/noticedesc?noticeid=f6f47020083d464dba0b06ecdc7f2696",
+        "fullParentPathCode": "097.97AS.DLA MARITIME.DLA MARITIME MECH.SPRMM1", "fullParentPathName":
+        "DEPT OF DEFENSE.DEFENSE LOGISTICS AGENCY.DLA MARITIME.DLA MARITIME MECHANICSBURG.SPRMM1
+        DLA MECHANICSBURG", "links": [{"rel": "self", "href": "https://api.sam.gov/prod/opportunities/v2/search?noticeid=f6f47020083d464dba0b06ecdc7f2696&limit=1"}],
+        "naicsCode": "334290", "naicsCodes": ["334290"], "noticeId": "f6f47020083d464dba0b06ecdc7f2696",
+        "officeAddress": {"zipcode": "redacted", "city": "MECHANICSBURG", "countryCode":
+        "USA", "state": "PA"}, "organizationType": "OFFICE", "placeOfPerformance":
+        null, "pointOfContact": "redacted", "postedDate": "2026-10-09", "resourceLinks":
+        null, "responseDeadLine": "2026-10-22T16:30:00-04:00", "solicitationNumber":
+        "SPRMM126QMG66", "title": "NRP,CONTROL MODULE", "type": "Solicitation", "typeOfSetAside":
+        "", "typeOfSetAsideDescription": null, "uiLink": "https://sam.gov/workspace/contract/opp/f6f47020083d464dba0b06ecdc7f2696/view"},
+        {"active": "Yes", "additionalInfoLink": null, "archiveDate": "2026-11-15",
+        "archiveType": "autocustom", "award": null, "baseType": "Combined Synopsis/Solicitation",
+        "classificationCode": "53", "description": "https://api.sam.gov/prod/opportunities/v1/noticedesc?noticeid=f67fe4ba5336425cbe581fc1da1a33eb",
+        "fullParentPathCode": "097.97AS.DLA AVIATION.DLA AV RICHMOND.SPE4A7", "fullParentPathName":
+        "DEPT OF DEFENSE.DEFENSE LOGISTICS AGENCY.DLA AVIATION.DLA AV RICHMOND.DLA
+        AVIATION", "links": [{"rel": "self", "href": "https://api.sam.gov/prod/opportunities/v2/search?noticeid=f67fe4ba5336425cbe581fc1da1a33eb&limit=1"}],
+        "naicsCode": "332510", "naicsCodes": ["332510"], "noticeId": "f67fe4ba5336425cbe581fc1da1a33eb",
+        "officeAddress": {"zipcode": "redacted", "city": "RICHMOND", "countryCode":
+        "USA", "state": "VA"}, "organizationType": "OFFICE", "placeOfPerformance":
+        null, "pointOfContact": "redacted", "postedDate": "2026-10-09", "resourceLinks":
+        null, "responseDeadLine": "2026-10-16", "solicitationNumber": "SPE4A727T0420",
+        "title": "53--SPACER,SLEEVE", "type": "Combined Synopsis/Solicitation", "typeOfSetAside":
+        "SBA", "typeOfSetAsideDescription": "Small Business Set Aside - Total", "uiLink":
+        "https://sam.gov/workspace/contract/opp/f67fe4ba5336425cbe581fc1da1a33eb/view"},
+        {"active": "Yes", "additionalInfoLink": null, "archiveDate": "2026-12-31",
+        "archiveType": "autocustom", "award": null, "baseType": "Solicitation", "classificationCode":
+        "U099", "description": "https://api.sam.gov/prod/opportunities/v1/noticedesc?noticeid=f61d51597aa94524a09ad263cf7a5d60",
+        "fullParentPathCode": "021.2100.AMC.ACC.ACC-CTRS.ACC-APG.W900KK", "fullParentPathName":
+        "DEPT OF DEFENSE.DEPT OF THE ARMY.AMC.ACC.ACC-CTRS.ACC-APG.W6QK ACC-APG-ORLANDO",
+        "links": [{"rel": "self", "href": "https://api.sam.gov/prod/opportunities/v2/search?noticeid=f61d51597aa94524a09ad263cf7a5d60&limit=1"}],
+        "naicsCode": "541715", "naicsCodes": ["541715"], "noticeId": "f61d51597aa94524a09ad263cf7a5d60",
+        "officeAddress": {"zipcode": "redacted", "city": "ORLANDO", "countryCode":
+        "USA", "state": "FL"}, "organizationType": "OFFICE", "placeOfPerformance":
+        {"city": {"code": "53000", "name": "Orlando"}, "state": {"code": "FL", "name":
+        "Florida"}, "zip": "32826", "country": {"code": "USA", "name": "UNITED STATES"}},
+        "pointOfContact": "redacted", "postedDate": "2026-10-09", "resourceLinks":
+        ["https://sam.gov/api/prod/opps/v3/opportunities/resources/files/8ef64443c10e4fef98818fb6a61c7766/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/d7a9f03ce58d4f97b9253faed8dc583f/download"],
+        "responseDeadLine": "2026-07-24T15:00:00-04:00", "solicitationNumber": "SOF-2026-TSERVE",
+        "title": "Special Operations Forces - Training, Testing, and Transition Services
+        (SOF-T Serve)", "type": "Solicitation", "typeOfSetAside": null, "typeOfSetAsideDescription":
+        null, "uiLink": "https://sam.gov/workspace/contract/opp/f61d51597aa94524a09ad263cf7a5d60/view"},
+        {"active": "Yes", "additionalInfoLink": null, "archiveDate": "2026-11-04",
+        "archiveType": "auto15", "award": null, "baseType": "Combined Synopsis/Solicitation",
+        "classificationCode": "DA01", "description": "https://api.sam.gov/prod/opportunities/v1/noticedesc?noticeid=f5eab03cf50c4fa09b53ed95e157ce55",
+        "fullParentPathCode": "017.1700.SPAWAR.N61750", "fullParentPathName": "DEPT
+        OF DEFENSE.DEPT OF THE NAVY.SPAWAR.PAE MISSION SYSTEMS", "links": [{"rel":
+        "self", "href": "https://api.sam.gov/prod/opportunities/v2/search?noticeid=f5eab03cf50c4fa09b53ed95e157ce55&limit=1"}],
+        "naicsCode": "541519", "naicsCodes": ["541519"], "noticeId": "f5eab03cf50c4fa09b53ed95e157ce55",
+        "officeAddress": {"zipcode": "redacted", "city": "ARLINGTON", "countryCode":
+        "USA", "state": "VA"}, "organizationType": "OFFICE", "placeOfPerformance":
+        {"city": {"code": "50700", "name": "Washington Navy Yard"}, "state": {"code":
+        "DC", "name": "District of Columbia"}, "zip": "20001", "country": {"code":
+        "USA", "name": "UNITED STATES"}}, "pointOfContact": "redacted", "postedDate":
+        "2026-10-09", "resourceLinks": ["https://sam.gov/api/prod/opps/v3/opportunities/resources/files/02983ba9fc2a44edbc4838d65e1b74cc/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/0710f982da164cd38f7df579f34480bf/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/4f80239af8e245518c537148f454015e/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/58e896d876bd401e83ebf6a2cb61fc0e/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/b21f710457fa49869362b6cd25988691/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/cf3d200cee024a16b192efccee62419f/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/eccef5b0298540ee956605741907700d/download"],
+        "responseDeadLine": "2026-10-20T12:00:00-04:00", "solicitationNumber": "N0003926R0005",
+        "title": "STANDARD LABOR DATA COLLECTION AND DISTRIBUTION APPLICATION (SLDCADA)
+        DRAFT REQUEST FOR PROPOSAL", "type": "Combined Synopsis/Solicitation", "typeOfSetAside":
+        "SBA", "typeOfSetAsideDescription": "Small Business Set Aside - Total", "uiLink":
+        "https://sam.gov/workspace/contract/opp/f5eab03cf50c4fa09b53ed95e157ce55/view"},
+        {"active": "Yes", "additionalInfoLink": null, "archiveDate": "2026-11-18",
+        "archiveType": "autocustom", "award": null, "baseType": "Combined Synopsis/Solicitation",
+        "classificationCode": "48", "description": "https://api.sam.gov/prod/opportunities/v1/noticedesc?noticeid=f5df8fd70bc5441abc71967be1b383b9",
+        "fullParentPathCode": "097.97AS.DLA MARITIME.DLA MARITIME COLUMBS.SPE7MC",
+        "fullParentPathName": "DEPT OF DEFENSE.DEFENSE LOGISTICS AGENCY.DLA MARITIME.DLA
+        MARITIME COLUMBUS.DLA WEAPONS SUPPORT", "links": [{"rel": "self", "href":
+        "https://api.sam.gov/prod/opportunities/v2/search?noticeid=f5df8fd70bc5441abc71967be1b383b9&limit=1"}],
+        "naicsCode": "332911", "naicsCodes": ["332911"], "noticeId": "f5df8fd70bc5441abc71967be1b383b9",
+        "officeAddress": {"zipcode": "redacted", "city": "COLUMBUS", "countryCode":
+        "USA", "state": "OH"}, "organizationType": "OFFICE", "placeOfPerformance":
+        null, "pointOfContact": "redacted", "postedDate": "2026-10-09", "resourceLinks":
+        null, "responseDeadLine": "2026-10-19", "solicitationNumber": "SPE7MC27T0319",
+        "title": "48--VALVE,GLOBE", "type": "Combined Synopsis/Solicitation", "typeOfSetAside":
+        "SDVOSBC", "typeOfSetAsideDescription": "Service-Disabled Veteran-Owned Small
+        Business (SDVOSB) Set-Aside (FAR 19.14)", "uiLink": "https://sam.gov/workspace/contract/opp/f5df8fd70bc5441abc71967be1b383b9/view"},
+        {"active": "Yes", "additionalInfoLink": null, "archiveDate": "2026-11-15",
+        "archiveType": "autocustom", "award": null, "baseType": "Combined Synopsis/Solicitation",
+        "classificationCode": "16", "description": "https://api.sam.gov/prod/opportunities/v1/noticedesc?noticeid=f5b3976b4e204bca869d735a7cbfeac5",
+        "fullParentPathCode": "097.97AS.DLA AVIATION.DLA AV RICHMOND.SPE4A5", "fullParentPathName":
+        "DEPT OF DEFENSE.DEFENSE LOGISTICS AGENCY.DLA AVIATION.DLA AV RICHMOND.DLA
+        AVIATION", "links": [{"rel": "self", "href": "https://api.sam.gov/prod/opportunities/v2/search?noticeid=f5b3976b4e204bca869d735a7cbfeac5&limit=1"}],
+        "naicsCode": "333414", "naicsCodes": ["333414"], "noticeId": "f5b3976b4e204bca869d735a7cbfeac5",
+        "officeAddress": {"zipcode": "redacted", "city": "RICHMOND", "countryCode":
+        "USA", "state": "VA"}, "organizationType": "OFFICE", "placeOfPerformance":
+        null, "pointOfContact": "redacted", "postedDate": "2026-10-09", "resourceLinks":
+        null, "responseDeadLine": "2026-10-16", "solicitationNumber": "SPE4A527T0277",
+        "title": "16--DUCT ASSEMBLY,AIR COND", "type": "Combined Synopsis/Solicitation",
+        "typeOfSetAside": null, "typeOfSetAsideDescription": null, "uiLink": "https://sam.gov/workspace/contract/opp/f5b3976b4e204bca869d735a7cbfeac5/view"},
+        {"active": "Yes", "additionalInfoLink": null, "archiveDate": "2026-11-27",
+        "archiveType": "auto15", "award": null, "baseType": "Sources Sought", "classificationCode":
+        "8145", "description": "https://api.sam.gov/prod/opportunities/v1/noticedesc?noticeid=f43249f64b854cbe9fdefb509690aabf",
+        "fullParentPathCode": "097.97AS.DLA AVIATION.DLA AV OKLAHOMA CITY.SPRTA1",
+        "fullParentPathName": "DEPT OF DEFENSE.DEFENSE LOGISTICS AGENCY.DLA AVIATION.DLA
+        AVIATION OKLAHOMA CITY.DLA AVIATION AT OKLAHOMA CITY, OK", "links": [{"rel":
+        "self", "href": "https://api.sam.gov/prod/opportunities/v2/search?noticeid=f43249f64b854cbe9fdefb509690aabf&limit=1"}],
+        "naicsCode": "336412", "naicsCodes": ["336412"], "noticeId": "f43249f64b854cbe9fdefb509690aabf",
+        "officeAddress": {"zipcode": "redacted", "city": "TINKER AFB", "countryCode":
+        "USA", "state": "OK"}, "organizationType": "OFFICE", "placeOfPerformance":
+        {"country": {"code": "USA", "name": "UNITED STATES"}}, "pointOfContact": "redacted",
+        "postedDate": "2026-10-09", "resourceLinks": ["https://sam.gov/api/prod/opps/v3/opportunities/resources/files/28c01a6b01824264a54259f329299d8b/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/2bbfd2ba0b274d4b84f9a8851c38a1f3/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/7371496dde2948aebbaac01413fcec9e/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/89f814ab5e184a6fb7a151c06e236f7c/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/deb8dbe032994344988f154384035482/download",
+        "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/fd2be472cec74b3cbc9ab9b7b7c70463/download"],
+        "responseDeadLine": "2026-11-12T15:00:00-06:00", "solicitationNumber": "SPRTA127R0023",
+        "title": "F100CoreModuleContainer_End_Item_F100_NSN_8145014524579NZ_PN_P4078843",
+        "type": "Solicitation", "typeOfSetAside": null, "typeOfSetAsideDescription":
+        null, "uiLink": "https://sam.gov/workspace/contract/opp/f43249f64b854cbe9fdefb509690aabf/view"}],
+        "links": [{"rel": "self", "href": "https://api.sam.gov/prod/opportunities/v2/search?postedFrom=10%2F08%2F2026&postedTo=10%2F09%2F2026&limit=25&offset=0&ptype=o%2Ck"}]}'
+    headers:
+      access-control-allow-headers:
+      - authorization,Access-Control-Allow-Origin,Content-Type,SOAPAction,apikey,Internal-Key,apikey,ApiKey
+      access-control-allow-methods:
+      - GET
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - ''
+      activityid:
+      - 14c125da-c64d-4ee0-a487-4693cab06c0e
+      cache-control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      connection:
+      - keep-alive
+      content-length:
+      - '44516'
+      content-type:
+      - application/json
+      date:
+      - Fri, 09 Oct 2026 23:27:54 GMT
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      server:
+      - istio-envoy
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '162'
+      x-frame-options:
+      - DENY
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+version: 1

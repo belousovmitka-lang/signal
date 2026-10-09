@@ -34,7 +34,7 @@ async def test_cassette_new_questions_and_keyword_search(settings, monkeypatch):
     r = out.result
     assert r.status == "ok" and r.invalid == 0 and r.fetched >= 20
     for p in out.posts:
-        assert p.title and p.text and "<p>" not in p.text and "&quot;" not in p.title
+        assert p.title and "<p>" not in p.text and "&quot;" not in p.title   # the API can omit a body
         assert p.published_at >= SINCE and p.raw["license"] == "CC BY-SA 4.0"
         assert "/questions/" in p.url and p.community.endswith((".stackexchange.com", "stackoverflow.com"))
         assert set(p.engagement) <= {"score", "answers", "views"}

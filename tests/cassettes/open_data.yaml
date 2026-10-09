@@ -1,0 +1,2104 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - data.cityofchicago.org
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://data.cityofchicago.org/robots.txt
+  response:
+    body:
+      string: 'Sitemap: https://sa-socrata-sitemaps-us-east-1-fedramp-prod.s3.us-east-1.amazonaws.com/sitemaps/sitemap-data.cityofchicago.org.xml
+
+
+
+        User-agent: *
+
+        Crawl-delay: 1
+
+
+
+
+        Disallow: /browse?*&category=
+
+        Disallow: /browse?*&federation_filter=
+
+        Disallow: /browse?*&limitTo=
+
+        Disallow: /browse?*&q=
+
+        Disallow: /browse?*&sortBy=
+
+        Disallow: /browse?*&tags=
+
+        Disallow: /browse?*&view_type=
+
+        Disallow: /browse/*?*&category=
+
+        Disallow: /browse/*?*&federation_filter=
+
+        Disallow: /browse/*?*&limitTo=
+
+        Disallow: /browse/*?*&q=
+
+        Disallow: /browse/*?*&sortBy=
+
+        Disallow: /browse/*?*&tags=
+
+        Disallow: /browse/*?*&view_type=
+
+        Disallow: /*/browse?*&category=
+
+        Disallow: /*/browse?*&federation_filter=
+
+        Disallow: /*/browse?*&limitTo=
+
+        Disallow: /*/browse?*&q=
+
+        Disallow: /*/browse?*&sortBy=
+
+        Disallow: /*/browse?*&tags=
+
+        Disallow: /*/browse?*&view_type=
+
+        Disallow: /page/*?*&category=
+
+        Disallow: /page/*?*&federation_filter=
+
+        Disallow: /page/*?*&limitTo=
+
+        Disallow: /page/*?*&q=
+
+        Disallow: /page/*?*&sortBy=
+
+        Disallow: /page/*?*&tags=
+
+        Disallow: /page/*?*&view_type=
+
+        Disallow: /catalog/*?*&category=
+
+        Disallow: /catalog/*?*&federation_filter=
+
+        Disallow: /catalog/*?*&limitTo=
+
+        Disallow: /catalog/*?*&q=
+
+        Disallow: /catalog/*?*&sortBy=
+
+        Disallow: /catalog/*?*&tags=
+
+        Disallow: /catalog/*?*&view_type=
+
+        Disallow: /facet/*?*&category=
+
+        Disallow: /facet/*?*&federation_filter=
+
+        Disallow: /facet/*?*&limitTo=
+
+        Disallow: /facet/*?*&q=
+
+        Disallow: /facet/*?*&sortBy=
+
+        Disallow: /facet/*?*&tags=
+
+        Disallow: /facet/*?*&view_type=
+
+
+        Disallow: */alt$
+
+        Disallow: */alt?
+
+        Disallow: */edit$
+
+        Disallow: /*/*/*/widget_preview
+
+        Disallow: /OData.svc/
+
+        Disallow: /api/odata/
+
+        Disallow: /browse/embed
+
+        Disallow: /login
+
+        Disallow: /reset_password/
+
+        Disallow: /tiles/
+
+        Disallow: /views/INLINE/rows.json?*method=clustered2*
+
+        Disallow: /api/collocate*
+
+
+        '
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      connection:
+      - keep-alive
+      content-length:
+      - '1753'
+      content-security-policy:
+      - 'default-src ''self''; base-uri ''self''; frame-ancestors ''self'' https:
+        http:; frame-src ''self'' https:; font-src ''self'' https: data:; img-src
+        ''self'' https: http: data: blob:; object-src ''none''; script-src ''self''
+        https: blob: ''unsafe-inline'' ''unsafe-eval''; style-src ''self'' https:
+        blob: ''unsafe-inline''; worker-src ''self'' blob:; connect-src ''self'' https:
+        http: wss: blob:; media-src ''self'' blob: https:; form-action ''self'' https:;
+        report-uri /report-csp-violation'
+      content-type:
+      - text/plain; charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:27:45 GMT
+      etag:
+      - W/"8cf8efc313d45d7d0235468301a618fa"
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      x-permitted-cross-domain-policies:
+      - none
+      x-runtime:
+      - '0.042136'
+      x-socrata-region:
+      - aws-us-east-1-fedramp-prod
+      x-socrata-requestid:
+      - 020b93a2c251e20ba5545e10f54ff21d
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - data.cityofchicago.org
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://data.cityofchicago.org/resource/ydr8-5enu.json?%24limit=15&%24offset=0&%24order=issue_date+DESC&%24where=issue_date+%3E%3D+%272026-10-06T00%3A00%3A00%27
+  response:
+    body:
+      string: "[{\"id\": \"N2991402\", \"permit_\": \"B200515077\", \"permit_status\":
+        \"ACTIVE\", \"permit_milestone\": \"INSPECTION ELIGIBLE\", \"permit_type\":
+        \"PERMIT \u2013 EXPRESS PERMIT PROGRAM\", \"review_type\": \"EXPRESS PERMIT
+        PROGRAM\", \"application_start_date\": \"2026-10-08T00:00:00.000\", \"issue_date\":
+        \"2026-10-08T00:00:00.000\", \"processing_time\": \"0\", \"street_number\":
+        \"redacted\", \"street_direction\": \"E\", \"street_name\": \"redacted\",
+        \"work_type\": \"Electrical Work\", \"work_description\": \"LOW VOLTAGE/COMMUNICATION
+        ELECTRICAL WORK. INSTALL SECURITY. SPECIFIC LOCATION: 716B UNIT.\", \"building_fee_paid\":
+        \"75\", \"zoning_fee_paid\": \"0\", \"other_fee_paid\": \"0\", \"subtotal_paid\":
+        \"75\", \"building_fee_unpaid\": \"0\", \"zoning_fee_unpaid\": \"0\", \"other_fee_unpaid\":
+        \"0\", \"subtotal_unpaid\": \"0\", \"building_fee_waived\": \"0\", \"building_fee_subtotal\":
+        \"75\", \"zoning_fee_subtotal\": \"0\", \"other_fee_subtotal\": \"0\", \"zoning_fee_waived\":
+        \"0\", \"other_fee_waived\": \"0\", \"subtotal_waived\": \"0\", \"total_fee\":
+        \"75\", \"contact_1_type\": \"redacted\", \"contact_1_name\": \"redacted\",
+        \"contact_1_city\": \"redacted\", \"contact_1_state\": \"redacted\", \"contact_1_zipcode\":
+        \"redacted\", \"contact_2_type\": \"redacted\", \"contact_2_name\": \"redacted\",
+        \"contact_2_city\": \"redacted\", \"contact_2_state\": \"redacted\", \"contact_2_zipcode\":
+        \"redacted\", \"contact_3_type\": \"redacted\", \"contact_3_name\": \"redacted\",
+        \"contact_3_city\": \"redacted\", \"contact_3_state\": \"redacted\", \"contact_3_zipcode\":
+        \"redacted\", \"reported_cost\": \"7241\", \"pin_list\": \"2514300029\", \"community_area\":
+        \"50\", \"census_tract\": \"500200\", \"ward\": \"9\", \"xcoordinate\": \"1183277.1539707526\",
+        \"ycoordinate\": \"1831541.7238251027\", \"latitude\": \"41.6929419346818\",
+        \"longitude\": \"-87.6046069177278\", \"location\": {\"type\": \"Point\",
+        \"coordinates\": [-87.604606917728, 41.692941934682]}}, {\"id\": \"N2990518\",
+        \"permit_\": \"B200514833\", \"permit_status\": \"ACTIVE\", \"permit_milestone\":
+        \"INSPECTIONS\", \"permit_type\": \"PERMIT \u2013 EXPRESS PERMIT PROGRAM\",
+        \"review_type\": \"EXPRESS PERMIT PROGRAM\", \"application_start_date\": \"2026-10-06T00:00:00.000\",
+        \"issue_date\": \"2026-10-08T00:00:00.000\", \"processing_time\": \"2\", \"street_number\":
+        \"redacted\", \"street_direction\": \"S\", \"street_name\": \"redacted\",
+        \"work_type\": \"Masonry Work\", \"work_description\": \"TUCKPOINTING AND
+        UNIT MASONRY REPAIR / REPLACEMENT: 100 SQ. FT., LINTEL QTY. 0, MAX. LENGTH
+        0. LOCATION: BUILDING EXTERIOR.\", \"building_fee_paid\": \"300\", \"zoning_fee_paid\":
+        \"50\", \"other_fee_paid\": \"25\", \"subtotal_paid\": \"375\", \"building_fee_unpaid\":
+        \"0\", \"zoning_fee_unpaid\": \"0\", \"other_fee_unpaid\": \"0\", \"subtotal_unpaid\":
+        \"0\", \"building_fee_waived\": \"0\", \"building_fee_subtotal\": \"300\",
+        \"zoning_fee_subtotal\": \"50\", \"other_fee_subtotal\": \"25\", \"zoning_fee_waived\":
+        \"0\", \"other_fee_waived\": \"0\", \"subtotal_waived\": \"0\", \"total_fee\":
+        \"375\", \"contact_1_type\": \"redacted\", \"contact_1_name\": \"redacted\",
+        \"contact_1_city\": \"redacted\", \"contact_1_state\": \"redacted\", \"contact_1_zipcode\":
+        \"redacted\", \"contact_2_type\": \"redacted\", \"contact_2_name\": \"redacted\",
+        \"contact_2_city\": \"redacted\", \"contact_2_state\": \"redacted\", \"contact_2_zipcode\":
+        \"redacted\", \"contact_3_type\": \"redacted\", \"contact_3_name\": \"redacted\",
+        \"contact_3_city\": \"redacted\", \"contact_3_state\": \"redacted\", \"contact_3_zipcode\":
+        \"redacted\", \"contact_4_type\": \"redacted\", \"contact_4_name\": \"redacted\",
+        \"contact_4_city\": \"redacted\", \"contact_4_state\": \"redacted\", \"contact_4_zipcode\":
+        \"redacted\", \"contact_5_type\": \"redacted\", \"contact_5_name\": \"redacted\",
+        \"contact_5_city\": \"redacted\", \"contact_5_state\": \"redacted\", \"contact_5_zipcode\":
+        \"redacted\", \"reported_cost\": \"8500\", \"pin_list\": \"2130118006\", \"community_area\":
+        \"43\", \"census_tract\": \"431300\", \"ward\": \"7\", \"xcoordinate\": \"1194419.8168161043\",
+        \"ycoordinate\": \"1855996.3412235004\", \"latitude\": \"41.75978171300422\",
+        \"longitude\": \"-87.56301094487287\", \"location\": {\"type\": \"Point\",
+        \"coordinates\": [-87.563010944873, 41.759781713004]}}, {\"id\": \"N2991540\",
+        \"permit_\": \"B200515135\", \"permit_status\": \"ACTIVE\", \"permit_milestone\":
+        \"INSPECTION ELIGIBLE\", \"permit_type\": \"PERMIT \u2013 EXPRESS PERMIT PROGRAM\",
+        \"review_type\": \"EXPRESS PERMIT PROGRAM\", \"application_start_date\": \"2026-10-08T00:00:00.000\",
+        \"issue_date\": \"2026-10-08T00:00:00.000\", \"processing_time\": \"0\", \"street_number\":
+        \"redacted\", \"street_direction\": \"S\", \"street_name\": \"redacted\",
+        \"work_type\": \"Reroofing\", \"work_description\": \"SCOPE: ROOF REPLACEMENT.
+        AREA: 1800 SQ. FT. ROOF COVERING: MINERAL - SURFACED ROLL ROOFING. LOCATION:
+        FLAT ROOF. IL ROOFING CONTRACTOR LICENSE: 104003460.\", \"building_fee_paid\":
+        \"450\", \"zoning_fee_paid\": \"0\", \"other_fee_paid\": \"0\", \"subtotal_paid\":
+        \"450\", \"building_fee_unpaid\": \"0\", \"zoning_fee_unpaid\": \"0\", \"other_fee_unpaid\":
+        \"0\", \"subtotal_unpaid\": \"0\", \"building_fee_waived\": \"0\", \"building_fee_subtotal\":
+        \"450\", \"zoning_fee_subtotal\": \"0\", \"other_fee_subtotal\": \"0\", \"zoning_fee_waived\":
+        \"0\", \"other_fee_waived\": \"0\", \"subtotal_waived\": \"0\", \"total_fee\":
+        \"450\", \"contact_1_type\": \"redacted\", \"contact_1_name\": \"redacted\",
+        \"contact_1_city\": \"redacted\", \"contact_1_state\": \"redacted\", \"contact_1_zipcode\":
+        \"redacted\", \"contact_2_type\": \"redacted\", \"contact_2_name\": \"redacted\",
+        \"contact_2_city\": \"redacted\", \"contact_2_state\": \"redacted\", \"contact_2_zipcode\":
+        \"redacted\", \"contact_3_type\": \"redacted\", \"contact_3_name\": \"redacted\",
+        \"contact_3_city\": \"redacted\", \"contact_3_state\": \"redacted\", \"contact_3_zipcode\":
+        \"redacted\", \"contact_4_type\": \"redacted\", \"contact_4_name\": \"redacted\",
+        \"contact_4_city\": \"redacted\", \"contact_4_state\": \"redacted\", \"contact_4_zipcode\":
+        \"redacted\", \"reported_cost\": \"35000\", \"pin_list\": \"2029212048\",
+        \"community_area\": \"68\", \"census_tract\": \"681400\", \"ward\": \"17\",
+        \"xcoordinate\": \"1170943.0948264292\", \"ycoordinate\": \"1856577.3264979478\",
+        \"latitude\": \"41.76192068292193\", \"longitude\": \"-87.64903549251132\",
+        \"location\": {\"type\": \"Point\", \"coordinates\": [-87.649035492511, 41.761920682922]}},
+        {\"id\": \"N2991309\", \"permit_\": \"B200515047\", \"permit_status\": \"ACTIVE\",
+        \"permit_milestone\": \"INSPECTIONS\", \"permit_type\": \"PERMIT \u2013 EXPRESS
+        PERMIT PROGRAM\", \"review_type\": \"EXPRESS PERMIT PROGRAM\", \"application_start_date\":
+        \"2026-10-08T00:00:00.000\", \"issue_date\": \"2026-10-08T00:00:00.000\",
+        \"processing_time\": \"0\", \"street_number\": \"redacted\", \"street_direction\":
+        \"S\", \"street_name\": \"redacted\", \"work_type\": \"Electrical Work\",
+        \"work_description\": \"LINE VOLTAGE ELECTRICAL WORK. NEW PERMANENT 225 AMP
+        SERVICE DISCONNECTING MEANS WITH 1 CIRCUITS. RECEPTACLE OUTLETS: 1 . LIGHTING
+        OUTLETS: 0. 13.5 KWH LITHIUM ION ENERGY STORAGE SYSTEM. SPECIFIC LOCATION:
+        MAIN PANEL, EXTERIOR WALL.\", \"building_fee_paid\": \"75\", \"zoning_fee_paid\":
+        \"0\", \"other_fee_paid\": \"0\", \"subtotal_paid\": \"75\", \"building_fee_unpaid\":
+        \"0\", \"zoning_fee_unpaid\": \"0\", \"other_fee_unpaid\": \"0\", \"subtotal_unpaid\":
+        \"0\", \"building_fee_waived\": \"0\", \"building_fee_subtotal\": \"75\",
+        \"zoning_fee_subtotal\": \"0\", \"other_fee_subtotal\": \"0\", \"zoning_fee_waived\":
+        \"0\", \"other_fee_waived\": \"0\", \"subtotal_waived\": \"0\", \"total_fee\":
+        \"75\", \"contact_1_type\": \"redacted\", \"contact_1_name\": \"redacted\",
+        \"contact_1_city\": \"redacted\", \"contact_1_state\": \"redacted\", \"contact_1_zipcode\":
+        \"redacted\", \"contact_2_type\": \"redacted\", \"contact_2_name\": \"redacted\",
+        \"contact_2_city\": \"redacted\", \"contact_2_state\": \"redacted\", \"contact_2_zipcode\":
+        \"redacted\", \"contact_3_type\": \"redacted\", \"contact_3_name\": \"redacted\",
+        \"contact_3_city\": \"redacted\", \"contact_3_state\": \"redacted\", \"contact_3_zipcode\":
+        \"redacted\", \"reported_cost\": \"9700\", \"pin_list\": \"2502314026\", \"community_area\":
+        \"47\", \"census_tract\": \"470100\", \"ward\": \"8\", \"xcoordinate\": \"1185783.0762418455\",
+        \"ycoordinate\": \"1843916.9437911266\", \"latitude\": \"41.72684247109886\",
+        \"longitude\": \"-87.59504388946344\", \"location\": {\"type\": \"Point\",
+        \"coordinates\": [-87.595043889463, 41.726842471099]}}, {\"id\": \"N2990784\",
+        \"permit_\": \"B200514908\", \"permit_status\": \"COMPLETE\", \"permit_milestone\":
+        \"COMPLETE\", \"permit_type\": \"PERMIT \u2013 EXPRESS PERMIT PROGRAM\", \"review_type\":
+        \"EXPRESS PERMIT PROGRAM\", \"application_start_date\": \"2026-10-07T00:00:00.000\",
+        \"issue_date\": \"2026-10-08T00:00:00.000\", \"processing_time\": \"1\", \"street_number\":
+        \"redacted\", \"street_direction\": \"S\", \"street_name\": \"redacted\",
+        \"work_type\": \"Administrative Change\", \"work_description\": \"OTHER ADMINISTRATIVE
+        CHANGE ASSOCIATED WITH PERMIT B200510661. DETAILS: CHANGE SIDE SETBACK TO
+        2'6\\\".  ADMINISTRATIVE FILING ONLY. NO SUBSTANTIVE CHANGE TO SCOPE OF PERMIT
+        B200510661.\", \"building_fee_paid\": \"75\", \"zoning_fee_paid\": \"0\",
+        \"other_fee_paid\": \"25\", \"subtotal_paid\": \"100\", \"building_fee_unpaid\":
+        \"0\", \"zoning_fee_unpaid\": \"0\", \"other_fee_unpaid\": \"0\", \"subtotal_unpaid\":
+        \"0\", \"building_fee_waived\": \"0\", \"building_fee_subtotal\": \"75\",
+        \"zoning_fee_subtotal\": \"0\", \"other_fee_subtotal\": \"25\", \"zoning_fee_waived\":
+        \"0\", \"other_fee_waived\": \"0\", \"subtotal_waived\": \"0\", \"total_fee\":
+        \"100\", \"contact_1_type\": \"redacted\", \"contact_1_name\": \"redacted\",
+        \"contact_1_city\": \"redacted\", \"contact_1_state\": \"redacted\", \"contact_1_zipcode\":
+        \"redacted\", \"contact_2_type\": \"redacted\", \"contact_2_name\": \"redacted\",
+        \"contact_2_city\": \"redacted\", \"contact_2_state\": \"redacted\", \"contact_2_zipcode\":
+        \"redacted\", \"contact_3_type\": \"redacted\", \"contact_3_name\": \"redacted\",
+        \"contact_3_city\": \"redacted\", \"contact_3_state\": \"redacted\", \"contact_3_zipcode\":
+        \"redacted\", \"community_area\": \"56\", \"census_tract\": \"560800\", \"ward\":
+        \"23\", \"xcoordinate\": \"1135902.661742562\", \"ycoordinate\": \"1868637.9741867431\",
+        \"latitude\": \"41.795710474506215\", \"longitude\": \"-87.77717898483114\",
+        \"location\": {\"type\": \"Point\", \"coordinates\": [-87.777178984831, 41.795710474506]}},
+        {\"id\": \"N2991805\", \"permit_\": \"B200515185\", \"permit_status\": \"ACTIVE\",
+        \"permit_milestone\": \"INSPECTION ELIGIBLE\", \"permit_type\": \"PERMIT \u2013
+        EXPRESS PERMIT PROGRAM\", \"review_type\": \"EXPRESS PERMIT PROGRAM\", \"application_start_date\":
+        \"2026-10-08T00:00:00.000\", \"issue_date\": \"2026-10-08T00:00:00.000\",
+        \"processing_time\": \"0\", \"street_number\": \"redacted\", \"street_direction\":
+        \"W\", \"street_name\": \"redacted\", \"work_type\": \"Monthly Maintenance
+        Permit\", \"work_description\": \"ELECTRICAL MAINTENANCE PERMIT. OCCUPANCY:
+        BUSINESS. START DATE: 10/8/2026. END DATE: 11/7/2026. ALL WORK UNDER THIS
+        PERMIT MUST BE PERFORMED BY EMPLOYEES OF THE LISTED ELECTRICAL CONTRACTOR.
+        THE ELECTRICAL CONTRACTOR MUST MAINTAIN COMPLETE WRITTEN RECORDS OF ALL WORK
+        PERFORMED UNDER THIS PERMIT AND MAKE THOSE RECORDS AVAILABLE TO THE BUILDING
+        COMMISSIONER UPON REQUEST.\", \"building_fee_paid\": \"75\", \"zoning_fee_paid\":
+        \"0\", \"other_fee_paid\": \"0\", \"subtotal_paid\": \"75\", \"building_fee_unpaid\":
+        \"0\", \"zoning_fee_unpaid\": \"0\", \"other_fee_unpaid\": \"0\", \"subtotal_unpaid\":
+        \"0\", \"building_fee_waived\": \"0\", \"building_fee_subtotal\": \"75\",
+        \"zoning_fee_subtotal\": \"0\", \"other_fee_subtotal\": \"0\", \"zoning_fee_waived\":
+        \"0\", \"other_fee_waived\": \"0\", \"subtotal_waived\": \"0\", \"total_fee\":
+        \"75\", \"contact_1_type\": \"redacted\", \"contact_1_name\": \"redacted\",
+        \"contact_1_city\": \"redacted\", \"contact_1_state\": \"redacted\", \"contact_1_zipcode\":
+        \"redacted\", \"contact_2_type\": \"redacted\", \"contact_2_name\": \"redacted\",
+        \"contact_2_city\": \"redacted\", \"contact_2_state\": \"redacted\", \"contact_2_zipcode\":
+        \"redacted\", \"contact_3_type\": \"redacted\", \"contact_3_name\": \"redacted\",
+        \"contact_3_city\": \"redacted\", \"contact_3_state\": \"redacted\", \"contact_3_zipcode\":
+        \"redacted\", \"community_area\": \"76\", \"census_tract\": \"760800\", \"ward\":
+        \"41\", \"xcoordinate\": \"1117049.876355215\", \"ycoordinate\": \"1938406.963691722\",
+        \"latitude\": \"41.98748168754663\", \"longitude\": \"-87.84485850345517\",
+        \"location\": {\"type\": \"Point\", \"coordinates\": [-87.844858503455, 41.987481687547]}},
+        {\"id\": \"N2992078\", \"permit_\": \"B200515248\", \"permit_status\": \"ACTIVE\",
+        \"permit_milestone\": \"INSPECTIONS\", \"permit_type\": \"PERMIT \u2013 EXPRESS
+        PERMIT PROGRAM\", \"review_type\": \"EXPRESS PERMIT PROGRAM\", \"application_start_date\":
+        \"2026-10-08T00:00:00.000\", \"issue_date\": \"2026-10-08T00:00:00.000\",
+        \"processing_time\": \"0\", \"street_number\": \"redacted\", \"street_direction\":
+        \"W\", \"street_name\": \"redacted\", \"work_type\": \"Electrical Work\",
+        \"work_description\": \"LINE VOLTAGE ELECTRICAL WORK. NEW PERMANENT 200 AMP
+        SERVICE DISCONNECTING MEANS WITH 40 CIRCUITS. RECEPTACLE OUTLETS: 1 . LIGHTING
+        OUTLETS: 0. SPECIFIC LOCATION: BASEMENT.\", \"building_fee_paid\": \"75\",
+        \"zoning_fee_paid\": \"0\", \"other_fee_paid\": \"0\", \"subtotal_paid\":
+        \"75\", \"building_fee_unpaid\": \"0\", \"zoning_fee_unpaid\": \"0\", \"other_fee_unpaid\":
+        \"0\", \"subtotal_unpaid\": \"0\", \"building_fee_waived\": \"0\", \"building_fee_subtotal\":
+        \"75\", \"zoning_fee_subtotal\": \"0\", \"other_fee_subtotal\": \"0\", \"zoning_fee_waived\":
+        \"0\", \"other_fee_waived\": \"0\", \"subtotal_waived\": \"0\", \"total_fee\":
+        \"75\", \"contact_1_type\": \"redacted\", \"contact_1_name\": \"redacted\",
+        \"contact_1_city\": \"redacted\", \"contact_1_state\": \"redacted\", \"contact_1_zipcode\":
+        \"redacted\", \"contact_2_type\": \"redacted\", \"contact_2_name\": \"redacted\",
+        \"contact_2_city\": \"redacted\", \"contact_2_state\": \"redacted\", \"contact_2_zipcode\":
+        \"redacted\", \"contact_3_type\": \"redacted\", \"contact_3_name\": \"redacted\",
+        \"contact_3_city\": \"redacted\", \"contact_3_state\": \"redacted\", \"contact_3_zipcode\":
+        \"redacted\", \"contact_4_type\": \"redacted\", \"contact_4_name\": \"redacted\",
+        \"contact_4_city\": \"redacted\", \"contact_4_state\": \"redacted\", \"contact_4_zipcode\":
+        \"redacted\", \"reported_cost\": \"3500\", \"pin_list\": \"1201402014\", \"community_area\":
+        \"10\", \"census_tract\": \"100300\", \"ward\": \"41\", \"xcoordinate\": \"1126826.517307369\",
+        \"ycoordinate\": \"1938612.5334279453\", \"latitude\": \"41.98788714681101\",
+        \"longitude\": \"-87.80889407851161\", \"location\": {\"type\": \"Point\",
+        \"coordinates\": [-87.808894078512, 41.987887146811]}}, {\"id\": \"N2989878\",
+        \"permit_\": \"B200514646\", \"permit_status\": \"ACTIVE\", \"permit_milestone\":
+        \"INSPECTIONS\", \"permit_type\": \"PERMIT \u2013 EXPRESS PERMIT PROGRAM\",
+        \"review_type\": \"EXPRESS PERMIT PROGRAM\", \"application_start_date\": \"2026-10-06T00:00:00.000\",
+        \"issue_date\": \"2026-10-08T00:00:00.000\", \"processing_time\": \"2\", \"street_number\":
+        \"redacted\", \"street_direction\": \"S\", \"street_name\": \"redacted\",
+        \"work_type\": \"Small-Scale Solar PV System\", \"work_description\": \"INSTALL
+        SOLAR PANELS ON ROOF OF PRINCIPAL BUILDING. ROOF TYPE: STEEP (>5:12). INVERTER
+        OUTPUT: 11.5 KW. ARRAY OUTPUT: 12.6 KW.   INCLUDES 13.5 KWH ENERGY STORAGE
+        SYSTEM.  LOCATION: ROOF PLANES OF MAIN HOUSE. ICC DISTRIBUTED GENERATION INSTALLER
+        CERT. #18-0817.\", \"permit_condition\": \"*PLEASE PROVIDE SEPARATE ELECTRICAL
+        PERMIT AT THE TIME OF SOLAR INSPECTION OR RISK FAILURE AS PROPOSED WORK PER
+        ELECTRICAL DRAWING.\", \"building_fee_paid\": \"225\", \"zoning_fee_paid\":
+        \"50\", \"other_fee_paid\": \"25\", \"subtotal_paid\": \"300\", \"building_fee_unpaid\":
+        \"0\", \"zoning_fee_unpaid\": \"0\", \"other_fee_unpaid\": \"0\", \"subtotal_unpaid\":
+        \"0\", \"building_fee_waived\": \"0\", \"building_fee_subtotal\": \"225\",
+        \"zoning_fee_subtotal\": \"50\", \"other_fee_subtotal\": \"25\", \"zoning_fee_waived\":
+        \"0\", \"other_fee_waived\": \"0\", \"subtotal_waived\": \"0\", \"total_fee\":
+        \"300\", \"contact_1_type\": \"redacted\", \"contact_1_name\": \"redacted\",
+        \"contact_1_city\": \"redacted\", \"contact_1_state\": \"redacted\", \"contact_1_zipcode\":
+        \"redacted\", \"contact_2_type\": \"redacted\", \"contact_2_name\": \"redacted\",
+        \"contact_2_city\": \"redacted\", \"contact_2_state\": \"redacted\", \"contact_2_zipcode\":
+        \"redacted\", \"contact_3_type\": \"redacted\", \"contact_3_name\": \"redacted\",
+        \"contact_3_city\": \"redacted\", \"contact_3_state\": \"redacted\", \"contact_3_zipcode\":
+        \"redacted\", \"contact_4_type\": \"redacted\", \"contact_4_name\": \"redacted\",
+        \"contact_4_city\": \"redacted\", \"contact_4_state\": \"redacted\", \"contact_4_zipcode\":
+        \"redacted\", \"contact_5_type\": \"redacted\", \"contact_5_name\": \"redacted\",
+        \"contact_5_city\": \"redacted\", \"contact_5_state\": \"redacted\", \"contact_5_zipcode\":
+        \"redacted\", \"reported_cost\": \"33940\", \"pin_list\": \"1934312048\",
+        \"community_area\": \"70\", \"census_tract\": \"700300\", \"ward\": \"18\",
+        \"xcoordinate\": \"1148538.944763425\", \"ycoordinate\": \"1847538.0562946314\",
+        \"latitude\": \"41.73757506393465\", \"longitude\": \"-87.73138193466716\",
+        \"location\": {\"type\": \"Point\", \"coordinates\": [-87.731381934667, 41.737575063935]}},
+        {\"id\": \"N2991683\", \"permit_\": \"B200515166\", \"permit_status\": \"ACTIVE\",
+        \"permit_milestone\": \"INSPECTION ELIGIBLE\", \"permit_type\": \"PERMIT \u2013
+        EXPRESS PERMIT PROGRAM\", \"review_type\": \"EXPRESS PERMIT PROGRAM\", \"application_start_date\":
+        \"2026-10-08T00:00:00.000\", \"issue_date\": \"2026-10-08T00:00:00.000\",
+        \"processing_time\": \"0\", \"street_number\": \"redacted\", \"street_direction\":
+        \"W\", \"street_name\": \"redacted\", \"work_type\": \"Electrical Work\",
+        \"work_description\": \"LOW VOLTAGE/COMMUNICATION ELECTRICAL WORK. INSTALL
+        DATA/VIDEO. SPECIFIC LOCATION: STORE ONLY.\", \"building_fee_paid\": \"75\",
+        \"zoning_fee_paid\": \"0\", \"other_fee_paid\": \"0\", \"subtotal_paid\":
+        \"75\", \"building_fee_unpaid\": \"0\", \"zoning_fee_unpaid\": \"0\", \"other_fee_unpaid\":
+        \"0\", \"subtotal_unpaid\": \"0\", \"building_fee_waived\": \"0\", \"building_fee_subtotal\":
+        \"75\", \"zoning_fee_subtotal\": \"0\", \"other_fee_subtotal\": \"0\", \"zoning_fee_waived\":
+        \"0\", \"other_fee_waived\": \"0\", \"subtotal_waived\": \"0\", \"total_fee\":
+        \"75\", \"contact_1_type\": \"redacted\", \"contact_1_name\": \"redacted\",
+        \"contact_1_city\": \"redacted\", \"contact_1_state\": \"redacted\", \"contact_1_zipcode\":
+        \"redacted\", \"contact_2_type\": \"redacted\", \"contact_2_name\": \"redacted\",
+        \"contact_2_city\": \"redacted\", \"contact_2_state\": \"redacted\", \"contact_2_zipcode\":
+        \"redacted\", \"contact_3_type\": \"redacted\", \"contact_3_name\": \"redacted\",
+        \"contact_3_city\": \"redacted\", \"contact_3_state\": \"redacted\", \"contact_3_zipcode\":
+        \"redacted\", \"reported_cost\": \"13889\", \"pin_list\": \"1636424017\",
+        \"xcoordinate\": \"1159211.8279489202\", \"ycoordinate\": \"1878729.9272905777\"},
+        {\"id\": \"N2990767\", \"permit_\": \"B200514901\", \"permit_status\": \"ACTIVE\",
+        \"permit_milestone\": \"INSPECTIONS\", \"permit_type\": \"PERMIT \u2013 EXPRESS
+        PERMIT PROGRAM\", \"review_type\": \"EXPRESS PERMIT PROGRAM\", \"application_start_date\":
+        \"2026-10-07T00:00:00.000\", \"issue_date\": \"2026-10-08T00:00:00.000\",
+        \"processing_time\": \"1\", \"street_number\": \"redacted\", \"street_direction\":
+        \"W\", \"street_name\": \"redacted\", \"work_type\": \"Porch,Deck,Balcony,or
+        Fire Escape\", \"work_description\": \"LIMITED REPAIR (25% OR LESS) FOR WOOD
+        PORCH (OPEN) (QUANTITY: 1, LOCATION: REAR OF BUILDING).\", \"building_fee_paid\":
+        \"75\", \"zoning_fee_paid\": \"0\", \"other_fee_paid\": \"25\", \"subtotal_paid\":
+        \"100\", \"building_fee_unpaid\": \"0\", \"zoning_fee_unpaid\": \"0\", \"other_fee_unpaid\":
+        \"0\", \"subtotal_unpaid\": \"0\", \"building_fee_waived\": \"0\", \"building_fee_subtotal\":
+        \"75\", \"zoning_fee_subtotal\": \"0\", \"other_fee_subtotal\": \"25\", \"zoning_fee_waived\":
+        \"0\", \"other_fee_waived\": \"0\", \"subtotal_waived\": \"0\", \"total_fee\":
+        \"100\", \"contact_1_type\": \"redacted\", \"contact_1_name\": \"redacted\",
+        \"contact_1_city\": \"redacted\", \"contact_1_state\": \"redacted\", \"contact_1_zipcode\":
+        \"redacted\", \"contact_2_type\": \"redacted\", \"contact_2_name\": \"redacted\",
+        \"contact_2_city\": \"redacted\", \"contact_2_state\": \"redacted\", \"contact_2_zipcode\":
+        \"redacted\", \"contact_3_type\": \"redacted\", \"contact_3_name\": \"redacted\",
+        \"contact_3_city\": \"redacted\", \"contact_3_state\": \"redacted\", \"contact_3_zipcode\":
+        \"redacted\", \"contact_4_type\": \"redacted\", \"contact_4_name\": \"redacted\",
+        \"contact_4_city\": \"redacted\", \"contact_4_state\": \"redacted\", \"contact_4_zipcode\":
+        \"redacted\", \"contact_5_type\": \"redacted\", \"contact_5_name\": \"redacted\",
+        \"contact_5_city\": \"redacted\", \"contact_5_state\": \"redacted\", \"contact_5_zipcode\":
+        \"redacted\", \"reported_cost\": \"4000\", \"pin_list\": \"1614206036\", \"community_area\":
+        \"27\", \"census_tract\": \"271300\", \"ward\": \"28\", \"xcoordinate\": \"1153921.7679647123\",
+        \"ycoordinate\": \"1898911.2473436636\", \"latitude\": \"41.878445191000544\",
+        \"longitude\": \"-87.71029601732056\", \"location\": {\"type\": \"Point\",
+        \"coordinates\": [-87.710296017321, 41.878445191001]}}, {\"id\": \"N2990627\",
+        \"permit_\": \"B200514864\", \"permit_status\": \"COMPLETE\", \"permit_milestone\":
+        \"COMPLETE\", \"permit_type\": \"PERMIT \u2013 EXPRESS PERMIT PROGRAM\", \"review_type\":
+        \"EXPRESS PERMIT PROGRAM\", \"application_start_date\": \"2026-10-06T00:00:00.000\",
+        \"issue_date\": \"2026-10-08T00:00:00.000\", \"processing_time\": \"2\", \"street_number\":
+        \"redacted\", \"street_direction\": \"W\", \"street_name\": \"redacted\",
+        \"work_type\": \"Administrative Change\", \"work_description\": \"FOR PERMIT
+        B200439965: ADDITIONAL OTHER CONTRACTOR.  NEW CONTRACTOR(S) LISTED UNDER \\\"OTHER
+        APPLICANTS AND CONTRACTORS\\\" ON PERMIT CERTIFICATE.\", \"building_fee_paid\":
+        \"75\", \"zoning_fee_paid\": \"0\", \"other_fee_paid\": \"0\", \"subtotal_paid\":
+        \"75\", \"building_fee_unpaid\": \"0\", \"zoning_fee_unpaid\": \"0\", \"other_fee_unpaid\":
+        \"0\", \"subtotal_unpaid\": \"0\", \"building_fee_waived\": \"0\", \"building_fee_subtotal\":
+        \"75\", \"zoning_fee_subtotal\": \"0\", \"other_fee_subtotal\": \"25\", \"zoning_fee_waived\":
+        \"0\", \"other_fee_waived\": \"25\", \"subtotal_waived\": \"25\", \"total_fee\":
+        \"100\", \"contact_1_type\": \"redacted\", \"contact_1_name\": \"redacted\",
+        \"contact_1_city\": \"redacted\", \"contact_1_state\": \"redacted\", \"contact_1_zipcode\":
+        \"redacted\", \"contact_2_type\": \"redacted\", \"contact_2_name\": \"redacted\",
+        \"contact_2_city\": \"redacted\", \"contact_2_state\": \"redacted\", \"contact_2_zipcode\":
+        \"redacted\", \"contact_3_type\": \"redacted\", \"contact_3_name\": \"redacted\",
+        \"contact_3_city\": \"redacted\", \"contact_3_state\": \"redacted\", \"contact_3_zipcode\":
+        \"redacted\", \"community_area\": \"71\", \"census_tract\": \"710600\", \"ward\":
+        \"17\", \"xcoordinate\": \"1168193.7089937157\", \"ycoordinate\": \"1852323.710524717\",
+        \"latitude\": \"41.75030776301133\", \"longitude\": \"-87.65923446696827\",
+        \"location\": {\"type\": \"Point\", \"coordinates\": [-87.659234466968, 41.750307763011]}},
+        {\"id\": \"N2991770\", \"permit_\": \"B200515177\", \"permit_status\": \"ACTIVE\",
+        \"permit_milestone\": \"INSPECTION ELIGIBLE\", \"permit_type\": \"PERMIT \u2013
+        EXPRESS PERMIT PROGRAM\", \"review_type\": \"EXPRESS PERMIT PROGRAM\", \"application_start_date\":
+        \"2026-10-08T00:00:00.000\", \"issue_date\": \"2026-10-08T00:00:00.000\",
+        \"processing_time\": \"0\", \"street_number\": \"redacted\", \"street_direction\":
+        \"N\", \"street_name\": \"redacted\", \"work_type\": \"Reroofing\", \"work_description\":
+        \"SCOPE: ROOF REPLACEMENT. AREA: 4900 SQ. FT. ROOF COVERING: OTHER. LOCATION:
+        WORK DONE ON THE ROOF. IL ROOFING CONTRACTOR LICENSE: 104000191.\", \"building_fee_paid\":
+        \"450\", \"zoning_fee_paid\": \"0\", \"other_fee_paid\": \"25\", \"subtotal_paid\":
+        \"475\", \"building_fee_unpaid\": \"0\", \"zoning_fee_unpaid\": \"0\", \"other_fee_unpaid\":
+        \"0\", \"subtotal_unpaid\": \"0\", \"building_fee_waived\": \"0\", \"building_fee_subtotal\":
+        \"450\", \"zoning_fee_subtotal\": \"0\", \"other_fee_subtotal\": \"25\", \"zoning_fee_waived\":
+        \"0\", \"other_fee_waived\": \"0\", \"subtotal_waived\": \"0\", \"total_fee\":
+        \"475\", \"contact_1_type\": \"redacted\", \"contact_1_name\": \"redacted\",
+        \"contact_1_city\": \"redacted\", \"contact_1_state\": \"redacted\", \"contact_1_zipcode\":
+        \"redacted\", \"contact_2_type\": \"redacted\", \"contact_2_name\": \"redacted\",
+        \"contact_2_city\": \"redacted\", \"contact_2_state\": \"redacted\", \"contact_2_zipcode\":
+        \"redacted\", \"contact_3_type\": \"redacted\", \"contact_3_name\": \"redacted\",
+        \"contact_3_city\": \"redacted\", \"contact_3_state\": \"redacted\", \"contact_3_zipcode\":
+        \"redacted\", \"contact_4_type\": \"redacted\", \"contact_4_name\": \"redacted\",
+        \"contact_4_city\": \"redacted\", \"contact_4_state\": \"redacted\", \"contact_4_zipcode\":
+        \"redacted\", \"contact_5_type\": \"redacted\", \"contact_5_name\": \"redacted\",
+        \"contact_5_city\": \"redacted\", \"contact_5_state\": \"redacted\", \"contact_5_zipcode\":
+        \"redacted\", \"reported_cost\": \"160000\", \"pin_list\": \"1432113042\",
+        \"community_area\": \"7\", \"census_tract\": \"70900\", \"ward\": \"2\", \"xcoordinate\":
+        \"1167900.1620921346\", \"ycoordinate\": \"1915023.7395408095\", \"latitude\":
+        \"41.92236900483591\", \"longitude\": \"-87.6585050738094\", \"location\":
+        {\"type\": \"Point\", \"coordinates\": [-87.658505073809, 41.922369004836]}},
+        {\"id\": \"N2991312\", \"permit_\": \"B200515050\", \"permit_status\": \"ACTIVE\",
+        \"permit_milestone\": \"INSPECTIONS\", \"permit_type\": \"PERMIT \u2013 EXPRESS
+        PERMIT PROGRAM\", \"review_type\": \"EXPRESS PERMIT PROGRAM\", \"application_start_date\":
+        \"2026-10-07T00:00:00.000\", \"issue_date\": \"2026-10-08T00:00:00.000\",
+        \"processing_time\": \"1\", \"street_number\": \"redacted\", \"street_direction\":
+        \"W\", \"street_name\": \"redacted\", \"work_type\": \"Masonry Work\", \"work_description\":
+        \"TUCKPOINTING AND UNIT MASONRY REPAIR / REPLACEMENT: 5000 SQ. FT., LINTEL
+        QTY. 0, MAX. LENGTH 0. LOCATION: REPAIRING MASONRY ON EXTERIOR WEST WALL AS
+        NEEDED.\", \"building_fee_paid\": \"300\", \"zoning_fee_paid\": \"50\", \"other_fee_paid\":
+        \"0\", \"subtotal_paid\": \"350\", \"building_fee_unpaid\": \"0\", \"zoning_fee_unpaid\":
+        \"0\", \"other_fee_unpaid\": \"0\", \"subtotal_unpaid\": \"0\", \"building_fee_waived\":
+        \"0\", \"building_fee_subtotal\": \"300\", \"zoning_fee_subtotal\": \"50\",
+        \"other_fee_subtotal\": \"0\", \"zoning_fee_waived\": \"0\", \"other_fee_waived\":
+        \"0\", \"subtotal_waived\": \"0\", \"total_fee\": \"350\", \"contact_1_type\":
+        \"redacted\", \"contact_1_name\": \"redacted\", \"contact_1_city\": \"redacted\",
+        \"contact_1_state\": \"redacted\", \"contact_1_zipcode\": \"redacted\", \"contact_2_type\":
+        \"redacted\", \"contact_2_name\": \"redacted\", \"contact_2_city\": \"redacted\",
+        \"contact_2_state\": \"redacted\", \"contact_2_zipcode\": \"redacted\", \"contact_3_type\":
+        \"redacted\", \"contact_3_name\": \"redacted\", \"contact_3_city\": \"redacted\",
+        \"contact_3_state\": \"redacted\", \"contact_3_zipcode\": \"redacted\", \"reported_cost\":
+        \"50000\", \"pin_list\": \"1705422013\", \"community_area\": \"24\", \"census_tract\":
+        \"241800\", \"ward\": \"27\", \"xcoordinate\": \"1169903.3689468375\", \"ycoordinate\":
+        \"1906281.1285995685\", \"latitude\": \"41.898335292668456\", \"longitude\":
+        \"-87.65140012099847\", \"location\": {\"type\": \"Point\", \"coordinates\":
+        [-87.651400120998, 41.898335292668]}}, {\"id\": \"N2992067\", \"permit_\":
+        \"B200515241\", \"permit_status\": \"ACTIVE\", \"permit_milestone\": \"INSPECTIONS\",
+        \"permit_type\": \"PERMIT \u2013 EXPRESS PERMIT PROGRAM\", \"review_type\":
+        \"EXPRESS PERMIT PROGRAM\", \"application_start_date\": \"2026-10-08T00:00:00.000\",
+        \"issue_date\": \"2026-10-08T00:00:00.000\", \"processing_time\": \"0\", \"street_number\":
+        \"redacted\", \"street_direction\": \"N\", \"street_name\": \"redacted\",
+        \"work_type\": \"Electrical Work\", \"work_description\": \"LINE VOLTAGE ELECTRICAL
+        WORK. NEW PERMANENT 100 AMP SERVICE DISCONNECTING MEANS WITH 1 CIRCUITS. RECEPTACLE
+        OUTLETS: 1 . LIGHTING OUTLETS: 1. SPECIFIC LOCATION: BASEMENT,1ST AND 2ND
+        FLOORS.\", \"building_fee_paid\": \"75\", \"zoning_fee_paid\": \"0\", \"other_fee_paid\":
+        \"0\", \"subtotal_paid\": \"75\", \"building_fee_unpaid\": \"0\", \"zoning_fee_unpaid\":
+        \"0\", \"other_fee_unpaid\": \"0\", \"subtotal_unpaid\": \"0\", \"building_fee_waived\":
+        \"0\", \"building_fee_subtotal\": \"75\", \"zoning_fee_subtotal\": \"0\",
+        \"other_fee_subtotal\": \"0\", \"zoning_fee_waived\": \"0\", \"other_fee_waived\":
+        \"0\", \"subtotal_waived\": \"0\", \"total_fee\": \"75\", \"contact_1_type\":
+        \"redacted\", \"contact_1_name\": \"redacted\", \"contact_1_city\": \"redacted\",
+        \"contact_1_state\": \"redacted\", \"contact_1_zipcode\": \"redacted\", \"contact_2_type\":
+        \"redacted\", \"contact_2_name\": \"redacted\", \"contact_2_city\": \"redacted\",
+        \"contact_2_state\": \"redacted\", \"contact_2_zipcode\": \"redacted\", \"contact_3_type\":
+        \"redacted\", \"contact_3_name\": \"redacted\", \"contact_3_city\": \"redacted\",
+        \"contact_3_state\": \"redacted\", \"contact_3_zipcode\": \"redacted\", \"contact_4_type\":
+        \"redacted\", \"contact_4_name\": \"redacted\", \"contact_4_city\": \"redacted\",
+        \"contact_4_state\": \"redacted\", \"contact_4_zipcode\": \"redacted\", \"reported_cost\":
+        \"1000\", \"pin_list\": \"1329114050\", \"community_area\": \"19\", \"census_tract\":
+        \"190400\", \"ward\": \"30\", \"xcoordinate\": \"1133606.496392141\", \"ycoordinate\":
+        \"1918942.2802464215\", \"latitude\": \"41.93379335438346\", \"longitude\":
+        \"-87.78441982166463\", \"location\": {\"type\": \"Point\", \"coordinates\":
+        [-87.784419821665, 41.933793354383]}}, {\"id\": \"N2988664\", \"permit_\":
+        \"B200514294\", \"permit_status\": \"ACTIVE\", \"permit_milestone\": \"INSPECTION
+        ELIGIBLE\", \"permit_type\": \"PERMIT \u2013 EXPRESS PERMIT PROGRAM\", \"review_type\":
+        \"EXPRESS PERMIT PROGRAM\", \"application_start_date\": \"2026-10-02T00:00:00.000\",
+        \"issue_date\": \"2026-10-08T00:00:00.000\", \"processing_time\": \"6\", \"street_number\":
+        \"redacted\", \"street_direction\": \"W\", \"street_name\": \"redacted\",
+        \"work_type\": \"Masonry Work\", \"work_description\": \"TUCKPOINTING AND
+        UNIT MASONRY REPAIR / REPLACEMENT: 100 SQ. FT., LINTEL QTY. 6, MAX. LENGTH
+        4. LOCATION: EAST AND WEST ELEVATIONS.\", \"building_fee_paid\": \"300\",
+        \"zoning_fee_paid\": \"50\", \"other_fee_paid\": \"25\", \"subtotal_paid\":
+        \"375\", \"building_fee_unpaid\": \"0\", \"zoning_fee_unpaid\": \"0\", \"other_fee_unpaid\":
+        \"0\", \"subtotal_unpaid\": \"0\", \"building_fee_waived\": \"0\", \"building_fee_subtotal\":
+        \"300\", \"zoning_fee_subtotal\": \"50\", \"other_fee_subtotal\": \"25\",
+        \"zoning_fee_waived\": \"0\", \"other_fee_waived\": \"0\", \"subtotal_waived\":
+        \"0\", \"total_fee\": \"375\", \"contact_1_type\": \"redacted\", \"contact_1_name\":
+        \"redacted\", \"contact_1_city\": \"redacted\", \"contact_1_state\": \"redacted\",
+        \"contact_1_zipcode\": \"redacted\", \"contact_2_type\": \"redacted\", \"contact_2_name\":
+        \"redacted\", \"contact_2_city\": \"redacted\", \"contact_2_state\": \"redacted\",
+        \"contact_2_zipcode\": \"redacted\", \"contact_3_type\": \"redacted\", \"contact_3_name\":
+        \"redacted\", \"contact_3_city\": \"redacted\", \"contact_3_state\": \"redacted\",
+        \"contact_3_zipcode\": \"redacted\", \"contact_4_type\": \"redacted\", \"contact_4_name\":
+        \"redacted\", \"contact_4_city\": \"redacted\", \"contact_4_state\": \"redacted\",
+        \"contact_4_zipcode\": \"redacted\", \"reported_cost\": \"15480\", \"pin_list\":
+        \"1405400032\", \"community_area\": \"77\", \"census_tract\": \"30600\", \"ward\":
+        \"48\", \"xcoordinate\": \"1167480.983250435\", \"ycoordinate\": \"1938717.5635981902\",
+        \"latitude\": \"41.98739484534096\", \"longitude\": \"-87.65936059068835\",
+        \"location\": {\"type\": \"Point\", \"coordinates\": [-87.659360590688, 41.987394845341]}}]"
+    headers:
+      access-control-allow-origin:
+      - '*'
+      connection:
+      - keep-alive
+      content-length:
+      - '29259'
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:27:45 GMT
+      etag:
+      - '"Zm94dHJvdC4yNzY2MV8yN18xNjg1M2hqRkxOMG0ySGppNm5sQlhmSUhfdzFUeDBxWQ---gzipWgp7bE-SvusKrnJnsHl1HqlbH5--gzip--gzip"'
+      last-modified:
+      - Fri, 09 Oct 2026 12:07:11 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-socrata-region:
+      - aws-us-east-1-fedramp-prod
+      x-socrata-requestid:
+      - 0c078d5fec95b2ef55fdda26dfcfcde0
+      x-soda2-data-out-of-date:
+      - 'false'
+      x-soda2-fields:
+      - '["id","permit_","permit_status","permit_milestone","permit_type","review_type","application_start_date","issue_date","processing_time","street_number","street_direction","street_name","work_type","work_description","permit_condition","building_fee_paid","zoning_fee_paid","other_fee_paid","subtotal_paid","building_fee_unpaid","zoning_fee_unpaid","other_fee_unpaid","subtotal_unpaid","building_fee_waived","building_fee_subtotal","zoning_fee_subtotal","other_fee_subtotal","zoning_fee_waived","other_fee_waived","subtotal_waived","total_fee","contact_1_type","contact_1_name","contact_1_city","contact_1_state","contact_1_zipcode","contact_2_type","contact_2_name","contact_2_city","contact_2_state","contact_2_zipcode","contact_3_type","contact_3_name","contact_3_city","contact_3_state","contact_3_zipcode","contact_4_type","contact_4_name","contact_4_city","contact_4_state","contact_4_zipcode","contact_5_type","contact_5_name","contact_5_city","contact_5_state","contact_5_zipcode","contact_6_type","contact_6_name","contact_6_city","contact_6_state","contact_6_zipcode","contact_7_type","contact_7_name","contact_7_city","contact_7_state","contact_7_zipcode","contact_8_type","contact_8_name","contact_8_city","contact_8_state","contact_8_zipcode","contact_9_type","contact_9_name","contact_9_city","contact_9_state","contact_9_zipcode","contact_10_type","contact_10_name","contact_10_city","contact_10_state","contact_10_zipcode","contact_11_type","contact_11_name","contact_11_city","contact_11_state","contact_11_zipcode","contact_12_type","contact_12_name","contact_12_city","contact_12_state","contact_12_zipcode","contact_13_type","contact_13_name","contact_13_city","contact_13_state","contact_13_zipcode","contact_14_type","contact_14_name","contact_14_city","contact_14_state","contact_14_zipcode","contact_15_type","contact_15_name","contact_15_city","contact_15_state","contact_15_zipcode","reported_cost","pin_list","community_area","census_tract","ward","xcoordinate","ycoordinate","latitude","longitude","location"]'
+      x-soda2-secondary-last-modified:
+      - Fri, 09 Oct 2026 12:07:11 GMT
+      x-soda2-truth-last-modified:
+      - Fri, 09 Oct 2026 12:07:11 GMT
+      x-soda2-types:
+      - '["text","text","text","text","text","text","floating_timestamp","floating_timestamp","number","number","text","text","text","text","text","number","number","number","number","number","number","number","number","number","number","number","number","number","number","number","number","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","number","text","number","number","number","number","number","number","number","point"]'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - open.canada.ca
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://open.canada.ca/robots.txt
+  response:
+    body:
+      string: '#
+
+        # robots.txt
+
+        #
+
+        # This file is to prevent the crawling and indexing of certain parts
+
+        # of your site by web crawlers and spiders run by sites like Yahoo!
+
+        # and Google. By telling these "robots" where not to go on your site,
+
+        # you save bandwidth and server resources.
+
+        #
+
+        # This file will be ignored unless it is at the root of your host:
+
+        # Used:    http://example.com/robots.txt
+
+        # Ignored: http://example.com/site/robots.txt
+
+        #
+
+        # For more information about the robots.txt standard, see:
+
+        # http://www.robotstxt.org/robotstxt.html
+
+
+        User-agent: *
+
+        Crawl-delay: 20
+
+        # Directories
+
+        Disallow: /core/
+
+        Disallow: /libraries/
+
+        Disallow: /modules/
+
+        Disallow: /profiles/
+
+        Disallow: /scripts/
+
+        Disallow: /sites/
+
+        Disallow: /themes/
+
+        # Files
+
+        Disallow: /README.md
+
+        Disallow: /README.txt
+
+        Disallow: /update.php
+
+        Disallow: /web.config
+
+        # Paths (clean URLs)
+
+        Disallow: /admin/
+
+        Disallow: /en/admin/
+
+        Disallow: /fr/admin/
+
+        Disallow: /comment/reply/
+
+        Disallow: /en/comment/reply/
+
+        Disallow: /fr/comment/reply/
+
+        Disallow: /filter/tips
+
+        Disallow: /en/filter/tips
+
+        Disallow: /fr/filter/tips
+
+        Disallow: /node/add/
+
+        Disallow: /en/node/add/
+
+        Disallow: /fr/node/add/
+
+        Disallow: /search/
+
+        Disallow: /en/search/
+
+        Disallow: /fr/search/
+
+        Disallow: /search/ati*
+
+        Disallow: /en/search/ati*
+
+        Disallow: /fr/search/ati*
+
+        Disallow: /user/register
+
+        Disallow: /en/user/register
+
+        Disallow: /fr/user/register
+
+        Disallow: /user/password
+
+        Disallow: /en/user/password
+
+        Disallow: /fr/user/password
+
+        Disallow: /user/login
+
+        Disallow: /en/user/login
+
+        Disallow: /fr/user/login
+
+        Disallow: /user/logout
+
+        Disallow: /en/user/logout
+
+        Disallow: /fr/user/logout
+
+        Disallow: /media/oembed
+
+        Disallow: /en/media/oembed
+
+        Disallow: /fr/media/oembed
+
+        Disallow: /*/media/oembed
+
+        # Paths (no clean URLs)
+
+        Disallow: /index.php/admin/
+
+        Disallow: /?q=admin/
+
+        Disallow: /index.php/comment/reply/
+
+        Disallow: /?q=comment/reply/
+
+        Disallow: /index.php/filter/tips
+
+        Disallow: /?q=filter/tips/
+
+        Disallow: /index.php/node/add/
+
+        Disallow: /?q=node/add/
+
+        Disallow: /index.php/search/
+
+        Disallow: /?q=search/
+
+        Disallow: /index.php/user/password
+
+        Disallow: /?q=user/password/
+
+        Disallow: /index.php/user/register
+
+        Disallow: /?q=user/register/
+
+        Disallow: /index.php/user/login
+
+        Disallow: /?q=user/login/
+
+        Disallow: /index.php/user/logout
+
+        Disallow: /?q=user/logout/
+
+        Disallow: /index.php/media/oembed
+
+        Disallow: /index.php/*/media/oembed
+
+
+        # Extras
+
+        # no access for table sorting paths or any paths that have parameters.
+
+        Disallow: /*?sort*
+
+        Disallow: /*&sort*
+
+        Disallow: /*?solrsort*
+
+        Disallow: /*&solrsort*
+
+
+        # no access to profile listings
+
+        Disallow: /profile
+
+        Disallow: /profile/*
+
+        Disallow: /?q=profile
+
+        Disallow: /?q=profile/*
+
+        '
+    headers:
+      accept-ranges:
+      - bytes
+      cache-control:
+      - max-age=315360000
+      connection:
+      - keep-alive
+      content-length:
+      - '2567'
+      content-type:
+      - text/plain
+      date:
+      - Fri, 09 Oct 2026 23:27:45 GMT
+      etag:
+      - '"68f300e3-a07"'
+      expires:
+      - Thu, 31 Dec 2037 23:55:55 GMT
+      keep-alive:
+      - timeout=5
+      last-modified:
+      - Sat, 18 Oct 2025 02:52:19 GMT
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      x-content-type-options:
+      - nosniff
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - open.canada.ca
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://open.canada.ca/data/api/3/action/package_search?fq=metadata_created%3A%5B2026-10-06T09%3A00%3A00Z+TO+NOW%5D&q=%2A%3A%2A&rows=10&sort=metadata_created+desc&start=0
+  response:
+    body:
+      string: "{\"help\": \"https://open.canada.ca/data/api/3/action/help_show?name=package_search\",
+        \"success\": true, \"result\": {\"count\": 127, \"facets\": {}, \"facet_ranges\":
+        {\"portal_release_date\": {\"counts\": [\"1926-10-09T00:00:00Z\", 20, \"2026-10-09T00:00:00Z\",
+        11], \"gap\": \"+100YEARS\", \"start\": \"1926-10-09T00:00:00Z\", \"end\":
+        \"2126-10-09T00:00:00Z\"}}, \"facet_queries\": {}, \"results\": [{\"additional_notes\":
+        {\"en\": \"\", \"fr\": \"\"}, \"audience\": [], \"author\": null, \"author_redacted\":
+        null, \"collection\": \"publication\", \"contributor\": {\"en\": \"\", \"fr\":
+        \"\"}, \"creator\": \"\", \"creator_user_id\": \"2dc5a12f-2a6f-4822-8514-165ea6bb05d9\",
+        \"data_series_issue_identification\": {\"en\": \"\", \"fr\": \"\"}, \"data_series_name\":
+        {\"en\": \"\", \"fr\": \"\"}, \"date_published\": \"2026-05-26 00:00:00\",
+        \"departmental_identification_number\": \"OI-2312\", \"digital_object_identifier\":
+        \"\", \"edition\": \"\", \"frequency\": \"not_planned\", \"gc_catalogue_number\":
+        \"\", \"geographic_region\": [], \"id\": \"6cb4be79-835c-49c7-8975-01bda80d2b23\",
+        \"imso_approval\": \"true\", \"isbn\": \"\", \"isopen\": false, \"issn\":
+        \"\", \"issuance\": \"\", \"issuance_frequency\": \"\", \"jurisdiction\":
+        \"federal\", \"keywords\": {\"en\": [\"Stories\", \"Global Affairs Canada\",
+        \"Climate Action\", \"Environment\", \"Gender Equality\", \"Water\", \"Women
+        and Girls\", \"Coral Triangle\"], \"fr\": [\"Histories\", \"Affaires mondiales
+        Canada\", \"Action climatique\", \"Environnement\", \"\xC9galit\xE9 des genres\",
+        \"Eau\", \"Femmes et filles\", \"triangle de corail\"]}, \"license_id\": \"ca-ogl-lgo\",
+        \"license_title\": \"Open Government Licence - Canada\", \"license_url\":
+        \"https://open.canada.ca/en/open-government-licence-canada\", \"maintainer\":
+        null, \"maintainer_email\": \"redacted@example.org\", \"metadata_created\":
+        \"2026-10-09T14:32:01.021762\", \"metadata_modified\": \"2026-10-09T14:32:01.058577\",
+        \"name\": \"6cb4be79-835c-49c7-8975-01bda80d2b23\", \"notes\": \"Canada supports
+        women-led marine conservation in Indonesia\u2019s Coral Triangle through traditional
+        sasi management systems. With Canadian funding, local women protect marine
+        life, restore fisheries, and strengthen community governance.\", \"notes_translated\":
+        {\"en\": \"Canada supports women-led marine conservation in Indonesia\u2019s
+        Coral Triangle through traditional sasi management systems. With Canadian
+        funding, local women protect marine life, restore fisheries, and strengthen
+        community governance.\", \"fr\": \"Le Canada soutient la conservation marine
+        dirig\xE9e par des femmes dans le Triangle de corail en Indon\xE9sie gr\xE2ce
+        au syst\xE8me traditionnel sasi. Gr\xE2ce \xE0 l\u2019appui financier du Canada,
+        des femmes locales prot\xE8gent la vie marine, r\xE9tablissent les p\xEAches
+        et renforcent la gouvernance communautaire.\"}, \"num_resources\": 2, \"num_tags\":
+        0, \"org_section\": {\"en\": \"RDW\", \"fr\": \"RDW\"}, \"org_title_at_publication\":
+        {\"en\": \"Global Affairs Canada\", \"fr\": \"Affaires mondiales Canada\"},
+        \"organization\": {\"id\": \"d7c2580f-89c5-4705-9d56-6b0e8e5d9538\", \"name\":
+        \"dfatd-maecd\", \"title\": \"Global Affairs Canada | Affaires mondiales Canada\",
+        \"type\": \"organization\", \"description\": \"\", \"image_url\": \"\", \"created\":
+        \"2016-09-23T17:25:20.992093\", \"is_organization\": true, \"approval_status\":
+        \"approved\", \"state\": \"active\"}, \"owner_org\": \"d7c2580f-89c5-4705-9d56-6b0e8e5d9538\",
+        \"place_of_publication\": [], \"portal_release_date\": \"2026-10-09\", \"private\":
+        false, \"program_page_url\": {\"en\": \"\", \"fr\": \"\"}, \"pspc_identification_number\":
+        \"\", \"ready_to_publish\": \"true\", \"restrictions\": \"unrestricted\",
+        \"series_publication_dates\": {\"en\": \"\", \"fr\": \"\"}, \"spatial\": \"\",
+        \"state\": \"active\", \"subject\": [\"government_and_politics\", \"nature_and_environment\"],
+        \"title\": \"Canada\u202Fhelps local\u202Fwomen protect\u202Fthe heart of
+        the Coral Triangle\", \"title_translated\": {\"en\": \"Canada\u202Fhelps local\u202Fwomen
+        protect\u202Fthe heart of the Coral Triangle\", \"fr\": \"Le Canada aide les
+        femmes locales \xE0 prot\xE9ger le c\u0153ur du Triangle de corail\"}, \"type\":
+        \"info\", \"url\": null, \"version\": null, \"resources\": [{\"cache_last_updated\":
+        null, \"cache_url\": null, \"character_set\": \"\", \"created\": \"2026-10-09T14:32:01.051686\",
+        \"datastore_active\": false, \"datastore_contains_all_records_of_source_file\":
+        false, \"date_published\": \"\", \"description\": \"\", \"description_translated\":
+        {\"en\": \"\", \"fr\": \"\"}, \"format\": \"HTML\", \"hash\": \"\", \"id\":
+        \"bd870987-84d3-4458-8f2f-6f494fee444e\", \"language\": [\"en\"], \"last_modified\":
+        null, \"metadata_modified\": \"2026-10-09T14:32:01.016102\", \"mimetype\":
+        null, \"mimetype_inner\": null, \"name\": \"Canada\u202Fhelps local\u202Fwomen
+        protect\u202Fthe heart of the Coral Triangle - 2026-05-26\", \"name_translated\":
+        {\"en\": \"Canada\u202Fhelps local\u202Fwomen protect\u202Fthe heart of the
+        Coral Triangle - 2026-05-26\", \"fr\": \"Le Canada aide les femmes locales
+        \xE0 prot\xE9ger le c\u0153ur du Triangle de corail - 2026-05-26\"}, \"package_id\":
+        \"6cb4be79-835c-49c7-8975-01bda80d2b23\", \"position\": 0, \"resource_type\":
+        \"article\", \"state\": \"active\", \"unique_identifier\": \"\", \"url\":
+        \"https://www.international.gc.ca/world-monde/stories-histoires/2026/2026-05-26-coral-triangle-triangle-corail.aspx?lang=eng\",
+        \"url_type\": \"\", \"validation_status\": \"\", \"validation_timestamp\":
+        \"\"}, {\"cache_last_updated\": null, \"cache_url\": null, \"character_set\":
+        \"\", \"created\": \"2026-10-09T14:32:01.051691\", \"datastore_active\": false,
+        \"datastore_contains_all_records_of_source_file\": false, \"date_published\":
+        \"\", \"description\": \"\", \"description_translated\": {\"en\": \"\", \"fr\":
+        \"\"}, \"format\": \"HTML\", \"hash\": \"\", \"id\": \"472d1765-e232-46f4-83a1-5c78598f7d55\",
+        \"language\": [\"fr\"], \"last_modified\": null, \"metadata_modified\": \"2026-10-09T14:32:01.018875\",
+        \"mimetype\": null, \"mimetype_inner\": null, \"name\": \"Canada\u202Fhelps
+        local\u202Fwomen protect\u202Fthe heart of the Coral Triangle - 2026-05-26\",
+        \"name_translated\": {\"en\": \"Canada\u202Fhelps local\u202Fwomen protect\u202Fthe
+        heart of the Coral Triangle - 2026-05-26\", \"fr\": \"Le Canada aide les femmes
+        locales \xE0 prot\xE9ger le c\u0153ur du Triangle de corail - 2026-05-26\"},
+        \"package_id\": \"6cb4be79-835c-49c7-8975-01bda80d2b23\", \"position\": 1,
+        \"resource_type\": \"article\", \"state\": \"active\", \"unique_identifier\":
+        \"\", \"url\": \"https://www.international.gc.ca/world-monde/stories-histoires/2026/2026-05-26-coral-triangle-triangle-corail.aspx?lang=fra\",
+        \"url_type\": \"\", \"validation_status\": \"\", \"validation_timestamp\":
+        \"\"}], \"tags\": [], \"groups\": [], \"relationships_as_subject\": [], \"relationships_as_object\":
+        []}, {\"additional_notes\": {\"en\": \"\", \"fr\": \"\"}, \"audience\": [],
+        \"author\": null, \"author_redacted\": null, \"collection\": \"publication\",
+        \"contributor\": {\"en\": \"\", \"fr\": \"\"}, \"creator\": \"\", \"creator_user_id\":
+        \"2dc5a12f-2a6f-4822-8514-165ea6bb05d9\", \"data_series_issue_identification\":
+        {\"en\": \"\", \"fr\": \"\"}, \"data_series_name\": {\"en\": \"\", \"fr\":
+        \"\"}, \"date_published\": \"2026-05-18 00:00:00\", \"departmental_identification_number\":
+        \"OI-2313\", \"digital_object_identifier\": \"\", \"edition\": \"\", \"frequency\":
+        \"not_planned\", \"gc_catalogue_number\": \"\", \"geographic_region\": [],
+        \"id\": \"d4275c2c-a3d6-4e89-9b0c-2846d97dc750\", \"imso_approval\": \"true\",
+        \"isbn\": \"\", \"isopen\": false, \"issn\": \"\", \"issuance\": \"\", \"issuance_frequency\":
+        \"\", \"jurisdiction\": \"federal\", \"keywords\": {\"en\": [\"Stories\",
+        \"Global Affairs Canada\", \"Climate Action\", \"Economic growth\", \"Environment\",
+        \"Gender equality\", \"Governance\", \"Women and girls\", \"Amazon\"], \"fr\":
+        [\"Histories\", \"Affaires mondiales Canada\", \"Action Climatique\", \"Croissance
+        \xE9conomique\", \"Environnement\", \"\xC9galit\xE9 des genres\", \"Gouvernance\",
+        \"Femmes et filles\", \"Amazonie\"]}, \"license_id\": \"ca-ogl-lgo\", \"license_title\":
+        \"Open Government Licence - Canada\", \"license_url\": \"https://open.canada.ca/en/open-government-licence-canada\",
+        \"maintainer\": null, \"maintainer_email\": \"redacted@example.org\", \"metadata_created\":
+        \"2026-10-09T14:32:00.380978\", \"metadata_modified\": \"2026-10-09T14:32:00.432423\",
+        \"name\": \"d4275c2c-a3d6-4e89-9b0c-2846d97dc750\", \"notes\": \"This initiative
+        invests in land rights for women, reduce deforestation, and support sustainable
+        land use. It helps communities build resilience and protects one of the world\u2019s
+        most important ecosystems.\", \"notes_translated\": {\"en\": \"This initiative
+        invests in land rights for women, reduce deforestation, and support sustainable
+        land use. It helps communities build resilience and protects one of the world\u2019s
+        most important ecosystems.\", \"fr\": \"Cette initiative investit dans les
+        droits fonciers des femmes, la r\xE9duction de la d\xE9forestation et l\u2019utilisation
+        durable des terres. Elle aide les communaut\xE9s \xE0 renforcer leur r\xE9silience
+        et prot\xE8ge un \xE9cosyst\xE8me essentiel \xE0 l\u2019\xE9chelle mondiale.\"},
+        \"num_resources\": 2, \"num_tags\": 0, \"org_section\": {\"en\": \"RDW\",
+        \"fr\": \"RDW\"}, \"org_title_at_publication\": {\"en\": \"Global Affairs
+        Canada\", \"fr\": \"Affaires mondiales Canada\"}, \"organization\": {\"id\":
+        \"d7c2580f-89c5-4705-9d56-6b0e8e5d9538\", \"name\": \"dfatd-maecd\", \"title\":
+        \"Global Affairs Canada | Affaires mondiales Canada\", \"type\": \"organization\",
+        \"description\": \"\", \"image_url\": \"\", \"created\": \"2016-09-23T17:25:20.992093\",
+        \"is_organization\": true, \"approval_status\": \"approved\", \"state\": \"active\"},
+        \"owner_org\": \"d7c2580f-89c5-4705-9d56-6b0e8e5d9538\", \"place_of_publication\":
+        [], \"portal_release_date\": \"2026-10-09\", \"private\": false, \"program_page_url\":
+        {\"en\": \"\", \"fr\": \"\"}, \"pspc_identification_number\": \"\", \"ready_to_publish\":
+        \"true\", \"restrictions\": \"unrestricted\", \"series_publication_dates\":
+        {\"en\": \"\", \"fr\": \"\"}, \"spatial\": \"\", \"state\": \"active\", \"subject\":
+        [\"government_and_politics\", \"nature_and_environment\"], \"title\": \"Canada
+        helps protect nature and livelihoods in the Amazon\", \"title_translated\":
+        {\"en\": \"Canada helps protect nature and livelihoods in the Amazon\", \"fr\":
+        \"Le Canada aide \xE0 prot\xE9ger la nature et les moyens de subsistance en
+        Amazonie\"}, \"type\": \"info\", \"url\": null, \"version\": null, \"resources\":
+        [{\"cache_last_updated\": null, \"cache_url\": null, \"character_set\": \"\",
+        \"created\": \"2026-10-09T14:32:00.426612\", \"datastore_active\": false,
+        \"datastore_contains_all_records_of_source_file\": false, \"date_published\":
+        \"\", \"description\": \"\", \"description_translated\": {\"en\": \"\", \"fr\":
+        \"\"}, \"format\": \"HTML\", \"hash\": \"\", \"id\": \"5f9abf94-25cf-47e2-8107-0c277bea0131\",
+        \"language\": [\"en\"], \"last_modified\": null, \"metadata_modified\": \"2026-10-09T14:32:00.373943\",
+        \"mimetype\": null, \"mimetype_inner\": null, \"name\": \"Canada helps protect
+        nature and livelihoods in the Amazon - 2026-05-18\", \"name_translated\":
+        {\"en\": \"Canada helps protect nature and livelihoods in the Amazon - 2026-05-18\",
+        \"fr\": \"Le Canada aide \xE0 prot\xE9ger la nature et les moyens de subsistance
+        en Amazonie - 2026-05-18\"}, \"package_id\": \"d4275c2c-a3d6-4e89-9b0c-2846d97dc750\",
+        \"position\": 0, \"resource_type\": \"article\", \"state\": \"active\", \"unique_identifier\":
+        \"\", \"url\": \"https://www.international.gc.ca/world-monde/stories-histoires/2026/2026-05-20-amazonia-amazonie.aspx?lang=eng\",
+        \"url_type\": \"\", \"validation_status\": \"\", \"validation_timestamp\":
+        \"\"}, {\"cache_last_updated\": null, \"cache_url\": null, \"character_set\":
+        \"\", \"created\": \"2026-10-09T14:32:00.426617\", \"datastore_active\": false,
+        \"datastore_contains_all_records_of_source_file\": false, \"date_published\":
+        \"\", \"description\": \"\", \"description_translated\": {\"en\": \"\", \"fr\":
+        \"\"}, \"format\": \"HTML\", \"hash\": \"\", \"id\": \"edc80b6e-7abf-4970-9518-d3f585b735dd\",
+        \"language\": [\"fr\"], \"last_modified\": null, \"metadata_modified\": \"2026-10-09T14:32:00.376576\",
+        \"mimetype\": null, \"mimetype_inner\": null, \"name\": \"Canada helps protect
+        nature and livelihoods in the Amazon - 2026-05-18\", \"name_translated\":
+        {\"en\": \"Canada helps protect nature and livelihoods in the Amazon - 2026-05-18\",
+        \"fr\": \"Le Canada aide \xE0 prot\xE9ger la nature et les moyens de subsistance
+        en Amazonie - 2026-05-18\"}, \"package_id\": \"d4275c2c-a3d6-4e89-9b0c-2846d97dc750\",
+        \"position\": 1, \"resource_type\": \"article\", \"state\": \"active\", \"unique_identifier\":
+        \"\", \"url\": \"https://www.international.gc.ca/world-monde/stories-histoires/2026/2026-05-20-amazonia-amazonie.aspx?lang=fra\",
+        \"url_type\": \"\", \"validation_status\": \"\", \"validation_timestamp\":
+        \"\"}], \"tags\": [], \"groups\": [], \"relationships_as_subject\": [], \"relationships_as_object\":
+        []}, {\"additional_notes\": {\"en\": \"\", \"fr\": \"\"}, \"audience\": [],
+        \"author\": null, \"author_redacted\": null, \"collection\": \"publication\",
+        \"contributor\": {\"en\": \"\", \"fr\": \"\"}, \"creator\": \"\", \"creator_user_id\":
+        \"2dc5a12f-2a6f-4822-8514-165ea6bb05d9\", \"data_series_issue_identification\":
+        {\"en\": \"\", \"fr\": \"\"}, \"data_series_name\": {\"en\": \"\", \"fr\":
+        \"\"}, \"date_published\": \"2026-09-09 00:00:00\", \"departmental_identification_number\":
+        \"OI-2311\", \"digital_object_identifier\": \"\", \"edition\": \"\", \"frequency\":
+        \"not_planned\", \"gc_catalogue_number\": \"\", \"geographic_region\": [],
+        \"id\": \"87fe1e2e-b442-4ea4-8642-171f6b774736\", \"imso_approval\": \"true\",
+        \"isbn\": \"\", \"isopen\": false, \"issn\": \"\", \"issuance\": \"\", \"issuance_frequency\":
+        \"\", \"jurisdiction\": \"federal\", \"keywords\": {\"en\": [\"Stories\",
+        \"Global Affairs Canada\", \"Trade Diversification\"], \"fr\": [\"Histories\",
+        \"Affaires mondiales Canada\", \"Diversification du commerce\"]}, \"license_id\":
+        \"ca-ogl-lgo\", \"license_title\": \"Open Government Licence - Canada\", \"license_url\":
+        \"https://open.canada.ca/en/open-government-licence-canada\", \"maintainer\":
+        null, \"maintainer_email\": \"redacted@example.org\", \"metadata_created\":
+        \"2026-10-09T14:02:01.108837\", \"metadata_modified\": \"2026-10-09T14:02:01.158688\",
+        \"name\": \"87fe1e2e-b442-4ea4-8642-171f6b774736\", \"notes\": \"How is Canada
+        doing in an unpredictable economy?\\r\\n\\r\\nFrom record-breaking non-U.S.
+        exports to a $240-billion boom in services exports, see what the trade data
+        tells us about Canada\u2019s economy and trade with the world.\", \"notes_translated\":
+        {\"en\": \"How is Canada doing in an unpredictable economy?\\r\\n\\r\\nFrom
+        record-breaking non-U.S. exports to a $240-billion boom in services exports,
+        see what the trade data tells us about Canada\u2019s economy and trade with
+        the world.\", \"fr\": \"Comment le Canada se porte-t-il dans une \xE9conomie
+        mondiale impr\xE9visible?\\r\\n\\r\\nDes exportations dans des pays autres
+        que les \xC9tats-Unis qui battent tous les records \xE0 un essor de 240 milliards
+        de dollars des exportations de services, d\xE9couvrez les principaux enseignements
+        \xE0 tirer du rapport Le point sur le commerce 2026 publi\xE9 par Affaires
+        mondiales Canada.\"}, \"num_resources\": 2, \"num_tags\": 0, \"org_section\":
+        {\"en\": \"RDW\", \"fr\": \"RDW\"}, \"org_title_at_publication\": {\"en\":
+        \"Global Affairs Canada\", \"fr\": \"Affaires mondiales Canada\"}, \"organization\":
+        {\"id\": \"d7c2580f-89c5-4705-9d56-6b0e8e5d9538\", \"name\": \"dfatd-maecd\",
+        \"title\": \"Global Affairs Canada | Affaires mondiales Canada\", \"type\":
+        \"organization\", \"description\": \"\", \"image_url\": \"\", \"created\":
+        \"2016-09-23T17:25:20.992093\", \"is_organization\": true, \"approval_status\":
+        \"approved\", \"state\": \"active\"}, \"owner_org\": \"d7c2580f-89c5-4705-9d56-6b0e8e5d9538\",
+        \"place_of_publication\": [], \"portal_release_date\": \"2026-10-09\", \"private\":
+        false, \"program_page_url\": {\"en\": \"\", \"fr\": \"\"}, \"pspc_identification_number\":
+        \"\", \"ready_to_publish\": \"true\", \"restrictions\": \"unrestricted\",
+        \"series_publication_dates\": {\"en\": \"\", \"fr\": \"\"}, \"spatial\": \"\",
+        \"state\": \"active\", \"subject\": [\"economics_and_industry\", \"government_and_politics\"],
+        \"title\": \"What Canada\u2019s State of Trade 2026 report tells us\", \"title_translated\":
+        {\"en\": \"What Canada\u2019s State of Trade 2026 report tells us\", \"fr\":
+        \"Ce que nous apprend le rapport Le point sur commerce du Canada 2026\"},
+        \"type\": \"info\", \"url\": null, \"version\": null, \"resources\": [{\"cache_last_updated\":
+        null, \"cache_url\": null, \"character_set\": \"\", \"created\": \"2026-10-09T14:02:01.153410\",
+        \"datastore_active\": false, \"datastore_contains_all_records_of_source_file\":
+        false, \"date_published\": \"\", \"description\": \"\", \"description_translated\":
+        {\"en\": \"\", \"fr\": \"\"}, \"format\": \"HTML\", \"hash\": \"\", \"id\":
+        \"50027785-2821-490c-8d59-39327d4e6353\", \"language\": [\"en\"], \"last_modified\":
+        null, \"metadata_modified\": \"2026-10-09T14:02:01.101514\", \"mimetype\":
+        null, \"mimetype_inner\": null, \"name\": \"What Canada\u2019s State of Trade
+        2026 report tells us - 2026-09-09\", \"name_translated\": {\"en\": \"What
+        Canada\u2019s State of Trade 2026 report tells us - 2026-09-09\", \"fr\":
+        \"Ce que nous apprend le rapport Le point sur commerce du Canada 2026 - 2026-09-09\"},
+        \"package_id\": \"87fe1e2e-b442-4ea4-8642-171f6b774736\", \"position\": 0,
+        \"resource_type\": \"article\", \"state\": \"active\", \"unique_identifier\":
+        \"\", \"url\": \"https://www.international.gc.ca/world-monde/stories-histoires/2026/2026-09-09-sot-2026-psc.aspx?lang=eng\",
+        \"url_type\": \"\", \"validation_status\": \"\", \"validation_timestamp\":
+        \"\"}, {\"cache_last_updated\": null, \"cache_url\": null, \"character_set\":
+        \"\", \"created\": \"2026-10-09T14:02:01.153415\", \"datastore_active\": false,
+        \"datastore_contains_all_records_of_source_file\": false, \"date_published\":
+        \"\", \"description\": \"\", \"description_translated\": {\"en\": \"\", \"fr\":
+        \"\"}, \"format\": \"HTML\", \"hash\": \"\", \"id\": \"4fd9acff-4f59-4e47-8ac0-6f0242130833\",
+        \"language\": [\"fr\"], \"last_modified\": null, \"metadata_modified\": \"2026-10-09T14:02:01.104930\",
+        \"mimetype\": null, \"mimetype_inner\": null, \"name\": \"What Canada\u2019s
+        State of Trade 2026 report tells us - 2026-09-09\", \"name_translated\": {\"en\":
+        \"What Canada\u2019s State of Trade 2026 report tells us - 2026-09-09\", \"fr\":
+        \"Ce que nous apprend le rapport Le point sur commerce du Canada 2026 - 2026-09-09\"},
+        \"package_id\": \"87fe1e2e-b442-4ea4-8642-171f6b774736\", \"position\": 1,
+        \"resource_type\": \"article\", \"state\": \"active\", \"unique_identifier\":
+        \"\", \"url\": \"https://www.international.gc.ca/world-monde/stories-histoires/2026/2026-09-09-sot-2026-psc.aspx?lang=fra\",
+        \"url_type\": \"\", \"validation_status\": \"\", \"validation_timestamp\":
+        \"\"}], \"tags\": [], \"groups\": [], \"relationships_as_subject\": [], \"relationships_as_object\":
+        []}, {\"association_type\": [], \"audience\": [], \"author\": null, \"author_redacted\":
+        \"redacted@example.org\", \"collection\": \"primary\", \"creator_user_id\":
+        \"6b600515-c266-4584-a219-d084c980fd47\", \"data_series_issue_identification\":
+        {\"fr\": \"Tableau 18100292\", \"en\": \"Table 18100292\"}, \"data_series_name\":
+        {\"fr\": \"Tableau\", \"en\": \"Table\"}, \"date_published\": \"2026-10-09
+        08:30:00\", \"display_flags\": [], \"frequency\": \"P3M\", \"geographic_region\":
+        [], \"id\": \"a579ad35-7b74-4c2b-b14e-6c675317bff7\", \"imso_approval\": \"true\",
+        \"isopen\": false, \"jurisdiction\": \"federal\", \"keywords\": {\"fr\": [\"autre
+        contenu li\xE9 aux indices des prix \xE0 la production\", \"indices des prix
+        \xE0 la production\", \"prix et indices des prix\", \"tableau\"], \"en\":
+        [\"other content related to producer price indexes\", \"prices and price indexes\",
+        \"producer price indexes\", \"table\"]}, \"license_id\": \"ca-ogl-lgo\", \"license_title\":
+        \"Open Government Licence - Canada\", \"license_url\": \"https://open.canada.ca/en/open-government-licence-canada\",
+        \"maintainer\": null, \"maintainer_email\": \"redacted@example.org\", \"metadata_created\":
+        \"2026-10-09T12:49:38.404422\", \"metadata_modified\": \"2026-10-09T12:49:38.442750\",
+        \"name\": \"a579ad35-7b74-4c2b-b14e-6c675317bff7\", \"notes\": \"Measures
+        of producer price change in the Canadian economy, by sector, quarterly.<br>\",
+        \"notes_translated\": {\"en\": \"Measures of producer price change in the
+        Canadian economy, by sector, quarterly.<br>\", \"fr\": \"Mesures de l'\xE9volution
+        des prix \xE0 la production dans l'\xE9conomie canadienne, par secteur, trimestriel.<br>\"},
+        \"num_resources\": 5, \"num_tags\": 0, \"org_title_at_publication\": {\"fr\":
+        \"Statistique Canada\", \"en\": \"Statistics Canada\"}, \"organization\":
+        {\"id\": \"A0F0FCFC-BC3B-4696-8B6D-E7E411D55BAC\", \"name\": \"statcan\",
+        \"title\": \"Statistics Canada | Statistique Canada\", \"type\": \"organization\",
+        \"description\": \"\", \"image_url\": \"\", \"created\": \"2016-09-23T17:26:15.123077\",
+        \"is_organization\": true, \"approval_status\": \"approved\", \"state\": \"active\"},
+        \"owner_org\": \"A0F0FCFC-BC3B-4696-8B6D-E7E411D55BAC\", \"place_of_publication\":
+        [], \"private\": false, \"ready_to_publish\": \"true\", \"restrictions\":
+        \"unrestricted\", \"spatial_representation_type\": [], \"state\": \"active\",
+        \"subject\": [\"economics_and_industry\"], \"title\": \"Sector-based Producer
+        Price Indexes, quarterly\", \"title_translated\": {\"fr\": \"Indices des prix
+        \xE0 la production par secteur, trimestrielle\", \"en\": \"Sector-based Producer
+        Price Indexes, quarterly\"}, \"topic_category\": [], \"type\": \"dataset\",
+        \"url\": \"{u'fr': u'http://www5.statcan.gc.ca/cansim/home-accueil?lang=fra',
+        u'en': u'http://www5.statcan.gc.ca/cansim/home-accueil?lang=eng'}\", \"version\":
+        null, \"resources\": [{\"cache_last_updated\": null, \"cache_url\": null,
+        \"created\": \"2026-10-09T12:49:38.436511\", \"data_quality\": [], \"datastore_active\":
+        false, \"description\": null, \"format\": \"CSV\", \"hash\": \"\", \"id\":
+        \"809707c4-9bb7-4598-a517-0b445e4a5975\", \"language\": [\"fr\"], \"last_modified\":
+        null, \"metadata_modified\": \"2026-10-09T12:49:38.401486\", \"mimetype\":
+        null, \"mimetype_inner\": null, \"name\": \"Dataset\", \"name_translated\":
+        {\"fr\": \"Ensembles de donn\xE9es\", \"en\": \"Dataset\"}, \"package_id\":
+        \"a579ad35-7b74-4c2b-b14e-6c675317bff7\", \"position\": 0, \"resource_type\":
+        \"dataset\", \"state\": \"active\", \"url\": \"https://www150.statcan.gc.ca/n1/tbl/csv/18100292-fra.zip\",
+        \"url_type\": null}, {\"cache_last_updated\": null, \"cache_url\": null, \"created\":
+        \"2026-10-09T12:49:38.436515\", \"data_quality\": [], \"datastore_active\":
+        false, \"description\": null, \"format\": \"CSV\", \"hash\": \"\", \"id\":
+        \"7c2a0594-2a63-4d6a-9cbd-7a46d62dcb34\", \"language\": [\"en\"], \"last_modified\":
+        null, \"metadata_modified\": \"2026-10-09T12:49:38.401572\", \"mimetype\":
+        null, \"mimetype_inner\": null, \"name\": \"Dataset\", \"name_translated\":
+        {\"fr\": \"Ensembles de donn\xE9es\", \"en\": \"Dataset\"}, \"package_id\":
+        \"a579ad35-7b74-4c2b-b14e-6c675317bff7\", \"position\": 1, \"resource_type\":
+        \"dataset\", \"state\": \"active\", \"url\": \"https://www150.statcan.gc.ca/n1/tbl/csv/18100292-eng.zip\",
+        \"url_type\": null}, {\"cache_last_updated\": null, \"cache_url\": null, \"created\":
+        \"2026-10-09T12:49:38.436517\", \"data_quality\": [], \"datastore_active\":
+        false, \"description\": null, \"format\": \"XML\", \"hash\": \"\", \"id\":
+        \"ad9165bb-5c72-411b-bfe2-3a8f446ca822\", \"language\": [\"en\", \"fr\"],
+        \"last_modified\": null, \"metadata_modified\": \"2026-10-09T12:49:38.401650\",
+        \"mimetype\": null, \"mimetype_inner\": null, \"name\": \"Dataset\", \"name_translated\":
+        {\"fr\": \"Ensembles de donn\xE9es\", \"en\": \"Dataset\"}, \"package_id\":
+        \"a579ad35-7b74-4c2b-b14e-6c675317bff7\", \"position\": 2, \"resource_type\":
+        \"dataset\", \"state\": \"active\", \"url\": \"https://www150.statcan.gc.ca/n1/tbl/sdmx/18100292-SDMX.zip\",
+        \"url_type\": null}, {\"cache_last_updated\": null, \"cache_url\": null, \"created\":
+        \"2026-10-09T12:49:38.436518\", \"data_quality\": [], \"datastore_active\":
+        false, \"description\": null, \"format\": \"HTML\", \"hash\": \"\", \"id\":
+        \"815509b5-df0f-4204-9976-3164e2b87d37\", \"language\": [\"fr\"], \"last_modified\":
+        null, \"metadata_modified\": \"2026-10-09T12:49:38.401726\", \"mimetype\":
+        null, \"mimetype_inner\": null, \"name\": \"Supporting Document\", \"name_translated\":
+        {\"fr\": \"Document connexe\", \"en\": \"Supporting Document\"}, \"package_id\":
+        \"a579ad35-7b74-4c2b-b14e-6c675317bff7\", \"position\": 3, \"resource_type\":
+        \"guide\", \"state\": \"active\", \"url\": \"https://www150.statcan.gc.ca/t1/tbl1/fr/tv.action?pid=1810029201\",
+        \"url_type\": null}, {\"cache_last_updated\": null, \"cache_url\": null, \"created\":
+        \"2026-10-09T12:49:38.436519\", \"data_quality\": [], \"datastore_active\":
+        false, \"description\": null, \"format\": \"HTML\", \"hash\": \"\", \"id\":
+        \"92ae4c52-2298-4148-af9e-566f3f251e50\", \"language\": [\"en\"], \"last_modified\":
+        null, \"metadata_modified\": \"2026-10-09T12:49:38.401799\", \"mimetype\":
+        null, \"mimetype_inner\": null, \"name\": \"Supporting Document\", \"name_translated\":
+        {\"fr\": \"Document connexe\", \"en\": \"Supporting Document\"}, \"package_id\":
+        \"a579ad35-7b74-4c2b-b14e-6c675317bff7\", \"position\": 4, \"resource_type\":
+        \"guide\", \"state\": \"active\", \"url\": \"https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1810029201\",
+        \"url_type\": null}], \"tags\": [], \"groups\": [], \"relationships_as_subject\":
+        [], \"relationships_as_object\": []}, {\"additional_notes\": {\"en\": \"\",
+        \"fr\": \"\"}, \"audience\": [\"general_public\"], \"author\": null, \"author_redacted\":
+        null, \"collection\": \"publication\", \"contributor\": {\"en\": \"\", \"fr\":
+        \"\"}, \"creator\": \"\", \"creator_user_id\": \"2dc5a12f-2a6f-4822-8514-165ea6bb05d9\",
+        \"data_series_issue_identification\": {\"en\": \"\", \"fr\": \"\"}, \"data_series_name\":
+        {\"en\": \"REGDOCs\", \"fr\": \"REGDOCs\"}, \"date_published\": \"2026-10-08
+        00:00:00\", \"departmental_identification_number\": \"\", \"digital_object_identifier\":
+        \"\", \"edition\": \"\", \"frequency\": \"as_needed\", \"gc_catalogue_number\":
+        \"\", \"geographic_region\": [], \"id\": \"a842d87b-7b1f-446f-9709-4ee188e221b4\",
+        \"imso_approval\": \"true\", \"isbn\": \"\", \"isopen\": false, \"issn\":
+        \"\", \"issuance\": \"\", \"issuance_frequency\": \"\", \"jurisdiction\":
+        \"federal\", \"keywords\": {\"en\": [\"Regulation\", \"Security\", \"Import
+        & Export\", \"Guidelines\"], \"fr\": [\"R\xE9glementation\", \"s\xE9curit\xE9\",
+        \"importations et exportations\", \"lignes directrices\"]}, \"license_id\":
+        \"ca-ogl-lgo\", \"license_title\": \"Open Government Licence - Canada\", \"license_url\":
+        \"https://open.canada.ca/en/open-government-licence-canada\", \"maintainer\":
+        null, \"maintainer_email\": \"redacted@example.org\", \"metadata_created\":
+        \"2026-10-09T11:52:16.629300\", \"metadata_modified\": \"2026-10-09T11:52:16.689416\",
+        \"name\": \"a842d87b-7b1f-446f-9709-4ee188e221b4\", \"notes\": \"Report from
+        regulatory consultation held from February 18 to April 19, 2026.\", \"notes_translated\":
+        {\"en\": \"Report from regulatory consultation held from February 18 to April
+        19, 2026.\", \"fr\": \"Rapport issus de la consultation r\xE9glementaire qui
+        s'est d\xE9roul\xE9e du 18 f\xE9vrier au 19 avril 2026\"}, \"num_resources\":
+        2, \"num_tags\": 0, \"org_section\": {\"en\": \"Regulatory Policy Directorate\",
+        \"fr\": \"Direction de la politique de r\xE9glementation\"}, \"org_title_at_publication\":
+        {\"en\": \"Canadian Nuclear Safety Commission\", \"fr\": \"Commission canadienne
+        de s\xFBret\xE9 nucl\xE9aire\"}, \"organization\": {\"id\": \"261F1DF4-DD3A-4DAD-939B-55B4F2853FBB\",
+        \"name\": \"cnsc-ccsn\", \"title\": \"Canadian Nuclear Safety Commission |
+        Commission canadienne de s\xFBret\xE9 nucl\xE9aire\", \"type\": \"organization\",
+        \"description\": \"\", \"image_url\": \"\", \"created\": \"2016-09-23T17:25:12.886961\",
+        \"is_organization\": true, \"approval_status\": \"approved\", \"state\": \"active\"},
+        \"owner_org\": \"261F1DF4-DD3A-4DAD-939B-55B4F2853FBB\", \"place_of_publication\":
+        [\"3506\"], \"portal_release_date\": \"2026-10-09\", \"private\": false, \"program_page_url\":
+        {\"en\": \"https://www.cnsc-ccsn.gc.ca/eng/acts-and-regulations/regulatory-documents/history/regdoc2-13-2/\",
+        \"fr\": \"https://www.cnsc-ccsn.gc.ca/fra/acts-and-regulations/regulatory-documents/history/regdoc2-13-2/\"},
+        \"pspc_identification_number\": \"\", \"ready_to_publish\": \"true\", \"restrictions\":
+        \"unrestricted\", \"series_publication_dates\": {\"en\": \"\", \"fr\": \"\"},
+        \"spatial\": \"\", \"state\": \"active\", \"subject\": [\"health_and_safety\"],
+        \"title\": \"Consultation Report for REGDOC 2.13.2, Import & Export, version
+        3\", \"title_translated\": {\"en\": \"Consultation Report for REGDOC 2.13.2,
+        Import & Export, version 3\", \"fr\": \"Rapport de consultation pour REGDOC
+        2.13.2 Importation et Exportation, version 3\"}, \"type\": \"info\", \"url\":
+        null, \"version\": null, \"resources\": [{\"cache_last_updated\": null, \"cache_url\":
+        null, \"character_set\": \"\", \"created\": \"2026-10-09T11:52:16.677078\",
+        \"datastore_active\": false, \"datastore_contains_all_records_of_source_file\":
+        false, \"date_published\": \"\", \"description\": \"\", \"description_translated\":
+        {\"en\": \"\", \"fr\": \"\"}, \"format\": \"PDF\", \"hash\": \"\", \"id\":
+        \"b9fdfe00-1851-4712-ac92-8ce3896457f1\", \"language\": [\"en\"], \"last_modified\":
+        \"2026-10-08T12:29:56.600470\", \"metadata_modified\": \"2026-10-09T11:52:16.615977\",
+        \"mimetype\": null, \"mimetype_inner\": null, \"name\": \"Consultation Report
+        for REGDOC 2.13.2, Import & Export, version 3\", \"name_translated\": {\"en\":
+        \"Consultation Report for REGDOC 2.13.2, Import & Export, version 3\", \"fr\":
+        \"Rapport de consultation pour REGDOC 2.13.2 Importation et Exportation, version
+        3\"}, \"package_id\": \"a842d87b-7b1f-446f-9709-4ee188e221b4\", \"position\":
+        0, \"resource_type\": \"consultation\", \"state\": \"active\", \"unique_identifier\":
+        \"\", \"url\": \"/data/dataset/a842d87b-7b1f-446f-9709-4ee188e221b4/resource/b9fdfe00-1851-4712-ac92-8ce3896457f1/download/consultation-report-regdoc-2.13.2.pdf\",
+        \"url_type\": \"upload\", \"validation_status\": \"\", \"validation_timestamp\":
+        \"\"}, {\"cache_last_updated\": null, \"cache_url\": null, \"character_set\":
+        \"\", \"created\": \"2026-10-09T11:52:16.677084\", \"datastore_active\": false,
+        \"datastore_contains_all_records_of_source_file\": false, \"date_published\":
+        \"\", \"description\": \"\", \"description_translated\": {\"en\": \"\", \"fr\":
+        \"\"}, \"format\": \"PDF\", \"hash\": \"\", \"id\": \"9d2b56fc-1a23-42be-b8b6-a5ed9975d971\",
+        \"language\": [\"fr\"], \"last_modified\": \"2026-10-08T12:30:18.313277\",
+        \"metadata_modified\": \"2026-10-09T11:52:16.625293\", \"mimetype\": null,
+        \"mimetype_inner\": null, \"name\": \"Consultation Report for REGDOC 2.13.2,
+        Import & Export, version 3\", \"name_translated\": {\"en\": \"Consultation
+        Report for REGDOC 2.13.2, Import & Export, version 3\", \"fr\": \"Rapport
+        de consultation pour REGDOC 2.13.2 Importation et Exportation, version 3\"},
+        \"package_id\": \"a842d87b-7b1f-446f-9709-4ee188e221b4\", \"position\": 1,
+        \"resource_type\": \"consultation\", \"state\": \"active\", \"unique_identifier\":
+        \"\", \"url\": \"/data/dataset/a842d87b-7b1f-446f-9709-4ee188e221b4/resource/9d2b56fc-1a23-42be-b8b6-a5ed9975d971/download/consultation-report-regdoc-2.13.2-fr.pdf\",
+        \"url_type\": \"upload\", \"validation_status\": \"\", \"validation_timestamp\":
+        \"\"}], \"tags\": [], \"groups\": [], \"relationships_as_subject\": [], \"relationships_as_object\":
+        []}, {\"additional_notes\": {\"en\": \"\", \"fr\": \"\"}, \"audience\": [\"general_public\",
+        \"government\"], \"author\": null, \"author_redacted\": null, \"collection\":
+        \"parliament_report\", \"contributor\": {\"en\": \"\", \"fr\": \"\"}, \"creator\":
+        \"Mingbo Ma\", \"creator_user_id\": \"2dc5a12f-2a6f-4822-8514-165ea6bb05d9\",
+        \"data_series_issue_identification\": {\"en\": \"\", \"fr\": \"\"}, \"data_series_name\":
+        {\"en\": \"Departmental Plans\", \"fr\": \"Plans minist\xE9riels\"}, \"date_created\":
+        \"2026-10-08\", \"date_published\": \"2026-10-07 00:00:00\", \"departmental_identification_number\":
+        \"\", \"digital_object_identifier\": \"\", \"edition\": \"\", \"frequency\":
+        \"as_needed\", \"gc_catalogue_number\": \"\", \"geographic_region\": [], \"id\":
+        \"2a4941c2-d5f8-40ab-a753-703f13100f4d\", \"imso_approval\": \"true\", \"isbn\":
+        \"\", \"isopen\": false, \"issn\": \"2371-8552\", \"issuance\": \"\", \"issuance_frequency\":
+        \"P1Y\", \"jurisdiction\": \"federal\", \"keywords\": {\"en\": [\"Departmental
+        Plan 2026-2027\", \"Core responsibility\", \"Spending\", \"Funding\"], \"fr\":
+        [\"Plan minist\xE9riel 2026-2027\", \"Responsabilit\xE9 essentielle\", \"D\xE9penses\",
+        \"Financement\"]}, \"license_id\": \"ca-ogl-lgo\", \"license_title\": \"Open
+        Government Licence - Canada\", \"license_url\": \"https://open.canada.ca/en/open-government-licence-canada\",
+        \"maintainer\": null, \"maintainer_email\": \"redacted@example.org\", \"metadata_created\":
+        \"2026-10-09T11:52:15.601701\", \"metadata_modified\": \"2026-10-09T11:52:15.692829\",
+        \"name\": \"2a4941c2-d5f8-40ab-a753-703f13100f4d\", \"notes\": \"This plan
+        provides parliamentarians and Canadians with an overview of the CRCC's objectives,
+        planned activities, and expected results as well as the financial and human
+        resources forecast for the reporting period, to deliver its mandate to provide
+        independent civilian oversight of the Royal Canadian Mounted Police (RCMP).\",
+        \"notes_translated\": {\"en\": \"This plan provides parliamentarians and Canadians
+        with an overview of the CRCC's objectives, planned activities, and expected
+        results as well as the financial and human resources forecast for the reporting
+        period, to deliver its mandate to provide independent civilian oversight of
+        the Royal Canadian Mounted Police (RCMP).\", \"fr\": \"Ce plan donne aux parlementaires
+        et \xE0 la population canadienne un aper\xE7u des objectifs de la CCETP, de
+        ses activit\xE9s pr\xE9vues et des r\xE9sultats attendus, ainsi que des ressources
+        financi\xE8res et humaines pr\xE9vues pour la p\xE9riode vis\xE9e, afin de
+        lui permettre de s'acquitter de son mandat consistant \xE0 assurer une surveillance
+        civile ind\xE9pendante de la Gendarmerie royale du Canada (GRC).\"}, \"num_resources\":
+        4, \"num_tags\": 0, \"org_section\": {\"en\": \"Civilian Review and Complaints
+        Commission for the RCMP\", \"fr\": \"Commission civile d'examen et de traitement
+        des plaintes relatives \xE0 la GRC\"}, \"org_title_at_publication\": {\"en\":
+        \"Commission civile d'examen et de traitement des plaintes relatives \xE0
+        la GRC\", \"fr\": \"Commission civile d'examen et de traitement des plaintes
+        relatives \xE0 la GRC \"}, \"organization\": {\"id\": \"35e24585-b7b9-4def-a1be-93a185744753\",
+        \"name\": \"cpc-cpp\", \"title\": \"Civilian Review and Complaints Commission
+        for the RCMP | Commission civile d'examen et de traitement des plaintes relatives
+        \xE0 la Gendarmerie royale du Canada\", \"type\": \"organization\", \"description\":
+        \"\", \"image_url\": \"\", \"created\": \"2016-09-23T17:25:14.002429\", \"is_organization\":
+        true, \"approval_status\": \"approved\", \"state\": \"active\"}, \"owner_org\":
+        \"35e24585-b7b9-4def-a1be-93a185744753\", \"place_of_publication\": [\"0\",
+        \"3\", \"3506\"], \"portal_release_date\": \"2026-10-09\", \"private\": false,
+        \"program_page_url\": {\"en\": \"https://www.crcc-ccetp.gc.ca/en\", \"fr\":
+        \"https://www.crcc-ccetp.gc.ca/fr\"}, \"pspc_identification_number\": \"\",
+        \"ready_to_publish\": \"true\", \"restrictions\": \"unrestricted\", \"series_publication_dates\":
+        {\"en\": \"\", \"fr\": \"\"}, \"spatial\": \"\", \"state\": \"active\", \"subject\":
+        [\"government_and_politics\", \"information_and_communications\"], \"time_period_coverage_end\":
+        \"2027-03-31 00:00:00\", \"time_period_coverage_start\": \"2026-04-01 00:00:00\",
+        \"title\": \"Civilian Review and Complaints Commission for the RCMP\u2019s
+        2026\u201327 Departmental Plan\", \"title_translated\": {\"en\": \"Civilian
+        Review and Complaints Commission for the RCMP\u2019s 2026\u201327 Departmental
+        Plan\", \"fr\": \"Plan minist\xE9riel 2026-2027 de la Commission civile d'examen
+        et de traitement des plaintes relatives \xE0 la GRC\"}, \"type\": \"info\",
+        \"url\": null, \"version\": null, \"resources\": [{\"cache_last_updated\":
+        null, \"cache_url\": null, \"character_set\": \"UTF-8\", \"created\": \"2026-10-09T11:52:15.676189\",
+        \"datastore_active\": false, \"datastore_contains_all_records_of_source_file\":
+        false, \"date_published\": \"2026-10-07\", \"description\": \"The CRCC's Departmental
+        Plan for the fiscal year 2026\u201327 provides parliamentarians and Canadians
+        with an overview of the CRCC's objectives, planned activities, and expected
+        results as well as the financial and human resources forecast for the reporting
+        period, to deliver its mandate to provide independent civilian oversight of
+        the Royal Canadian Mounted Police (RCMP).\", \"description_translated\": {\"en\":
+        \"The CRCC's Departmental Plan for the fiscal year 2026\u201327 provides parliamentarians
+        and Canadians with an overview of the CRCC's objectives, planned activities,
+        and expected results as well as the financial and human resources forecast
+        for the reporting period, to deliver its mandate to provide independent civilian
+        oversight of the Royal Canadian Mounted Police (RCMP).\", \"fr\": \"Le Plan
+        minist\xE9riel de la CCETP pour l'exercice 2026-2027  donne aux parlementaires
+        et \xE0 la population canadienne un aper\xE7u des objectifs de la CCETP, de
+        ses activit\xE9s pr\xE9vues et des r\xE9sultats attendus, ainsi que des ressources
+        financi\xE8res et humaines pr\xE9vues pour la p\xE9riode vis\xE9e, afin de
+        lui permettre de s'acquitter de son mandat consistant \xE0 assurer une surveillance
+        civile ind\xE9pendante de la Gendarmerie royale du Canada (GRC).\"}, \"format\":
+        \"HTML\", \"hash\": \"\", \"id\": \"5679290b-b228-4694-b8a0-2e83a39a82f8\",
+        \"language\": [\"en\"], \"last_modified\": null, \"metadata_modified\": \"2026-10-09T11:52:15.573864\",
+        \"mimetype\": null, \"mimetype_inner\": null, \"name\": \"Civilian Review
+        and Complaints Commission for the RCMP\u2019s 2026\u201327 Departmental Plan\",
+        \"name_translated\": {\"en\": \"Civilian Review and Complaints Commission
+        for the RCMP\u2019s 2026\u201327 Departmental Plan\", \"fr\": \"Plan minist\xE9riel
+        2026-2027 de la Commission civile d'examen et de traitement des plaintes relatives
+        \xE0 la GRC\"}, \"package_id\": \"2a4941c2-d5f8-40ab-a753-703f13100f4d\",
+        \"position\": 0, \"resource_type\": \"plan\", \"state\": \"active\", \"unique_identifier\":
+        \"\", \"url\": \"https://www.crcc-ccetp.gc.ca/en/commission/corporate-reports/departmental-plans/departmental-plan-2026-2027\",
+        \"url_type\": \"\", \"validation_status\": \"\", \"validation_timestamp\":
+        \"\"}, {\"cache_last_updated\": null, \"cache_url\": null, \"character_set\":
+        \"UTF-8\", \"created\": \"2026-10-09T11:52:15.676195\", \"datastore_active\":
+        false, \"datastore_contains_all_records_of_source_file\": false, \"date_published\":
+        \"2026-10-07\", \"description\": \"This plan provides parliamentarians and
+        Canadians with an overview of the CRCC's objectives, planned activities, and
+        expected results as well as the financial and human resources forecast for
+        the reporting period, to deliver its mandate to provide independent civilian
+        oversight of the Royal Canadian Mounted Police (RCMP).\", \"description_translated\":
+        {\"en\": \"This plan provides parliamentarians and Canadians with an overview
+        of the CRCC's objectives, planned activities, and expected results as well
+        as the financial and human resources forecast for the reporting period, to
+        deliver its mandate to provide independent civilian oversight of the Royal
+        Canadian Mounted Police (RCMP).\", \"fr\": \"Ce plan donne aux parlementaires
+        et \xE0 la population canadienne un aper\xE7u des objectifs de la CCETP, de
+        ses activit\xE9s pr\xE9vues et des r\xE9sultats attendus, ainsi que des ressources
+        financi\xE8res et humaines pr\xE9vues pour la p\xE9riode vis\xE9e, afin de
+        lui permettre de s'acquitter de son mandat consistant \xE0 assurer une surveillance
+        civile ind\xE9pendante de la Gendarmerie royale du Canada (GRC).\"}, \"format\":
+        \"HTML\", \"hash\": \"\", \"id\": \"514a7aac-43a6-4667-bfcd-4c89b092e107\",
+        \"language\": [\"fr\"], \"last_modified\": null, \"metadata_modified\": \"2026-10-09T11:52:15.582808\",
+        \"mimetype\": null, \"mimetype_inner\": null, \"name\": \"Civilian Review
+        and Complaints Commission for the RCMP\u2019s 2026\u201327 Departmental Plan\",
+        \"name_translated\": {\"en\": \"Civilian Review and Complaints Commission
+        for the RCMP\u2019s 2026\u201327 Departmental Plan\", \"fr\": \"Plan minist\xE9riel
+        2026-2027 de la Commission civile d'examen et de traitement des plaintes relatives
+        \xE0 la GRC\"}, \"package_id\": \"2a4941c2-d5f8-40ab-a753-703f13100f4d\",
+        \"position\": 1, \"resource_type\": \"plan\", \"state\": \"active\", \"unique_identifier\":
+        \"\", \"url\": \"https://www.crcc-ccetp.gc.ca/fr/commission/rapports-organisationnels/plans-ministeriels/plan-ministeriel-2026-2027\",
+        \"url_type\": \"\", \"validation_status\": \"\", \"validation_timestamp\":
+        \"\"}, {\"cache_last_updated\": null, \"cache_url\": null, \"character_set\":
+        \"\", \"created\": \"2026-10-09T11:52:15.676196\", \"datastore_active\": false,
+        \"datastore_contains_all_records_of_source_file\": false, \"date_published\":
+        \"2026-10-07\", \"description\": \" This plan provides parliamentarians and
+        Canadians with an overview of the CRCC's objectives, planned activities, and
+        expected results as well as the financial and human resources forecast for
+        the reporting period, to deliver its mandate to provide independent civilian
+        oversight of the Royal Canadian Mounted Police (RCMP).\", \"description_translated\":
+        {\"en\": \" This plan provides parliamentarians and Canadians with an overview
+        of the CRCC's objectives, planned activities, and expected results as well
+        as the financial and human resources forecast for the reporting period, to
+        deliver its mandate to provide independent civilian oversight of the Royal
+        Canadian Mounted Police (RCMP).\", \"fr\": \"Ce plan donne aux parlementaires
+        et \xE0 la population canadienne un aper\xE7u des objectifs de la CCETP, de
+        ses activit\xE9s pr\xE9vues et des r\xE9sultats attendus, ainsi que des ressources
+        financi\xE8res et humaines pr\xE9vues pour la p\xE9riode vis\xE9e, afin de
+        lui permettre de s'acquitter de son mandat consistant \xE0 assurer une surveillance
+        civile ind\xE9pendante de la Gendarmerie royale du Canada (GRC).\"}, \"format\":
+        \"PDF\", \"hash\": \"\", \"id\": \"0c05f93b-3fc7-4e6d-b9d6-091d39ca3155\",
+        \"language\": [\"en\"], \"last_modified\": null, \"metadata_modified\": \"2026-10-09T11:52:15.591249\",
+        \"mimetype\": null, \"mimetype_inner\": null, \"name\": \"Civilian Review
+        and Complaints Commission for the RCMP\u2019s 2026\u201327 Departmental Plan\",
+        \"name_translated\": {\"en\": \"Civilian Review and Complaints Commission
+        for the RCMP\u2019s 2026\u201327 Departmental Plan\", \"fr\": \"Plan minist\xE9riel
+        2026-2027 de la Commission civile d'examen et de traitement des plaintes relatives
+        \xE0 la GRC\"}, \"package_id\": \"2a4941c2-d5f8-40ab-a753-703f13100f4d\",
+        \"position\": 2, \"resource_type\": \"plan\", \"size\": 531746, \"state\":
+        \"active\", \"unique_identifier\": \"\", \"url\": \"https://www.crcc-ccetp.gc.ca/pdf/dp-pm-2026-27-en.pdf\",
+        \"url_type\": \"\", \"validation_status\": \"\", \"validation_timestamp\":
+        \"\"}, {\"cache_last_updated\": null, \"cache_url\": null, \"character_set\":
+        \"\", \"created\": \"2026-10-09T11:52:15.676197\", \"datastore_active\": false,
+        \"datastore_contains_all_records_of_source_file\": false, \"date_published\":
+        \"2026-10-07\", \"description\": \"This plan provides parliamentarians and
+        Canadians with an overview of the CRCC's objectives, planned activities, and
+        expected results as well as the financial and human resources forecast for
+        the reporting period, to deliver its mandate to provide independent civilian
+        oversight of the Royal Canadian Mounted Police (RCMP).\", \"description_translated\":
+        {\"en\": \"This plan provides parliamentarians and Canadians with an overview
+        of the CRCC's objectives, planned activities, and expected results as well
+        as the financial and human resources forecast for the reporting period, to
+        deliver its mandate to provide independent civilian oversight of the Royal
+        Canadian Mounted Police (RCMP).\", \"fr\": \"Ce plan donne aux parlementaires
+        et \xE0 la population canadienne un aper\xE7u des objectifs de la CCETP, de
+        ses activit\xE9s pr\xE9vues et des r\xE9sultats attendus, ainsi que des ressources
+        financi\xE8res et humaines pr\xE9vues pour la p\xE9riode vis\xE9e, afin de
+        lui permettre de s'acquitter de son mandat consistant \xE0 assurer une surveillance
+        civile ind\xE9pendante de la Gendarmerie royale du Canada (GRC).\"}, \"format\":
+        \"PDF\", \"hash\": \"\", \"id\": \"e36dabbd-d401-40d7-b804-0fc81594624e\",
+        \"language\": [\"fr\"], \"last_modified\": null, \"metadata_modified\": \"2026-10-09T11:52:15.598838\",
+        \"mimetype\": null, \"mimetype_inner\": null, \"name\": \"Civilian Review
+        and Complaints Commission for the RCMP\u2019s 2026\u201327 Departmental Plan\",
+        \"name_translated\": {\"en\": \"Civilian Review and Complaints Commission
+        for the RCMP\u2019s 2026\u201327 Departmental Plan\", \"fr\": \"Plan minist\xE9riel
+        2026-2027 de la Commission civile d'examen et de traitement des plaintes relatives
+        \xE0 la GRC\"}, \"package_id\": \"2a4941c2-d5f8-40ab-a753-703f13100f4d\",
+        \"position\": 3, \"resource_type\": \"plan\", \"size\": 574549, \"state\":
+        \"active\", \"unique_identifier\": \"\", \"url\": \"https://www.crcc-ccetp.gc.ca/pdf/dp-pm-2026-27-fr.pdf\",
+        \"url_type\": \"\", \"validation_status\": \"\", \"validation_timestamp\":
+        \"\"}], \"tags\": [], \"groups\": [], \"relationships_as_subject\": [], \"relationships_as_object\":
+        []}, {\"additional_notes\": {\"en\": \"\", \"fr\": \"\"}, \"audience\": [\"general_public\",
+        \"government\"], \"author\": null, \"author_redacted\": null, \"collection\":
+        \"parliament_report\", \"contributor\": {\"en\": \"\", \"fr\": \"\"}, \"creator\":
+        \"Mingbo Ma\", \"creator_user_id\": \"2dc5a12f-2a6f-4822-8514-165ea6bb05d9\",
+        \"data_series_issue_identification\": {\"en\": \"\", \"fr\": \"\"}, \"data_series_name\":
+        {\"en\": \"Departmental Plans\", \"fr\": \"Plans minist\xE9riels\"}, \"date_created\":
+        \"2026-10-08\", \"date_published\": \"2026-10-07 00:00:00\", \"departmental_identification_number\":
+        \"\", \"digital_object_identifier\": \"\", \"edition\": \"\", \"frequency\":
+        \"as_needed\", \"gc_catalogue_number\": \"\", \"geographic_region\": [], \"id\":
+        \"33ac4744-94b3-4481-a8f2-29f3e58d6e47\", \"imso_approval\": \"true\", \"isbn\":
+        \"\", \"isopen\": false, \"issn\": \"2371-8552\", \"issuance\": \"serial\",
+        \"issuance_frequency\": \"P1Y\", \"jurisdiction\": \"federal\", \"keywords\":
+        {\"en\": [\"Departmental Plan 2025-2026\", \"Core responsibility\", \"Spending\",
+        \"Funding\"], \"fr\": [\"Plan minist\xE9riel 2025-2026\", \"Responsabilit\xE9
+        essentielle\", \"D\xE9penses\", \"Financement\"]}, \"license_id\": \"ca-ogl-lgo\",
+        \"license_title\": \"Open Government Licence - Canada\", \"license_url\":
+        \"https://open.canada.ca/en/open-government-licence-canada\", \"maintainer\":
+        null, \"maintainer_email\": \"redacted@example.org\", \"metadata_created\":
+        \"2026-10-09T11:52:14.654208\", \"metadata_modified\": \"2026-10-09T11:52:14.722840\",
+        \"name\": \"33ac4744-94b3-4481-a8f2-29f3e58d6e47\", \"notes\": \"This plan
+        provides parliamentarians and Canadians with an overview of the CRCC's objectives,
+        planned activities, and expected results as well as the financial and human
+        resources forecasted for the reporting period, to deliver its mandate to provide
+        independent civilian oversight of the Royal Canadian Mounted Police (RCMP).\",
+        \"notes_translated\": {\"en\": \"This plan provides parliamentarians and Canadians
+        with an overview of the CRCC's objectives, planned activities, and expected
+        results as well as the financial and human resources forecasted for the reporting
+        period, to deliver its mandate to provide independent civilian oversight of
+        the Royal Canadian Mounted Police (RCMP).\", \"fr\": \"Ce plan donne aux parlementaires
+        et \xE0 la population canadienne un aper\xE7u des objectifs de la CCETP, de
+        ses activit\xE9s pr\xE9vues et des r\xE9sultats attendus, ainsi que des ressources
+        financi\xE8res et humaines pr\xE9vues pour la p\xE9riode vis\xE9e, afin de
+        lui permettre de s'acquitter de son mandat consistant \xE0 assurer une surveillance
+        civile ind\xE9pendante de la Gendarmerie royale du Canada (GRC).\"}, \"num_resources\":
+        4, \"num_tags\": 0, \"org_section\": {\"en\": \"Civilian Review and Complaints
+        Commission for the RCMP\", \"fr\": \"Commission civile d'examen et de traitement
+        des plaintes relatives \xE0 la GRC\"}, \"org_title_at_publication\": {\"en\":
+        \"Commission civile d'examen et de traitement des plaintes relatives \xE0
+        la GRC\", \"fr\": \"Commission civile d'examen et de traitement des plaintes
+        relatives \xE0 la GRC \"}, \"organization\": {\"id\": \"35e24585-b7b9-4def-a1be-93a185744753\",
+        \"name\": \"cpc-cpp\", \"title\": \"Civilian Review and Complaints Commission
+        for the RCMP | Commission civile d'examen et de traitement des plaintes relatives
+        \xE0 la Gendarmerie royale du Canada\", \"type\": \"organization\", \"description\":
+        \"\", \"image_url\": \"\", \"created\": \"2016-09-23T17:25:14.002429\", \"is_organization\":
+        true, \"approval_status\": \"approved\", \"state\": \"active\"}, \"owner_org\":
+        \"35e24585-b7b9-4def-a1be-93a185744753\", \"place_of_publication\": [\"3506\"],
+        \"portal_release_date\": \"2026-10-09\", \"private\": false, \"program_page_url\":
+        {\"en\": \"https://www.crcc-ccetp.gc.ca/en/\", \"fr\": \"https://www.crcc-ccetp.gc.ca/fr\"},
+        \"pspc_identification_number\": \"\", \"ready_to_publish\": \"true\", \"restrictions\":
+        \"unrestricted\", \"series_publication_dates\": {\"en\": \"\", \"fr\": \"\"},
+        \"spatial\": \"\", \"state\": \"active\", \"subject\": [\"government_and_politics\",
+        \"information_and_communications\"], \"time_period_coverage_end\": \"2026-03-31
+        00:00:00\", \"time_period_coverage_start\": \"2025-04-01 00:00:00\", \"title\":
+        \"Departmental Plan 2025-2026\", \"title_translated\": {\"en\": \"Departmental
+        Plan 2025-2026\", \"fr\": \"Plan minist\xE9riel 2025-2026\"}, \"type\": \"info\",
+        \"url\": null, \"version\": null, \"resources\": [{\"cache_last_updated\":
+        null, \"cache_url\": null, \"character_set\": \"UTF-8\", \"created\": \"2026-10-09T11:52:14.713739\",
+        \"datastore_active\": false, \"datastore_contains_all_records_of_source_file\":
+        false, \"date_published\": \"2026-10-07\", \"description\": \"This plan provides
+        parliamentarians and Canadians with an overview of the CRCC's objectives,
+        planned activities, and expected results as well as the financial and human
+        resources forecasted for the reporting period, to deliver its mandate to provide
+        independent civilian oversight of the Royal Canadian Mounted Police (RCMP).\",
+        \"description_translated\": {\"en\": \"This plan provides parliamentarians
+        and Canadians with an overview of the CRCC's objectives, planned activities,
+        and expected results as well as the financial and human resources forecasted
+        for the reporting period, to deliver its mandate to provide independent civilian
+        oversight of the Royal Canadian Mounted Police (RCMP).\", \"fr\": \"Ce plan
+        donne aux parlementaires et \xE0 la population canadienne un aper\xE7u des
+        objectifs de la CCETP, de ses activit\xE9s pr\xE9vues et des r\xE9sultats
+        attendus, ainsi que des ressources financi\xE8res et humaines pr\xE9vues pour
+        la p\xE9riode vis\xE9e, afin de lui permettre de s'acquitter de son mandat
+        consistant \xE0 assurer une surveillance civile ind\xE9pendante de la Gendarmerie
+        royale du Canada (GRC).\"}, \"format\": \"HTML\", \"hash\": \"\", \"id\":
+        \"5d2eed64-d00b-45a1-97fc-70a0d89b2828\", \"language\": [\"en\"], \"last_modified\":
+        null, \"metadata_modified\": \"2026-10-09T11:52:14.643071\", \"mimetype\":
+        null, \"mimetype_inner\": null, \"name\": \"Departmental Plan 2025-2026\",
+        \"name_translated\": {\"en\": \"Departmental Plan 2025-2026\", \"fr\": \"Plan
+        minist\xE9riel 2025-2026\"}, \"package_id\": \"33ac4744-94b3-4481-a8f2-29f3e58d6e47\",
+        \"position\": 0, \"resource_type\": \"plan\", \"state\": \"active\", \"unique_identifier\":
+        \"\", \"url\": \"https://www.crcc-ccetp.gc.ca/en/commission/corporate-reports/departmental-plans/departmental-plan-2025-2026\",
+        \"url_type\": \"\", \"validation_status\": \"\", \"validation_timestamp\":
+        \"\"}, {\"cache_last_updated\": null, \"cache_url\": null, \"character_set\":
+        \"UTF-8\", \"created\": \"2026-10-09T11:52:14.713745\", \"datastore_active\":
+        false, \"datastore_contains_all_records_of_source_file\": false, \"date_published\":
+        \"2026-10-07\", \"description\": \"This plan provides parliamentarians and
+        Canadians with an overview of the CRCC's objectives, planned activities, and
+        expected results as well as the financial and human resources forecasted for
+        the reporting period, to deliver its mandate to provide independent civilian
+        oversight of the Royal Canadian Mounted Police (RCMP).\", \"description_translated\":
+        {\"en\": \"This plan provides parliamentarians and Canadians with an overview
+        of the CRCC's objectives, planned activities, and expected results as well
+        as the financial and human resources forecasted for the reporting period,
+        to deliver its mandate to provide independent civilian oversight of the Royal
+        Canadian Mounted Police (RCMP).\", \"fr\": \"Ce plan donne aux parlementaires
+        et \xE0 la population canadienne un aper\xE7u des objectifs de la CCETP, de
+        ses activit\xE9s pr\xE9vues et des r\xE9sultats attendus, ainsi que des ressources
+        financi\xE8res et humaines pr\xE9vues pour la p\xE9riode vis\xE9e, afin de
+        lui permettre de s'acquitter de son mandat consistant \xE0 assurer une surveillance
+        civile ind\xE9pendante de la Gendarmerie royale du Canada (GRC).\"}, \"format\":
+        \"HTML\", \"hash\": \"\", \"id\": \"c0a2fb42-bc29-408f-94e4-f009788d9e99\",
+        \"language\": [\"fr\"], \"last_modified\": null, \"metadata_modified\": \"2026-10-09T11:52:14.645709\",
+        \"mimetype\": null, \"mimetype_inner\": null, \"name\": \"Departmental Plan
+        2025-2026\", \"name_translated\": {\"en\": \"Departmental Plan 2025-2026\",
+        \"fr\": \"Plan minist\xE9riel 2025-2026\"}, \"package_id\": \"33ac4744-94b3-4481-a8f2-29f3e58d6e47\",
+        \"position\": 1, \"resource_type\": \"plan\", \"state\": \"active\", \"unique_identifier\":
+        \"\", \"url\": \"https://www.crcc-ccetp.gc.ca/fr/commission/rapports-organisationnels/plans-minist%C3%A9riels/plan-ministeriel-2025-2026\",
+        \"url_type\": \"\", \"validation_status\": \"\", \"validation_timestamp\":
+        \"\"}, {\"cache_last_updated\": null, \"cache_url\": null, \"character_set\":
+        \"\", \"created\": \"2026-10-09T11:52:14.713747\", \"datastore_active\": false,
+        \"datastore_contains_all_records_of_source_file\": false, \"date_published\":
+        \"2026-10-07\", \"description\": \"This plan provides parliamentarians and
+        Canadians with an overview of the CRCC's objectives, planned activities, and
+        expected results as well as the financial and human resources forecasted for
+        the reporting period, to deliver its mandate to provide independent civilian
+        oversight of the Royal Canadian Mounted Police (RCMP).\", \"description_translated\":
+        {\"en\": \"This plan provides parliamentarians and Canadians with an overview
+        of the CRCC's objectives, planned activities, and expected results as well
+        as the financial and human resources forecasted for the reporting period,
+        to deliver its mandate to provide independent civilian oversight of the Royal
+        Canadian Mounted Police (RCMP).\", \"fr\": \"Ce plan donne aux parlementaires
+        et \xE0 la population canadienne un aper\xE7u des objectifs de la CCETP, de
+        ses activit\xE9s pr\xE9vues et des r\xE9sultats attendus, ainsi que des ressources
+        financi\xE8res et humaines pr\xE9vues pour la p\xE9riode vis\xE9e, afin de
+        lui permettre de s'acquitter de son mandat consistant \xE0 assurer une surveillance
+        civile ind\xE9pendante de la Gendarmerie royale du Canada (GRC).\"}, \"format\":
+        \"PDF\", \"hash\": \"\", \"id\": \"fd1ed431-bc43-477f-891b-7d68e38a58b2\",
+        \"language\": [\"en\"], \"last_modified\": null, \"metadata_modified\": \"2026-10-09T11:52:14.648555\",
+        \"mimetype\": null, \"mimetype_inner\": null, \"name\": \"Departmental Plan
+        2025-26\", \"name_translated\": {\"en\": \"Departmental Plan 2025-26\", \"fr\":
+        \"Plan minist\xE9riel 2025-2026\"}, \"package_id\": \"33ac4744-94b3-4481-a8f2-29f3e58d6e47\",
+        \"position\": 2, \"resource_type\": \"plan\", \"size\": 580004, \"state\":
+        \"active\", \"unique_identifier\": \"\", \"url\": \"https://www.crcc-ccetp.gc.ca/pdf/dp-pm-2025-26-en.pdf\",
+        \"url_type\": \"\", \"validation_status\": \"\", \"validation_timestamp\":
+        \"\"}, {\"cache_last_updated\": null, \"cache_url\": null, \"character_set\":
+        \"\", \"created\": \"2026-10-09T11:52:14.713748\", \"datastore_active\": false,
+        \"datastore_contains_all_records_of_source_file\": false, \"date_published\":
+        \"2026-10-07\", \"description\": \"This plan provides parliamentarians and
+        Canadians with an overview of the CRCC's objectives, planned activities, and
+        expected results as well as the financial and human resources forecasted for
+        the reporting period, to deliver its mandate to provide independent civilian
+        oversight of the Royal Canadian Mounted Police (RCMP).\", \"description_translated\":
+        {\"en\": \"This plan provides parliamentarians and Canadians with an overview
+        of the CRCC's objectives, planned activities, and expected results as well
+        as the financial and human resources forecasted for the reporting period,
+        to deliver its mandate to provide independent civilian oversight of the Royal
+        Canadian Mounted Police (RCMP).\", \"fr\": \"Ce plan donne aux parlementaires
+        et \xE0 la population canadienne un aper\xE7u des objectifs de la CCETP, de
+        ses activit\xE9s pr\xE9vues et des r\xE9sultats attendus, ainsi que des ressources
+        financi\xE8res et humaines pr\xE9vues pour la p\xE9riode vis\xE9e, afin de
+        lui permettre de s'acquitter de son mandat consistant \xE0 assurer une surveillance
+        civile ind\xE9pendante de la Gendarmerie royale du Canada (GRC).\"}, \"format\":
+        \"PDF\", \"hash\": \"\", \"id\": \"315f4381-65a8-4c3b-aaa7-42d3baceb8b9\",
+        \"language\": [\"fr\"], \"last_modified\": null, \"metadata_modified\": \"2026-10-09T11:52:14.651396\",
+        \"mimetype\": null, \"mimetype_inner\": null, \"name\": \"Departmental Plan
+        2025-2026\", \"name_translated\": {\"en\": \"Departmental Plan 2025-2026\",
+        \"fr\": \"Plan minist\xE9riel 2025-2026\"}, \"package_id\": \"33ac4744-94b3-4481-a8f2-29f3e58d6e47\",
+        \"position\": 3, \"resource_type\": \"plan\", \"size\": 640459, \"state\":
+        \"active\", \"unique_identifier\": \"\", \"url\": \"https://www.crcc-ccetp.gc.ca/pdf/dp-pm-2025-26-fr.pdf\",
+        \"url_type\": \"\", \"validation_status\": \"\", \"validation_timestamp\":
+        \"\"}], \"tags\": [], \"groups\": [], \"relationships_as_subject\": [], \"relationships_as_object\":
+        []}, {\"additional_notes\": {\"en\": \"\", \"fr\": \"\"}, \"audience\": [\"general_public\",
+        \"government\"], \"author\": null, \"author_redacted\": null, \"collection\":
+        \"parliament_report\", \"contributor\": {\"en\": \"\", \"fr\": \"\"}, \"creator\":
+        \"Mingbo Ma\", \"creator_user_id\": \"2dc5a12f-2a6f-4822-8514-165ea6bb05d9\",
+        \"data_series_issue_identification\": {\"en\": \"\", \"fr\": \"\"}, \"data_series_name\":
+        {\"en\": \"\", \"fr\": \"\"}, \"date_created\": \"2026-10-08\", \"date_published\":
+        \"2026-10-08 00:00:00\", \"departmental_identification_number\": \"\", \"digital_object_identifier\":
+        \"\", \"edition\": \"\", \"frequency\": \"as_needed\", \"gc_catalogue_number\":
+        \"\", \"geographic_region\": [], \"id\": \"6648a10a-d044-4257-bad6-9038871b37e5\",
+        \"imso_approval\": \"true\", \"isbn\": \"\", \"isopen\": false, \"issn\":
+        \"2561-9217\", \"issuance\": \"serial\", \"issuance_frequency\": \"P1Y\",
+        \"jurisdiction\": \"federal\", \"keywords\": {\"en\": [\"Annual report\",
+        \"CRCC\", \"Access to Information Act\"], \"fr\": [\"Rapport annuel\", \"CCETP\",
+        \"Loi sur l\u2019acc\xE8s \xE0 l\u2019information\"]}, \"license_id\": \"ca-ogl-lgo\",
+        \"license_title\": \"Open Government Licence - Canada\", \"license_url\":
+        \"https://open.canada.ca/en/open-government-licence-canada\", \"maintainer\":
+        null, \"maintainer_email\": \"redacted@example.org\", \"metadata_created\":
+        \"2026-10-09T11:52:13.659956\", \"metadata_modified\": \"2026-10-09T11:52:13.725586\",
+        \"name\": \"6648a10a-d044-4257-bad6-9038871b37e5\", \"notes\": \"This Annual
+        Report was prepared in accordance with section 94 of the Access to Information
+        Act, which stipulates that annual reports on access to information shall be
+        tabled in Parliament. \", \"notes_translated\": {\"en\": \"This Annual Report
+        was prepared in accordance with section 94 of the Access to Information Act,
+        which stipulates that annual reports on access to information shall be tabled
+        in Parliament. \", \"fr\": \"Le pr\xE9sent rapport annuel a \xE9t\xE9 r\xE9dig\xE9
+        en vertu de l'article 94 de la Loi sur l'acc\xE8s \xE0 l'information, selon
+        lequel des rapports annuels sur l'acc\xE8s \xE0 l'information doivent \xEAtre
+        d\xE9pos\xE9s au Parlement.\"}, \"num_resources\": 4, \"num_tags\": 0, \"org_section\":
+        {\"en\": \"Civilian Review and Complaints Commission for the RCMP\", \"fr\":
+        \"Commission civile d'examen et de traitement des plaintes relatives \xE0
+        la GRC\"}, \"org_title_at_publication\": {\"en\": \"Commission civile d'examen
+        et de traitement des plaintes relatives \xE0 la GRC\", \"fr\": \"Commission
+        civile d'examen et de traitement des plaintes relatives \xE0 la GRC \"}, \"organization\":
+        {\"id\": \"35e24585-b7b9-4def-a1be-93a185744753\", \"name\": \"cpc-cpp\",
+        \"title\": \"Civilian Review and Complaints Commission for the RCMP | Commission
+        civile d'examen et de traitement des plaintes relatives \xE0 la Gendarmerie
+        royale du Canada\", \"type\": \"organization\", \"description\": \"\", \"image_url\":
+        \"\", \"created\": \"2016-09-23T17:25:14.002429\", \"is_organization\": true,
+        \"approval_status\": \"approved\", \"state\": \"active\"}, \"owner_org\":
+        \"35e24585-b7b9-4def-a1be-93a185744753\", \"place_of_publication\": [\"3506\"],
+        \"portal_release_date\": \"2026-10-09\", \"private\": false, \"program_page_url\":
+        {\"en\": \"https://www.crcc-ccetp.gc.ca/en\", \"fr\": \"https://www.crcc-ccetp.gc.ca/fr\"},
+        \"pspc_identification_number\": \"\", \"ready_to_publish\": \"true\", \"restrictions\":
+        \"unrestricted\", \"series_publication_dates\": {\"en\": \"\", \"fr\": \"\"},
+        \"spatial\": \"\", \"state\": \"active\", \"subject\": [\"government_and_politics\",
+        \"information_and_communications\", \"law\"], \"time_period_coverage_end\":
+        \"2026-03-31 00:00:00\", \"time_period_coverage_start\": \"2025-04-01 00:00:00\",
+        \"title\": \"Annual Report to Parliament on the Administration of the Access
+        to Information Act 2025-2026\", \"title_translated\": {\"en\": \"Annual Report
+        to Parliament on the Administration of the Access to Information Act 2025-2026\",
+        \"fr\": \"Rapport annuel au Parlement sur l\u2019application de la Loi sur
+        l\u2019acc\xE8s \xE0 l\u2019information 2025-2026\"}, \"type\": \"info\",
+        \"url\": null, \"version\": null, \"resources\": [{\"cache_last_updated\":
+        null, \"cache_url\": null, \"character_set\": \"UTF-8\", \"created\": \"2026-10-09T11:52:13.714339\",
+        \"datastore_active\": false, \"datastore_contains_all_records_of_source_file\":
+        false, \"date_published\": \"2026-10-08\", \"description\": \"This Annual
+        Report was prepared in accordance with section 94 of the Access to Information
+        Act, which stipulates that annual reports on access to information shall be
+        tabled in Parliament. \", \"description_translated\": {\"en\": \"This Annual
+        Report was prepared in accordance with section 94 of the Access to Information
+        Act, which stipulates that annual reports on access to information shall be
+        tabled in Parliament. \", \"fr\": \"Le pr\xE9sent rapport annuel a \xE9t\xE9
+        r\xE9dig\xE9 en vertu de l'article 94 de la Loi sur l'acc\xE8s \xE0 l'information,
+        selon lequel des rapports annuels sur l'acc\xE8s \xE0 l'information doivent
+        \xEAtre d\xE9pos\xE9s au Parlement.\"}, \"format\": \"HTML\", \"hash\": \"\",
+        \"id\": \"b26cb54f-0a62-4fa5-87ba-483fa3456d53\", \"language\": [\"en\"],
+        \"last_modified\": null, \"metadata_modified\": \"2026-10-09T11:52:13.648712\",
+        \"mimetype\": null, \"mimetype_inner\": null, \"name\": \"Annual Report to
+        Parliament on the Administration of the Access to Information Act 2025-2026\",
+        \"name_translated\": {\"en\": \"Annual Report to Parliament on the Administration
+        of the Access to Information Act 2025-2026\", \"fr\": \"Rapport annuel au
+        Parlement sur l\u2019application de la Loi sur l\u2019acc\xE8s \xE0 l\u2019information
+        2025-2026\"}, \"package_id\": \"6648a10a-d044-4257-bad6-9038871b37e5\", \"position\":
+        0, \"resource_type\": \"annual_report\", \"state\": \"active\", \"unique_identifier\":
+        \"\", \"url\": \"https://www.crcc-ccetp.gc.ca/en/commission/corporate-reports/annual-reports-access-information-and-privacy/annual-report-parliament-administration-access-information-act-2025-2026\",
+        \"url_type\": \"\", \"validation_status\": \"\", \"validation_timestamp\":
+        \"\"}, {\"cache_last_updated\": null, \"cache_url\": null, \"character_set\":
+        \"UTF-8\", \"created\": \"2026-10-09T11:52:13.714345\", \"datastore_active\":
+        false, \"datastore_contains_all_records_of_source_file\": false, \"date_published\":
+        \"2026-10-08\", \"description\": \"This Annual Report was prepared in accordance
+        with section 94 of the  Access to Information Act, which stipulates that annual
+        reports on access to information shall be tabled in Parliament. \", \"description_translated\":
+        {\"en\": \"This Annual Report was prepared in accordance with section 94 of
+        the  Access to Information Act, which stipulates that annual reports on access
+        to information shall be tabled in Parliament. \", \"fr\": \"Le pr\xE9sent
+        rapport annuel a \xE9t\xE9 r\xE9dig\xE9 en vertu de l'article 94 de la Loi
+        sur l'acc\xE8s \xE0 l'information, selon lequel des rapports annuels sur l'acc\xE8s
+        \xE0 l'information doivent \xEAtre d\xE9pos\xE9s au Parlement.\"}, \"format\":
+        \"HTML\", \"hash\": \"\", \"id\": \"2047f491-d99e-4572-8294-c4c7c417ca22\",
+        \"language\": [\"fr\"], \"last_modified\": null, \"metadata_modified\": \"2026-10-09T11:52:13.651807\",
+        \"mimetype\": null, \"mimetype_inner\": null, \"name\": \"Annual Report to
+        Parliament on the Administration of the Access to Information Act 2025-2026\",
+        \"name_translated\": {\"en\": \"Annual Report to Parliament on the Administration
+        of the Access to Information Act 2025-2026\", \"fr\": \"Rapport annuel au
+        Parlement sur l\u2019application de la Loi sur l\u2019acc\xE8s \xE0 l\u2019information
+        2025-2026\"}, \"package_id\": \"6648a10a-d044-4257-bad6-9038871b37e5\", \"position\":
+        1, \"resource_type\": \"annual_report\", \"state\": \"active\", \"unique_identifier\":
+        \"\", \"url\": \"https://www.crcc-ccetp.gc.ca/fr/commission/rapports-organisationnels/rapports-annuels-acces-information-protection-renseignements-personnels/rapport-annuel-parlement-application-loi-acces-information-2025-2026\",
+        \"url_type\": \"\", \"validation_status\": \"\", \"validation_timestamp\":
+        \"\"}, {\"cache_last_updated\": null, \"cache_url\": null, \"character_set\":
+        \"\", \"created\": \"2026-10-09T11:52:13.714347\", \"datastore_active\": false,
+        \"datastore_contains_all_records_of_source_file\": false, \"date_published\":
+        \"2026-10-08\", \"description\": \"This Annual Report was prepared in accordance
+        with section 94 of the Access to Information Act, which stipulates that annual
+        reports on access to information shall be tabled in Parliament. \", \"description_translated\":
+        {\"en\": \"This Annual Report was prepared in accordance with section 94 of
+        the Access to Information Act, which stipulates that annual reports on access
+        to information shall be tabled in Parliament. \", \"fr\": \"Le pr\xE9sent
+        rapport annuel a \xE9t\xE9 r\xE9dig\xE9 en vertu de l'article 94 de la Loi
+        sur l\u2019acc\xE8s \xE0 l\u2019information, selon lequel des rapports annuels
+        sur l'acc\xE8s \xE0 l'information doivent \xEAtre d\xE9pos\xE9s au Parlement.\"},
+        \"format\": \"PDF\", \"hash\": \"\", \"id\": \"25993428-dd94-4501-8848-937e850100d6\",
+        \"language\": [\"en\"], \"last_modified\": null, \"metadata_modified\": \"2026-10-09T11:52:13.654495\",
+        \"mimetype\": null, \"mimetype_inner\": null, \"name\": \"Annual Report to
+        Parliament on the Administration of the Access to Information Act 2025-2026\",
+        \"name_translated\": {\"en\": \"Annual Report to Parliament on the Administration
+        of the Access to Information Act 2025-2026\", \"fr\": \"Rapport annuel au
+        Parlement sur l\u2019application de la Loi sur l\u2019acc\xE8s \xE0 l\u2019information
+        2025-2026\"}, \"package_id\": \"6648a10a-d044-4257-bad6-9038871b37e5\", \"position\":
+        2, \"resource_type\": \"annual_report\", \"size\": 737543, \"state\": \"active\",
+        \"unique_identifier\": \"\", \"url\": \"https://www.crcc-ccetp.gc.ca/pdf/atiaannRep_25-26-en.pdf\",
+        \"url_type\": \"\", \"validation_status\": \"\", \"validation_timestamp\":
+        \"\"}, {\"cache_last_updated\": null, \"cache_url\": null, \"character_set\":
+        \"\", \"created\": \"2026-10-09T11:52:13.714348\", \"datastore_active\": false,
+        \"datastore_contains_all_records_of_source_file\": false, \"date_published\":
+        \"2026-10-08\", \"description\": \"This Annual Report was prepared in accordance
+        with section 94 of the Access to Information Act, which stipulates that annual
+        reports on access to information shall be tabled in Parliament. \", \"description_translated\":
+        {\"en\": \"This Annual Report was prepared in accordance with section 94 of
+        the Access to Information Act, which stipulates that annual reports on access
+        to information shall be tabled in Parliament. \", \"fr\": \"Le pr\xE9sent
+        rapport annuel a \xE9t\xE9 r\xE9dig\xE9 en vertu de l'article 94 de la Loi
+        sur l'acc\xE8s \xE0 l'information, selon lequel des rapports annuels sur l'acc\xE8s
+        \xE0 l'information doivent \xEAtre d\xE9pos\xE9s au Parlement.\"}, \"format\":
+        \"PDF\", \"hash\": \"\", \"id\": \"fa445d96-de32-46c3-948e-af64149c4925\",
+        \"language\": [\"fr\"], \"last_modified\": null, \"metadata_modified\": \"2026-10-09T11:52:13.657137\",
+        \"mimetype\": null, \"mimetype_inner\": null, \"name\": \"Annual Report to
+        Parliament on the Administration of the Access to Information Act 2025-2026\",
+        \"name_translated\": {\"en\": \"Annual Report to Parliament on the Administration
+        of the Access to Information Act 2025-2026\", \"fr\": \"Rapport annuel au
+        Parlement sur l\u2019application de la Loi sur l\u2019acc\xE8s \xE0 l\u2019information
+        2025-2026\"}, \"package_id\": \"6648a10a-d044-4257-bad6-9038871b37e5\", \"position\":
+        3, \"resource_type\": \"annual_report\", \"size\": 812281, \"state\": \"active\",
+        \"unique_identifier\": \"\", \"url\": \"https://www.crcc-ccetp.gc.ca/pdf/atiaannRep_25-26-fr.pdf\",
+        \"url_type\": \"\", \"validation_status\": \"\", \"validation_timestamp\":
+        \"\"}], \"tags\": [], \"groups\": [], \"relationships_as_subject\": [], \"relationships_as_object\":
+        []}, {\"additional_notes\": {\"en\": \"\", \"fr\": \"\"}, \"audience\": [\"general_public\",
+        \"government\"], \"author\": null, \"author_redacted\": null, \"collection\":
+        \"parliament_report\", \"contributor\": {\"en\": \"\", \"fr\": \"\"}, \"creator\":
+        \"Mingbo Ma\", \"creator_user_id\": \"2dc5a12f-2a6f-4822-8514-165ea6bb05d9\",
+        \"data_series_issue_identification\": {\"en\": \"\", \"fr\": \"\"}, \"data_series_name\":
+        {\"en\": \"\", \"fr\": \"\"}, \"date_created\": \"2026-10-08\", \"date_published\":
+        \"2026-10-08 00:00:00\", \"departmental_identification_number\": \"\", \"digital_object_identifier\":
+        \"\", \"edition\": \"\", \"frequency\": \"as_needed\", \"gc_catalogue_number\":
+        \"\", \"geographic_region\": [], \"id\": \"2f4187d5-56f3-4eb6-8759-959b7d47743c\",
+        \"imso_approval\": \"true\", \"isbn\": \"\", \"isopen\": false, \"issn\":
+        \"2561-9217\", \"issuance\": \"serial\", \"issuance_frequency\": \"P1Y\",
+        \"jurisdiction\": \"federal\", \"keywords\": {\"en\": [\"Annual report\",
+        \"CRCC\", \"Administration of the Privacy Act\"], \"fr\": [\"Rapport annuel\",
+        \"CCETP\", \"Loi sur la protection des renseignements personnels\"]}, \"license_id\":
+        \"ca-ogl-lgo\", \"license_title\": \"Open Government Licence - Canada\", \"license_url\":
+        \"https://open.canada.ca/en/open-government-licence-canada\", \"maintainer\":
+        null, \"maintainer_email\": \"redacted@example.org\", \"metadata_created\":
+        \"2026-10-09T11:52:12.773338\", \"metadata_modified\": \"2026-10-09T11:52:12.860699\",
+        \"name\": \"2f4187d5-56f3-4eb6-8759-959b7d47743c\", \"notes\": \"This Annual
+        Report was prepared in accordance with section 72 of the Privacy Act, which
+        stipulates that annual reports on privacy shall be tabled in Parliament.\",
+        \"notes_translated\": {\"en\": \"This Annual Report was prepared in accordance
+        with section 72 of the Privacy Act, which stipulates that annual reports on
+        privacy shall be tabled in Parliament.\", \"fr\": \"Le pr\xE9sent rapport
+        annuel a \xE9t\xE9 r\xE9dig\xE9 en vertu de l'article 72 de la Loi sur la
+        protection des renseignements personnels, selon lequel des rapports annuels
+        sur la protection des renseignements personnels doivent \xEAtre d\xE9pos\xE9s
+        au Parlement.\"}, \"num_resources\": 4, \"num_tags\": 0, \"org_section\":
+        {\"en\": \"Civilian Review and Complaints Commission for the RCMP\", \"fr\":
+        \"Commission civile d'examen et de traitement des plaintes relatives \xE0
+        la GRC\"}, \"org_title_at_publication\": {\"en\": \"Commission civile d'examen
+        et de traitement des plaintes relatives \xE0 la GRC\", \"fr\": \"Commission
+        civile d'examen et de traitement des plaintes relatives \xE0 la GRC \"}, \"organization\":
+        {\"id\": \"35e24585-b7b9-4def-a1be-93a185744753\", \"name\": \"cpc-cpp\",
+        \"title\": \"Civilian Review and Complaints Commission for the RCMP | Commission
+        civile d'examen et de traitement des plaintes relatives \xE0 la Gendarmerie
+        royale du Canada\", \"type\": \"organization\", \"description\": \"\", \"image_url\":
+        \"\", \"created\": \"2016-09-23T17:25:14.002429\", \"is_organization\": true,
+        \"approval_status\": \"approved\", \"state\": \"active\"}, \"owner_org\":
+        \"35e24585-b7b9-4def-a1be-93a185744753\", \"place_of_publication\": [\"3506\"],
+        \"portal_release_date\": \"2026-10-09\", \"private\": false, \"program_page_url\":
+        {\"en\": \"https://www.crcc-ccetp.gc.ca/en\", \"fr\": \"https://www.crcc-ccetp.gc.ca/fr\"},
+        \"pspc_identification_number\": \"\", \"ready_to_publish\": \"true\", \"restrictions\":
+        \"unrestricted\", \"series_publication_dates\": {\"en\": \"\", \"fr\": \"\"},
+        \"spatial\": \"\", \"state\": \"active\", \"subject\": [\"government_and_politics\",
+        \"information_and_communications\", \"law\"], \"time_period_coverage_end\":
+        \"2026-03-31 00:00:00\", \"time_period_coverage_start\": \"2025-04-01 00:00:00\",
+        \"title\": \"Annual Report to Parliament on the Administration of the Privacy
+        Act 2025-2026\", \"title_translated\": {\"en\": \"Annual Report to Parliament
+        on the Administration of the Privacy Act 2025-2026\", \"fr\": \"Rapport annuel
+        au Parlement sur l\u2019application de la Loi sur la protection des renseignements
+        personnels 2025-2026\"}, \"type\": \"info\", \"url\": null, \"version\": null,
+        \"resources\": [{\"cache_last_updated\": null, \"cache_url\": null, \"character_set\":
+        \"UTF-8\", \"created\": \"2026-10-09T11:52:12.848865\", \"datastore_active\":
+        false, \"datastore_contains_all_records_of_source_file\": false, \"date_published\":
+        \"2026-10-08\", \"description\": \"This Annual Report was prepared in accordance
+        with section 72 of the Privacy Act, which stipulates that annual reports on
+        privacy shall be tabled in Parliament.\", \"description_translated\": {\"en\":
+        \"This Annual Report was prepared in accordance with section 72 of the Privacy
+        Act, which stipulates that annual reports on privacy shall be tabled in Parliament.\",
+        \"fr\": \"Le pr\xE9sent rapport annuel a \xE9t\xE9 r\xE9dig\xE9 en vertu de
+        l'article 72 de la Loi sur la protection des renseignements personnels, selon
+        lequel des rapports annuels sur la protection des renseignements personnels
+        doivent \xEAtre d\xE9pos\xE9s au Parlement.\"}, \"format\": \"HTML\", \"hash\":
+        \"\", \"id\": \"beaebd7b-a886-452c-b647-f37d1ecdea3f\", \"language\": [\"en\"],
+        \"last_modified\": null, \"metadata_modified\": \"2026-10-09T11:52:12.760142\",
+        \"mimetype\": null, \"mimetype_inner\": null, \"name\": \"Annual Report to
+        Parliament on the Administration of the Privacy Act 2025-2026\", \"name_translated\":
+        {\"en\": \"Annual Report to Parliament on the Administration of the Privacy
+        Act 2025-2026\", \"fr\": \"Rapport annuel au Parlement sur l\u2019application
+        de la Loi sur la protection des renseignements personnels 2025-2026\"}, \"package_id\":
+        \"2f4187d5-56f3-4eb6-8759-959b7d47743c\", \"position\": 0, \"resource_type\":
+        \"annual_report\", \"state\": \"active\", \"unique_identifier\": \"\", \"url\":
+        \"https://www.crcc-ccetp.gc.ca/en/commission/corporate-reports/annual-reports-access-information-and-privacy/annual-report-parliament-administration-privacy-act-2025-2026\",
+        \"url_type\": \"\", \"validation_status\": \"\", \"validation_timestamp\":
+        \"\"}, {\"cache_last_updated\": null, \"cache_url\": null, \"character_set\":
+        \"UTF-8\", \"created\": \"2026-10-09T11:52:12.848871\", \"datastore_active\":
+        false, \"datastore_contains_all_records_of_source_file\": false, \"date_published\":
+        \"2026-10-08\", \"description\": \"This Annual Report was prepared in accordance
+        with section 72 of the Privacy Act, which stipulates that annual reports on
+        privacy shall be tabled in Parliament.\", \"description_translated\": {\"en\":
+        \"This Annual Report was prepared in accordance with section 72 of the Privacy
+        Act, which stipulates that annual reports on privacy shall be tabled in Parliament.\",
+        \"fr\": \"Le pr\xE9sent rapport annuel a \xE9t\xE9 r\xE9dig\xE9 en vertu de
+        l'article 72 de la Loi sur la protection des renseignements personnels, selon
+        lequel des rapports annuels sur la protection des renseignements personnels
+        doivent \xEAtre d\xE9pos\xE9s au Parlement.\"}, \"format\": \"HTML\", \"hash\":
+        \"\", \"id\": \"c9bd7f27-e28a-4099-9b3a-e5f0ea40ecea\", \"language\": [\"fr\"],
+        \"last_modified\": null, \"metadata_modified\": \"2026-10-09T11:52:12.763259\",
+        \"mimetype\": null, \"mimetype_inner\": null, \"name\": \"Annual Report to
+        Parliament on the Administration of the Privacy Act 2025-2026\", \"name_translated\":
+        {\"en\": \"Annual Report to Parliament on the Administration of the Privacy
+        Act 2025-2026\", \"fr\": \"Rapport annuel au Parlement sur l\u2019application
+        de la Loi sur la protection des renseignements personnels 2025-2026\"}, \"package_id\":
+        \"2f4187d5-56f3-4eb6-8759-959b7d47743c\", \"position\": 1, \"resource_type\":
+        \"annual_report\", \"state\": \"active\", \"unique_identifier\": \"\", \"url\":
+        \"https://www.crcc-ccetp.gc.ca/fr/commission/rapports-organisationnels/rapports-annuels-acces-information-protection-renseignements-personnels/rapport-annuel-parlement-application-loi-protection-renseignements-personnels-2025-2026\",
+        \"url_type\": \"\", \"validation_status\": \"\", \"validation_timestamp\":
+        \"\"}, {\"cache_last_updated\": null, \"cache_url\": null, \"character_set\":
+        \"\", \"created\": \"2026-10-09T11:52:12.848873\", \"datastore_active\": false,
+        \"datastore_contains_all_records_of_source_file\": false, \"date_published\":
+        \"2026-10-08\", \"description\": \"This Annual Report was prepared in accordance
+        with section 72 of the Privacy Act, which stipulates that annual reports on
+        privacy shall be tabled in Parliament.\", \"description_translated\": {\"en\":
+        \"This Annual Report was prepared in accordance with section 72 of the Privacy
+        Act, which stipulates that annual reports on privacy shall be tabled in Parliament.\",
+        \"fr\": \"Le pr\xE9sent rapport annuel a \xE9t\xE9 r\xE9dig\xE9 en vertu de
+        l'article 72 de la Loi sur la protection des renseignements personnels, selon
+        lequel des rapports annuels sur la protection des renseignements personnels
+        doivent \xEAtre d\xE9pos\xE9s au Parlement.\"}, \"format\": \"PDF\", \"hash\":
+        \"\", \"id\": \"822ecef2-e055-4e43-afed-20ae5dae5c0a\", \"language\": [\"en\"],
+        \"last_modified\": null, \"metadata_modified\": \"2026-10-09T11:52:12.766042\",
+        \"mimetype\": null, \"mimetype_inner\": null, \"name\": \"Annual Report to
+        Parliament on the Administration of the Privacy Act 2025-2026\", \"name_translated\":
+        {\"en\": \"Annual Report to Parliament on the Administration of the Privacy
+        Act 2025-2026\", \"fr\": \"Rapport annuel au Parlement sur l\u2019application
+        de la Loi sur la protection des renseignements personnels 2025-2026\"}, \"package_id\":
+        \"2f4187d5-56f3-4eb6-8759-959b7d47743c\", \"position\": 2, \"resource_type\":
+        \"annual_report\", \"size\": 373318, \"state\": \"active\", \"unique_identifier\":
+        \"\", \"url\": \"https://www.crcc-ccetp.gc.ca/pdf/paannrep_25-26-en.pdf\",
+        \"url_type\": \"\", \"validation_status\": \"\", \"validation_timestamp\":
+        \"\"}, {\"cache_last_updated\": null, \"cache_url\": null, \"character_set\":
+        \"\", \"created\": \"2026-10-09T11:52:12.848874\", \"datastore_active\": false,
+        \"datastore_contains_all_records_of_source_file\": false, \"date_published\":
+        \"2026-10-08\", \"description\": \"This Annual Report was prepared in accordance
+        with section 72 of the Privacy Act, which stipulates that annual reports on
+        privacy shall be tabled in Parliament.\", \"description_translated\": {\"en\":
+        \"This Annual Report was prepared in accordance with section 72 of the Privacy
+        Act, which stipulates that annual reports on privacy shall be tabled in Parliament.\",
+        \"fr\": \"Le pr\xE9sent rapport annuel a \xE9t\xE9 r\xE9dig\xE9 en vertu de
+        l'article 72 de la Loi sur la protection des renseignements personnels, selon
+        lequel des rapports annuels sur la protection des renseignements personnels
+        doivent \xEAtre d\xE9pos\xE9s au Parlement.\"}, \"format\": \"PDF\", \"hash\":
+        \"\", \"id\": \"98825d87-44d0-468c-9201-3706cfaab10e\", \"language\": [\"fr\"],
+        \"last_modified\": null, \"metadata_modified\": \"2026-10-09T11:52:12.769526\",
+        \"mimetype\": null, \"mimetype_inner\": null, \"name\": \"Annual Report to
+        Parliament on the Administration of the Privacy Act 2025-2026\", \"name_translated\":
+        {\"en\": \"Annual Report to Parliament on the Administration of the Privacy
+        Act 2025-2026\", \"fr\": \"Rapport annuel au Parlement sur l\u2019application
+        de la Loi sur la protection des renseignements personnels 2025-2026\"}, \"package_id\":
+        \"2f4187d5-56f3-4eb6-8759-959b7d47743c\", \"position\": 3, \"resource_type\":
+        \"annual_report\", \"size\": 616142, \"state\": \"active\", \"unique_identifier\":
+        \"\", \"url\": \"https://www.crcc-ccetp.gc.ca/pdf/paannrep_25-26-fr.pdf\",
+        \"url_type\": \"\", \"validation_status\": \"\", \"validation_timestamp\":
+        \"\"}], \"tags\": [], \"groups\": [], \"relationships_as_subject\": [], \"relationships_as_object\":
+        []}, {\"additional_notes\": {\"en\": \"\", \"fr\": \"\"}, \"audience\": [],
+        \"author\": null, \"author_redacted\": null, \"collection\": \"publication\",
+        \"contributor\": {\"en\": \"\", \"fr\": \"\"}, \"creator\": \"\", \"creator_user_id\":
+        \"2dc5a12f-2a6f-4822-8514-165ea6bb05d9\", \"data_series_issue_identification\":
+        {\"en\": \"\", \"fr\": \"\"}, \"data_series_name\": {\"en\": \"\", \"fr\":
+        \"\"}, \"date_published\": \"2019-01-07 00:00:00\", \"departmental_identification_number\":
+        \"OI-2310\", \"digital_object_identifier\": \"\", \"edition\": \"\", \"frequency\":
+        \"not_planned\", \"gc_catalogue_number\": \"\", \"geographic_region\": [],
+        \"id\": \"d6e1303a-4415-4fc5-a3d4-cb7cb9e79e70\", \"imso_approval\": \"true\",
+        \"isbn\": \"\", \"isopen\": false, \"issn\": \"\", \"issuance\": \"\", \"issuance_frequency\":
+        \"\", \"jurisdiction\": \"federal\", \"keywords\": {\"en\": [\"Act\", \"Bribery\",
+        \"Foreign Public Officials\", \"OECD\", \"CFPOA\"], \"fr\": [\"Loi\", \"corruption\",
+        \"agents publics \xE9trangers\", \"OCDE\", \"LCAPE\"]}, \"license_id\": \"ca-ogl-lgo\",
+        \"license_title\": \"Open Government Licence - Canada\", \"license_url\":
+        \"https://open.canada.ca/en/open-government-licence-canada\", \"maintainer\":
+        null, \"maintainer_email\": \"redacted@example.org\", \"metadata_created\":
+        \"2026-10-09T11:43:04.578674\", \"metadata_modified\": \"2026-10-09T11:43:04.632816\",
+        \"name\": \"d6e1303a-4415-4fc5-a3d4-cb7cb9e79e70\", \"notes\": \"Sometimes
+        known as \u201Cgrease payments\u201D, facilitation payments are those made
+        to expedite or secure the performance by a foreign public official of any
+        act of a routine nature that is part of the foreign public official\u2019s
+        duties or functions. Examples include: the issuance of a permit, licence or
+        other document; the processing of official documents, such as visas and work
+        permits; the provision of services normally offered to the public, such as
+        mail and utilities; and the provision of other government services such as
+        police protection, cargo logistics, the protection of perishable products
+        from deterioration or the scheduling of inspections related to contract performance
+        or transit of goods.\\r\\n\\r\\nSince October 31, 2017, any payment made by
+        a Canadian to a foreign public official to secure or expedite the performance
+        of acts of a routine nature that are within the scope of the official's duties
+        and functions in order to obtain or retain an advantage in the course of business
+        is not permitted under Canadian law, regardless of whether it takes place
+        in Canada or abroad.\", \"notes_translated\": {\"en\": \"Sometimes known as
+        \u201Cgrease payments\u201D, facilitation payments are those made to expedite
+        or secure the performance by a foreign public official of any act of a routine
+        nature that is part of the foreign public official\u2019s duties or functions.
+        Examples include: the issuance of a permit, licence or other document; the
+        processing of official documents, such as visas and work permits; the provision
+        of services normally offered to the public, such as mail and utilities; and
+        the provision of other government services such as police protection, cargo
+        logistics, the protection of perishable products from deterioration or the
+        scheduling of inspections related to contract performance or transit of goods.\\r\\n\\r\\nSince
+        October 31, 2017, any payment made by a Canadian to a foreign public official
+        to secure or expedite the performance of acts of a routine nature that are
+        within the scope of the official's duties and functions in order to obtain
+        or retain an advantage in the course of business is not permitted under Canadian
+        law, regardless of whether it takes place in Canada or abroad.\", \"fr\":
+        \"Un paiement de facilitation, ou \xAB d\u2019acc\xE9l\xE9ration \xBB, est
+        un paiement vers\xE9 \xE0 un agent public \xE9tranger pour qu\u2019il ex\xE9cute
+        ou acc\xE9l\xE8re l\u2019ex\xE9cution d\u2019une t\xE2che r\xE9guli\xE8re
+        qui fait partie de ses fonctions officielles. Par exemple : d\xE9livrance
+        de permis, de licences ou d\u2019autres documents; traitement de documents
+        officiels, comme des visas et des permis de travail; prestation de services
+        normalement offerts au public, comme la livraison du courrier ou les services
+        publics; prestation d\u2019autres services gouvernementaux, comme la protection
+        de la police, le fret et la logistique, la protection des produits p\xE9rissables
+        contre la d\xE9t\xE9rioration ou l\u2019\xE9tablissement des calendriers des
+        inspections relatives \xE0 l\u2019ex\xE9cution de contrats ou au transit de
+        marchandises.\\r\\n\\r\\nDepuis le 31 octobre 2017, tout paiement vers\xE9
+        par un Canadien \xE0 un agent public \xE9tranger pour qu\u2019il ex\xE9cute
+        ou acc\xE9l\xE8re l\u2019ex\xE9cution d\u2019une t\xE2che r\xE9guli\xE8re
+        qui fait partie de ses fonctions officielles n\u2019est pas permise en vertu
+        de la loi canadienne, que le paiement ait eu lieu au Canada ou \xE0 l\u2019\xE9tranger.\"},
+        \"num_resources\": 2, \"num_tags\": 0, \"org_section\": {\"en\": \"JLA\",
+        \"fr\": \"JLA\"}, \"org_title_at_publication\": {\"en\": \"Global Affairs
+        Canada\", \"fr\": \"Affaires mondiales Canada\"}, \"organization\": {\"id\":
+        \"d7c2580f-89c5-4705-9d56-6b0e8e5d9538\", \"name\": \"dfatd-maecd\", \"title\":
+        \"Global Affairs Canada | Affaires mondiales Canada\", \"type\": \"organization\",
+        \"description\": \"\", \"image_url\": \"\", \"created\": \"2016-09-23T17:25:20.992093\",
+        \"is_organization\": true, \"approval_status\": \"approved\", \"state\": \"active\"},
+        \"owner_org\": \"d7c2580f-89c5-4705-9d56-6b0e8e5d9538\", \"place_of_publication\":
+        [], \"portal_release_date\": \"2026-10-09\", \"private\": false, \"program_page_url\":
+        {\"en\": \"\", \"fr\": \"\"}, \"pspc_identification_number\": \"\", \"ready_to_publish\":
+        \"true\", \"restrictions\": \"unrestricted\", \"series_publication_dates\":
+        {\"en\": \"\", \"fr\": \"\"}, \"spatial\": \"\", \"state\": \"active\", \"subject\":
+        [\"government_and_politics\"], \"title\": \"Strengthening Canada\u2019s fight
+        against foreign bribery\", \"title_translated\": {\"en\": \"Strengthening
+        Canada\u2019s fight against foreign bribery\", \"fr\": \"Renforcement des
+        capacit\xE9s du Canada dans la lutte contre la corruption transnationale\"},
+        \"type\": \"info\", \"url\": null, \"version\": null, \"resources\": [{\"cache_last_updated\":
+        null, \"cache_url\": null, \"character_set\": \"\", \"created\": \"2026-10-09T11:43:04.626555\",
+        \"datastore_active\": false, \"datastore_contains_all_records_of_source_file\":
+        false, \"date_published\": \"\", \"description\": \"\", \"description_translated\":
+        {\"en\": \"\", \"fr\": \"\"}, \"format\": \"HTML\", \"hash\": \"\", \"id\":
+        \"a319324c-86b4-4a31-bc30-e761bc2782e8\", \"language\": [\"en\"], \"last_modified\":
+        null, \"metadata_modified\": \"2026-10-09T11:43:04.572764\", \"mimetype\":
+        null, \"mimetype_inner\": null, \"name\": \"Strengthening Canada\u2019s fight
+        against foreign bribery - 2019-01-07\", \"name_translated\": {\"en\": \"Strengthening
+        Canada\u2019s fight against foreign bribery - 2019-01-07\", \"fr\": \"Renforcement
+        des capacit\xE9s du Canada dans la lutte contre la corruption transnationale
+        - 2019-01-07\"}, \"package_id\": \"d6e1303a-4415-4fc5-a3d4-cb7cb9e79e70\",
+        \"position\": 0, \"resource_type\": \"publication\", \"state\": \"active\",
+        \"unique_identifier\": \"\", \"url\": \"https://webarchiveweb.wayback.bac-lac.canada.ca/web/20250614190709/https://www.international.gc.ca/trade-agreements-accords-commerciaux/topics-domaines/other-autre/corruption_questions-answers-reponses.aspx?lang=eng\",
+        \"url_type\": \"\", \"validation_status\": \"\", \"validation_timestamp\":
+        \"\"}, {\"cache_last_updated\": null, \"cache_url\": null, \"character_set\":
+        \"\", \"created\": \"2026-10-09T11:43:04.626562\", \"datastore_active\": false,
+        \"datastore_contains_all_records_of_source_file\": false, \"date_published\":
+        \"\", \"description\": \"\", \"description_translated\": {\"en\": \"\", \"fr\":
+        \"\"}, \"format\": \"HTML\", \"hash\": \"\", \"id\": \"009a2cf2-0491-4e42-b3ce-8d0ff88fedf7\",
+        \"language\": [\"fr\"], \"last_modified\": null, \"metadata_modified\": \"2026-10-09T11:43:04.575754\",
+        \"mimetype\": null, \"mimetype_inner\": null, \"name\": \"Strengthening Canada\u2019s
+        fight against foreign bribery - 2019-01-07\", \"name_translated\": {\"en\":
+        \"Strengthening Canada\u2019s fight against foreign bribery - 2019-01-07\",
+        \"fr\": \"Renforcement des capacit\xE9s du Canada dans la lutte contre la
+        corruption transnationale - 2019-01-07\"}, \"package_id\": \"d6e1303a-4415-4fc5-a3d4-cb7cb9e79e70\",
+        \"position\": 1, \"resource_type\": \"publication\", \"state\": \"active\",
+        \"unique_identifier\": \"\", \"url\": \"https://webarchiveweb.wayback.bac-lac.canada.ca/web/20250614190709/https://www.international.gc.ca/trade-agreements-accords-commerciaux/topics-domaines/other-autre/corruption_questions-answers-reponses.aspx?lang=fra\",
+        \"url_type\": \"\", \"validation_status\": \"\", \"validation_timestamp\":
+        \"\"}], \"tags\": [], \"groups\": [], \"relationships_as_subject\": [], \"relationships_as_object\":
+        []}], \"sort\": \"metadata_created desc\", \"search_facets\": {}}}"
+    headers:
+      access-control-allow-methods:
+      - GET, POST
+      cache-control:
+      - public, max-age=30, must-revalidate
+      connection:
+      - keep-alive
+      content-length:
+      - '85248'
+      content-security-policy:
+      - 'default-src ''self'' ''unsafe-inline'' *.affmunqc.net *.arcgis.com app.powerbi.com
+        *.arcgisonline.com *.atlas.gouv.qc.ca *.canada.ca *.demdex.net *.education.gouv.qc.ca
+        *.epsg.io *.gc.ca *.geo.ca maps.ducks.ca *.google-analytics.com analytics.google.com
+        *.googletagmanager.com *.gouv.qc.ca *.gov.bc.ca *.maps.alberta.ca *.mapserver.transports.gouv.qc.ca
+        *.mern.gouv.qc.ca *.mrnf.gouv.qc.ca *.msp.gouv.qc.ca *.officeapps.live.com
+        *.omtrdc.net *.open.canada.ca *.rouyn-noranda.ca *.services.geo.ca *.servicesgeo.enviroweb.gouv.qc.ca
+        *.shawinigan.ca *.sherbrooke.qc.ca *.ville.lac-megantic.qc.ca *.ville.montreal.qc.ca
+        *.ville.quebec.qc.ca *.ville.sherbrooke.qc.ca ftp://*.gouv.qc.ca geodiscover.alberta.ca
+        governmentofbc.maps.arcgis.com platform.twitter.com syndication.twitter.com
+        www.youtube.com youtube.com; script-src ''self'' ''unsafe-inline'' ''unsafe-eval''
+        data: blob: *.open.canada.ca *.canada.ca webservices.maps.canada.ca *.viewer-visualiseur.services.geo.ca
+        *.google-analytics.com analytics.google.com ajax.googleapis.com js.arcgis.com
+        *.gc.ca *.geosciences.ca *.epsg.io epsg.io jsonpdataproxy.appspot.com www.youtube.com
+        youtube.com s.ytimg.com platform.twitter.com *.syndication.twimg.com *.adobedtm.com
+        *.omtrdc.net www.googletagmanager.com d3js.org cdnjs.cloudflare.com cdn.datatables.net
+        cdn.jsdelivr.net code.jquery.com use.fontawesome.com *.foresee.com *.answerscloud.com
+        *.foreseeresults.com *.4seeresults.com surveyjs.azureedge.net unpkg.com cdn.polyfill.io;
+        img-src ''self'' data: *.affmunqc.net *.arcgisonline.com *.atlas.gouv.qc.ca
+        *.blob.core.windows.net *.canada.ca *.demdex.net *.education.gouv.qc.ca *.epsg.io
+        *.everesttech.net *.foresee.com *.gc.ca *.geo.ca *.geosciences.ca *.google-analytics.com
+        analytics.google.com *.googletagmanager.com *.gouv.qc.ca *.gov.bc.ca *.maps.alberta.ca
+        *.mapserver.transports.gouv.qc.ca *.mern.gouv.qc.ca *.mrnf.gouv.qc.ca *.msp.gouv.qc.ca
+        *.nfis.org *.omtrdc.net *.open.canada.ca *.rouyn-noranda.ca *.services.geo.ca
+        *.servicesgeo.enviroweb.gouv.qc.ca *.shawinigan.ca *.sherbrooke.qc.ca *.twimg.com
+        *.ville.lac-megantic.qc.ca *.ville.montreal.qc.ca *.ville.quebec.qc.ca *.ville.sherbrooke.qc.ca
+        cdn.datatables.net ftp://*.gouv.qc.ca geodiscover.alberta.ca governmentofbc.maps.arcgis.com
+        http://geogratis.gc.ca js.arcgis.com maps.ducks.ca platform.twitter.com syndication.twitter.com
+        http://webservices.maps.canada.ca *.openstreetmap.org; style-src ''self''
+        ''unsafe-inline'' maxcdn.bootstrapcdn.com netdna.bootstrapcdn.com *.gc.ca
+        *.open.canada.ca *.canada.ca fonts.googleapis.com platform.twitter.com cdn.datatables.net
+        cdn.jsdelivr.net use.fontawesome.com *.foresee.com; font-src ''self'' maxcdn.bootstrapcdn.com
+        netdna.bootstrapcdn.com *.open.canada.ca *.canada.ca fonts.googleapis.com
+        fonts.gstatic.com cdn.jsdelivr.net use.fontawesome.com *.foresee.com; connect-src
+        ''self'' *.4seeresults.com *.affmunqc.net *.answerscloud.com *.arcgis.com
+        *.arcgisonline.com *.atlas.gouv.qc.ca *.blob.core.windows.net *.canada.ca
+        cdn.datatables.net *.education.gouv.qc.ca *.epsg.io epsg.io *.foresee.com
+        *.foreseeresults.com *.gc.ca *.google-analytics.com analytics.google.com *.geo.ca
+        maps.ducks.ca *.geosciences.ca *.gouv.qc.ca *.mapserver.transports.gouv.qc.ca
+        *.mern.gouv.qc.ca *.mrnf.gouv.qc.ca *.msp.gouv.qc.ca *.omtrdc.net *.open.canada.ca
+        *.rouyn-noranda.ca *.services.geo.ca *.servicesgeo.enviroweb.gouv.qc.ca *.shawinigan.ca
+        *.sherbrooke.qc.ca *.ville.lac-megantic.qc.ca *.ville.montreal.qc.ca *.ville.quebec.qc.ca
+        *.ville.sherbrooke.qc.ca dpm.demdex.net fonts.gstatic.com ftp://*.gouv.qc.ca;
+        object-src ''self'' *.open.canada.ca *.canada.ca www.youtube.com youtube.com
+        *.gc.ca rcs.gcgeo.gc.ca maps.canada.ca; media-src ''self'' *.open.canada.ca
+        *.canada.ca *.gc.ca www.youtube.com youtube.com epsg.io *.openstreetmap.org;
+        frame-ancestors ''self'' *.gc.ca *.canada.ca canada.ca open-data.github.io
+        canada-preview.adobecqms.net author-canada-prod.adobecqms.net 056gc.sharepoint.com;'
+      content-type:
+      - application/json;charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:27:45 GMT
+      keep-alive:
+      - timeout=5
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      vary:
+      - Origin
+      x-content-type-options:
+      - nosniff
+      x-forwarded-proto:
+      - https
+      x-frame-options:
+      - SAMEORIGIN
+      x-ua-compatible:
+      - IE=Edge
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1

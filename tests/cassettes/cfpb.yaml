@@ -1,0 +1,1825 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - www.consumerfinance.gov
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://www.consumerfinance.gov/data-research/consumer-complaints/search/api/v1/?date_received_min=2026-10-07&no_aggs=true&no_highlight=true&size=100&sort=created_date_desc
+  response:
+    body:
+      string: '{"took": 54, "timed_out": false, "_shards": {"total": 5, "successful":
+        5, "skipped": 0, "failed": 0}, "hits": {"total": {"value": 17537, "relation":
+        "eq"}, "max_score": null, "hits": [{"_index": "complaint-public-v1", "_id":
+        "29496093", "_score": null, "_source": {"product": "Credit reporting or other
+        personal consumer reports", "date_sent_to_company": "2026-10-09T03:09:31.000Z",
+        "issue": "Incorrect information on your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29496093", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "Experian Information Solutions Inc.", "date_received": "2026-10-09T02:57:32.000Z",
+        "state": "TX", "company_public_response": null, "sub_issue": "Information
+        belongs to someone else"}, "sort": [1791514652000, "29496093"]}, {"_index":
+        "complaint-public-v1", "_id": "29495731", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-09T02:55:21.000Z", "issue": "Incorrect information on your report",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29495731", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "Experian Information Solutions Inc.", "date_received":
+        "2026-10-09T02:52:04.000Z", "state": "FL", "company_public_response": null,
+        "sub_issue": "Information belongs to someone else"}, "sort": [1791514324000,
+        "29495731"]}, {"_index": "complaint-public-v1", "_id": "29494637", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-09T02:46:36.000Z", "issue": "Incorrect
+        information on your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29494637", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "Experian Information Solutions
+        Inc.", "date_received": "2026-10-09T02:43:10.000Z", "state": "AZ", "company_public_response":
+        null, "sub_issue": "Information belongs to someone else"}, "sort": [1791513790000,
+        "29494637"]}, {"_index": "complaint-public-v1", "_id": "29494137", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-09T02:36:21.000Z", "issue": "Incorrect
+        information on your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29494137", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "Experian Information Solutions
+        Inc.", "date_received": "2026-10-09T02:32:59.000Z", "state": "IL", "company_public_response":
+        null, "sub_issue": "Information belongs to someone else"}, "sort": [1791513179000,
+        "29494137"]}, {"_index": "complaint-public-v1", "_id": "29493012", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-09T02:26:46.000Z", "issue": "Incorrect
+        information on your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29493012", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "Experian Information Solutions
+        Inc.", "date_received": "2026-10-09T02:23:40.000Z", "state": "FL", "company_public_response":
+        null, "sub_issue": "Information belongs to someone else"}, "sort": [1791512620000,
+        "29493012"]}, {"_index": "complaint-public-v1", "_id": "29492458", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-09T02:14:26.000Z", "issue": "Incorrect
+        information on your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29492458", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "Experian Information Solutions
+        Inc.", "date_received": "2026-10-09T02:11:02.000Z", "state": "MA", "company_public_response":
+        null, "sub_issue": "Information belongs to someone else"}, "sort": [1791511862000,
+        "29492458"]}, {"_index": "complaint-public-v1", "_id": "29490946", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-09T01:50:21.000Z", "issue": "Incorrect
+        information on your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29490946", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "Experian Information Solutions
+        Inc.", "date_received": "2026-10-09T01:47:21.000Z", "state": "FL", "company_public_response":
+        null, "sub_issue": "Information belongs to someone else"}, "sort": [1791510441000,
+        "29490946"]}, {"_index": "complaint-public-v1", "_id": "29487957", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-09T00:57:55.000Z", "issue": "Incorrect
+        information on your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29487957", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "Experian Information Solutions
+        Inc.", "date_received": "2026-10-09T00:54:12.000Z", "state": "FL", "company_public_response":
+        null, "sub_issue": "Information belongs to someone else"}, "sort": [1791507252000,
+        "29487957"]}, {"_index": "complaint-public-v1", "_id": "29486727", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-09T00:45:50.000Z", "issue": "Incorrect
+        information on your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29486727", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "Experian Information Solutions
+        Inc.", "date_received": "2026-10-09T00:42:13.000Z", "state": "FL", "company_public_response":
+        null, "sub_issue": "Information belongs to someone else"}, "sort": [1791506533000,
+        "29486727"]}, {"_index": "complaint-public-v1", "_id": "29486238", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-09T00:32:01.000Z", "issue": "Incorrect
+        information on your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29486238", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "Experian Information Solutions
+        Inc.", "date_received": "2026-10-09T00:28:40.000Z", "state": "FL", "company_public_response":
+        null, "sub_issue": "Information belongs to someone else"}, "sort": [1791505720000,
+        "29486238"]}, {"_index": "complaint-public-v1", "_id": "29484812", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-09T00:18:05.000Z", "issue": "Incorrect
+        information on your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29484812", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "Experian Information Solutions
+        Inc.", "date_received": "2026-10-09T00:13:08.000Z", "state": "CA", "company_public_response":
+        null, "sub_issue": "Information belongs to someone else"}, "sort": [1791504788000,
+        "29484812"]}, {"_index": "complaint-public-v1", "_id": "29476729", "_score":
+        null, "_source": {"product": "Debt collection", "date_sent_to_company": "2026-10-08T22:27:46.000Z",
+        "issue": "Attempts to collect debt not owed", "sub_product": "I do not know",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29476729", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "Kriya Capital, LLC", "date_received": "2026-10-08T22:23:45.000Z", "state":
+        "CA", "company_public_response": null, "sub_issue": "Debt is not yours"},
+        "sort": [1791498225000, "29476729"]}, {"_index": "complaint-public-v1", "_id":
+        "29476574", "_score": null, "_source": {"product": "Debt collection", "date_sent_to_company":
+        "2026-10-08T22:25:35.000Z", "issue": "Written notification about debt", "sub_product":
+        "I do not know", "zip_code": "redacted", "tags": null, "complaint_id": "29476574",
+        "timely": "Yes", "company_response": "In progress", "submitted_via": "Web",
+        "company": "Kriya Capital, LLC", "date_received": "2026-10-08T22:21:33.000Z",
+        "state": "AL", "company_public_response": null, "sub_issue": "Didn''t receive
+        notice of right to dispute"}, "sort": [1791498093000, "29476574"]}, {"_index":
+        "complaint-public-v1", "_id": "29474245", "_score": null, "_source": {"product":
+        "Debt collection", "date_sent_to_company": "2026-10-08T21:57:26.000Z", "issue":
+        "Attempts to collect debt not owed", "sub_product": "I do not know", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29474245", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "Kriya Capital, LLC", "date_received":
+        "2026-10-08T21:55:31.000Z", "state": "IL", "company_public_response": null,
+        "sub_issue": "Debt is not yours"}, "sort": [1791496531000, "29474245"]}, {"_index":
+        "complaint-public-v1", "_id": "29474001", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T21:53:39.000Z", "issue": "Incorrect information on your report",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29474001", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "Kriya Capital, LLC", "date_received": "2026-10-08T21:44:47.000Z",
+        "state": "TX", "company_public_response": null, "sub_issue": "Information
+        belongs to someone else"}, "sort": [1791495887000, "29474001"]}, {"_index":
+        "complaint-public-v1", "_id": "29473509", "_score": null, "_source": {"product":
+        "Debt collection", "date_sent_to_company": "2026-10-08T21:47:45.000Z", "issue":
+        "Took or threatened to take negative or legal action", "sub_product": "Telecommunications
+        debt", "zip_code": "redacted", "tags": null, "complaint_id": "29473509", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "Kriya Capital, LLC", "date_received": "2026-10-08T21:24:18.000Z", "state":
+        "MD", "company_public_response": null, "sub_issue": "Threatened or suggested
+        your credit would be damaged"}, "sort": [1791494658000, "29473509"]}, {"_index":
+        "complaint-public-v1", "_id": "29470456", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T21:09:22.000Z", "issue": "Problem with fraud alerts or security
+        freezes", "sub_product": "Credit reporting", "zip_code": "redacted", "tags":
+        null, "complaint_id": "29470456", "timely": "Yes", "company_response": "Closed
+        with explanation", "submitted_via": "Web", "company": "National Consumer Telecom
+        & Utilities Exchange, Inc.", "date_received": "2026-10-08T21:06:51.000Z",
+        "state": "IL", "company_public_response": null, "sub_issue": null}, "sort":
+        [1791493611000, "29470456"]}, {"_index": "complaint-public-v1", "_id": "29470822",
+        "_score": null, "_source": {"product": "Debt collection", "date_sent_to_company":
+        "2026-10-08T21:15:55.000Z", "issue": "Attempts to collect debt not owed",
+        "sub_product": "Telecommunications debt", "zip_code": "redacted", "tags":
+        null, "complaint_id": "29470822", "timely": "Yes", "company_response": "In
+        progress", "submitted_via": "Web", "company": "Kriya Capital, LLC", "date_received":
+        "2026-10-08T21:06:02.000Z", "state": "IL", "company_public_response": null,
+        "sub_issue": "Debt was result of identity theft"}, "sort": [1791493562000,
+        "29470822"]}, {"_index": "complaint-public-v1", "_id": "29470290", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T21:05:48.000Z", "issue": "Incorrect
+        information on your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29470290", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "EQUIFAX, INC.", "date_received":
+        "2026-10-08T21:05:26.000Z", "state": "NY", "company_public_response": null,
+        "sub_issue": "Information belongs to someone else"}, "sort": [1791493526000,
+        "29470290"]}, {"_index": "complaint-public-v1", "_id": "29470148", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T21:02:46.000Z", "issue": "Problem
+        with fraud alerts or security freezes", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29470148", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "Experian Information Solutions Inc.", "date_received": "2026-10-08T21:02:17.000Z",
+        "state": "IL", "company_public_response": null, "sub_issue": null}, "sort":
+        [1791493337000, "29470148"]}, {"_index": "complaint-public-v1", "_id": "29470288",
+        "_score": null, "_source": {"product": "Credit reporting or other personal
+        consumer reports", "date_sent_to_company": "2026-10-08T21:05:50.000Z", "issue":
+        "Incorrect information on your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29470288", "timely":
+        "Yes", "company_response": "Closed with explanation", "submitted_via": "Web",
+        "company": "National Consumer Telecom & Utilities Exchange, Inc.", "date_received":
+        "2026-10-08T21:01:40.000Z", "state": "NY", "company_public_response": null,
+        "sub_issue": "Information belongs to someone else"}, "sort": [1791493300000,
+        "29470288"]}, {"_index": "complaint-public-v1", "_id": "29470086", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T21:01:46.000Z", "issue": "Incorrect
+        information on your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29470086", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "Experian Information Solutions
+        Inc.", "date_received": "2026-10-08T21:01:22.000Z", "state": "NY", "company_public_response":
+        null, "sub_issue": "Information belongs to someone else"}, "sort": [1791493282000,
+        "29470086"]}, {"_index": "complaint-public-v1", "_id": "29468661", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T20:52:32.000Z", "issue": "Problem
+        with a company''s investigation into an existing problem", "sub_product":
+        "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29468661", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "ALLY FINANCIAL INC.", "date_received": "2026-10-08T20:49:46.000Z",
+        "state": "CA", "company_public_response": null, "sub_issue": "Investigation
+        took more than 30 days"}, "sort": [1791492586000, "29468661"]}, {"_index":
+        "complaint-public-v1", "_id": "29468129", "_score": null, "_source": {"product":
+        "Debt collection", "date_sent_to_company": "2026-10-08T20:45:10.000Z", "issue":
+        "Written notification about debt", "sub_product": "I do not know", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29468129", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "Kriya Capital, LLC", "date_received":
+        "2026-10-08T20:38:48.000Z", "state": "TX", "company_public_response": null,
+        "sub_issue": "Didn''t receive enough information to verify debt"}, "sort":
+        [1791491928000, "29468129"]}, {"_index": "complaint-public-v1", "_id": "29467098",
+        "_score": null, "_source": {"product": "Mortgage", "date_sent_to_company":
+        "2026-10-08T20:29:01.000Z", "issue": "Struggling to pay mortgage", "sub_product":
+        "Conventional home mortgage", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29467098", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "SANTANDER HOLDINGS USA, INC.", "date_received": "2026-10-08T20:20:13.000Z",
+        "state": "NY", "company_public_response": null, "sub_issue": "An existing
+        modification, forbearance plan, short sale, or other loss mitigation relief"},
+        "sort": [1791490813000, "29467098"]}, {"_index": "complaint-public-v1", "_id":
+        "29465774", "_score": null, "_source": {"product": "Debt collection", "date_sent_to_company":
+        "2026-10-08T20:19:04.000Z", "issue": "Written notification about debt", "sub_product":
+        "Credit card debt", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29465774", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "Kriya Capital, LLC", "date_received": "2026-10-08T20:14:57.000Z",
+        "state": "CA", "company_public_response": null, "sub_issue": "Didn''t receive
+        notice of right to dispute"}, "sort": [1791490497000, "29465774"]}, {"_index":
+        "complaint-public-v1", "_id": "29463513", "_score": null, "_source": {"product":
+        "Debt collection", "date_sent_to_company": "2026-10-08T19:58:11.000Z", "issue":
+        "Communication tactics", "sub_product": "I do not know", "zip_code": "redacted",
+        "tags": null, "complaint_id": "29463513", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "Kriya Capital, LLC", "date_received":
+        "2026-10-08T19:55:43.000Z", "state": "LA", "company_public_response": null,
+        "sub_issue": "You told them to stop contacting you, but they keep trying"},
+        "sort": [1791489343000, "29463513"]}, {"_index": "complaint-public-v1", "_id":
+        "29464123", "_score": null, "_source": {"product": "Money transfer, virtual
+        currency, or money service", "date_sent_to_company": "2026-10-08T20:07:20.000Z",
+        "issue": "Other transaction problem", "sub_product": "Domestic (US) money
+        transfer", "zip_code": "redacted", "tags": null, "complaint_id": "29464123",
+        "timely": "Yes", "company_response": "In progress", "submitted_via": "Web",
+        "company": "BANK OF AMERICA, NATIONAL ASSOCIATION", "date_received": "2026-10-08T19:50:55.000Z",
+        "state": "MA", "company_public_response": null, "sub_issue": null}, "sort":
+        [1791489055000, "29464123"]}, {"_index": "complaint-public-v1", "_id": "29462068",
+        "_score": null, "_source": {"product": "Debt collection", "date_sent_to_company":
+        "2026-10-08T19:34:57.000Z", "issue": "Attempts to collect debt not owed",
+        "sub_product": "I do not know", "zip_code": "redacted", "tags": "Servicemember",
+        "complaint_id": "29462068", "timely": "Yes", "company_response": "In progress",
+        "submitted_via": "Web", "company": "Upstart Holdings, Inc.", "date_received":
+        "2026-10-08T19:33:01.000Z", "state": "TX", "company_public_response": null,
+        "sub_issue": "Debt is not yours"}, "sort": [1791487981000, "29462068"]}, {"_index":
+        "complaint-public-v1", "_id": "29462457", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:38:31.000Z", "issue": "Incorrect information on your report",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29462457", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:30:27.000Z", "state": "AZ", "company_public_response": null,
+        "sub_issue": "Information belongs to someone else"}, "sort": [1791487827000,
+        "29462457"]}, {"_index": "complaint-public-v1", "_id": "29462365", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:36:53.000Z", "issue": "Incorrect
+        information on your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29462365", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:30:27.000Z", "state": "MS",
+        "company_public_response": null, "sub_issue": "Information belongs to someone
+        else"}, "sort": [1791487827000, "29462365"]}, {"_index": "complaint-public-v1",
+        "_id": "29462461", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:38:37.000Z",
+        "issue": "Incorrect information on your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29462461", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:30:25.000Z",
+        "state": "GA", "company_public_response": null, "sub_issue": "Information
+        belongs to someone else"}, "sort": [1791487825000, "29462461"]}, {"_index":
+        "complaint-public-v1", "_id": "29462301", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:35:34.000Z", "issue": "Problem with a company''s investigation
+        into an existing problem", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29462301", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:30:20.000Z", "state": "FL",
+        "company_public_response": null, "sub_issue": "Their investigation did not
+        fix an error on your report"}, "sort": [1791487820000, "29462301"]}, {"_index":
+        "complaint-public-v1", "_id": "29462318", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:35:54.000Z", "issue": "Incorrect information on your report",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29462318", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:30:13.000Z", "state": "CA", "company_public_response": null,
+        "sub_issue": "Account status incorrect"}, "sort": [1791487813000, "29462318"]},
+        {"_index": "complaint-public-v1", "_id": "29461151", "_score": null, "_source":
+        {"product": "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:30:38.000Z", "issue": "Problem with a company''s investigation
+        into an existing problem", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29461151", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:30:10.000Z", "state": "MA",
+        "company_public_response": null, "sub_issue": "Their investigation did not
+        fix an error on your report"}, "sort": [1791487810000, "29461151"]}, {"_index":
+        "complaint-public-v1", "_id": "29462331", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:36:01.000Z", "issue": "Problem with a company''s investigation
+        into an existing problem", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29462331", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:30:07.000Z", "state": "CA",
+        "company_public_response": null, "sub_issue": "Their investigation did not
+        fix an error on your report"}, "sort": [1791487807000, "29462331"]}, {"_index":
+        "complaint-public-v1", "_id": "29462328", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:36:01.000Z", "issue": "Incorrect information on your report",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29462328", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:30:06.000Z", "state": "CA", "company_public_response": null,
+        "sub_issue": "Information belongs to someone else"}, "sort": [1791487806000,
+        "29462328"]}, {"_index": "complaint-public-v1", "_id": "29461400", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:32:27.000Z", "issue": "Incorrect
+        information on your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29461400", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:30:03.000Z", "state": "MD",
+        "company_public_response": null, "sub_issue": "Account status incorrect"},
+        "sort": [1791487803000, "29461400"]}, {"_index": "complaint-public-v1", "_id":
+        "29461147", "_score": null, "_source": {"product": "Credit reporting or other
+        personal consumer reports", "date_sent_to_company": "2026-10-08T19:30:30.000Z",
+        "issue": "Incorrect information on your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29461147", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:30:01.000Z",
+        "state": "FL", "company_public_response": null, "sub_issue": "Account information
+        incorrect"}, "sort": [1791487801000, "29461147"]}, {"_index": "complaint-public-v1",
+        "_id": "29461144", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:30:38.000Z",
+        "issue": "Incorrect information on your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29461144", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:29:59.000Z",
+        "state": "MS", "company_public_response": null, "sub_issue": "Information
+        belongs to someone else"}, "sort": [1791487799000, "29461144"]}, {"_index":
+        "complaint-public-v1", "_id": "29461136", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:30:20.000Z", "issue": "Incorrect information on your report",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29461136", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:29:52.000Z", "state": "WI", "company_public_response": null,
+        "sub_issue": "Information belongs to someone else"}, "sort": [1791487792000,
+        "29461136"]}, {"_index": "complaint-public-v1", "_id": "29461407", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:32:33.000Z", "issue": "Incorrect
+        information on your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29461407", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:29:50.000Z", "state": "NY",
+        "company_public_response": null, "sub_issue": "Information belongs to someone
+        else"}, "sort": [1791487790000, "29461407"]}, {"_index": "complaint-public-v1",
+        "_id": "29461406", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:32:30.000Z",
+        "issue": "Improper use of your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29461406", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:29:48.000Z",
+        "state": "CA", "company_public_response": null, "sub_issue": "Reporting company
+        used your report improperly"}, "sort": [1791487788000, "29461406"]}, {"_index":
+        "complaint-public-v1", "_id": "29461185", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:31:23.000Z", "issue": "Improper use of your report", "sub_product":
+        "Credit reporting", "zip_code": "redacted", "tags": "Servicemember", "complaint_id":
+        "29461185", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:29:32.000Z", "state": "TX", "company_public_response": null,
+        "sub_issue": "Reporting company used your report improperly"}, "sort": [1791487772000,
+        "29461185"]}, {"_index": "complaint-public-v1", "_id": "29462327", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:35:59.000Z", "issue": "Improper
+        use of your report", "sub_product": "Credit reporting", "zip_code": "redacted",
+        "tags": null, "complaint_id": "29462327", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:29:21.000Z", "state": "LA",
+        "company_public_response": null, "sub_issue": "Reporting company used your
+        report improperly"}, "sort": [1791487761000, "29462327"]}, {"_index": "complaint-public-v1",
+        "_id": "29461071", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:28:58.000Z",
+        "issue": "Incorrect information on your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29461071", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:28:35.000Z",
+        "state": "CA", "company_public_response": null, "sub_issue": "Information
+        belongs to someone else"}, "sort": [1791487715000, "29461071"]}, {"_index":
+        "complaint-public-v1", "_id": "29461134", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:30:23.000Z", "issue": "Incorrect information on your report",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29461134", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:28:29.000Z", "state": "NC", "company_public_response": null,
+        "sub_issue": "Account information incorrect"}, "sort": [1791487709000, "29461134"]},
+        {"_index": "complaint-public-v1", "_id": "29461811", "_score": null, "_source":
+        {"product": "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:33:58.000Z", "issue": "Incorrect information on your report",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29461811", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:28:20.000Z", "state": "MS", "company_public_response": null,
+        "sub_issue": "Information belongs to someone else"}, "sort": [1791487700000,
+        "29461811"]}, {"_index": "complaint-public-v1", "_id": "29461793", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:33:42.000Z", "issue": "Incorrect
+        information on your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29461793", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:28:18.000Z", "state": "MS",
+        "company_public_response": null, "sub_issue": "Information belongs to someone
+        else"}, "sort": [1791487698000, "29461793"]}, {"_index": "complaint-public-v1",
+        "_id": "29461029", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:28:36.000Z",
+        "issue": "Incorrect information on your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29461029", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:28:12.000Z",
+        "state": "AL", "company_public_response": null, "sub_issue": "Public record
+        information inaccurate"}, "sort": [1791487692000, "29461029"]}, {"_index":
+        "complaint-public-v1", "_id": "29461181", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:31:20.000Z", "issue": "Incorrect information on your report",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29461181", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:28:06.000Z", "state": "WI", "company_public_response": null,
+        "sub_issue": "Account information incorrect"}, "sort": [1791487686000, "29461181"]},
+        {"_index": "complaint-public-v1", "_id": "29461585", "_score": null, "_source":
+        {"product": "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:33:24.000Z", "issue": "Incorrect information on your report",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29461585", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:27:58.000Z", "state": "MO", "company_public_response": null,
+        "sub_issue": "Information belongs to someone else"}, "sort": [1791487678000,
+        "29461585"]}, {"_index": "complaint-public-v1", "_id": "29461592", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:33:30.000Z", "issue": "Improper
+        use of your report", "sub_product": "Credit reporting", "zip_code": "redacted",
+        "tags": null, "complaint_id": "29461592", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:27:55.000Z", "state": "FL",
+        "company_public_response": null, "sub_issue": "Reporting company used your
+        report improperly"}, "sort": [1791487675000, "29461592"]}, {"_index": "complaint-public-v1",
+        "_id": "29461020", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:28:22.000Z",
+        "issue": "Improper use of your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29461020", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:27:54.000Z",
+        "state": "MS", "company_public_response": null, "sub_issue": "Reporting company
+        used your report improperly"}, "sort": [1791487674000, "29461020"]}, {"_index":
+        "complaint-public-v1", "_id": "29461126", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:30:17.000Z", "issue": "Incorrect information on your report",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29461126", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:27:52.000Z", "state": "MD", "company_public_response": null,
+        "sub_issue": "Information belongs to someone else"}, "sort": [1791487672000,
+        "29461126"]}, {"_index": "complaint-public-v1", "_id": "29461016", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:28:20.000Z", "issue": "Incorrect
+        information on your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29461016", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:27:51.000Z", "state": "GA",
+        "company_public_response": null, "sub_issue": "Information belongs to someone
+        else"}, "sort": [1791487671000, "29461016"]}, {"_index": "complaint-public-v1",
+        "_id": "29461102", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:29:34.000Z",
+        "issue": "Incorrect information on your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29461102", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:27:42.000Z",
+        "state": "NC", "company_public_response": null, "sub_issue": "Account information
+        incorrect"}, "sort": [1791487662000, "29461102"]}, {"_index": "complaint-public-v1",
+        "_id": "29461169", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:31:06.000Z",
+        "issue": "Incorrect information on your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29461169", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:27:37.000Z",
+        "state": "CA", "company_public_response": null, "sub_issue": "Information
+        belongs to someone else"}, "sort": [1791487657000, "29461169"]}, {"_index":
+        "complaint-public-v1", "_id": "29460966", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:27:44.000Z", "issue": "Incorrect information on your report",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460966", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:27:22.000Z", "state": "LA", "company_public_response": null,
+        "sub_issue": "Information belongs to someone else"}, "sort": [1791487642000,
+        "29460966"]}, {"_index": "complaint-public-v1", "_id": "29460952", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:27:32.000Z", "issue": "Incorrect
+        information on your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29460952", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:27:07.000Z", "state": "NV",
+        "company_public_response": null, "sub_issue": "Information belongs to someone
+        else"}, "sort": [1791487627000, "29460952"]}, {"_index": "complaint-public-v1",
+        "_id": "29461100", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:29:29.000Z",
+        "issue": "Problem with a company''s investigation into an existing problem",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29461100", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:26:57.000Z", "state": "CO", "company_public_response": null,
+        "sub_issue": "Investigation took more than 30 days"}, "sort": [1791487617000,
+        "29461100"]}, {"_index": "complaint-public-v1", "_id": "29461195", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:31:36.000Z", "issue": "Incorrect
+        information on your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29461195", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:26:56.000Z", "state": "FL",
+        "company_public_response": null, "sub_issue": "Information belongs to someone
+        else"}, "sort": [1791487616000, "29461195"]}, {"_index": "complaint-public-v1",
+        "_id": "29462053", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:34:38.000Z",
+        "issue": "Incorrect information on your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29462053", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:26:50.000Z",
+        "state": "IL", "company_public_response": null, "sub_issue": "Information
+        belongs to someone else"}, "sort": [1791487610000, "29462053"]}, {"_index":
+        "complaint-public-v1", "_id": "29461041", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:28:55.000Z", "issue": "Incorrect information on your report",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29461041", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:26:32.000Z", "state": "IL", "company_public_response": null,
+        "sub_issue": "Information belongs to someone else"}, "sort": [1791487592000,
+        "29461041"]}, {"_index": "complaint-public-v1", "_id": "29463093", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:52:29.000Z", "issue": "Incorrect
+        information on your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29463093", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:26:30.000Z", "state": "NY",
+        "company_public_response": null, "sub_issue": "Account information incorrect"},
+        "sort": [1791487590000, "29463093"]}, {"_index": "complaint-public-v1", "_id":
+        "29461148", "_score": null, "_source": {"product": "Credit reporting or other
+        personal consumer reports", "date_sent_to_company": "2026-10-08T19:30:36.000Z",
+        "issue": "Problem with a company''s investigation into an existing problem",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29461148", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:26:30.000Z", "state": "MA", "company_public_response": null,
+        "sub_issue": "Their investigation did not fix an error on your report"}, "sort":
+        [1791487590000, "29461148"]}, {"_index": "complaint-public-v1", "_id": "29460885",
+        "_score": null, "_source": {"product": "Credit reporting or other personal
+        consumer reports", "date_sent_to_company": "2026-10-08T19:26:58.000Z", "issue":
+        "Incorrect information on your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29460885", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:26:29.000Z",
+        "state": "AL", "company_public_response": null, "sub_issue": "Information
+        belongs to someone else"}, "sort": [1791487589000, "29460885"]}, {"_index":
+        "complaint-public-v1", "_id": "29460870", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:26:39.000Z", "issue": "Improper use of your report", "sub_product":
+        "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460870", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:26:13.000Z", "state": "NJ", "company_public_response": null,
+        "sub_issue": "Reporting company used your report improperly"}, "sort": [1791487573000,
+        "29460870"]}, {"_index": "complaint-public-v1", "_id": "29460861", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:26:31.000Z", "issue": "Incorrect
+        information on your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29460861", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:26:04.000Z", "state": "FL",
+        "company_public_response": null, "sub_issue": "Account information incorrect"},
+        "sort": [1791487564000, "29460861"]}, {"_index": "complaint-public-v1", "_id":
+        "29460857", "_score": null, "_source": {"product": "Credit reporting or other
+        personal consumer reports", "date_sent_to_company": "2026-10-08T19:26:27.000Z",
+        "issue": "Improper use of your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29460857", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:26:02.000Z",
+        "state": "GA", "company_public_response": null, "sub_issue": "Reporting company
+        used your report improperly"}, "sort": [1791487562000, "29460857"]}, {"_index":
+        "complaint-public-v1", "_id": "29460856", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:26:30.000Z", "issue": "Improper use of your report", "sub_product":
+        "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460856", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:26:02.000Z", "state": "GA", "company_public_response": null,
+        "sub_issue": "Reporting company used your report improperly"}, "sort": [1791487562000,
+        "29460856"]}, {"_index": "complaint-public-v1", "_id": "29461073", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:29:06.000Z", "issue": "Improper
+        use of your report", "sub_product": "Credit reporting", "zip_code": "redacted",
+        "tags": null, "complaint_id": "29461073", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:25:54.000Z", "state": "MS",
+        "company_public_response": null, "sub_issue": "Reporting company used your
+        report improperly"}, "sort": [1791487554000, "29461073"]}, {"_index": "complaint-public-v1",
+        "_id": "29462481", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:38:52.000Z",
+        "issue": "Incorrect information on your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29462481", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:25:28.000Z",
+        "state": "IL", "company_public_response": null, "sub_issue": "Information
+        belongs to someone else"}, "sort": [1791487528000, "29462481"]}, {"_index":
+        "complaint-public-v1", "_id": "29462471", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:38:45.000Z", "issue": "Incorrect information on your report",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29462471", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:25:27.000Z", "state": "IL", "company_public_response": null,
+        "sub_issue": "Information belongs to someone else"}, "sort": [1791487527000,
+        "29462471"]}, {"_index": "complaint-public-v1", "_id": "29462900", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:47:39.000Z", "issue": "Incorrect
+        information on your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29462900", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:25:25.000Z", "state": "GA",
+        "company_public_response": null, "sub_issue": "Information belongs to someone
+        else"}, "sort": [1791487525000, "29462900"]}, {"_index": "complaint-public-v1",
+        "_id": "29462887", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:47:22.000Z",
+        "issue": "Incorrect information on your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29462887", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:25:23.000Z",
+        "state": "GA", "company_public_response": null, "sub_issue": "Information
+        belongs to someone else"}, "sort": [1791487523000, "29462887"]}, {"_index":
+        "complaint-public-v1", "_id": "29460887", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:27:03.000Z", "issue": "Problem with a company''s investigation
+        into an existing problem", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29460887", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:25:23.000Z", "state": "SC",
+        "company_public_response": null, "sub_issue": "Investigation took more than
+        30 days"}, "sort": [1791487523000, "29460887"]}, {"_index": "complaint-public-v1",
+        "_id": "29461042", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:28:58.000Z",
+        "issue": "Incorrect information on your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29461042", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:25:21.000Z",
+        "state": "FL", "company_public_response": null, "sub_issue": "Information
+        belongs to someone else"}, "sort": [1791487521000, "29461042"]}, {"_index":
+        "complaint-public-v1", "_id": "29460783", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:25:48.000Z", "issue": "Improper use of your report", "sub_product":
+        "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460783", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:25:19.000Z", "state": "NC", "company_public_response": null,
+        "sub_issue": "Reporting company used your report improperly"}, "sort": [1791487519000,
+        "29460783"]}, {"_index": "complaint-public-v1", "_id": "29460782", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:25:51.000Z", "issue": "Improper
+        use of your report", "sub_product": "Credit reporting", "zip_code": "redacted",
+        "tags": null, "complaint_id": "29460782", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:25:19.000Z", "state": "NC",
+        "company_public_response": null, "sub_issue": "Reporting company used your
+        report improperly"}, "sort": [1791487519000, "29460782"]}, {"_index": "complaint-public-v1",
+        "_id": "29460780", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:25:40.000Z",
+        "issue": "Incorrect information on your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29460780", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:25:16.000Z",
+        "state": "GA", "company_public_response": null, "sub_issue": "Account information
+        incorrect"}, "sort": [1791487516000, "29460780"]}, {"_index": "complaint-public-v1",
+        "_id": "29461011", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:28:15.000Z",
+        "issue": "Incorrect information on your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29461011", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:25:15.000Z",
+        "state": "CA", "company_public_response": null, "sub_issue": "Information
+        belongs to someone else"}, "sort": [1791487515000, "29461011"]}, {"_index":
+        "complaint-public-v1", "_id": "29460775", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:25:37.000Z", "issue": "Problem with a company''s investigation
+        into an existing problem", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29460775", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:25:12.000Z", "state": "CA",
+        "company_public_response": null, "sub_issue": "Their investigation did not
+        fix an error on your report"}, "sort": [1791487512000, "29460775"]}, {"_index":
+        "complaint-public-v1", "_id": "29460750", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:25:18.000Z", "issue": "Problem with a company''s investigation
+        into an existing problem", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29460750", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:24:53.000Z", "state": "SC",
+        "company_public_response": null, "sub_issue": "Their investigation did not
+        fix an error on your report"}, "sort": [1791487493000, "29460750"]}, {"_index":
+        "complaint-public-v1", "_id": "29461090", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:29:19.000Z", "issue": "Problem with a company''s investigation
+        into an existing problem", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29461090", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:24:36.000Z", "state": "FL",
+        "company_public_response": null, "sub_issue": "Their investigation did not
+        fix an error on your report"}, "sort": [1791487476000, "29461090"]}, {"_index":
+        "complaint-public-v1", "_id": "29462395", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:37:22.000Z", "issue": "Incorrect information on your report",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29462395", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:24:35.000Z", "state": "CA", "company_public_response": null,
+        "sub_issue": "Information belongs to someone else"}, "sort": [1791487475000,
+        "29462395"]}, {"_index": "complaint-public-v1", "_id": "29460865", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:26:34.000Z", "issue": "Incorrect
+        information on your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29460865", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:24:29.000Z", "state": "TX",
+        "company_public_response": null, "sub_issue": "Information belongs to someone
+        else"}, "sort": [1791487469000, "29460865"]}, {"_index": "complaint-public-v1",
+        "_id": "29460924", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:27:15.000Z",
+        "issue": "Improper use of your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29460924", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:24:15.000Z",
+        "state": "NC", "company_public_response": null, "sub_issue": "Reporting company
+        used your report improperly"}, "sort": [1791487455000, "29460924"]}, {"_index":
+        "complaint-public-v1", "_id": "29460720", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:24:30.000Z", "issue": "Improper use of your report", "sub_product":
+        "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460720", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:23:58.000Z", "state": "FL", "company_public_response": null,
+        "sub_issue": "Reporting company used your report improperly"}, "sort": [1791487438000,
+        "29460720"]}, {"_index": "complaint-public-v1", "_id": "29460708", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:24:18.000Z", "issue": "Problem
+        with a company''s investigation into an existing problem", "sub_product":
+        "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460708", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:23:51.000Z", "state": "PA", "company_public_response": null,
+        "sub_issue": "Their investigation did not fix an error on your report"}, "sort":
+        [1791487431000, "29460708"]}, {"_index": "complaint-public-v1", "_id": "29463378",
+        "_score": null, "_source": {"product": "Credit reporting or other personal
+        consumer reports", "date_sent_to_company": "2026-10-08T19:56:14.000Z", "issue":
+        "Problem with a company''s investigation into an existing problem", "sub_product":
+        "Credit reporting", "zip_code": "redacted", "tags": "Servicemember", "complaint_id":
+        "29463378", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:23:44.000Z", "state": "TX", "company_public_response": null,
+        "sub_issue": "Difficulty submitting a dispute or getting information about
+        a dispute over the phone"}, "sort": [1791487424000, "29463378"]}, {"_index":
+        "complaint-public-v1", "_id": "29460657", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:23:56.000Z", "issue": "Incorrect information on your report",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": "Servicemember",
+        "complaint_id": "29460657", "timely": "Yes", "company_response": "In progress",
+        "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.",
+        "date_received": "2026-10-08T19:23:22.000Z", "state": "TX", "company_public_response":
+        null, "sub_issue": "Account information incorrect"}, "sort": [1791487402000,
+        "29460657"]}, {"_index": "complaint-public-v1", "_id": "29460661", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:23:48.000Z", "issue": "Improper
+        use of your report", "sub_product": "Credit reporting", "zip_code": "redacted",
+        "tags": null, "complaint_id": "29460661", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:23:21.000Z", "state": "NC",
+        "company_public_response": null, "sub_issue": "Reporting company used your
+        report improperly"}, "sort": [1791487401000, "29460661"]}, {"_index": "complaint-public-v1",
+        "_id": "29460660", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:23:48.000Z",
+        "issue": "Improper use of your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29460660", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:23:21.000Z",
+        "state": "NC", "company_public_response": null, "sub_issue": "Reporting company
+        used your report improperly"}, "sort": [1791487401000, "29460660"]}, {"_index":
+        "complaint-public-v1", "_id": "29461397", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:32:19.000Z", "issue": "Improper use of your report", "sub_product":
+        "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29461397", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:23:17.000Z", "state": "FL", "company_public_response": null,
+        "sub_issue": "Reporting company used your report improperly"}, "sort": [1791487397000,
+        "29461397"]}, {"_index": "complaint-public-v1", "_id": "29460654", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:23:48.000Z", "issue": "Incorrect
+        information on your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29460654", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:23:15.000Z", "state": "TX",
+        "company_public_response": null, "sub_issue": "Account information incorrect"},
+        "sort": [1791487395000, "29460654"]}, {"_index": "complaint-public-v1", "_id":
+        "29462087", "_score": null, "_source": {"product": "Credit reporting or other
+        personal consumer reports", "date_sent_to_company": "2026-10-08T19:35:10.000Z",
+        "issue": "Incorrect information on your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29462087", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:23:12.000Z",
+        "state": "CA", "company_public_response": null, "sub_issue": "Account information
+        incorrect"}, "sort": [1791487392000, "29462087"]}, {"_index": "complaint-public-v1",
+        "_id": "29460880", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:26:51.000Z",
+        "issue": "Incorrect information on your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29460880", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:23:04.000Z",
+        "state": "AL", "company_public_response": null, "sub_issue": "Information
+        belongs to someone else"}, "sort": [1791487384000, "29460880"]}, {"_index":
+        "complaint-public-v1", "_id": "29460875", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:26:52.000Z", "issue": "Improper use of your report", "sub_product":
+        "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460875", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:22:56.000Z", "state": "AL", "company_public_response": null,
+        "sub_issue": "Reporting company used your report improperly"}, "sort": [1791487376000,
+        "29460875"]}, {"_index": "complaint-public-v1", "_id": "29461120", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:29:51.000Z", "issue": "Incorrect
+        information on your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29461120", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:22:51.000Z", "state": "SC",
+        "company_public_response": null, "sub_issue": "Information belongs to someone
+        else"}, "sort": [1791487371000, "29461120"]}]}, "_meta": {"license": "CC0",
+        "last_updated": "2026-10-09T12:00:00-05:00", "last_indexed": "2026-10-09T12:00:00-05:00",
+        "total_record_count": 18300534, "is_data_stale": false, "has_data_issue":
+        false, "break_points": {"2": [1791487371000, "29461120"]}}}'
+    headers:
+      access-control-allow-methods:
+      - GET
+      access-control-allow-origin:
+      - https://cfpb.github.io
+      allow:
+      - OPTIONS, GET
+      connection:
+      - keep-alive
+      content-length:
+      - '66498'
+      content-security-policy:
+      - 'default-src ''self''; style-src ''self'' ''unsafe-inline'' *.consumerfinance.gov
+        *.googletagmanager.com fonts.googleapis.com api.mapbox.com www.ssa.gov/accessibility/andi/;
+        img-src ''self'' *.cfpb.gov *.consumerfinance.gov www.ecfr.gov s3.amazonaws.com
+        img.youtube.com *.google-analytics.com *.googletagmanager.com api.mapbox.com
+        *.tiles.mapbox.com blob: data: www.gravatar.com *.qualtrics.com *.mouseflow.com
+        i.ytimg.com www.ssa.gov/accessibility/andi/; frame-src ''self'' *.consumerfinance.gov
+        *.googletagmanager.com *.google-analytics.com www.youtube.com *.qualtrics.com
+        mailto:; connect-src ''self'' *.consumerfinance.gov dap.digitalgov.gov *.google-analytics.com
+        *.tiles.mapbox.com api.mapbox.com bam.nr-data.net gov-bam.nr-data.net s3.amazonaws.com
+        public.govdelivery.com *.mouseflow.com *.qualtrics.com raw.githubusercontent.com;
+        font-src ''self'' fonts.gstatic.com; media-src ''self'' *.consumerfinance.gov;
+        script-src ''self'' ''unsafe-inline'' ''unsafe-eval'' *.consumerfinance.gov
+        dap.digitalgov.gov *.googleanalytics.com *.google-analytics.com *.googletagmanager.com
+        api.mapbox.com js-agent.newrelic.com bam.nr-data.net gov-bam.nr-data.net *.youtube.com
+        *.ytimg.com *.mouseflow.com *.geo.census.gov about: www.federalregister.gov
+        *.qualtrics.com www.ssa.gov/accessibility/andi/ ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js'
+      content-type:
+      - application/json
+      cross-origin-opener-policy:
+      - same-origin
+      date:
+      - Fri, 09 Oct 2026 23:27:14 GMT
+      etag:
+      - '"84cdbba767dc09b2e96c1e7480e2c8cb"'
+      permissions-policy:
+      - interest-cohort=()
+      referrer-policy:
+      - same-origin
+      server:
+      - envoy
+      strict-transport-security:
+      - max-age=31536000
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '680'
+      x-frame-options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - www.consumerfinance.gov
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://www.consumerfinance.gov/data-research/consumer-complaints/search/api/v1/?date_received_min=2026-10-07&frm=100&no_aggs=true&no_highlight=true&page=2&search_after=1791487371000_29461120&size=100&sort=created_date_desc
+  response:
+    body:
+      string: '{"took": 58, "timed_out": false, "_shards": {"total": 5, "successful":
+        5, "skipped": 0, "failed": 0}, "hits": {"total": {"value": 17537, "relation":
+        "eq"}, "max_score": null, "hits": [{"_index": "complaint-public-v1", "_id":
+        "29461037", "_score": null, "_source": {"product": "Credit reporting or other
+        personal consumer reports", "date_sent_to_company": "2026-10-08T19:28:46.000Z",
+        "issue": "Improper use of your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29461037", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:22:48.000Z",
+        "state": "SC", "company_public_response": null, "sub_issue": "Reporting company
+        used your report improperly"}, "sort": [1791487368000, "29461037"]}, {"_index":
+        "complaint-public-v1", "_id": "29460706", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:24:18.000Z", "issue": "Problem with a company''s investigation
+        into an existing problem", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29460706", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:22:04.000Z", "state": "TN",
+        "company_public_response": null, "sub_issue": "Investigation took more than
+        30 days"}, "sort": [1791487324000, "29460706"]}, {"_index": "complaint-public-v1",
+        "_id": "29460838", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:26:15.000Z",
+        "issue": "Improper use of your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29460838", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:21:58.000Z",
+        "state": "PA", "company_public_response": null, "sub_issue": "Reporting company
+        used your report improperly"}, "sort": [1791487318000, "29460838"]}, {"_index":
+        "complaint-public-v1", "_id": "29460588", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:22:19.000Z", "issue": "Incorrect information on your report",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460588", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:21:54.000Z", "state": "NV", "company_public_response": null,
+        "sub_issue": "Account status incorrect"}, "sort": [1791487314000, "29460588"]},
+        {"_index": "complaint-public-v1", "_id": "29460725", "_score": null, "_source":
+        {"product": "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:24:32.000Z", "issue": "Credit monitoring or identity theft
+        protection services", "sub_product": "Credit reporting", "zip_code": "redacted",
+        "tags": null, "complaint_id": "29460725", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:21:52.000Z", "state": "LA",
+        "company_public_response": null, "sub_issue": "Didn''t receive services that
+        were advertised"}, "sort": [1791487312000, "29460725"]}, {"_index": "complaint-public-v1",
+        "_id": "29460569", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:22:11.000Z",
+        "issue": "Incorrect information on your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29460569", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:21:37.000Z",
+        "state": "PA", "company_public_response": null, "sub_issue": "Information
+        belongs to someone else"}, "sort": [1791487297000, "29460569"]}, {"_index":
+        "complaint-public-v1", "_id": "29460568", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:22:05.000Z", "issue": "Incorrect information on your report",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460568", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:21:37.000Z", "state": "PA", "company_public_response": null,
+        "sub_issue": "Information belongs to someone else"}, "sort": [1791487297000,
+        "29460568"]}, {"_index": "complaint-public-v1", "_id": "29460977", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:28:07.000Z", "issue": "Incorrect
+        information on your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29460977", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:21:33.000Z", "state": "FL",
+        "company_public_response": null, "sub_issue": "Information belongs to someone
+        else"}, "sort": [1791487293000, "29460977"]}, {"_index": "complaint-public-v1",
+        "_id": "29460561", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:22:04.000Z",
+        "issue": "Incorrect information on your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29460561", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:21:32.000Z",
+        "state": "CT", "company_public_response": null, "sub_issue": "Account information
+        incorrect"}, "sort": [1791487292000, "29460561"]}, {"_index": "complaint-public-v1",
+        "_id": "29460554", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:21:46.000Z",
+        "issue": "Improper use of your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29460554", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:21:19.000Z",
+        "state": "AL", "company_public_response": null, "sub_issue": "Reporting company
+        used your report improperly"}, "sort": [1791487279000, "29460554"]}, {"_index":
+        "complaint-public-v1", "_id": "29460938", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:27:22.000Z", "issue": "Incorrect information on your report",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460938", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:21:13.000Z", "state": "FL", "company_public_response": null,
+        "sub_issue": "Account information incorrect"}, "sort": [1791487273000, "29460938"]},
+        {"_index": "complaint-public-v1", "_id": "29460652", "_score": null, "_source":
+        {"product": "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:23:48.000Z", "issue": "Improper use of your report", "sub_product":
+        "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460652", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:21:12.000Z", "state": "NC", "company_public_response": null,
+        "sub_issue": "Reporting company used your report improperly"}, "sort": [1791487272000,
+        "29460652"]}, {"_index": "complaint-public-v1", "_id": "29461106", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:29:39.000Z", "issue": "Incorrect
+        information on your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29461106", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:20:57.000Z", "state": "IL",
+        "company_public_response": null, "sub_issue": "Information belongs to someone
+        else"}, "sort": [1791487257000, "29461106"]}, {"_index": "complaint-public-v1",
+        "_id": "29460891", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:27:07.000Z",
+        "issue": "Improper use of your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29460891", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:20:55.000Z",
+        "state": "NE", "company_public_response": null, "sub_issue": "Credit inquiries
+        on your report that you don''t recognize"}, "sort": [1791487255000, "29460891"]},
+        {"_index": "complaint-public-v1", "_id": "29462881", "_score": null, "_source":
+        {"product": "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:47:07.000Z", "issue": "Incorrect information on your report",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29462881", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:20:53.000Z", "state": "FL", "company_public_response": null,
+        "sub_issue": "Information belongs to someone else"}, "sort": [1791487253000,
+        "29462881"]}, {"_index": "complaint-public-v1", "_id": "29460530", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:21:14.000Z", "issue": "Incorrect
+        information on your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29460530", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:20:51.000Z", "state": "FL",
+        "company_public_response": null, "sub_issue": "Information belongs to someone
+        else"}, "sort": [1791487251000, "29460530"]}, {"_index": "complaint-public-v1",
+        "_id": "29460976", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:28:02.000Z",
+        "issue": "Problem with a company''s investigation into an existing problem",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460976", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:20:49.000Z", "state": "MD", "company_public_response": null,
+        "sub_issue": "Was not notified of investigation status or results"}, "sort":
+        [1791487249000, "29460976"]}, {"_index": "complaint-public-v1", "_id": "29460531",
+        "_score": null, "_source": {"product": "Credit reporting or other personal
+        consumer reports", "date_sent_to_company": "2026-10-08T19:21:15.000Z", "issue":
+        "Improper use of your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29460531", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:20:49.000Z", "state": "NC",
+        "company_public_response": null, "sub_issue": "Reporting company used your
+        report improperly"}, "sort": [1791487249000, "29460531"]}, {"_index": "complaint-public-v1",
+        "_id": "29460886", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:27:01.000Z",
+        "issue": "Problem with a company''s investigation into an existing problem",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460886", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:20:21.000Z", "state": "FL", "company_public_response": null,
+        "sub_issue": "Their investigation did not fix an error on your report"}, "sort":
+        [1791487221000, "29460886"]}, {"_index": "complaint-public-v1", "_id": "29460596",
+        "_score": null, "_source": {"product": "Credit reporting or other personal
+        consumer reports", "date_sent_to_company": "2026-10-08T19:22:46.000Z", "issue":
+        "Incorrect information on your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29460596", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:20:18.000Z",
+        "state": "FL", "company_public_response": null, "sub_issue": "Information
+        belongs to someone else"}, "sort": [1791487218000, "29460596"]}, {"_index":
+        "complaint-public-v1", "_id": "29460727", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:24:36.000Z", "issue": "Incorrect information on your report",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460727", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:20:01.000Z", "state": "MD", "company_public_response": null,
+        "sub_issue": "Information belongs to someone else"}, "sort": [1791487201000,
+        "29460727"]}, {"_index": "complaint-public-v1", "_id": "29460604", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:22:58.000Z", "issue": "Incorrect
+        information on your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29460604", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:19:58.000Z", "state": "GA",
+        "company_public_response": null, "sub_issue": "Information belongs to someone
+        else"}, "sort": [1791487198000, "29460604"]}, {"_index": "complaint-public-v1",
+        "_id": "29460597", "_score": null, "_source": {"product": "Debt collection",
+        "date_sent_to_company": "2026-10-08T19:22:47.000Z", "issue": "Attempts to
+        collect debt not owed", "sub_product": "I do not know", "zip_code": "redacted",
+        "tags": null, "complaint_id": "29460597", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "Kriya Capital, LLC", "date_received":
+        "2026-10-08T19:19:58.000Z", "state": "MS", "company_public_response": null,
+        "sub_issue": "Debt is not yours"}, "sort": [1791487198000, "29460597"]}, {"_index":
+        "complaint-public-v1", "_id": "29460471", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:20:27.000Z", "issue": "Problem with a company''s investigation
+        into an existing problem", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29460471", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:19:55.000Z", "state": "AR",
+        "company_public_response": null, "sub_issue": "Their investigation did not
+        fix an error on your report"}, "sort": [1791487195000, "29460471"]}, {"_index":
+        "complaint-public-v1", "_id": "29461180", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:31:09.000Z", "issue": "Incorrect information on your report",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29461180", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:19:42.000Z", "state": "MD", "company_public_response": null,
+        "sub_issue": "Account information incorrect"}, "sort": [1791487182000, "29461180"]},
+        {"_index": "complaint-public-v1", "_id": "29460455", "_score": null, "_source":
+        {"product": "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:20:03.000Z", "issue": "Improper use of your report", "sub_product":
+        "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460455", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:19:36.000Z", "state": "LA", "company_public_response": null,
+        "sub_issue": "Reporting company used your report improperly"}, "sort": [1791487176000,
+        "29460455"]}, {"_index": "complaint-public-v1", "_id": "29460525", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:21:04.000Z", "issue": "Incorrect
+        information on your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29460525", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:19:30.000Z", "state": "SC",
+        "company_public_response": null, "sub_issue": "Account information incorrect"},
+        "sort": [1791487170000, "29460525"]}, {"_index": "complaint-public-v1", "_id":
+        "29461086", "_score": null, "_source": {"product": "Credit reporting or other
+        personal consumer reports", "date_sent_to_company": "2026-10-08T19:29:26.000Z",
+        "issue": "Incorrect information on your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29461086", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:19:28.000Z",
+        "state": "TX", "company_public_response": null, "sub_issue": "Account information
+        incorrect"}, "sort": [1791487168000, "29461086"]}, {"_index": "complaint-public-v1",
+        "_id": "29460438", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:19:53.000Z",
+        "issue": "Problem with a company''s investigation into an existing problem",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460438", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:19:27.000Z", "state": "TX", "company_public_response": null,
+        "sub_issue": "Their investigation did not fix an error on your report"}, "sort":
+        [1791487167000, "29460438"]}, {"_index": "complaint-public-v1", "_id": "29460434",
+        "_score": null, "_source": {"product": "Credit reporting or other personal
+        consumer reports", "date_sent_to_company": "2026-10-08T19:19:50.000Z", "issue":
+        "Incorrect information on your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29460434", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:19:26.000Z",
+        "state": "NY", "company_public_response": null, "sub_issue": "Information
+        belongs to someone else"}, "sort": [1791487166000, "29460434"]}, {"_index":
+        "complaint-public-v1", "_id": "29460980", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:28:00.000Z", "issue": "Improper use of your report", "sub_product":
+        "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460980", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:19:23.000Z", "state": "FL", "company_public_response": null,
+        "sub_issue": "Credit inquiries on your report that you don''t recognize"},
+        "sort": [1791487163000, "29460980"]}, {"_index": "complaint-public-v1", "_id":
+        "29460401", "_score": null, "_source": {"product": "Credit reporting or other
+        personal consumer reports", "date_sent_to_company": "2026-10-08T19:19:50.000Z",
+        "issue": "Problem with a company''s investigation into an existing problem",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460401", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:19:19.000Z", "state": "GA", "company_public_response": null,
+        "sub_issue": "Investigation took more than 30 days"}, "sort": [1791487159000,
+        "29460401"]}, {"_index": "complaint-public-v1", "_id": "29460396", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:19:43.000Z", "issue": "Improper
+        use of your report", "sub_product": "Credit reporting", "zip_code": "redacted",
+        "tags": null, "complaint_id": "29460396", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:19:13.000Z", "state": "AL",
+        "company_public_response": null, "sub_issue": "Reporting company used your
+        report improperly"}, "sort": [1791487153000, "29460396"]}, {"_index": "complaint-public-v1",
+        "_id": "29460395", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:19:38.000Z",
+        "issue": "Incorrect information on your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29460395", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:19:13.000Z",
+        "state": "CT", "company_public_response": null, "sub_issue": "Information
+        belongs to someone else"}, "sort": [1791487153000, "29460395"]}, {"_index":
+        "complaint-public-v1", "_id": "29460577", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:22:12.000Z", "issue": "Incorrect information on your report",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460577", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:19:03.000Z", "state": "TX", "company_public_response": null,
+        "sub_issue": "Account status incorrect"}, "sort": [1791487143000, "29460577"]},
+        {"_index": "complaint-public-v1", "_id": "29460378", "_score": null, "_source":
+        {"product": "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:19:31.000Z", "issue": "Incorrect information on your report",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460378", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:19:00.000Z", "state": "GA", "company_public_response": null,
+        "sub_issue": "Information belongs to someone else"}, "sort": [1791487140000,
+        "29460378"]}, {"_index": "complaint-public-v1", "_id": "29460728", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:24:39.000Z", "issue": "Improper
+        use of your report", "sub_product": "Credit reporting", "zip_code": "redacted",
+        "tags": null, "complaint_id": "29460728", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:18:57.000Z", "state": "FL",
+        "company_public_response": null, "sub_issue": "Reporting company used your
+        report improperly"}, "sort": [1791487137000, "29460728"]}, {"_index": "complaint-public-v1",
+        "_id": "29460453", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:20:04.000Z",
+        "issue": "Incorrect information on your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29460453", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:18:39.000Z",
+        "state": "MS", "company_public_response": null, "sub_issue": "Account information
+        incorrect"}, "sort": [1791487119000, "29460453"]}, {"_index": "complaint-public-v1",
+        "_id": "29460334", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:18:50.000Z",
+        "issue": "Incorrect information on your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29460334", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:18:21.000Z",
+        "state": "CA", "company_public_response": null, "sub_issue": "Information
+        belongs to someone else"}, "sort": [1791487101000, "29460334"]}, {"_index":
+        "complaint-public-v1", "_id": "29460520", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:20:57.000Z", "issue": "Improper use of your report", "sub_product":
+        "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460520", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:18:15.000Z", "state": "CA", "company_public_response": null,
+        "sub_issue": "Reporting company used your report improperly"}, "sort": [1791487095000,
+        "29460520"]}, {"_index": "complaint-public-v1", "_id": "29460533", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:21:18.000Z", "issue": "Problem
+        with a company''s investigation into an existing problem", "sub_product":
+        "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460533", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:17:58.000Z", "state": "TX", "company_public_response": null,
+        "sub_issue": "Investigation took more than 30 days"}, "sort": [1791487078000,
+        "29460533"]}, {"_index": "complaint-public-v1", "_id": "29460761", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:25:24.000Z", "issue": "Improper
+        use of your report", "sub_product": "Credit reporting", "zip_code": "redacted",
+        "tags": null, "complaint_id": "29460761", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:17:57.000Z", "state": "UT",
+        "company_public_response": null, "sub_issue": "Reporting company used your
+        report improperly"}, "sort": [1791487077000, "29460761"]}, {"_index": "complaint-public-v1",
+        "_id": "29460428", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:19:50.000Z",
+        "issue": "Problem with fraud alerts or security freezes", "sub_product": "Credit
+        reporting", "zip_code": "redacted", "tags": null, "complaint_id": "29460428",
+        "timely": "Yes", "company_response": "In progress", "submitted_via": "Web",
+        "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:17:54.000Z",
+        "state": "TX", "company_public_response": null, "sub_issue": null}, "sort":
+        [1791487074000, "29460428"]}, {"_index": "complaint-public-v1", "_id": "29460315",
+        "_score": null, "_source": {"product": "Credit reporting or other personal
+        consumer reports", "date_sent_to_company": "2026-10-08T19:18:16.000Z", "issue":
+        "Problem with a company''s investigation into an existing problem", "sub_product":
+        "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460315", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:17:52.000Z", "state": "MD", "company_public_response": null,
+        "sub_issue": "Was not notified of investigation status or results"}, "sort":
+        [1791487072000, "29460315"]}, {"_index": "complaint-public-v1", "_id": "29460202",
+        "_score": null, "_source": {"product": "Credit reporting or other personal
+        consumer reports", "date_sent_to_company": "2026-10-08T19:16:37.000Z", "issue":
+        "Problem with a company''s investigation into an existing problem", "sub_product":
+        "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460202", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:16:10.000Z", "state": "GA", "company_public_response": null,
+        "sub_issue": "Investigation took more than 30 days"}, "sort": [1791486970000,
+        "29460202"]}, {"_index": "complaint-public-v1", "_id": "29460435", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:19:53.000Z", "issue": "Problem
+        with a company''s investigation into an existing problem", "sub_product":
+        "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460435", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:16:09.000Z", "state": "TX", "company_public_response": null,
+        "sub_issue": "Investigation took more than 30 days"}, "sort": [1791486969000,
+        "29460435"]}, {"_index": "complaint-public-v1", "_id": "29460937", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:27:24.000Z", "issue": "Improper
+        use of your report", "sub_product": "Credit reporting", "zip_code": "redacted",
+        "tags": null, "complaint_id": "29460937", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:16:07.000Z", "state": "SC",
+        "company_public_response": null, "sub_issue": "Reporting company used your
+        report improperly"}, "sort": [1791486967000, "29460937"]}, {"_index": "complaint-public-v1",
+        "_id": "29460302", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:17:57.000Z",
+        "issue": "Problem with fraud alerts or security freezes", "sub_product": "Credit
+        reporting", "zip_code": "redacted", "tags": null, "complaint_id": "29460302",
+        "timely": "Yes", "company_response": "In progress", "submitted_via": "Web",
+        "company": "EQUIFAX, INC.", "date_received": "2026-10-08T19:16:04.000Z", "state":
+        "TX", "company_public_response": null, "sub_issue": null}, "sort": [1791486964000,
+        "29460302"]}, {"_index": "complaint-public-v1", "_id": "29460192", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:16:31.000Z", "issue": "Improper
+        use of your report", "sub_product": "Credit reporting", "zip_code": "redacted",
+        "tags": null, "complaint_id": "29460192", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:15:59.000Z", "state": "AL",
+        "company_public_response": null, "sub_issue": "Reporting company used your
+        report improperly"}, "sort": [1791486959000, "29460192"]}, {"_index": "complaint-public-v1",
+        "_id": "29460186", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:16:33.000Z",
+        "issue": "Incorrect information on your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29460186", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:15:59.000Z",
+        "state": "CA", "company_public_response": null, "sub_issue": "Account information
+        incorrect"}, "sort": [1791486959000, "29460186"]}, {"_index": "complaint-public-v1",
+        "_id": "29460185", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:16:23.000Z",
+        "issue": "Incorrect information on your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29460185", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:15:59.000Z",
+        "state": "CA", "company_public_response": null, "sub_issue": "Account information
+        incorrect"}, "sort": [1791486959000, "29460185"]}, {"_index": "complaint-public-v1",
+        "_id": "29460335", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:18:52.000Z",
+        "issue": "Incorrect information on your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29460335", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:15:52.000Z",
+        "state": "FL", "company_public_response": null, "sub_issue": "Information
+        belongs to someone else"}, "sort": [1791486952000, "29460335"]}, {"_index":
+        "complaint-public-v1", "_id": "29460175", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:16:22.000Z", "issue": "Problem with a company''s investigation
+        into an existing problem", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29460175", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:15:52.000Z", "state": "LA",
+        "company_public_response": null, "sub_issue": "Investigation took more than
+        30 days"}, "sort": [1791486952000, "29460175"]}, {"_index": "complaint-public-v1",
+        "_id": "29460939", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:27:22.000Z",
+        "issue": "Problem with a company''s investigation into an existing problem",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460939", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:15:49.000Z", "state": "TX", "company_public_response": null,
+        "sub_issue": "Investigation took more than 30 days"}, "sort": [1791486949000,
+        "29460939"]}, {"_index": "complaint-public-v1", "_id": "29460173", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:16:18.000Z", "issue": "Problem
+        with a company''s investigation into an existing problem", "sub_product":
+        "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460173", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:15:49.000Z", "state": "MO", "company_public_response": null,
+        "sub_issue": "Their investigation did not fix an error on your report"}, "sort":
+        [1791486949000, "29460173"]}, {"_index": "complaint-public-v1", "_id": "29460170",
+        "_score": null, "_source": {"product": "Credit reporting or other personal
+        consumer reports", "date_sent_to_company": "2026-10-08T19:16:19.000Z", "issue":
+        "Problem with a company''s investigation into an existing problem", "sub_product":
+        "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460170", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:15:47.000Z", "state": "MA", "company_public_response": null,
+        "sub_issue": "Investigation took more than 30 days"}, "sort": [1791486947000,
+        "29460170"]}, {"_index": "complaint-public-v1", "_id": "29460456", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:20:08.000Z", "issue": "Improper
+        use of your report", "sub_product": "Credit reporting", "zip_code": "redacted",
+        "tags": null, "complaint_id": "29460456", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:15:42.000Z", "state": "NC",
+        "company_public_response": null, "sub_issue": "Reporting company used your
+        report improperly"}, "sort": [1791486942000, "29460456"]}, {"_index": "complaint-public-v1",
+        "_id": "29460165", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:16:11.000Z",
+        "issue": "Problem with a company''s investigation into an existing problem",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460165", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:15:42.000Z", "state": "GA", "company_public_response": null,
+        "sub_issue": "Investigation took more than 30 days"}, "sort": [1791486942000,
+        "29460165"]}, {"_index": "complaint-public-v1", "_id": "29460160", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:16:02.000Z", "issue": "Problem
+        with a company''s investigation into an existing problem", "sub_product":
+        "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460160", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:15:38.000Z", "state": "NH", "company_public_response": null,
+        "sub_issue": "Investigation took more than 30 days"}, "sort": [1791486938000,
+        "29460160"]}, {"_index": "complaint-public-v1", "_id": "29460513", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:20:52.000Z", "issue": "Incorrect
+        information on your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29460513", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:15:24.000Z", "state": "CA",
+        "company_public_response": null, "sub_issue": "Information belongs to someone
+        else"}, "sort": [1791486924000, "29460513"]}, {"_index": "complaint-public-v1",
+        "_id": "29460153", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:15:48.000Z",
+        "issue": "Problem with a company''s investigation into an existing problem",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460153", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:15:15.000Z", "state": "OH", "company_public_response": null,
+        "sub_issue": "Their investigation did not fix an error on your report"}, "sort":
+        [1791486915000, "29460153"]}, {"_index": "complaint-public-v1", "_id": "29460299",
+        "_score": null, "_source": {"product": "Credit reporting or other personal
+        consumer reports", "date_sent_to_company": "2026-10-08T19:17:54.000Z", "issue":
+        "Incorrect information on your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29460299", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:15:14.000Z",
+        "state": "MI", "company_public_response": null, "sub_issue": "Information
+        belongs to someone else"}, "sort": [1791486914000, "29460299"]}, {"_index":
+        "complaint-public-v1", "_id": "29460142", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:15:35.000Z", "issue": "Incorrect information on your report",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460142", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:15:06.000Z", "state": "NJ", "company_public_response": null,
+        "sub_issue": "Information belongs to someone else"}, "sort": [1791486906000,
+        "29460142"]}, {"_index": "complaint-public-v1", "_id": "29461021", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:28:26.000Z", "issue": "Incorrect
+        information on your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29461021", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:14:56.000Z", "state": "NJ",
+        "company_public_response": null, "sub_issue": "Information belongs to someone
+        else"}, "sort": [1791486896000, "29461021"]}, {"_index": "complaint-public-v1",
+        "_id": "29462778", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:44:37.000Z",
+        "issue": "Problem with a company''s investigation into an existing problem",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29462778", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "PNC Bank N.A.", "date_received": "2026-10-08T19:14:44.000Z",
+        "state": "PA", "company_public_response": null, "sub_issue": "Difficulty submitting
+        a dispute or getting information about a dispute over the phone"}, "sort":
+        [1791486884000, "29462778"]}, {"_index": "complaint-public-v1", "_id": "29460397",
+        "_score": null, "_source": {"product": "Credit reporting or other personal
+        consumer reports", "date_sent_to_company": "2026-10-08T19:19:48.000Z", "issue":
+        "Improper use of your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29460397", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:14:31.000Z", "state": "GA",
+        "company_public_response": null, "sub_issue": "Reporting company used your
+        report improperly"}, "sort": [1791486871000, "29460397"]}, {"_index": "complaint-public-v1",
+        "_id": "29460385", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:19:35.000Z",
+        "issue": "Incorrect information on your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29460385", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:14:29.000Z",
+        "state": "GA", "company_public_response": null, "sub_issue": "Information
+        belongs to someone else"}, "sort": [1791486869000, "29460385"]}, {"_index":
+        "complaint-public-v1", "_id": "29460087", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:14:42.000Z", "issue": "Incorrect information on your report",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460087", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:14:16.000Z", "state": "FL", "company_public_response": null,
+        "sub_issue": "Account information incorrect"}, "sort": [1791486856000, "29460087"]},
+        {"_index": "complaint-public-v1", "_id": "29460080", "_score": null, "_source":
+        {"product": "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:14:38.000Z", "issue": "Incorrect information on your report",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460080", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:14:11.000Z", "state": "GA", "company_public_response": null,
+        "sub_issue": "Information belongs to someone else"}, "sort": [1791486851000,
+        "29460080"]}, {"_index": "complaint-public-v1", "_id": "29460070", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:14:26.000Z", "issue": "Problem
+        with a company''s investigation into an existing problem", "sub_product":
+        "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460070", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:14:02.000Z", "state": "FL", "company_public_response": null,
+        "sub_issue": "Their investigation did not fix an error on your report"}, "sort":
+        [1791486842000, "29460070"]}, {"_index": "complaint-public-v1", "_id": "29460319",
+        "_score": null, "_source": {"product": "Credit reporting or other personal
+        consumer reports", "date_sent_to_company": "2026-10-08T19:18:30.000Z", "issue":
+        "Incorrect information on your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29460319", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:12:52.000Z",
+        "state": "UNITED STATES MINOR OUTLYING ISLANDS", "company_public_response":
+        null, "sub_issue": "Account information incorrect"}, "sort": [1791486772000,
+        "29460319"]}, {"_index": "complaint-public-v1", "_id": "29460288", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:17:40.000Z", "issue": "Incorrect
+        information on your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29460288", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:12:43.000Z", "state": "MS",
+        "company_public_response": null, "sub_issue": "Information belongs to someone
+        else"}, "sort": [1791486763000, "29460288"]}, {"_index": "complaint-public-v1",
+        "_id": "29460144", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:15:38.000Z",
+        "issue": "Problem with a company''s investigation into an existing problem",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460144", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:12:41.000Z", "state": "MI", "company_public_response": null,
+        "sub_issue": "Their investigation did not fix an error on your report"}, "sort":
+        [1791486761000, "29460144"]}, {"_index": "complaint-public-v1", "_id": "29460077",
+        "_score": null, "_source": {"product": "Credit reporting or other personal
+        consumer reports", "date_sent_to_company": "2026-10-08T19:14:37.000Z", "issue":
+        "Problem with a company''s investigation into an existing problem", "sub_product":
+        "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460077", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:12:40.000Z", "state": "MI", "company_public_response": null,
+        "sub_issue": "Investigation took more than 30 days"}, "sort": [1791486760000,
+        "29460077"]}, {"_index": "complaint-public-v1", "_id": "29460127", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:15:20.000Z", "issue": "Incorrect
+        information on your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29460127", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:12:38.000Z", "state": "MA",
+        "company_public_response": null, "sub_issue": "Information belongs to someone
+        else"}, "sort": [1791486758000, "29460127"]}, {"_index": "complaint-public-v1",
+        "_id": "29460555", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:21:49.000Z",
+        "issue": "Incorrect information on your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29460555", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:12:35.000Z",
+        "state": "IL", "company_public_response": null, "sub_issue": "Account information
+        incorrect"}, "sort": [1791486755000, "29460555"]}, {"_index": "complaint-public-v1",
+        "_id": "29460293", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:17:46.000Z",
+        "issue": "Problem with a company''s investigation into an existing problem",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460293", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:12:19.000Z", "state": "SC", "company_public_response": null,
+        "sub_issue": "Investigation took more than 30 days"}, "sort": [1791486739000,
+        "29460293"]}, {"_index": "complaint-public-v1", "_id": "29460056", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:14:12.000Z", "issue": "Incorrect
+        information on your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29460056", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:12:13.000Z", "state": "TX",
+        "company_public_response": null, "sub_issue": "Information belongs to someone
+        else"}, "sort": [1791486733000, "29460056"]}, {"_index": "complaint-public-v1",
+        "_id": "29459968", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:12:22.000Z",
+        "issue": "Incorrect information on your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29459968", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:11:57.000Z",
+        "state": "NJ", "company_public_response": null, "sub_issue": "Account status
+        incorrect"}, "sort": [1791486717000, "29459968"]}, {"_index": "complaint-public-v1",
+        "_id": "29460457", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:20:08.000Z",
+        "issue": "Problem with a company''s investigation into an existing problem",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460457", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:11:55.000Z", "state": "NJ", "company_public_response": null,
+        "sub_issue": "Their investigation did not fix an error on your report"}, "sort":
+        [1791486715000, "29460457"]}, {"_index": "complaint-public-v1", "_id": "29460106",
+        "_score": null, "_source": {"product": "Credit reporting or other personal
+        consumer reports", "date_sent_to_company": "2026-10-08T19:15:00.000Z", "issue":
+        "Incorrect information on your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29460106", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:11:50.000Z",
+        "state": "LA", "company_public_response": null, "sub_issue": "Information
+        belongs to someone else"}, "sort": [1791486710000, "29460106"]}, {"_index":
+        "complaint-public-v1", "_id": "29460095", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:14:49.000Z", "issue": "Incorrect information on your report",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460095", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:11:48.000Z", "state": "LA", "company_public_response": null,
+        "sub_issue": "Information belongs to someone else"}, "sort": [1791486708000,
+        "29460095"]}, {"_index": "complaint-public-v1", "_id": "29459959", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:12:09.000Z", "issue": "Problem
+        with a company''s investigation into an existing problem", "sub_product":
+        "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29459959", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:11:43.000Z", "state": "CA", "company_public_response": null,
+        "sub_issue": "Their investigation did not fix an error on your report"}, "sort":
+        [1791486703000, "29459959"]}, {"_index": "complaint-public-v1", "_id": "29459954",
+        "_score": null, "_source": {"product": "Credit reporting or other personal
+        consumer reports", "date_sent_to_company": "2026-10-08T19:11:58.000Z", "issue":
+        "Improper use of your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29459954", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:11:35.000Z", "state": "TX",
+        "company_public_response": null, "sub_issue": "Reporting company used your
+        report improperly"}, "sort": [1791486695000, "29459954"]}, {"_index": "complaint-public-v1",
+        "_id": "29459940", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:11:48.000Z",
+        "issue": "Problem with a company''s investigation into an existing problem",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29459940", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:11:23.000Z", "state": "IL", "company_public_response": null,
+        "sub_issue": "Investigation took more than 30 days"}, "sort": [1791486683000,
+        "29459940"]}, {"_index": "complaint-public-v1", "_id": "29459926", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:11:34.000Z", "issue": "Incorrect
+        information on your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29459926", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:11:10.000Z", "state": "NV",
+        "company_public_response": null, "sub_issue": "Account information incorrect"},
+        "sort": [1791486670000, "29459926"]}, {"_index": "complaint-public-v1", "_id":
+        "29460001", "_score": null, "_source": {"product": "Credit reporting or other
+        personal consumer reports", "date_sent_to_company": "2026-10-08T19:13:18.000Z",
+        "issue": "Incorrect information on your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29460001", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:10:31.000Z",
+        "state": "CA", "company_public_response": null, "sub_issue": "Account status
+        incorrect"}, "sort": [1791486631000, "29460001"]}, {"_index": "complaint-public-v1",
+        "_id": "29460017", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:13:30.000Z",
+        "issue": "Incorrect information on your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29460017", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:10:29.000Z",
+        "state": "CA", "company_public_response": null, "sub_issue": "Information
+        belongs to someone else"}, "sort": [1791486629000, "29460017"]}, {"_index":
+        "complaint-public-v1", "_id": "29459995", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:13:05.000Z", "issue": "Incorrect information on your report",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29459995", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:10:19.000Z", "state": "FL", "company_public_response": null,
+        "sub_issue": "Information belongs to someone else"}, "sort": [1791486619000,
+        "29459995"]}, {"_index": "complaint-public-v1", "_id": "29460602", "_score":
+        null, "_source": {"product": "Checking or savings account", "date_sent_to_company":
+        "2026-10-08T19:22:50.000Z", "issue": "Managing an account", "sub_product":
+        "Checking account", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460602", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "ALLY FINANCIAL INC.", "date_received": "2026-10-08T19:10:06.000Z",
+        "state": "NY", "company_public_response": null, "sub_issue": "Deposits and
+        withdrawals"}, "sort": [1791486606000, "29460602"]}, {"_index": "complaint-public-v1",
+        "_id": "29459858", "_score": null, "_source": {"product": "Debt collection",
+        "date_sent_to_company": "2026-10-08T19:09:45.000Z", "issue": "False statements
+        or representation", "sub_product": "Credit card debt", "zip_code": "redacted",
+        "tags": null, "complaint_id": "29459858", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "Upstart Holdings, Inc.",
+        "date_received": "2026-10-08T19:09:21.000Z", "state": "CO", "company_public_response":
+        null, "sub_issue": "Attempted to collect wrong amount"}, "sort": [1791486561000,
+        "29459858"]}, {"_index": "complaint-public-v1", "_id": "29460064", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:14:19.000Z", "issue": "Improper
+        use of your report", "sub_product": "Credit reporting", "zip_code": "redacted",
+        "tags": null, "complaint_id": "29460064", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:09:01.000Z", "state": "MI",
+        "company_public_response": null, "sub_issue": "Reporting company used your
+        report improperly"}, "sort": [1791486541000, "29460064"]}, {"_index": "complaint-public-v1",
+        "_id": "29460110", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:15:03.000Z",
+        "issue": "Improper use of your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29460110", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:08:59.000Z",
+        "state": "NY", "company_public_response": null, "sub_issue": "Reporting company
+        used your report improperly"}, "sort": [1791486539000, "29460110"]}, {"_index":
+        "complaint-public-v1", "_id": "29459889", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:10:37.000Z", "issue": "Incorrect information on your report",
+        "sub_product": "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29459889", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:08:41.000Z", "state": "IN", "company_public_response": null,
+        "sub_issue": "Information belongs to someone else"}, "sort": [1791486521000,
+        "29459889"]}, {"_index": "complaint-public-v1", "_id": "29459816", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:09:04.000Z", "issue": "Incorrect
+        information on your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29459816", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:08:38.000Z", "state": "GA",
+        "company_public_response": null, "sub_issue": "Account status incorrect"},
+        "sort": [1791486518000, "29459816"]}, {"_index": "complaint-public-v1", "_id":
+        "29459812", "_score": null, "_source": {"product": "Credit reporting or other
+        personal consumer reports", "date_sent_to_company": "2026-10-08T19:09:01.000Z",
+        "issue": "Improper use of your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29459812", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:08:35.000Z",
+        "state": "PA", "company_public_response": null, "sub_issue": "Credit inquiries
+        on your report that you don''t recognize"}, "sort": [1791486515000, "29459812"]},
+        {"_index": "complaint-public-v1", "_id": "29460322", "_score": null, "_source":
+        {"product": "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:18:35.000Z", "issue": "Improper use of your report", "sub_product":
+        "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29460322", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:08:11.000Z", "state": "LA", "company_public_response": null,
+        "sub_issue": "Reporting company used your report improperly"}, "sort": [1791486491000,
+        "29460322"]}, {"_index": "complaint-public-v1", "_id": "29460049", "_score":
+        null, "_source": {"product": "Credit reporting or other personal consumer
+        reports", "date_sent_to_company": "2026-10-08T19:14:02.000Z", "issue": "Incorrect
+        information on your report", "sub_product": "Credit reporting", "zip_code":
+        "redacted", "tags": null, "complaint_id": "29460049", "timely": "Yes", "company_response":
+        "In progress", "submitted_via": "Web", "company": "TRANSUNION INTERMEDIATE
+        HOLDINGS, INC.", "date_received": "2026-10-08T19:08:10.000Z", "state": "MA",
+        "company_public_response": null, "sub_issue": "Information belongs to someone
+        else"}, "sort": [1791486490000, "29460049"]}, {"_index": "complaint-public-v1",
+        "_id": "29460040", "_score": null, "_source": {"product": "Credit reporting
+        or other personal consumer reports", "date_sent_to_company": "2026-10-08T19:13:51.000Z",
+        "issue": "Improper use of your report", "sub_product": "Credit reporting",
+        "zip_code": "redacted", "tags": null, "complaint_id": "29460040", "timely":
+        "Yes", "company_response": "In progress", "submitted_via": "Web", "company":
+        "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received": "2026-10-08T19:08:06.000Z",
+        "state": "MA", "company_public_response": null, "sub_issue": "Reporting company
+        used your report improperly"}, "sort": [1791486486000, "29460040"]}, {"_index":
+        "complaint-public-v1", "_id": "29459897", "_score": null, "_source": {"product":
+        "Credit reporting or other personal consumer reports", "date_sent_to_company":
+        "2026-10-08T19:10:37.000Z", "issue": "Improper use of your report", "sub_product":
+        "Credit reporting", "zip_code": "redacted", "tags": null, "complaint_id":
+        "29459897", "timely": "Yes", "company_response": "In progress", "submitted_via":
+        "Web", "company": "TRANSUNION INTERMEDIATE HOLDINGS, INC.", "date_received":
+        "2026-10-08T19:07:59.000Z", "state": "FL", "company_public_response": null,
+        "sub_issue": "Reporting company used your report improperly"}, "sort": [1791486479000,
+        "29459897"]}]}, "_meta": {"license": "CC0", "last_updated": "2026-10-09T12:00:00-05:00",
+        "last_indexed": "2026-10-09T12:00:00-05:00", "total_record_count": 18300534,
+        "is_data_stale": false, "has_data_issue": false, "break_points": {"2": [1791487371000,
+        "29461120"], "3": [1791486479000, "29459897"]}}}'
+    headers:
+      access-control-allow-methods:
+      - GET
+      access-control-allow-origin:
+      - https://cfpb.github.io
+      allow:
+      - OPTIONS, GET
+      connection:
+      - keep-alive
+      content-length:
+      - '67307'
+      content-security-policy:
+      - 'script-src ''self'' ''unsafe-inline'' ''unsafe-eval'' *.consumerfinance.gov
+        dap.digitalgov.gov *.googleanalytics.com *.google-analytics.com *.googletagmanager.com
+        api.mapbox.com js-agent.newrelic.com bam.nr-data.net gov-bam.nr-data.net *.youtube.com
+        *.ytimg.com *.mouseflow.com *.geo.census.gov about: www.federalregister.gov
+        *.qualtrics.com www.ssa.gov/accessibility/andi/ ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js;
+        default-src ''self''; connect-src ''self'' *.consumerfinance.gov dap.digitalgov.gov
+        *.google-analytics.com *.tiles.mapbox.com api.mapbox.com bam.nr-data.net gov-bam.nr-data.net
+        s3.amazonaws.com public.govdelivery.com *.mouseflow.com *.qualtrics.com raw.githubusercontent.com;
+        frame-src ''self'' *.consumerfinance.gov *.googletagmanager.com *.google-analytics.com
+        www.youtube.com *.qualtrics.com mailto:; media-src ''self'' *.consumerfinance.gov;
+        font-src ''self'' fonts.gstatic.com; img-src ''self'' *.cfpb.gov *.consumerfinance.gov
+        www.ecfr.gov s3.amazonaws.com img.youtube.com *.google-analytics.com *.googletagmanager.com
+        api.mapbox.com *.tiles.mapbox.com blob: data: www.gravatar.com *.qualtrics.com
+        *.mouseflow.com i.ytimg.com www.ssa.gov/accessibility/andi/; style-src ''self''
+        ''unsafe-inline'' *.consumerfinance.gov *.googletagmanager.com fonts.googleapis.com
+        api.mapbox.com www.ssa.gov/accessibility/andi/'
+      content-type:
+      - application/json
+      cross-origin-opener-policy:
+      - same-origin
+      date:
+      - Fri, 09 Oct 2026 23:27:15 GMT
+      etag:
+      - '"c97cf15ab6a601888cba617f2c5b60dc"'
+      permissions-policy:
+      - interest-cohort=()
+      referrer-policy:
+      - same-origin
+      server:
+      - envoy
+      strict-transport-security:
+      - max-age=31536000
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-envoy-upstream-service-time:
+      - '225'
+      x-frame-options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+version: 1
