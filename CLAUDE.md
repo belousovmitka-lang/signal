@@ -216,7 +216,7 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 | G6 | `job_boards` | Company job posts across all industries | own_api | Greenhouse `boards-api.greenhouse.io/v1/boards/<token>/jobs`, Lever `api.lever.co/v0/postings/<company>`, Ashby `api.ashbyhq.com/posting-api/job-board/<name>`, SmartRecruiters public postings API, USAJOBS `data.usajobs.gov/api/search`. Build a company list per industry. |
 | G7 | `youtube` — **blocked (2026-10-09)** | YouTube videos, comments, conference talks, webinars posted to YouTube | own_api → G1 | YouTube API Developer Policies III.E forbid aggregating API Data across channels not owned by one content owner, using API Data "to create new or derived data or metrics", and storing non-statistics data over 30 days. Signal's cross-channel feed, ranking and idea generation do all three. Until then: G1 search profile `youtube.com/watch` (titles + snippets). Unblocks with: YouTube API compliance audit and the derived-metrics permission (policy section L, via the quota extension form, since June 2026). |
 | G8 | `podcasts` | Industry podcasts | rss + own_api | Podcast Index API to discover shows; RSS for episodes; transcribe audio with a speech-to-text service (cost-metered) or use publisher transcripts when provided. |
-| G9 | `open_data` | City/state open data portals, data.gov, FCC data | own_api | Socrata SODA API and CKAN API. Datasets: 311 requests, permits, inspections, complaints. |
+| G9 | `open_data` — **done (2026-10-09)** | City/state open data portals, data.gov, FCC data | own_api | Socrata SODA API per dataset with an explicit field map (only named fields stored, so no applicant names or addresses): NYC restaurant inspections, Chicago building permits, NYC 311. CKAN new-dataset listings (open.canada.ca; catalog.data.gov's CKAN API returns 404 as of 2026-10-09). |
 | G10 | `app_reviews` — **done (2026-10-09): WordPress.org** | App Store, app marketplaces | rss | WordPress.org plugin review + support feeds (`/support/plugin/<slug>/reviews/feed/`); rating and reply counts parsed. Blocked 2026-10-09: Apple reviews feed (itunes.apple.com robots.txt `Disallow: /*/rss/*`), Chrome Web Store and Atlassian Marketplace REST API (robots.txt), Shopify App Store (ToS forbids robots). api.wordpress.org plugin info API is robots-disallowed. Google Play allows robots-compliant access but serves reviews via internal APIs: not used. |
 
 ### 7.2 Platform-specific connectors (own API or public data)
@@ -313,7 +313,7 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 | PACER (direct) | `pacer` | own_api (paid) | $0.10/page, $3 cap/document; only for specific documents | on demand | paid (flag off) |
 | Bar associations, medical boards, licensing bodies | G2 / G5, else G1 | rss / public_pages | per body | weekly | todo |
 | City council and school board agendas and minutes | G5 / G9, else G1 | public_pages | many cities use the same agenda platforms; detect per site | weekly | todo |
-| Open data portals (data.gov and city portals) | G9 | own_api | Socrata / CKAN | weekly | todo |
+| Open data portals (data.gov and city portals) | G9 | own_api | Socrata / CKAN; add datasets per industry in sources.yaml | weekly | done (2026-10-09) |
 | Patents (USPTO, Google Patents) | `patents` | own_api | USPTO open data / PatentsView APIs | monthly | todo |
 
 **Podcasts, video, events**
@@ -468,7 +468,7 @@ Work top to bottom. Finish each connector to its definition of done before start
 13. G10 `app_reviews` — done (2026-10-09, WordPress.org); `feature_boards` deferred (no stable public interface)
 14. `gdelt`, `edgar`, procurement (`sam_gov`, `ted`, `uk_tenders`)
 15. Regulatory and legal: `federal_register`, `regulations_gov`, `legiscan`/`openstates`, `courtlistener`, `cfpb`, `openfda`, `nhtsa`, `osha`, `eurlex`
-16. G9 `open_data`
+16. G9 `open_data` — done (2026-10-09)
 
 **Phase 4 — media, startup ecosystem, research**
 17. G8 `podcasts`, `twitch`, `events`

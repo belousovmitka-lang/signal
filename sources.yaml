@@ -379,6 +379,62 @@ sources:
     queries:
       - {industry_hint: healthcare, limit: 500}
 
+  open_data:
+    enabled: true
+    status: done
+    status_date: 2026-10-09
+    route: own_api
+    source_type: government
+    cadence: weekly
+    access_check:
+      robots: allowed
+      terms: allowed
+      decision: full
+      checked_at: 2026-10-09
+      notes: >-
+        Socrata SODA API (NYC, Chicago open data) and CKAN (open.canada.ca), no key. Only the fields
+        named per query are stored: no applicant names, phone numbers or street addresses.
+    queries:
+      - industry_hint: restaurants
+        limit: 300
+        params:
+          kind: socrata
+          name: NYC restaurant inspections
+          domain: data.cityofnewyork.us
+          dataset: 43nn-pn8j
+          date_field: inspection_date
+          id_fields: [camis, inspection_date, violation_code]
+          title: "{dba}: {violation_description}"
+          text: "{inspection_type}. {action} Critical: {critical_flag}. Score {score}."
+          community: "NYC restaurants / {boro}"
+          keep: [cuisine_description, critical_flag, grade, score, inspection_type, violation_code]
+      - industry_hint: construction
+        limit: 300
+        params:
+          kind: socrata
+          name: Chicago building permits
+          domain: data.cityofchicago.org
+          dataset: ydr8-5enu
+          date_field: issue_date
+          id_fields: [id]
+          title: "{work_type}: {work_description}"
+          text: "{permit_type}. Reported cost ${reported_cost}. Processing time {processing_time} days."
+          community: "Chicago permits / {work_type}"
+          keep: [permit_type, work_type, reported_cost, processing_time, total_fee, community_area]
+      - limit: 300
+        params:
+          kind: socrata
+          name: NYC 311 service requests
+          domain: data.cityofnewyork.us
+          dataset: erm2-nwe9
+          date_field: created_date
+          id_fields: [unique_key]
+          title: "{complaint_type}: {descriptor}"
+          text: "{agency_name}. Status: {status}. {resolution_description}"
+          community: "NYC 311 / {borough}"
+          keep: [complaint_type, descriptor, agency, borough, status]
+      - {limit: 100, params: {kind: ckan, base: "https://open.canada.ca/data"}}
+
   bluesky:
     connector: search_api
     enabled: true
