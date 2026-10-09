@@ -1,0 +1,2206 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      accept:
+      - application/vnd.github+json
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - api.github.com
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+      x-github-api-version:
+      - '2022-11-28'
+    method: GET
+    uri: https://api.github.com/search/issues?order=desc&page=1&per_page=15&q=label%3Abounty+is%3Aissue+is%3Aopen+created%3A%3E%3D2026-10-06T00%3A00%3A00Z&sort=created
+  response:
+    body:
+      string: "{\"total_count\": 38, \"incomplete_results\": false, \"items\": [{\"url\":
+        \"https://api.github.com/repos/SPLURT-Station/S.P.L.U.R.T-tg/issues/1292\",
+        \"repository_url\": \"https://api.github.com/repos/SPLURT-Station/S.P.L.U.R.T-tg\",
+        \"labels_url\": \"https://api.github.com/repos/SPLURT-Station/S.P.L.U.R.T-tg/issues/1292/labels{/name}\",
+        \"comments_url\": \"https://api.github.com/repos/SPLURT-Station/S.P.L.U.R.T-tg/issues/1292/comments\",
+        \"events_url\": \"https://api.github.com/repos/SPLURT-Station/S.P.L.U.R.T-tg/issues/1292/events\",
+        \"html_url\": \"https://github.com/SPLURT-Station/S.P.L.U.R.T-tg/issues/1292\",
+        \"id\": 5779463051, \"node_id\": \"I_kwDOMEB5Ys8AAAABWHubiw\", \"number\":
+        1292, \"title\": \"[BOUNTY] Suggestion #1259\", \"user\": {\"login\": \"redacted\",
+        \"id\": 97993072, \"node_id\": \"U_kgDOBddBcA\", \"avatar_url\": \"redacted\",
+        \"gravatar_id\": \"redacted\", \"url\": \"redacted\", \"html_url\": \"redacted\",
+        \"followers_url\": \"redacted\", \"following_url\": \"redacted\", \"gists_url\":
+        \"redacted\", \"starred_url\": \"redacted\", \"subscriptions_url\": \"redacted\",
+        \"organizations_url\": \"redacted\", \"repos_url\": \"redacted\", \"events_url\":
+        \"redacted\", \"received_events_url\": \"redacted\", \"type\": \"User\", \"user_view_type\":
+        \"public\", \"site_admin\": false}, \"labels\": [{\"id\": 8116698395, \"node_id\":
+        \"LA_kwDOMEB5Ys8AAAAB48r9Gw\", \"url\": \"https://api.github.com/repos/SPLURT-Station/S.P.L.U.R.T-tg/labels/bounty\",
+        \"name\": \"bounty\", \"color\": \"5319E7\", \"default\": false, \"description\":
+        \"Bounty with payments offered for completing it\", \"archived_at\": null,
+        \"archived_by\": null}], \"state\": \"open\", \"locked\": false, \"assignees\":
+        [], \"milestone\": null, \"comments\": 9, \"created_at\": \"2026-10-09T14:07:48Z\",
+        \"updated_at\": \"2026-10-09T22:41:00Z\", \"closed_at\": null, \"assignee\":
+        null, \"author_redacted\": \"COLLABORATOR\", \"issue_field_values\": [], \"type\":
+        null, \"active_lock_reason\": null, \"sub_issues_summary\": {\"total\": 0,
+        \"completed\": 0, \"percent_completed\": 0}, \"issue_dependencies_summary\":
+        {\"blocked_by\": 0, \"total_blocked_by\": 0, \"blocking\": 0, \"total_blocking\":
+        0}, \"body\": \"### About the Bounty\\n\\n## Original issue text:\\n\\n**Suggestion:**\\nAllow
+        Borgs to turn off all comms. Sometimes the traffic gets very annoying. Especially
+        during RP/ERP, bleeding out the text in short order when shit is going down.
+        If we're having a conversation or in active play, it makes it extremely hard
+        to keep track of the ongoing RP.\\n\\n**Reason:**\\n[BOUNTY] okye\\n\\n**Results:**\\n17x
+        <:In_help:1056296636348899408>\\n7x <:In_harm:1056296637909192794>\\n\\n\\n###
+        Suggestion Reference\\n\\n**Suggested by:** thomastonotter\\nhttps://discord.com/channels/908082639704064051/1404686278351655055/1558118785595211903\\n\\n###
+        Contact Information\\n\\nContact `mos_ley` in discord for payment information.\\n\\nContact
+        `thomastonotter` in discord for information about the requirements.\\n\\n###
+        Payment Details\\n\\nPayment methods:\\n- PayPal\\n- Cryptocurrency\\n\\n\",
+        \"reactions\": {\"url\": \"https://api.github.com/repos/SPLURT-Station/S.P.L.U.R.T-tg/issues/1292/reactions\",
+        \"total_count\": 0, \"+1\": 0, \"-1\": 0, \"laugh\": 0, \"hooray\": 0, \"confused\":
+        0, \"heart\": 0, \"rocket\": 0, \"eyes\": 0}, \"timeline_url\": \"https://api.github.com/repos/SPLURT-Station/S.P.L.U.R.T-tg/issues/1292/timeline\",
+        \"performed_via_github_app\": null, \"state_reason\": null, \"pinned_comment\":
+        null, \"score\": 1.0}, {\"url\": \"https://api.github.com/repos/SPLURT-Station/S.P.L.U.R.T-tg/issues/1291\",
+        \"repository_url\": \"https://api.github.com/repos/SPLURT-Station/S.P.L.U.R.T-tg\",
+        \"labels_url\": \"https://api.github.com/repos/SPLURT-Station/S.P.L.U.R.T-tg/issues/1291/labels{/name}\",
+        \"comments_url\": \"https://api.github.com/repos/SPLURT-Station/S.P.L.U.R.T-tg/issues/1291/comments\",
+        \"events_url\": \"https://api.github.com/repos/SPLURT-Station/S.P.L.U.R.T-tg/issues/1291/events\",
+        \"html_url\": \"https://github.com/SPLURT-Station/S.P.L.U.R.T-tg/issues/1291\",
+        \"id\": 5779459949, \"node_id\": \"I_kwDOMEB5Ys8AAAABWHuPbQ\", \"number\":
+        1291, \"title\": \"[BOUNTY] Suggestion #1268\", \"user\": {\"login\": \"redacted\",
+        \"id\": 97993072, \"node_id\": \"U_kgDOBddBcA\", \"avatar_url\": \"redacted\",
+        \"gravatar_id\": \"redacted\", \"url\": \"redacted\", \"html_url\": \"redacted\",
+        \"followers_url\": \"redacted\", \"following_url\": \"redacted\", \"gists_url\":
+        \"redacted\", \"starred_url\": \"redacted\", \"subscriptions_url\": \"redacted\",
+        \"organizations_url\": \"redacted\", \"repos_url\": \"redacted\", \"events_url\":
+        \"redacted\", \"received_events_url\": \"redacted\", \"type\": \"User\", \"user_view_type\":
+        \"public\", \"site_admin\": false}, \"labels\": [{\"id\": 8116698395, \"node_id\":
+        \"LA_kwDOMEB5Ys8AAAAB48r9Gw\", \"url\": \"https://api.github.com/repos/SPLURT-Station/S.P.L.U.R.T-tg/labels/bounty\",
+        \"name\": \"bounty\", \"color\": \"5319E7\", \"default\": false, \"description\":
+        \"Bounty with payments offered for completing it\", \"archived_at\": null,
+        \"archived_by\": null}], \"state\": \"open\", \"locked\": false, \"assignees\":
+        [], \"milestone\": null, \"comments\": 5, \"created_at\": \"2026-10-09T14:07:34Z\",
+        \"updated_at\": \"2026-10-09T22:48:30Z\", \"closed_at\": null, \"assignee\":
+        null, \"author_redacted\": \"COLLABORATOR\", \"issue_field_values\": [], \"type\":
+        null, \"active_lock_reason\": null, \"sub_issues_summary\": {\"total\": 0,
+        \"completed\": 0, \"percent_completed\": 0}, \"issue_dependencies_summary\":
+        {\"blocked_by\": 0, \"total_blocked_by\": 0, \"blocking\": 0, \"total_blocking\":
+        0}, \"body\": \"### About the Bounty\\n\\n## Original issue text:\\n\\n**Suggestion:**\\nMake
+        the gas analyzer function like the plant analyzer does. Open a UI window that
+        is dynamically updated so we don't have to spam the dumb canister we are working
+        on constantly while drowning out every other message in chat.\\n\\n**Reason:**\\n[BOUNTY]
+        okye\\n\\n**Results:**\\n6x <:In_help:1056296636348899408>\\n1x <:In_harm:1056296637909192794>\\n\\n\\n###
+        Suggestion Reference\\n\\n**Suggested by:** megamiana\\nhttps://discord.com/channels/908082639704064051/1404686278351655055/1558118728170733710\\n\\n###
+        Contact Information\\n\\nContact `mos_ley` in discord for payment information.\\n\\nContact
+        `megamiana` in discord for information about the requirements.\\n\\n### Payment
+        Details\\n\\nPayment methods:\\n- PayPal\\n- Cryptocurrency\\n\\n\", \"reactions\":
+        {\"url\": \"https://api.github.com/repos/SPLURT-Station/S.P.L.U.R.T-tg/issues/1291/reactions\",
+        \"total_count\": 0, \"+1\": 0, \"-1\": 0, \"laugh\": 0, \"hooray\": 0, \"confused\":
+        0, \"heart\": 0, \"rocket\": 0, \"eyes\": 0}, \"timeline_url\": \"https://api.github.com/repos/SPLURT-Station/S.P.L.U.R.T-tg/issues/1291/timeline\",
+        \"performed_via_github_app\": null, \"state_reason\": null, \"pinned_comment\":
+        null, \"score\": 1.0}, {\"url\": \"https://api.github.com/repos/zhangjiayang6835-cyber/bounty-plaza/issues/1836\",
+        \"repository_url\": \"https://api.github.com/repos/zhangjiayang6835-cyber/bounty-plaza\",
+        \"labels_url\": \"https://api.github.com/repos/zhangjiayang6835-cyber/bounty-plaza/issues/1836/labels{/name}\",
+        \"comments_url\": \"https://api.github.com/repos/zhangjiayang6835-cyber/bounty-plaza/issues/1836/comments\",
+        \"events_url\": \"https://api.github.com/repos/zhangjiayang6835-cyber/bounty-plaza/issues/1836/events\",
+        \"html_url\": \"https://github.com/zhangjiayang6835-cyber/bounty-plaza/issues/1836\",
+        \"id\": 5754154619, \"node_id\": \"I_kwDOTR3Rz88AAAABVvluew\", \"number\":
+        1836, \"title\": \"[Bounty] [Bounty $3,000] Fix ttnn.sampling distribution
+        bias from low-precision random th\", \"user\": {\"login\": \"redacted\", \"id\":
+        288065324, \"node_id\": \"U_kgDOESuHLA\", \"avatar_url\": \"redacted\", \"gravatar_id\":
+        \"redacted\", \"url\": \"redacted\", \"html_url\": \"redacted\", \"followers_url\":
+        \"redacted\", \"following_url\": \"redacted\", \"gists_url\": \"redacted\",
+        \"starred_url\": \"redacted\", \"subscriptions_url\": \"redacted\", \"organizations_url\":
+        \"redacted\", \"repos_url\": \"redacted\", \"events_url\": \"redacted\", \"received_events_url\":
+        \"redacted\", \"type\": \"User\", \"user_view_type\": \"public\", \"site_admin\":
+        false}, \"labels\": [{\"id\": 11494155492, \"node_id\": \"LA_kwDOTR3Rz88AAAACrRrk5A\",
+        \"url\": \"https://api.github.com/repos/zhangjiayang6835-cyber/bounty-plaza/labels/bounty\",
+        \"name\": \"bounty\", \"color\": \"5319E7\", \"default\": false, \"description\":
+        null, \"archived_at\": null, \"archived_by\": null}, {\"id\": 11494468630,
+        \"node_id\": \"LA_kwDOTR3Rz88AAAACrR-sFg\", \"url\": \"https://api.github.com/repos/zhangjiayang6835-cyber/bounty-plaza/labels/real\",
+        \"name\": \"real\", \"color\": \"ededed\", \"default\": false, \"description\":
+        null, \"archived_at\": null, \"archived_by\": null}], \"state\": \"open\",
+        \"locked\": false, \"assignees\": [], \"milestone\": null, \"comments\": 20,
+        \"created_at\": \"2026-10-08T01:05:18Z\", \"updated_at\": \"2026-10-09T22:55:02Z\",
+        \"closed_at\": null, \"assignee\": null, \"author_redacted\": \"OWNER\", \"active_lock_reason\":
+        null, \"sub_issues_summary\": {\"total\": 0, \"completed\": 0, \"percent_completed\":
+        0}, \"issue_dependencies_summary\": {\"blocked_by\": 0, \"total_blocked_by\":
+        0, \"blocking\": 0, \"total_blocking\": 0}, \"body\": \"### \u8D4F\u91D1\u5E73\u53F0
+        / Platform\\nGitHub\\n\\n### \u539F\u59CB\u94FE\u63A5 / Source URL\\nhttps://github.com/tenstorrent/tt-metal/issues/59732\\n\\n###
+        \u6F0F\u6D1E\u63CF\u8FF0 / Description\\n[Bounty $3,000] Fix ttnn.sampling
+        distribution bias from low-precision random threshold\\n\\n# \U0001F4DD Background\\n\\nThis
+        is a community-suggested bounty that we have reviewed and assigned to [@samiyadev786](https://github.com/samiyadev786).\\n\\n`ttnn.sampling`
+        is used for on-device non-greedy token sampling in the shared sampling path
+        used by `tt-transformers` and other model integrations. The operation currently
+        compares an FP32 cumulative probability against a random threshold that is
+        packed to bfloat16. Because the threshold has only bfloat16 resolution, the
+        sampler does not draw from the requested distribution accurately.\\n\\nThe
+        issue has been reproduced on both Wormhole N150 and Blackhole P150. In the
+        reported measurements, candidate tokens with small probabilities were never
+        emitted or were emitted at materially incorrect frequencies. The existing
+        tests primarily check candidate membership, determinism, and valid indices;
+        they do not provide a sufficiently sensitive frequency-based regression test.\\n\\n#
+        \U0001F4A1 Problem to Solve\\n\\nFix the random-threshold path in `ttnn.sampling`
+        so that the threshold used by the comparison has sufficient FP32-level resolution
+        across the supported Wormhole and Blackhole implementations.\\n\\nThe fix
+        must preserve the existing public API and sampling controls, including top-k,
+        top-p, temperature, per-user seeding, reproducibility, and trace replay. The
+        change should not introduce a material performance regression in the decode
+        sampling path.\\n\\nThe main implementation areas are expected to be under:\\n\\n*
+        `ttnn/cpp/ttnn/operations/reduction/sampling/device/`\\n* `ttnn/cpp/ttnn/operations/reduction/sampling/device/kernels/compute/`\\n*
+        `ttnn/cpp/ttnn/operations/reduction/sampling/device/kernels/dataflow/`\\n\\nThe
+        exact implementation approach is not prescribed, provided the acceptance criteria
+        below are met.\\n\\n# \U0001F3AF Acceptance Criteria\\n\\n* [ ] The sampler
+        uses a random threshold with sufficient FP32-level resolution; the threshold
+        must not be limited to the current bfloat16 grid or capped at `255/256` because
+        of the packed representation.\\n* [ ] The corrected beh\\n\\n### \u79EF\u5206\u5E01\u5956\u52B1
+        / Coin Reward\\n3750 coins\\n\\n### \u771F\u5B9E\u8D4F\u91D1\uFF08USD\uFF09/
+        Real Reward\\n$3,000\\n\\n### \u96BE\u5EA6 / Difficulty\\nMedium\\n\\n###
+        \u8BA4\u9886\u65B9\u5F0F\\n\u8BC4\u8BBA `/claim` \u9501\u5B9A\u4EFB\u52A1
+        24h\\n\\n### \u5151\u6362\u8BF4\u660E\\n> \u67E5\u770B [REWARD_POLICY.md](REWARD_POLICY.md)
+        \u4E86\u89E3\u5151\u6362\u89C4\u5219\\n\", \"reactions\": {\"url\": \"https://api.github.com/repos/zhangjiayang6835-cyber/bounty-plaza/issues/1836/reactions\",
+        \"total_count\": 0, \"+1\": 0, \"-1\": 0, \"laugh\": 0, \"hooray\": 0, \"confused\":
+        0, \"heart\": 0, \"rocket\": 0, \"eyes\": 0}, \"timeline_url\": \"https://api.github.com/repos/zhangjiayang6835-cyber/bounty-plaza/issues/1836/timeline\",
+        \"performed_via_github_app\": null, \"state_reason\": null, \"pinned_comment\":
+        null, \"score\": 1.0}, {\"url\": \"https://api.github.com/repos/tenstorrent/tt-metal/issues/59732\",
+        \"repository_url\": \"https://api.github.com/repos/tenstorrent/tt-metal\",
+        \"labels_url\": \"https://api.github.com/repos/tenstorrent/tt-metal/issues/59732/labels{/name}\",
+        \"comments_url\": \"https://api.github.com/repos/tenstorrent/tt-metal/issues/59732/comments\",
+        \"events_url\": \"https://api.github.com/repos/tenstorrent/tt-metal/issues/59732/events\",
+        \"html_url\": \"https://github.com/tenstorrent/tt-metal/issues/59732\", \"id\":
+        5752205252, \"node_id\": \"I_kwDOI9Wqc88AAAABVtuvxA\", \"number\": 59732,
+        \"title\": \"[Bounty $3,000] Fix ttnn.sampling distribution bias from low-precision
+        random threshold\", \"user\": {\"login\": \"redacted\", \"id\": 239675896,
+        \"node_id\": \"U_kgDODkkp-A\", \"avatar_url\": \"redacted\", \"gravatar_id\":
+        \"redacted\", \"url\": \"redacted\", \"html_url\": \"redacted\", \"followers_url\":
+        \"redacted\", \"following_url\": \"redacted\", \"gists_url\": \"redacted\",
+        \"starred_url\": \"redacted\", \"subscriptions_url\": \"redacted\", \"organizations_url\":
+        \"redacted\", \"repos_url\": \"redacted\", \"events_url\": \"redacted\", \"received_events_url\":
+        \"redacted\", \"type\": \"User\", \"user_view_type\": \"public\", \"site_admin\":
+        false}, \"labels\": [{\"id\": 7931645110, \"node_id\": \"LA_kwDOI9Wqc88AAAAB2MNMtg\",
+        \"url\": \"https://api.github.com/repos/tenstorrent/tt-metal/labels/bounty\",
+        \"name\": \"bounty\", \"color\": \"aaaaaa\", \"default\": false, \"description\":
+        null, \"archived_at\": null, \"archived_by\": null}, {\"id\": 7931705304,
+        \"node_id\": \"LA_kwDOI9Wqc88AAAAB2MQ32A\", \"url\": \"https://api.github.com/repos/tenstorrent/tt-metal/labels/bounty_difficulty/medium\",
+        \"name\": \"bounty_difficulty/medium\", \"color\": \"EE8199\", \"default\":
+        false, \"description\": \"Medium Bounty\", \"archived_at\": null, \"archived_by\":
+        null}], \"state\": \"open\", \"locked\": false, \"assignees\": [{\"login\":
+        \"redacted\", \"id\": 171659890, \"node_id\": \"U_kgDOCjtScg\", \"avatar_url\":
+        \"redacted\", \"gravatar_id\": \"redacted\", \"url\": \"redacted\", \"html_url\":
+        \"redacted\", \"followers_url\": \"redacted\", \"following_url\": \"redacted\",
+        \"gists_url\": \"redacted\", \"starred_url\": \"redacted\", \"subscriptions_url\":
+        \"redacted\", \"organizations_url\": \"redacted\", \"repos_url\": \"redacted\",
+        \"events_url\": \"redacted\", \"received_events_url\": \"redacted\", \"type\":
+        \"User\", \"user_view_type\": \"public\", \"site_admin\": false}], \"milestone\":
+        null, \"comments\": 4, \"created_at\": \"2026-10-07T21:34:17Z\", \"updated_at\":
+        \"2026-10-09T17:25:48Z\", \"closed_at\": null, \"assignee\": {\"login\": \"redacted\",
+        \"id\": 171659890, \"node_id\": \"U_kgDOCjtScg\", \"avatar_url\": \"redacted\",
+        \"gravatar_id\": \"redacted\", \"url\": \"redacted\", \"html_url\": \"redacted\",
+        \"followers_url\": \"redacted\", \"following_url\": \"redacted\", \"gists_url\":
+        \"redacted\", \"starred_url\": \"redacted\", \"subscriptions_url\": \"redacted\",
+        \"organizations_url\": \"redacted\", \"repos_url\": \"redacted\", \"events_url\":
+        \"redacted\", \"received_events_url\": \"redacted\", \"type\": \"User\", \"user_view_type\":
+        \"public\", \"site_admin\": false}, \"author_redacted\": \"CONTRIBUTOR\",
+        \"issue_field_values\": [], \"type\": null, \"active_lock_reason\": null,
+        \"sub_issues_summary\": {\"total\": 0, \"completed\": 0, \"percent_completed\":
+        0}, \"issue_dependencies_summary\": {\"blocked_by\": 0, \"total_blocked_by\":
+        0, \"blocking\": 0, \"total_blocking\": 0}, \"body\": \"# \U0001F4DD Background\\n\\nThis
+        is a community-suggested bounty that we have reviewed and assigned to [@samiyadev786](https://github.com/samiyadev786).\\n\\n`ttnn.sampling`
+        is used for on-device non-greedy token sampling in the shared sampling path
+        used by `tt-transformers` and other model integrations. The operation currently
+        compares an FP32 cumulative probability against a random threshold that is
+        packed to bfloat16. Because the threshold has only bfloat16 resolution, the
+        sampler does not draw from the requested distribution accurately.\\n\\nThe
+        issue has been reproduced on both Wormhole N150 and Blackhole P150. In the
+        reported measurements, candidate tokens with small probabilities were never
+        emitted or were emitted at materially incorrect frequencies. The existing
+        tests primarily check candidate membership, determinism, and valid indices;
+        they do not provide a sufficiently sensitive frequency-based regression test.\\n\\n#
+        \U0001F4A1 Problem to Solve\\n\\nFix the random-threshold path in `ttnn.sampling`
+        so that the threshold used by the comparison has sufficient FP32-level resolution
+        across the supported Wormhole and Blackhole implementations.\\n\\nThe fix
+        must preserve the existing public API and sampling controls, including top-k,
+        top-p, temperature, per-user seeding, reproducibility, and trace replay. The
+        change should not introduce a material performance regression in the decode
+        sampling path.\\n\\nThe main implementation areas are expected to be under:\\n\\n*
+        `ttnn/cpp/ttnn/operations/reduction/sampling/device/`\\n* `ttnn/cpp/ttnn/operations/reduction/sampling/device/kernels/compute/`\\n*
+        `ttnn/cpp/ttnn/operations/reduction/sampling/device/kernels/dataflow/`\\n\\nThe
+        exact implementation approach is not prescribed, provided the acceptance criteria
+        below are met.\\n\\n# \U0001F3AF Acceptance Criteria\\n\\n* [ ] The sampler
+        uses a random threshold with sufficient FP32-level resolution; the threshold
+        must not be limited to the current bfloat16 grid or capped at `255/256` because
+        of the packed representation.\\n* [ ] The corrected behavior is implemented
+        and validated on Wormhole and Blackhole.\\n* [ ] A two-candidate frequency
+        test covers small probabilities, including a case where the current implementation
+        produces a materially biased or zero count.\\n* [ ] A multi-candidate frequency
+        test verifies that low-probability tail candidates are sampled and that equal-probability
+        candidates are sampled homogeneously within a documented statistical tolerance.\\n*
+        [ ] The tests compare observed counts against an explicitly documented reference
+        distribution and use a statistically justified pass/fail criterion.\\n* [
+        ] Existing top-k, top-p, temperature, determinism, valid-index, and reproducibility
+        tests continue to pass.\\n* [ ] Per-user manual-seed reproducibility and trace
+        replay are preserved.\\n* [ ] Sampling performance remains within an agreed
+        tolerance of the baseline for representative batch and width configurations.\\n*
+        [ ] The PR includes the implementation, regression tests, and concise validation
+        results for both architectures.\\n\\n# \U0001F6AB Out of Scope\\n\\n* Changing
+        the public `ttnn.sampling` API.\\n* Replacing the sampler with host-side sampling.\\n*
+        Redesigning the random-number generator globally.\\n* Changing the intended
+        semantics of top-k, top-p, or temperature sampling.\\n* Unrelated RNG seeding
+        or per-row entropy work.\\n* Broad accuracy changes to the approximate softmax
+        or exponential implementation, except where strictly required to validate
+        this threshold fix.\\n\\n# \u23F3 Deadline\\n\\nThe issue may be reopened
+        or reassigned if there is no meaningful progress update within two weeks.
+        The maximum completion window is two months unless otherwise agreed with Tenstorrent.\\n\\n#
+        \U0001F9ED Guidance & Starting Points\\n\\nThe reported root cause is the
+        conversion of the random tile to a 16-bit/bfloat16 representation before the
+        writer compares it with the cumulative probability. Start by tracing the random
+        tile format, the circular-buffer format, and the writer-side comparison together
+        on both architectures.\\n\\nA robust fix should retain the existing index-width
+        and output behavior while increasing the resolution of the random threshold.
+        It should also retain fixed-seed behavior and avoid adding an avoidable program-cache
+        or decode-latency cost.\\n\\nBefore finalizing the test thresholds, validate
+        the reference probabilities and statistical bounds independently on the host.
+        Include the draw count, seed policy, architecture, input distribution, and
+        pass/fail calculation in the PR description or test comments.\\n\\nContributors
+        are welcome to open a draft PR at any stage for feedback. Payment is made
+        only after the completed contribution satisfies the acceptance criteria and
+        is merged.\\n\\n# \U0001F50E Possible Approaches\\n\\n* Construct a higher-resolution
+        uniform threshold from the random data already produced by the sampling path,
+        while preserving deterministic seeded behavior.\\n* Keep the existing 16-bit
+        index path separate from the random-threshold representation so large-vocabulary/index
+        handling is not changed unnecessarily.\\n* Add focused statistical tests first,
+        then use them to validate the device implementation on Wormhole and Blackhole.\\n\\nThese
+        are starting points only; the submitted implementation may use another approach
+        that satisfies the acceptance criteria.\\n\\n# Bounty\\n\\nReward: **$3,000
+        USD**\\n\\nThis bounty is subject to the [Tenstorrent Bounty Program Terms
+        & Conditions](https://docs.tenstorrent.com/bounty_terms.html) and applicable
+        local tax requirements.\", \"reactions\": {\"url\": \"https://api.github.com/repos/tenstorrent/tt-metal/issues/59732/reactions\",
+        \"total_count\": 0, \"+1\": 0, \"-1\": 0, \"laugh\": 0, \"hooray\": 0, \"confused\":
+        0, \"heart\": 0, \"rocket\": 0, \"eyes\": 0}, \"timeline_url\": \"https://api.github.com/repos/tenstorrent/tt-metal/issues/59732/timeline\",
+        \"performed_via_github_app\": null, \"state_reason\": null, \"pinned_comment\":
+        null, \"score\": 1.0}, {\"url\": \"https://api.github.com/repos/Element-Ventures-Canada-Ltd/openchokepoint/issues/3\",
+        \"repository_url\": \"https://api.github.com/repos/Element-Ventures-Canada-Ltd/openchokepoint\",
+        \"labels_url\": \"https://api.github.com/repos/Element-Ventures-Canada-Ltd/openchokepoint/issues/3/labels{/name}\",
+        \"comments_url\": \"https://api.github.com/repos/Element-Ventures-Canada-Ltd/openchokepoint/issues/3/comments\",
+        \"events_url\": \"https://api.github.com/repos/Element-Ventures-Canada-Ltd/openchokepoint/issues/3/events\",
+        \"html_url\": \"https://github.com/Element-Ventures-Canada-Ltd/openchokepoint/issues/3\",
+        \"id\": 5749552086, \"node_id\": \"I_kwDOU9nIsc8AAAABVrMz1g\", \"number\":
+        3, \"title\": \"[Priority] Open call: digital-thread and critical-items register
+        schema for rocket turbopump supply chains\", \"user\": {\"login\": \"redacted\",
+        \"id\": 330289023, \"node_id\": \"U_kgDOE6_Pfw\", \"avatar_url\": \"redacted\",
+        \"gravatar_id\": \"redacted\", \"url\": \"redacted\", \"html_url\": \"redacted\",
+        \"followers_url\": \"redacted\", \"following_url\": \"redacted\", \"gists_url\":
+        \"redacted\", \"starred_url\": \"redacted\", \"subscriptions_url\": \"redacted\",
+        \"organizations_url\": \"redacted\", \"repos_url\": \"redacted\", \"events_url\":
+        \"redacted\", \"received_events_url\": \"redacted\", \"type\": \"User\", \"user_view_type\":
+        \"public\", \"site_admin\": false}, \"labels\": [{\"id\": 12585949101, \"node_id\":
+        \"LA_kwDOU9nIsc8AAAAC7i5XrQ\", \"url\": \"https://api.github.com/repos/Element-Ventures-Canada-Ltd/openchokepoint/labels/schema\",
+        \"name\": \"schema\", \"color\": \"7f0521\", \"default\": false, \"description\":
+        \"Changes to the OpenChokepoint schema\", \"archived_at\": null, \"archived_by\":
+        null}, {\"id\": 12585950828, \"node_id\": \"LA_kwDOU9nIsc8AAAAC7i5ebA\", \"url\":
+        \"https://api.github.com/repos/Element-Ventures-Canada-Ltd/openchokepoint/labels/bounty\",
+        \"name\": \"bounty\", \"color\": \"a2dc27\", \"default\": false, \"description\":
+        \"Bounty-eligible once assigned; see BOUNTIES.md\", \"archived_at\": null,
+        \"archived_by\": null}, {\"id\": 12585951097, \"node_id\": \"LA_kwDOU9nIsc8AAAAC7i5feQ\",
+        \"url\": \"https://api.github.com/repos/Element-Ventures-Canada-Ltd/openchokepoint/labels/priority:%20high\",
+        \"name\": \"priority: high\", \"color\": \"d73a4a\", \"default\": false, \"description\":
+        \"High-priority open call\", \"archived_at\": null, \"archived_by\": null},
+        {\"id\": 12592539878, \"node_id\": \"LA_kwDOU9nIsc8AAAAC7pLo5g\", \"url\":
+        \"https://api.github.com/repos/Element-Ventures-Canada-Ltd/openchokepoint/labels/bounty:major\",
+        \"name\": \"bounty:major\", \"color\": \"73f07c\", \"default\": false, \"description\":
+        \"Tier: module, benchmark component, validated public-source dataset. Nominal
+        C$1,500 (BOUNTIES.md)\", \"archived_at\": null, \"archived_by\": null}], \"state\":
+        \"open\", \"locked\": false, \"assignees\": [], \"milestone\": null, \"comments\":
+        11, \"created_at\": \"2026-10-07T18:03:49Z\", \"updated_at\": \"2026-10-09T20:38:33Z\",
+        \"closed_at\": null, \"assignee\": null, \"author_redacted\": \"MEMBER\",
+        \"issue_field_values\": [], \"type\": null, \"active_lock_reason\": null,
+        \"sub_issues_summary\": {\"total\": 0, \"completed\": 0, \"percent_completed\":
+        0}, \"issue_dependencies_summary\": {\"blocked_by\": 0, \"total_blocked_by\":
+        0, \"blocking\": 0, \"total_blocking\": 0}, \"body\": \"**Track:** Schema
+        \xB7 **Priority:** High \xB7 **Bounty:** Yes, amount to be posted before assignment
+        (see [BOUNTIES.md](https://github.com/Element-Ventures-Canada-Ltd/openchokepoint/blob/main/BOUNTIES.md))
+        \xB7 **Window:** open now, programme runs to 31 March 2027\\n\\nExtends seed-backlog
+        item #7 (Component, Lot, MaterialClass).\\n\\n## Why this matters\\n\\nCanada
+        is building its first domestic launch supply chains. For rocket turbopumps,
+        the binding constraint is not the design. It is the **evidence chain** that
+        proves each part was made, treated, cleaned and inspected the way it must
+        be. A pump geometry without that pedigree cannot be licensed, insured or flown.\\n\\nToday
+        there is no open, shared grammar for that evidence chain. Every programme
+        rebuilds it in spreadsheets. That makes the chain hard to inspect, hard to
+        transfer between suppliers, and fragile when people move on.\\n\\nThis issue
+        invites engineers, quality specialists, data modellers and students to design
+        that grammar in the open. The result will be the reference schema that Canadian
+        and allied programmes can adopt without lock-in.\\n\\n## Problem\\n\\nOpenChokepoint
+        v0.1 can say *who* supplies *what capability*. It cannot yet say:\\n\\n1.
+        **Which physical part** a record refers to (part number, revision, serial).\\n2.
+        **Which material lot** it came from, and through which processing steps.\\n3.
+        **Which evidence** each step produced (a build record, a heat-treatment record,
+        a cleaning certificate, an inspection result) and whether that evidence exists.\\n4.
+        **Which items are critical**: loss of the item would delay a programme by
+        more than 30 days, and whether a qualified alternate exists.\\n\\n## Proposal
+        scope\\n\\nPropose new types and links in `schema/openchokepoint.yaml`. The
+        proposal includes two examples: a synthetic one, and one real-world example
+        drawn only from published reports. A starting sketch, open to challenge:\\n\\n|
+        Proposed type | Purpose |\\n|---|---|\\n| `Component` | A part design: part
+        number and revision. No geometry, no drawings. |\\n| `SerialItem` | One physical
+        instance of a `Component`. |\\n| `MaterialLot` | A batch of feedstock (powder,
+        billet, bar) with its `MaterialClass`. |\\n| `ProcessStep` | One controlled
+        operation: build, stress relief, HIP, heat treatment, machining, finishing,
+        cleaning, inspection, balancing, assembly. |\\n| `EvidenceRecord` | A pointer
+        to proof that a step happened: record kind, issuer, date, and a content hash
+        or public citation. **Never the content itself.** |\\n| `CriticalItem` | A
+        flag on a `Component`, `MaterialLot` or `Capability`: delay impact band, single-source
+        flag, qualified-alternate flag. |\\n\\n| Proposed link | From \u2192 to |\\n|---|---|\\n|
+        `instance_of` | `SerialItem` \u2192 `Component` |\\n| `made_from` | `SerialItem`
+        \u2192 `MaterialLot` |\\n| `underwent` | `SerialItem` \u2192 `ProcessStep`
+        (ordered) |\\n| `evidenced_by` | `ProcessStep` \u2192 `EvidenceRecord` |\\n|
+        `performed_at` | `ProcessStep` \u2192 `Facility` |\\n| `alternate_for` | `Entity`
+        or `Facility` \u2192 `CriticalItem` |\\n\\nAll new objects carry the existing
+        shared properties: `evidence_grade`, `sources`, `as_of`, `lifecycle` and `synthetic`.\\n\\n##
+        Hard boundaries (read before contributing)\\n\\nThis schema records **that**
+        evidence exists and **where** it sits. It must never carry the technical content
+        itself.\\n\\n- **No technical data.** This covers geometry, drawings, CAD,
+        build parameters, process recipes, temperatures, pressures, test data and
+        acceptance limits. Use references, hashes or citations only. Content that
+        could be export-controlled is out of scope and will be rejected.\\n- **Two
+        kinds of example:**\\n  - **Synthetic.** Fictional records, marked `synthetic:
+        true`, under `examples/`.\\n  - **Real-world (one, from public reports only).**
+        Records built solely from **published, publicly released** reports, such as
+        NASA Technical Reports Server papers. They are marked `synthetic: false` and
+        filed under `data/digital-thread/` with a complete `provenance.yaml`. Every
+        record must cite its public source by URL and section.\\n- **No non-public
+        records.** Do not post any organization's internal part, lot, supplier, inspection
+        or test records, even if you have permission to see them. If it has not been
+        publicly released, it does not belong here.\\n- **No assessments on real records.**
+        `CriticalItem` judgments (delay band, single-source and alternate flags) appear
+        in synthetic examples only. They are never recorded against a real organization
+        or part.\\n- **Standards by citation.** Refer to public standards (for example
+        NASA-STD-6033 or ASTM G93) by number and section. Do not copy their text into
+        the repository.\\n- Follow [HANDLING.md](https://github.com/Element-Ventures-Canada-Ltd/openchokepoint/blob/main/HANDLING.md).
+        If you think something sensitive was posted, report it privately via [SECURITY.md](https://github.com/Element-Ventures-Canada-Ltd/openchokepoint/blob/main/SECURITY.md).\\n\\n##
+        Acceptance test\\n\\nA pull request resolves this issue when it meets all
+        of the following:\\n\\n1. `schema/openchokepoint.yaml` adds the agreed types
+        and links, with a version bump to 0.2.0-draft.\\n2. `examples/synthetic-turbopump-thread.yaml`
+        traces at least **one fictional rotor part end to end**: material lot \u2192
+        build \u2192 at least three post-processing steps \u2192 cleaning \u2192 inspection
+        \u2192 assembly. Each step has an `EvidenceRecord`.\\n3. The same synthetic
+        example includes at least **three `CriticalItem` records**: one single-sourced
+        item, one with a qualified alternate, and one with a missing evidence record.\\n4.
+        `data/digital-thread/` holds **one real-world trace**: a publicly documented
+        turbopump component, traced from material lot to serial, or as far as the
+        public record goes. Gaps in the public record are shown as missing `EvidenceRecord`s,
+        not filled by inference. Each record cites its public source and is graded
+        `confirmed` or `reported`.\\n5. `tools/validate.py` validates both examples.
+        It also **rejects**:\\n   - an `EvidenceRecord` that carries inline content
+        instead of a reference, hash or citation;\\n   - a real (`synthetic: false`)
+        record outside `data/`, or one without an https public source;\\n   - a `CriticalItem`
+        on a real record.\\n6. A short doc page, `docs/digital-thread.md`, explains
+        the model in plain language for non-engineers.\\n7. CI passes and the contributor
+        has signed the CLA.\\n\\n## How to take part\\n\\n1. **Comment** with your
+        background and the part you want to own: types, a validator rule, the synthetic
+        example, the real-world example, or the doc. A maintainer assigns it. Unassigned
+        work is not bounty-eligible.\\n2. **Discuss** design choices in this thread
+        before opening a large PR. Disagreement with the sketch above is welcome;
+        that is the point of an open call.\\n3. Splitting the work is fine. A maintainer
+        may break this into sub-issues once owners are assigned.\\n\\nContributions
+        are under Apache-2.0 with the project CLA. Programme maintained by Element
+        Ventures (Canada) Ltd.\\n\\n*Handling: Unclassified \u2014 public*\", \"reactions\":
+        {\"url\": \"https://api.github.com/repos/Element-Ventures-Canada-Ltd/openchokepoint/issues/3/reactions\",
+        \"total_count\": 0, \"+1\": 0, \"-1\": 0, \"laugh\": 0, \"hooray\": 0, \"confused\":
+        0, \"heart\": 0, \"rocket\": 0, \"eyes\": 0}, \"timeline_url\": \"https://api.github.com/repos/Element-Ventures-Canada-Ltd/openchokepoint/issues/3/timeline\",
+        \"performed_via_github_app\": null, \"state_reason\": null, \"pinned_comment\":
+        null, \"score\": 1.0}, {\"url\": \"https://api.github.com/repos/SPLURT-Station/S.P.L.U.R.T-tg/issues/1286\",
+        \"repository_url\": \"https://api.github.com/repos/SPLURT-Station/S.P.L.U.R.T-tg\",
+        \"labels_url\": \"https://api.github.com/repos/SPLURT-Station/S.P.L.U.R.T-tg/issues/1286/labels{/name}\",
+        \"comments_url\": \"https://api.github.com/repos/SPLURT-Station/S.P.L.U.R.T-tg/issues/1286/comments\",
+        \"events_url\": \"https://api.github.com/repos/SPLURT-Station/S.P.L.U.R.T-tg/issues/1286/events\",
+        \"html_url\": \"https://github.com/SPLURT-Station/S.P.L.U.R.T-tg/issues/1286\",
+        \"id\": 5747123052, \"node_id\": \"I_kwDOMEB5Ys8AAAABVo4jbA\", \"number\":
+        1286, \"title\": \"[BOUNTY] Suggestion #1255\", \"user\": {\"login\": \"redacted\",
+        \"id\": 97993072, \"node_id\": \"U_kgDOBddBcA\", \"avatar_url\": \"redacted\",
+        \"gravatar_id\": \"redacted\", \"url\": \"redacted\", \"html_url\": \"redacted\",
+        \"followers_url\": \"redacted\", \"following_url\": \"redacted\", \"gists_url\":
+        \"redacted\", \"starred_url\": \"redacted\", \"subscriptions_url\": \"redacted\",
+        \"organizations_url\": \"redacted\", \"repos_url\": \"redacted\", \"events_url\":
+        \"redacted\", \"received_events_url\": \"redacted\", \"type\": \"User\", \"user_view_type\":
+        \"public\", \"site_admin\": false}, \"labels\": [{\"id\": 8116698395, \"node_id\":
+        \"LA_kwDOMEB5Ys8AAAAB48r9Gw\", \"url\": \"https://api.github.com/repos/SPLURT-Station/S.P.L.U.R.T-tg/labels/bounty\",
+        \"name\": \"bounty\", \"color\": \"5319E7\", \"default\": false, \"description\":
+        \"Bounty with payments offered for completing it\", \"archived_at\": null,
+        \"archived_by\": null}], \"state\": \"open\", \"locked\": false, \"assignees\":
+        [], \"milestone\": null, \"comments\": 3, \"created_at\": \"2026-10-07T14:56:42Z\",
+        \"updated_at\": \"2026-10-09T20:32:13Z\", \"closed_at\": null, \"assignee\":
+        null, \"author_redacted\": \"COLLABORATOR\", \"issue_field_values\": [], \"type\":
+        null, \"active_lock_reason\": null, \"sub_issues_summary\": {\"total\": 0,
+        \"completed\": 0, \"percent_completed\": 0}, \"issue_dependencies_summary\":
+        {\"blocked_by\": 0, \"total_blocked_by\": 0, \"blocking\": 0, \"total_blocking\":
+        0}, \"body\": \"### About the Bounty\\n\\n## Original issue text:\\n\\n**Suggestion:**\\nAllow
+        us to add more than one phobia! Some of us have more than one for our chars
+        but can't mechanicaly apply it.\\n\\n**Reason:**\\n[BOUNTY] if there's a way
+        to implement this without adding a million quirks that comes to mind it would
+        be appreciated\\n\\n**Results:**\\n19x <:In_help:1056296636348899408>\\n0x
+        <:In_harm:1056296637909192794>\\n\\n\\n### Suggestion Reference\\n\\n**Suggested
+        by:** adambo54\\nhttps://discord.com/channels/908082639704064051/1404686278351655055/1557406317612630187\\n\\n###
+        Contact Information\\n\\nContact `mos_ley` in discord for payment information.\\n\\nContact
+        `adambo54` in discord for information about the requirements.\\n\\n### Payment
+        Details\\n\\nPayment methods:\\n- PayPal\\n- Cryptocurrency\\n\\n\", \"reactions\":
+        {\"url\": \"https://api.github.com/repos/SPLURT-Station/S.P.L.U.R.T-tg/issues/1286/reactions\",
+        \"total_count\": 0, \"+1\": 0, \"-1\": 0, \"laugh\": 0, \"hooray\": 0, \"confused\":
+        0, \"heart\": 0, \"rocket\": 0, \"eyes\": 0}, \"timeline_url\": \"https://api.github.com/repos/SPLURT-Station/S.P.L.U.R.T-tg/issues/1286/timeline\",
+        \"performed_via_github_app\": null, \"state_reason\": null, \"pinned_comment\":
+        null, \"score\": 1.0}, {\"url\": \"https://api.github.com/repos/SPLURT-Station/S.P.L.U.R.T-tg/issues/1285\",
+        \"repository_url\": \"https://api.github.com/repos/SPLURT-Station/S.P.L.U.R.T-tg\",
+        \"labels_url\": \"https://api.github.com/repos/SPLURT-Station/S.P.L.U.R.T-tg/issues/1285/labels{/name}\",
+        \"comments_url\": \"https://api.github.com/repos/SPLURT-Station/S.P.L.U.R.T-tg/issues/1285/comments\",
+        \"events_url\": \"https://api.github.com/repos/SPLURT-Station/S.P.L.U.R.T-tg/issues/1285/events\",
+        \"html_url\": \"https://github.com/SPLURT-Station/S.P.L.U.R.T-tg/issues/1285\",
+        \"id\": 5747103845, \"node_id\": \"I_kwDOMEB5Ys8AAAABVo3YZQ\", \"number\":
+        1285, \"title\": \"[BOUNTY] Suggestion #1258\", \"user\": {\"login\": \"redacted\",
+        \"id\": 97993072, \"node_id\": \"U_kgDOBddBcA\", \"avatar_url\": \"redacted\",
+        \"gravatar_id\": \"redacted\", \"url\": \"redacted\", \"html_url\": \"redacted\",
+        \"followers_url\": \"redacted\", \"following_url\": \"redacted\", \"gists_url\":
+        \"redacted\", \"starred_url\": \"redacted\", \"subscriptions_url\": \"redacted\",
+        \"organizations_url\": \"redacted\", \"repos_url\": \"redacted\", \"events_url\":
+        \"redacted\", \"received_events_url\": \"redacted\", \"type\": \"User\", \"user_view_type\":
+        \"public\", \"site_admin\": false}, \"labels\": [{\"id\": 8116698395, \"node_id\":
+        \"LA_kwDOMEB5Ys8AAAAB48r9Gw\", \"url\": \"https://api.github.com/repos/SPLURT-Station/S.P.L.U.R.T-tg/labels/bounty\",
+        \"name\": \"bounty\", \"color\": \"5319E7\", \"default\": false, \"description\":
+        \"Bounty with payments offered for completing it\", \"archived_at\": null,
+        \"archived_by\": null}], \"state\": \"open\", \"locked\": false, \"assignees\":
+        [], \"milestone\": null, \"comments\": 3, \"created_at\": \"2026-10-07T14:55:23Z\",
+        \"updated_at\": \"2026-10-09T21:01:11Z\", \"closed_at\": null, \"assignee\":
+        null, \"author_redacted\": \"COLLABORATOR\", \"issue_field_values\": [], \"type\":
+        null, \"active_lock_reason\": null, \"sub_issues_summary\": {\"total\": 0,
+        \"completed\": 0, \"percent_completed\": 0}, \"issue_dependencies_summary\":
+        {\"blocked_by\": 0, \"total_blocked_by\": 0, \"blocking\": 0, \"total_blocking\":
+        0}, \"body\": \"### About the Bounty\\n\\n## Original issue text:\\n\\n**Suggestion:**\\nMake
+        invisifiber shoes respect the footstep sound choice made in character creation\\n\\n**Reason:**\\n[BOUNTY]
+        okie\\n\\n**Results:**\\n16x <:In_help:1056296636348899408>\\n0x <:In_harm:1056296637909192794>\\n\\n\\n###
+        Suggestion Reference\\n\\n**Suggested by:** hickoryslim\\nhttps://discord.com/channels/908082639704064051/1404686278351655055/1557405984098492519\\n\\n###
+        Contact Information\\n\\nContact `mos_ley` in discord for payment information.\\n\\nContact
+        `hickoryslim` in discord for information about the requirements.\\n\\n###
+        Payment Details\\n\\nPayment methods:\\n- PayPal\\n- Cryptocurrency\\n\\n\",
+        \"reactions\": {\"url\": \"https://api.github.com/repos/SPLURT-Station/S.P.L.U.R.T-tg/issues/1285/reactions\",
+        \"total_count\": 0, \"+1\": 0, \"-1\": 0, \"laugh\": 0, \"hooray\": 0, \"confused\":
+        0, \"heart\": 0, \"rocket\": 0, \"eyes\": 0}, \"timeline_url\": \"https://api.github.com/repos/SPLURT-Station/S.P.L.U.R.T-tg/issues/1285/timeline\",
+        \"performed_via_github_app\": null, \"state_reason\": null, \"pinned_comment\":
+        null, \"score\": 1.0}, {\"url\": \"https://api.github.com/repos/Ikalus1988/MisakaNet/issues/2988\",
+        \"repository_url\": \"https://api.github.com/repos/Ikalus1988/MisakaNet\",
+        \"labels_url\": \"https://api.github.com/repos/Ikalus1988/MisakaNet/issues/2988/labels{/name}\",
+        \"comments_url\": \"https://api.github.com/repos/Ikalus1988/MisakaNet/issues/2988/comments\",
+        \"events_url\": \"https://api.github.com/repos/Ikalus1988/MisakaNet/issues/2988/events\",
+        \"html_url\": \"https://github.com/Ikalus1988/MisakaNet/issues/2988\", \"id\":
+        5746120805, \"node_id\": \"I_kwDOSP_2Ts8AAAABVn7YZQ\", \"number\": 2988, \"title\":
+        \"[Bounty] Answer 2 linked question(s) as a lesson\", \"user\": {\"login\":
+        \"redacted\", \"id\": 41898282, \"node_id\": \"MDM6Qm90NDE4OTgyODI=\", \"avatar_url\":
+        \"redacted\", \"gravatar_id\": \"redacted\", \"url\": \"redacted\", \"html_url\":
+        \"redacted\", \"followers_url\": \"redacted\", \"following_url\": \"redacted\",
+        \"gists_url\": \"redacted\", \"starred_url\": \"redacted\", \"subscriptions_url\":
+        \"redacted\", \"organizations_url\": \"redacted\", \"repos_url\": \"redacted\",
+        \"events_url\": \"redacted\", \"received_events_url\": \"redacted\", \"type\":
+        \"Bot\", \"user_view_type\": \"public\", \"site_admin\": false}, \"labels\":
+        [{\"id\": 11232462358, \"node_id\": \"LA_kwDOSP_2Ts8AAAACnYHGFg\", \"url\":
+        \"https://api.github.com/repos/Ikalus1988/MisakaNet/labels/ready\", \"name\":
+        \"ready\", \"color\": \"ededed\", \"default\": false, \"description\": null,
+        \"archived_at\": null, \"archived_by\": null}, {\"id\": 11393972658, \"node_id\":
+        \"LA_kwDOSP_2Ts8AAAACpyI5sg\", \"url\": \"https://api.github.com/repos/Ikalus1988/MisakaNet/labels/bounty\",
+        \"name\": \"bounty\", \"color\": \"ededed\", \"default\": false, \"description\":
+        null, \"archived_at\": null, \"archived_by\": null}], \"state\": \"open\",
+        \"locked\": false, \"assignees\": [], \"milestone\": null, \"comments\": 5,
+        \"created_at\": \"2026-10-07T13:50:10Z\", \"updated_at\": \"2026-10-09T19:51:10Z\",
+        \"closed_at\": null, \"assignee\": null, \"author_redacted\": \"CONTRIBUTOR\",
+        \"active_lock_reason\": null, \"sub_issues_summary\": {\"total\": 0, \"completed\":
+        0, \"percent_completed\": 0}, \"issue_dependencies_summary\": {\"blocked_by\":
+        0, \"total_blocked_by\": 0, \"blocking\": 0, \"total_blocking\": 0}, \"body\":
+        \"<!-- misakanet-question-bounty:anchor-2833 -->\\n# [Bounty] Answer the 2
+        linked question(s) as a lesson\\n\\n## Context\\n\\nThese intakes ask about
+        something no lesson covers. Measured through the production retrieval path
+        (BM25 plus the IDF-weighted relevance floor), every one of them returns `no_match`
+        \u2014 so there is nothing to link the asker to, and the answer has to be
+        written rather than looked up.\\n\\n- #2833 \u2014 [Question] RE-TEST AFTER
+        #2829 fix merged. Verifying body assembly cap raised to 60000. the\\n- #2844
+        \u2014 [Question] RE-TEST the misakanet dsh mcp intake sidebar fragment is
+        alive the misakanet dsh\\n\\n_Shared vocabulary that grouped them: `alive`,
+        `fragment`, `intake`, `mcp`._\\n\\n## Deliverable\\n\\nA lesson under `lessons/`
+        that answers the question(s) above, following `docs/maintainer/lesson-fields.md`
+        (title / domain / problem / root cause / fix, and a `## Verification` that
+        is a checkable command with an expected result). A written answer in the issue
+        is welcome as a first step, but the lesson is what makes it count \u2014 it
+        is the artifact the corpus keeps and the FAQ is built from.\\n\\n## MANDATORY
+        ACCEPTANCE CRITERIA (AC)\\n\\n**0. REPRODUCIBLE EVIDENCE \u2014 the condition
+        most submissions fail**\\n\\n- [ ] Paste the command you ran and the output
+        you got. Not a description of what you did \u2014 the command and its output.
+        If you name an endpoint it must be `misakanet.org`.\\n- [ ] Say what you observed
+        yourself versus what you read somewhere. A lesson citing a source that does
+        not exist is worse than one citing nothing (`scripts/check_provenance.py`
+        fails on it).\\n\\n**1. The derived artifacts are regenerated \u2014 this
+        is the step that fails CI most often**\\n\\n- [ ] Run the three commands the
+        daily job runs, in this order, and commit what they change:\\n\\n```bash\\npython3
+        scripts/update_lessons_json.py    # data/lessons.json\\npython3 scripts/build_lesson_pages.py
+        \    # docs/lessons/**, docs/topics/**, docs/sitemap.xml\\npython3 scripts/export_okf.py
+        \            # data/okf/lessons.jsonl\\n```\\n\\n  Skipping this fails three
+        tests on every platform \u2014 `test_lesson_page_generator` and\\n  `test_okf_export_freshness`
+        twice \u2014 because a new lesson makes the index, the generated pages and\\n
+        \ the OKF export stale. Measured 2026-09-26 on the first two lesson PRs opened
+        against these tasks.\\n\\n**2. The lesson passes the repository's own gates**\\n\\n-
+        [ ] `python3 scripts/lesson_gate.py <your lesson>` is clean.\\n- [ ] `python3
+        scripts/check_provenance.py --check` does not report a dead source for it.\\n-
+        [ ] `python3 -m pytest tests/ -q` still passes.\\n\\n**3. Answering means
+        being found**\\n\\n- [ ] Your lesson is reachable for the question text that
+        produced this bounty. **Two steps, and the second one is ours, not yours:**\\n
+        \ - run the query locally against a fresh index and paste the result:\\n    `MISAKANET_LESSONS_INDEX=/tmp/idx.json
+        python3 scripts/update_lessons_json.py` then search that file for the question's
+        words (`grep -i`), or run the shipped search over the corpus (`python3 search_knowledge.py
+        \\\"<question>\\\"`);\\n  - after the merge, a maintainer confirms it against
+        the **hosted** `misakanet_search` once the daily index job has run. Measured
+        2026-09-26: the live index lagged the corpus by hours (and froze outright
+        for seven of them), so \\\"the hosted search finds it\\\" cannot be a condition
+        you satisfy before the merge \u2014 a submission was failed by us for a state
+        we caused.\\n\\n**4. Claiming**\\n\\n- [ ] Comment `/try` (or `/claim`) so
+        others know you are on it; one open PR per task. The claim rules are in `JOIN.md`
+        and `CONTRIBUTING.md`.\\n\\n## What the reward is, stated plainly\\n\\n**This
+        is a `zero-bounty` task: $0.** The reward is merge credit, a leaderboard entry
+        and a line in the Hall of Fame. A real bounty exists only when someone funds
+        it by commenting `/reward <amount>` on this issue \u2014 the money is held
+        and paid by Opire, not by this repository. If you want this one funded, say
+        so; if nobody funds it, it is still worth doing, because the answer gets reused
+        by every agent that hits the same thing.\\n\\n## Closes\\n\\nA merged lesson
+        closes this task **and** the questions above (link them with `Fixes #N` so
+        the receipt rule applies). If you cannot finish it, comment here and it goes
+        back to the pool.\\n\\n<sub>Opened automatically by `scripts/question_autopilot.py`
+        from measured coverage of the open questions. The grouping is a suggestion:
+        if these are not really one question, say so and this task will be split.</sub>\\n<br/>\\n<hr/>\\n\\n<details><summary>This
+        repo is using Opire - what does it mean? \U0001F447</summary><br/>\U0001F4B5
+        Everyone can add rewards for this issue commenting <code>/reward 100</code>
+        (replace <code>100</code> with the amount).<br/>\U0001F575\uFE0F\u200D\u2642\uFE0F
+        If someone starts working on this issue to earn the rewards, they can comment
+        <code>/try</code> to let everyone know!<br/>\U0001F64C And when they open
+        the PR, they can comment <code>/claim #2988</code> either in the PR description
+        or in a PR's comment.<br/><br/>\U0001FA99 Also, everyone can tip any user
+        commenting <code>/tip 20 @github-actions[bot]</code> (replace <code>20</code>
+        with the amount, and <code>@github-actions[bot]</code> with the user to tip).<br/><br/>\U0001F4D6
+        If you want to learn more, check out our <a href=\\\"https://docs.opire.dev\\\">documentation</a>.</details>\",
+        \"reactions\": {\"url\": \"https://api.github.com/repos/Ikalus1988/MisakaNet/issues/2988/reactions\",
+        \"total_count\": 0, \"+1\": 0, \"-1\": 0, \"laugh\": 0, \"hooray\": 0, \"confused\":
+        0, \"heart\": 0, \"rocket\": 0, \"eyes\": 0}, \"timeline_url\": \"https://api.github.com/repos/Ikalus1988/MisakaNet/issues/2988/timeline\",
+        \"performed_via_github_app\": null, \"state_reason\": null, \"pinned_comment\":
+        null, \"score\": 1.0}, {\"url\": \"https://api.github.com/repos/zhangjiayang6835-cyber/bounty-plaza/issues/1828\",
+        \"repository_url\": \"https://api.github.com/repos/zhangjiayang6835-cyber/bounty-plaza\",
+        \"labels_url\": \"https://api.github.com/repos/zhangjiayang6835-cyber/bounty-plaza/issues/1828/labels{/name}\",
+        \"comments_url\": \"https://api.github.com/repos/zhangjiayang6835-cyber/bounty-plaza/issues/1828/comments\",
+        \"events_url\": \"https://api.github.com/repos/zhangjiayang6835-cyber/bounty-plaza/issues/1828/events\",
+        \"html_url\": \"https://github.com/zhangjiayang6835-cyber/bounty-plaza/issues/1828\",
+        \"id\": 5742162145, \"node_id\": \"I_kwDOTR3Rz88AAAABVkJw4Q\", \"number\":
+        1828, \"title\": \"[Bounty] \U0001F4B0 Donate $10-$100 USDT/USDC \u2014 Support
+        VeloDAG Core Rust Dev\", \"user\": {\"login\": \"redacted\", \"id\": 288065324,
+        \"node_id\": \"U_kgDOESuHLA\", \"avatar_url\": \"redacted\", \"gravatar_id\":
+        \"redacted\", \"url\": \"redacted\", \"html_url\": \"redacted\", \"followers_url\":
+        \"redacted\", \"following_url\": \"redacted\", \"gists_url\": \"redacted\",
+        \"starred_url\": \"redacted\", \"subscriptions_url\": \"redacted\", \"organizations_url\":
+        \"redacted\", \"repos_url\": \"redacted\", \"events_url\": \"redacted\", \"received_events_url\":
+        \"redacted\", \"type\": \"User\", \"user_view_type\": \"public\", \"site_admin\":
+        false}, \"labels\": [{\"id\": 11494155492, \"node_id\": \"LA_kwDOTR3Rz88AAAACrRrk5A\",
+        \"url\": \"https://api.github.com/repos/zhangjiayang6835-cyber/bounty-plaza/labels/bounty\",
+        \"name\": \"bounty\", \"color\": \"5319E7\", \"default\": false, \"description\":
+        null, \"archived_at\": null, \"archived_by\": null}, {\"id\": 11494468630,
+        \"node_id\": \"LA_kwDOTR3Rz88AAAACrR-sFg\", \"url\": \"https://api.github.com/repos/zhangjiayang6835-cyber/bounty-plaza/labels/real\",
+        \"name\": \"real\", \"color\": \"ededed\", \"default\": false, \"description\":
+        null, \"archived_at\": null, \"archived_by\": null}], \"state\": \"open\",
+        \"locked\": false, \"assignees\": [], \"milestone\": null, \"comments\": 5,
+        \"created_at\": \"2026-10-07T08:52:34Z\", \"updated_at\": \"2026-10-09T20:21:31Z\",
+        \"closed_at\": null, \"assignee\": null, \"author_redacted\": \"OWNER\", \"active_lock_reason\":
+        null, \"sub_issues_summary\": {\"total\": 0, \"completed\": 0, \"percent_completed\":
+        0}, \"issue_dependencies_summary\": {\"blocked_by\": 0, \"total_blocked_by\":
+        0, \"blocking\": 0, \"total_blocking\": 0}, \"body\": \"### \u8D4F\u91D1\u5E73\u53F0
+        / Platform\\nGitHub\\n\\n### \u539F\u59CB\u94FE\u63A5 / Source URL\\nhttps://github.com/quantumchain-core/velodag-core/issues/2\\n\\n###
+        \u6F0F\u6D1E\u63CF\u8FF0 / Description\\n\U0001F4B0 Donate $10-$100 USDT/USDC
+        \u2014 Support VeloDAG Core Rust Dev\\n\\n### Looking for small bug bounties
+        & sponsors\\n\\nBuilding VeloDAG Core in Rust (post-quantum BlockDAG).\\n\\nIf
+        you want to fund a bug fix or donate $10-$100 in stablecoins (USDT / USDC):\\n\\n-
+        Comment \\\"interested in funding\\\" on this issue\\n- I will share wallet
+        address privately (DM / email)\\n\\nNo Stripe/PayPal needed. TRC20 supported
+        for low fees.\\n\\n**Bugs open for funding:**\\n- P2P, GhostDAG, crypto perf,
+        CLI\\n\\nThanks for support \u2014 sponsors get credit in README.\\n\\n###
+        \u79EF\u5206\u5E01\u5956\u52B1 / Coin Reward\\n125 coins\\n\\n### \u771F\u5B9E\u8D4F\u91D1\uFF08USD\uFF09/
+        Real Reward\\n$100\\n\\n### \u96BE\u5EA6 / Difficulty\\nMedium\\n\\n### \u8BA4\u9886\u65B9\u5F0F\\n\u8BC4\u8BBA
+        `/claim` \u9501\u5B9A\u4EFB\u52A1 24h\\n\\n### \u5151\u6362\u8BF4\u660E\\n>
+        \u67E5\u770B [REWARD_POLICY.md](REWARD_POLICY.md) \u4E86\u89E3\u5151\u6362\u89C4\u5219\\n\",
+        \"reactions\": {\"url\": \"https://api.github.com/repos/zhangjiayang6835-cyber/bounty-plaza/issues/1828/reactions\",
+        \"total_count\": 0, \"+1\": 0, \"-1\": 0, \"laugh\": 0, \"hooray\": 0, \"confused\":
+        0, \"heart\": 0, \"rocket\": 0, \"eyes\": 0}, \"timeline_url\": \"https://api.github.com/repos/zhangjiayang6835-cyber/bounty-plaza/issues/1828/timeline\",
+        \"performed_via_github_app\": null, \"state_reason\": null, \"pinned_comment\":
+        null, \"score\": 1.0}, {\"url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/issues/349\",
+        \"repository_url\": \"https://api.github.com/repos/AstralDeep/AstralDeep\",
+        \"labels_url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/issues/349/labels{/name}\",
+        \"comments_url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/issues/349/comments\",
+        \"events_url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/issues/349/events\",
+        \"html_url\": \"https://github.com/AstralDeep/AstralDeep/issues/349\", \"id\":
+        5738923348, \"node_id\": \"I_kwDORPrtwM8AAAABVhEFVA\", \"number\": 349, \"title\":
+        \"Add a bounded offline prompt-optimization pilot with held-out evaluation\",
+        \"user\": {\"login\": \"redacted\", \"id\": 16158892, \"node_id\": \"MDQ6VXNlcjE2MTU4ODky\",
+        \"avatar_url\": \"redacted\", \"gravatar_id\": \"redacted\", \"url\": \"redacted\",
+        \"html_url\": \"redacted\", \"followers_url\": \"redacted\", \"following_url\":
+        \"redacted\", \"gists_url\": \"redacted\", \"starred_url\": \"redacted\",
+        \"subscriptions_url\": \"redacted\", \"organizations_url\": \"redacted\",
+        \"repos_url\": \"redacted\", \"events_url\": \"redacted\", \"received_events_url\":
+        \"redacted\", \"type\": \"User\", \"user_view_type\": \"public\", \"site_admin\":
+        false}, \"labels\": [{\"id\": 10202954255, \"node_id\": \"LA_kwDORPrtwM8AAAACYCS6Dw\",
+        \"url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/labels/enhancement\",
+        \"name\": \"enhancement\", \"color\": \"a2eeef\", \"default\": true, \"description\":
+        \"New feature or request\", \"archived_at\": null, \"archived_by\": null},
+        {\"id\": 12483823448, \"node_id\": \"LA_kwDORPrtwM8AAAAC6BgHWA\", \"url\":
+        \"https://api.github.com/repos/AstralDeep/AstralDeep/labels/bounty\", \"name\":
+        \"bounty\", \"color\": \"6366F1\", \"default\": false, \"description\": \"Approved
+        points-based community task\", \"archived_at\": null, \"archived_by\": null},
+        {\"id\": 12483823866, \"node_id\": \"LA_kwDORPrtwM8AAAAC6BgI-g\", \"url\":
+        \"https://api.github.com/repos/AstralDeep/AstralDeep/labels/points:200\",
+        \"name\": \"points:200\", \"color\": \"8B5CF6\", \"default\": false, \"description\":
+        \"200 recognition points\", \"archived_at\": null, \"archived_by\": null},
+        {\"id\": 12483824341, \"node_id\": \"LA_kwDORPrtwM8AAAAC6BgK1Q\", \"url\":
+        \"https://api.github.com/repos/AstralDeep/AstralDeep/labels/track:security\",
+        \"name\": \"track:security\", \"color\": \"06B6D4\", \"default\": false, \"description\":
+        \"Security, authority, and LETS\", \"archived_at\": null, \"archived_by\":
+        null}, {\"id\": 12483824410, \"node_id\": \"LA_kwDORPrtwM8AAAAC6BgLGg\", \"url\":
+        \"https://api.github.com/repos/AstralDeep/AstralDeep/labels/track:reusability\",
+        \"name\": \"track:reusability\", \"color\": \"06B6D4\", \"default\": false,
+        \"description\": \"Independent reusable components\", \"archived_at\": null,
+        \"archived_by\": null}, {\"id\": 12483824671, \"node_id\": \"LA_kwDORPrtwM8AAAAC6BgMHw\",
+        \"url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/labels/priority:P3\",
+        \"name\": \"priority:P3\", \"color\": \"7F8C8D\", \"default\": false, \"description\":
+        \"Lower priority\", \"archived_at\": null, \"archived_by\": null}], \"state\":
+        \"open\", \"locked\": false, \"assignees\": [], \"milestone\": null, \"comments\":
+        4, \"created_at\": \"2026-10-07T03:32:29Z\", \"updated_at\": \"2026-10-09T21:26:04Z\",
+        \"closed_at\": null, \"assignee\": null, \"author_redacted\": \"CONTRIBUTOR\",
+        \"issue_field_values\": [], \"type\": null, \"active_lock_reason\": null,
+        \"sub_issues_summary\": {\"total\": 0, \"completed\": 0, \"percent_completed\":
+        0}, \"issue_dependencies_summary\": {\"blocked_by\": 0, \"total_blocked_by\":
+        0, \"blocking\": 0, \"total_blocking\": 0}, \"body\": \"## Problem or idea\\n\\nAstral
+        already conditions drafts on successful examples and scores tool trajectories.
+        Selected current source reads did not establish a metric-driven task-prompt
+        workbench with disjoint search, selection and final evaluation sets. Stanford-origin
+        DSPy and newer GEPA motivate one measured development-time experiment. Their
+        paper results do not demonstrate gains or clinical safety for Astral.\\n\\n##
+        Expected outcome\\n\\nImplement one bounded offline workbench that proposes/tests
+        allowlisted task-instruction text and exports an inert reviewed candidate/report.
+        Required CI uses deterministic scripted proposals and provider doubles; optional
+        real-model qualification uses existing authorized provider controls. No automatic
+        production prompt adoption.\\n\\n## Environment\\n\\nMVP mode; owning repository:
+        AstralDeep; production Python 3.11. Reviewed current remote main: `8d82a0b48493e5018bdf81a4f59c189a8b045f6b`
+        (2026-10-06). Relevant source seams were rechecked against the earlier research
+        baseline. Upstream commits are investigation snapshots, not approved dependency
+        releases. No implementation, measured benefit or live qualification is claimed.\\n\\n##
+        Acceptance checks\\n\\n- [ ] Choose one small existing non-PHI task prompt
+        with independent deterministic schema/answer/evidence metrics. Optimize only
+        an allowlisted task-instruction string. Freeze system/security policy, tool
+        schemas, dispatch, credentials, model/profile and permissions; no Flex/executable-code
+        optimization, uploaded pickle/cloudpickle program or autonomous agent loop.\\n-
+        [ ] Freeze disjoint train, selection-validation and untouched final held-out
+        partitions with identities/digests and independent labels. Neither final results
+        nor hidden duplicate cases can enter reflection/selection. Omitted or empty
+        validation must fail configuration rather than silently use training data;
+        after final evaluation, further tuning requires a new explicitly designated
+        final hold-out.\\n- [ ] Bind the optimizer and both reflection/evaluation
+        model calls to current owner/provider/PHI/egress/accounting controls. Optional
+        real-model search is explicitly configured development work outside live requests;
+        do not construct ambient-credential vendor clients, execute provider-hosted
+        tools or export user/clinical data to a tracking platform.\\n- [ ] Bound total
+        reflection plus evaluation calls, tokens, retries, concurrency and outputs.
+        Reserve a conservative configured token/cost upper bound before each admitted
+        call, then reconcile actual usage/cost afterward. The examined dspy.GEPA rejects
+        max_reflection_cost; a metric-call count alone is not a total budget. Unknown/incomplete
+        accounting, cancellation and exhausted budgets remain visible and cannot produce
+        an unqualified success.\\n- [ ] Treat candidate prompts and feedback as untrusted
+        bounded text. Validate artifact schema, allowed target fields, encoding and
+        size while policy/schema/permission configuration remains immutable regardless
+        of candidate text. Never interpret candidate text as code, tool declarations
+        or authority. This does not claim to detect every malicious textual instruction.
+        Use visible outputs and safe tool receipts for feedback; inaccessible hidden
+        reasoning is not required.\\n- [ ] Export inert prompt-text JSON plus a candidate-bound
+        report containing baseline/candidate hashes, fixture/source/optimizer/model
+        identities, selection and untouched held-out results, full call/cost/failure
+        inventory and a qualified adoption/rejection recommendation. Never auto-load
+        generated Python, patch production prompts or promote from training scores.\\n-
+        [ ] Provide real runnable optimizer/metric/export plumbing and scripted deterministic
+        CI, with an optional actual authorized synthetic model run for qualification.
+        A well-supported negative result may retain the baseline; never substitute
+        a fake successful search or omit infrastructure/budget failures.\\n- [ ] Exercise
+        denied provider/data requests, owner isolation, policy preservation, held-out
+        leakage, deterministic selection, cancellation, malformed output, budget exhaustion
+        and failure recovery. Ordinary reviewed source changes and applicable gates
+        must precede any later production adoption.\\n- [ ] Cover golden, edge, denial,
+        cancellation and failure paths. Retain at least 90% changed-Python-line coverage,
+        all owning repository gates and required deterministic/offline CI jobs within
+        30 minutes. No live third-party services, soak tests, shared-runner wall-clock
+        pass bounds, gate weakening or retries that hide failures. Record exact checks
+        and distinguish source review, test-passing, live qualification and deployment.\\n-
+        [ ] Preserve Keycloak-only IAM, owner/project isolation, RFC 8693 attenuation,
+        ordinary tool/PHI/egress/confirmation gates, LETS and hash-chained audit.
+        Declare and pin any new dependencies/assets in their owning manifest. Durable
+        mechanics belong in Plane; reusable rendering in Projection. No schema, shared
+        UI contract, component pin, production default or release change is implicit.\\n\\n##
+        Supporting details\\n\\n**Bounty: 200 recognition points. Points only; no
+        monetary payment.** One qualifying PR merged into main closes this issue for
+        one bounty award. Avoid closing multiple eligible bounties with one PR. No
+        assignee is reserved by opening this issue.\\n\\nScope: one allowed task prompt,
+        an offline optimization workbench and review artifact. [#317](https://github.com/AstralDeep/AstralDeep/issues/317),
+        [#320](https://github.com/AstralDeep/AstralDeep/issues/320) and [#338](https://github.com/AstralDeep/AstralDeep/issues/338)
+        retain their diagnostic corpora/replay; reuse suitable fixture/rubric seams
+        without duplicating those features. [#274](https://github.com/AstralDeep/AstralDeep/issues/274)/[#275](https://github.com/AstralDeep/AstralDeep/issues/275)
+        retain runtime harness/profile rollout and [#316](https://github.com/AstralDeep/AstralDeep/issues/316)
+        context accounting. No new UI, persistence or deployed agent framework.\\n\\nDebt:
+        one prompt/task and small synthetic partitions; clinician calibration, broad
+        model comparisons and production adoption are separate. DSPy may start in
+        a declared isolated development extra/environment; source metadata compatibility
+        is not dependency resolution qualification.\\n\\nSource evidence, accessed
+        2026-10-06:\\n- [Current successful-exemplar conditioning](https://github.com/AstralDeep/AstralDeep/blob/8d82a0b48493e5018bdf81a4f59c189a8b045f6b/backend/orchestrator/draft_archive.py),
+        [trajectory evaluation](https://github.com/AstralDeep/AstralDeep/blob/8d82a0b48493e5018bdf81a4f59c189a8b045f6b/backend/orchestrator/agent_eval.py)\\n-
+        [DSPy GEPA wrapper](https://github.com/stanfordnlp/dspy/blob/bc8af7ed3d5ee0b892211e5c03274396442a413c/dspy/teleprompt/gepa/gepa.py),
+        [manifest](https://github.com/stanfordnlp/dspy/blob/bc8af7ed3d5ee0b892211e5c03274396442a413c/pyproject.toml).
+        MIT; Python >=3.10,<3.15; inspected dependency set includes gepa[dspy]==0.1.4,
+        LiteLLM and cloudpickle. Missing validation defaults to training; cost support
+        and code-optimization defaults require explicit constraints.\\n- [GEPA: Reflective
+        Prompt Evolution Can Outperform Reinforcement Learning \u2014 Lakshya A Agrawal,
+        Shangyin Tan, Dilara Soylu et al.; ICLR 2026, peer-reviewed, full authors/paper
+        in proceedings](https://proceedings.iclr.cc/paper_files/paper/2026/hash/0e9e708b6f48e14fd0ac29e167413f76-Abstract-Conference.html).
+        Its six-task results motivate this pilot rather than predict Astral gains.\\n-
+        [DSPy: Compiling Declarative Language Model Calls into State-of-the-Art Pipelines
+        \u2014 Omar Khattab et al.; ICLR 2024, peer-reviewed](https://proceedings.iclr.cc/paper_files/paper/2024/hash/f1cf02ce09757f57c3b93c0db83181e0-Abstract-Conference.html).
+        Older interface reference; compare the newer GEPA method rather than assume
+        the original optimizer remains best.\\n\", \"reactions\": {\"url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/issues/349/reactions\",
+        \"total_count\": 0, \"+1\": 0, \"-1\": 0, \"laugh\": 0, \"hooray\": 0, \"confused\":
+        0, \"heart\": 0, \"rocket\": 0, \"eyes\": 0}, \"timeline_url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/issues/349/timeline\",
+        \"performed_via_github_app\": null, \"state_reason\": null, \"pinned_comment\":
+        null, \"score\": 1.0}, {\"url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/issues/348\",
+        \"repository_url\": \"https://api.github.com/repos/AstralDeep/AstralDeep\",
+        \"labels_url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/issues/348/labels{/name}\",
+        \"comments_url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/issues/348/comments\",
+        \"events_url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/issues/348/events\",
+        \"html_url\": \"https://github.com/AstralDeep/AstralDeep/issues/348\", \"id\":
+        5738922794, \"node_id\": \"I_kwDORPrtwM8AAAABVhEDKg\", \"number\": 348, \"title\":
+        \"Qualify owner-scoped semantic memory retrieval and reranking\", \"user\":
+        {\"login\": \"redacted\", \"id\": 16158892, \"node_id\": \"MDQ6VXNlcjE2MTU4ODky\",
+        \"avatar_url\": \"redacted\", \"gravatar_id\": \"redacted\", \"url\": \"redacted\",
+        \"html_url\": \"redacted\", \"followers_url\": \"redacted\", \"following_url\":
+        \"redacted\", \"gists_url\": \"redacted\", \"starred_url\": \"redacted\",
+        \"subscriptions_url\": \"redacted\", \"organizations_url\": \"redacted\",
+        \"repos_url\": \"redacted\", \"events_url\": \"redacted\", \"received_events_url\":
+        \"redacted\", \"type\": \"User\", \"user_view_type\": \"public\", \"site_admin\":
+        false}, \"labels\": [{\"id\": 10202954255, \"node_id\": \"LA_kwDORPrtwM8AAAACYCS6Dw\",
+        \"url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/labels/enhancement\",
+        \"name\": \"enhancement\", \"color\": \"a2eeef\", \"default\": true, \"description\":
+        \"New feature or request\", \"archived_at\": null, \"archived_by\": null},
+        {\"id\": 12483823448, \"node_id\": \"LA_kwDORPrtwM8AAAAC6BgHWA\", \"url\":
+        \"https://api.github.com/repos/AstralDeep/AstralDeep/labels/bounty\", \"name\":
+        \"bounty\", \"color\": \"6366F1\", \"default\": false, \"description\": \"Approved
+        points-based community task\", \"archived_at\": null, \"archived_by\": null},
+        {\"id\": 12483823866, \"node_id\": \"LA_kwDORPrtwM8AAAAC6BgI-g\", \"url\":
+        \"https://api.github.com/repos/AstralDeep/AstralDeep/labels/points:200\",
+        \"name\": \"points:200\", \"color\": \"8B5CF6\", \"default\": false, \"description\":
+        \"200 recognition points\", \"archived_at\": null, \"archived_by\": null},
+        {\"id\": 12483824341, \"node_id\": \"LA_kwDORPrtwM8AAAAC6BgK1Q\", \"url\":
+        \"https://api.github.com/repos/AstralDeep/AstralDeep/labels/track:security\",
+        \"name\": \"track:security\", \"color\": \"06B6D4\", \"default\": false, \"description\":
+        \"Security, authority, and LETS\", \"archived_at\": null, \"archived_by\":
+        null}, {\"id\": 12483824410, \"node_id\": \"LA_kwDORPrtwM8AAAAC6BgLGg\", \"url\":
+        \"https://api.github.com/repos/AstralDeep/AstralDeep/labels/track:reusability\",
+        \"name\": \"track:reusability\", \"color\": \"06B6D4\", \"default\": false,
+        \"description\": \"Independent reusable components\", \"archived_at\": null,
+        \"archived_by\": null}, {\"id\": 12483824671, \"node_id\": \"LA_kwDORPrtwM8AAAAC6BgMHw\",
+        \"url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/labels/priority:P3\",
+        \"name\": \"priority:P3\", \"color\": \"7F8C8D\", \"default\": false, \"description\":
+        \"Lower priority\", \"archived_at\": null, \"archived_by\": null}], \"state\":
+        \"open\", \"locked\": false, \"assignees\": [], \"milestone\": null, \"comments\":
+        3, \"created_at\": \"2026-10-07T03:32:25Z\", \"updated_at\": \"2026-10-09T21:50:06Z\",
+        \"closed_at\": null, \"assignee\": null, \"author_redacted\": \"CONTRIBUTOR\",
+        \"issue_field_values\": [], \"type\": null, \"active_lock_reason\": null,
+        \"sub_issues_summary\": {\"total\": 0, \"completed\": 0, \"percent_completed\":
+        0}, \"issue_dependencies_summary\": {\"blocked_by\": 0, \"total_blocked_by\":
+        0, \"blocking\": 0, \"total_blocking\": 0}, \"body\": \"## Problem or idea\\n\\nCurrent
+        memory_search filters live owner/project rows, constructs literal-token seeds
+        and optionally scores/expands them with recency, importance and PPR. With
+        no lexical seeds it returns empty before graph expansion. Existing LLM Factory
+        embeddings do not mean memory recall consumes vectors. A reranker alone cannot
+        recover a missing candidate. HF TEI, BAAI/BGE and newer Qwen text retrieval
+        models motivate a bounded comparison, not a predicted accuracy gain.\\n\\n##
+        Expected outcome\\n\\nDeliver a runnable, read-only qualification pilot for
+        bounded semantic candidate generation and optional reranking of synthetic
+        non-PHI personalization memory. Compare actual baseline, semantic candidates
+        and ordering separately; export candidate-bound evidence supporting an explicit
+        adoption/rejection decision. Keep production retrieval defaults unchanged
+        until ordinary qualified adoption.\\n\\n## Environment\\n\\nMVP mode; owning
+        repository: AstralDeep; production Python 3.11. Reviewed current remote main:
+        `8d82a0b48493e5018bdf81a4f59c189a8b045f6b` (2026-10-06). Relevant source seams
+        were rechecked against the earlier research baseline. Upstream commits are
+        investigation snapshots, not approved dependency releases. No implementation,
+        measured benefit or live qualification is claimed.\\n\\n## Acceptance checks\\n\\n-
+        [ ] Freeze independently labeled synthetic query/memory cases with immutable
+        identities, labels/rationales and digests. Include paraphrases/synonyms with
+        zero exact overlap, lexical ambiguity, negation, contradiction/supersession,
+        owner/project/time boundaries, graph expansion, tampering and instruction-bearing
+        rows. Separate selection cases from untouched final evaluation.\\n- [ ] Reproduce
+        the actual current lexical/multisignal/PPR baseline and its empty-seed behavior
+        through a non-reinforcing read seam. Do not invoke live memory_search only
+        to measure it, because recall reinforces rows. Keep this scope on personalization
+        memory, distinct from exact tool-observation recall.\\n- [ ] Implement bounded
+        semantic candidate generation on an already authorized owner/project snapshot;
+        apply live/tamper/temporal filters before inference and revalidate any selected
+        identity before return. An optional reranker orders only that authorized candidate
+        set. No model response can add a foreign, stale, deleted or otherwise unauthorized
+        row.\\n- [ ] Use one explicitly approved local inference boundary through
+        existing factory/provider/PHI/egress controls, or a separately declared offline
+        diagnostic runtime with synthetic data only. Pin package/image/model/tokenizer
+        revisions, licenses/notices and asset digests; no ambient provider keys, arbitrary
+        endpoint fallback, hosted inference, automatic downloads or remote model-code
+        execution. Missing/unqualified assets produce truthful unavailable status.\\n-
+        [ ] Qualify the actual model/runtime/API combination. TEI exposes /v1/embeddings
+        and a separate /rerank route; do not assume /v1/rerank or that an examined
+        TEI build supports every Qwen reranker. Validate finite scores/vectors, dimensions,
+        stable row association, duplicate/missing/out-of-range indices and malformed/truncated
+        output.\\n- [ ] Bound snapshot/candidate bytes and count, tokens, batch/concurrency,
+        outputs, calls/retries and host runtime. Any prototype cache is ephemeral
+        and bound to owner/project, source revision/digest, model/profile and expiry;
+        invalidate/reject stale state. No new vector database, direct SQL, durable
+        embedding index or recall/write policy is included; durable changes belong
+        in separately qualified Plane work.\\n- [ ] Report candidate recall@K and
+        ordering measures such as nDCG@K separately for baseline, semantic-only and
+        optional reranked variants, with negative cases/failures and resource/cost
+        inventory. A ranking gain cannot conceal candidate misses or authorization
+        regressions. Results are relevance evidence, not fact truth, calibrated medical
+        certainty or permission.\\n- [ ] Provide deterministic provider doubles/scripted
+        fixtures for required CI. Separately perform at least one bounded manual local
+        synthetic run with the actual pinned model/runtime/profile before claiming
+        that combination qualified; unavailable or unexecuted profiles remain unqualified,
+        and doubles cannot establish model/runtime qualification. Export baseline/candidate/config/fixture
+        identities and an honest adoption or rejection report; no automatic production
+        promotion or fabricated model pass.\\n- [ ] Cover golden, edge, denial, cancellation
+        and failure paths. Retain at least 90% changed-Python-line coverage, all owning
+        repository gates and required deterministic/offline CI jobs within 30 minutes.
+        No live third-party services, soak tests, shared-runner wall-clock pass bounds,
+        gate weakening or retries that hide failures. Record exact checks and distinguish
+        source review, test-passing, live qualification and deployment.\\n- [ ] Preserve
+        Keycloak-only IAM, owner/project isolation, RFC 8693 attenuation, ordinary
+        tool/PHI/egress/confirmation gates, LETS and hash-chained audit. Declare and
+        pin any new dependencies/assets in their owning manifest. Durable mechanics
+        belong in Plane; reusable rendering in Projection. No schema, shared UI contract,
+        component pin, production default or release change is implicit.\\n\\n## Supporting
+        details\\n\\n**Bounty: 200 recognition points. Points only; no monetary payment.**
+        One qualifying PR merged into main closes this issue for one bounty award.
+        Avoid closing multiple eligible bounties with one PR. No assignee is reserved
+        by opening this issue.\\n\\nScope: one semantic personalization-retrieval
+        qualification, not a new RAG platform, clinical extractor, vector store or
+        provider SDK integration. [#271](https://github.com/AstralDeep/AstralDeep/issues/271),
+        [#272](https://github.com/AstralDeep/AstralDeep/issues/272) and [#273](https://github.com/AstralDeep/AstralDeep/issues/273)
+        retain feature-093 exact tool-observation recall/compaction/adoption evidence;
+        [#316](https://github.com/AstralDeep/AstralDeep/issues/316) retains general
+        context accounting. Optional reranking belongs in this issue, not a second
+        bounty.\\n\\nDebt: bounded synthetic non-PHI cases, one small text model/profile
+        and linear owner-scoped candidates/ephemeral state. Actual store size, clinical
+        relevance, persistent indexing and multimodal retrieval remain separate. Qwen's
+        examined example repository had no detected root license; a model-card license
+        does not grant example-code permission.\\n\\nSource evidence, accessed 2026-10-06:\\n-
+        [Current memory_search](https://github.com/AstralDeep/AstralDeep/blob/8d82a0b48493e5018bdf81a4f59c189a8b045f6b/backend/personalization/memory_tools.py#L411),
+        [scoring](https://github.com/AstralDeep/AstralDeep/blob/8d82a0b48493e5018bdf81a4f59c189a8b045f6b/backend/personalization/retrieval_scoring.py),
+        [existing factory embedding tool](https://github.com/AstralDeep/AstralDeep/blob/8d82a0b48493e5018bdf81a4f59c189a8b045f6b/backend/agents/ml_services/llm_factory_tools.py)\\n-
+        [HF TEI source](https://github.com/huggingface/text-embeddings-inference/tree/56964585069318d01ddeeec9454a952a66f1d3a2),
+        [official endpoint/local deployment guide](https://huggingface.co/docs/text-embeddings-inference/quick_tour);
+        Apache 2.0 service code, model permissions separate.\\n- [BAAI FlagEmbedding,
+        MIT code](https://github.com/FlagOpen/FlagEmbedding/tree/fd1a2bdf69488ffebe0327999d4400d8c8058a0b)\\n-
+        [Qwen3-Reranker-0.6B model metadata, Apache 2.0 declaration](https://huggingface.co/Qwen/Qwen3-Reranker-0.6B/blob/e61197ed45024b0ed8a2d74b80b4d909f1255473/README.md);
+        weights/runtime were not executed or qualified.\\n- [Qwen3 Embedding: Advancing
+        Text Embedding and Reranking Through Foundation Models \u2014 Yanzhao Zhang,
+        Mingxin Li, Dingkun Long et al.; arXiv 2506.05176, June 2025 technical-report
+        preprint](https://arxiv.org/abs/2506.05176)\\n- [ModernBERT + ColBERT: Enhancing
+        biomedical RAG through an advanced re-ranking retriever \u2014 Eduardo Mart\xEDnez
+        Rivera and Filippo Menolascina; arXiv 2510.04757, October 2025 preprint](https://arxiv.org/abs/2510.04757).
+        Reported tuning dependence motivates comparison; unaligned reranking may worsen
+        results.\\n\", \"reactions\": {\"url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/issues/348/reactions\",
+        \"total_count\": 0, \"+1\": 0, \"-1\": 0, \"laugh\": 0, \"hooray\": 0, \"confused\":
+        0, \"heart\": 0, \"rocket\": 0, \"eyes\": 0}, \"timeline_url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/issues/348/timeline\",
+        \"performed_via_github_app\": null, \"state_reason\": null, \"pinned_comment\":
+        null, \"score\": 1.0}, {\"url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/issues/347\",
+        \"repository_url\": \"https://api.github.com/repos/AstralDeep/AstralDeep\",
+        \"labels_url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/issues/347/labels{/name}\",
+        \"comments_url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/issues/347/comments\",
+        \"events_url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/issues/347/events\",
+        \"html_url\": \"https://github.com/AstralDeep/AstralDeep/issues/347\", \"id\":
+        5738907536, \"node_id\": \"I_kwDORPrtwM8AAAABVhDHkA\", \"number\": 347, \"title\":
+        \"Preserve Gemini tool-continuation metadata through streamed responses\",
+        \"user\": {\"login\": \"redacted\", \"id\": 16158892, \"node_id\": \"MDQ6VXNlcjE2MTU4ODky\",
+        \"avatar_url\": \"redacted\", \"gravatar_id\": \"redacted\", \"url\": \"redacted\",
+        \"html_url\": \"redacted\", \"followers_url\": \"redacted\", \"following_url\":
+        \"redacted\", \"gists_url\": \"redacted\", \"starred_url\": \"redacted\",
+        \"subscriptions_url\": \"redacted\", \"organizations_url\": \"redacted\",
+        \"repos_url\": \"redacted\", \"events_url\": \"redacted\", \"received_events_url\":
+        \"redacted\", \"type\": \"User\", \"user_view_type\": \"public\", \"site_admin\":
+        false}, \"labels\": [{\"id\": 10202954223, \"node_id\": \"LA_kwDORPrtwM8AAAACYCS57w\",
+        \"url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/labels/bug\",
+        \"name\": \"bug\", \"color\": \"d73a4a\", \"default\": true, \"description\":
+        \"Something isn't working\", \"archived_at\": null, \"archived_by\": null},
+        {\"id\": 12483823448, \"node_id\": \"LA_kwDORPrtwM8AAAAC6BgHWA\", \"url\":
+        \"https://api.github.com/repos/AstralDeep/AstralDeep/labels/bounty\", \"name\":
+        \"bounty\", \"color\": \"6366F1\", \"default\": false, \"description\": \"Approved
+        points-based community task\", \"archived_at\": null, \"archived_by\": null},
+        {\"id\": 12483823733, \"node_id\": \"LA_kwDORPrtwM8AAAAC6BgIdQ\", \"url\":
+        \"https://api.github.com/repos/AstralDeep/AstralDeep/labels/points:100\",
+        \"name\": \"points:100\", \"color\": \"8B5CF6\", \"default\": false, \"description\":
+        \"100 recognition points\", \"archived_at\": null, \"archived_by\": null},
+        {\"id\": 12483824128, \"node_id\": \"LA_kwDORPrtwM8AAAAC6BgKAA\", \"url\":
+        \"https://api.github.com/repos/AstralDeep/AstralDeep/labels/track:interoperability\",
+        \"name\": \"track:interoperability\", \"color\": \"06B6D4\", \"default\":
+        false, \"description\": \"MCP, Agent2Agent, and protocol integration\", \"archived_at\":
+        null, \"archived_by\": null}, {\"id\": 12483824341, \"node_id\": \"LA_kwDORPrtwM8AAAAC6BgK1Q\",
+        \"url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/labels/track:security\",
+        \"name\": \"track:security\", \"color\": \"06B6D4\", \"default\": false, \"description\":
+        \"Security, authority, and LETS\", \"archived_at\": null, \"archived_by\":
+        null}, {\"id\": 12483824599, \"node_id\": \"LA_kwDORPrtwM8AAAAC6BgL1w\", \"url\":
+        \"https://api.github.com/repos/AstralDeep/AstralDeep/labels/priority:P2\",
+        \"name\": \"priority:P2\", \"color\": \"D4A72C\", \"default\": false, \"description\":
+        \"Normal priority\", \"archived_at\": null, \"archived_by\": null}], \"state\":
+        \"open\", \"locked\": false, \"assignees\": [], \"milestone\": null, \"comments\":
+        4, \"created_at\": \"2026-10-07T03:30:26Z\", \"updated_at\": \"2026-10-09T22:15:31Z\",
+        \"closed_at\": null, \"assignee\": null, \"author_redacted\": \"CONTRIBUTOR\",
+        \"issue_field_values\": [], \"type\": null, \"active_lock_reason\": null,
+        \"sub_issues_summary\": {\"total\": 0, \"completed\": 0, \"percent_completed\":
+        0}, \"issue_dependencies_summary\": {\"blocked_by\": 0, \"total_blocked_by\":
+        0, \"blocking\": 0, \"total_blocking\": 0}, \"body\": \"## Problem or idea\\n\\nDeep
+        already offers Gemini through OpenAI-compatible routing. Its streamed tool
+        accumulator/reconstruction saves id, function name and arguments while dropping
+        provider extras. Current Google compatibility documentation requires the corresponding
+        tool_calls[].extra_content.google.thought_signature on some tool continuations;
+        omission can cause provider validation errors. Metadata loss is source-verified
+        at current main; no live deployed Gemini incident has been reproduced.\\n\\n##
+        Expected outcome\\n\\nPreserve and qualify bounded Gemini continuation metadata
+        through the current stream/non-stream and outgoing-wire paths, with unchanged
+        owner-authorized tool dispatch. Keep compatibility routing first; native SDK/API
+        adoption requires a separately demonstrated capability gap.\\n\\n## Environment\\n\\nMVP
+        mode; owning repository: AstralDeep; production Python 3.11. Reviewed current
+        remote main: `8d82a0b48493e5018bdf81a4f59c189a8b045f6b` (2026-10-06). Relevant
+        source seams were rechecked against the earlier research baseline. Upstream
+        commits are investigation snapshots, not approved dependency releases. No
+        implementation, measured benefit or live qualification is claimed.\\n\\n##
+        Acceptance checks\\n\\n- [ ] Freeze current documented single, parallel and
+        sequential Gemini compatibility fixtures. Bind handling to a qualified provider/profile
+        and supported wire capability, not casual model-name substring matching or
+        silent custom-endpoint rewriting.\\n- [ ] Preserve explicitly allowlisted
+        bounded opaque continuation metadata through fragmented stream accumulation,
+        message reconstruction and the next request. Prove stream/non-stream outgoing-wire
+        equivalence with transport fixtures. Preserve association to the correct call/part
+        and original bytes; do not merge/reorder signature-bearing parts incompatibly.
+        Sequential fixtures retain every required signature in the current turn; parallel
+        fixtures permit the documented first-call-only signature rather than demanding
+        one on each call.\\n- [ ] Validate separate metadata/argument fragments, contradictory/duplicate/malformed/oversized
+        data, missing required continuation state, error/truncated streams and cancellation.
+        Unknown provider fields remain outside tool arguments/policy. Never fabricate
+        dummy signatures to bypass provider validation.\\n- [ ] Dispatch only complete
+        validated calls through ordinary owner/tool/PHI/egress/confirmation/LETS gates.
+        Metadata grants no permission. After continuation errors or reconnect, do
+        not redispatch completed effects or synthesize successful tool results; retain
+        ordinary receipt/replay behavior.\\n- [ ] Bound continuation state to the
+        current owner/request/provider/profile lifecycle, with cancellation/cleanup
+        and no raw signatures in UI/log/audit traces or a new durable store. Context
+        editing/compaction must not silently remove required current-turn state; incompatible
+        or unavailable state produces a typed failure.\\n- [ ] Retain full qualified
+        usage/accounting behavior under current provider controls and #316; test denied
+        tools, owner isolation, missing/unknown usage, generic/local provider regression
+        and stream failure/recovery. Do not introduce SDK automatic function execution,
+        provider-hosted tools, ambient credentials or managed session storage.\\n-
+        [ ] Qualify at least one optional synthetic staging continuation against the
+        documented provider flow through real Astral dispatch, recording exact model/profile/serializer
+        evidence and any unavailable inputs. Required CI is deterministic and offline;
+        no live success is claimed in advance.\\n- [ ] Cover golden, edge, denial,
+        cancellation and failure paths. Retain at least 90% changed-Python-line coverage,
+        all owning repository gates and required deterministic/offline CI jobs within
+        30 minutes. No live third-party services, soak tests, shared-runner wall-clock
+        pass bounds, gate weakening or retries that hide failures. Record exact checks
+        and distinguish source review, test-passing, live qualification and deployment.\\n-
+        [ ] Preserve Keycloak-only IAM, owner/project isolation, RFC 8693 attenuation,
+        ordinary tool/PHI/egress/confirmation gates, LETS and hash-chained audit.
+        Declare and pin any new dependencies/assets in their owning manifest. Durable
+        mechanics belong in Plane; reusable rendering in Projection. No schema, shared
+        UI contract, component pin, production default or release change is implicit.\\n\\n##
+        Supporting details\\n\\n**Bounty: 100 recognition points. Points only; no
+        monetary payment.** One qualifying PR merged into main closes this issue for
+        one bounty award. Avoid closing multiple eligible bounties with one PR. No
+        assignee is reserved by opening this issue.\\n\\nScope: current Chat Completions
+        compatibility and client tool continuation. Coordinate existing [#274](https://github.com/AstralDeep/AstralDeep/issues/274),
+        [#275](https://github.com/AstralDeep/AstralDeep/issues/275) and [#316](https://github.com/AstralDeep/AstralDeep/issues/316)
+        seams; do not create a second provider/harness/accounting core. OpenAI Responses
+        [#326](https://github.com/AstralDeep/AstralDeep/issues/326), native Claude
+        [#331](https://github.com/AstralDeep/AstralDeep/issues/331), and feature-093
+        observation retention remain separate.\\n\\nDebt: one qualified Gemini compatibility
+        profile and current-turn client functions. Native generateContent/Interactions
+        APIs, hosted state/tools, wider metadata and additional providers require
+        separate evidence. SDK is a source/reference option, not a mandatory new dependency.\\n\\nSource
+        evidence, accessed 2026-10-06:\\n- [Current stream accumulator](https://github.com/AstralDeep/AstralDeep/blob/8d82a0b48493e5018bdf81a4f59c189a8b045f6b/backend/orchestrator/orchestrator.py#L15999),
+        [reconstruction](https://github.com/AstralDeep/AstralDeep/blob/8d82a0b48493e5018bdf81a4f59c189a8b045f6b/backend/orchestrator/orchestrator.py#L16059),
+        [provider factory](https://github.com/AstralDeep/AstralDeep/blob/8d82a0b48493e5018bdf81a4f59c189a8b045f6b/backend/llm_config/client_factory.py)\\n-
+        [Google OpenAI compatibility documentation](https://ai.google.dev/gemini-api/docs/openai),
+        [required signature association/compatibility wire examples](https://ai.google.dev/gemini-api/docs/generate-content/thought-signatures).
+        Current vendor documentation, not a live Astral test.\\n- [Google Gen AI SDK
+        investigation pin](https://github.com/googleapis/python-genai/tree/84bf19c9394bb3cc41f56c11d125cf6e5de86e3a).
+        Apache 2.0, Python >=3.10; its ambient cloud configuration and automatic execution
+        paths do not receive implied trust.\\n\", \"reactions\": {\"url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/issues/347/reactions\",
+        \"total_count\": 0, \"+1\": 0, \"-1\": 0, \"laugh\": 0, \"hooray\": 0, \"confused\":
+        0, \"heart\": 0, \"rocket\": 0, \"eyes\": 0}, \"timeline_url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/issues/347/timeline\",
+        \"performed_via_github_app\": null, \"state_reason\": null, \"pinned_comment\":
+        null, \"score\": 1.0}, {\"url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/issues/346\",
+        \"repository_url\": \"https://api.github.com/repos/AstralDeep/AstralDeep\",
+        \"labels_url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/issues/346/labels{/name}\",
+        \"comments_url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/issues/346/comments\",
+        \"events_url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/issues/346/events\",
+        \"html_url\": \"https://github.com/AstralDeep/AstralDeep/issues/346\", \"id\":
+        5738907021, \"node_id\": \"I_kwDORPrtwM8AAAABVhDFjQ\", \"number\": 346, \"title\":
+        \"Preserve layout and source locations when parsing owned PDF/DOCX attachments\",
+        \"user\": {\"login\": \"redacted\", \"id\": 16158892, \"node_id\": \"MDQ6VXNlcjE2MTU4ODky\",
+        \"avatar_url\": \"redacted\", \"gravatar_id\": \"redacted\", \"url\": \"redacted\",
+        \"html_url\": \"redacted\", \"followers_url\": \"redacted\", \"following_url\":
+        \"redacted\", \"gists_url\": \"redacted\", \"starred_url\": \"redacted\",
+        \"subscriptions_url\": \"redacted\", \"organizations_url\": \"redacted\",
+        \"repos_url\": \"redacted\", \"events_url\": \"redacted\", \"received_events_url\":
+        \"redacted\", \"type\": \"User\", \"user_view_type\": \"public\", \"site_admin\":
+        false}, \"labels\": [{\"id\": 10202954255, \"node_id\": \"LA_kwDORPrtwM8AAAACYCS6Dw\",
+        \"url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/labels/enhancement\",
+        \"name\": \"enhancement\", \"color\": \"a2eeef\", \"default\": true, \"description\":
+        \"New feature or request\", \"archived_at\": null, \"archived_by\": null},
+        {\"id\": 12483823448, \"node_id\": \"LA_kwDORPrtwM8AAAAC6BgHWA\", \"url\":
+        \"https://api.github.com/repos/AstralDeep/AstralDeep/labels/bounty\", \"name\":
+        \"bounty\", \"color\": \"6366F1\", \"default\": false, \"description\": \"Approved
+        points-based community task\", \"archived_at\": null, \"archived_by\": null},
+        {\"id\": 12483823866, \"node_id\": \"LA_kwDORPrtwM8AAAAC6BgI-g\", \"url\":
+        \"https://api.github.com/repos/AstralDeep/AstralDeep/labels/points:200\",
+        \"name\": \"points:200\", \"color\": \"8B5CF6\", \"default\": false, \"description\":
+        \"200 recognition points\", \"archived_at\": null, \"archived_by\": null},
+        {\"id\": 12483824341, \"node_id\": \"LA_kwDORPrtwM8AAAAC6BgK1Q\", \"url\":
+        \"https://api.github.com/repos/AstralDeep/AstralDeep/labels/track:security\",
+        \"name\": \"track:security\", \"color\": \"06B6D4\", \"default\": false, \"description\":
+        \"Security, authority, and LETS\", \"archived_at\": null, \"archived_by\":
+        null}, {\"id\": 12483824410, \"node_id\": \"LA_kwDORPrtwM8AAAAC6BgLGg\", \"url\":
+        \"https://api.github.com/repos/AstralDeep/AstralDeep/labels/track:reusability\",
+        \"name\": \"track:reusability\", \"color\": \"06B6D4\", \"default\": false,
+        \"description\": \"Independent reusable components\", \"archived_at\": null,
+        \"archived_by\": null}, {\"id\": 12483824599, \"node_id\": \"LA_kwDORPrtwM8AAAAC6BgL1w\",
+        \"url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/labels/priority:P2\",
+        \"name\": \"priority:P2\", \"color\": \"D4A72C\", \"default\": false, \"description\":
+        \"Normal priority\", \"archived_at\": null, \"archived_by\": null}], \"state\":
+        \"open\", \"locked\": false, \"assignees\": [], \"milestone\": null, \"comments\":
+        4, \"created_at\": \"2026-10-07T03:30:22Z\", \"updated_at\": \"2026-10-09T22:44:58Z\",
+        \"closed_at\": null, \"assignee\": null, \"author_redacted\": \"CONTRIBUTOR\",
+        \"issue_field_values\": [], \"type\": null, \"active_lock_reason\": null,
+        \"sub_issues_summary\": {\"total\": 0, \"completed\": 0, \"percent_completed\":
+        0}, \"issue_dependencies_summary\": {\"blocked_by\": 0, \"total_blocked_by\":
+        0, \"blocking\": 0, \"total_blocking\": 0}, \"body\": \"## Problem or idea\\n\\nThe
+        current file reader joins PDF page text and DOCX paragraphs; it does not traverse
+        DOCX tables or preserve a structured PDF table/reading-order/source-region
+        representation. Sparse PDF text can lead to a vision fallback. IBM Research-origin
+        Docling, now a Docling Project/LF AI & Data project, offers a local structured
+        parsing candidate. Its code license and documented features do not establish
+        clinical correctness or containment.\\n\\n## Expected outcome\\n\\nImplement
+        and qualify one opt-in, default-off, bounded PDF/DOCX adapter in the existing
+        attachment/file-tool flow. Compare the actual reader with the candidate on
+        a small synthetic corpus; return genuine structure/provenance and truthful
+        partial/failure status. A defensible negative comparison may retain the baseline,
+        but the runnable candidate and qualification evidence must be real.\\n\\n##
+        Environment\\n\\nMVP mode; owning repository: AstralDeep; production Python
+        3.11. Reviewed current remote main: `8d82a0b48493e5018bdf81a4f59c189a8b045f6b`
+        (2026-10-06). Relevant source seams were rechecked against the earlier research
+        baseline. Upstream commits are investigation snapshots, not approved dependency
+        releases. No implementation, measured benefit or live qualification is claimed.\\n\\n##
+        Acceptance checks\\n\\n- [ ] Obtain input only through the current authenticated
+        owner-scoped attachment-byte path and MIME checks. Reuse the parser registry/autoparse
+        lifecycle. Accept controlled DocumentStream bytes, never arbitrary paths/URLs,
+        broad attachment-store mounts, nested archive formats, executable macros,
+        plugins or external-resource resolution.\\n- [ ] Use one host-selected short-lived
+        non-root Linux worker profile with immutable read-only runtime/model assets
+        and disposable scratch/output. Deny all network and supply no provider/host
+        credentials, services or sockets. Reuse existing host ProcessSupervisor kill/cancel/descendant
+        contracts; missing or degraded containment/assets fail closed without an unsandboxed,
+        networked or provider fallback.\\n- [ ] Declare a reproducible Python 3.11
+        worker dependency set, exact native/model/OCR revisions, licenses/notices
+        and file digests. Disable remote services, plugins and VLM/picture/chart/formula/code/audio
+        enrichment. A pinned code SHA is insufficient: examined presets use mutable
+        model revisions and first-use downloads.\\n- [ ] Apply explicit byte/page/decompression/output,
+        CPU/memory/descendant, concurrency and host-deadline limits before expensive
+        work; do not rely on the library's effectively unlimited defaults or cooperative
+        timeout. Preserve requested PDF page ranges throughout rendering/OCR and keep
+        original source-page identity.\\n- [ ] Normalize bounded reading order, table
+        rows/cells and genuine PDF page/region provenance or DOCX block/table/cell
+        identifiers, together with source digest and parser/profile identity. Do not
+        invent DOCX page coordinates. Distinguish full, partial, truncated, timeout,
+        cancelled and failed results; PARTIAL_SUCCESS must not become complete success
+        or silently feed extraction as a complete note.\\n- [ ] Keep extracted content
+        untrusted under existing taint/PHI rules and authorized response/artifact
+        boundaries. Numeric/OCR confidence never establishes medical truth or permission.
+        No PHI/raw document content enters debug/audit/evidence logs or a new persistence
+        service.\\n- [ ] Use independent synthetic goldens for multi-column text,
+        PDF/DOCX tables, scanned numeric/sign/decimal/unit cells, continuation tables,
+        clean/degraded matched pages, selected-page behavior, blank/encrypted/malformed
+        input and inert prompt injection. Compare transcription, table association,
+        reading order and source-location validity; count failed/partial cases.\\n-
+        [ ] Exercise real dispatch owner denial, missing assets, attempted outbound
+        access, overflow, cancellation and descendant cleanup. Qualification must
+        include the actual chosen parser/profile on synthetic input; the existing
+        generic containment demonstration alone does not qualify an ML/native parser.\\n-
+        [ ] Cover golden, edge, denial, cancellation and failure paths. Retain at
+        least 90% changed-Python-line coverage, all owning repository gates and required
+        deterministic/offline CI jobs within 30 minutes. No live third-party services,
+        soak tests, shared-runner wall-clock pass bounds, gate weakening or retries
+        that hide failures. Record exact checks and distinguish source review, test-passing,
+        live qualification and deployment.\\n- [ ] Preserve Keycloak-only IAM, owner/project
+        isolation, RFC 8693 attenuation, ordinary tool/PHI/egress/confirmation gates,
+        LETS and hash-chained audit. Declare and pin any new dependencies/assets in
+        their owning manifest. Durable mechanics belong in Plane; reusable rendering
+        in Projection. No schema, shared UI contract, component pin, production default
+        or release change is implicit.\\n\\n## Supporting details\\n\\n**Bounty: 200
+        recognition points. Points only; no monetary payment.** One qualifying PR
+        merged into main closes this issue for one bounty award. Avoid closing multiple
+        eligible bounties with one PR. No assignee is reserved by opening this issue.\\n\\nScope:
+        document structure before semantic extraction. [#336](https://github.com/AstralDeep/AstralDeep/issues/336)
+        retains clinical field/source-span/meaning validation, [#317](https://github.com/AstralDeep/AstralDeep/issues/317)
+        clinical diagnostics, and [#337](https://github.com/AstralDeep/AstralDeep/issues/337)
+        general Linux containment qualification. This workload needs its own real
+        profile evidence. MarkItDown is a lighter comparison alternative for the same
+        capability; do not fund both as separate parser integrations. No new primitive,
+        native client, provider core or Plane schema.\\n\\nDebt: PDF/DOCX only, one
+        Linux CPU profile and small synthetic fixtures. Wider languages/layouts, handwriting,
+        GPU operation and clinical deployment need separate evidence.\\n\\nSource
+        evidence, accessed 2026-10-06:\\n- [Current Deep file reader](https://github.com/AstralDeep/AstralDeep/blob/8d82a0b48493e5018bdf81a4f59c189a8b045f6b/backend/agents/general/file_tools/read_document.py)\\n-
+        [Docling converter](https://github.com/docling-project/docling/blob/ef6ba52b81b1ab66439b5bb31e0383c50fc37b72/docling/document_converter.py),
+        [pipeline defaults](https://github.com/docling-project/docling/blob/ef6ba52b81b1ab66439b5bb31e0383c50fc37b72/docling/datamodel/pipeline_options.py),
+        [MIT license](https://github.com/docling-project/docling/blob/ef6ba52b81b1ab66439b5bb31e0383c50fc37b72/LICENSE).
+        Individual models are separately governed.\\n- [Microsoft MarkItDown alternative,
+        pinned](https://github.com/microsoft/markitdown/tree/4cc9fa17653d695d64fb9eee5b33d4de55ff84e8)\\n-
+        [Docling: An Efficient Open-Source Toolkit for AI-driven Document Conversion
+        \u2014 Nikolaos Livathinos, Christoph Auer, Maksym Lysak et al.; AAAI 2025
+        Open-Source AI workshop, not a main-conference result](https://arxiv.org/abs/2501.17887)\\n-
+        [PureDocBench \u2014 Zhiheng Li, Zongyang Ma, Jiaxian Chen et al.; arXiv 2605.07492v2,
+        revised September 27, 2026, preprint](https://arxiv.org/abs/2605.07492v2).
+        Matched clean/degraded design motivates fixtures; it does not validate Astral
+        clinical tables.\\n\", \"reactions\": {\"url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/issues/346/reactions\",
+        \"total_count\": 0, \"+1\": 0, \"-1\": 0, \"laugh\": 0, \"hooray\": 0, \"confused\":
+        0, \"heart\": 0, \"rocket\": 0, \"eyes\": 0}, \"timeline_url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/issues/346/timeline\",
+        \"performed_via_github_app\": null, \"state_reason\": null, \"pinned_comment\":
+        null, \"score\": 1.0}, {\"url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/issues/337\",
+        \"repository_url\": \"https://api.github.com/repos/AstralDeep/AstralDeep\",
+        \"labels_url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/issues/337/labels{/name}\",
+        \"comments_url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/issues/337/comments\",
+        \"events_url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/issues/337/events\",
+        \"html_url\": \"https://github.com/AstralDeep/AstralDeep/issues/337\", \"id\":
+        5738556448, \"node_id\": \"I_kwDORPrtwM8AAAABVgtsIA\", \"number\": 337, \"title\":
+        \"Qualify a fail-closed Linux subprocess profile using sandbox-runtime\",
+        \"user\": {\"login\": \"redacted\", \"id\": 16158892, \"node_id\": \"MDQ6VXNlcjE2MTU4ODky\",
+        \"avatar_url\": \"redacted\", \"gravatar_id\": \"redacted\", \"url\": \"redacted\",
+        \"html_url\": \"redacted\", \"followers_url\": \"redacted\", \"following_url\":
+        \"redacted\", \"gists_url\": \"redacted\", \"starred_url\": \"redacted\",
+        \"subscriptions_url\": \"redacted\", \"organizations_url\": \"redacted\",
+        \"repos_url\": \"redacted\", \"events_url\": \"redacted\", \"received_events_url\":
+        \"redacted\", \"type\": \"User\", \"user_view_type\": \"public\", \"site_admin\":
+        false}, \"labels\": [{\"id\": 10202954255, \"node_id\": \"LA_kwDORPrtwM8AAAACYCS6Dw\",
+        \"url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/labels/enhancement\",
+        \"name\": \"enhancement\", \"color\": \"a2eeef\", \"default\": true, \"description\":
+        \"New feature or request\", \"archived_at\": null, \"archived_by\": null},
+        {\"id\": 12483823448, \"node_id\": \"LA_kwDORPrtwM8AAAAC6BgHWA\", \"url\":
+        \"https://api.github.com/repos/AstralDeep/AstralDeep/labels/bounty\", \"name\":
+        \"bounty\", \"color\": \"6366F1\", \"default\": false, \"description\": \"Approved
+        points-based community task\", \"archived_at\": null, \"archived_by\": null},
+        {\"id\": 12483823866, \"node_id\": \"LA_kwDORPrtwM8AAAAC6BgI-g\", \"url\":
+        \"https://api.github.com/repos/AstralDeep/AstralDeep/labels/points:200\",
+        \"name\": \"points:200\", \"color\": \"8B5CF6\", \"default\": false, \"description\":
+        \"200 recognition points\", \"archived_at\": null, \"archived_by\": null},
+        {\"id\": 12483824341, \"node_id\": \"LA_kwDORPrtwM8AAAAC6BgK1Q\", \"url\":
+        \"https://api.github.com/repos/AstralDeep/AstralDeep/labels/track:security\",
+        \"name\": \"track:security\", \"color\": \"06B6D4\", \"default\": false, \"description\":
+        \"Security, authority, and LETS\", \"archived_at\": null, \"archived_by\":
+        null}, {\"id\": 12483824671, \"node_id\": \"LA_kwDORPrtwM8AAAAC6BgMHw\", \"url\":
+        \"https://api.github.com/repos/AstralDeep/AstralDeep/labels/priority:P3\",
+        \"name\": \"priority:P3\", \"color\": \"7F8C8D\", \"default\": false, \"description\":
+        \"Lower priority\", \"archived_at\": null, \"archived_by\": null}], \"state\":
+        \"open\", \"locked\": false, \"assignees\": [], \"milestone\": null, \"comments\":
+        3, \"created_at\": \"2026-10-07T02:48:47Z\", \"updated_at\": \"2026-10-09T23:35:50Z\",
+        \"closed_at\": null, \"assignee\": null, \"author_redacted\": \"CONTRIBUTOR\",
+        \"issue_field_values\": [], \"type\": null, \"active_lock_reason\": null,
+        \"sub_issues_summary\": {\"total\": 0, \"completed\": 0, \"percent_completed\":
+        0}, \"issue_dependencies_summary\": {\"blocked_by\": 0, \"total_blocked_by\":
+        0, \"blocking\": 0, \"total_blocking\": 0}, \"body\": \"## Problem or idea\\n\\nAnthropic
+        sandbox-runtime offers OS-level filesystem/network containment for subprocesses.
+        It could strengthen an isolated Astral effect worker, but its dependencies,
+        degraded modes, global runtime state and platform constraints are not yet
+        qualified for Astral. Sandbox containment supplements authorization; it cannot
+        issue or replace a LETS receipt.\\n\\n## Expected outcome\\n\\nBuild an opt-in
+        Linux qualification runner for one short-lived harmless local effect, using
+        the existing ProcessSupervisor and existing generated-executor receipt verifier.
+        Compare the authorized scratch-file effect and denied effects under an immutable
+        SRT profile, without changing production launches.\\n\\n## Environment\\n\\nMVP
+        mode; owning repository: AstralDeep. Reviewed baseline: `f89ba2ae9c0e8decd271544e05a93f6c8a202a66`
+        (2026-10-06). Source review establishes an integration lead, not demonstrated
+        clinical benefit, benchmark performance or production qualification.\\n\\n##
+        Acceptance checks\\n\\n- [ ] Pin and declare the SRT runtime/artifact and
+        required Linux primitives (reviewed package 0.0.78, Node >=22.12, bubblewrap
+        and seccomp support); document one supported architecture/profile. No unpinned
+        npx download at runtime. Unsupported OS/container/kernel or missing/degraded
+        dependencies fail closed before the effect starts.\\n- [ ] Start one isolated
+        non-root SRT process with an immutable profile per invocation. Deny all network
+        including direct IP, DNS/proxy, loopback/private/link-local and Unix-socket
+        paths; expose no inherited/passed host sockets, database/blob sockets, provider
+        proxy or credentials. Use minimal explicit allow-only runtime/source reads
+        and scratch writes, clean environment and no home/project settings discovery.
+        Do not weaken host AppArmor/user-namespace policy for the pilot.\\n- [ ] Route
+        the effect through existing normal dispatch, bounded ProcessSupervisor lifecycle
+        and the existing LETS receipt verification/claim seam. Preserve audience/owner/scope/argument/digest/expiry/replay
+        checks and ordinary audit. No new executor protocol, credential broker, process
+        manager or generic raw-command tool.\\n- [ ] Test successful authorized scratch
+        output, denied secret reads/out-of-scratch writes/network/IPC, symlink and
+        mount-boundary cases, malformed or wrong-scope receipts, missing seccomp/bwrap,
+        launch failure, output exhaustion, timeout/cancellation/revocation and descendant
+        cleanup. Treat upstream warnings that reduce the required profile as hard
+        failures; never fall back to an unsandboxed process.\\n- [ ] Verify real harmless
+        local effects independently of the child's exit text and keep sanitized receipts/config/artifact
+        digests. Fixed fixtures must exercise the actual sandbox on a supported isolated
+        Linux runner; unsupported hosts report unavailable, never a simulated containment
+        pass. Do not require live third-party network for CI.\\n- [ ] Keep SRT control-fd
+        updates, long-lived draft agents, interactive terminals, Windows/macOS, nested
+        weak container mode, AppleEvents and provider egress outside this pilot. A
+        failed or unavailable pilot is a valid diagnostic outcome with an actionable
+        qualification record.\\n- [ ] Preserve Keycloak-only IAM, owner isolation,
+        RFC 8693 attenuation, tool/PHI/egress/confirmation gates, LETS enforcement
+        and hash-chained audit. Models and vendor runtimes do not authorize effects.
+        Declare and qualify any dependency in the owning manifest; no schema, shared
+        contract, component pin, production default or release change is implicit.\\n-
+        [ ] Cover golden paths, edge cases, denials, failures and recovery. Required
+        checks remain deterministic/offline, production Python remains 3.11, changed
+        Python lines retain at least 90% coverage, and each hosted CI job finishes
+        within 30 minutes. Record exact candidate-bound checks and separate tests,
+        live qualification and deployment.\\n\\n## Supporting details\\n\\n**Bounty:
+        200 recognition points. Points only; no monetary payment.** One qualifying
+        PR merged into main closes this issue for one bounty award. Avoid closing
+        multiple eligible bounties with one PR. Opening this issue reserves no assignee.\\n\\nScope
+        and related work: One new containment qualification profile only. [#256](https://github.com/AstralDeep/AstralDeep/issues/256)
+        owns general terminal lifecycle; [#319](https://github.com/AstralDeep/AstralDeep/issues/319)
+        owns Fence-based Ubuntu CI egress. LETS owns existing effect authority/receipts
+        and does not become a subprocess sandbox manager. No production draft-launch
+        change is requested.\\n\\nDebt: Linux and one short-lived no-network effect
+        only. Qualification must establish dependency/namespace/cleanup behavior before
+        any production integration; the reviewed library is not assumed a complete
+        security boundary.\\n\\nSource evidence (accessed 2026-10-06; commit pins
+        are investigation snapshots, not approved release versions):\\n- [Sandbox
+        runtime, Apache-2.0 source](https://github.com/anthropics/sandbox-runtime/tree/12a2be92c110cbc3c19584c4c8387e7e754c8179)\\n-
+        [Linux seccomp degradation and process flags](https://github.com/anthropics/sandbox-runtime/blob/12a2be92c110cbc3c19584c4c8387e7e754c8179/src/sandbox/linux-sandbox-utils.ts#L3293)\\n-
+        [Current Astral process supervisor](https://github.com/AstralDeep/AstralDeep/blob/f89ba2ae9c0e8decd271544e05a93f6c8a202a66/backend/shared/process_supervision.py)\\n-
+        [Existing generated executor receipt boundary](https://github.com/AstralDeep/AstralDeep/blob/f89ba2ae9c0e8decd271544e05a93f6c8a202a66/backend/orchestrator/generated_lets_executor.py#L157)\\n-
+        [How we contain Claude across products \u2014 Max McGuinness, Mikaela Grace,
+        Jiri De Jonghe, Jake Eaton, Abel Ribbink; Anthropic Engineering, May 2026
+        engineering retrospective. Its documented proxy/configuration failures motivate
+        retaining operation-level gates; it does not qualify SRT for Astral.](https://www.anthropic.com/engineering/how-we-contain-claude)\\n\",
+        \"reactions\": {\"url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/issues/337/reactions\",
+        \"total_count\": 0, \"+1\": 0, \"-1\": 0, \"laugh\": 0, \"hooray\": 0, \"confused\":
+        0, \"heart\": 0, \"rocket\": 0, \"eyes\": 0}, \"timeline_url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/issues/337/timeline\",
+        \"performed_via_github_app\": null, \"state_reason\": null, \"pinned_comment\":
+        null, \"score\": 1.0}, {\"url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/issues/338\",
+        \"repository_url\": \"https://api.github.com/repos/AstralDeep/AstralDeep\",
+        \"labels_url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/issues/338/labels{/name}\",
+        \"comments_url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/issues/338/comments\",
+        \"events_url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/issues/338/events\",
+        \"html_url\": \"https://github.com/AstralDeep/AstralDeep/issues/338\", \"id\":
+        5738556529, \"node_id\": \"I_kwDORPrtwM8AAAABVgtscQ\", \"number\": 338, \"title\":
+        \"Replay bounded multi-turn escalation and recovery through real dispatch
+        gates\", \"user\": {\"login\": \"redacted\", \"id\": 16158892, \"node_id\":
+        \"MDQ6VXNlcjE2MTU4ODky\", \"avatar_url\": \"redacted\", \"gravatar_id\": \"redacted\",
+        \"url\": \"redacted\", \"html_url\": \"redacted\", \"followers_url\": \"redacted\",
+        \"following_url\": \"redacted\", \"gists_url\": \"redacted\", \"starred_url\":
+        \"redacted\", \"subscriptions_url\": \"redacted\", \"organizations_url\":
+        \"redacted\", \"repos_url\": \"redacted\", \"events_url\": \"redacted\", \"received_events_url\":
+        \"redacted\", \"type\": \"User\", \"user_view_type\": \"public\", \"site_admin\":
+        false}, \"labels\": [{\"id\": 10202954255, \"node_id\": \"LA_kwDORPrtwM8AAAACYCS6Dw\",
+        \"url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/labels/enhancement\",
+        \"name\": \"enhancement\", \"color\": \"a2eeef\", \"default\": true, \"description\":
+        \"New feature or request\", \"archived_at\": null, \"archived_by\": null},
+        {\"id\": 12483823448, \"node_id\": \"LA_kwDORPrtwM8AAAAC6BgHWA\", \"url\":
+        \"https://api.github.com/repos/AstralDeep/AstralDeep/labels/bounty\", \"name\":
+        \"bounty\", \"color\": \"6366F1\", \"default\": false, \"description\": \"Approved
+        points-based community task\", \"archived_at\": null, \"archived_by\": null},
+        {\"id\": 12483823866, \"node_id\": \"LA_kwDORPrtwM8AAAAC6BgI-g\", \"url\":
+        \"https://api.github.com/repos/AstralDeep/AstralDeep/labels/points:200\",
+        \"name\": \"points:200\", \"color\": \"8B5CF6\", \"default\": false, \"description\":
+        \"200 recognition points\", \"archived_at\": null, \"archived_by\": null},
+        {\"id\": 12483824341, \"node_id\": \"LA_kwDORPrtwM8AAAAC6BgK1Q\", \"url\":
+        \"https://api.github.com/repos/AstralDeep/AstralDeep/labels/track:security\",
+        \"name\": \"track:security\", \"color\": \"06B6D4\", \"default\": false, \"description\":
+        \"Security, authority, and LETS\", \"archived_at\": null, \"archived_by\":
+        null}, {\"id\": 12483824410, \"node_id\": \"LA_kwDORPrtwM8AAAAC6BgLGg\", \"url\":
+        \"https://api.github.com/repos/AstralDeep/AstralDeep/labels/track:reusability\",
+        \"name\": \"track:reusability\", \"color\": \"06B6D4\", \"default\": false,
+        \"description\": \"Independent reusable components\", \"archived_at\": null,
+        \"archived_by\": null}, {\"id\": 12483824599, \"node_id\": \"LA_kwDORPrtwM8AAAAC6BgL1w\",
+        \"url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/labels/priority:P2\",
+        \"name\": \"priority:P2\", \"color\": \"D4A72C\", \"default\": false, \"description\":
+        \"Normal priority\", \"archived_at\": null, \"archived_by\": null}], \"state\":
+        \"open\", \"locked\": false, \"assignees\": [], \"milestone\": null, \"comments\":
+        3, \"created_at\": \"2026-10-07T02:48:47Z\", \"updated_at\": \"2026-10-09T23:36:21Z\",
+        \"closed_at\": null, \"assignee\": null, \"author_redacted\": \"CONTRIBUTOR\",
+        \"issue_field_values\": [], \"type\": null, \"active_lock_reason\": null,
+        \"sub_issues_summary\": {\"total\": 0, \"completed\": 0, \"percent_completed\":
+        0}, \"issue_dependencies_summary\": {\"blocked_by\": 0, \"total_blocked_by\":
+        0, \"blocking\": 0, \"total_blocking\": 0}, \"body\": \"## Problem or idea\\n\\nCurrent
+        Anthropic/Petri research emphasizes persistent adversaries, scenario exploration
+        and independent effect scoring. Astral already has real narrow gate tests,
+        receipts and benchmark contracts, but no completed bounded conversation replay
+        interface was found in the selected benchmark path. Refusal text or a one-turn
+        gate result cannot establish what occurred across later turns.\\n\\n## Expected
+        outcome\\n\\nAdd a small frozen synthetic multi-turn diagnostic at an existing
+        provider/dispatcher seam, retaining real selected authorization gates and
+        an independent harmless local effect oracle. Required CI uses scripted providers;
+        optional discovery remains a separate non-gating research activity.\\n\\n##
+        Environment\\n\\nMVP mode; owning repository: AstralDeep. Reviewed baseline:
+        `f89ba2ae9c0e8decd271544e05a93f6c8a202a66` (2026-10-06). Source review establishes
+        an integration lead, not demonstrated clinical benefit, benchmark performance
+        or production qualification.\\n\\n## Acceptance checks\\n\\n- [ ] Freeze 12\u201320
+        human-reviewed synthetic scenarios of roughly 4\u20138 turns with development/held-out
+        identities, provenance/digests, expected authority transitions, attempted
+        effects and benign recovery twins. Counts are MVP bounds, not research-derived
+        safety thresholds.\\n- [ ] Cover repeated or rewritten requests after denial,
+        revocation between turns, authority drift through an existing handoff, later
+        untrusted tool/document content, false completion after a denied effect, and
+        allowed recovery. Include cancellation, failure, missing observation and exhausted
+        budgets.\\n- [ ] Script provider responses while preserving real selected
+        ordinary dispatch, owner/policy/PHI/egress/confirmation/delegation/audit and
+        LETS enforcement. Reuse existing local warden/Plane/test-driver patterns and
+        benign local effects. Do not replace permission decisions with canned booleans
+        or disable gates to claim full enforcement.\\n- [ ] Correlate messages/tool
+        attempts/gate decisions with actual effect observations and receipts. Keep
+        the test-owned effect oracle inaccessible to the attacker. Separate unattempted,
+        prevented, occurred, unknown/unobserved, truncated/cancelled and infrastructure
+        outcomes; unknown or cutoff cannot become a clean security pass.\\n- [ ] Bound
+        every turn, delegated worker turn, tool call, retry, output and scenario;
+        use fresh namespaced state per scenario/branch. Conversation rollback cannot
+        pretend to undo durable effects. Use fake clocks where required, deterministic
+        offline fixtures and explicit teardown.\\n- [ ] Deliver a candidate-bound
+        run record stating which gates are real, which services/providers are doubled
+        and what selected route still requires synthetic staging verification. Scripted
+        regression results are not live-model attack rates or proof of clinical safety.\\n-
+        [ ] Optional discovery may propose scenarios from a pinned maintained Petri/Bloom
+        environment outside Deep's Python 3.11 runtime. Give it only synthetic/public-permissioned
+        inputs and explicit call/token/concurrency/retry/time/cost limits. Human review
+        precedes fixture changes; no paid provider/judge or research runtime becomes
+        a required gate.\\n- [ ] Preserve Keycloak-only IAM, owner isolation, RFC
+        8693 attenuation, tool/PHI/egress/confirmation gates, LETS enforcement and
+        hash-chained audit. Models and vendor runtimes do not authorize effects. Declare
+        and qualify any dependency in the owning manifest; no schema, shared contract,
+        component pin, production default or release change is implicit.\\n- [ ] Cover
+        golden paths, edge cases, denials, failures and recovery. Required checks
+        remain deterministic/offline, production Python remains 3.11, changed Python
+        lines retain at least 90% coverage, and each hosted CI job finishes within
+        30 minutes. Record exact candidate-bound checks and separate tests, live qualification
+        and deployment.\\n\\n## Supporting details\\n\\n**Bounty: 200 recognition
+        points. Points only; no monetary payment.** One qualifying PR merged into
+        main closes this issue for one bounty award. Avoid closing multiple eligible
+        bounties with one PR. Opening this issue reserves no assignee.\\n\\nScope
+        and related work: Conversation-state/effect evidence only. [#320](https://github.com/AstralDeep/AstralDeep/issues/320)
+        owns single-turn instruction/abstention/truthful-completion tests; [#317](https://github.com/AstralDeep/AstralDeep/issues/317)
+        owns clinical diagnostics; [#220](https://github.com/AstralDeep/AstralDeep/issues/220)
+        owns full MCP/A2A/voice ingress qualification; #271\u2013#275 retain recall/compaction/harness
+        ownership. Reuse their seams rather than create a general framework or duplicate
+        corpus bounty.\\n\\nDebt: A fixed small synthetic corpus tests selected state
+        transitions. Optional adaptive exploration and judge calibration remain unmeasured.
+        Current Petri needs Python 3.12; Dish simulates ordinary tool results, so
+        neither can replace real Astral effect evidence.\\n\\nSource evidence (accessed
+        2026-10-06; commit pins are investigation snapshots, not approved release
+        versions):\\n- [Red-teaming auto mode: pinned released code](https://github.com/safety-research/red-teaming-auto-mode/tree/94f891113665c6dee50c95b79c32549fed963977)\\n-
+        [Red-Teaming Auto Mode: Improving Blocking Classifiers Against Malign Coding
+        Agents \u2014 Alex Remedios, Simon Storf, Fabien Roger, John Hughes; arXiv
+        2609.19587v2, September 2026 preprint. Persistent-adversary results do not
+        establish an Astral failure rate.](https://arxiv.org/abs/2609.19587v2)\\n-
+        [Maintained Petri successor, now Meridian](https://github.com/meridianlabs-ai/inspect_petri/tree/766d3842e67c573aaf7d5dffcdfb0381a35e3574)\\n-
+        [Maintained Bloom successor](https://github.com/meridianlabs-ai/petri_bloom/tree/902e932c219818429d79bc12a1937e4f04490308)\\n-
+        [Existing benchmark driver](https://github.com/AstralDeep/AstralDeep/blob/f89ba2ae9c0e8decd271544e05a93f6c8a202a66/backend/security_benchmark/drivers/inprocess.py)\\n-
+        [Existing narrow real-gate LETS driver](https://github.com/AstralDeep/AstralDeep/blob/f89ba2ae9c0e8decd271544e05a93f6c8a202a66/backend/tests/lets_case_study_driver.py)\\n\\n###
+        Additional implementation references (2026-10-06)\\n\\nAdditional references;
+        acceptance, scope and 200 points are unchanged. [AgentDojo](https://github.com/ethz-spylab/agentdojo/tree/089ed468cf3ed0322acc66b0211f26d9d90dbf60)
+        (MIT; Python >=3.10), [PyRIT](https://github.com/microsoft/PyRIT/tree/345a7ab86ce0601f22e0825af57fe126b361781b)
+        (MIT; >=3.11,<3.15) and [Inspect AI](https://github.com/UKGovernmentBEIS/inspect_ai/tree/aa20052a65b13516f1ee79d10ccceda00c205cc6)
+        (MIT; >=3.10) may inform optional case preparation and task/scorer/export
+        design. Debenedetti et al.\u2019s [AgentDojo, NeurIPS 2024 Datasets and Benchmarks
+        track](https://proceedings.neurips.cc/paper_files/paper/2024/hash/97091a5177d8dc64b1da8bf3e1f6fb54-Abstract-Datasets_and_Benchmarks_Track.html)
+        is peer reviewed; its results are not Astral failure rates. Astral\u2019s
+        current real-loader returns empty, so samples do not establish upstream-corpus
+        integration. PyRIT targets/memory were not qualified here. Inspect bridging
+        redirects vendor calls and does not establish Astral gate enforcement. Retain
+        ordinary dispatch and the independent effect oracle; no additional runtime,
+        persistence system or bounty is required. Sources accessed 2026-10-06.\\n\",
+        \"reactions\": {\"url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/issues/338/reactions\",
+        \"total_count\": 0, \"+1\": 0, \"-1\": 0, \"laugh\": 0, \"hooray\": 0, \"confused\":
+        0, \"heart\": 0, \"rocket\": 0, \"eyes\": 0}, \"timeline_url\": \"https://api.github.com/repos/AstralDeep/AstralDeep/issues/338/timeline\",
+        \"performed_via_github_app\": null, \"state_reason\": null, \"pinned_comment\":
+        null, \"score\": 1.0}], \"search_type\": \"lexical\"}"
+    headers:
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining,
+        X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes,
+        X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO,
+        X-GitHub-Request-Id, Deprecation, Sunset, Warning
+      cache-control:
+      - no-cache
+      content-length:
+      - '114316'
+      content-security-policy:
+      - default-src 'none'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:40:41 GMT
+      github-authentication-token-expiration:
+      - 2027-01-07 23:59:17 UTC
+      link:
+      - <https://api.github.com/search/issues?q=label%3Abounty+is%3Aissue+is%3Aopen+created%3A%3E%3D2026-10-06T00%3A00%3A00Z&per_page=15&page=2&sort=created&order=desc>;
+        rel="next", <https://api.github.com/search/issues?q=label%3Abounty+is%3Aissue+is%3Aopen+created%3A%3E%3D2026-10-06T00%3A00%3A00Z&per_page=15&page=3&sort=created&order=desc>;
+        rel="last"
+      referrer-policy:
+      - origin-when-cross-origin, strict-origin-when-cross-origin
+      server:
+      - github.com
+      strict-transport-security:
+      - max-age=31536000; includeSubdomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept, Authorization, Cookie, X-GitHub-OTP,Accept-Encoding, Accept, X-Requested-With
+      x-accepted-github-permissions:
+      - allows_permissionless_access=true
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - deny
+      x-github-api-version-selected:
+      - '2022-11-28'
+      x-github-edge-region:
+      - iad
+      x-github-media-type:
+      - github.v3; format=json
+      x-github-request-id:
+      - 48C5:30F8F2:2F6A9D4:9C422FA:6AC97B78
+      x-ratelimit-limit:
+      - '30'
+      x-ratelimit-remaining:
+      - '27'
+      x-ratelimit-reset:
+      - '1791589282'
+      x-ratelimit-resource:
+      - search
+      x-ratelimit-used:
+      - '3'
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - application/vnd.github+json
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - api.github.com
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+      x-github-api-version:
+      - '2022-11-28'
+    method: GET
+    uri: https://api.github.com/search/repositories?order=desc&page=1&per_page=10&q=stars%3A%3E%3D50+created%3A%3E%3D2026-10-06T00%3A00%3A00Z&sort=stars
+  response:
+    body:
+      string: "{\"total_count\": 283, \"incomplete_results\": false, \"items\": [{\"id\":
+        1407950271, \"node_id\": \"R_kgDOU-udvw\", \"name\": \"math\", \"full_name\":
+        \"redacted\", \"private\": false, \"owner\": {\"login\": \"redacted\", \"id\":
+        14957082, \"node_id\": \"MDEyOk9yZ2FuaXphdGlvbjE0OTU3MDgy\", \"avatar_url\":
+        \"redacted\", \"gravatar_id\": \"redacted\", \"url\": \"redacted\", \"html_url\":
+        \"redacted\", \"followers_url\": \"redacted\", \"following_url\": \"redacted\",
+        \"gists_url\": \"redacted\", \"starred_url\": \"redacted\", \"subscriptions_url\":
+        \"redacted\", \"organizations_url\": \"redacted\", \"repos_url\": \"redacted\",
+        \"events_url\": \"redacted\", \"received_events_url\": \"redacted\", \"type\":
+        \"Organization\", \"user_view_type\": \"public\", \"site_admin\": false},
+        \"html_url\": \"https://github.com/openai/math\", \"description\": null, \"fork\":
+        false, \"url\": \"https://api.github.com/repos/openai/math\", \"forks_url\":
+        \"https://api.github.com/repos/openai/math/forks\", \"keys_url\": \"https://api.github.com/repos/openai/math/keys{/key_id}\",
+        \"collaborators_url\": \"https://api.github.com/repos/openai/math/collaborators{/collaborator}\",
+        \"teams_url\": \"https://api.github.com/repos/openai/math/teams\", \"hooks_url\":
+        \"https://api.github.com/repos/openai/math/hooks\", \"issue_events_url\":
+        \"https://api.github.com/repos/openai/math/issues/events{/number}\", \"events_url\":
+        \"https://api.github.com/repos/openai/math/events\", \"assignees_url\": \"https://api.github.com/repos/openai/math/assignees{/user}\",
+        \"branches_url\": \"https://api.github.com/repos/openai/math/branches{/branch}\",
+        \"tags_url\": \"https://api.github.com/repos/openai/math/tags\", \"blobs_url\":
+        \"https://api.github.com/repos/openai/math/git/blobs{/sha}\", \"git_tags_url\":
+        \"https://api.github.com/repos/openai/math/git/tags{/sha}\", \"git_refs_url\":
+        \"https://api.github.com/repos/openai/math/git/refs{/sha}\", \"trees_url\":
+        \"https://api.github.com/repos/openai/math/git/trees{/sha}\", \"statuses_url\":
+        \"https://api.github.com/repos/openai/math/statuses/{sha}\", \"languages_url\":
+        \"https://api.github.com/repos/openai/math/languages\", \"stargazers_url\":
+        \"https://api.github.com/repos/openai/math/stargazers\", \"contributors_url\":
+        \"https://api.github.com/repos/openai/math/contributors\", \"subscribers_url\":
+        \"https://api.github.com/repos/openai/math/subscribers\", \"subscription_url\":
+        \"https://api.github.com/repos/openai/math/subscription\", \"commits_url\":
+        \"https://api.github.com/repos/openai/math/commits{/sha}\", \"git_commits_url\":
+        \"https://api.github.com/repos/openai/math/git/commits{/sha}\", \"comments_url\":
+        \"https://api.github.com/repos/openai/math/comments{/number}\", \"issue_comment_url\":
+        \"https://api.github.com/repos/openai/math/issues/comments{/number}\", \"contents_url\":
+        \"https://api.github.com/repos/openai/math/contents/{+path}\", \"compare_url\":
+        \"https://api.github.com/repos/openai/math/compare/{base}...{head}\", \"merges_url\":
+        \"https://api.github.com/repos/openai/math/merges\", \"archive_url\": \"https://api.github.com/repos/openai/math/{archive_format}{/ref}\",
+        \"downloads_url\": \"https://api.github.com/repos/openai/math/downloads\",
+        \"issues_url\": \"https://api.github.com/repos/openai/math/issues{/number}\",
+        \"pulls_url\": \"https://api.github.com/repos/openai/math/pulls{/number}\",
+        \"milestones_url\": \"https://api.github.com/repos/openai/math/milestones{/number}\",
+        \"notifications_url\": \"https://api.github.com/repos/openai/math/notifications{?since,all,participating}\",
+        \"labels_url\": \"https://api.github.com/repos/openai/math/labels{/name}\",
+        \"releases_url\": \"https://api.github.com/repos/openai/math/releases{/id}\",
+        \"deployments_url\": \"https://api.github.com/repos/openai/math/deployments\",
+        \"created_at\": \"2026-10-06T21:47:02Z\", \"updated_at\": \"2026-10-09T23:36:34Z\",
+        \"pushed_at\": \"2026-10-08T05:20:00Z\", \"git_url\": \"git://github.com/openai/math.git\",
+        \"ssh_url\": \"redacted@example.org:openai/math.git\", \"clone_url\": \"https://github.com/openai/math.git\",
+        \"svn_url\": \"https://github.com/openai/math\", \"homepage\": null, \"size\":
+        822061, \"stargazers_count\": 13051, \"watchers_count\": 13051, \"language\":
+        \"Lean\", \"has_issues\": false, \"has_projects\": false, \"has_downloads\":
+        false, \"has_wiki\": false, \"has_pages\": false, \"has_discussions\": false,
+        \"forks_count\": 1407, \"mirror_url\": null, \"archived\": false, \"disabled\":
+        false, \"open_issues_count\": 0, \"license\": {\"key\": \"apache-2.0\", \"name\":
+        \"Apache License 2.0\", \"spdx_id\": \"Apache-2.0\", \"url\": \"https://api.github.com/licenses/apache-2.0\",
+        \"node_id\": \"MDc6TGljZW5zZTI=\"}, \"allow_forking\": true, \"is_template\":
+        false, \"web_commit_signoff_required\": false, \"has_pull_requests\": true,
+        \"pull_request_creation_policy\": \"collaborators_only\", \"topics\": [],
+        \"visibility\": \"public\", \"forks\": 1407, \"open_issues\": 0, \"watchers\":
+        13051, \"default_branch\": \"main\", \"permissions\": {\"admin\": false, \"maintain\":
+        false, \"push\": false, \"triage\": false, \"pull\": true}, \"score\": 1.0},
+        {\"id\": 1406706284, \"node_id\": \"R_kgDOU9iibA\", \"name\": \"huashu-art-motion\",
+        \"full_name\": \"redacted\", \"private\": false, \"owner\": {\"login\": \"redacted\",
+        \"id\": 127714341, \"node_id\": \"U_kgDOB5zEJQ\", \"avatar_url\": \"redacted\",
+        \"gravatar_id\": \"redacted\", \"url\": \"redacted\", \"html_url\": \"redacted\",
+        \"followers_url\": \"redacted\", \"following_url\": \"redacted\", \"gists_url\":
+        \"redacted\", \"starred_url\": \"redacted\", \"subscriptions_url\": \"redacted\",
+        \"organizations_url\": \"redacted\", \"repos_url\": \"redacted\", \"events_url\":
+        \"redacted\", \"received_events_url\": \"redacted\", \"type\": \"User\", \"user_view_type\":
+        \"public\", \"site_admin\": false}, \"html_url\": \"https://github.com/alchaincyf/huashu-art-motion\",
+        \"description\": \"\u827A\u672F\u52A8\u753Bskill\uFF1A35\u79CD\u827A\u672F\u98CE\u683C\u30019\u79CD\u89E3\u8BF4\u8BED\u6CD5\uFF0C\u7528\u4EE3\u7801\u8BA9\u753B\u52A8\u8D77\u6765\u3002\",
+        \"fork\": false, \"url\": \"https://api.github.com/repos/alchaincyf/huashu-art-motion\",
+        \"forks_url\": \"https://api.github.com/repos/alchaincyf/huashu-art-motion/forks\",
+        \"keys_url\": \"https://api.github.com/repos/alchaincyf/huashu-art-motion/keys{/key_id}\",
+        \"collaborators_url\": \"https://api.github.com/repos/alchaincyf/huashu-art-motion/collaborators{/collaborator}\",
+        \"teams_url\": \"https://api.github.com/repos/alchaincyf/huashu-art-motion/teams\",
+        \"hooks_url\": \"https://api.github.com/repos/alchaincyf/huashu-art-motion/hooks\",
+        \"issue_events_url\": \"https://api.github.com/repos/alchaincyf/huashu-art-motion/issues/events{/number}\",
+        \"events_url\": \"https://api.github.com/repos/alchaincyf/huashu-art-motion/events\",
+        \"assignees_url\": \"https://api.github.com/repos/alchaincyf/huashu-art-motion/assignees{/user}\",
+        \"branches_url\": \"https://api.github.com/repos/alchaincyf/huashu-art-motion/branches{/branch}\",
+        \"tags_url\": \"https://api.github.com/repos/alchaincyf/huashu-art-motion/tags\",
+        \"blobs_url\": \"https://api.github.com/repos/alchaincyf/huashu-art-motion/git/blobs{/sha}\",
+        \"git_tags_url\": \"https://api.github.com/repos/alchaincyf/huashu-art-motion/git/tags{/sha}\",
+        \"git_refs_url\": \"https://api.github.com/repos/alchaincyf/huashu-art-motion/git/refs{/sha}\",
+        \"trees_url\": \"https://api.github.com/repos/alchaincyf/huashu-art-motion/git/trees{/sha}\",
+        \"statuses_url\": \"https://api.github.com/repos/alchaincyf/huashu-art-motion/statuses/{sha}\",
+        \"languages_url\": \"https://api.github.com/repos/alchaincyf/huashu-art-motion/languages\",
+        \"stargazers_url\": \"https://api.github.com/repos/alchaincyf/huashu-art-motion/stargazers\",
+        \"contributors_url\": \"https://api.github.com/repos/alchaincyf/huashu-art-motion/contributors\",
+        \"subscribers_url\": \"https://api.github.com/repos/alchaincyf/huashu-art-motion/subscribers\",
+        \"subscription_url\": \"https://api.github.com/repos/alchaincyf/huashu-art-motion/subscription\",
+        \"commits_url\": \"https://api.github.com/repos/alchaincyf/huashu-art-motion/commits{/sha}\",
+        \"git_commits_url\": \"https://api.github.com/repos/alchaincyf/huashu-art-motion/git/commits{/sha}\",
+        \"comments_url\": \"https://api.github.com/repos/alchaincyf/huashu-art-motion/comments{/number}\",
+        \"issue_comment_url\": \"https://api.github.com/repos/alchaincyf/huashu-art-motion/issues/comments{/number}\",
+        \"contents_url\": \"https://api.github.com/repos/alchaincyf/huashu-art-motion/contents/{+path}\",
+        \"compare_url\": \"https://api.github.com/repos/alchaincyf/huashu-art-motion/compare/{base}...{head}\",
+        \"merges_url\": \"https://api.github.com/repos/alchaincyf/huashu-art-motion/merges\",
+        \"archive_url\": \"https://api.github.com/repos/alchaincyf/huashu-art-motion/{archive_format}{/ref}\",
+        \"downloads_url\": \"https://api.github.com/repos/alchaincyf/huashu-art-motion/downloads\",
+        \"issues_url\": \"https://api.github.com/repos/alchaincyf/huashu-art-motion/issues{/number}\",
+        \"pulls_url\": \"https://api.github.com/repos/alchaincyf/huashu-art-motion/pulls{/number}\",
+        \"milestones_url\": \"https://api.github.com/repos/alchaincyf/huashu-art-motion/milestones{/number}\",
+        \"notifications_url\": \"https://api.github.com/repos/alchaincyf/huashu-art-motion/notifications{?since,all,participating}\",
+        \"labels_url\": \"https://api.github.com/repos/alchaincyf/huashu-art-motion/labels{/name}\",
+        \"releases_url\": \"https://api.github.com/repos/alchaincyf/huashu-art-motion/releases{/id}\",
+        \"deployments_url\": \"https://api.github.com/repos/alchaincyf/huashu-art-motion/deployments\",
+        \"created_at\": \"2026-10-06T04:49:37Z\", \"updated_at\": \"2026-10-09T23:33:45Z\",
+        \"pushed_at\": \"2026-10-08T13:11:08Z\", \"git_url\": \"git://github.com/alchaincyf/huashu-art-motion.git\",
+        \"ssh_url\": \"redacted@example.org:alchaincyf/huashu-art-motion.git\", \"clone_url\":
+        \"https://github.com/alchaincyf/huashu-art-motion.git\", \"svn_url\": \"https://github.com/alchaincyf/huashu-art-motion\",
+        \"homepage\": null, \"size\": 47719, \"stargazers_count\": 2860, \"watchers_count\":
+        2860, \"language\": \"JavaScript\", \"has_issues\": true, \"has_projects\":
+        true, \"has_downloads\": false, \"has_wiki\": true, \"has_pages\": false,
+        \"has_discussions\": false, \"forks_count\": 304, \"mirror_url\": null, \"archived\":
+        false, \"disabled\": false, \"open_issues_count\": 3, \"license\": {\"key\":
+        \"mit\", \"name\": \"MIT License\", \"spdx_id\": \"MIT\", \"url\": \"https://api.github.com/licenses/mit\",
+        \"node_id\": \"MDc6TGljZW5zZTEz\"}, \"allow_forking\": true, \"is_template\":
+        false, \"web_commit_signoff_required\": false, \"has_pull_requests\": true,
+        \"pull_request_creation_policy\": \"all\", \"topics\": [], \"visibility\":
+        \"public\", \"forks\": 304, \"open_issues\": 3, \"watchers\": 2860, \"default_branch\":
+        \"main\", \"permissions\": {\"admin\": false, \"maintain\": false, \"push\":
+        false, \"triage\": false, \"pull\": true}, \"score\": 1.0}, {\"id\": 1409787646,
+        \"node_id\": \"R_kgDOVAem_g\", \"name\": \"ARTEX\", \"full_name\": \"redacted\",
+        \"private\": false, \"owner\": {\"login\": \"redacted\", \"id\": 83952182,
+        \"node_id\": \"MDQ6VXNlcjgzOTUyMTgy\", \"avatar_url\": \"redacted\", \"gravatar_id\":
+        \"redacted\", \"url\": \"redacted\", \"html_url\": \"redacted\", \"followers_url\":
+        \"redacted\", \"following_url\": \"redacted\", \"gists_url\": \"redacted\",
+        \"starred_url\": \"redacted\", \"subscriptions_url\": \"redacted\", \"organizations_url\":
+        \"redacted\", \"repos_url\": \"redacted\", \"events_url\": \"redacted\", \"received_events_url\":
+        \"redacted\", \"type\": \"User\", \"user_view_type\": \"public\", \"site_admin\":
+        false}, \"html_url\": \"https://github.com/mhtsec/ARTEX\", \"description\":
+        \"AI \u81EA\u4E3B\u6E17\u900F\u6D4B\u8BD5\u7CFB\u7EDF | \u767E\u5EA6\u201Cagent+\u201D\u653B\u9632\u6311\u6218\u8D5B\u51A0\u519B\u9879\u76EE\",
+        \"fork\": false, \"url\": \"https://api.github.com/repos/mhtsec/ARTEX\", \"forks_url\":
+        \"https://api.github.com/repos/mhtsec/ARTEX/forks\", \"keys_url\": \"https://api.github.com/repos/mhtsec/ARTEX/keys{/key_id}\",
+        \"collaborators_url\": \"https://api.github.com/repos/mhtsec/ARTEX/collaborators{/collaborator}\",
+        \"teams_url\": \"https://api.github.com/repos/mhtsec/ARTEX/teams\", \"hooks_url\":
+        \"https://api.github.com/repos/mhtsec/ARTEX/hooks\", \"issue_events_url\":
+        \"https://api.github.com/repos/mhtsec/ARTEX/issues/events{/number}\", \"events_url\":
+        \"https://api.github.com/repos/mhtsec/ARTEX/events\", \"assignees_url\": \"https://api.github.com/repos/mhtsec/ARTEX/assignees{/user}\",
+        \"branches_url\": \"https://api.github.com/repos/mhtsec/ARTEX/branches{/branch}\",
+        \"tags_url\": \"https://api.github.com/repos/mhtsec/ARTEX/tags\", \"blobs_url\":
+        \"https://api.github.com/repos/mhtsec/ARTEX/git/blobs{/sha}\", \"git_tags_url\":
+        \"https://api.github.com/repos/mhtsec/ARTEX/git/tags{/sha}\", \"git_refs_url\":
+        \"https://api.github.com/repos/mhtsec/ARTEX/git/refs{/sha}\", \"trees_url\":
+        \"https://api.github.com/repos/mhtsec/ARTEX/git/trees{/sha}\", \"statuses_url\":
+        \"https://api.github.com/repos/mhtsec/ARTEX/statuses/{sha}\", \"languages_url\":
+        \"https://api.github.com/repos/mhtsec/ARTEX/languages\", \"stargazers_url\":
+        \"https://api.github.com/repos/mhtsec/ARTEX/stargazers\", \"contributors_url\":
+        \"https://api.github.com/repos/mhtsec/ARTEX/contributors\", \"subscribers_url\":
+        \"https://api.github.com/repos/mhtsec/ARTEX/subscribers\", \"subscription_url\":
+        \"https://api.github.com/repos/mhtsec/ARTEX/subscription\", \"commits_url\":
+        \"https://api.github.com/repos/mhtsec/ARTEX/commits{/sha}\", \"git_commits_url\":
+        \"https://api.github.com/repos/mhtsec/ARTEX/git/commits{/sha}\", \"comments_url\":
+        \"https://api.github.com/repos/mhtsec/ARTEX/comments{/number}\", \"issue_comment_url\":
+        \"https://api.github.com/repos/mhtsec/ARTEX/issues/comments{/number}\", \"contents_url\":
+        \"https://api.github.com/repos/mhtsec/ARTEX/contents/{+path}\", \"compare_url\":
+        \"https://api.github.com/repos/mhtsec/ARTEX/compare/{base}...{head}\", \"merges_url\":
+        \"https://api.github.com/repos/mhtsec/ARTEX/merges\", \"archive_url\": \"https://api.github.com/repos/mhtsec/ARTEX/{archive_format}{/ref}\",
+        \"downloads_url\": \"https://api.github.com/repos/mhtsec/ARTEX/downloads\",
+        \"issues_url\": \"https://api.github.com/repos/mhtsec/ARTEX/issues{/number}\",
+        \"pulls_url\": \"https://api.github.com/repos/mhtsec/ARTEX/pulls{/number}\",
+        \"milestones_url\": \"https://api.github.com/repos/mhtsec/ARTEX/milestones{/number}\",
+        \"notifications_url\": \"https://api.github.com/repos/mhtsec/ARTEX/notifications{?since,all,participating}\",
+        \"labels_url\": \"https://api.github.com/repos/mhtsec/ARTEX/labels{/name}\",
+        \"releases_url\": \"https://api.github.com/repos/mhtsec/ARTEX/releases{/id}\",
+        \"deployments_url\": \"https://api.github.com/repos/mhtsec/ARTEX/deployments\",
+        \"created_at\": \"2026-10-08T05:33:06Z\", \"updated_at\": \"2026-10-09T23:40:20Z\",
+        \"pushed_at\": \"2026-10-08T13:45:54Z\", \"git_url\": \"git://github.com/mhtsec/ARTEX.git\",
+        \"ssh_url\": \"redacted@example.org:mhtsec/ARTEX.git\", \"clone_url\": \"https://github.com/mhtsec/ARTEX.git\",
+        \"svn_url\": \"https://github.com/mhtsec/ARTEX\", \"homepage\": null, \"size\":
+        9624, \"stargazers_count\": 2131, \"watchers_count\": 2131, \"language\":
+        \"Go\", \"has_issues\": true, \"has_projects\": true, \"has_downloads\": false,
+        \"has_wiki\": false, \"has_pages\": false, \"has_discussions\": false, \"forks_count\":
+        4374, \"mirror_url\": null, \"archived\": false, \"disabled\": false, \"open_issues_count\":
+        0, \"license\": {\"key\": \"agpl-3.0\", \"name\": \"GNU Affero General Public
+        License v3.0\", \"spdx_id\": \"AGPL-3.0\", \"url\": \"https://api.github.com/licenses/agpl-3.0\",
+        \"node_id\": \"MDc6TGljZW5zZTE=\"}, \"allow_forking\": true, \"is_template\":
+        false, \"web_commit_signoff_required\": false, \"has_pull_requests\": true,
+        \"pull_request_creation_policy\": \"all\", \"topics\": [], \"visibility\":
+        \"public\", \"forks\": 4374, \"open_issues\": 0, \"watchers\": 2131, \"default_branch\":
+        \"main\", \"permissions\": {\"admin\": false, \"maintain\": false, \"push\":
+        false, \"triage\": false, \"pull\": true}, \"score\": 1.0}, {\"id\": 1408465463,
+        \"node_id\": \"R_kgDOU_N6Nw\", \"name\": \"nvidia-macos-driver\", \"full_name\":
+        \"redacted\", \"private\": false, \"owner\": {\"login\": \"redacted\", \"id\":
+        333880792, \"node_id\": \"U_kgDOE-ad2A\", \"avatar_url\": \"redacted\", \"gravatar_id\":
+        \"redacted\", \"url\": \"redacted\", \"html_url\": \"redacted\", \"followers_url\":
+        \"redacted\", \"following_url\": \"redacted\", \"gists_url\": \"redacted\",
+        \"starred_url\": \"redacted\", \"subscriptions_url\": \"redacted\", \"organizations_url\":
+        \"redacted\", \"repos_url\": \"redacted\", \"events_url\": \"redacted\", \"received_events_url\":
+        \"redacted\", \"type\": \"User\", \"user_view_type\": \"public\", \"site_admin\":
+        false}, \"html_url\": \"https://github.com/nullmoth/nvidia-macos-driver\",
+        \"description\": \"Metal driver for NVIDIA GeForce RTX cards on macOS 15 Sequoia
+        (Intel / OpenCore). Free, source included.\", \"fork\": false, \"url\": \"https://api.github.com/repos/nullmoth/nvidia-macos-driver\",
+        \"forks_url\": \"https://api.github.com/repos/nullmoth/nvidia-macos-driver/forks\",
+        \"keys_url\": \"https://api.github.com/repos/nullmoth/nvidia-macos-driver/keys{/key_id}\",
+        \"collaborators_url\": \"https://api.github.com/repos/nullmoth/nvidia-macos-driver/collaborators{/collaborator}\",
+        \"teams_url\": \"https://api.github.com/repos/nullmoth/nvidia-macos-driver/teams\",
+        \"hooks_url\": \"https://api.github.com/repos/nullmoth/nvidia-macos-driver/hooks\",
+        \"issue_events_url\": \"https://api.github.com/repos/nullmoth/nvidia-macos-driver/issues/events{/number}\",
+        \"events_url\": \"https://api.github.com/repos/nullmoth/nvidia-macos-driver/events\",
+        \"assignees_url\": \"https://api.github.com/repos/nullmoth/nvidia-macos-driver/assignees{/user}\",
+        \"branches_url\": \"https://api.github.com/repos/nullmoth/nvidia-macos-driver/branches{/branch}\",
+        \"tags_url\": \"https://api.github.com/repos/nullmoth/nvidia-macos-driver/tags\",
+        \"blobs_url\": \"https://api.github.com/repos/nullmoth/nvidia-macos-driver/git/blobs{/sha}\",
+        \"git_tags_url\": \"https://api.github.com/repos/nullmoth/nvidia-macos-driver/git/tags{/sha}\",
+        \"git_refs_url\": \"https://api.github.com/repos/nullmoth/nvidia-macos-driver/git/refs{/sha}\",
+        \"trees_url\": \"https://api.github.com/repos/nullmoth/nvidia-macos-driver/git/trees{/sha}\",
+        \"statuses_url\": \"https://api.github.com/repos/nullmoth/nvidia-macos-driver/statuses/{sha}\",
+        \"languages_url\": \"https://api.github.com/repos/nullmoth/nvidia-macos-driver/languages\",
+        \"stargazers_url\": \"https://api.github.com/repos/nullmoth/nvidia-macos-driver/stargazers\",
+        \"contributors_url\": \"https://api.github.com/repos/nullmoth/nvidia-macos-driver/contributors\",
+        \"subscribers_url\": \"https://api.github.com/repos/nullmoth/nvidia-macos-driver/subscribers\",
+        \"subscription_url\": \"https://api.github.com/repos/nullmoth/nvidia-macos-driver/subscription\",
+        \"commits_url\": \"https://api.github.com/repos/nullmoth/nvidia-macos-driver/commits{/sha}\",
+        \"git_commits_url\": \"https://api.github.com/repos/nullmoth/nvidia-macos-driver/git/commits{/sha}\",
+        \"comments_url\": \"https://api.github.com/repos/nullmoth/nvidia-macos-driver/comments{/number}\",
+        \"issue_comment_url\": \"https://api.github.com/repos/nullmoth/nvidia-macos-driver/issues/comments{/number}\",
+        \"contents_url\": \"https://api.github.com/repos/nullmoth/nvidia-macos-driver/contents/{+path}\",
+        \"compare_url\": \"https://api.github.com/repos/nullmoth/nvidia-macos-driver/compare/{base}...{head}\",
+        \"merges_url\": \"https://api.github.com/repos/nullmoth/nvidia-macos-driver/merges\",
+        \"archive_url\": \"https://api.github.com/repos/nullmoth/nvidia-macos-driver/{archive_format}{/ref}\",
+        \"downloads_url\": \"https://api.github.com/repos/nullmoth/nvidia-macos-driver/downloads\",
+        \"issues_url\": \"https://api.github.com/repos/nullmoth/nvidia-macos-driver/issues{/number}\",
+        \"pulls_url\": \"https://api.github.com/repos/nullmoth/nvidia-macos-driver/pulls{/number}\",
+        \"milestones_url\": \"https://api.github.com/repos/nullmoth/nvidia-macos-driver/milestones{/number}\",
+        \"notifications_url\": \"https://api.github.com/repos/nullmoth/nvidia-macos-driver/notifications{?since,all,participating}\",
+        \"labels_url\": \"https://api.github.com/repos/nullmoth/nvidia-macos-driver/labels{/name}\",
+        \"releases_url\": \"https://api.github.com/repos/nullmoth/nvidia-macos-driver/releases{/id}\",
+        \"deployments_url\": \"https://api.github.com/repos/nullmoth/nvidia-macos-driver/deployments\",
+        \"created_at\": \"2026-10-07T08:13:12Z\", \"updated_at\": \"2026-10-09T23:33:40Z\",
+        \"pushed_at\": \"2026-10-09T19:09:57Z\", \"git_url\": \"git://github.com/nullmoth/nvidia-macos-driver.git\",
+        \"ssh_url\": \"redacted@example.org:nullmoth/nvidia-macos-driver.git\", \"clone_url\":
+        \"https://github.com/nullmoth/nvidia-macos-driver.git\", \"svn_url\": \"https://github.com/nullmoth/nvidia-macos-driver\",
+        \"homepage\": \"https://nullmothsystems.com\", \"size\": 2680, \"stargazers_count\":
+        1841, \"watchers_count\": 1841, \"language\": \"Rust\", \"has_issues\": true,
+        \"has_projects\": true, \"has_downloads\": false, \"has_wiki\": false, \"has_pages\":
+        false, \"has_discussions\": false, \"forks_count\": 167, \"mirror_url\": null,
+        \"archived\": false, \"disabled\": false, \"open_issues_count\": 64, \"license\":
+        {\"key\": \"other\", \"name\": \"Other\", \"spdx_id\": \"NOASSERTION\", \"url\":
+        null, \"node_id\": \"MDc6TGljZW5zZTA=\"}, \"allow_forking\": true, \"is_template\":
+        false, \"web_commit_signoff_required\": false, \"has_pull_requests\": true,
+        \"pull_request_creation_policy\": \"all\", \"topics\": [], \"visibility\":
+        \"public\", \"forks\": 167, \"open_issues\": 64, \"watchers\": 1841, \"default_branch\":
+        \"main\", \"permissions\": {\"admin\": false, \"maintain\": false, \"push\":
+        false, \"triage\": false, \"pull\": true}, \"score\": 1.0}, {\"id\": 1408489772,
+        \"node_id\": \"R_kgDOU_PZLA\", \"name\": \"wordcraft\", \"full_name\": \"redacted\",
+        \"private\": false, \"owner\": {\"login\": \"redacted\", \"id\": 76897702,
+        \"node_id\": \"MDEyOk9yZ2FuaXphdGlvbjc2ODk3NzAy\", \"avatar_url\": \"redacted\",
+        \"gravatar_id\": \"redacted\", \"url\": \"redacted\", \"html_url\": \"redacted\",
+        \"followers_url\": \"redacted\", \"following_url\": \"redacted\", \"gists_url\":
+        \"redacted\", \"starred_url\": \"redacted\", \"subscriptions_url\": \"redacted\",
+        \"organizations_url\": \"redacted\", \"repos_url\": \"redacted\", \"events_url\":
+        \"redacted\", \"received_events_url\": \"redacted\", \"type\": \"Organization\",
+        \"user_view_type\": \"public\", \"site_admin\": false}, \"html_url\": \"https://github.com/storytold/wordcraft\",
+        \"description\": \"An open-source, clean-room reimplementation of Microsoft
+        Word in pure Rust\", \"fork\": false, \"url\": \"https://api.github.com/repos/storytold/wordcraft\",
+        \"forks_url\": \"https://api.github.com/repos/storytold/wordcraft/forks\",
+        \"keys_url\": \"https://api.github.com/repos/storytold/wordcraft/keys{/key_id}\",
+        \"collaborators_url\": \"https://api.github.com/repos/storytold/wordcraft/collaborators{/collaborator}\",
+        \"teams_url\": \"https://api.github.com/repos/storytold/wordcraft/teams\",
+        \"hooks_url\": \"https://api.github.com/repos/storytold/wordcraft/hooks\",
+        \"issue_events_url\": \"https://api.github.com/repos/storytold/wordcraft/issues/events{/number}\",
+        \"events_url\": \"https://api.github.com/repos/storytold/wordcraft/events\",
+        \"assignees_url\": \"https://api.github.com/repos/storytold/wordcraft/assignees{/user}\",
+        \"branches_url\": \"https://api.github.com/repos/storytold/wordcraft/branches{/branch}\",
+        \"tags_url\": \"https://api.github.com/repos/storytold/wordcraft/tags\", \"blobs_url\":
+        \"https://api.github.com/repos/storytold/wordcraft/git/blobs{/sha}\", \"git_tags_url\":
+        \"https://api.github.com/repos/storytold/wordcraft/git/tags{/sha}\", \"git_refs_url\":
+        \"https://api.github.com/repos/storytold/wordcraft/git/refs{/sha}\", \"trees_url\":
+        \"https://api.github.com/repos/storytold/wordcraft/git/trees{/sha}\", \"statuses_url\":
+        \"https://api.github.com/repos/storytold/wordcraft/statuses/{sha}\", \"languages_url\":
+        \"https://api.github.com/repos/storytold/wordcraft/languages\", \"stargazers_url\":
+        \"https://api.github.com/repos/storytold/wordcraft/stargazers\", \"contributors_url\":
+        \"https://api.github.com/repos/storytold/wordcraft/contributors\", \"subscribers_url\":
+        \"https://api.github.com/repos/storytold/wordcraft/subscribers\", \"subscription_url\":
+        \"https://api.github.com/repos/storytold/wordcraft/subscription\", \"commits_url\":
+        \"https://api.github.com/repos/storytold/wordcraft/commits{/sha}\", \"git_commits_url\":
+        \"https://api.github.com/repos/storytold/wordcraft/git/commits{/sha}\", \"comments_url\":
+        \"https://api.github.com/repos/storytold/wordcraft/comments{/number}\", \"issue_comment_url\":
+        \"https://api.github.com/repos/storytold/wordcraft/issues/comments{/number}\",
+        \"contents_url\": \"https://api.github.com/repos/storytold/wordcraft/contents/{+path}\",
+        \"compare_url\": \"https://api.github.com/repos/storytold/wordcraft/compare/{base}...{head}\",
+        \"merges_url\": \"https://api.github.com/repos/storytold/wordcraft/merges\",
+        \"archive_url\": \"https://api.github.com/repos/storytold/wordcraft/{archive_format}{/ref}\",
+        \"downloads_url\": \"https://api.github.com/repos/storytold/wordcraft/downloads\",
+        \"issues_url\": \"https://api.github.com/repos/storytold/wordcraft/issues{/number}\",
+        \"pulls_url\": \"https://api.github.com/repos/storytold/wordcraft/pulls{/number}\",
+        \"milestones_url\": \"https://api.github.com/repos/storytold/wordcraft/milestones{/number}\",
+        \"notifications_url\": \"https://api.github.com/repos/storytold/wordcraft/notifications{?since,all,participating}\",
+        \"labels_url\": \"https://api.github.com/repos/storytold/wordcraft/labels{/name}\",
+        \"releases_url\": \"https://api.github.com/repos/storytold/wordcraft/releases{/id}\",
+        \"deployments_url\": \"https://api.github.com/repos/storytold/wordcraft/deployments\",
+        \"created_at\": \"2026-10-07T08:34:24Z\", \"updated_at\": \"2026-10-09T23:38:27Z\",
+        \"pushed_at\": \"2026-10-09T13:22:42Z\", \"git_url\": \"git://github.com/storytold/wordcraft.git\",
+        \"ssh_url\": \"redacted@example.org:storytold/wordcraft.git\", \"clone_url\":
+        \"https://github.com/storytold/wordcraft.git\", \"svn_url\": \"https://github.com/storytold/wordcraft\",
+        \"homepage\": \"https://getartcraft.com/apps/wordcraft\", \"size\": 7116,
+        \"stargazers_count\": 1834, \"watchers_count\": 1834, \"language\": \"Rust\",
+        \"has_issues\": true, \"has_projects\": true, \"has_downloads\": false, \"has_wiki\":
+        true, \"has_pages\": false, \"has_discussions\": false, \"forks_count\": 548,
+        \"mirror_url\": null, \"archived\": false, \"disabled\": false, \"open_issues_count\":
+        95, \"license\": {\"key\": \"apache-2.0\", \"name\": \"Apache License 2.0\",
+        \"spdx_id\": \"Apache-2.0\", \"url\": \"https://api.github.com/licenses/apache-2.0\",
+        \"node_id\": \"MDc6TGljZW5zZTI=\"}, \"allow_forking\": true, \"is_template\":
+        false, \"web_commit_signoff_required\": false, \"has_pull_requests\": true,
+        \"pull_request_creation_policy\": \"all\", \"topics\": [], \"visibility\":
+        \"public\", \"forks\": 548, \"open_issues\": 95, \"watchers\": 1834, \"default_branch\":
+        \"main\", \"permissions\": {\"admin\": false, \"maintain\": false, \"push\":
+        false, \"triage\": false, \"pull\": true}, \"score\": 1.0}, {\"id\": 1407504032,
+        \"node_id\": \"R_kgDOU-TOoA\", \"name\": \"iPhone-use\", \"full_name\": \"redacted\",
+        \"private\": false, \"owner\": {\"login\": \"redacted\", \"id\": 8215057,
+        \"node_id\": \"MDQ6VXNlcjgyMTUwNTc=\", \"avatar_url\": \"redacted\", \"gravatar_id\":
+        \"redacted\", \"url\": \"redacted\", \"html_url\": \"redacted\", \"followers_url\":
+        \"redacted\", \"following_url\": \"redacted\", \"gists_url\": \"redacted\",
+        \"starred_url\": \"redacted\", \"subscriptions_url\": \"redacted\", \"organizations_url\":
+        \"redacted\", \"repos_url\": \"redacted\", \"events_url\": \"redacted\", \"received_events_url\":
+        \"redacted\", \"type\": \"User\", \"user_view_type\": \"public\", \"site_admin\":
+        false}, \"html_url\": \"https://github.com/zhongerxin/iPhone-use\", \"description\":
+        \"\u8BA9 Codex \u901A\u8FC7 USB \u64CD\u4F5C\u771F\u5B9E iPhone\uFF1A\u5F15\u5BFC\u5B89\u88C5\u3001App
+        \u81EA\u52A8\u5316\u3001\u5B9E\u65F6\u5C4F\u5E55\u4E0E\u622A\u56FE\u56DE\u9000\u3002\",
+        \"fork\": false, \"url\": \"https://api.github.com/repos/zhongerxin/iPhone-use\",
+        \"forks_url\": \"https://api.github.com/repos/zhongerxin/iPhone-use/forks\",
+        \"keys_url\": \"https://api.github.com/repos/zhongerxin/iPhone-use/keys{/key_id}\",
+        \"collaborators_url\": \"https://api.github.com/repos/zhongerxin/iPhone-use/collaborators{/collaborator}\",
+        \"teams_url\": \"https://api.github.com/repos/zhongerxin/iPhone-use/teams\",
+        \"hooks_url\": \"https://api.github.com/repos/zhongerxin/iPhone-use/hooks\",
+        \"issue_events_url\": \"https://api.github.com/repos/zhongerxin/iPhone-use/issues/events{/number}\",
+        \"events_url\": \"https://api.github.com/repos/zhongerxin/iPhone-use/events\",
+        \"assignees_url\": \"https://api.github.com/repos/zhongerxin/iPhone-use/assignees{/user}\",
+        \"branches_url\": \"https://api.github.com/repos/zhongerxin/iPhone-use/branches{/branch}\",
+        \"tags_url\": \"https://api.github.com/repos/zhongerxin/iPhone-use/tags\",
+        \"blobs_url\": \"https://api.github.com/repos/zhongerxin/iPhone-use/git/blobs{/sha}\",
+        \"git_tags_url\": \"https://api.github.com/repos/zhongerxin/iPhone-use/git/tags{/sha}\",
+        \"git_refs_url\": \"https://api.github.com/repos/zhongerxin/iPhone-use/git/refs{/sha}\",
+        \"trees_url\": \"https://api.github.com/repos/zhongerxin/iPhone-use/git/trees{/sha}\",
+        \"statuses_url\": \"https://api.github.com/repos/zhongerxin/iPhone-use/statuses/{sha}\",
+        \"languages_url\": \"https://api.github.com/repos/zhongerxin/iPhone-use/languages\",
+        \"stargazers_url\": \"https://api.github.com/repos/zhongerxin/iPhone-use/stargazers\",
+        \"contributors_url\": \"https://api.github.com/repos/zhongerxin/iPhone-use/contributors\",
+        \"subscribers_url\": \"https://api.github.com/repos/zhongerxin/iPhone-use/subscribers\",
+        \"subscription_url\": \"https://api.github.com/repos/zhongerxin/iPhone-use/subscription\",
+        \"commits_url\": \"https://api.github.com/repos/zhongerxin/iPhone-use/commits{/sha}\",
+        \"git_commits_url\": \"https://api.github.com/repos/zhongerxin/iPhone-use/git/commits{/sha}\",
+        \"comments_url\": \"https://api.github.com/repos/zhongerxin/iPhone-use/comments{/number}\",
+        \"issue_comment_url\": \"https://api.github.com/repos/zhongerxin/iPhone-use/issues/comments{/number}\",
+        \"contents_url\": \"https://api.github.com/repos/zhongerxin/iPhone-use/contents/{+path}\",
+        \"compare_url\": \"https://api.github.com/repos/zhongerxin/iPhone-use/compare/{base}...{head}\",
+        \"merges_url\": \"https://api.github.com/repos/zhongerxin/iPhone-use/merges\",
+        \"archive_url\": \"https://api.github.com/repos/zhongerxin/iPhone-use/{archive_format}{/ref}\",
+        \"downloads_url\": \"https://api.github.com/repos/zhongerxin/iPhone-use/downloads\",
+        \"issues_url\": \"https://api.github.com/repos/zhongerxin/iPhone-use/issues{/number}\",
+        \"pulls_url\": \"https://api.github.com/repos/zhongerxin/iPhone-use/pulls{/number}\",
+        \"milestones_url\": \"https://api.github.com/repos/zhongerxin/iPhone-use/milestones{/number}\",
+        \"notifications_url\": \"https://api.github.com/repos/zhongerxin/iPhone-use/notifications{?since,all,participating}\",
+        \"labels_url\": \"https://api.github.com/repos/zhongerxin/iPhone-use/labels{/name}\",
+        \"releases_url\": \"https://api.github.com/repos/zhongerxin/iPhone-use/releases{/id}\",
+        \"deployments_url\": \"https://api.github.com/repos/zhongerxin/iPhone-use/deployments\",
+        \"created_at\": \"2026-10-06T15:09:33Z\", \"updated_at\": \"2026-10-09T23:40:32Z\",
+        \"pushed_at\": \"2026-10-09T13:47:58Z\", \"git_url\": \"git://github.com/zhongerxin/iPhone-use.git\",
+        \"ssh_url\": \"redacted@example.org:zhongerxin/iPhone-use.git\", \"clone_url\":
+        \"https://github.com/zhongerxin/iPhone-use.git\", \"svn_url\": \"https://github.com/zhongerxin/iPhone-use\",
+        \"homepage\": null, \"size\": 45240, \"stargazers_count\": 1696, \"watchers_count\":
+        1696, \"language\": \"Python\", \"has_issues\": true, \"has_projects\": true,
+        \"has_downloads\": false, \"has_wiki\": false, \"has_pages\": false, \"has_discussions\":
+        false, \"forks_count\": 160, \"mirror_url\": null, \"archived\": false, \"disabled\":
+        false, \"open_issues_count\": 8, \"license\": {\"key\": \"mit\", \"name\":
+        \"MIT License\", \"spdx_id\": \"MIT\", \"url\": \"https://api.github.com/licenses/mit\",
+        \"node_id\": \"MDc6TGljZW5zZTEz\"}, \"allow_forking\": true, \"is_template\":
+        false, \"web_commit_signoff_required\": false, \"has_pull_requests\": true,
+        \"pull_request_creation_policy\": \"all\", \"topics\": [], \"visibility\":
+        \"public\", \"forks\": 160, \"open_issues\": 8, \"watchers\": 1696, \"default_branch\":
+        \"main\", \"permissions\": {\"admin\": false, \"maintain\": false, \"push\":
+        false, \"triage\": false, \"pull\": true}, \"score\": 1.0}, {\"id\": 1407873347,
+        \"node_id\": \"R_kgDOU-pxQw\", \"name\": \"aurelio-finance\", \"full_name\":
+        \"redacted\", \"private\": false, \"owner\": {\"login\": \"redacted\", \"id\":
+        154470154, \"node_id\": \"U_kgDOCTUHCg\", \"avatar_url\": \"redacted\", \"gravatar_id\":
+        \"redacted\", \"url\": \"redacted\", \"html_url\": \"redacted\", \"followers_url\":
+        \"redacted\", \"following_url\": \"redacted\", \"gists_url\": \"redacted\",
+        \"starred_url\": \"redacted\", \"subscriptions_url\": \"redacted\", \"organizations_url\":
+        \"redacted\", \"repos_url\": \"redacted\", \"events_url\": \"redacted\", \"received_events_url\":
+        \"redacted\", \"type\": \"User\", \"user_view_type\": \"public\", \"site_admin\":
+        false}, \"html_url\": \"https://github.com/LosaLosSantos/aurelio-finance\",
+        \"description\": \"Open-source personal finance app with an AI financial advisor:
+        track your net worth, investments, ETFs, cash and debts on your own computer.\",
+        \"fork\": false, \"url\": \"https://api.github.com/repos/LosaLosSantos/aurelio-finance\",
+        \"forks_url\": \"https://api.github.com/repos/LosaLosSantos/aurelio-finance/forks\",
+        \"keys_url\": \"https://api.github.com/repos/LosaLosSantos/aurelio-finance/keys{/key_id}\",
+        \"collaborators_url\": \"https://api.github.com/repos/LosaLosSantos/aurelio-finance/collaborators{/collaborator}\",
+        \"teams_url\": \"https://api.github.com/repos/LosaLosSantos/aurelio-finance/teams\",
+        \"hooks_url\": \"https://api.github.com/repos/LosaLosSantos/aurelio-finance/hooks\",
+        \"issue_events_url\": \"https://api.github.com/repos/LosaLosSantos/aurelio-finance/issues/events{/number}\",
+        \"events_url\": \"https://api.github.com/repos/LosaLosSantos/aurelio-finance/events\",
+        \"assignees_url\": \"https://api.github.com/repos/LosaLosSantos/aurelio-finance/assignees{/user}\",
+        \"branches_url\": \"https://api.github.com/repos/LosaLosSantos/aurelio-finance/branches{/branch}\",
+        \"tags_url\": \"https://api.github.com/repos/LosaLosSantos/aurelio-finance/tags\",
+        \"blobs_url\": \"https://api.github.com/repos/LosaLosSantos/aurelio-finance/git/blobs{/sha}\",
+        \"git_tags_url\": \"https://api.github.com/repos/LosaLosSantos/aurelio-finance/git/tags{/sha}\",
+        \"git_refs_url\": \"https://api.github.com/repos/LosaLosSantos/aurelio-finance/git/refs{/sha}\",
+        \"trees_url\": \"https://api.github.com/repos/LosaLosSantos/aurelio-finance/git/trees{/sha}\",
+        \"statuses_url\": \"https://api.github.com/repos/LosaLosSantos/aurelio-finance/statuses/{sha}\",
+        \"languages_url\": \"https://api.github.com/repos/LosaLosSantos/aurelio-finance/languages\",
+        \"stargazers_url\": \"https://api.github.com/repos/LosaLosSantos/aurelio-finance/stargazers\",
+        \"contributors_url\": \"https://api.github.com/repos/LosaLosSantos/aurelio-finance/contributors\",
+        \"subscribers_url\": \"https://api.github.com/repos/LosaLosSantos/aurelio-finance/subscribers\",
+        \"subscription_url\": \"https://api.github.com/repos/LosaLosSantos/aurelio-finance/subscription\",
+        \"commits_url\": \"https://api.github.com/repos/LosaLosSantos/aurelio-finance/commits{/sha}\",
+        \"git_commits_url\": \"https://api.github.com/repos/LosaLosSantos/aurelio-finance/git/commits{/sha}\",
+        \"comments_url\": \"https://api.github.com/repos/LosaLosSantos/aurelio-finance/comments{/number}\",
+        \"issue_comment_url\": \"https://api.github.com/repos/LosaLosSantos/aurelio-finance/issues/comments{/number}\",
+        \"contents_url\": \"https://api.github.com/repos/LosaLosSantos/aurelio-finance/contents/{+path}\",
+        \"compare_url\": \"https://api.github.com/repos/LosaLosSantos/aurelio-finance/compare/{base}...{head}\",
+        \"merges_url\": \"https://api.github.com/repos/LosaLosSantos/aurelio-finance/merges\",
+        \"archive_url\": \"https://api.github.com/repos/LosaLosSantos/aurelio-finance/{archive_format}{/ref}\",
+        \"downloads_url\": \"https://api.github.com/repos/LosaLosSantos/aurelio-finance/downloads\",
+        \"issues_url\": \"https://api.github.com/repos/LosaLosSantos/aurelio-finance/issues{/number}\",
+        \"pulls_url\": \"https://api.github.com/repos/LosaLosSantos/aurelio-finance/pulls{/number}\",
+        \"milestones_url\": \"https://api.github.com/repos/LosaLosSantos/aurelio-finance/milestones{/number}\",
+        \"notifications_url\": \"https://api.github.com/repos/LosaLosSantos/aurelio-finance/notifications{?since,all,participating}\",
+        \"labels_url\": \"https://api.github.com/repos/LosaLosSantos/aurelio-finance/labels{/name}\",
+        \"releases_url\": \"https://api.github.com/repos/LosaLosSantos/aurelio-finance/releases{/id}\",
+        \"deployments_url\": \"https://api.github.com/repos/LosaLosSantos/aurelio-finance/deployments\",
+        \"created_at\": \"2026-10-06T20:14:19Z\", \"updated_at\": \"2026-10-09T23:38:55Z\",
+        \"pushed_at\": \"2026-10-09T11:29:00Z\", \"git_url\": \"git://github.com/LosaLosSantos/aurelio-finance.git\",
+        \"ssh_url\": \"redacted@example.org:LosaLosSantos/aurelio-finance.git\", \"clone_url\":
+        \"https://github.com/LosaLosSantos/aurelio-finance.git\", \"svn_url\": \"https://github.com/LosaLosSantos/aurelio-finance\",
+        \"homepage\": null, \"size\": 9129, \"stargazers_count\": 1539, \"watchers_count\":
+        1539, \"language\": \"Python\", \"has_issues\": true, \"has_projects\": true,
+        \"has_downloads\": false, \"has_wiki\": false, \"has_pages\": false, \"has_discussions\":
+        false, \"forks_count\": 118, \"mirror_url\": null, \"archived\": false, \"disabled\":
+        false, \"open_issues_count\": 0, \"license\": {\"key\": \"mit\", \"name\":
+        \"MIT License\", \"spdx_id\": \"MIT\", \"url\": \"https://api.github.com/licenses/mit\",
+        \"node_id\": \"MDc6TGljZW5zZTEz\"}, \"allow_forking\": true, \"is_template\":
+        false, \"web_commit_signoff_required\": false, \"has_pull_requests\": true,
+        \"pull_request_creation_policy\": \"all\", \"topics\": [\"ai\", \"dividends\",
+        \"etf\", \"finance\", \"financial-planning\", \"fintech\", \"investing\",
+        \"llm\", \"net-worth\", \"personal-finance\", \"portfolio-tracker\", \"self-hosted\",
+        \"stocks\", \"wealth-management\"], \"visibility\": \"public\", \"forks\":
+        118, \"open_issues\": 0, \"watchers\": 1539, \"default_branch\": \"main\",
+        \"permissions\": {\"admin\": false, \"maintain\": false, \"push\": false,
+        \"triage\": false, \"pull\": true}, \"score\": 1.0}, {\"id\": 1408289866,
+        \"node_id\": \"R_kgDOU_DMSg\", \"name\": \"cadcraft\", \"full_name\": \"redacted\",
+        \"private\": false, \"owner\": {\"login\": \"redacted\", \"id\": 76897702,
+        \"node_id\": \"MDEyOk9yZ2FuaXphdGlvbjc2ODk3NzAy\", \"avatar_url\": \"redacted\",
+        \"gravatar_id\": \"redacted\", \"url\": \"redacted\", \"html_url\": \"redacted\",
+        \"followers_url\": \"redacted\", \"following_url\": \"redacted\", \"gists_url\":
+        \"redacted\", \"starred_url\": \"redacted\", \"subscriptions_url\": \"redacted\",
+        \"organizations_url\": \"redacted\", \"repos_url\": \"redacted\", \"events_url\":
+        \"redacted\", \"received_events_url\": \"redacted\", \"type\": \"Organization\",
+        \"user_view_type\": \"public\", \"site_admin\": false}, \"html_url\": \"https://github.com/storytold/cadcraft\",
+        \"description\": \"CADCraft: computer-aided design and drafting \u2014 an
+        open-source, clean-room AutoCAD-style app in pure Rust\", \"fork\": false,
+        \"url\": \"https://api.github.com/repos/storytold/cadcraft\", \"forks_url\":
+        \"https://api.github.com/repos/storytold/cadcraft/forks\", \"keys_url\": \"https://api.github.com/repos/storytold/cadcraft/keys{/key_id}\",
+        \"collaborators_url\": \"https://api.github.com/repos/storytold/cadcraft/collaborators{/collaborator}\",
+        \"teams_url\": \"https://api.github.com/repos/storytold/cadcraft/teams\",
+        \"hooks_url\": \"https://api.github.com/repos/storytold/cadcraft/hooks\",
+        \"issue_events_url\": \"https://api.github.com/repos/storytold/cadcraft/issues/events{/number}\",
+        \"events_url\": \"https://api.github.com/repos/storytold/cadcraft/events\",
+        \"assignees_url\": \"https://api.github.com/repos/storytold/cadcraft/assignees{/user}\",
+        \"branches_url\": \"https://api.github.com/repos/storytold/cadcraft/branches{/branch}\",
+        \"tags_url\": \"https://api.github.com/repos/storytold/cadcraft/tags\", \"blobs_url\":
+        \"https://api.github.com/repos/storytold/cadcraft/git/blobs{/sha}\", \"git_tags_url\":
+        \"https://api.github.com/repos/storytold/cadcraft/git/tags{/sha}\", \"git_refs_url\":
+        \"https://api.github.com/repos/storytold/cadcraft/git/refs{/sha}\", \"trees_url\":
+        \"https://api.github.com/repos/storytold/cadcraft/git/trees{/sha}\", \"statuses_url\":
+        \"https://api.github.com/repos/storytold/cadcraft/statuses/{sha}\", \"languages_url\":
+        \"https://api.github.com/repos/storytold/cadcraft/languages\", \"stargazers_url\":
+        \"https://api.github.com/repos/storytold/cadcraft/stargazers\", \"contributors_url\":
+        \"https://api.github.com/repos/storytold/cadcraft/contributors\", \"subscribers_url\":
+        \"https://api.github.com/repos/storytold/cadcraft/subscribers\", \"subscription_url\":
+        \"https://api.github.com/repos/storytold/cadcraft/subscription\", \"commits_url\":
+        \"https://api.github.com/repos/storytold/cadcraft/commits{/sha}\", \"git_commits_url\":
+        \"https://api.github.com/repos/storytold/cadcraft/git/commits{/sha}\", \"comments_url\":
+        \"https://api.github.com/repos/storytold/cadcraft/comments{/number}\", \"issue_comment_url\":
+        \"https://api.github.com/repos/storytold/cadcraft/issues/comments{/number}\",
+        \"contents_url\": \"https://api.github.com/repos/storytold/cadcraft/contents/{+path}\",
+        \"compare_url\": \"https://api.github.com/repos/storytold/cadcraft/compare/{base}...{head}\",
+        \"merges_url\": \"https://api.github.com/repos/storytold/cadcraft/merges\",
+        \"archive_url\": \"https://api.github.com/repos/storytold/cadcraft/{archive_format}{/ref}\",
+        \"downloads_url\": \"https://api.github.com/repos/storytold/cadcraft/downloads\",
+        \"issues_url\": \"https://api.github.com/repos/storytold/cadcraft/issues{/number}\",
+        \"pulls_url\": \"https://api.github.com/repos/storytold/cadcraft/pulls{/number}\",
+        \"milestones_url\": \"https://api.github.com/repos/storytold/cadcraft/milestones{/number}\",
+        \"notifications_url\": \"https://api.github.com/repos/storytold/cadcraft/notifications{?since,all,participating}\",
+        \"labels_url\": \"https://api.github.com/repos/storytold/cadcraft/labels{/name}\",
+        \"releases_url\": \"https://api.github.com/repos/storytold/cadcraft/releases{/id}\",
+        \"deployments_url\": \"https://api.github.com/repos/storytold/cadcraft/deployments\",
+        \"created_at\": \"2026-10-07T05:22:31Z\", \"updated_at\": \"2026-10-09T23:36:21Z\",
+        \"pushed_at\": \"2026-10-09T13:21:09Z\", \"git_url\": \"git://github.com/storytold/cadcraft.git\",
+        \"ssh_url\": \"redacted@example.org:storytold/cadcraft.git\", \"clone_url\":
+        \"https://github.com/storytold/cadcraft.git\", \"svn_url\": \"https://github.com/storytold/cadcraft\",
+        \"homepage\": null, \"size\": 2667, \"stargazers_count\": 1347, \"watchers_count\":
+        1347, \"language\": \"Rust\", \"has_issues\": true, \"has_projects\": true,
+        \"has_downloads\": false, \"has_wiki\": true, \"has_pages\": false, \"has_discussions\":
+        false, \"forks_count\": 568, \"mirror_url\": null, \"archived\": false, \"disabled\":
+        false, \"open_issues_count\": 60, \"license\": {\"key\": \"apache-2.0\", \"name\":
+        \"Apache License 2.0\", \"spdx_id\": \"Apache-2.0\", \"url\": \"https://api.github.com/licenses/apache-2.0\",
+        \"node_id\": \"MDc6TGljZW5zZTI=\"}, \"allow_forking\": true, \"is_template\":
+        false, \"web_commit_signoff_required\": false, \"has_pull_requests\": true,
+        \"pull_request_creation_policy\": \"all\", \"topics\": [], \"visibility\":
+        \"public\", \"forks\": 568, \"open_issues\": 60, \"watchers\": 1347, \"default_branch\":
+        \"main\", \"permissions\": {\"admin\": false, \"maintain\": false, \"push\":
+        false, \"triage\": false, \"pull\": true}, \"score\": 1.0}, {\"id\": 1408557215,
+        \"node_id\": \"R_kgDOU_Tgnw\", \"name\": \"pt-pc\", \"full_name\": \"redacted\",
+        \"private\": false, \"owner\": {\"login\": \"redacted\", \"id\": 41537900,
+        \"node_id\": \"MDQ6VXNlcjQxNTM3OTAw\", \"avatar_url\": \"redacted\", \"gravatar_id\":
+        \"redacted\", \"url\": \"redacted\", \"html_url\": \"redacted\", \"followers_url\":
+        \"redacted\", \"following_url\": \"redacted\", \"gists_url\": \"redacted\",
+        \"starred_url\": \"redacted\", \"subscriptions_url\": \"redacted\", \"organizations_url\":
+        \"redacted\", \"repos_url\": \"redacted\", \"events_url\": \"redacted\", \"received_events_url\":
+        \"redacted\", \"type\": \"User\", \"user_view_type\": \"public\", \"site_admin\":
+        false}, \"html_url\": \"https://github.com/LoreanXavier/pt-pc\", \"description\":
+        \"Native PC port of P.T. (runs from your own PS4 game files)\", \"fork\":
+        false, \"url\": \"https://api.github.com/repos/LoreanXavier/pt-pc\", \"forks_url\":
+        \"https://api.github.com/repos/LoreanXavier/pt-pc/forks\", \"keys_url\": \"https://api.github.com/repos/LoreanXavier/pt-pc/keys{/key_id}\",
+        \"collaborators_url\": \"https://api.github.com/repos/LoreanXavier/pt-pc/collaborators{/collaborator}\",
+        \"teams_url\": \"https://api.github.com/repos/LoreanXavier/pt-pc/teams\",
+        \"hooks_url\": \"https://api.github.com/repos/LoreanXavier/pt-pc/hooks\",
+        \"issue_events_url\": \"https://api.github.com/repos/LoreanXavier/pt-pc/issues/events{/number}\",
+        \"events_url\": \"https://api.github.com/repos/LoreanXavier/pt-pc/events\",
+        \"assignees_url\": \"https://api.github.com/repos/LoreanXavier/pt-pc/assignees{/user}\",
+        \"branches_url\": \"https://api.github.com/repos/LoreanXavier/pt-pc/branches{/branch}\",
+        \"tags_url\": \"https://api.github.com/repos/LoreanXavier/pt-pc/tags\", \"blobs_url\":
+        \"https://api.github.com/repos/LoreanXavier/pt-pc/git/blobs{/sha}\", \"git_tags_url\":
+        \"https://api.github.com/repos/LoreanXavier/pt-pc/git/tags{/sha}\", \"git_refs_url\":
+        \"https://api.github.com/repos/LoreanXavier/pt-pc/git/refs{/sha}\", \"trees_url\":
+        \"https://api.github.com/repos/LoreanXavier/pt-pc/git/trees{/sha}\", \"statuses_url\":
+        \"https://api.github.com/repos/LoreanXavier/pt-pc/statuses/{sha}\", \"languages_url\":
+        \"https://api.github.com/repos/LoreanXavier/pt-pc/languages\", \"stargazers_url\":
+        \"https://api.github.com/repos/LoreanXavier/pt-pc/stargazers\", \"contributors_url\":
+        \"https://api.github.com/repos/LoreanXavier/pt-pc/contributors\", \"subscribers_url\":
+        \"https://api.github.com/repos/LoreanXavier/pt-pc/subscribers\", \"subscription_url\":
+        \"https://api.github.com/repos/LoreanXavier/pt-pc/subscription\", \"commits_url\":
+        \"https://api.github.com/repos/LoreanXavier/pt-pc/commits{/sha}\", \"git_commits_url\":
+        \"https://api.github.com/repos/LoreanXavier/pt-pc/git/commits{/sha}\", \"comments_url\":
+        \"https://api.github.com/repos/LoreanXavier/pt-pc/comments{/number}\", \"issue_comment_url\":
+        \"https://api.github.com/repos/LoreanXavier/pt-pc/issues/comments{/number}\",
+        \"contents_url\": \"https://api.github.com/repos/LoreanXavier/pt-pc/contents/{+path}\",
+        \"compare_url\": \"https://api.github.com/repos/LoreanXavier/pt-pc/compare/{base}...{head}\",
+        \"merges_url\": \"https://api.github.com/repos/LoreanXavier/pt-pc/merges\",
+        \"archive_url\": \"https://api.github.com/repos/LoreanXavier/pt-pc/{archive_format}{/ref}\",
+        \"downloads_url\": \"https://api.github.com/repos/LoreanXavier/pt-pc/downloads\",
+        \"issues_url\": \"https://api.github.com/repos/LoreanXavier/pt-pc/issues{/number}\",
+        \"pulls_url\": \"https://api.github.com/repos/LoreanXavier/pt-pc/pulls{/number}\",
+        \"milestones_url\": \"https://api.github.com/repos/LoreanXavier/pt-pc/milestones{/number}\",
+        \"notifications_url\": \"https://api.github.com/repos/LoreanXavier/pt-pc/notifications{?since,all,participating}\",
+        \"labels_url\": \"https://api.github.com/repos/LoreanXavier/pt-pc/labels{/name}\",
+        \"releases_url\": \"https://api.github.com/repos/LoreanXavier/pt-pc/releases{/id}\",
+        \"deployments_url\": \"https://api.github.com/repos/LoreanXavier/pt-pc/deployments\",
+        \"created_at\": \"2026-10-07T09:33:31Z\", \"updated_at\": \"2026-10-09T23:07:18Z\",
+        \"pushed_at\": \"2026-10-09T21:23:52Z\", \"git_url\": \"git://github.com/LoreanXavier/pt-pc.git\",
+        \"ssh_url\": \"redacted@example.org:LoreanXavier/pt-pc.git\", \"clone_url\":
+        \"https://github.com/LoreanXavier/pt-pc.git\", \"svn_url\": \"https://github.com/LoreanXavier/pt-pc\",
+        \"homepage\": null, \"size\": 18254, \"stargazers_count\": 1195, \"watchers_count\":
+        1195, \"language\": \"C++\", \"has_issues\": true, \"has_projects\": true,
+        \"has_downloads\": false, \"has_wiki\": false, \"has_pages\": false, \"has_discussions\":
+        false, \"forks_count\": 79, \"mirror_url\": null, \"archived\": false, \"disabled\":
+        false, \"open_issues_count\": 12, \"license\": {\"key\": \"other\", \"name\":
+        \"Other\", \"spdx_id\": \"NOASSERTION\", \"url\": null, \"node_id\": \"MDc6TGljZW5zZTA=\"},
+        \"allow_forking\": true, \"is_template\": false, \"web_commit_signoff_required\":
+        false, \"has_pull_requests\": true, \"pull_request_creation_policy\": \"all\",
+        \"topics\": [], \"visibility\": \"public\", \"forks\": 79, \"open_issues\":
+        12, \"watchers\": 1195, \"default_branch\": \"main\", \"permissions\": {\"admin\":
+        false, \"maintain\": false, \"push\": false, \"triage\": false, \"pull\":
+        true}, \"score\": 1.0}, {\"id\": 1408099862, \"node_id\": \"R_kgDOU-3mFg\",
+        \"name\": \"tendedero\", \"full_name\": \"redacted\", \"private\": false,
+        \"owner\": {\"login\": \"redacted\", \"id\": 62165585, \"node_id\": \"MDQ6VXNlcjYyMTY1NTg1\",
+        \"avatar_url\": \"redacted\", \"gravatar_id\": \"redacted\", \"url\": \"redacted\",
+        \"html_url\": \"redacted\", \"followers_url\": \"redacted\", \"following_url\":
+        \"redacted\", \"gists_url\": \"redacted\", \"starred_url\": \"redacted\",
+        \"subscriptions_url\": \"redacted\", \"organizations_url\": \"redacted\",
+        \"repos_url\": \"redacted\", \"events_url\": \"redacted\", \"received_events_url\":
+        \"redacted\", \"type\": \"User\", \"user_view_type\": \"public\", \"site_admin\":
+        false}, \"html_url\": \"https://github.com/alejandrobujan/tendedero\", \"description\":
+        \"Screenshots, hung out to dry. A tiny native macOS app that hangs every screenshot
+        on a line at the top of your screen.\", \"fork\": false, \"url\": \"https://api.github.com/repos/alejandrobujan/tendedero\",
+        \"forks_url\": \"https://api.github.com/repos/alejandrobujan/tendedero/forks\",
+        \"keys_url\": \"https://api.github.com/repos/alejandrobujan/tendedero/keys{/key_id}\",
+        \"collaborators_url\": \"https://api.github.com/repos/alejandrobujan/tendedero/collaborators{/collaborator}\",
+        \"teams_url\": \"https://api.github.com/repos/alejandrobujan/tendedero/teams\",
+        \"hooks_url\": \"https://api.github.com/repos/alejandrobujan/tendedero/hooks\",
+        \"issue_events_url\": \"https://api.github.com/repos/alejandrobujan/tendedero/issues/events{/number}\",
+        \"events_url\": \"https://api.github.com/repos/alejandrobujan/tendedero/events\",
+        \"assignees_url\": \"https://api.github.com/repos/alejandrobujan/tendedero/assignees{/user}\",
+        \"branches_url\": \"https://api.github.com/repos/alejandrobujan/tendedero/branches{/branch}\",
+        \"tags_url\": \"https://api.github.com/repos/alejandrobujan/tendedero/tags\",
+        \"blobs_url\": \"https://api.github.com/repos/alejandrobujan/tendedero/git/blobs{/sha}\",
+        \"git_tags_url\": \"https://api.github.com/repos/alejandrobujan/tendedero/git/tags{/sha}\",
+        \"git_refs_url\": \"https://api.github.com/repos/alejandrobujan/tendedero/git/refs{/sha}\",
+        \"trees_url\": \"https://api.github.com/repos/alejandrobujan/tendedero/git/trees{/sha}\",
+        \"statuses_url\": \"https://api.github.com/repos/alejandrobujan/tendedero/statuses/{sha}\",
+        \"languages_url\": \"https://api.github.com/repos/alejandrobujan/tendedero/languages\",
+        \"stargazers_url\": \"https://api.github.com/repos/alejandrobujan/tendedero/stargazers\",
+        \"contributors_url\": \"https://api.github.com/repos/alejandrobujan/tendedero/contributors\",
+        \"subscribers_url\": \"https://api.github.com/repos/alejandrobujan/tendedero/subscribers\",
+        \"subscription_url\": \"https://api.github.com/repos/alejandrobujan/tendedero/subscription\",
+        \"commits_url\": \"https://api.github.com/repos/alejandrobujan/tendedero/commits{/sha}\",
+        \"git_commits_url\": \"https://api.github.com/repos/alejandrobujan/tendedero/git/commits{/sha}\",
+        \"comments_url\": \"https://api.github.com/repos/alejandrobujan/tendedero/comments{/number}\",
+        \"issue_comment_url\": \"https://api.github.com/repos/alejandrobujan/tendedero/issues/comments{/number}\",
+        \"contents_url\": \"https://api.github.com/repos/alejandrobujan/tendedero/contents/{+path}\",
+        \"compare_url\": \"https://api.github.com/repos/alejandrobujan/tendedero/compare/{base}...{head}\",
+        \"merges_url\": \"https://api.github.com/repos/alejandrobujan/tendedero/merges\",
+        \"archive_url\": \"https://api.github.com/repos/alejandrobujan/tendedero/{archive_format}{/ref}\",
+        \"downloads_url\": \"https://api.github.com/repos/alejandrobujan/tendedero/downloads\",
+        \"issues_url\": \"https://api.github.com/repos/alejandrobujan/tendedero/issues{/number}\",
+        \"pulls_url\": \"https://api.github.com/repos/alejandrobujan/tendedero/pulls{/number}\",
+        \"milestones_url\": \"https://api.github.com/repos/alejandrobujan/tendedero/milestones{/number}\",
+        \"notifications_url\": \"https://api.github.com/repos/alejandrobujan/tendedero/notifications{?since,all,participating}\",
+        \"labels_url\": \"https://api.github.com/repos/alejandrobujan/tendedero/labels{/name}\",
+        \"releases_url\": \"https://api.github.com/repos/alejandrobujan/tendedero/releases{/id}\",
+        \"deployments_url\": \"https://api.github.com/repos/alejandrobujan/tendedero/deployments\",
+        \"created_at\": \"2026-10-07T01:29:54Z\", \"updated_at\": \"2026-10-09T23:36:21Z\",
+        \"pushed_at\": \"2026-10-08T09:55:45Z\", \"git_url\": \"git://github.com/alejandrobujan/tendedero.git\",
+        \"ssh_url\": \"redacted@example.org:alejandrobujan/tendedero.git\", \"clone_url\":
+        \"https://github.com/alejandrobujan/tendedero.git\", \"svn_url\": \"https://github.com/alejandrobujan/tendedero\",
+        \"homepage\": \"\", \"size\": 13110, \"stargazers_count\": 1182, \"watchers_count\":
+        1182, \"language\": \"Swift\", \"has_issues\": true, \"has_projects\": true,
+        \"has_downloads\": false, \"has_wiki\": false, \"has_pages\": false, \"has_discussions\":
+        false, \"forks_count\": 102, \"mirror_url\": null, \"archived\": false, \"disabled\":
+        false, \"open_issues_count\": 36, \"license\": {\"key\": \"other\", \"name\":
+        \"Other\", \"spdx_id\": \"NOASSERTION\", \"url\": null, \"node_id\": \"MDc6TGljZW5zZTA=\"},
+        \"allow_forking\": true, \"is_template\": false, \"web_commit_signoff_required\":
+        false, \"has_pull_requests\": true, \"pull_request_creation_policy\": \"all\",
+        \"topics\": [], \"visibility\": \"public\", \"forks\": 102, \"open_issues\":
+        36, \"watchers\": 1182, \"default_branch\": \"main\", \"permissions\": {\"admin\":
+        false, \"maintain\": false, \"push\": false, \"triage\": false, \"pull\":
+        true}, \"score\": 1.0}]}"
+    headers:
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining,
+        X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes,
+        X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO,
+        X-GitHub-Request-Id, Deprecation, Sunset, Warning
+      cache-control:
+      - no-cache
+      content-length:
+      - '51721'
+      content-security-policy:
+      - default-src 'none'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 09 Oct 2026 23:40:41 GMT
+      github-authentication-token-expiration:
+      - 2027-01-07 23:59:17 UTC
+      link:
+      - <https://api.github.com/search/repositories?q=stars%3A%3E%3D50+created%3A%3E%3D2026-10-06T00%3A00%3A00Z&per_page=10&page=2&sort=stars&order=desc>;
+        rel="next", <https://api.github.com/search/repositories?q=stars%3A%3E%3D50+created%3A%3E%3D2026-10-06T00%3A00%3A00Z&per_page=10&page=29&sort=stars&order=desc>;
+        rel="last"
+      referrer-policy:
+      - origin-when-cross-origin, strict-origin-when-cross-origin
+      server:
+      - github.com
+      strict-transport-security:
+      - max-age=31536000; includeSubdomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept, Authorization, Cookie, X-GitHub-OTP,Accept-Encoding, Accept, X-Requested-With
+      x-accepted-github-permissions:
+      - allows_permissionless_access=true
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - deny
+      x-github-api-version-selected:
+      - '2022-11-28'
+      x-github-edge-region:
+      - iad
+      x-github-media-type:
+      - github.v3; format=json
+      x-github-request-id:
+      - 48C5:30F8F2:2F6ADC0:9C42FCE:6AC97B79
+      x-ratelimit-limit:
+      - '30'
+      x-ratelimit-remaining:
+      - '26'
+      x-ratelimit-reset:
+      - '1791589282'
+      x-ratelimit-resource:
+      - search
+      x-ratelimit-used:
+      - '4'
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+version: 1

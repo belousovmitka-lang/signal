@@ -42,3 +42,11 @@ def test_person_objects_keep_ids_and_flags():
     out = json.loads(scrub_text(json.dumps(post), "application/json"))
     assert out["author"] == {"did": "did:plc:x", "handle": "redacted", "displayName": "redacted", "labels": []}
     assert out["uri"] == post["uri"]
+
+
+def test_github_users():
+    issue = {"html_url": "https://github.com/a/b/issues/1", "user": {"login": "octo", "id": 9, "avatar_url": "x",
+             "html_url": "https://github.com/octo", "type": "User"}, "assignees": [{"login": "cat"}]}
+    out = json.loads(scrub_text(json.dumps(issue), "application/json"))
+    assert out["user"] == {"login": "redacted", "id": 9, "avatar_url": "redacted", "html_url": "redacted", "type": "User"}
+    assert out["assignees"] == [{"login": "redacted"}] and out["html_url"] == issue["html_url"]

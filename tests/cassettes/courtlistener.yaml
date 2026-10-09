@@ -1,0 +1,691 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - www.courtlistener.com
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://www.courtlistener.com/api/rest/v4/search/?filed_after=2026-09-01&order_by=dateFiled+desc&q=contract+AND+software&type=o
+  response:
+    body:
+      string: "{\"count\": 47, \"next\": \"https://www.courtlistener.com/api/rest/v4/search/?cursor=cz0xNzkwMTIxNjAwMDAwJnM9MTEwMTIxNzYmdD1vJmQ9MjAyNi0xMC0wOSZwPTI%3D&filed_after=2026-09-01&order_by=dateFiled+desc&q=contract+AND+software&type=o\",
+        \"previous\": null, \"results\": [{\"absolute_url\": \"/opinion/11013608/juan-gonzalez-v-resolvion-llc/\",
+        \"attorney\": \"\", \"caseName\": \"Juan Gonzalez v. Resolvion, LLC\", \"caseNameFull\":
+        \"\", \"citation\": [], \"citeCount\": 0, \"cluster_id\": 11013608, \"court\":
+        \"District Court of Appeal of Florida\", \"court_citation_string\": \"Fla.
+        Dist. Ct. App.\", \"court_id\": \"fladistctapp\", \"court_jurisdiction\":
+        \"SA\", \"dateArgued\": null, \"dateFiled\": \"2026-10-07\", \"dateReargued\":
+        null, \"dateReargumentDenied\": null, \"docketNumber\": \"3D2025-1480\", \"docket_id\":
+        74929455, \"judge\": \"\", \"lexisCite\": \"\", \"meta\": {\"timestamp\":
+        \"2026-10-07T14:13:09.072635Z\", \"date_created\": \"2026-10-07T14:13:08.941722Z\",
+        \"score\": {\"bm25\": null}}, \"neutralCite\": \"\", \"non_participating_judge_ids\":
+        [], \"opinions\": [{\"author_redacted\": null, \"cites\": [815987, 1454529,
+        1823487, 1855835, 2717677, 2968024, 4286212, 4800998], \"download_url\": \"https://flcourts-media.flcourts.gov/content/download/2496339/opinion/Opinion_2025-1480.pdf\",
+        \"id\": 11481297, \"joined_by_ids\": [], \"local_path\": \"pdf/2026/10/07/juan_gonzalez_v._resolvion_llc.pdf\",
+        \"meta\": {\"timestamp\": \"2026-10-07T14:15:50.291144Z\", \"date_created\":
+        \"2026-10-07T14:13:08.945942Z\"}, \"ordering_key\": null, \"per_curiam\":
+        false, \"sha1\": \"53213be928a678ca31fb3cc19c4768a8c55faa93\", \"snippet\":
+        \"       Third District Court of Appeal\\n                               State
+        of Florida\\n\\n                        Opinion filed October 7, 2026.\\n
+        \      Not final until disposition of timely filed motion for rehearing.\\n\\n
+        \                           ________________\\n\\n                             No.
+        3D25-1480\\n                    Lower Tribunal No. 25-4087-CA-01\\n                           ________________\\n\\n\\n
+        \                            Juan Gonzalez,\\n                                  Appellant,\\n\\n
+        \     \", \"type\": \"combined-opinion\"}], \"panel_ids\": [], \"panel_names\":
+        [], \"posture\": \"\", \"procedural_history\": \"\", \"scdb_id\": \"\", \"sibling_ids\":
+        [11481297], \"source\": \"C\", \"status\": \"Published\", \"suitNature\":
+        \"\", \"syllabus\": \"\"}, {\"absolute_url\": \"/opinion/11011901/jenkins-v-mason-harriman-group-inc/\",
+        \"attorney\": \"\", \"caseName\": \"Jenkins v. Mason Harriman Group, Inc.\",
+        \"caseNameFull\": \"\", \"citation\": [], \"citeCount\": 0, \"cluster_id\":
+        11011901, \"court\": \"District Court, District of Columbia\", \"court_citation_string\":
+        \"D.D.C.\", \"court_id\": \"dcd\", \"court_jurisdiction\": \"FD\", \"dateArgued\":
+        null, \"dateFiled\": \"2026-10-05\", \"dateReargued\": null, \"dateReargumentDenied\":
+        null, \"docketNumber\": \"Civil Action No. 2023-0629\", \"docket_id\": 71772082,
+        \"judge\": \"Judge Royce C. Lamberth\", \"lexisCite\": \"\", \"meta\": {\"timestamp\":
+        \"2026-10-05T19:01:39.707514Z\", \"date_created\": \"2026-10-05T19:01:39.516767Z\",
+        \"score\": {\"bm25\": null}}, \"neutralCite\": \"\", \"non_participating_judge_ids\":
+        [], \"opinions\": [{\"author_redacted\": 1844, \"cites\": [47925, 2360420,
+        2780807, 4204602, 7849135, 9502823], \"download_url\": \"https://ecf.dcd.uscourts.gov/cgi-bin/show_public_doc?2023cv0629-80\",
+        \"id\": 11479585, \"joined_by_ids\": [], \"local_path\": \"pdf/2026/10/05/jenkins_v._mason_harriman_group_inc..pdf\",
+        \"meta\": {\"timestamp\": \"2026-10-05T19:02:37.695285Z\", \"date_created\":
+        \"2026-10-05T19:01:39.554209Z\"}, \"ordering_key\": null, \"per_curiam\":
+        false, \"sha1\": \"8a5330eb58bd1760b13c22573e18e78a7146fb9d\", \"snippet\":
+        \"UNITED STATES DISTRICT COURT\\nFOR THE DISTRICT OF COLUMBIA\\n\\nDUANE JENKINS,\\nPlaintiff,\\n\\nVv.
+        Case No. 1:23-CV-629-RCL\\n\\nMASON HARRIMAN GROUP, INC,\\n\\nDefendants.\\n\\nMEMORANDUM
+        OPINION\\n\\nDefendant Mason Harriman Group (\u201CMHG\u201D) prevailed on
+        its Motion for Summary\\nJudgment in this case in November 2025. ECF No. 69.
+        MHG now moves for an award of\\nattorneys\u2019 fees pursuant to Federal Rule
+        56(h) and costs pursuant to Federal Rule 54(d)(1). Def.\u2019s\\nMot., ECF
+        No. 73. Plaintiff Duane Jenkins opposes. PI.\u2019s Opp., ECF \", \"type\":
+        \"combined-opinion\"}], \"panel_ids\": [], \"panel_names\": [], \"posture\":
+        \"\", \"procedural_history\": \"\", \"scdb_id\": \"\", \"sibling_ids\": [11479585],
+        \"source\": \"C\", \"status\": \"Published\", \"suitNature\": \"\", \"syllabus\":
+        \"\"}, {\"absolute_url\": \"/opinion/11011688/snow-v-align-technology-inc/\",
+        \"attorney\": \"\", \"caseName\": \"Snow v. Align Technology, Inc.\", \"caseNameFull\":
+        \"\", \"citation\": [], \"citeCount\": 0, \"cluster_id\": 11011688, \"court\":
+        \"Court of Appeals for the Ninth Circuit\", \"court_citation_string\": \"9th
+        Cir.\", \"court_id\": \"ca9\", \"court_jurisdiction\": \"F\", \"dateArgued\":
+        null, \"dateFiled\": \"2026-10-05\", \"dateReargued\": null, \"dateReargumentDenied\":
+        null, \"docketNumber\": \"24-1783\", \"docket_id\": 68976382, \"judge\": \"\",
+        \"lexisCite\": \"\", \"meta\": {\"timestamp\": \"2026-10-05T17:01:14.047761Z\",
+        \"date_created\": \"2026-10-05T17:01:13.897495Z\", \"score\": {\"bm25\": null}},
+        \"neutralCite\": \"\", \"non_participating_judge_ids\": [], \"opinions\":
+        [{\"author_redacted\": null, \"cites\": [99426, 109586, 111469, 111483, 185418,
+        500777, 577173, 685672, 762244, 787790, 1041704, 3051039, 4032530, 4509849,
+        4554945, 4564406, 4697200, 4710340, 9004446, 9418205, 9423241, 9425176, 9426837,
+        9430403, 9432566, 9432817, 9434530, 9481369, 10763728], \"download_url\":
+        \"https://cdn.ca9.uscourts.gov/datastore/opinions/2026/10/05/24-1783.pdf\",
+        \"id\": 11479370, \"joined_by_ids\": [], \"local_path\": \"pdf/2026/10/05/snow_v._align_technology_inc..pdf\",
+        \"meta\": {\"timestamp\": \"2026-10-05T17:08:07.965754Z\", \"date_created\":
+        \"2026-10-05T17:01:13.902210Z\"}, \"ordering_key\": null, \"per_curiam\":
+        false, \"sha1\": \"ebfdcec5458e70809805e0b0faf64e3e0a58126a\", \"snippet\":
+        \"              FOR PUBLICATION\\n\\n  UNITED STATES COURT OF APPEALS\\n       FOR
+        THE NINTH CIRCUIT\\n\\nSIMON AND SIMON, PC; VIP             No. 24-1703\\nDENTAL
+        SPAS,\\n                                       D.C. No.\\n                                    3:20-cv-03754-\\n
+        \        Plaintiffs - Appellants,\\n                                          VC\\n
+        v.\\n\\nALIGN TECHNOLOGY, INC.,               OPINION\\n\\n         Defendant
+        - Appellee.\\n\\n\\nMISTY SNOW; EMILY VO; KATIE          No. 24-1783\\nCAMPBELL;
+        CECELIA GARAY;\\nCELESTE\", \"type\": \"combined-opinion\"}], \"panel_ids\":
+        [], \"panel_names\": [], \"posture\": \"\", \"procedural_history\": \"\",
+        \"scdb_id\": \"\", \"sibling_ids\": [11479370], \"source\": \"C\", \"status\":
+        \"Published\", \"suitNature\": \"\", \"syllabus\": \"\"}, {\"absolute_url\":
+        \"/opinion/11012844/22nd-century-networks-inc-v-united-states/\", \"attorney\":
+        \"\", \"caseName\": \"22nd Century Networks, Inc. v. United States\", \"caseNameFull\":
+        \"\", \"citation\": [], \"citeCount\": 0, \"cluster_id\": 11012844, \"court\":
+        \"United States Court of Federal Claims\", \"court_citation_string\": \"Fed.
+        Cl.\", \"court_id\": \"uscfc\", \"court_jurisdiction\": \"FS\", \"dateArgued\":
+        null, \"dateFiled\": \"2026-10-03\", \"dateReargued\": null, \"dateReargumentDenied\":
+        null, \"docketNumber\": \"26-718\", \"docket_id\": 74924591, \"judge\": \"Marian
+        Blank Horn\", \"lexisCite\": \"\", \"meta\": {\"timestamp\": \"2026-10-06T17:01:58.185385Z\",
+        \"date_created\": \"2026-10-06T17:01:58.061159Z\", \"score\": {\"bm25\": null}},
+        \"neutralCite\": \"\", \"non_participating_judge_ids\": [], \"opinions\":
+        [{\"author_redacted\": 10121, \"cites\": [776, 787, 108752, 109122, 109827,
+        206859, 207728, 208807, 210550, 210985, 212051, 288379, 289586, 301735, 488664,
+        520062, 629259, 696351, 731326, 748869, 768896, 769216, 771944, 776279, 783150,
+        786393, 787384, 789965, 807366, 813234, 815272, 854365, 857861, 1041980, 2645811,
+        2689163, 2735184, 2795702, 2812752, 3184869, 4025735, 4126470, 4185031, 4205465,
+        4211408, 4238484, 4244878, 4312304, 4318612, 4511045, 4513547, 4665974, 4693678,
+        4857754, 5132870, 5141641, 6319757, 6646284, 6648544, 6651133, 6652571, 6652650,
+        6654223, 6655065, 6658679, 6659831, 6663140, 6826941, 7216864, 7218441, 7218572,
+        7218586, 8414131, 8595028, 9396377, 9424197, 9424477, 9426695, 9429294, 9432081,
+        9434160, 9435008, 9435351, 9440704, 9440743, 9496902, 9496982, 9497050, 9515881,
+        9811228, 9843242, 9888302, 9888811, 9946257, 10593545], \"download_url\":
+        \"https://ecf.cofc.uscourts.gov/cgi-bin/show_public_doc?2026cv0718-54-0\",
+        \"id\": 11480532, \"joined_by_ids\": [], \"local_path\": \"pdf/2026/10/03/22nd_century_networks_inc._v._united_states.pdf\",
+        \"meta\": {\"timestamp\": \"2026-10-06T17:27:39.591415Z\", \"date_created\":
+        \"2026-10-06T17:01:58.078127Z\"}, \"ordering_key\": null, \"per_curiam\":
+        false, \"sha1\": \"acf3bccfbf2ad9c80ca464b9521483ade87c1ba4\", \"snippet\":
+        \"          In the United States Court of Federal Claims\\n                                    No.
+        26-718C\\n                             Filed: September 14, 2026\\n              Redacted
+        Version Issued for Publication: October 3, 20261\\n\\n\\n\\n       * * * *
+        * * * * * * * * * * * * **\\n                                            *\\n
+        \ 22ND CENTURY NETWORKS, INC.,              *\\n                                            *\\n
+        \                                           *\\n                     Protestor,
+        \         \", \"type\": \"combined-opinion\"}], \"panel_ids\": [], \"panel_names\":
+        [], \"posture\": \"\", \"procedural_history\": \"\", \"scdb_id\": \"\", \"sibling_ids\":
+        [11480532], \"source\": \"C\", \"status\": \"Published\", \"suitNature\":
+        \"\", \"syllabus\": \"REPORTED OPINION\"}, {\"absolute_url\": \"/opinion/11008272/american-catalog-mailers-association-v-director-division-of-taxation/\",
+        \"attorney\": \"\", \"caseName\": \"American Catalog Mailers Association v.
+        Director, Division of Taxation\", \"caseNameFull\": \"\", \"citation\": [],
+        \"citeCount\": 0, \"cluster_id\": 11008272, \"court\": \"New Jersey Tax Court\",
+        \"court_citation_string\": \"N.J. Tax Ct.\", \"court_id\": \"njtaxct\", \"court_jurisdiction\":
+        \"SS\", \"dateArgued\": null, \"dateFiled\": \"2026-10-01\", \"dateReargued\":
+        null, \"dateReargumentDenied\": null, \"docketNumber\": \"010021-2025\", \"docket_id\":
+        74904837, \"judge\": \"\", \"lexisCite\": \"\", \"meta\": {\"timestamp\":
+        \"2026-10-01T19:15:04.366824Z\", \"date_created\": \"2026-10-01T19:10:43.956568Z\",
+        \"score\": {\"bm25\": null}}, \"neutralCite\": \"\", \"non_participating_judge_ids\":
+        [], \"opinions\": [{\"author_redacted\": null, \"cites\": [85412, 90078, 91869,
+        93898, 102972, 103319, 104307, 104966, 105210, 105540, 106018, 108647, 109578,
+        109615, 1074562, 1297504, 1327532, 1462340, 1551246, 1730195, 1740568, 1960573,
+        1990064, 2009412, 2085760, 2274899, 2381317, 2403799, 2444225, 2619740, 2790213,
+        2801433, 4286671, 7331505, 8905194, 8905843, 8905866, 8906138, 8906419, 8906454,
+        9298222, 9309312, 9418697, 9419346, 9419507, 9419782, 9420543, 9421754, 9427046,
+        9427542, 9430381, 9432555, 9432625, 9433102, 9578813, 9691045], \"download_url\":
+        \"https://www.njcourts.gov/system/files/court-opinions/2026/010021-2025.pdf\",
+        \"id\": 11475947, \"joined_by_ids\": [], \"local_path\": \"pdf/2026/10/01/american_catalog_mailers_association_v._director_division_of_taxation.pdf\",
+        \"meta\": {\"timestamp\": \"2026-10-01T19:55:54.098036Z\", \"date_created\":
+        \"2026-10-01T19:10:43.959562Z\"}, \"ordering_key\": null, \"per_curiam\":
+        false, \"sha1\": \"ef7b0fe129636c4a6d4dd9049445d4e50d77fe10\", \"snippet\":
+        \"               NOT FOR PUBLICATION WITHOUT APPROVAL OF\\n                 THE
+        TAX COURT COMMITTEE ON OPINIONS\\n\\n------------------------------------------------------x\\nAMERICAN
+        CATALOG MAILERS                              :\\nASSOCIATION,                                          :
+        \  TAX COURT OF NEW JERSEY\\n                                                      :
+        \  DOCKET NO: 010021-2025\\n               Plaintiff,                             :\\n
+        \                                                     :\\n    \", \"type\":
+        \"combined-opinion\"}], \"panel_ids\": [], \"panel_names\": [], \"posture\":
+        \"\", \"procedural_history\": \"\", \"scdb_id\": \"\", \"sibling_ids\": [11475947],
+        \"source\": \"C\", \"status\": \"Published\", \"suitNature\": \"\", \"syllabus\":
+        \"\"}, {\"absolute_url\": \"/opinion/11007540/lutheran-home-v-dhs-apl-of-lutheran-home/\",
+        \"attorney\": \"\", \"caseName\": \"Lutheran Home v. DHS; Apl. of: Lutheran
+        Home\", \"caseNameFull\": \"\", \"citation\": [], \"citeCount\": 0, \"cluster_id\":
+        11007540, \"court\": \"Supreme Court of Pennsylvania\", \"court_citation_string\":
+        \"Pa.\", \"court_id\": \"pa\", \"court_jurisdiction\": \"S\", \"dateArgued\":
+        null, \"dateFiled\": \"2026-10-01\", \"dateReargued\": null, \"dateReargumentDenied\":
+        null, \"docketNumber\": \"7 MAP 2025\", \"docket_id\": 74902367, \"judge\":
+        \"Dougherty, Kevin M.; Donohue, Christine; Wecht, David N.\", \"lexisCite\":
+        \"\", \"meta\": {\"timestamp\": \"2026-10-01T14:19:17.853889Z\", \"date_created\":
+        \"2026-10-01T14:19:17.578065Z\", \"score\": {\"bm25\": null}}, \"neutralCite\":
+        \"\", \"non_participating_judge_ids\": [], \"opinions\": [{\"author_redacted\":
+        null, \"cites\": [84759, 94825, 104034, 111221, 117865, 118089, 743059, 1041307,
+        1087611, 1509179, 1929478, 2085132, 2091776, 2312063, 4297933, 4347792, 4354916,
+        4410206, 4956003, 4967172, 6358193, 6373425, 9431495, 9431664, 9441722, 9500709,
+        9694576, 9697005, 9712141, 9753392, 9888403, 9888940, 10452863], \"download_url\":
+        \"https://www.pacourts.us/assets/opinions/Supreme/out/J-99-2025mo - 106943923375999736.pdf\",
+        \"id\": 11475204, \"joined_by_ids\": [], \"local_path\": \"pdf/2026/10/01/lutheran_home_v._dhs_apl._of_lutheran_home.pdf\",
+        \"meta\": {\"timestamp\": \"2026-10-01T16:10:22.053473Z\", \"date_created\":
+        \"2026-10-01T14:19:17.706986Z\"}, \"ordering_key\": 1, \"per_curiam\": false,
+        \"sha1\": \"2c6b71e03dfe649602e59aef32e35df3719d2af0\", \"snippet\": \"                                   [J-99-2025]\\n
+        \                   IN THE SUPREME COURT OF PENNSYLVANIA\\n                                MIDDLE
+        DISTRICT\\n\\nTODD, C.J., DONOHUE, DOUGHERTY, WECHT, MUNDY, BROBSON, McCAFFERY,
+        JJ.\\n\\n\\n  LUTHERAN HOME AT KANE AND        :                No. 7 MAP
+        2025\\n  SIEMON'S LAKEVIEW MANOR ESTATE   :\\n                                   :
+        \               Appeal from the Order of the\\n                                   :
+        \               Commonwealth Court at No. 303 CD\\n     \", \"type\": \"lead-opinion\"}],
+        \"panel_ids\": [], \"panel_names\": [], \"posture\": \"\", \"procedural_history\":
+        \"\", \"scdb_id\": \"\", \"sibling_ids\": [11475204, 11475205, 11475206],
+        \"source\": \"C\", \"status\": \"Published\", \"suitNature\": \"\", \"syllabus\":
+        \"\"}, {\"absolute_url\": \"/opinion/11012129/dr-j-scot-estep-dvm-dacvp-and-texas-veterinary-pathology-llc-v-dipak/\",
+        \"attorney\": \"\", \"caseName\": \"Dr. J. Scot Estep, DVM, DACVP and Texas
+        Veterinary Pathology, LLC v. Dipak Giri\", \"caseNameFull\": \"\", \"citation\":
+        [], \"citeCount\": 0, \"cluster_id\": 11012129, \"court\": \"Texas Court of
+        Appeals, 3rd District (Austin)\", \"court_citation_string\": \"Tex. App.-Austin\",
+        \"court_id\": \"txctapp3\", \"court_jurisdiction\": \"SA\", \"dateArgued\":
+        null, \"dateFiled\": \"2026-09-30\", \"dateReargued\": null, \"dateReargumentDenied\":
+        null, \"docketNumber\": \"03-24-00616-CV\", \"docket_id\": 72588724, \"judge\":
+        \"\", \"lexisCite\": \"\", \"meta\": {\"timestamp\": \"2026-10-06T06:14:30.851336Z\",
+        \"date_created\": \"2026-10-06T06:14:30.729855Z\", \"score\": {\"bm25\": null}},
+        \"neutralCite\": \"\", \"non_participating_judge_ids\": [], \"opinions\":
+        [{\"author_redacted\": null, \"cites\": [894832, 895322, 1403900, 1404975,
+        1499353, 1519282, 1560611, 1638773, 1723541, 1730564, 2362457, 2539387, 3073261,
+        4307252, 4387171, 4400694, 5287660, 9646275, 9652962, 9682116, 9705773, 9759436,
+        9769860, 9815727, 9836363], \"download_url\": \"https://search.txcourts.gov/SearchMedia.aspx?MediaVersionID=0b0dae15-3555-4ce8-8851-b9c9e40f52f6&coa=coa03&DT=Opinion&MediaID=22b6ce70-cb7a-4ff8-9835-b771a3b868cf\",
+        \"id\": 11479813, \"joined_by_ids\": [], \"local_path\": \"pdf/2026/09/30/dr._j._scot_estep_dvm_dacvp_and_texas_veterinary_pathology_llc_v._dipak.pdf\",
+        \"meta\": {\"timestamp\": \"2026-10-06T06:15:22.718431Z\", \"date_created\":
+        \"2026-10-06T06:14:30.734052Z\"}, \"ordering_key\": null, \"per_curiam\":
+        false, \"sha1\": \"ab814e675e8306c83657592914fb42d04d2b86fb\", \"snippet\":
+        \"       TEXAS COURT OF APPEALS, THIRD DISTRICT, AT AUSTIN\\n\\n\\n\\n                                     NO.
+        03-24-00616-CV\\n\\n\\n    Dr. J. Scot Estep, DVM, DACVP and Texas Veterinary
+        Pathology, LLC, Appellants\\n\\n                                                v.\\n\\n
+        \                                    Dipak Giri, Appellee\\n\\n\\n               FROM
+        THE 433RD DISTRICT COURT OF COMAL COUNTY\\n      NO. C2017-1285E, THE HONORABLE
+        STEPHANIE BASCON, JUDGE PRESIDING\\n\\n\\n\\n                           MEMORANDUM
+        OPINION\\n\\n     \", \"type\": \"lead-opinion\"}], \"panel_ids\": [], \"panel_names\":
+        [], \"posture\": \"\", \"procedural_history\": \"\", \"scdb_id\": \"\", \"sibling_ids\":
+        [11479813], \"source\": \"C\", \"status\": \"Published\", \"suitNature\":
+        \"Libel & slander\", \"syllabus\": \"\"}, {\"absolute_url\": \"/opinion/11007972/seneca-global-services-llc-v-united-states/\",
+        \"attorney\": \"\", \"caseName\": \"Seneca Global Services, LLC v. United
+        States\", \"caseNameFull\": \"\", \"citation\": [], \"citeCount\": 0, \"cluster_id\":
+        11007972, \"court\": \"United States Court of Federal Claims\", \"court_citation_string\":
+        \"Fed. Cl.\", \"court_id\": \"uscfc\", \"court_jurisdiction\": \"FS\", \"dateArgued\":
+        null, \"dateFiled\": \"2026-09-30\", \"dateReargued\": null, \"dateReargumentDenied\":
+        null, \"docketNumber\": \"25-195\", \"docket_id\": 74903619, \"judge\": \"Marian
+        Blank Horn\", \"lexisCite\": \"\", \"meta\": {\"timestamp\": \"2026-10-01T17:01:59.278402Z\",
+        \"date_created\": \"2026-10-01T17:01:58.959859Z\", \"score\": {\"bm25\": null}},
+        \"neutralCite\": \"\", \"non_participating_judge_ids\": [], \"opinions\":
+        [{\"author_redacted\": 10121, \"cites\": [], \"download_url\": \"https://ecf.cofc.uscourts.gov/cgi-bin/show_public_doc?2025cv0195-25-0\",
+        \"id\": 11475647, \"joined_by_ids\": [], \"local_path\": \"pdf/2026/09/30/seneca_global_services_llc_v._united_states.pdf\",
+        \"meta\": {\"timestamp\": \"2026-10-01T17:17:25.845783Z\", \"date_created\":
+        \"2026-10-01T17:01:59.171041Z\"}, \"ordering_key\": null, \"per_curiam\":
+        false, \"sha1\": \"b39236232bd674c595414619ebb31d5a07eb369a\", \"snippet\":
+        \"        In the United States Court of Federal Claims\\n                                         No.
+        25-195C\\n                                  Filed: September 30, 2026\\n\\n
+        \  * * * * * * * * * * * * * * * * * **           *\\n   SENECA GLOBAL SERVICES,
+        LLC,                   *\\n                                                  *\\n
+        \                    Plaintiff,                   *\\n                                                  *\\n
+        \  v.\\n                                                  *\\n   UNITED STATE\",
+        \"type\": \"combined-opinion\"}], \"panel_ids\": [], \"panel_names\": [],
+        \"posture\": \"\", \"procedural_history\": \"\", \"scdb_id\": \"\", \"sibling_ids\":
+        [11475647], \"source\": \"C\", \"status\": \"Published\", \"suitNature\":
+        \"\", \"syllabus\": \"REPORTED OPINION granting [11] Motion to Dismiss - Rule
+        12(b)(6). The Clerk is directed to enter judgment\"}, {\"absolute_url\": \"/opinion/10988837/thomson-reuters-enterprise-centre-gmbh-v-ross-intelligence-inc/\",
+        \"attorney\": \"\", \"caseName\": \"Thomson Reuters Enterprise Centre GmbH
+        v. Ross Intelligence Inc\", \"caseNameFull\": \"\", \"citation\": [], \"citeCount\":
+        0, \"cluster_id\": 10988837, \"court\": \"Court of Appeals for the Third Circuit\",
+        \"court_citation_string\": \"3rd Cir.\", \"court_id\": \"ca3\", \"court_jurisdiction\":
+        \"F\", \"dateArgued\": \"2026-06-11\", \"dateFiled\": \"2026-09-30\", \"dateReargued\":
+        null, \"dateReargumentDenied\": null, \"docketNumber\": \"25-2153\", \"docket_id\":
+        70622297, \"judge\": \"\", \"lexisCite\": \"\", \"meta\": {\"timestamp\":
+        \"2026-09-30T18:01:17.274957Z\", \"date_created\": \"2026-09-30T18:00:59.118705Z\",
+        \"score\": {\"bm25\": null}}, \"neutralCite\": \"\", \"non_participating_judge_ids\":
+        [], \"opinions\": [{\"author_redacted\": null, \"cites\": [92329, 92372, 112568,
+        593285, 756424, 758668, 2677701, 3012890, 3014430, 3124896, 4393426, 4422176,
+        4529017, 4880094, 9426134, 9430025, 9431989, 9432954, 9497562, 9880229, 9888852],
+        \"download_url\": \"https://www2.ca3.uscourts.gov/opinarch/252153p.pdf\",
+        \"id\": 11456501, \"joined_by_ids\": [], \"local_path\": \"pdf/2026/09/30/thomson_reuters_enterprise_centre_gmbh_v._ross_intelligence_inc.pdf\",
+        \"meta\": {\"timestamp\": \"2026-09-30T18:40:14.522893Z\", \"date_created\":
+        \"2026-09-30T18:00:59.173497Z\"}, \"ordering_key\": null, \"per_curiam\":
+        false, \"sha1\": \"87dd60e3b86e293ebcff786d813017b4bd9f1765\", \"snippet\":
+        \"UNITED STATES COURT OF APPEALS FOR THE THIRD CIRCUIT\\n                             No.
+        25-2153\\n\\n          THOMSON REUTERS ENTERPRISE CENTRE GMBH;\\n                   WEST
+        PUBLISHING CORP\\n\\n                                  v.\\n\\n                     ROSS
+        INTELLIGENCE INC,\\n                            Appellant\\n                 _____________________________\\n\\n
+        \          On Appeal from the U.S. District Court, D. Del.\\n            Judge
+        Stephanos Bibas,* No. 1:20-cv-00613\\n\\n        Before: RESTREPO, MONTGO\",
+        \"type\": \"combined-opinion\"}], \"panel_ids\": [], \"panel_names\": [],
+        \"posture\": \"\", \"procedural_history\": \"\", \"scdb_id\": \"\", \"sibling_ids\":
+        [11456501], \"source\": \"C\", \"status\": \"Published\", \"suitNature\":
+        \"\", \"syllabus\": \"\"}, {\"absolute_url\": \"/opinion/10987875/north-palm-motors-llc-an-illinois-limited-liability-company-dba/\",
+        \"attorney\": \"\", \"caseName\": \"North Palm Motors, LLC, an Illinois Limited
+        Liability Company, D/B/A Napleton's Car Rental Center v. Custom Fleet Services,
+        Inc. D/B/A Auto Rentals of the Palm Beaches\", \"caseNameFull\": \"\", \"citation\":
+        [], \"citeCount\": 0, \"cluster_id\": 10987875, \"court\": \"District Court
+        of Appeal of Florida\", \"court_citation_string\": \"Fla. Dist. Ct. App.\",
+        \"court_id\": \"fladistctapp\", \"court_jurisdiction\": \"SA\", \"dateArgued\":
+        null, \"dateFiled\": \"2026-09-30\", \"dateReargued\": null, \"dateReargumentDenied\":
+        null, \"docketNumber\": \"4D2025-0167\", \"docket_id\": 74873775, \"judge\":
+        \"\", \"lexisCite\": \"\", \"meta\": {\"timestamp\": \"2026-09-30T14:07:07.240927Z\",
+        \"date_created\": \"2026-09-30T14:07:07.148227Z\", \"score\": {\"bm25\": null}},
+        \"neutralCite\": \"\", \"non_participating_judge_ids\": [], \"opinions\":
+        [{\"author_redacted\": null, \"cites\": [61353, 1102073, 1102783, 1128717,
+        1622931, 1670209, 1683370, 1693626, 1711177, 1809833, 1816803, 1819871, 1847445,
+        1855268, 2355894, 2567823, 2681314, 3386967, 4079809, 4100980, 4795527, 4837365,
+        4865826, 4870485, 4876214, 4920330, 5139688, 7731708, 7767201, 9434070, 9805990,
+        9889184, 10494023], \"download_url\": \"https://flcourts-media.flcourts.gov/content/download/2496006/opinion/Opinion_2025-0167.pdf\",
+        \"id\": 11455539, \"joined_by_ids\": [], \"local_path\": \"pdf/2026/09/30/north_palm_motors_llc_an_illinois_limited_liability_company_dba.pdf\",
+        \"meta\": {\"timestamp\": \"2026-09-30T14:08:49.803020Z\", \"date_created\":
+        \"2026-09-30T14:07:07.151907Z\"}, \"ordering_key\": null, \"per_curiam\":
+        false, \"sha1\": \"db26868750895b01363c611ceff339383b55dd6f\", \"snippet\":
+        \"       DISTRICT COURT OF APPEAL OF THE STATE OF FLORIDA\\n                             FOURTH
+        DISTRICT\\n\\n                     NORTH PALM MOTORS, LLC,\\n                       Appellant/Cross-Appellee,\\n\\n
+        \                                   v.\\n\\n                CUSTOM FLEET SERVICES,
+        INC., et al.,\\n                     Appellees/Cross-Appellants.\\n\\n                            No.
+        4D2025-0167\\n\\n                          [September 30, 2026]\\n\\n   Appeal
+        and cross-appeal from the Circuit Court for the Fifteenth\", \"type\": \"combined-opinion\"}],
+        \"panel_ids\": [], \"panel_names\": [], \"posture\": \"\", \"procedural_history\":
+        \"\", \"scdb_id\": \"\", \"sibling_ids\": [11455539], \"source\": \"C\", \"status\":
+        \"Published\", \"suitNature\": \"\", \"syllabus\": \"\"}, {\"absolute_url\":
+        \"/opinion/10987673/viasat-inc-v-l3harris-technologies-inc/\", \"attorney\":
+        \"\", \"caseName\": \"Viasat, Inc. v. L3Harris Technologies, Inc.\", \"caseNameFull\":
+        \"\", \"citation\": [], \"citeCount\": 0, \"cluster_id\": 10987673, \"court\":
+        \"Court of Chancery of Delaware\", \"court_citation_string\": \"Del. Ch.\",
+        \"court_id\": \"delch\", \"court_jurisdiction\": \"SA\", \"dateArgued\": null,
+        \"dateFiled\": \"2026-09-29\", \"dateReargued\": null, \"dateReargumentDenied\":
+        null, \"docketNumber\": \"2024-0713-LWW\", \"docket_id\": 74873411, \"judge\":
+        \"\", \"lexisCite\": \"\", \"meta\": {\"timestamp\": \"2026-09-30T13:04:05.598839Z\",
+        \"date_created\": \"2026-09-30T13:04:05.483457Z\", \"score\": {\"bm25\": null}},
+        \"neutralCite\": \"\", \"non_participating_judge_ids\": [], \"opinions\":
+        [{\"author_redacted\": null, \"cites\": [1484430, 1980577, 1984498, 2274537,
+        2277625, 2282164, 2299215, 4021492, 9748101], \"download_url\": \"https://courts.delaware.gov/opinions/download.aspx?id=401500\",
+        \"id\": 11455337, \"joined_by_ids\": [], \"local_path\": \"pdf/2026/09/29/viasat_inc._v._l3harris_technologies_inc..pdf\",
+        \"meta\": {\"timestamp\": \"2026-09-30T13:06:12.906910Z\", \"date_created\":
+        \"2026-09-30T13:04:05.497079Z\"}, \"ordering_key\": null, \"per_curiam\":
+        false, \"sha1\": \"c8185d5914bbbda1c28375a8a06893211c235eb7\", \"snippet\":
+        \"     IN THE COURT OF CHANCERY OF THE STATE OF DELAWARE\\n\\n     VIASAT,
+        INC.,                         )\\n                                           )\\n
+        \               Plaintiff,                 )\\n                                           )\\n
+        \         v.                               ) C.A. No. 2024-0713-LWW\\n                                           )\\n
+        \    L3HARRIS TECHNOLOGIES,                )\\n     INC.,                                 )\\n
+        \                                          )\\n               D\", \"type\":
+        \"combined-opinion\"}], \"panel_ids\": [], \"panel_names\": [], \"posture\":
+        \"\", \"procedural_history\": \"\", \"scdb_id\": \"\", \"sibling_ids\": [11455337],
+        \"source\": \"C\", \"status\": \"Published\", \"suitNature\": \"\", \"syllabus\":
+        \"\"}, {\"absolute_url\": \"/opinion/10985956/slade-fidler-v-aikg-llc/\",
+        \"attorney\": \"\", \"caseName\": \"SLADE FIDLER v. AIKG, LLC\", \"caseNameFull\":
+        \"\", \"citation\": [], \"citeCount\": 0, \"cluster_id\": 10985956, \"court\":
+        \"Court of Appeals of Georgia\", \"court_citation_string\": \"Ga. Ct. App.\",
+        \"court_id\": \"gactapp\", \"court_jurisdiction\": \"SA\", \"dateArgued\":
+        null, \"dateFiled\": \"2026-09-29\", \"dateReargued\": null, \"dateReargumentDenied\":
+        null, \"docketNumber\": \"A26A1558\", \"docket_id\": 74866196, \"judge\":
+        \"\", \"lexisCite\": \"\", \"meta\": {\"timestamp\": \"2026-09-29T16:17:11.926023Z\",
+        \"date_created\": \"2026-09-29T16:17:11.802997Z\", \"score\": {\"bm25\": null}},
+        \"neutralCite\": \"\", \"non_participating_judge_ids\": [], \"opinions\":
+        [{\"author_redacted\": null, \"cites\": [1234799, 1324624, 1406238, 1417763,
+        2502130, 2812616, 4168419, 7399980, 7399997, 7878175, 9394694, 9820251, 10833438,
+        10833588], \"download_url\": \"https://efast.gaappeals.gov/download?filingId=a730a7f2-4a22-4019-9081-d90c59b5761a\",
+        \"id\": 11453620, \"joined_by_ids\": [], \"local_path\": \"pdf/2026/09/29/slade_fidler_v._aikg_llc.pdf\",
+        \"meta\": {\"timestamp\": \"2026-09-29T19:51:13.174812Z\", \"date_created\":
+        \"2026-09-29T16:17:11.807047Z\"}, \"ordering_key\": null, \"per_curiam\":
+        false, \"sha1\": \"548e36284ddb4851dd86d86f8af9b9254508da36\", \"snippet\":
+        \"                               THIRD DIVISION\\n                                DILLARD,
+        P. J.,\\n                             GOBEIL and PIPKIN, JJ.\\n\\n                    NOTICE:
+        Motions for reconsideration must be\\n                    received no later
+        than 4:30pm on the 10th day after the\\n                    decision was issued
+        to be deemed timely filed.\\n                              https://www.gaappeals.gov/rules\\n\\n\\n\\n
+        \                                                                 September
+        29, 2\", \"type\": \"combined-opinion\"}], \"panel_ids\": [], \"panel_names\":
+        [], \"posture\": \"\", \"procedural_history\": \"\", \"scdb_id\": \"\", \"sibling_ids\":
+        [11453620], \"source\": \"C\", \"status\": \"Published\", \"suitNature\":
+        \"\", \"syllabus\": \"\"}, {\"absolute_url\": \"/opinion/10984957/donshik-v-donshik/\",
+        \"attorney\": \"\", \"caseName\": \"Donshik v. Donshik\", \"caseNameFull\":
+        \"\", \"citation\": [], \"citeCount\": 0, \"cluster_id\": 10984957, \"court\":
+        \"Connecticut Appellate Court\", \"court_citation_string\": \"Conn. App. Ct.\",
+        \"court_id\": \"connappct\", \"court_jurisdiction\": \"SA\", \"dateArgued\":
+        null, \"dateFiled\": \"2026-09-29\", \"dateReargued\": null, \"dateReargumentDenied\":
+        null, \"docketNumber\": \"AC46983\", \"docket_id\": 74857891, \"judge\": \"Suarez;
+        Westbrook; Wilson\", \"lexisCite\": \"\", \"meta\": {\"timestamp\": \"2026-09-28T12:03:30.620404Z\",
+        \"date_created\": \"2026-09-28T12:03:29.711016Z\", \"score\": {\"bm25\": null}},
+        \"neutralCite\": \"\", \"non_participating_judge_ids\": [], \"opinions\":
+        [{\"author_redacted\": null, \"cites\": [1843487, 2375002, 2445599, 4163319,
+        4387252, 5131942, 5941747, 6339454, 7798724, 7840859, 7841112, 7843923, 7844165,
+        7844739, 7861293, 7861299, 7864000, 8211294, 9514847, 9523851, 9666886, 9750920,
+        10602683, 10742420], \"download_url\": \"https://www.jud.ct.gov/external/supapp/Cases/AROap/AP242/AP242.363.pdf\",
+        \"id\": 11452621, \"joined_by_ids\": [], \"local_path\": \"pdf/2026/09/29/donshik_v._donshik.pdf\",
+        \"meta\": {\"timestamp\": \"2026-09-28T12:14:40.200392Z\", \"date_created\":
+        \"2026-09-28T12:03:29.716019Z\"}, \"ordering_key\": null, \"per_curiam\":
+        false, \"sha1\": \"8f97b30116cc11fb0f9d50be47e051a7fface9f1\", \"snippet\":
+        \"************************************************\\n   The \u201Cofficially
+        released\u201D date that appears near the\\nbeginning of an opinion is the
+        date the opinion will be\\npublished in the Connecticut Law Journal or the
+        date it\\nis released as a slip opinion. The operative date for the\\nbeginning
+        of all time periods for the filing of postopinion\\nmotions and petitions
+        for certification is the \u201Cofficially\\nreleased\u201D date appearing
+        in the opinion.\\n   All opinions are subject to modification and technical\\ncorrect\",
+        \"type\": \"lead-opinion\"}], \"panel_ids\": [], \"panel_names\": [], \"posture\":
+        \"\", \"procedural_history\": \"Action for, inter alia, the dissolution of
+        a marriage, and for other relief, brought to the Superior Court in the judicial
+        district of Hartford and tried to the court, Klau, J.; thereafter, the court
+        granted in part the defendant's motion to preclude certain evidence; judgment
+        in part for the plaintiff, from which the plaintiff appealed to this court.
+        Reversed in part; further proceedings. Igor G. Kuperman, for the appellant
+        (plaintiff). Brandon B. Fontaine, with whom was Kathleen E. Scelfo, for the
+        appellee (defendant).\", \"scdb_id\": \"\", \"sibling_ids\": [11452621], \"source\":
+        \"C\", \"status\": \"Published\", \"suitNature\": \"\", \"syllabus\": \"The
+        plaintiff appealed from the trial court's judgment dissolving her mar- riage
+        to the defendant and finding in his favor as to her claims of conversion and
+        statutory (\xA7 52-564) theft. The plaintiff, who was a joint holder with
+        the defendant of certain brokerage accounts, claimed, inter alia, that the
+        court improperly determined that the torts of conversion and statutory theft
+        did not apply to moneys misappropriated by joint account holders. Held: The
+        trial court did not abuse its discretion when it precluded the plaintiff's
+        expert witness from testifying about the value of the defendant's business
+        enterprise, as the expert was not disclosed until the middle of trial even
+        though the case had been pending for more than three years, the defendant's
+        prior responses to the plaintiff's discovery requests were sufficient for
+        an expert to offer an opinion on the value of the business, and the court's
+        pre- clusion order was a proportionate sanction for the plaintiff's noncompliance
+        with prior disclosure requirements and a reasonable exercise of the court's
+        inherent authority to manage its docket. This court declined to review the
+        plaintiff's unpreserved, conclusory claim that the trial court's limitation
+        of her counsel's direct examination of the defendant at trial constituted
+        a violation of the plaintiff's right to procedural due process, as the claim
+        was inadequately briefed. The plaintiff's contention that the trial court
+        applied an improper legal standard in awarding her only nominal damages on
+        her claim of negligent infliction of emotional distress was unavailing, as
+        the court effectively compensated the plaintiff through its financial orders
+        when dissolving the marriage, virtually all of the evidence to support the
+        negligent infliction of emotional distress claim had been presented in the
+        dissolution portion of the trial and was relevant to the factors the court
+        was required to consider in making its financial orders, and the court recognized
+        that an award of damages on the negligent infliction of emotional distress
+        claim would violate the common-law rule precluding double recovery. The trial
+        court improperly rendered judgment for the defendant on the plaintiff's claims
+        of conversion and theft in violation of \xA7 52-564 relative to the parties'
+        jointly held brokerage accounts, as the court made no factual findings regarding
+        the accounts but, instead, improperly relied on the statute ((Rev. to 2019)
+        \xA7 36a-290) governing joint bank and credit union accounts in determining,
+        as a matter of law, that the defendant could not be held liable for the conversion
+        of funds in the brokerage accounts; accordingly, the judg- ment was reversed
+        as to those claims and the case was remanded for further proceedings on those
+        counts of the plaintiff's complaint. Donshik v. Donshik This court declined
+        to review the plaintiff's claim that the trial court sum- marily denied her
+        motion to stay the trial proceedings without first balancing the interests
+        of the parties, nonparties, the public and the court, as the plain- tiff's
+        failure to seek an articulation of the trial court's reasoning rendered the
+        record inadequate for review, and, in the absence of an indication to the
+        contrary, it was presumed that the court applied the correct legal standard
+        in declining to stay the proceedings. Argued September 18, 2025\u2014officially
+        released September 29, 2026\"}, {\"absolute_url\": \"/opinion/10985573/in-re-saama-technologies-litigation/\",
+        \"attorney\": \"\", \"caseName\": \"In Re Saama Technologies Litigation\",
+        \"caseNameFull\": \"\", \"citation\": [], \"citeCount\": 0, \"cluster_id\":
+        10985573, \"court\": \"Court of Chancery of Delaware\", \"court_citation_string\":
+        \"Del. Ch.\", \"court_id\": \"delch\", \"court_jurisdiction\": \"SA\", \"dateArgued\":
+        null, \"dateFiled\": \"2026-09-28\", \"dateReargued\": null, \"dateReargumentDenied\":
+        null, \"docketNumber\": \"2022-1045-LWW\", \"docket_id\": 72313822, \"judge\":
+        \"\", \"lexisCite\": \"\", \"meta\": {\"timestamp\": \"2026-09-29T13:03:06.933485Z\",
+        \"date_created\": \"2026-09-29T13:03:06.810638Z\", \"score\": {\"bm25\": null}},
+        \"neutralCite\": \"\", \"non_participating_judge_ids\": [], \"opinions\":
+        [{\"author_redacted\": null, \"cites\": [523565, 1425089, 1443006, 1482248,
+        1484430, 1490563, 1497598, 1518403, 1916381, 1930620, 1954871, 1981210, 1991847,
+        2050905, 2099701, 2109097, 2160076, 2192279, 2274537, 2277625, 2310303, 2334726,
+        2360315, 2370284, 2379496, 2394833, 2423041, 2444275, 2554098, 4095048, 4181259,
+        4359652, 4965203, 4965324, 4965537, 4968516, 8980630, 9748101, 9820831], \"download_url\":
+        \"https://courts.delaware.gov/opinions/download.aspx?id=401460\", \"id\":
+        11453237, \"joined_by_ids\": [], \"local_path\": \"pdf/2026/09/28/in_re_saama_technologies_litigation.pdf\",
+        \"meta\": {\"timestamp\": \"2026-09-29T13:07:50.057213Z\", \"date_created\":
+        \"2026-09-29T13:03:06.816752Z\"}, \"ordering_key\": null, \"per_curiam\":
+        false, \"sha1\": \"e9366a17f6f7c6b68981531b63b320fde5869f07\", \"snippet\":
+        \"    IN THE COURT OF CHANCERY OF THE STATE OF DELAWARE\\n\\n\\n IN RE SAAMA
+        TECHNOLOGIES               )   Consolidated\\n LITIGATION                             )
+        \  C.A. No. 2022-1045-LWW\\n\\n\\n\\n\\n                        MEMORANDUM
+        OPINION\\n\\n                         Date Submitted: June 1, 2026\\n                       Date
+        Decided: September 28, 2026\\n\\nA. Thompson Bayliss, Eric A. Veres & Clara
+        E. Hubbard, ABRAMS & BAYLISS\\nLLP, Wilmington, Delaware; Sean Baldwin, Will
+        Rathgeber, Stephen Federowicz,\\nDrake Reed, \", \"type\": \"combined-opinion\"}],
+        \"panel_ids\": [], \"panel_names\": [], \"posture\": \"\", \"procedural_history\":
+        \"\", \"scdb_id\": \"\", \"sibling_ids\": [11453237], \"source\": \"C\", \"status\":
+        \"Published\", \"suitNature\": \"\", \"syllabus\": \"\"}, {\"absolute_url\":
+        \"/opinion/10984000/kalshiex-llc-v-william-orgel/\", \"attorney\": \"\", \"caseName\":
+        \"KalshiEX LLC v. William Orgel\", \"caseNameFull\": \"\", \"citation\": [],
+        \"citeCount\": 0, \"cluster_id\": 10984000, \"court\": \"Court of Appeals
+        for the Sixth Circuit\", \"court_citation_string\": \"6th Cir.\", \"court_id\":
+        \"ca6\", \"court_jurisdiction\": \"F\", \"dateArgued\": null, \"dateFiled\":
+        \"2026-09-25\", \"dateReargued\": null, \"dateReargumentDenied\": null, \"docketNumber\":
+        \"26-5235\", \"docket_id\": 72811702, \"judge\": \"Eric L. Clay; Julia Smith
+        Gibbons; Rachel S. Bloomekatz\", \"lexisCite\": \"\", \"meta\": {\"timestamp\":
+        \"2026-09-25T20:02:56.024267Z\", \"date_created\": \"2026-09-25T20:02:55.657062Z\",
+        \"score\": {\"bm25\": null}}, \"neutralCite\": \"\", \"non_participating_judge_ids\":
+        [], \"opinions\": [{\"author_redacted\": null, \"cites\": [], \"download_url\":
+        \"http://www.opn.ca6.uscourts.gov/opinions.pdf/26a0272p-06.pdf\", \"id\":
+        11451663, \"joined_by_ids\": [], \"local_path\": \"pdf/2026/09/25/kalshiex_llc_v._william_orgel.pdf\",
+        \"meta\": {\"timestamp\": \"2026-09-25T20:03:19.258582Z\", \"date_created\":
+        \"2026-09-25T20:02:55.714570Z\"}, \"ordering_key\": null, \"per_curiam\":
+        false, \"sha1\": \"e96bded17abed748cb8e0ac8e2e1cb133b44ce26\", \"snippet\":
+        \"                             RECOMMENDED FOR PUBLICATION\\n                             Pursuant
+        to Sixth Circuit I.O.P. 32.1(b)\\n                                    File
+        Name: 26a0272p.06\\n\\n                 UNITED STATES COURT OF APPEALS\\n
+        \                               FOR THE SIXTH CIRCUIT\\n\\n\\n\\nKALSHIEX
+        LLC,                                             \u2510\\n                      Plaintiff-Appellant
+        (26-3196),      \u2502\\n                       Plaintiff-Appellee (26-5235),
+        \     \u2502\\n                            \", \"type\": \"combined-opinion\"}],
+        \"panel_ids\": [642, 1187], \"panel_names\": [\"Eric L. Clay\", \"Julia Smith
+        Gibbons\"], \"posture\": \"\", \"procedural_history\": \"\", \"scdb_id\":
+        \"\", \"sibling_ids\": [11451663], \"source\": \"C\", \"status\": \"Published\",
+        \"suitNature\": \"\", \"syllabus\": \"\"}, {\"absolute_url\": \"/opinion/10983481/anthropic-pbc-v-united-states-department-of-war/\",
+        \"attorney\": \"\", \"caseName\": \"Anthropic PBC v. United States Department
+        of War\", \"caseNameFull\": \"\", \"citation\": [], \"citeCount\": 0, \"cluster_id\":
+        10983481, \"court\": \"Court of Appeals for the D.C. Circuit\", \"court_citation_string\":
+        \"D.C. Cir.\", \"court_id\": \"cadc\", \"court_jurisdiction\": \"F\", \"dateArgued\":
+        \"2026-05-19\", \"dateFiled\": \"2026-09-25\", \"dateReargued\": null, \"dateReargumentDenied\":
+        null, \"docketNumber\": \"26-1049\", \"docket_id\": 72380208, \"judge\": \"\",
+        \"lexisCite\": \"\", \"meta\": {\"timestamp\": \"2026-09-25T15:01:05.353562Z\",
+        \"date_created\": \"2026-09-25T15:01:05.256348Z\", \"score\": {\"bm25\": null}},
+        \"neutralCite\": \"\", \"non_participating_judge_ids\": [], \"opinions\":
+        [{\"author_redacted\": null, \"cites\": [96902, 104114, 104321, 108752, 109122,
+        118125, 145885, 185763, 186458, 186780, 276387, 2816311, 2820796, 3181481,
+        3217228, 4026547, 4288402, 4673619, 4673620, 4706040, 6326350, 6402029, 6498783,
+        6501080, 6991217, 6998429, 7841546, 9226038, 9385592, 9425003, 9426279, 9426893,
+        9428473, 9431017, 9431176, 9432625, 9433157, 9434817, 9435008, 9435235, 9435351,
+        9436666, 9438256, 9439379, 9807826, 9822759, 9889182, 9956510, 10452864],
+        \"download_url\": \"https://media.cadc.uscourts.gov/opinions/docs/2026/09/26-1049-2194984.pdf\",
+        \"id\": 11451144, \"joined_by_ids\": [], \"local_path\": \"pdf/2026/09/25/anthropic_pbc_v._united_states_department_of_war.pdf\",
+        \"meta\": {\"timestamp\": \"2026-09-25T15:33:13.686638Z\", \"date_created\":
+        \"2026-09-25T15:01:05.261015Z\"}, \"ordering_key\": null, \"per_curiam\":
+        false, \"sha1\": \"05ca90ca0967f5fd88ba1e18fff84739755a4a78\", \"snippet\":
+        \" United States Court of Appeals\\n         FOR THE DISTRICT OF COLUMBIA
+        CIRCUIT\\n\\n\\n\\nArgued May 19, 2026               Decided September 25,
+        2026\\n\\n                        No. 26-1049\\n\\n                      ANTHROPIC
+        PBC,\\n                        PETITIONER\\n\\n                             v.\\n\\n
+        \  UNITED STATES DEPARTMENT OF WAR AND PETER B.\\nHEGSETH, IN HIS OFFICIAL
+        CAPACITY AS SECRETARY OF WAR,\\n                      RESPONDENTS\\n\\n\\n
+        \                Consolidated with 26-1162\\n\\n\\n           On Petitions
+        for Re\", \"type\": \"combined-opinion\"}], \"panel_ids\": [], \"panel_names\":
+        [], \"posture\": \"\", \"procedural_history\": \"\", \"scdb_id\": \"\", \"sibling_ids\":
+        [11451144], \"source\": \"C\", \"status\": \"Published\", \"suitNature\":
+        \"\", \"syllabus\": \"\"}, {\"absolute_url\": \"/opinion/10983264/stewart-title-company-v-qualia-labs-inc-dba-qualia-software-inc/\",
+        \"attorney\": \"\", \"caseName\": \"Stewart Title Company v. Qualia Labs,
+        Inc. D/B/A Qualia Software, Inc.\", \"caseNameFull\": \"\", \"citation\":
+        [], \"citeCount\": 0, \"cluster_id\": 10983264, \"court\": \"Texas Supreme
+        Court\", \"court_citation_string\": \"Tex.\", \"court_id\": \"tex\", \"court_jurisdiction\":
+        \"S\", \"dateArgued\": null, \"dateFiled\": \"2026-09-25\", \"dateReargued\":
+        null, \"dateReargumentDenied\": null, \"docketNumber\": \"25-0686\", \"docket_id\":
+        73050785, \"judge\": \"Busby\", \"lexisCite\": \"\", \"meta\": {\"timestamp\":
+        \"2026-09-25T14:18:00.999803Z\", \"date_created\": \"2026-09-25T14:18:00.819699Z\",
+        \"score\": {\"bm25\": null}}, \"neutralCite\": \"\", \"non_participating_judge_ids\":
+        [], \"opinions\": [{\"author_redacted\": null, \"cites\": [117937, 1035393,
+        2360329, 2831475, 4276220, 4342002, 4358632, 4425650, 4542048, 4706002, 8221284,
+        9873454], \"download_url\": \"https://www.txcourts.gov/media/1463376/250686d.pdf\",
+        \"id\": 11450927, \"joined_by_ids\": [], \"local_path\": \"pdf/2026/09/25/stewart_title_company_v._qualia_labs_inc._dba_qualia_software_inc..pdf\",
+        \"meta\": {\"timestamp\": \"2026-09-25T14:19:21.260898Z\", \"date_created\":
+        \"2026-09-25T14:18:00.860195Z\"}, \"ordering_key\": null, \"per_curiam\":
+        false, \"sha1\": \"a368a09b0d552e1e80a68fca6dbc79f281df6f80\", \"snippet\":
+        \"          Supreme Court of Texas\\n                            \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\\n
+        \                            No. 25-0686\\n                            \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\\n\\n
+        \                       Stewart Title Company,\\n                              Petitioner,\\n\\n
+        \                                  v.\\n\\n           Qualia Labs, Inc. d/b/a
+        Qualia Software, Inc.,\\n                              Respondent\\n\\n   \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\\n
+        \              On Petition for Review from the\\n     Court of Appeals for
+        th\", \"type\": \"dissent\"}], \"panel_ids\": [], \"panel_names\": [], \"posture\":
+        \"\", \"procedural_history\": \"\", \"scdb_id\": \"\", \"sibling_ids\": [11450927],
+        \"source\": \"C\", \"status\": \"Published\", \"suitNature\": \"\", \"syllabus\":
+        \"\"}, {\"absolute_url\": \"/opinion/10983115/skt2-llc-v-rivet-industries-inc/\",
+        \"attorney\": \"\", \"caseName\": \"Skt2, LLC v. Rivet Industries, Inc.\",
+        \"caseNameFull\": \"\", \"citation\": [], \"citeCount\": 0, \"cluster_id\":
+        10983115, \"court\": \"District Court, District of Columbia\", \"court_citation_string\":
+        \"D.D.C.\", \"court_id\": \"dcd\", \"court_jurisdiction\": \"FD\", \"dateArgued\":
+        null, \"dateFiled\": \"2026-09-24\", \"dateReargued\": null, \"dateReargumentDenied\":
+        null, \"docketNumber\": \"Civil Action No. 2025-3904\", \"docket_id\": 74846779,
+        \"judge\": \"Judge Tanya S. Chutkan\", \"lexisCite\": \"\", \"meta\": {\"timestamp\":
+        \"2026-09-24T19:01:32.052559Z\", \"date_created\": \"2026-09-24T19:01:31.786852Z\",
+        \"score\": {\"bm25\": null}}, \"neutralCite\": \"\", \"non_participating_judge_ids\":
+        [], \"opinions\": [{\"author_redacted\": 620, \"cites\": [186196, 187404,
+        417693, 441618, 579431, 663691, 744159, 777869, 788119, 788434, 1518561, 1535019,
+        1814166, 1964882, 2087306, 2090001, 2185552, 2194643, 2293887, 2294957, 2300553,
+        2317332, 2338779, 2347333, 2374387, 2383996, 2402302, 2422499, 2470974, 2476228,
+        2511958, 2660945, 2662489, 2723967, 4027956, 4407679, 4966685, 4967678, 4967920,
+        6985273, 7235306, 7241178, 7253454, 7861939, 9435068, 9435339, 9490424, 9648375,
+        9748101, 9842131], \"download_url\": \"https://ecf.dcd.uscourts.gov/cgi-bin/show_public_doc?2025cv3904-31\",
+        \"id\": 11450775, \"joined_by_ids\": [], \"local_path\": \"pdf/2026/09/24/skt2_llc_v._rivet_industries_inc..pdf\",
+        \"meta\": {\"timestamp\": \"2026-09-24T19:02:39.689000Z\", \"date_created\":
+        \"2026-09-24T19:01:31.856651Z\"}, \"ordering_key\": null, \"per_curiam\":
+        false, \"sha1\": \"0e9da6419701f3c70cc688a0d48db5237226cf9d\", \"snippet\":
+        \"                              UNITED STATES DISTRICT COURT\\n                              FOR
+        THE DISTRICT OF COLUMBIA\\n\\n\\n SKT2, LLC, d/b/a K\xC4GWERKS,\\n\\n                 Plaintiff,\\n\\n
+        \        v.\\n                                                           Case
+        No. 25-cv-3904 (TSC)\\n RIVET INDUSTRIES, INC. and\\n ROBERT H. LUKE,\\n\\n
+        \                Defendants.\\n\\n\\n\\n                                 MEMORANDUM
+        OPINION\\n\\n       Plaintiff SKT2, LLC, which operates as K\xE4gwerks, brings
+        this action against Rivet\\n\\nIndu\", \"type\": \"combined-opinion\"}], \"panel_ids\":
+        [], \"panel_names\": [], \"posture\": \"\", \"procedural_history\": \"\",
+        \"scdb_id\": \"\", \"sibling_ids\": [11450775], \"source\": \"C\", \"status\":
+        \"Published\", \"suitNature\": \"\", \"syllabus\": \"\"}, {\"absolute_url\":
+        \"/opinion/10983106/durbal-v-association-of-american-medical-colleges/\",
+        \"attorney\": \"\", \"caseName\": \"Durbal v. Association of American Medical
+        Colleges\", \"caseNameFull\": \"\", \"citation\": [], \"citeCount\": 0, \"cluster_id\":
+        10983106, \"court\": \"District Court, District of Columbia\", \"court_citation_string\":
+        \"D.D.C.\", \"court_id\": \"dcd\", \"court_jurisdiction\": \"FD\", \"dateArgued\":
+        null, \"dateFiled\": \"2026-09-24\", \"dateReargued\": null, \"dateReargumentDenied\":
+        null, \"docketNumber\": \"Civil Action No. 2025-2537\", \"docket_id\": 74846054,
+        \"judge\": \"Judge Amir H. Ali\", \"lexisCite\": \"\", \"meta\": {\"timestamp\":
+        \"2026-09-24T18:03:43.275946Z\", \"date_created\": \"2026-09-24T18:03:43.168127Z\",
+        \"score\": {\"bm25\": null}}, \"neutralCite\": \"\", \"non_participating_judge_ids\":
+        [], \"opinions\": [{\"author_redacted\": null, \"cites\": [109586, 145675,
+        147421, 185459, 626402, 766079, 1035747, 1559467, 1629795, 2312865, 2658326,
+        2827981, 3203364, 4396211, 4554945, 7245242, 7250535, 8414182, 9427139, 9428838,
+        9429005, 9430664, 9435001, 9435068, 9435339, 9878148, 9888399], \"download_url\":
+        \"https://ecf.dcd.uscourts.gov/cgi-bin/show_public_doc?2025cv2537-25\", \"id\":
+        11450766, \"joined_by_ids\": [], \"local_path\": \"pdf/2026/09/24/durbal_v._association_of_american_medical_colleges.pdf\",
+        \"meta\": {\"timestamp\": \"2026-09-24T18:09:23.489888Z\", \"date_created\":
+        \"2026-09-24T18:03:43.186088Z\"}, \"ordering_key\": null, \"per_curiam\":
+        false, \"sha1\": \"dd0ad1d7cf4dcf731b1547d217a886dbe563a199\", \"snippet\":
+        \"                             UNITED STATES DISTRICT COURT\\n                             FOR
+        THE DISTRICT OF COLUMBIA\\n\\n\\n\\n NIRVANA DURBAL,\\n\\n                Plaintiff,\\n
+        \                                                        Civil Action No.
+        25-02537 (AHA)\\n        v.\\n\\n ASSOCIATION OF AMERICAN\\n MEDICAL COLLEGES,\\n\\n
+        \               Defendant.\\n\\n\\n\\n                               Memorandum
+        Opinion and Order\\n\\n       Nirvana Durbal sues the Association of American
+        Medical Colleges (\u201CAAMC\u201D), asserting\\n\\nthat i\", \"type\": \"combined-opinion\"}],
+        \"panel_ids\": [], \"panel_names\": [], \"posture\": \"\", \"procedural_history\":
+        \"\", \"scdb_id\": \"\", \"sibling_ids\": [11450766], \"source\": \"C\", \"status\":
+        \"Published\", \"suitNature\": \"\", \"syllabus\": \"\"}, {\"absolute_url\":
+        \"/opinion/11012176/ladrillera-mecanizada-sa-de-c-v-v-gugtre-sa-de-cv/\",
+        \"attorney\": \"\", \"caseName\": \"Ladrillera Mecanizada, S.A. De C v. v.
+        Gugtre, S.A. De C.V.\", \"caseNameFull\": \"\", \"citation\": [], \"citeCount\":
+        0, \"cluster_id\": 11012176, \"court\": \"Texas Court of Appeals, 4th District
+        (San Antonio)\", \"court_citation_string\": \"Tex. App.-San Antonio\", \"court_id\":
+        \"txctapp4\", \"court_jurisdiction\": \"SA\", \"dateArgued\": null, \"dateFiled\":
+        \"2026-09-23\", \"dateReargued\": null, \"dateReargumentDenied\": null, \"docketNumber\":
+        \"04-25-00615-CV\", \"docket_id\": 72599301, \"judge\": \"\", \"lexisCite\":
+        \"\", \"meta\": {\"timestamp\": \"2026-10-06T08:19:06.203067Z\", \"date_created\":
+        \"2026-10-06T08:19:03.430137Z\", \"score\": {\"bm25\": null}}, \"neutralCite\":
+        \"\", \"non_participating_judge_ids\": [], \"opinions\": [{\"author_redacted\":
+        null, \"cites\": [104200, 219732, 895192, 1404975, 1677728, 1759068, 1789075,
+        1875835, 2279933, 2831311, 3191892, 4671322, 5285381, 5286607, 9512917, 9512929,
+        9636255, 9662054, 9663095, 9705791, 9777863, 9824214, 9843648], \"download_url\":
+        \"https://search.txcourts.gov/SearchMedia.aspx?MediaVersionID=ea6567eb-faa3-426c-8574-810b3741b771&coa=coa04&DT=Opinion&MediaID=24198f6b-add0-4f16-80be-b131aa8d4b5b\",
+        \"id\": 11479864, \"joined_by_ids\": [], \"local_path\": \"pdf/2026/09/23/ladrillera_mecanizada_s.a._de_c_v._v._gugtre_s.a._de_c.v..pdf\",
+        \"meta\": {\"timestamp\": \"2026-10-06T08:20:19.780535Z\", \"date_created\":
+        \"2026-10-06T08:19:03.439876Z\"}, \"ordering_key\": null, \"per_curiam\":
+        false, \"sha1\": \"a6a67fd7027058a490d08f1b15dc82b06c511aa1\", \"snippet\":
+        \"                               Fourth Court of Appeals\\n                                      San
+        Antonio, Texas\\n                                 MEMORANDUM OPINION\\n                                         No.
+        04-25-00615-CV\\n\\n                          LADRILLERA MECANIZADA, S.A.
+        DE C.V.,\\n                                      Appellant\\n\\n                                                   v.\\n\\n
+        \                                     GUGTRE, S.A. DE C.V.,\\n                                           Appel\",
+        \"type\": \"lead-opinion\"}], \"panel_ids\": [], \"panel_names\": [], \"posture\":
+        \"\", \"procedural_history\": \"\", \"scdb_id\": \"\", \"sibling_ids\": [11479864],
+        \"source\": \"C\", \"status\": \"Published\", \"suitNature\": \"Interlocutory\",
+        \"syllabus\": \"\"}]}"
+    headers:
+      allow:
+      - GET, POST, HEAD, OPTIONS
+      alt-svc:
+      - h3=":443"; ma=86400
+      connection:
+      - keep-alive
+      content-length:
+      - '48743'
+      content-security-policy:
+      - connect-src 'self' https://storage.courtlistener.com/ https://hcaptcha.com/
+        https://*.hcaptcha.com/ https://plausible.io/; default-src 'self' https://storage.courtlistener.com/;
+        script-src 'self' 'report-sample' https://storage.courtlistener.com/ https://hcaptcha.com/
+        https://*.hcaptcha.com/ https://plausible.io/; object-src 'self' https://storage.courtlistener.com/;
+        style-src 'self' 'report-sample' https://storage.courtlistener.com/ https://hcaptcha.com/
+        https://*.hcaptcha.com/ 'unsafe-inline'; font-src 'self' https://storage.courtlistener.com/
+        data:; frame-src 'self' https://storage.courtlistener.com/ https://hcaptcha.com/
+        https://*.hcaptcha.com/; img-src 'self' https://storage.courtlistener.com/
+        https://portraits.free.law/ https://seals.free.law/ data:; media-src 'self'
+        https://storage.courtlistener.com/ data:; base-uri 'self'; form-action 'self';
+        upgrade-insecure-requests
+      content-type:
+      - application/json
+      cross-origin-opener-policy:
+      - same-origin
+      date:
+      - Fri, 09 Oct 2026 23:40:26 GMT
+      permissions-policy:
+      - browsing-topics=()
+      referrer-policy:
+      - same-origin
+      server:
+      - uvicorn
+      strict-transport-security:
+      - max-age=63072000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept, origin, Cookie
+      - Accept-Encoding
+      via:
+      - 1.1 e694c28f3f4b3c78628be967383db56e.cloudfront.net (CloudFront)
+      x-amz-cf-id:
+      - rZuKZcbkRcwgFzW6lfARE2wV8grsZKEBdqMSq66HPEpUaWp3ZmmczA==
+      x-amz-cf-pop:
+      - IAD61-P3
+      x-cache:
+      - Miss from cloudfront
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+    status:
+      code: 200
+      message: OK
+version: 1

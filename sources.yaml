@@ -633,6 +633,114 @@ sources:
       - {industry_hint: ecommerce, params: {agency: FTC}, limit: 25}
       - {industry_hint: healthcare, params: {agency: HHS}, limit: 25}
 
+  courtlistener:
+    enabled: true
+    status: done
+    status_date: 2026-10-09
+    route: own_api
+    source_type: government
+    cadence: daily
+    env: [COURTLISTENER_TOKEN]
+    rate_limit: {requests_per_second: 0.075, domains: [www.courtlistener.com]}   # free tier: 5/minute
+    quota: {units: 100, window_days: 1}                                          # free tier: 125/day
+    access_check:
+      robots: allowed
+      terms: allowed
+      decision: full
+      terms_url: https://www.courtlistener.com/help/api/rest/
+      checked_at: 2026-10-09
+      notes: >-
+        Free API tier; Free Law Project offers commercial agreements: confirm before launch (terms page needs
+        JavaScript). Attorney, judge and panel fields not stored; case names are public court captions.
+    queries:
+      - {industry_hint: legal, keywords: ['"law firm" AND (software OR malpractice OR billing)'], limit: 20}
+      - {industry_hint: healthcare, keywords: ['(hospital OR clinic) AND ("electronic health record" OR software)'], limit: 20}
+      - {industry_hint: construction, keywords: ['contractor AND ("change order" OR "mechanics lien")'], limit: 20}
+      - {industry_hint: real_estate, keywords: ['landlord AND tenant AND (software OR portal)'], limit: 20}
+      - {industry_hint: logistics, keywords: ['(carrier OR broker) AND (freight OR detention)'], limit: 20}
+      - {industry_hint: ecommerce, keywords: ['(Amazon OR Shopify) AND seller'], limit: 20}
+      - {industry_hint: restaurants, keywords: ['restaurant AND ("delivery app" OR franchise)'], limit: 20}
+      - {industry_hint: accounting, keywords: ['(CPA OR bookkeeper) AND negligence'], limit: 20}
+      - {industry_hint: insurance, keywords: ['insurer AND "bad faith" AND claim'], limit: 20}
+      - {industry_hint: hr, keywords: ['employer AND ("applicant tracking" OR "background check")'], limit: 20}
+      - {industry_hint: it_devtools, keywords: ['"software license" AND breach'], limit: 20}
+
+  openstates:
+    enabled: true
+    status: done
+    status_date: 2026-10-09
+    route: own_api
+    source_type: government
+    cadence: daily
+    env: [OPENSTATES_API_KEY]
+    rate_limit: {requests_per_second: 0.15, domains: [v3.openstates.org]}
+    quota: {units: 400, window_days: 1}
+    access_check:
+      robots: allowed
+      terms: allowed
+      decision: full
+      terms_url: https://open.pluralpolicy.com/data/
+      checked_at: 2026-10-09
+      notes: Open States data is a public domain dedication (attribution appreciated). Limits unpublished; paced conservatively.
+    queries:
+      - {industry_hint: legal, keywords: ["legal services"], limit: 40}
+      - {industry_hint: healthcare, keywords: ["prior authorization"], limit: 40}
+      - {industry_hint: construction, keywords: ["contractor licensing"], limit: 40}
+      - {industry_hint: real_estate, keywords: ["landlord tenant"], limit: 40}
+      - {industry_hint: logistics, keywords: ["commercial vehicle"], limit: 40}
+      - {industry_hint: ecommerce, keywords: ["online marketplace"], limit: 40}
+      - {industry_hint: restaurants, keywords: ["restaurant"], limit: 40}
+      - {industry_hint: accounting, keywords: ["certified public accountant"], limit: 40}
+      - {industry_hint: education, keywords: ["teacher"], limit: 40}
+      - {industry_hint: marketing, keywords: ["consumer data privacy"], limit: 40}
+      - {industry_hint: hr, keywords: ["employment"], limit: 40}
+      - {industry_hint: insurance, keywords: ["insurance claims"], limit: 40}
+      - {industry_hint: manufacturing, keywords: ["manufacturing"], limit: 40}
+      - {industry_hint: agriculture, keywords: ["agriculture"], limit: 40}
+      - {industry_hint: it_devtools, keywords: ["artificial intelligence"], limit: 40}
+
+  github:
+    enabled: true
+    status: done
+    status_date: 2026-10-09
+    route: own_api
+    source_type: community
+    cadence: daily
+    env: [GITHUB_TOKEN]
+    rate_limit: {requests_per_second: 0.4, domains: [api.github.com]}    # search API: 30/minute
+    access_check:
+      robots: allowed
+      terms: allowed
+      decision: full
+      terms_url: https://docs.github.com/en/site-policy/github-terms/github-terms-of-service
+      checked_at: 2026-10-09
+      notes: >-
+        API Terms (section H): no spam, no selling users' personal data, no token sharing to beat limits.
+        The trending page is not scraped; usernames hashed.
+    queries:
+      - {params: {kind: issues}, keywords: ["label:bounty"], limit: 100}
+      - {params: {kind: issues}, keywords: ['label:"💎 Bounty"'], limit: 100}
+      - {params: {kind: issues}, keywords: ['label:"feature request"'], limit: 200}
+      - {params: {kind: repos, min_stars: 50}, limit: 100}
+
+  wikipedia:
+    enabled: false                   # daily trending is mostly people in the news (true crime, celebrities): low signal
+    status: done
+    status_date: 2026-10-09
+    route: own_api
+    source_type: research
+    cadence: daily
+    env: [SIGNAL_CONTACT_EMAIL]
+    access_check:
+      robots: allowed
+      terms: allowed
+      decision: full
+      terms_url: https://foundation.wikimedia.org/wiki/Policy:Wikimedia_Foundation_User-Agent_Policy
+      checked_at: 2026-10-09
+      notes: wikimedia.org pageviews API, UA with contact email; en.wikipedia.org /api/ is robots-disallowed (unused).
+    queries:
+      - {params: {project: en.wikipedia, top: 100}, limit: 300}
+
   bluesky:
     connector: search_api
     enabled: true

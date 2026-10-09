@@ -22,12 +22,14 @@ PERSONAL_KEYS = {
     "avatar", "avatar_static", "profile_image", "bio", "zip_code", "zipcode", "incident_zip", "incident_address",
     "street", "street1", "street2", "street_name", "street_number", "building", "author_flair_text",
     "zip", "city", "address1", "address2", "fax", "submitterrep", "submitterrepaddress", "submitterrepcitystate",
+    "login", "gravatar_id",
 }
 # Dropped whole: these hold nothing connectors need.
 DROPPED_CONTAINERS = {"pointofcontact", "relatedpersonslist", "patient"}
 PERSONAL_PREFIXES = ("contact_", "manufacturer_contact_", "distributor_")
 # Inside these objects, also redact their name/link-style fields.
-PERSON_CONTAINERS = {"account", "author", "creator", "owner", "user", "person", "mentions", "submitter"}
+PERSON_CONTAINERS = {"account", "author", "creator", "owner", "user", "person", "mentions", "submitter",
+                     "assignee", "assignees", "closed_by", "sender"}
 PERSON_FIELDS = {"name", "url", "link", "note", "fields", "header", "header_static", "actor_id", "uri"}
 
 _XML_TAGS = re.compile(
@@ -51,7 +53,7 @@ def scrub_json(value: Any, in_person: bool = False) -> Any:
                 out[k] = REDACTED
             elif isinstance(v, (dict, list)) and (_is_personal(k) or k.lower() in PERSON_CONTAINERS):
                 out[k] = scrub_json(v, in_person=True)       # e.g. Bluesky "author": {did, handle, labels}
-            elif _is_personal(k) or (in_person and k.lower() in PERSON_FIELDS):
+            elif _is_personal(k) or (in_person and (k.lower() in PERSON_FIELDS or k.lower().endswith("_url"))):
                 out[k] = v if isinstance(v, bool) or v is None else REDACTED
             else:
                 out[k] = scrub_json(v, in_person=k.lower() in PERSON_CONTAINERS)

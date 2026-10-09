@@ -1,0 +1,473 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - v3.openstates.org
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://v3.openstates.org/bills?include=abstracts&page=1&per_page=20&q=small+business&sort=latest_action_desc&updated_since=2026-09-15
+  response:
+    body:
+      string: '{"results": [{"id": "ocd-bill/bab226a3-aada-44f4-a6c4-86d373b78847",
+        "session": "222", "jurisdiction": {"id": "ocd-jurisdiction/country:us/state:nj/government",
+        "name": "New Jersey", "classification": "state"}, "from_organization": {"id":
+        "ocd-organization/0461b3ba-ecad-4ed3-bc89-056dbaa698d1", "name": "Senate",
+        "classification": "upper"}, "identifier": "S 681", "title": "\"Electronic
+        Cigarette Extended Producer Responsibility Act.\"", "classification": ["bill"],
+        "subject": [], "extras": {}, "created_at": "2026-01-23T01:24:57.921061+00:00",
+        "updated_at": "2026-10-09T00:36:57.489019+00:00", "openstates_url": "https://openstates.org/nj/bills/222/S681/",
+        "first_action_date": "2026-01-13T05:00:00+00:00", "latest_action_date": "2026-10-08T04:00:00+00:00",
+        "latest_action_description": "Referred to Senate Budget and Appropriations
+        Committee", "latest_passage_date": "", "abstracts": []}, {"id": "ocd-bill/306afda2-e926-4228-9538-21c6169435d0",
+        "session": "222", "jurisdiction": {"id": "ocd-jurisdiction/country:us/state:nj/government",
+        "name": "New Jersey", "classification": "state"}, "from_organization": {"id":
+        "ocd-organization/0461b3ba-ecad-4ed3-bc89-056dbaa698d1", "name": "Senate",
+        "classification": "upper"}, "identifier": "S 1779", "title": "Establishes
+        Downtown Economic Growth Program to encourage business development in certain
+        small municipalities.", "classification": ["bill"], "subject": [], "extras":
+        {}, "created_at": "2026-01-23T01:28:50.157185+00:00", "updated_at": "2026-10-09T12:07:36.836614+00:00",
+        "openstates_url": "https://openstates.org/nj/bills/222/S1779/", "first_action_date":
+        "2026-01-13T05:00:00+00:00", "latest_action_date": "2026-10-08T04:00:00+00:00",
+        "latest_action_description": "Referred to Senate Budget and Appropriations
+        Committee", "latest_passage_date": "", "abstracts": []}, {"id": "ocd-bill/7a252c24-105c-4a6a-aabb-be25b4b2030f",
+        "session": "222", "jurisdiction": {"id": "ocd-jurisdiction/country:us/state:nj/government",
+        "name": "New Jersey", "classification": "state"}, "from_organization": {"id":
+        "ocd-organization/0461b3ba-ecad-4ed3-bc89-056dbaa698d1", "name": "Senate",
+        "classification": "upper"}, "identifier": "S 3800", "title": "Requires EDA
+        to include social media development services in services offered through Small
+        Business E-commerce Support Program.", "classification": ["bill"], "subject":
+        [], "extras": {}, "created_at": "2026-03-03T08:38:11.781237+00:00", "updated_at":
+        "2026-10-09T00:34:32.597143+00:00", "openstates_url": "https://openstates.org/nj/bills/222/S3800/",
+        "first_action_date": "2026-03-05T05:00:00+00:00", "latest_action_date": "2026-10-08T04:00:00+00:00",
+        "latest_action_description": "Referred to Senate Budget and Appropriations
+        Committee", "latest_passage_date": "", "abstracts": []}, {"id": "ocd-bill/7f051a62-523e-4a2c-970a-f620820b1726",
+        "session": "194th", "jurisdiction": {"id": "ocd-jurisdiction/country:us/state:ma/government",
+        "name": "Massachusetts", "classification": "state"}, "from_organization":
+        {"id": "ocd-organization/ca38ad9c-c3d5-4c4f-bc2f-d885218ed802", "name": "House",
+        "classification": "lower"}, "identifier": "H 4754", "title": "An Act relative
+        to expanded small property tax abatements in the Town of Auburn", "classification":
+        ["bill"], "subject": [], "extras": {}, "created_at": "2025-11-17T23:31:21.276396+00:00",
+        "updated_at": "2026-10-08T21:46:42.664115+00:00", "openstates_url": "https://openstates.org/ma/bills/194th/H4754/",
+        "first_action_date": "2025-11-17", "latest_action_date": "2026-10-08", "latest_action_description":
+        "Enacted and laid before the Governor", "latest_passage_date": "2026-10-08",
+        "abstracts": [{"abstract": "By Representative Frost of Auburn, a petition
+        (accompanied by bill, House, No. 4754) of Paul K. Frost and Michael O. Moore
+        (by vote of the town) relative to expanded small property tax abatements in
+        the town of Auburn.  Revenue.  [Local Approval Received.]", "note": "summary"}]},
+        {"id": "ocd-bill/0028b889-1c97-4f8b-b37e-55e293c340f7", "session": "136",
+        "jurisdiction": {"id": "ocd-jurisdiction/country:us/state:oh/government",
+        "name": "Ohio", "classification": "state"}, "from_organization": {"id": "ocd-organization/401c065d-0f85-4c93-b87b-1675a7ef6c1a",
+        "name": "Senate", "classification": "upper"}, "identifier": "SB 477", "title":
+        "Revise law regarding electric bicycles, other mobility devices", "classification":
+        ["bill"], "subject": ["Crimes, Corrections, and Law Enforcement", "Highways,
+        Roads, and Bridges", "Law Enforcement", "Traffic Offenses", "Transportation",
+        "Vehicle Registration and Titling"], "extras": {}, "created_at": "2026-10-08T00:32:44.333563+00:00",
+        "updated_at": "2026-10-08T18:01:25.231180+00:00", "openstates_url": "https://openstates.org/oh/bills/136/SB477/",
+        "first_action_date": "2026-10-07T04:00:00+00:00", "latest_action_date": "2026-10-07T04:00:00+00:00",
+        "latest_action_description": "Introduced", "latest_passage_date": "", "abstracts":
+        [{"abstract": "To amend sections 4507.11, 4508.02, 4511.01, 4511.20, 4511.514,
+        4511.522, and 4511.54 and to enact sections 4503.184 and 4508.081 of the Revised
+        Code to revise the law regarding electric bicycles, low-speed micromobility
+        devices, and electric personal assistive mobility devices.", "note": "long
+        title"}]}, {"id": "ocd-bill/af5341d0-19b2-44aa-93ef-4ea03a120793", "session":
+        "2025-2026", "jurisdiction": {"id": "ocd-jurisdiction/country:us/state:pa/government",
+        "name": "Pennsylvania", "classification": "state"}, "from_organization": {"id":
+        "ocd-organization/9443a886-8032-4502-b99d-551735ec9606", "name": "Senate",
+        "classification": "upper"}, "identifier": "SB 1217", "title": "An act designating
+        a bridge, identified as Bridge Key 7591, carrying State Route 2043 over the
+        SEPTA West Trenton Line, Bensalem Township, Bucks County, as the Lieutenant
+        Colonel Kenneth O. Hunter Memorial Bridge; designating a bridge, identified
+        as Bridge Key 30666, on that portion of Pennsylvania Route 309 over the Little
+        Schuylkill River, Tamaqua Borough, Schuylkill County, as the PFC David L.
+        Verbilla, USMC Memorial Bridge; designating a bridge, identified as Bridge
+        Key 47656, on that portion of Pennsylvania Route 309 over the Little Schuylkill
+        River, Tamaqua Borough, Schuylkill County, as the CPL Howard Arthur Donald,
+        USMC Memorial Bridge; designating a bridge, identified as Bridge Key 30656,
+        on that portion of Pennsylvania Route 209 East Broad Street over the Little
+        Schuylkill River, Tamaqua Borough, Schuylkill County, as the Sergeant Franklin
+        Eugene Hosler Memorial Bridge; designating a bridge, identified as Bridge
+        Key 30696, on that portion of Pennsylvania Route 443 over the Keenigs Creek,
+        East Brunswick Township, Schuylkill County, as the Specialist Gary George
+        Geiger Memorial Bridge; designating a bridge, identified as Bridge Key 5845,
+        carrying 8th Street over the Norfolk Southern railroad tracks in the City
+        of Altoona, Blair County, as the PFC Ronald and CPL Thomas Kustaborder Memorial
+        Bridge; designating a bridge, identified as Bridge Key 53671, carrying U.S.
+        Business Route 220 over Sandy Run in Logan Township, Blair County, as the
+        Kutz Brothers Veterans Memorial Bridge; designating a bridge, identified as
+        Bridge Key 5672, carrying State Route 1001, Valley View Boulevard, over Brush
+        Run between Jaggard Street and South 16th Street in the City of Altoona, Blair
+        County, as the S.W. Neal Family WWII Veterans Memorial Bridge; designating
+        a bridge, identified as Bridge Key 41558, carrying Pennsylvania Route 164,
+        Johnstown Road, over South Dry Run between Baird Lane and Gates Lane in Freedom
+        Township, Blair County, as the Hazenstab Family Veterans Memorial Bridge;
+        designating a bridge, identified as Bridge Key 67831, carrying Pennsylvania
+        Route 913 over Great Trough Creek in the Village of Robertsdale, Wood Township,
+        Huntingdon County, as the Robertsdale Area Veterans Memorial Bridge; designating
+        a bridge, identified as Bridge Key 53911, carrying U.S. Route 222 over Cedar
+        Creek in Allentown, Lehigh County, as the Mayor William L. Heydt Memorial
+        Bridge; designating a bridge, identified as Bridge Key 19237, carrying State
+        Route 1018, over a tributary of Dixon Run in Green Township, Indiana County,
+        as the US Army SSGT James D. Rushton Memorial Bridge; designating a bridge,
+        identified as Bridge Key 19080, carrying Pennsylvania Route 259 over Laurel
+        Run in Cherryhill Township, Indiana County, as the Marine Corps SSGT Michael
+        A. Geneva Memorial Bridge; designating a bridge, identified as Bridge Key
+        42251, carrying Pennsylvania Route 61 over the Shamokin Creek in Mount Carmel
+        Borough, Northumberland County, as the Veterans Viaduct; designating a portion
+        of Blakely Street, State Route 6011 and Pennsylvania Route 347, from the intersection
+        with Pine Street to the intersection with Drinker Street in Dunmore Borough,
+        Lackawanna County, as Staff Sergeant Steven R. Tudor Memorial Highway; designating
+        a bridge, identified as Bridge Key 45346, carrying Pennsylvania Route 653
+        over Buffalo Creek in Garrett Borough, Somerset County, as the Corporal Harold
+        L. Gray Memorial Bridge; designating a bridge, identified as Bridge Key 46384,
+        carrying Galloway Road over Interstate 276 in Bensalem Township, Bucks County,
+        as the Sgt. John J. Bonk, Jr., Memorial Bridge; designating a bridge, identified
+        as Bridge Key 7041, carrying Pennsylvania Route 513 over Neshaminy Creek in
+        Hulmeville Borough, Bucks County, as the Corporal Robert Lee Clampffer Memorial
+        Bridge; designating a bridge, identified as Bridge Key 22595, located on that
+        portion of U.S. Route 22 in East Hanover Township, Lebanon County, over Pennsylvania
+        Route 934 as the CW5 John Michael Travers Memorial Bridge; designating a bridge,
+        identified as Bridge Key 16676, carrying Pennsylvania Route 381 over Meadow
+        Run in the Borough of Ohiopyle, Fayette County, as the Paul T. Sucevic Memorial
+        Bridge; designating the bridge, identified as Bridge Key 19033, located on
+        northbound Pennsylvania Route 119 over Pennsylvania Route 286 in White Township,
+        Indiana County, as the Specialist Five Timothy Rice Memorial Bridge; designating
+        the bridge, identified as Bridge Key 19034, located on southbound Pennsylvania
+        Route 119 over Pennsylvania Route 286 in White Township, Indiana County, as
+        the Specialist Five Timothy Rice Memorial Bridge; designating a bridge, identified
+        as Bridge Key 53696, carrying Pennsylvania Route 913 over Shoup Run in the
+        Village of Barnettstown, Carbon Township, Huntingdon County, as the Corporal
+        Eldon \"Bish\" Neuder Memorial Bridge; designating a bridge, identified as
+        Bridge Key 19636, on that portion of U.S. Route 322 over the Mill Creek in
+        Pine Creek Township, Jefferson County, as the PFC Walter Elwood \"Barney\"
+        Martin Memorial Bridge; designating a bridge, identified as Bridge Key 67845,
+        on that portion of Pennsylvania Route 830 over Falls Creek in Falls Creek
+        Borough, Jefferson County, as the PFC Norman P. Chittester Memorial Bridge;
+        designating the interchange of Interstate 81 with State Route 4007, known
+        as Exit 119, on the border of Cass Township and Butler Township, Schuylkill
+        County, as the PSP Trooper Michael E. Pahira, Jr., Memorial Interchange; designating
+        the bridges, identified as Bridge Keys 25048 and 25050, carrying Interstate
+        99 over Pennsylvania Route 973 in Lycoming Township, Lycoming County, as the
+        Mark Murawski Memorial Bridge; designating a portion of State Route 3062 from
+        the intersection with Lieds Road in West Bradford Township, Chester County,
+        to the intersection with Ryan Boulevard in West Bradford Township, Chester
+        County, as the Corporal Timothy J. O''Connor, Jr. Memorial Highway; designating
+        a bridge, identified as Bridge Key 15287, carrying State Route 2031 over Amtrak
+        in Ridley Park Borough, Delaware County, as the Mayor Hank Eberle Memorial
+        Bridge; designating a bridge, identified as Bridge Key 48271, on that portion
+        carrying State Route 0130 over Turtle Creek in Trafford Borough, Westmoreland
+        County, as the Sergeant First Class Robert J. Fike Memorial Bridge; designating
+        a bridge, identified as Bridge Key 70551, carrying State Route 3013 over Blair
+        Gap Run in Allegheny Township, Blair County, as the Lt. Col. Palmer Brown
+        Memorial Bridge; designating a portion of Pennsylvania Route 73 from the Boyertown
+        Borough/Colebrookdale Township Line in Colebrookdale Township, Berks County,
+        to the intersection with Covered Bridge Road and Oysterdale Road in Oley Township,
+        Berks County, as the Officer Kristen M. Yeager Memorial Highway; designating
+        a bridge, identified as Bridge Key 46807, on that portion of State Route 2007
+        over the South Fork Little Conemaugh River in Summerhill Township, Cambria
+        County, as Army Specialist Four Anthony Michael Notich Memorial Bridge; designating
+        a bridge, identified as Bridge Key 47686, carrying U.S. Route 219 over the
+        West Branch Susquehanna River in Susquehanna Township, Cambria County, as
+        the Seaman First Class Paul Kephart Memorial Bridge; designating a bridge,
+        identified as Bridge Key 27860, carrying State Route 4038 over the Schuylkill
+        River in Pottstown Borough, Montgomery County, as the Commander Job W. Price
+        Memorial Bridge; designating the roundabout on Pennsylvania Route 415 at the
+        intersection of Main Street and Lake Street in Dallas Borough, Luzerne County,
+        as the Charles D. Lemmond, Jr., Memorial Roundabout; designating a portion
+        of Wyoming Avenue, U.S. Route 11, from the western border of Edwardsville
+        Borough to the intersection with Church Street in Kingston Borough, Luzerne
+        County, as the James J. Haggerty Memorial Highway; designating a bridge, identified
+        as Bridge Key 19239, carrying State Route 1019, also known as Valley Road,
+        over Two Lick Creek in Green Township, Indiana County, as the Tec 5 John George
+        Memorial Bridge; designating a bridge, identified as Bridge Key 68471, carrying
+        Pennsylvania Route 403 over Pine Run in Marion Center Borough, Indiana County,
+        as the Sergeant Larry McManus Memorial Bridge; designating a bridge, identified
+        as Bridge Key 70470, carrying State Route 2012, also known as River Road,
+        over Blacklick Creek between Buffington and East Wheatfield Townships in Indiana
+        County, as the Sgt. SOF Frank J. McCloskey Memorial Bridge; and making repeals.",
+        "classification": ["bill"], "subject": [], "extras": {}, "created_at": "2026-03-19T13:39:42.279596+00:00",
+        "updated_at": "2026-10-09T02:30:56.706676+00:00", "openstates_url": "https://openstates.org/pa/bills/2025-2026/SB1217/",
+        "first_action_date": "2026-03-18T04:00:00+00:00", "latest_action_date": "2026-10-07T04:00:00+00:00",
+        "latest_action_description": "Re-referred to Appropriations", "latest_passage_date":
+        "2026-09-30T04:00:00+00:00", "abstracts": []}, {"id": "ocd-bill/4acd183b-76e6-46e8-8e8c-7cddb7444ae9",
+        "session": "2025-2026", "jurisdiction": {"id": "ocd-jurisdiction/country:us/state:pa/government",
+        "name": "Pennsylvania", "classification": "state"}, "from_organization": {"id":
+        "ocd-organization/9443a886-8032-4502-b99d-551735ec9606", "name": "Senate",
+        "classification": "upper"}, "identifier": "SB 478", "title": "An Act establishing
+        the Office of Employee Ownership within the Department of Community and Economic
+        Development; establishing the Employee Ownership Advisory Board; and providing
+        technical and financial assistance to employee-owned enterprises.", "classification":
+        ["bill"], "subject": [], "extras": {}, "created_at": "2025-03-20T19:41:04.430797+00:00",
+        "updated_at": "2026-10-06T16:11:54.806801+00:00", "openstates_url": "https://openstates.org/pa/bills/2025-2026/SB478/",
+        "first_action_date": "2025-03-20T04:00:00+00:00", "latest_action_date": "2026-10-05T04:00:00+00:00",
+        "latest_action_description": "Referred to Commerce", "latest_passage_date":
+        "2026-10-05T04:00:00+00:00", "abstracts": []}, {"id": "ocd-bill/a9624635-95c4-4ebe-a0c1-124c30fb215c",
+        "session": "222", "jurisdiction": {"id": "ocd-jurisdiction/country:us/state:nj/government",
+        "name": "New Jersey", "classification": "state"}, "from_organization": {"id":
+        "ocd-organization/68d34c4f-e59d-42a2-bcfe-fbf7f8cc8f15", "name": "Assembly",
+        "classification": "lower"}, "identifier": "A 5594", "title": "Modifies scope
+        of New Jersey Regulatory Flexibility Act related to economic impact of rules
+        on small businesses and small local government units.", "classification":
+        ["bill"], "subject": [], "extras": {}, "created_at": "2026-09-26T00:51:27.898516+00:00",
+        "updated_at": "2026-10-07T03:58:12.822514+00:00", "openstates_url": "https://openstates.org/nj/bills/222/A5594/",
+        "first_action_date": "2026-10-05T04:00:00+00:00", "latest_action_date": "2026-10-05T04:00:00+00:00",
+        "latest_action_description": "Introduced, Referred to Assembly Commerce and
+        Economic Development Committee", "latest_passage_date": "", "abstracts": []},
+        {"id": "ocd-bill/32cd04d2-e2b4-4972-87c6-c2a4ff92f604", "session": "2025-2026",
+        "jurisdiction": {"id": "ocd-jurisdiction/country:us/state:pa/government",
+        "name": "Pennsylvania", "classification": "state"}, "from_organization": {"id":
+        "ocd-organization/9443a886-8032-4502-b99d-551735ec9606", "name": "Senate",
+        "classification": "upper"}, "identifier": "SB 1328", "title": "An Act requiring
+        automated external defibrillators at utility or electrical worksites; imposing
+        duties on the Department of Labor and Industry; and imposing penalties.",
+        "classification": ["bill"], "subject": [], "extras": {}, "created_at": "2026-05-21T01:36:28.211766+00:00",
+        "updated_at": "2026-10-07T01:59:47.852470+00:00", "openstates_url": "https://openstates.org/pa/bills/2025-2026/SB1328/",
+        "first_action_date": "2026-05-20T04:00:00+00:00", "latest_action_date": "2026-10-05T04:00:00+00:00",
+        "latest_action_description": "Referred to Labor & Industry", "latest_passage_date":
+        "2026-10-05T04:00:00+00:00", "abstracts": []}, {"id": "ocd-bill/31a35d5f-a322-4f0a-9aa8-4217c71aae4f",
+        "session": "222", "jurisdiction": {"id": "ocd-jurisdiction/country:us/state:nj/government",
+        "name": "New Jersey", "classification": "state"}, "from_organization": {"id":
+        "ocd-organization/68d34c4f-e59d-42a2-bcfe-fbf7f8cc8f15", "name": "Assembly",
+        "classification": "lower"}, "identifier": "A 5592", "title": "Provides corporation
+        business and gross income tax credits to certain businesses for qualified
+        purchases from NJ small businesses.", "classification": ["bill"], "subject":
+        [], "extras": {}, "created_at": "2026-09-26T00:25:54.925731+00:00", "updated_at":
+        "2026-10-07T04:05:54.487680+00:00", "openstates_url": "https://openstates.org/nj/bills/222/A5592/",
+        "first_action_date": "2026-10-05T04:00:00+00:00", "latest_action_date": "2026-10-05T04:00:00+00:00",
+        "latest_action_description": "Introduced, Referred to Assembly Commerce and
+        Economic Development Committee", "latest_passage_date": "", "abstracts": []},
+        {"id": "ocd-bill/adc002c5-5713-4373-8dd8-d203cd7ecbb3", "session": "222",
+        "jurisdiction": {"id": "ocd-jurisdiction/country:us/state:nj/government",
+        "name": "New Jersey", "classification": "state"}, "from_organization": {"id":
+        "ocd-organization/0461b3ba-ecad-4ed3-bc89-056dbaa698d1", "name": "Senate",
+        "classification": "upper"}, "identifier": "S 4735", "title": "Allows exclusion
+        of certain small business income from taxation under gross income tax and
+        corporation business tax.", "classification": ["bill"], "subject": [], "extras":
+        {}, "created_at": "2026-10-02T06:42:40.153576+00:00", "updated_at": "2026-10-06T16:10:11.189964+00:00",
+        "openstates_url": "https://openstates.org/nj/bills/222/S4735/", "first_action_date":
+        "2026-10-05T04:00:00+00:00", "latest_action_date": "2026-10-05T04:00:00+00:00",
+        "latest_action_description": "Introduced in the Senate, Referred to Senate
+        Budget and Appropriations Committee", "latest_passage_date": "", "abstracts":
+        []}, {"id": "ocd-bill/02902ed7-c3e9-46fb-b99f-907d355fed43", "session": "222",
+        "jurisdiction": {"id": "ocd-jurisdiction/country:us/state:nj/government",
+        "name": "New Jersey", "classification": "state"}, "from_organization": {"id":
+        "ocd-organization/68d34c4f-e59d-42a2-bcfe-fbf7f8cc8f15", "name": "Assembly",
+        "classification": "lower"}, "identifier": "A 5593", "title": "\"Main Street
+        Storefront Investment Credit Act\"; provides corporation business and gross
+        income tax credits to small businesses for certain property improvements.",
+        "classification": ["bill"], "subject": [], "extras": {}, "created_at": "2026-09-26T00:21:37.515889+00:00",
+        "updated_at": "2026-10-07T04:24:32.022195+00:00", "openstates_url": "https://openstates.org/nj/bills/222/A5593/",
+        "first_action_date": "2026-10-05T04:00:00+00:00", "latest_action_date": "2026-10-05T04:00:00+00:00",
+        "latest_action_description": "Introduced, Referred to Assembly Commerce and
+        Economic Development Committee", "latest_passage_date": "", "abstracts": []},
+        {"id": "ocd-bill/00f341f5-81d7-4828-bbdd-236147f2a09f", "session": "222",
+        "jurisdiction": {"id": "ocd-jurisdiction/country:us/state:nj/government",
+        "name": "New Jersey", "classification": "state"}, "from_organization": {"id":
+        "ocd-organization/0461b3ba-ecad-4ed3-bc89-056dbaa698d1", "name": "Senate",
+        "classification": "upper"}, "identifier": "S 4626", "title": "Establishes
+        Office of Small Business Advisory Services and Small Business Advisory Accountability
+        Fund; appropriates $2.5 million.", "classification": ["bill"], "subject":
+        [], "extras": {}, "created_at": "2026-09-29T11:44:46.602741+00:00", "updated_at":
+        "2026-10-02T17:59:16.886961+00:00", "openstates_url": "https://openstates.org/nj/bills/222/S4626/",
+        "first_action_date": "2026-10-01T04:00:00+00:00", "latest_action_date": "2026-10-01T04:00:00+00:00",
+        "latest_action_description": "Introduced in the Senate, Referred to Senate
+        Commerce Committee", "latest_passage_date": "", "abstracts": []}, {"id": "ocd-bill/ae2c1b3d-2067-4e09-8bec-aeec402d38be",
+        "session": "2025-2026", "jurisdiction": {"id": "ocd-jurisdiction/country:us/state:mi/government",
+        "name": "Michigan", "classification": "state"}, "from_organization": {"id":
+        "ocd-organization/7cf9891c-6c1f-45ec-b24c-7aa9be45e9cc", "name": "Senate",
+        "classification": "upper"}, "identifier": "SB 1191", "title": "Economic development:
+        other; mass timber loan and technical assistance programs and mass timber
+        revolving loan fund; create. Amends sec. 9 of 1984 PA 270 (MCL 125.2009) &
+        adds ch. 8F.", "classification": ["bill"], "subject": ["Economic development:
+        other"], "extras": {}, "created_at": "2026-10-02T03:16:14.492574+00:00", "updated_at":
+        "2026-10-02T03:16:14.735098+00:00", "openstates_url": "https://openstates.org/mi/bills/2025-2026/SB1191/",
+        "first_action_date": "2026-10-01", "latest_action_date": "2026-10-01", "latest_action_description":
+        "REFERRED TO COMMITTEE ON ECONOMIC AND COMMUNITY DEVELOPMENT", "latest_passage_date":
+        "", "abstracts": []}, {"id": "ocd-bill/0b952561-3d24-4a96-9ba1-65f303daada6",
+        "session": "2025-2026", "jurisdiction": {"id": "ocd-jurisdiction/country:us/state:mi/government",
+        "name": "Michigan", "classification": "state"}, "from_organization": {"id":
+        "ocd-organization/d387cf69-631c-4013-bb32-4a00c848fcc4", "name": "House",
+        "classification": "lower"}, "identifier": "HB 6427", "title": "Businesses:
+        other; Michigan zoning enabling act; make subject to the data center local
+        decision protection act. Amends secs. 205 & 606 of 2006 PA 110 (MCL 125.3205
+        & 125.3606).   TIE BAR WITH: HB 6426''26", "classification": ["bill"], "subject":
+        ["Businesses: other", "Local government: other"], "extras": {}, "created_at":
+        "2026-10-01T02:48:18.403668+00:00", "updated_at": "2026-10-01T02:48:18.711842+00:00",
+        "openstates_url": "https://openstates.org/mi/bills/2025-2026/HB6427/", "first_action_date":
+        "2026-09-30", "latest_action_date": "2026-10-01", "latest_action_description":
+        "bill electronically reproduced 09/30/2026", "latest_passage_date": "", "abstracts":
+        []}, {"id": "ocd-bill/720a872f-326d-437a-9a61-90200c1111ca", "session": "136",
+        "jurisdiction": {"id": "ocd-jurisdiction/country:us/state:oh/government",
+        "name": "Ohio", "classification": "state"}, "from_organization": {"id": "ocd-organization/401c065d-0f85-4c93-b87b-1675a7ef6c1a",
+        "name": "Senate", "classification": "upper"}, "identifier": "SB 464", "title":
+        "Allow a tax credit for compensation to skilled trades instructors", "classification":
+        ["bill"], "subject": ["Commerce", "Education", "Employment", "Taxation", "Wage
+        and Hour"], "extras": {}, "created_at": "2026-07-21T20:34:19.969609+00:00",
+        "updated_at": "2026-10-01T00:12:35.588351+00:00", "openstates_url": "https://openstates.org/oh/bills/136/SB464/",
+        "first_action_date": "2026-07-21T04:00:00+00:00", "latest_action_date": "2026-09-30T04:00:00+00:00",
+        "latest_action_description": "Referred to committee", "latest_passage_date":
+        "", "abstracts": [{"abstract": "To amend sections 5747.98 and 5751.98 and
+        to enact sections 5747.053 and 5751.55 of the Revised Code to authorize a
+        refundable tax credit for compensation paid to skilled trades instructors.",
+        "note": "long title"}]}, {"id": "ocd-bill/046c7659-4a18-4f06-83f5-1bb10b196757",
+        "session": "20252026", "jurisdiction": {"id": "ocd-jurisdiction/country:us/state:ca/government",
+        "name": "California", "classification": "state"}, "from_organization": {"id":
+        "ocd-organization/e70e812e-44d2-46b0-9eae-2f3b9a1d5150", "name": "Assembly",
+        "classification": "lower"}, "identifier": "AB 685", "title": "Small Business
+        Development Technical Assistance.", "classification": ["bill"], "subject":
+        ["SmallBusinessDevelopmentTechnicalAssistance"], "extras": {"tags": ["fiscal
+        committee"], "impact_clause": "An act to amend Sections 12100.61 and 12100.63
+        of the Government Code, relating to economic recovery."}, "created_at": "2025-02-15T05:54:34.463336+00:00",
+        "updated_at": "2026-10-02T09:16:55.280146+00:00", "openstates_url": "https://openstates.org/ca/bills/20252026/AB685/",
+        "first_action_date": "2025-02-14", "latest_action_date": "2026-09-30", "latest_action_description":
+        "Chaptered by Secretary of State - Chapter 824, Statutes of 2026.", "latest_passage_date":
+        "2026-08-26", "abstracts": [{"abstract": "Existing law establishes the Office
+        of Small Business Advocate (OSBA) within the Governor''s Office of Business
+        and Economic Development, also known as GO-Biz, to advocate for causes of
+        small business and to provide small businesses with the information they need
+        to survive in the marketplace. Existing law also establishes the California
+        Small Business Technical Assistance Program (SB-TAP) within OSBA, under the
+        direct authority of the Small Business Advocate, for the purpose of assisting
+        small businesses through free or low-cost one-on-one consulting and low-cost
+        training by entering into grant agreements with one or more small business
+        technical assistance centers. Under existing law, OSBA administers the Capital
+        Infusion Program (CIP) pursuant to the SB-TAP, as specified.\n\nExisting law
+        sets forth the criteria that an applicant must meet to be eligible to participate
+        in these programs, which can vary depending on whether the applicant is receiving
+        funding from federal or private sources.\n\nThis bill would revise certain
+        eligibility criteria for the small business technical assistance center grant
+        programs, as specified. The bill would create uniform eligibility requirements
+        for applicants with funding from a nonstate source. The bill would also authorize
+        multiple small business technical assistance centers to apply as a network
+        with a single fiscal agent if their active contracts are under the same funding
+        authority. The bill would also require the OSBA to establish standardized
+        performance metrics, reporting requirements, and outcome measures applicable
+        to all grant recipients participating in the SB-TAP and would require the
+        OSBA to monitor grant recipients during the grant performance period to ensure
+        their compliance with SB-TAP requirements, as provided. The bill would include
+        findings and declarations by the Legislature relating to the administration
+        of the CIP and would require the OSBA to report its findings and actions and
+        aggregate program outcomes to the Legislature.", "note": "summary"}]}, {"id":
+        "ocd-bill/2ff8c475-94d1-425b-9f21-d8a1b5a82152", "session": "20252026", "jurisdiction":
+        {"id": "ocd-jurisdiction/country:us/state:ca/government", "name": "California",
+        "classification": "state"}, "from_organization": {"id": "ocd-organization/e70e812e-44d2-46b0-9eae-2f3b9a1d5150",
+        "name": "Assembly", "classification": "lower"}, "identifier": "AB 1679", "title":
+        "Local pop-up small business program.", "classification": ["bill"], "subject":
+        ["Localpop-upsmallbusinessprogram"], "extras": {"tags": ["fiscal committee",
+        "local program"], "impact_clause": "An act to add Chapter 5.9 (commencing
+        with Section 51028) to Part 1 of Division 1 of Title 5 of the Government Code,
+        and to amend Section 113789 of the Health and Safety Code, relating to local
+        government."}, "created_at": "2026-02-03T08:35:20.363464+00:00", "updated_at":
+        "2026-10-02T09:19:02.475809+00:00", "openstates_url": "https://openstates.org/ca/bills/20252026/AB1679/",
+        "first_action_date": "2026-02-02", "latest_action_date": "2026-09-30", "latest_action_description":
+        "Chaptered by Secretary of State - Chapter 825, Statutes of 2026.", "latest_passage_date":
+        "2026-08-26", "abstracts": [{"abstract": "(1) Existing law establishes various
+        programs to promote small businesses operating in nonstandard locations, including
+        cottage food operations and sidewalk vendors, and imposes requirements on,
+        and provides authorizations to, local governments relating to these programs.
+        Existing law authorizes the legislative body of an incorporated city or the
+        board of supervisors of a county, as applicable, to license any kind of business
+        not prohibited by law, transacted and carried on within the limits of the
+        jurisdiction of the city or county, and to fix the rate of the license fee
+        and provide for its collection, as provided.\n\nThis bill would require a
+        city, including a charter city, county, or city and county, defined as a local
+        jurisdiction to allow temporary commercial activation authorization for a
+        pop-up small business, as those terms are defined, to operate for no more
+        than 120 days in an eligible commercial space without requiring full compliance
+        with standards applicable to permanent occupancy, as specified. The bill would
+        require a local jurisdiction to consider temporarily suspending, deferring,
+        or modifying specified standards and discretionary requirements. The bill
+        would require a temporary commercial activation to comply with health and
+        safety standards governing temporary use and structures, as specified.\n\n
+        This bill would further require a local jurisdiction to provide written accessibility
+        compliance guidance materials to an applicant. The bill would authorize a
+        local jurisdiction to establish fees not exceeding the reasonable costs of
+        program administration and create enforcement mechanisms and penalties for
+        noncompliance. By requiring a city, including a charter city, county, or city
+        and county to allow temporary commercial activation authorization for pop-up
+        small businesses, this bill would impose a state-mandated local program.\n\n(2)
+        Existing law, the California Retail Food Code, establishes uniform health
+        and sanitation standards for, and provides for regulation by the State Department
+        of Public Health of, retail food facilities and requires local health agencies
+        to enforce those provisions. A violation of the California Retail Food Code
+        is generally a misdemeanor. Existing law defines \"food facility\" to include
+        specified permanent and nonpermanent food facilities.\n\nThis bill would specify
+        that the term \"food facility\" includes a pop-up small business, as described
+        above, that has been approved for limited food preparation. By changing the
+        definition of a crime and because the bill would impose a higher level of
+        service on local health agencies, this bill would impose a state-mandated
+        local program.\n\n(3) The bill would include findings that changes proposed
+        by this bill address a matter of statewide concern rather than a municipal
+        affair and, therefore, apply to all cities, including charter cities.\n\nThe
+        California Constitution requires the state to reimburse local agencies and
+        school districts for certain costs mandated by the state. Statutory provisions
+        establish procedures for making that reimbursement.\n\nThis bill would provide
+        that no reimbursement is required by this act for specified reasons.", "note":
+        "summary"}]}, {"id": "ocd-bill/a5c30672-83fb-44a5-b4c8-19a5d8b0a24a", "session":
+        "34", "jurisdiction": {"id": "ocd-jurisdiction/country:us/state:ak/government",
+        "name": "Alaska", "classification": "state"}, "from_organization": {"id":
+        "ocd-organization/9c84bc85-9bb0-4f31-99ad-5fed91afdc28", "name": "House",
+        "classification": "lower"}, "identifier": "HB 263", "title": "An Act making
+        appropriations for the operating and loan program expenses of state government
+        and for certain programs; capitalizing funds; amending appropriations; making
+        supplemental appropriations; and providing for an effective date.", "classification":
+        ["bill"], "subject": ["AGENCY", "AGRICULTURE", "AIRPORTS", "ALASKA NATIVES",
+        "ALCOHOL", "APPROPRIATIONS", "ARTS & HUMANITIES", "AVIATION", "BOARDS & COMMISSIONS",
+        "BONDS & BONDING", "BUDGET", "BUDGET RESERVE FUND", "BUILDINGS", "CONTRACTS",
+        "CORPORATIONS", "CORRECTIONS", "COURTS", "CRIMINAL PROCEDURE", "DEBT", "ECONOMIC
+        DEVELOPMENT", "EDUCATION", "EMPLOYMENT", "ENERGY", "ENVIRONMENTAL CONCERNS",
+        "EXECUTIVE BRANCH", "FAMILIES", "FEDERAL AID", "FEES", "FINANCIAL INSTITUTIONS",
+        "FIRE PROTECTION", "FISH & GAME (BOTH)", "FUNDS", "GOVERNOR", "GRANTS", "HEALTH
+        & SOCIAL SERVICES", "HIGHWAYS", "HOUSING", "INSURANCE", "INTEREST", "INVESTMENTS",
+        "LABOR", "LAW ENFORCEMENT", "LEASES", "LEGISLATURE", "LIBRARIES", "LICENSING",
+        "LOANS", "MARIJUANA", "MARINE FACILITIES", "MARINE HIGHWAY", "MEDICAL CARE",
+        "MENTAL HEALTH", "MILITARY", "MINORS", "MOTOR VEHICLES", "MUSEUMS", "NATIVE
+        ORGANIZATIONS", "NURSES", "OIL & GAS", "PARKS & RECREATION", "PERMANENT FUND",
+        "PIONEERS'' HOMES", "PSYCHOLOGISTS", "PUBLIC ASSISTANCE", "PUBLIC CORPORATIONS",
+        "PUBLIC DEFENDER", "PUBLIC EMPLOYEES", "PUBLIC FINANCE", "PUBLIC OFFICERS",
+        "PUBLIC SAFETY", "RESOURCES", "RETIREMENT", "REVENUE", "REVENUE SHARING",
+        "SALARIES & ALLOWANCES", "SCHOOLS", "SCIENCE & TECHNOLOGY", "SECURITIES",
+        "SENIOR CITIZENS", "SUPPLEMENTAL APPROPRIATIONS", "TAXATION", "TRANSPORTATION",
+        "UNIVERSITIES", "VETERANS", "VOCATIONAL TRAINING", "WATER", "WORKERS COMPENSATION"],
+        "extras": {}, "created_at": "2026-01-23T22:27:20.503325+00:00", "updated_at":
+        "2026-10-09T23:24:54.750244+00:00", "openstates_url": "https://openstates.org/ak/bills/34/HB263/",
+        "first_action_date": "2026-01-23", "latest_action_date": "2026-09-30", "latest_action_description":
+        "(H) FISCAL NOTE MEMO Transmitted to Governor 9/11/26", "latest_passage_date":
+        "2026-05-07", "abstracts": []}, {"id": "ocd-bill/1cf72b63-6b70-44e5-b885-5abda815cd1d",
+        "session": "34", "jurisdiction": {"id": "ocd-jurisdiction/country:us/state:ak/government",
+        "name": "Alaska", "classification": "state"}, "from_organization": {"id":
+        "ocd-organization/9c84bc85-9bb0-4f31-99ad-5fed91afdc28", "name": "House",
+        "classification": "lower"}, "identifier": "HJR 44", "title": "Supporting the
+        ability of Alaska Native corporations and entities owned by federally recognized
+        tribes in the state to participate in the United States Small Business Administration''s
+        8(a) Business Development Program.", "classification": ["joint resolution"],
+        "subject": ["ALASKA NATIVES", "BUSINESS", "CLAIMS", "ECONOMIC DEVELOPMENT",
+        "FEDERAL AID", "INTERGOVERNMENTAL RELATIONS", "NATIVE ORGANIZATIONS", "TRUSTS"],
+        "extras": {}, "created_at": "2026-03-16T20:38:39.261679+00:00", "updated_at":
+        "2026-09-25T22:47:42.033540+00:00", "openstates_url": "https://openstates.org/ak/bills/34/HJR44/",
+        "first_action_date": "2026-03-16", "latest_action_date": "2026-09-30", "latest_action_description":
+        "(H) PERMANENTLY FILED 9/22 LEGIS RESOLVE 33", "latest_passage_date": "2026-05-11",
+        "abstracts": []}], "pagination": {"per_page": 20, "page": 1, "max_page": 14,
+        "total_items": 268}}'
+    headers:
+      connection:
+      - keep-alive
+      content-length:
+      - '35949'
+      content-type:
+      - application/json
+      date:
+      - Fri, 09 Oct 2026 23:41:53 GMT
+      server:
+      - uvicorn
+    status:
+      code: 200
+      message: OK
+version: 1

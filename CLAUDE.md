@@ -263,7 +263,7 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 | State government job boards | G2 / G5, else G1 | rss / public_pages | per state | weekly | todo |
 | Industry job boards (legal, healthcare, construction, logistics) | G2 / G5, else G1 | rss / public_pages | per board | weekly | todo |
 | Company career pages (all industries) | G6 | own_api | Greenhouse, Lever, Ashby, SmartRecruiters | weekly | todo |
-| GitHub bounties, Algora, Gitcoin | `github` + G1 | own_api | GitHub search for issues with bounty labels; Algora/Gitcoin public pages | daily | todo |
+| GitHub bounties, Algora, Gitcoin | `github` | own_api | GitHub search issues `label:bounty` and Algora's `label:"💎 Bounty"` (paid_demand); Algora/Gitcoin public pages not checked | daily | done (2026-10-09, GitHub part) |
 | IssueHunt and other bounty boards | G5, else G1 | public_pages | public listings | daily | todo |
 | Kaggle | `kaggle` | own_api | Kaggle API competitions list | weekly | todo |
 | HeroX, Wazoku (InnoCentive) | G5, else G1 | public_pages | public challenge listings | weekly | todo |
@@ -278,7 +278,7 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 | Chrome Web Store | G10 | — | robots.txt disallows review pages | weekly | blocked (2026-10-09) |
 | Shopify App Store, Salesforce AppExchange, Atlassian Marketplace, WordPress plugins | G10 | rss | WordPress plugins: done (2026-10-09). Shopify: ToS forbids robots. Atlassian: REST API disallowed by robots.txt. AppExchange: reviews load via internal APIs, no clean route | weekly | partly done |
 | Public feature boards (Canny, UserVoice, Productboard portals) | `feature_boards` | public_pages | robots.txt and terms allow reading; but Canny boards ship data only as an embedded JS object (not JSON, not a published interface) and UserVoice needs JavaScript. Revisit if a vendor offers a public feed or API | weekly | todo (deferred 2026-10-09) |
-| GitHub issues and discussions | `github` | own_api | REST/GraphQL search issues and discussions | daily | todo |
+| GitHub issues and discussions | `github` | own_api | REST search: feature-request issues (discussions need GraphQL: todo); usernames hashed; API terms forbid spam and selling personal data | daily | done (2026-10-09, issues) |
 | Better Business Bureau | G5, else G1 | public_pages | check terms; default G1 | weekly | todo |
 
 **News, trade press, funding**
@@ -309,8 +309,8 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 | Federal Register | `federal_register` | own_api | `federalregister.gov/api/v1/documents.json`: every new rule and proposed rule, plus keyword notices; comment deadlines and agencies kept; no key, public domain | daily | done (2026-10-09) |
 | Regulations.gov | `regulations_gov` | own_api | API v4 public comments per agency (SBA, FMCSA, CMS, OSHA, FDA, IRS, FTC, HHS), detail call per comment; 1,000 req/hour. Titles rebuilt (they name the commenter); no submitter names, addresses, emails, phones; organization and category kept | daily | done (2026-10-09) |
 | EU and national official journals | `eurlex` + G2 | own_api | eur-lex.europa.eu answers bots with an empty HTTP 202 challenge (2026-10-09): never bypass. Routes: EUR-Lex SOAP web service (registration) or the Publications Office CELLAR SPARQL endpoint | weekly | todo |
-| State legislature trackers | `legiscan` / `openstates` | own_api | LegiScan API, Open States API | daily | todo |
-| CourtListener (incl. RECAP copies of PACER filings) | `courtlistener` | own_api | REST API v4 search + opinions + dockets | daily | todo |
+| State legislature trackers | `legiscan` / `openstates` | own_api | Open States v3 `/bills` (public domain data; limits unpublished, paced 9/min, 400/day): done (2026-10-09). LegiScan: no key yet | daily | partly done |
+| CourtListener (incl. RECAP copies of PACER filings) | `courtlistener` | own_api | REST API v4 search (opinions), token. Free tier 5/min, 50/hour, 125/day: paced 13s, capped 100/day. Attorney/judge fields not stored. Commercial agreements exist: confirm with Free Law Project | daily | done (2026-10-09) |
 | PACER (direct) | `pacer` | own_api (paid) | $0.10/page, $3 cap/document; only for specific documents | on demand | paid (flag off) |
 | Bar associations, medical boards, licensing bodies | G2 / G5, else G1 | rss / public_pages | per body | weekly | todo |
 | City council and school board agendas and minutes | G5 / G9, else G1 | public_pages | many cities use the same agenda platforms; detect per site | weekly | todo |
@@ -336,7 +336,7 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 | YC Requests for Startups | — | — | YC terms: "you will not engage in or use any data mining, robots, scraping or similar data gathering or extraction methods" (2026-10-09) | monthly | blocked |
 | BetaList, AlternativeTo | — | — | BetaList terms: personal, non-commercial viewing only, no commercial use (covers its RSS); AlternativeTo answers our bot with 403 (2026-10-09) | weekly | blocked |
 | Acquire.com, Flippa listings | — | — | Acquire terms forbid any robot or automatic means; Flippa terms forbid copying or extracting listings (2026-10-09) | weekly | blocked |
-| GitHub trending | `github` | own_api | GitHub AUP allows scraped data only for listed purposes (research, archival), not commercial use: use the REST/GraphQL search API (recent repos by stars) with GITHUB_TOKEN instead of the trending page | daily | todo (needs GITHUB_TOKEN) |
+| GitHub trending | `github` | own_api | Search API: repos created since the cursor, sorted by stars (the trending page is not scraped) | daily | done (2026-10-09) |
 | Hugging Face | `huggingface` | own_api | Hub API `/api/spaces` and `/api/models` sorted by trendingScore, no key; snapshot (`filter_since = False`), id-only dedupe | weekly | done (2026-10-09) |
 | Kickstarter, Indiegogo | — | — | both answer our bot with 403 (2026-10-09) | weekly | blocked |
 
@@ -350,7 +350,7 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 | Industry association surveys, vendor benchmark reports, analyst firms' free reports | G2 / G5 | rss / public_pages | per publisher | monthly | todo |
 | Government statistics (BLS, Census, Eurostat) | `stats` | own_api | Checked 2026-10-09: api.bls.gov robots.txt `Disallow: /` (blocked); Census API now requires a key (`CENSUS_API_KEY`; Business Formation Statistics = new business applications by industry); Eurostat API allowed by robots, not built yet | monthly | todo |
 | Academic papers | `papers` | rss (arXiv) / own_api | arXiv via RSS category feeds (rss.arxiv.org, 1 request/3s; metadata CC0): done (2026-10-09). export.arxiv.org (query API) is robots-disallowed for all agents: not used. PubMed E-utilities: eutils.ncbi.nlm.nih.gov robots.txt disallows our path (2026-10-09): blocked. Semantic Scholar: key optional, todo | daily | partly done |
-| Wikipedia | `wikipedia` | own_api | en.wikipedia.org robots.txt disallows `/api/`; Wikimedia pageviews API (wikimedia.org) requires a User-Agent with real contact info: waits for SIGNAL_CONTACT_EMAIL | weekly | todo |
+| Wikipedia | `wikipedia` | own_api | Wikimedia pageviews top articles (wikimedia.org, UA with contact email). Built but **disabled**: daily trending is mostly people in the news, low signal for builders | weekly | done (2026-10-09, disabled) |
 
 **Paid connectors (build, keep behind a feature flag, off by default)**
 
