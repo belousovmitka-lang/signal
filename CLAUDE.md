@@ -361,8 +361,8 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 | NewsAPI.org or similar | `newsapi` — **built, flag off (2026-10-09)** | Developer free (development only); Business $449/mo, Advanced $1,749/mo; $0.0018/extra request | broader news search; replaces Google News / GDELT if bought |
 | Crunchbase | `crunchbase` — **built, flag off (2026-10-09)** | enterprise plan, ~$20,000/year | structured funding data: v4 `searches/funding_rounds`, announced_on ≥ cursor, after_id paging, category filter. Storage rights per license |
 | Semrush / Ahrefs | `keywords_paid` — **built, flag off (2026-10-09)** | ~$500+/month | search volume at scale: Semrush `phrase_questions` / `phrase_related`, 40 units per line, metered in units and dollars |
-| PACER direct | `pacer` | per page | specific court documents |
-| Social listening tool (Brandwatch, Talkwalker) | `listening` | ~$800–5,000/month | licensed coverage of LinkedIn, Instagram, TikTok, Facebook at scale |
+| PACER direct | `pacer` — **deferred (2026-10-09)** | per page ($0.10, $3 cap/document) | specific court documents, on demand. PACER Case Locator API needs an authenticated PACER session; use `courtlistener` (RECAP) first and design this around a concrete need |
+| Social listening tool (Brandwatch, Talkwalker) | `listening` — **deferred (2026-10-09)** | ~$800–5,000/month | licensed coverage of LinkedIn, Instagram, TikTok, Facebook at scale; APIs are vendor- and contract-specific: build once a vendor is chosen |
 | Reddit commercial API | G3 `reddit` — **built, flag off (2026-10-09)** | ~$12,000+/month reported | full Reddit coverage after approval. OAuth app-only, /r/<sub>/new and /search, deletion re-check via /api/info. Needs the commercial agreement first (Data API Terms) |
 
 ### 7.3 Search profiles (G1) — platforms reached only through search
@@ -476,8 +476,8 @@ Work top to bottom. Finish each connector to its definition of done before start
 18. `producthunt` (awaiting approval), `huggingface` — done (2026-10-09); startup public pages all blocked by terms or bot walls (see 7.2)
 19. `trends`, `keyword_planner`, `stats`, `papers`, `wikipedia`
 
-**Phase 5 — paid connectors (flag off until budgeted)**
-20. `yelp`, `google_places`, `newsapi`, `crunchbase`, `keywords_paid`, `pacer`, `listening`, Reddit own API
+**Phase 5 — paid connectors (flag off until budgeted)** — done (2026-10-09)
+20. Done (2026-10-09): `newsapi`, `reddit` (own API), `crunchbase`, `keywords_paid` built behind feature flags (off). Blocked by public terms: `yelp`, `google_places`. Deferred: `pacer`, `listening`
 
 **Phase 6 — discovery agent**
 21. Given a new industry, run site-limited searches to find its communities, publications and associations; detect forum software; run the access check; write a new `industries/<industry>.yaml` for human review.
