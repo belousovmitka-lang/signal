@@ -21,8 +21,10 @@ from sqlalchemy import (
     delete,
     event,
     func,
+    inspect,
     select,
 )
+from sqlalchemy import text as sql_text
 from sqlalchemy.engine import Dialect, Engine
 from sqlalchemy.orm import DeclarativeBase, Mapped, Session, mapped_column
 
@@ -97,6 +99,7 @@ class CostEventRow(Base):
     usd: Mapped[float] = mapped_column(Float, default=0.0)
     units: Mapped[float] = mapped_column(Float, default=0.0)   # API quota units (YouTube units, Threads queries)
     calls: Mapped[int] = mapped_column(Integer, default=1)
+    provider: Mapped[str | None] = mapped_column(String(64), index=True)  # shared paid API, e.g. "brave"
     note: Mapped[str | None] = mapped_column(Text)
 
 
@@ -131,6 +134,18 @@ class Store:
         if self.engine.dialect.name == "sqlite":
             event.listen(self.engine, "connect", _sqlite_pragmas)
         Base.metadata.create_all(self.engine)
+        self._add_missing_columns()
+
+    def _add_missing_columns(self) -> None:
+        """Add new nullable columns to existing tables. A stopgap until Alembic comes with Postgres."""
+        insp = inspect(self.engine)
+        with self.engine.begin() as conn:
+            for table in Base.metadata.sorted_tables:
+                existing = {c["name"] for c in insp.get_columns(table.name)}
+                for column in table.columns:
+                    if column.name not in existing and column.nullable:
+                        col_type = column.type.compile(self.engine.dialect)
+                        conn.execute(sql_text(f'ALTER TABLE {table.name} ADD COLUMN {column.name} {col_type}'))
 
     def session(self) -> Session:
         return Session(self.engine, expire_on_commit=False)
@@ -218,9 +233,16 @@ class Store:
     # --- costs ---------------------------------------------------------------
 
     def add_cost_event(self, source: str, at: datetime, usd: float, units: float, calls: int,
-                       note: str | None) -> None:
+                       note: str | None, provider: str | None = None) -> None:
         with self.session() as s, s.begin():
-            s.add(CostEventRow(source=source, at=at, usd=usd, units=units, calls=calls, note=note))
+            s.add(CostEventRow(source=source, at=at, usd=usd, units=units, calls=calls, note=note,
+                               provider=provider))
+
+    def provider_spend(self, provider: str, start: datetime, end: datetime) -> float:
+        stmt = select(func.sum(CostEventRow.usd)).where(
+            CostEventRow.provider == provider, CostEventRow.at >= start, CostEventRow.at < end)
+        with self.session() as s:
+            return float(s.scalar(stmt) or 0.0)
 
     def cost_totals(self, start: datetime, end: datetime, source: str | None = None) -> dict[str, dict[str, float]]:
         stmt = (

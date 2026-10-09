@@ -57,7 +57,7 @@ class Services:
                 sources=sources,
                 http=http,
                 store=store,
-                costs=CostMeter(store, sources.budgets()),
+                costs=CostMeter(store, sources.budgets(), d.provider_budgets),
                 robots=RobotsChecker(http),
             )
         finally:

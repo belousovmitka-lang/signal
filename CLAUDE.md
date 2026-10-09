@@ -207,7 +207,7 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 
 | # | Connector | Covers | Route | Notes |
 |---|---|---|---|---|
-| G1 | `search_api` | Every platform in 7.3 plus any niche site without its own connector | search_api | Brave and Exa behind one interface. Each platform gets a **search profile**: domains/path filters + query templates. Store snippets with `is_snippet=True`. |
+| G1 | `search_api` — **done (2026-10-09), pointer design** | Platforms whose posts can be read through an allowed route once found | search_api → platform route | Search results are pointers only: Brave API Terms 3(b)(i) forbid storing results beyond transient storage, Exa ToS 4.2(a) forbid copying output. `discovery.py` returns URLs held in memory; each URL goes to a resolver that reads the post from its own platform (Bluesky AT Protocol, Medium and Substack RSS); URLs no resolver accepts are dropped unstored. Exa is asked for no contents ($0.007/search). Shared monthly caps per provider: `defaults.provider_budgets`. Adding a platform = adding a resolver, after its robots.txt **and** terms allow automated reading. |
 | G2 | `rss` — **done (2026-10-09)** | Trade press, newsletters (Substack, Beehiiv), Medium tags, blogs, press release wires, podcast feeds, VC blogs, bar/association news, Stack Exchange feeds | rss | Google News keyword feeds are **blocked** (robots.txt + non-commercial terms, checked 2026-10-09): keyword news goes through G1. Medium: `https://medium.com/feed/tag/<tag>`. Substack: `<pub>/feed`. |
 | G3 | `reddit` | All subreddits in the industry maps and section 7.2 | search_api now, own_api after approval | Until commercial approval, run through G1 with `site:reddit.com/r/<sub>`. After approval: OAuth API, `/r/<sub>/new`, `/r/<sub>/search`, comments. Honor deletions per Reddit terms. |
 | G4 | `discourse` | Any Discourse forum (many community and vendor forums) | public_pages | Discourse serves JSON by appending `.json` (e.g. `/latest.json`, `/t/<slug>/<id>.json`, `/search.json?q=`). Detect Discourse from page meta. |
@@ -224,7 +224,7 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 
 | Platform | Connector | Route | Endpoint / method | Cadence | Status |
 |---|---|---|---|---|---|
-| Reddit | G3 `reddit` | search_api → own_api | see G3 | hourly | todo; apply for commercial access now |
+| Reddit | G3 `reddit` | own_api only | reddit.com robots.txt disallows our bot, and search results can't be stored, so the search route is closed (2026-10-09) | hourly | blocked until commercial API access |
 | Hacker News | `hackernews` | own_api | Algolia HN Search API `hn.algolia.com/api/v1/search_by_date` (keyword phrases, tags) + Firebase API `hacker-news.firebaseio.com/v0` (ask/show/job lists; MIT, no rate limit) | hourly | done (2026-10-09) |
 | Stack Exchange network (incl. Stack Overflow, Law, Workplace, Money, Academia, DIY) | `stackexchange` | own_api | `api.stackexchange.com/2.3/search/advanced?site=<site>`; 300 req/day per IP without a key, 10,000 with a free stackapps.com key; obey the `backoff` field. Content is CC BY-SA 4.0: the app must credit Stack Exchange and link to each question | daily | done (2026-10-09) |
 | Telegram public channels | `telegram` | public_pages | Public channel previews `https://t.me/s/<channel>`; do not use MTProto with a personal account | daily | todo |
@@ -240,7 +240,7 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 |---|---|---|---|---|---|
 | X (Twitter) | `x` | own_api | API v2 recent search `/2/tweets/search/recent`; pay-per-use, cost-metered | hourly | todo (needs credits) |
 | Threads | `threads` | own_api + search_api | `GET graph.threads.net/v1.0/keyword_search` (needs `threads_basic` + `threads_keyword_search` app review; 2,200 queries/24h); overflow through G1 `site:threads.net` | daily | awaiting approval |
-| Bluesky | `bluesky` | own_api | AT Protocol `app.bsky.feed.searchPosts`. As of 2026-10-09 the public AppView returns 403 to unauthenticated search; search needs an authenticated session (app password). Decision pending on whether a disclosed bot account fits rule 1; until then G1 `site:bsky.app` | hourly | todo |
+| Bluesky | `bluesky` (G1 source) | own_api | `searchPosts` returns 403 to logged-out callers (2026-10-09), so Exa finds post URLs and posts are read with `app.bsky.feed.getPosts` on the public AppView (no login, 25 per call). Skip authors labelled `!no-unauthenticated`; honor deletions (`scripts/recheck_deletions.py bluesky`); guidelines require a monitored contact email. Exa's Bluesky coverage is thin (mostly popular posts) | weekly | done (2026-10-09) |
 | Instagram | `instagram` | own_api + search_api | Graph API via a business account: `ig_hashtag_search` → `/<hashtag-id>/recent_media` (limited unique hashtags per 7 days); plus G1 profile | daily | todo |
 | Facebook Pages | `facebook_pages` | own_api + search_api | Graph API with Page Public Content Access (needs Meta app review); plus G1 profile | daily | awaiting approval |
 | YouTube | G7 → G1 | search_api | own API blocked by YouTube developer policies (see G7); G1 `youtube.com/watch` | daily | blocked (2026-10-09) |
@@ -365,6 +365,8 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 
 ### 7.3 Search profiles (G1) — platforms reached only through search
 
+**Status (2026-10-09):** search results can't be stored (Brave 3(b)(i), Exa 4.2(a)), so a profile only works if the found page can then be read through an allowed route. robots.txt disallows our bot on Reddit, Quora, LinkedIn, Facebook, Instagram, Threads, Indeed jobs, Trustpilot and Yelp. YouTube, Craigslist, Amazon, Glassdoor, Upwork, TikTok, G2, Capterra and Gartner allow it in robots.txt, but their terms are believed to forbid automated collection: check each one's terms before writing a resolver. These rows are **blocked** until then; unblock through official APIs, partnerships or the paid `listening` connector.
+
 Each row is a search profile in `sources.yaml`: domain/path filters + query templates such as `"<role>" ("is there a tool" OR "so tired of" OR "manually" OR "takes forever")`. All return snippets (`is_snippet=True`) with links.
 
 | Platform | Domain / path filter |
@@ -447,9 +449,9 @@ Work top to bottom. Finish each connector to its definition of done before start
 1. Repo scaffold, `models.py`, `base.py`, `store.py`, `dedupe.py`, `costs.py`, `robots.py`, `sources.yaml` schema, `.env.example`, `scripts/smoke.py`.
 
 **Phase 1 — reach every industry (MVP)**
-2. G1 `search_api` (Brave first, then Exa) with search profiles for every row in 7.3
+2. G1 `search_api` — done (2026-10-09) as discovery + resolvers (Bluesky, Medium, Substack). 7.3 profiles need a resolver each; see the note under 7.3
 3. G2 `rss`
-4. G3 `reddit` (search route)
+4. ~~G3 `reddit` (search route)~~ blocked (2026-10-09): robots.txt disallows us and search results can't be stored; needs the commercial API
 5. `hackernews`, `stackexchange`
 6. `x` (once credits are bought), `bluesky`, `threads`
 7. ~~G7 `youtube`~~ blocked by YouTube developer policies (2026-10-09); covered by a G1 search profile

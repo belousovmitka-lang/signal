@@ -60,60 +60,73 @@ class RssConnector(BaseConnector):
             log.info("%s: feed %s has no entries", self.name, url)
             return
 
-        meta = parsed.feed
-        community = query.params.get("community") or html_to_text(meta.get("title")) or name
-        language = (meta.get("language") or "").split("-")[0].lower() or None
-        domain = (urlsplit(url).hostname or "").removeprefix("www.")
-
+        community, language, domain = feed_meta(parsed, url, query.params.get("community") or None, name)
         for entry in parsed.entries:
-            post = self._entry_to_post(entry, url, name, community, language, domain, query)
+            fields = entry_fields(entry, url, name, community, language, domain)
+            if fields is None:
+                self.invalid += 1
+                continue
+            post = self.make_post(industry_hint=query.industry_hint, **fields)
             if post is not None:
                 yield post
 
-    def _entry_to_post(self, entry: Any, feed_url: str, name: str, community: str, language: str | None,
-                       domain: str, query: SourceQuery) -> RawPost | None:
-        link = entry.get("link") or (entry.get("id") if entry.get("guidislink") else None)
-        if not link:
-            self.invalid += 1
-            return None
 
-        content = entry.get("content") or []
-        full_html = max((c.get("value", "") for c in content), key=len, default="")
-        summary_html = entry.get("summary", "")
-        text = html_to_text(full_html) or html_to_text(summary_html)
+def feed_meta(parsed: Any, feed_url: str, community: str | None, name: str) -> tuple[str, str | None, str]:
+    """(community, language, domain) for a parsed feed."""
+    meta = parsed.feed
+    community = community or html_to_text(meta.get("title")) or name
+    language = (meta.get("language") or "").split("-")[0].lower() or None
+    domain = (urlsplit(feed_url).hostname or "").removeprefix("www.")
+    return community, language, domain
 
-        # dict.get: feedparser's own .get silently maps "updated" to "published" (deprecated).
-        published = (
-            struct_to_datetime(dict.get(entry, "published_parsed"))
-            or struct_to_datetime(dict.get(entry, "updated_parsed"))
-            or parse_date(dict.get(entry, "published"))
-            or parse_date(dict.get(entry, "updated"))
-        )
-        raw: dict[str, Any] = {
-            "feed": feed_url,
-            "guid": entry.get("id"),
-            "tags": [t.get("term") for t in entry.get("tags", []) if t.get("term")],
-        }
-        if published is None:
-            published = utcnow()
-            raw["date_missing"] = True
 
-        engagement = {}
-        if (comments := entry.get("slash_comments")) and str(comments).isdigit():
-            engagement["comments"] = int(comments)
+def entry_fields(entry: Any, feed_url: str, name: str, community: str, language: str | None,
+                 domain: str) -> dict[str, Any] | None:
+    """RawPost fields for one feed entry (source "rss:<name>"), or None if it has no link.
 
-        author = html_to_text(entry.get("author")) or None
-        return self.make_post(
-            source=f"rss:{name}",
-            url=link,
-            title=html_to_text(entry.get("title")) or None,
-            text=text,
-            is_snippet=not full_html,
-            author_hash=hash_author(author, domain) if author else None,
-            community=community,
-            published_at=published,
-            language=language,
-            engagement=engagement,
-            industry_hint=query.industry_hint,
-            raw=raw,
-        )
+    Shared with the search_api resolvers that find a post's entry in its author's feed.
+    """
+    link = entry.get("link") or (entry.get("id") if entry.get("guidislink") else None)
+    if not link:
+        return None
+
+    content = entry.get("content") or []
+    full_html = max((c.get("value", "") for c in content), key=len, default="")
+    summary_html = entry.get("summary", "")
+    text = html_to_text(full_html) or html_to_text(summary_html)
+
+    # dict.get: feedparser's own .get silently maps "updated" to "published" (deprecated).
+    published = (
+        struct_to_datetime(dict.get(entry, "published_parsed"))
+        or struct_to_datetime(dict.get(entry, "updated_parsed"))
+        or parse_date(dict.get(entry, "published"))
+        or parse_date(dict.get(entry, "updated"))
+    )
+    raw: dict[str, Any] = {
+        "feed": feed_url,
+        "guid": entry.get("id"),
+        "tags": [t.get("term") for t in entry.get("tags", []) if t.get("term")],
+    }
+    if published is None:
+        published = utcnow()
+        raw["date_missing"] = True
+
+    engagement = {}
+    if (comments := entry.get("slash_comments")) and str(comments).isdigit():
+        engagement["comments"] = int(comments)
+
+    author = html_to_text(entry.get("author")) or None
+    return {
+        "source": f"rss:{name}",
+        "route": "rss",
+        "url": link,
+        "title": html_to_text(entry.get("title")) or None,
+        "text": text,
+        "is_snippet": not full_html,
+        "author_hash": hash_author(author, domain) if author else None,
+        "community": community,
+        "published_at": published,
+        "language": language,
+        "engagement": engagement,
+        "raw": raw,
+    }

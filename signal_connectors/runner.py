@@ -9,7 +9,7 @@ from __future__ import annotations
 import asyncio
 import logging
 from dataclasses import dataclass, field
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 from .config import SourceConfig
 from .connectors import get_connector_class
@@ -120,6 +120,24 @@ async def run_source(
     log.info("%s: %s fetched=%d new=%d dup=%d invalid=%d cost=$%.4f", source.name, result.status,
              result.fetched, result.new, result.duplicates, result.invalid, result.cost_usd)
     return out
+
+
+async def recheck_deletions(services: Services, source: SourceConfig) -> int:
+    """Purge stored posts their platform no longer serves (Bluesky guideline 3; Reddit/X terms).
+
+    The connector must implement `deleted(urls) -> list[str]`. Returns the number purged.
+    """
+    connector = get_connector_class(source.connector)(source, services)
+    deleted_fn = getattr(connector, "deleted", None)
+    if deleted_fn is None:
+        return 0
+    post_source = source.options.get("post_source", source.name)
+    rows = services.store.ids_for_recheck(post_source, datetime(1970, 1, 1, tzinfo=timezone.utc))
+    by_url = {url: post_id for post_id, url in rows}
+    gone = await deleted_fn(list(by_url))
+    purged = services.store.delete_posts([by_url[u] for u in gone if u in by_url])
+    log.info("%s: re-checked %d posts, purged %d", source.name, len(rows), purged)
+    return purged
 
 
 async def run_sources(services: Services, sources: list[SourceConfig]) -> list[FetchResult]:

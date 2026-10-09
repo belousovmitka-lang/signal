@@ -20,8 +20,14 @@ DEFAULT_PORTS = {"http": 80, "https": 443}
 MIN_TEXT_HASH_CHARS = 40
 
 
-def _is_tracking(key: str) -> bool:
+# Parameters that are tracking only for some values (Medium: source=rss-..., source=post_page-...).
+_TRACKING_VALUES = {"source": ("rss", "post_page", "collection_home", "user_profile")}
+
+
+def _is_tracking(key: str, value: str = "") -> bool:
     k = key.lower()
+    if k in _TRACKING_VALUES and value.lower().startswith(_TRACKING_VALUES[k]):
+        return True
     return k in TRACKING_PARAMS or k.startswith(TRACKING_PREFIXES)
 
 
@@ -46,7 +52,7 @@ def canonical_url(url: str) -> str:
     path = re.sub(r"/{2,}", "/", parts.path) or "/"
     if len(path) > 1 and path.endswith("/"):
         path = path.rstrip("/") or "/"
-    query = sorted((k, v) for k, v in parse_qsl(parts.query, keep_blank_values=True) if not _is_tracking(k))
+    query = sorted((k, v) for k, v in parse_qsl(parts.query, keep_blank_values=True) if not _is_tracking(k, v))
     return urlunsplit((scheme, netloc, path, urlencode(query), ""))
 
 

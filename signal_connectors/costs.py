@@ -31,6 +31,11 @@ class QuotaExceeded(Exception):
     pass
 
 
+class Charge:
+    def __init__(self, usd: float) -> None:
+        self.usd = usd
+
+
 def month_bounds(now: datetime) -> tuple[datetime, datetime]:
     start = now.astimezone(timezone.utc).replace(day=1, hour=0, minute=0, second=0, microsecond=0)
     end = start.replace(year=start.year + 1, month=1) if start.month == 12 else start.replace(month=start.month + 1)
@@ -38,9 +43,12 @@ def month_bounds(now: datetime) -> tuple[datetime, datetime]:
 
 
 class CostMeter:
-    def __init__(self, store: Store, budgets: Mapping[str, float]) -> None:
+    def __init__(self, store: Store, budgets: Mapping[str, float],
+                 provider_budgets: Mapping[str, float] | None = None) -> None:
         self.store = store
         self.budgets = dict(budgets)
+        # Caps on a paid API shared by several sources (e.g. Brave's free credit), summed across them.
+        self.provider_budgets = dict(provider_budgets or {})
 
     def budget(self, source: str) -> float:
         return self.budgets.get(source, 0.0)
@@ -51,6 +59,21 @@ class CostMeter:
 
     def remaining(self, source: str, now: datetime | None = None) -> float:
         return max(0.0, self.budget(source) - self.spent_this_month(source, now))
+
+    def provider_spent_this_month(self, provider: str, now: datetime | None = None) -> float:
+        return self.store.provider_spend(provider, *month_bounds(now or utcnow()))
+
+    def provider_remaining(self, provider: str) -> float:
+        return max(0.0, self.provider_budgets.get(provider, 0.0) - self.provider_spent_this_month(provider))
+
+    def ensure_provider_budget(self, provider: str, estimated_usd: float) -> None:
+        if estimated_usd <= 0:
+            return
+        spent = self.provider_spent_this_month(provider)
+        budget = self.provider_budgets.get(provider, 0.0)
+        if spent + estimated_usd > budget + EPSILON:
+            raise BudgetExceeded(f"provider {provider}: ${spent:.4f} spent of ${budget:.2f} this month; "
+                                 f"refusing a ${estimated_usd:.4f} call")
 
     def ensure_budget(self, source: str, estimated_usd: float) -> None:
         if estimated_usd <= 0:
@@ -71,20 +94,28 @@ class CostMeter:
             raise QuotaExceeded(f"{source}: {used:.0f}/{limit:.0f} units used in the last {window}; need {units:.0f}")
 
     def record(self, source: str, usd: float = 0.0, units: float = 0.0, calls: int = 1,
-               note: str | None = None) -> None:
-        self.store.add_cost_event(source, utcnow(), usd, units, calls, note)
+               note: str | None = None, provider: str | None = None) -> None:
+        self.store.add_cost_event(source, utcnow(), usd, units, calls, note, provider)
 
     @contextmanager
     def metered(self, source: str, usd: float = 0.0, units: float = 0.0, note: str | None = None,
-                quota: tuple[float, timedelta] | None = None) -> Iterator[None]:
-        """Guard and record one call. The call is recorded even if it raises, since it may still be billed."""
+                quota: tuple[float, timedelta] | None = None,
+                provider: str | None = None) -> Iterator[Charge]:
+        """Guard and record one call. The call is recorded even if it raises, since it may still be billed.
+
+        `usd` is the estimate used for the guard; set `charge.usd` inside the block to record the
+        actual cost when the API reports it.
+        """
         self.ensure_budget(source, usd)
+        if provider:
+            self.ensure_provider_budget(provider, usd)
         if quota:
             self.ensure_quota(source, units, *quota)
+        charge = Charge(usd)
         try:
-            yield
+            yield charge
         finally:
-            self.record(source, usd=usd, units=units, note=note)
+            self.record(source, usd=charge.usd, units=units, note=note, provider=provider)
 
     def ledger(self, now: datetime | None = None) -> dict[str, dict[str, float]]:
         """This month's totals per source, with budget and remaining."""

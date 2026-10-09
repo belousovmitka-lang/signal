@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
+import re
 from datetime import date, timedelta
 from pathlib import Path
 from typing import Any, Literal
+from urllib.parse import urlsplit
 
 import yaml
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
@@ -65,12 +67,58 @@ class QueryConfig(_Strict):
     params: dict[str, Any] = Field(default_factory=dict)
 
 
+class QueryTemplate(_Strict):
+    """A query filled in from each industry's map.
+
+    Placeholders: {name}, {roles}, {tasks}, {tools}, {pains} (the first `top` of each list).
+    Lists are joined as ("a" OR "b") for keyword engines (Brave) and "a, b or c" for Exa.
+    `domains_from`: "subreddits" -> reddit.com/r/<sub>, "search_only_forums" -> forums that
+    can only be read through search (robots or bot walls).
+    """
+
+    profile: str
+    provider: Literal["brave", "exa"]
+    query: str
+    domains: list[str] = Field(default_factory=list)
+    domains_from: Literal["subreddits", "search_only_forums"] | None = None
+    source_type: SourceType | None = None
+    top: int = Field(default=3, ge=1, le=10)
+    limit: int | None = Field(default=None, ge=1, le=200)
+
+    def _join(self, items: list[str]) -> str:
+        items = items[: self.top]
+        if self.provider == "exa":
+            return items[0] if len(items) == 1 else ", ".join(items[:-1]) + " or " + items[-1]
+        return "(" + " OR ".join(f'"{i}"' for i in items) + ")"
+
+    def render(self, key: str, industry: Industry) -> QueryConfig | None:
+        v = industry.vocabulary
+        domains = list(self.domains)
+        if self.domains_from == "subreddits":
+            domains += [f"reddit.com/r/{s}" for s in industry.subreddits]
+        elif self.domains_from == "search_only_forums":
+            domains += [urlsplit(f.url).netloc.removeprefix("www.") + urlsplit(f.url).path.rstrip("/")
+                        for f in industry.forums if f.status in {"search_only", "blocked"}]
+        if self.domains_from and not domains:
+            return None
+        values = {"name": industry.name, "roles": v.roles, "tasks": v.tasks, "tools": v.tools, "pains": v.pain_phrases}
+        needed = re.findall(r"{(\w+)}", self.query)
+        if any(n != "name" and not values.get(n) for n in needed):
+            return None
+        text = self.query.format(**{k: (val if k == "name" else self._join(val)) for k, val in values.items()})
+        return QueryConfig(keywords=[text], domains=domains, limit=self.limit, industry_hint=key,
+                           params={"provider": self.provider, "profile": self.profile,
+                                   **({"source_type": self.source_type} if self.source_type else {})})
+
+
 class Defaults(_Strict):
     requests_per_second: float = Field(default=1.0, gt=0)
     timeout_seconds: float = Field(default=20.0, gt=0)
     max_attempts: int = Field(default=5, ge=1)
     initial_lookback_days: int = Field(default=7, ge=1)
     limit: int = Field(default=50, ge=1)
+    # Monthly caps for paid APIs shared by several sources, keyed by provider ("brave", "exa").
+    provider_budgets: dict[str, float] = Field(default_factory=dict)
 
 
 class SourceConfig(_Strict):
@@ -166,6 +214,16 @@ class SourcesFile(_Strict):
                         source.queries.append(QueryConfig(industry_hint=key,
                                                           params={"feed": feed.url, "name": feed.name}))
 
+    def add_industry_templates(self, industries: dict[str, Industry]) -> None:
+        """Expand options.industry_templates into one query per template per industry."""
+        for source in self.sources.values():
+            for raw in source.options.get("industry_templates", []):
+                template = QueryTemplate.model_validate(raw)
+                for key, industry in industries.items():
+                    query = template.render(key, industry)
+                    if query is not None:
+                        source.queries.append(query)
+
     def get(self, name: str) -> SourceConfig:
         try:
             return self.sources[name]
@@ -177,5 +235,7 @@ def load_sources(path: Path | str, industries_dir: Path | None = INDUSTRIES_DIR)
     data = yaml.safe_load(Path(path).read_text(encoding="utf-8")) or {}
     sources = SourcesFile.model_validate(data)
     if industries_dir is not None and industries_dir.is_dir():
-        sources.add_industry_feeds(load_industries(industries_dir))
+        industries = load_industries(industries_dir)
+        sources.add_industry_feeds(industries)
+        sources.add_industry_templates(industries)
     return sources

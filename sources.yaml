@@ -48,6 +48,9 @@ defaults:
   max_attempts: 5                    # retries on 429/5xx with exponential backoff
   initial_lookback_days: 7           # first run of a source fetches this far back
   limit: 50                          # default results per query
+  provider_budgets:                  # monthly caps across all sources, just under the free credits
+    brave: 4.50                      # $5 free monthly credit
+    exa: 9.00                        # $10 free monthly credit
 
 sources:
   rss:
@@ -123,6 +126,65 @@ sources:
       - communities: [stackoverflow]
         keywords: ["is there a library", "is there a tool"]
         limit: 50
+
+  bluesky:
+    connector: search_api
+    enabled: true
+    status: done
+    status_date: 2026-10-09
+    route: own_api
+    source_type: social
+    cadence: weekly                  # Exa's Bluesky coverage is thin (mostly popular posts); ~$0.45/month
+    monthly_budget_usd: 2.00         # Exa discovery: 15 searches/run at $0.007
+    env: [EXA_API_KEY]
+    deletion_recheck_days: 7         # Bluesky developer guideline 3: honor deletions
+    access_check:
+      robots: allowed
+      terms: allowed
+      decision: full
+      terms_url: https://docs.bsky.app/docs/support/developer-guidelines
+      checked_at: 2026-10-09
+      notes: >-
+        Exa finds post URLs (held in memory only; Exa ToS 4.2(a)); posts are read from the AT Protocol
+        public AppView (getPosts), which needs no login. searchPosts itself returns 403 to logged-out
+        callers. Authors labelled !no-unauthenticated are skipped. Guidelines: honor deletions
+        (scripts/recheck_deletions.py bluesky) and publish a monitored contact email (SIGNAL_CONTACT_EMAIL).
+    options:
+      industry_templates:
+        - profile: bluesky
+          provider: exa
+          domains: [bsky.app]
+          # first-person phrasing matched real posts slightly better than a description (tested 2026-10-09)
+          query: "I'm a {roles} and I'm so tired of doing {tasks} by hand. Is there a tool for this?"
+          top: 1
+          limit: 10
+
+  search_api:
+    enabled: true
+    status: done
+    status_date: 2026-10-09
+    route: search_api
+    source_type: community
+    cadence: weekly
+    monthly_budget_usd: 2.00
+    env: [EXA_API_KEY, BRAVE_API_KEY]
+    access_check:
+      robots: allowed
+      terms: allowed
+      decision: full
+      checked_at: 2026-10-09
+      notes: >-
+        Search results are pointers only: Brave API Terms 3(b)(i) forbid storing results beyond
+        transient storage, Exa ToS 4.2(a) forbid copying output. URLs are held in memory, then each post
+        is read through its platform's allowed route (Medium and Substack RSS feeds). URLs no resolver
+        accepts are dropped unstored.
+    options:
+      industry_templates:
+        - profile: blogs
+          provider: exa
+          domains: [medium.com, substack.com]
+          query: "{roles} writing about the problems with {tasks} and the lack of good software"
+          limit: 10
 
   youtube:
     enabled: false

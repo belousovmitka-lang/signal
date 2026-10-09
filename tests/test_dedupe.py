@@ -10,6 +10,8 @@ from signal_connectors.dedupe import canonical_url, normalize_text, text_hash, u
     ("http://example.com:80//x//y", "http://example.com/x/y"),
     ("https://user:pw@example.com/p?fbclid=1&gclid=2", "https://example.com/p"),
     ("//example.com/", "https://example.com/"),
+    ("https://medium.com/@a/post-50e04eb1e905?source=rss-f40835382ca7------2", "https://medium.com/@a/post-50e04eb1e905"),
+    ("https://medium.com/@a/post-50e04eb1e905?source=post_page-----x", "https://medium.com/@a/post-50e04eb1e905"),
 ])
 def test_canonical_url(a, b):
     assert canonical_url(a) == b
@@ -18,6 +20,7 @@ def test_canonical_url(a, b):
 
 def test_canonical_url_keeps_meaningful_params_and_ports():
     assert canonical_url("https://example.com:8443/search?q=tool&page=2") == "https://example.com:8443/search?page=2&q=tool"
+    assert canonical_url("https://data.example/api?source=census") == "https://data.example/api?source=census"
 
 
 @pytest.mark.parametrize("bad", ["", "ftp://example.com/x", "/relative/path", "not a url"])
