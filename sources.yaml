@@ -253,6 +253,92 @@ sources:
       - {industry_hint: legal, params: {plugin: contact-form-7, kind: reviews}, limit: 30}
       - {industry_hint: legal, params: {plugin: contact-form-7, kind: support}, limit: 30}
 
+  gdelt:
+    enabled: false                   # 429s even at 1 request/20s from this IP; results noisy (2026-10-09)
+    status: todo
+    status_date: 2026-10-09
+    route: own_api
+    source_type: news
+    cadence: daily
+    rate_limit: {requests_per_second: 0.05, domains: [api.gdeltproject.org]}   # 20s apart: 5s still drew 429s
+    access_check:
+      robots: not_applicable
+      terms: allowed
+      decision: full
+      terms_url: https://www.gdeltproject.org/about.html
+      checked_at: 2026-10-09
+      notes: >-
+        "unlimited and unrestricted use for any academic, commercial, or governmental use"; any use must
+        cite the GDELT Project with a link (app obligation). Titles and links only; replaces Google News.
+    queries:
+      - {industry_hint: legal, keywords: ['("law firm" OR "law firms" OR paralegal OR "legal tech") (software OR automation OR shortage OR regulation OR startup)'], limit: 75}
+      - {industry_hint: healthcare, keywords: ['(hospital OR clinic OR "health system" OR nurses) (software OR automation OR shortage OR regulation OR startup)'], limit: 75}
+      - {industry_hint: construction, keywords: ['(contractor OR contractors OR "construction industry") (software OR automation OR shortage OR regulation OR startup)'], limit: 75}
+      - {industry_hint: real_estate, keywords: ['("real estate" OR realtors OR "property managers") (software OR automation OR shortage OR regulation OR startup)'], limit: 75}
+      - {industry_hint: logistics, keywords: ['(trucking OR freight OR "supply chain") (software OR automation OR shortage OR regulation OR startup)'], limit: 75}
+      - {industry_hint: ecommerce, keywords: ['(ecommerce OR "online sellers" OR retailers) (software OR automation OR shortage OR regulation OR startup)'], limit: 75}
+      - {industry_hint: restaurants, keywords: ['(restaurant OR restaurants OR hospitality) (software OR automation OR shortage OR regulation OR startup)'], limit: 75}
+      - {industry_hint: accounting, keywords: ['(accountants OR accounting OR bookkeeping OR CPA) (software OR automation OR shortage OR regulation OR startup)'], limit: 75}
+      - {industry_hint: education, keywords: ['(teachers OR schools OR "school district") (software OR automation OR shortage OR regulation OR startup)'], limit: 75}
+      - {industry_hint: marketing, keywords: ['(marketers OR "marketing agencies" OR advertisers) (software OR automation OR shortage OR regulation OR startup)'], limit: 75}
+      - {industry_hint: hr, keywords: ['(recruiters OR "human resources" OR hiring) (software OR automation OR shortage OR regulation OR startup)'], limit: 75}
+      - {industry_hint: insurance, keywords: ['(insurers OR "insurance agents" OR insurance) (software OR automation OR shortage OR regulation OR startup)'], limit: 75}
+      - {industry_hint: manufacturing, keywords: ['(manufacturers OR factories OR manufacturing) (software OR automation OR shortage OR regulation OR startup)'], limit: 75}
+      - {industry_hint: agriculture, keywords: ['(farmers OR farming OR agriculture) (software OR automation OR shortage OR regulation OR startup)'], limit: 75}
+      - {industry_hint: it_devtools, keywords: ['(sysadmins OR "IT teams" OR developers) (software OR automation OR shortage OR regulation OR startup)'], limit: 75}
+
+  ted:
+    enabled: true
+    status: done
+    status_date: 2026-10-09
+    route: own_api
+    source_type: government
+    cadence: daily
+    access_check:
+      robots: not_applicable
+      terms: allowed
+      decision: full
+      terms_url: https://ted.europa.eu/en/legal-notice
+      checked_at: 2026-10-09
+      notes: TED API v3 anonymous search. Reuse authorised (Decision 2011/833/EU) with acknowledgement.
+    queries:
+      - {params: {cpv: ["72000000", "48000000"]}, limit: 300}    # IT services, software packages
+
+  uk_tenders:
+    enabled: true
+    status: done
+    status_date: 2026-10-09
+    route: own_api
+    source_type: government
+    cadence: daily
+    access_check:
+      robots: not_applicable
+      terms: allowed
+      decision: full
+      checked_at: 2026-10-09
+      notes: Contracts Finder and Find a Tender OCDS APIs, no key. Open Government Licence v3.0.
+    queries:
+      - {params: {service: contracts_finder, tags: [tender]}, limit: 500}
+      - {params: {service: find_a_tender, tags: [tender]}, limit: 500}
+
+  federal_register:
+    enabled: true
+    status: todo                     # live smoke ok (128 new); cassette test still to write
+    status_date: 2026-10-09
+    route: own_api
+    source_type: government
+    cadence: daily
+    access_check:
+      robots: allowed
+      terms: allowed
+      decision: full
+      terms_url: https://www.federalregister.gov/reader-aids/policy/legal-status
+      checked_at: 2026-10-09
+      notes: Federal Register API v1, no key. US government works are public domain.
+    queries:
+      - {params: {types: [RULE, PRORULE]}, limit: 400}              # every new rule and proposed rule
+      - {params: {types: [NOTICE]}, keywords: ["small business", "small entities"], limit: 100}
+
   bluesky:
     connector: search_api
     enabled: true
