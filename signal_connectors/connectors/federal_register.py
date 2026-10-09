@@ -27,6 +27,7 @@ class FederalRegisterConnector(BaseConnector):
     route = "own_api"
     source_type = "government"
     day_granular = True
+    text_dedupe = False
 
     def params(self, query: SourceQuery) -> list[tuple[str, Any]]:
         p: list[tuple[str, Any]] = [("per_page", min(PAGE, query.limit)), ("order", "newest")]

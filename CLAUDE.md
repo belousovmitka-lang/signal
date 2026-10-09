@@ -298,7 +298,7 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 | EU TED | `ted` | own_api | TED API v3 `POST /v3/notices/search`, anonymous; CPV filter, `SORT BY publication-date DESC`; reuse under Decision 2011/833/EU | daily | done (2026-10-09) |
 | UK Contracts Finder / Find a Tender | `uk_tenders` | own_api | OCDS APIs (Contracts Finder search, Find a Tender release packages), no key, cursor paging; Open Government Licence v3.0 | daily | done (2026-10-09) |
 | School district and university RFPs | G5 / G2, else G1 | public_pages | per site | weekly | todo |
-| CFPB complaint database | `cfpb` | own_api | Consumer Complaint Database API | daily | todo |
+| CFPB complaint database | `cfpb` | own_api | Consumer Complaint Database API, no key, CC0. Narratives are no longer in the API (2026-10-09): records are structured (product, issue, company, response). Paging needs `_meta.break_points` (`frm` alone is ignored). ~4-5k/day, capped per run; ZIP not stored | daily | done (2026-10-09) |
 | FDA device reports (MAUDE) | `openfda` | own_api | openFDA device/event API | weekly | todo |
 | NHTSA complaints | `nhtsa` | own_api | NHTSA complaints API | weekly | todo |
 | FCC consumer complaints | G9 | own_api | FCC open data (Socrata) | weekly | todo |

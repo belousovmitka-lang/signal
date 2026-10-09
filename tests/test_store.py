@@ -54,3 +54,8 @@ def test_deletion_recheck_and_purge(store):
     assert {i for i, _ in due} == {a.id, b.id}
     assert store.delete_posts([a.id]) == 1
     assert store.get_post(a.id) is None and store.count_posts() == 1
+
+
+def test_structured_records_can_skip_text_dedupe(store):
+    store.save_posts([post("https://a.example/1")])
+    assert store.save_posts([post("https://a.example/2")], text_dedupe=False).new == 1

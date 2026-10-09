@@ -339,6 +339,27 @@ sources:
       - {params: {types: [RULE, PRORULE]}, limit: 400}              # every new rule and proposed rule
       - {params: {types: [NOTICE]}, keywords: ["small business", "small entities"], limit: 100}
 
+  cfpb:
+    enabled: true
+    status: done
+    status_date: 2026-10-09
+    route: own_api
+    source_type: government
+    cadence: daily
+    access_check:
+      robots: allowed
+      terms: allowed
+      decision: full
+      terms_url: https://www.consumerfinance.gov/complaint/data-use/
+      checked_at: 2026-10-09
+      notes: >-
+        Public complaint data, CC0 (API _meta.license), no key. Narratives are no longer in the API (checked 2026-10-09), so
+        records are structured; ZIP codes are not stored. ~4-5k complaints/day: capped per run.
+    queries:
+      - {limit: 300}
+      - {industry_hint: real_estate, params: {product: [Mortgage]}, limit: 100}
+      - {industry_hint: accounting, params: {product: ["Debt collection"]}, limit: 100}
+
   bluesky:
     connector: search_api
     enabled: true

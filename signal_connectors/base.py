@@ -201,6 +201,9 @@ class BaseConnector(ABC):
     # True when the source only gives dates (no time of day): the runner then compares dates, so
     # items from the cursor's own day aren't dropped for being stamped at midnight.
     day_granular: ClassVar[bool] = False
+    # False for structured records (complaints, tenders, rules) whose text repeats across distinct
+    # records: they dedupe on id only, never on text hash.
+    text_dedupe: ClassVar[bool] = True
 
     def __init__(self, source: SourceConfig, services: Services) -> None:
         self.source = source

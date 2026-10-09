@@ -36,6 +36,7 @@ class UkTendersConnector(BaseConnector):
     connector = "uk_tenders"
     route = "own_api"
     source_type = "government"
+    text_dedupe = False
 
     async def fetch(self, query: SourceQuery) -> AsyncIterator[RawPost]:
         name = query.params.get("service", "contracts_finder")

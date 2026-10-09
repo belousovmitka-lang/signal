@@ -39,6 +39,7 @@ class TedConnector(BaseConnector):
     route = "own_api"
     source_type = "government"
     day_granular = True   # TED publication dates have no time of day
+    text_dedupe = False
 
     def expert_query(self, query: SourceQuery) -> str:
         cpv = query.params.get("cpv") or DEFAULT_CPV

@@ -152,8 +152,8 @@ class Store:
 
     # --- posts ---------------------------------------------------------------
 
-    def save_posts(self, posts: Iterable[RawPost]) -> SaveResult:
-        """Insert posts that are new by id and, failing that, by normalized text hash."""
+    def save_posts(self, posts: Iterable[RawPost], *, text_dedupe: bool = True) -> SaveResult:
+        """Insert posts that are new by id and (unless text_dedupe is False) by normalized text hash."""
         posts = list(posts)
         result = SaveResult()
         if not posts:
@@ -165,7 +165,7 @@ class Store:
             seen_hashes = set(s.scalars(select(PostRow.text_hash).where(PostRow.text_hash.in_(hashes)))) if hashes else set()
             for post in posts:
                 h = text_hash(post.text)
-                if post.id in seen_ids or (h and h in seen_hashes):
+                if post.id in seen_ids or (text_dedupe and h and h in seen_hashes):
                     result.duplicates += 1
                     continue
                 s.add(PostRow(text_hash=h, **post.model_dump()))

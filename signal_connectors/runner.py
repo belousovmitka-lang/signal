@@ -69,7 +69,7 @@ async def run_source(
 
         def flush() -> None:
             if save and batch:
-                saved = services.store.save_posts(batch)
+                saved = services.store.save_posts(batch, text_dedupe=connector.text_dedupe)
                 result.new += saved.new
                 result.duplicates += saved.duplicates
             batch.clear()
