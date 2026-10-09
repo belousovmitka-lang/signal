@@ -146,6 +146,63 @@ sources:
     options:
       industry_forums: true
 
+  mastodon:
+    enabled: true
+    status: done
+    status_date: 2026-10-09
+    route: own_api
+    source_type: social
+    cadence: daily
+    deletion_recheck_days: 7
+    access_check:
+      robots: allowed
+      terms: allowed
+      decision: full
+      terms_url: https://mastodon.social/terms-of-service
+      checked_at: 2026-10-09
+      notes: >-
+        Public hashtag timelines on mastodon.social, no login. Its terms bind registered users only;
+        server rules cover conduct. Consent: only authors who opted in to search (indexable), not noindex,
+        not bots, no #nobot/#noindex in bio. Deletions re-checked on each post's home server.
+    queries:
+      - {industry_hint: legal, communities: [lawyers, legaltech, paralegal], limit: 40}
+      - {industry_hint: healthcare, communities: [nursing, medicine, healthit], limit: 40}
+      - {industry_hint: construction, communities: [construction, electrician, hvac], limit: 40}
+      - {industry_hint: real_estate, communities: [realestate, landlord, propertymanagement], limit: 40}
+      - {industry_hint: logistics, communities: [trucking, logistics, supplychain], limit: 40}
+      - {industry_hint: ecommerce, communities: [ecommerce, shopify, etsy], limit: 40}
+      - {industry_hint: restaurants, communities: [restaurants, hospitality, chefs], limit: 40}
+      - {industry_hint: accounting, communities: [accounting, bookkeeping, taxes], limit: 40}
+      - {industry_hint: education, communities: [teachers, edtech, highered], limit: 40}
+      - {industry_hint: marketing, communities: [marketing, seo, socialmediamarketing], limit: 40}
+      - {industry_hint: hr, communities: [hr, recruiting, humanresources], limit: 40}
+      - {industry_hint: insurance, communities: [insurance, insurtech], limit: 40}
+      - {industry_hint: manufacturing, communities: [manufacturing, machining, cnc], limit: 40}
+      - {industry_hint: agriculture, communities: [farming, agriculture, agtech], limit: 40}
+      - {industry_hint: it_devtools, communities: [sysadmin, devops, homelab], limit: 40}
+
+  lemmy:
+    enabled: true
+    status: done
+    status_date: 2026-10-09
+    route: own_api
+    source_type: community
+    cadence: daily
+    deletion_recheck_days: 7
+    access_check:
+      robots: allowed
+      terms: allowed
+      decision: full
+      terms_url: https://legal.lemmy.world/tos/
+      checked_at: 2026-10-09
+      notes: >-
+        lemmy.world public API, no login. Its ToS covers the API; bot rules apply to posting, voting and
+        advertising bots, not reading. robots.txt Crawl-delay 60 is applied (about 1 request/minute).
+        Bot accounts and deleted/removed posts skipped; deletions re-checked on the origin instance.
+    queries:
+      - keywords: ["is there a tool", "is there an app", "is there software", "so tired of", "takes forever"]
+        limit: 50
+
   bluesky:
     connector: search_api
     enabled: true

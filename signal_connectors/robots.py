@@ -144,6 +144,8 @@ class RobotsChecker:
                 host = urlsplit(origin).hostname or ""
                 rps = min(self.http.limiter.rate(host), 1.0 / rules.crawl_delay)
                 self.http.limiter.set_rate(host, rps)
+                # The robots.txt request itself counts: the next request waits the full delay.
+                self.http.limiter.defer(host, 1.0 / rps)
             return rules
 
     async def _fetch(self, origin: str) -> tuple[RobotsRules, float]:

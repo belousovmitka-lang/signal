@@ -65,6 +65,8 @@ async def test_fetch_is_cached_per_origin_and_applies_crawl_delay():
         with pytest.raises(RobotsDisallowed):
             await robots.require("https://forum.example.org/admin")
         assert http.limiter.rate("forum.example.org") == 0.25
+        import time
+        assert http.limiter._next["forum.example.org"] >= time.monotonic() + 3  # next request waits ~4s
     assert fetched == ["https://forum.example.org/robots.txt"]
 
 
