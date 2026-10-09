@@ -453,6 +453,33 @@ sources:
       - {params: {kind: spaces}, limit: 100}
       - {params: {kind: models}, limit: 100}
 
+  papers:
+    connector: rss
+    enabled: true
+    status: done
+    status_date: 2026-10-09
+    route: rss
+    source_type: research
+    cadence: daily
+    rate_limit: {requests_per_second: 0.33, domains: [rss.arxiv.org]}    # "one request every three seconds"
+    access_check:
+      robots: allowed
+      terms: allowed
+      decision: full
+      terms_url: https://info.arxiv.org/help/api/tou.html
+      checked_at: 2026-10-09
+      notes: >-
+        arXiv RSS (rss.arxiv.org has no robots.txt). export.arxiv.org (the query API) is robots-disallowed
+        for all agents, so it is not used. arXiv metadata (title, abstract) is CC0; e-prints are not
+        stored. PubMed waits for SIGNAL_CONTACT_EMAIL (NCBI asks for tool + email).
+    queries:
+      - {params: {feed: "https://rss.arxiv.org/rss/cs.CY", name: arxiv-cs.CY, community: "arXiv cs.CY"}, limit: 100}
+      - {params: {feed: "https://rss.arxiv.org/rss/cs.HC", name: arxiv-cs.HC, community: "arXiv cs.HC"}, limit: 100}
+      - {params: {feed: "https://rss.arxiv.org/rss/cs.SE", name: arxiv-cs.SE, community: "arXiv cs.SE"}, limit: 100}
+      - {params: {feed: "https://rss.arxiv.org/rss/cs.CE", name: arxiv-cs.CE, community: "arXiv cs.CE"}, limit: 100}
+      - {params: {feed: "https://rss.arxiv.org/rss/econ.GN", name: arxiv-econ.GN, community: "arXiv econ.GN"}, limit: 100}
+      - {params: {feed: "https://rss.arxiv.org/rss/q-fin.GN", name: arxiv-q-fin.GN, community: "arXiv q-fin.GN"}, limit: 100}
+
   bluesky:
     connector: search_api
     enabled: true

@@ -348,7 +348,7 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 | Google autocomplete / "People also ask" | G1 | search_api | via search API results | weekly | todo |
 | Industry association surveys, vendor benchmark reports, analyst firms' free reports | G2 / G5 | rss / public_pages | per publisher | monthly | todo |
 | Government statistics (BLS, Census, Eurostat) | `stats` | own_api | BLS API, Census API, Eurostat API | monthly | todo |
-| Academic papers | `papers` | own_api | arXiv API, PubMed E-utilities, Semantic Scholar API | weekly | todo |
+| Academic papers | `papers` | rss (arXiv) / own_api | arXiv via RSS category feeds (rss.arxiv.org, 1 request/3s; metadata CC0): done (2026-10-09). export.arxiv.org (query API) is robots-disallowed for all agents: not used. PubMed E-utilities waits for SIGNAL_CONTACT_EMAIL (NCBI asks for tool + email). Semantic Scholar: key optional, todo | daily | partly done |
 | Wikipedia | `wikipedia` | own_api | MediaWiki API (recent changes) + Wikimedia pageviews API | weekly | todo |
 
 **Paid connectors (build, keep behind a feature flag, off by default)**
