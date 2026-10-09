@@ -304,7 +304,7 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 | FCC consumer complaints | G9 | own_api | FCC open data (Socrata) | weekly | todo |
 | FTC published complaint datasets | G9 / downloads | public_pages | published datasets only | monthly | todo |
 | OSHA enforcement data | `osha` | own_api | Department of Labor enforcement data API | monthly | todo |
-| Federal Register | `federal_register` | own_api | `federalregister.gov/api/v1/documents` | daily | todo |
+| Federal Register | `federal_register` | own_api | `federalregister.gov/api/v1/documents.json`: every new rule and proposed rule, plus keyword notices; comment deadlines and agencies kept; no key, public domain | daily | done (2026-10-09) |
 | Regulations.gov | `regulations_gov` | own_api | API v4 (documents and public comments) | daily | todo |
 | EU and national official journals | `eurlex` + G2 | own_api / rss | EUR-Lex web services and RSS | weekly | todo |
 | State legislature trackers | `legiscan` / `openstates` | own_api | LegiScan API, Open States API | daily | todo |

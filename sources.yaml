@@ -323,7 +323,7 @@ sources:
 
   federal_register:
     enabled: true
-    status: todo                     # live smoke ok (128 new); cassette test still to write
+    status: done
     status_date: 2026-10-09
     route: own_api
     source_type: government
