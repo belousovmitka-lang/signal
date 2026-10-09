@@ -332,13 +332,13 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 | Platform | Connector | Route | Endpoint / method | Cadence | Status |
 |---|---|---|---|---|---|
 | Product Hunt | `producthunt` | own_api | GraphQL API v2; commercial use needs Product Hunt's permission (request it) | daily | awaiting approval |
-| Indie Hackers | G5, else G1 | public_pages | check terms | daily | todo |
-| YC Requests for Startups | G5 | public_pages | single page, monthly diff | monthly | todo |
-| BetaList, AlternativeTo | G5, else G1 | public_pages | check terms | weekly | todo |
-| Acquire.com, Flippa listings | G5, else G1 | public_pages | logged-out listings only | weekly | todo |
-| GitHub trending | `github` | public_pages / own_api | trending page or search by recent stars | daily | todo |
+| Indie Hackers | — | — | answers our bot with 403 (Cloudflare) on its terms page and content (2026-10-09) | daily | blocked |
+| YC Requests for Startups | — | — | YC terms: "you will not engage in or use any data mining, robots, scraping or similar data gathering or extraction methods" (2026-10-09) | monthly | blocked |
+| BetaList, AlternativeTo | — | — | BetaList terms: personal, non-commercial viewing only, no commercial use (covers its RSS); AlternativeTo answers our bot with 403 (2026-10-09) | weekly | blocked |
+| Acquire.com, Flippa listings | — | — | Acquire terms forbid any robot or automatic means; Flippa terms forbid copying or extracting listings (2026-10-09) | weekly | blocked |
+| GitHub trending | `github` | own_api | GitHub AUP allows scraped data only for listed purposes (research, archival), not commercial use: use the REST/GraphQL search API (recent repos by stars) with GITHUB_TOKEN instead of the trending page | daily | todo (needs GITHUB_TOKEN) |
 | Hugging Face | `huggingface` | own_api | Hub API `/api/spaces` and `/api/models` sorted by trendingScore, no key; snapshot (`filter_since = False`), id-only dedupe | weekly | done (2026-10-09) |
-| Kickstarter, Indiegogo | G5, else G1 | public_pages | check terms | weekly | todo |
+| Kickstarter, Indiegogo | — | — | both answer our bot with 403 (2026-10-09) | weekly | blocked |
 
 **Research and search data**
 
@@ -473,7 +473,7 @@ Work top to bottom. Finish each connector to its definition of done before start
 
 **Phase 4 — media, startup ecosystem, research**
 17. G8 `podcasts`, `twitch`, `events`
-18. `producthunt`, `huggingface`, startup public pages
+18. `producthunt` (awaiting approval), `huggingface` — done (2026-10-09); startup public pages all blocked by terms or bot walls (see 7.2)
 19. `trends`, `keyword_planner`, `stats`, `papers`, `wikipedia`
 
 **Phase 5 — paid connectors (flag off until budgeted)**
