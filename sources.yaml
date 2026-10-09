@@ -360,6 +360,25 @@ sources:
       - {industry_hint: real_estate, params: {product: [Mortgage]}, limit: 100}
       - {industry_hint: accounting, params: {product: ["Debt collection"]}, limit: 100}
 
+  openfda:
+    enabled: true
+    status: done
+    status_date: 2026-10-09
+    route: own_api
+    source_type: government
+    cadence: weekly
+    access_check:
+      robots: allowed
+      terms: allowed
+      decision: full
+      terms_url: https://open.fda.gov/license/
+      checked_at: 2026-10-09
+      notes: >-
+        openFDA device events (MAUDE), no key (240 requests/minute, 1,000/day per IP). CC0. Data lags
+        5-6 weeks, so runs look back 60 days before the cursor. Contact names/phones/addresses not stored.
+    queries:
+      - {industry_hint: healthcare, limit: 500}
+
   bluesky:
     connector: search_api
     enabled: true

@@ -204,6 +204,9 @@ class BaseConnector(ABC):
     # False for structured records (complaints, tenders, rules) whose text repeats across distinct
     # records: they dedupe on id only, never on text hash.
     text_dedupe: ClassVar[bool] = True
+    # False when the connector deliberately reads before `since` (sources that publish late, like
+    # openFDA's MAUDE): the runner then doesn't drop items older than the cursor.
+    filter_since: ClassVar[bool] = True
 
     def __init__(self, source: SourceConfig, services: Services) -> None:
         self.source = source
