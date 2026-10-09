@@ -177,6 +177,7 @@ TWITCH_CLIENT_SECRET=
 GOOGLE_ADS_DEVELOPER_TOKEN=  # Keyword Planner
 SEMANTIC_SCHOLAR_KEY=
 DOL_API_KEY=                 # OSHA enforcement data (dataportal.dol.gov)
+CENSUS_API_KEY=              # api.census.gov now requires a key
 STACKEXCHANGE_KEY=           # optional; raises quota 300 -> 10,000/day
 BLUESKY_HANDLE=              # pending rule-1 decision
 BLUESKY_APP_PASSWORD=
@@ -347,9 +348,9 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 | Google Keyword Planner | `keyword_planner` | own_api | Google Ads API KeywordPlanIdeaService | monthly | todo |
 | Google autocomplete / "People also ask" | G1 | search_api | via search API results | weekly | todo |
 | Industry association surveys, vendor benchmark reports, analyst firms' free reports | G2 / G5 | rss / public_pages | per publisher | monthly | todo |
-| Government statistics (BLS, Census, Eurostat) | `stats` | own_api | BLS API, Census API, Eurostat API | monthly | todo |
+| Government statistics (BLS, Census, Eurostat) | `stats` | own_api | Checked 2026-10-09: api.bls.gov robots.txt `Disallow: /` (blocked); Census API now requires a key (`CENSUS_API_KEY`; Business Formation Statistics = new business applications by industry); Eurostat API allowed by robots, not built yet | monthly | todo |
 | Academic papers | `papers` | rss (arXiv) / own_api | arXiv via RSS category feeds (rss.arxiv.org, 1 request/3s; metadata CC0): done (2026-10-09). export.arxiv.org (query API) is robots-disallowed for all agents: not used. PubMed E-utilities waits for SIGNAL_CONTACT_EMAIL (NCBI asks for tool + email). Semantic Scholar: key optional, todo | daily | partly done |
-| Wikipedia | `wikipedia` | own_api | MediaWiki API (recent changes) + Wikimedia pageviews API | weekly | todo |
+| Wikipedia | `wikipedia` | own_api | en.wikipedia.org robots.txt disallows `/api/`; Wikimedia pageviews API (wikimedia.org) requires a User-Agent with real contact info: waits for SIGNAL_CONTACT_EMAIL | weekly | todo |
 
 **Paid connectors (build, keep behind a feature flag, off by default)**
 
