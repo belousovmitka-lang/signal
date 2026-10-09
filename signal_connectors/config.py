@@ -228,6 +228,16 @@ class SourcesFile(_Strict):
                             "feed": forum.rss, "name": urlsplit(forum.url).netloc.removeprefix("www."),
                             "community": forum.name, "software": forum.software}))
 
+    def add_industry_subreddits(self, industries: dict[str, Industry]) -> None:
+        """One query per industry map (its subreddits) for sources with options.industry_subreddits."""
+        for source in self.sources.values():
+            if not source.options.get("industry_subreddits"):
+                continue
+            for key, industry in industries.items():
+                if industry.subreddits:
+                    source.queries.append(QueryConfig(industry_hint=key, communities=list(industry.subreddits)))
+            source.options.setdefault("roles", sorted({r for i in industries.values() for r in i.vocabulary.roles}))
+
     def add_industry_templates(self, industries: dict[str, Industry]) -> None:
         """Expand options.industry_templates into one query per template per industry."""
         for source in self.sources.values():
@@ -252,5 +262,6 @@ def load_sources(path: Path | str, industries_dir: Path | None = INDUSTRIES_DIR)
         industries = load_industries(industries_dir)
         sources.add_industry_feeds(industries)
         sources.add_industry_forums(industries)
+        sources.add_industry_subreddits(industries)
         sources.add_industry_templates(industries)
     return sources

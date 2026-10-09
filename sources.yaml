@@ -502,6 +502,31 @@ sources:
     queries:
       - {industry_hint: legal, keywords: ['("law firm" OR paralegal) AND (software OR automation)'], limit: 100}
 
+  reddit:
+    enabled: false
+    status: paid_flag_off
+    status_date: 2026-10-09
+    paid: true
+    feature_flag: ENABLE_REDDIT_API
+    route: own_api
+    source_type: community
+    cadence: hourly
+    monthly_budget_usd: 0            # set from the Reddit agreement
+    env: [REDDIT_CLIENT_ID, REDDIT_CLIENT_SECRET]
+    deletion_recheck_days: 2         # Data API Terms: delete content removed by users
+    access_check:
+      robots: not_applicable
+      terms: unchecked               # needs Reddit's separate commercial agreement before enabling
+      decision: pending
+      terms_url: https://redditinc.com/policies/data-api-terms
+      checked_at: 2026-10-09
+      notes: >-
+        Commercial use needs a separate agreement with Reddit; no ML/AI training on User Content without
+        rightsholders' permission; delete data not required for the approved use case.
+    options:
+      industry_subreddits: true      # one query per industry map
+      user_agent: "web:signal-connectors:0.1 (by /u/REPLACE_ME)"
+
   bluesky:
     connector: search_api
     enabled: true

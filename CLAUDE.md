@@ -363,7 +363,7 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 | Semrush / Ahrefs | `keywords_paid` | ~$500+/month | search volume at scale |
 | PACER direct | `pacer` | per page | specific court documents |
 | Social listening tool (Brandwatch, Talkwalker) | `listening` | ~$800–5,000/month | licensed coverage of LinkedIn, Instagram, TikTok, Facebook at scale |
-| Reddit commercial API | G3 | ~$12,000+/month reported | full Reddit coverage after approval |
+| Reddit commercial API | G3 `reddit` — **built, flag off (2026-10-09)** | ~$12,000+/month reported | full Reddit coverage after approval. OAuth app-only, /r/<sub>/new and /search, deletion re-check via /api/info. Needs the commercial agreement first (Data API Terms) |
 
 ### 7.3 Search profiles (G1) — platforms reached only through search
 
