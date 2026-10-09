@@ -360,7 +360,7 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 | Google Places reviews | `google_places` — **blocked (2026-10-09)** | pay per call; 5 reviews per place | Maps Platform terms: no caching except listed fields (Places: lat/lng 30 days, place_id), and "Customer will not create content based on Google Maps Content". Reviews can't be stored |
 | NewsAPI.org or similar | `newsapi` — **built, flag off (2026-10-09)** | Developer free (development only); Business $449/mo, Advanced $1,749/mo; $0.0018/extra request | broader news search; replaces Google News / GDELT if bought |
 | Crunchbase | `crunchbase` — **built, flag off (2026-10-09)** | enterprise plan, ~$20,000/year | structured funding data: v4 `searches/funding_rounds`, announced_on ≥ cursor, after_id paging, category filter. Storage rights per license |
-| Semrush / Ahrefs | `keywords_paid` | ~$500+/month | search volume at scale |
+| Semrush / Ahrefs | `keywords_paid` — **built, flag off (2026-10-09)** | ~$500+/month | search volume at scale: Semrush `phrase_questions` / `phrase_related`, 40 units per line, metered in units and dollars |
 | PACER direct | `pacer` | per page | specific court documents |
 | Social listening tool (Brandwatch, Talkwalker) | `listening` | ~$800–5,000/month | licensed coverage of LinkedIn, Instagram, TikTok, Facebook at scale |
 | Reddit commercial API | G3 `reddit` — **built, flag off (2026-10-09)** | ~$12,000+/month reported | full Reddit coverage after approval. OAuth app-only, /r/<sub>/new and /search, deletion re-check via /api/info. Needs the commercial agreement first (Data API Terms) |

@@ -546,6 +546,26 @@ sources:
     queries:
       - {limit: 500}
 
+  keywords_paid:
+    enabled: false
+    status: paid_flag_off
+    status_date: 2026-10-09
+    paid: true
+    feature_flag: ENABLE_KEYWORDS_PAID
+    route: own_api
+    source_type: research
+    cadence: monthly
+    monthly_budget_usd: 0            # set with the Semrush plan; options.usd_per_1000_units prices the units
+    env: [SEMRUSH_KEY]
+    access_check:
+      robots: not_applicable
+      terms: unchecked               # storage of keyword data per the Semrush API license: confirm before enabling
+      decision: pending
+      checked_at: 2026-10-09
+    options: {usd_per_1000_units: 0}
+    queries:
+      - {industry_hint: legal, keywords: ["legal billing software", "law firm intake"], params: {report: phrase_questions}, limit: 50}
+
   bluesky:
     connector: search_api
     enabled: true
