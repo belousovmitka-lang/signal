@@ -480,6 +480,28 @@ sources:
       - {params: {feed: "https://rss.arxiv.org/rss/econ.GN", name: arxiv-econ.GN, community: "arXiv econ.GN"}, limit: 100}
       - {params: {feed: "https://rss.arxiv.org/rss/q-fin.GN", name: arxiv-q-fin.GN, community: "arXiv q-fin.GN"}, limit: 100}
 
+  newsapi:
+    enabled: false
+    status: paid_flag_off
+    status_date: 2026-10-09
+    paid: true
+    feature_flag: ENABLE_NEWSAPI
+    route: own_api
+    source_type: news
+    cadence: daily
+    monthly_budget_usd: 0            # set when a plan is bought (Business $449/mo, 2026-10-09)
+    env: [NEWSAPI_KEY]
+    access_check:
+      robots: not_applicable
+      terms: allowed
+      decision: full
+      terms_url: https://newsapi.org/terms
+      checked_at: 2026-10-09
+      notes: Developer plan is development-only; production needs a paid plan. No competing news database.
+    options: {cost_per_call_usd: 0.0018}
+    queries:
+      - {industry_hint: legal, keywords: ['("law firm" OR paralegal) AND (software OR automation)'], limit: 100}
+
   bluesky:
     connector: search_api
     enabled: true
