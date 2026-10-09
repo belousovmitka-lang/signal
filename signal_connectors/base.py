@@ -135,10 +135,11 @@ class HttpClient:
                 return min(after, self.backoff_max)
         return self._backoff(state)
 
-    async def request(self, method: str, url: str, **kwargs: Any) -> httpx.Response:
+    async def request(self, method: str, url: str, *, attempts: int | None = None, **kwargs: Any) -> httpx.Response:
+        """`attempts` overrides max_attempts for APIs that penalize retries (GDELT)."""
         domain = domain_of(url)
         retrying = AsyncRetrying(
-            stop=stop_after_attempt(self.max_attempts),
+            stop=stop_after_attempt(attempts or self.max_attempts),
             wait=self._wait,
             retry=retry_if_exception_type((RetryableResponse, httpx.TransportError)),
             reraise=True,
@@ -197,6 +198,9 @@ class BaseConnector(ABC):
     route: ClassVar[Route]
     source_type: ClassVar[SourceType]
     default_cadence: ClassVar[Cadence] = "daily"
+    # True when the source only gives dates (no time of day): the runner then compares dates, so
+    # items from the cursor's own day aren't dropped for being stamped at midnight.
+    day_granular: ClassVar[bool] = False
 
     def __init__(self, source: SourceConfig, services: Services) -> None:
         self.source = source

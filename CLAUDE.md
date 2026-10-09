@@ -284,7 +284,7 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 | Platform | Connector | Route | Endpoint / method | Cadence | Status |
 |---|---|---|---|---|---|
 | Google News (keyword) | G2 | rss | Google News RSS search | hourly | blocked (2026-10-09): robots.txt disallows `/rss`, feeds are personal/non-commercial only; use G1 news search + `gdelt` |
-| GDELT | `gdelt` | own_api | GDELT DOC 2.0 API | daily | todo |
+| GDELT | `gdelt` | own_api | GDELT DOC 2.0 API; free for commercial use with citation. Built, but **disabled**: returned 429 even at 1 request/20s (2026-10-09), and OR'd keyword queries were noisy. Revisit with one combined daily query or GDELT's bulk datasets | daily | todo (built, disabled) |
 | Wire services, business press, tech press, trade publications, press release wires, newsletters, company and industry blogs, local news, VC and accelerator blogs | G2 | rss | headlines + summaries; full text only where the feed provides it | hourly to daily | done (2026-10-09): 36 trade-press feeds live; more per industry map |
 | SEC EDGAR (Form D funding filings) | `edgar` | own_api | EDGAR full-text search and submissions APIs (set a User-Agent with contact email) | daily | todo |
 | Layoff and shutdown trackers | G5, else G1 | public_pages | check terms per tracker | weekly | todo |
@@ -295,8 +295,8 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 |---|---|---|---|---|---|
 | SAM.gov | `sam_gov` | own_api | Opportunities API | daily | todo |
 | State/city procurement portals, BidNet, DemandStar | G5 / G2, else G1 | public_pages | per portal; many publish RSS | daily | todo |
-| EU TED | `ted` | own_api | TED API | daily | todo |
-| UK Contracts Finder / Find a Tender | `uk_tenders` | own_api | official APIs | daily | todo |
+| EU TED | `ted` | own_api | TED API v3 `POST /v3/notices/search`, anonymous; CPV filter, `SORT BY publication-date DESC`; reuse under Decision 2011/833/EU | daily | done (2026-10-09) |
+| UK Contracts Finder / Find a Tender | `uk_tenders` | own_api | OCDS APIs (Contracts Finder search, Find a Tender release packages), no key, cursor paging; Open Government Licence v3.0 | daily | done (2026-10-09) |
 | School district and university RFPs | G5 / G2, else G1 | public_pages | per site | weekly | todo |
 | CFPB complaint database | `cfpb` | own_api | Consumer Complaint Database API | daily | todo |
 | FDA device reports (MAUDE) | `openfda` | own_api | openFDA device/event API | weekly | todo |

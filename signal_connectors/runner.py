@@ -79,7 +79,8 @@ async def run_source(
             agen = connector.fetch(query)
             try:
                 async for post in agen:
-                    if post.published_at < query_since:
+                    if (post.published_at.date() < query_since.date() if connector.day_granular
+                            else post.published_at < query_since):
                         continue
                     result.fetched += 1
                     count += 1
