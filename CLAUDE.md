@@ -176,6 +176,7 @@ TWITCH_CLIENT_ID=
 TWITCH_CLIENT_SECRET=
 GOOGLE_ADS_DEVELOPER_TOKEN=  # Keyword Planner
 SEMANTIC_SCHOLAR_KEY=
+DOL_API_KEY=                 # OSHA enforcement data (dataportal.dol.gov)
 STACKEXCHANGE_KEY=           # optional; raises quota 300 -> 10,000/day
 BLUESKY_HANDLE=              # pending rule-1 decision
 BLUESKY_APP_PASSWORD=
@@ -300,13 +301,13 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 | School district and university RFPs | G5 / G2, else G1 | public_pages | per site | weekly | todo |
 | CFPB complaint database | `cfpb` | own_api | Consumer Complaint Database API, no key, CC0. Narratives are no longer in the API (2026-10-09): records are structured (product, issue, company, response). Paging needs `_meta.break_points` (`frm` alone is ignored). ~4-5k/day, capped per run; ZIP not stored | daily | done (2026-10-09) |
 | FDA device reports (MAUDE) | `openfda` | own_api | openFDA `/device/event.json`, no key, CC0. MAUDE lags 5-6 weeks and `date_added` can't be sorted, so runs look back 60 days (`filter_since = False`); contact names/phones not stored | weekly | done (2026-10-09) |
-| NHTSA complaints | `nhtsa` | own_api | NHTSA complaints API | weekly | todo |
+| NHTSA complaints | `nhtsa` | own_api / downloads | The complaints API only looks up by make + model + year (no "recent" endpoint); recent complaints need the daily bulk flat file. Automotive is not in the industry maps yet | weekly | todo (2026-10-09: needs bulk-file route) |
 | FCC consumer complaints | G9 | own_api | FCC open data (Socrata) | weekly | todo |
 | FTC published complaint datasets | G9 / downloads | public_pages | published datasets only | monthly | todo |
-| OSHA enforcement data | `osha` | own_api | Department of Labor enforcement data API | monthly | todo |
+| OSHA enforcement data | `osha` | own_api | DOL data API (apiprod.dol.gov v4) requires a free API key from dataportal.dol.gov (`DOL_API_KEY`) | monthly | todo (needs key) |
 | Federal Register | `federal_register` | own_api | `federalregister.gov/api/v1/documents.json`: every new rule and proposed rule, plus keyword notices; comment deadlines and agencies kept; no key, public domain | daily | done (2026-10-09) |
 | Regulations.gov | `regulations_gov` | own_api | API v4 (documents and public comments) | daily | todo |
-| EU and national official journals | `eurlex` + G2 | own_api / rss | EUR-Lex web services and RSS | weekly | todo |
+| EU and national official journals | `eurlex` + G2 | own_api | eur-lex.europa.eu answers bots with an empty HTTP 202 challenge (2026-10-09): never bypass. Routes: EUR-Lex SOAP web service (registration) or the Publications Office CELLAR SPARQL endpoint | weekly | todo |
 | State legislature trackers | `legiscan` / `openstates` | own_api | LegiScan API, Open States API | daily | todo |
 | CourtListener (incl. RECAP copies of PACER filings) | `courtlistener` | own_api | REST API v4 search + opinions + dockets | daily | todo |
 | PACER (direct) | `pacer` | own_api (paid) | $0.10/page, $3 cap/document; only for specific documents | on demand | paid (flag off) |
