@@ -75,3 +75,25 @@ def make_services(settings: Settings) -> Callable[..., Any]:
         return Services.open(settings, sources, transport=transport, backoff_initial=0.01)
 
     return factory
+
+
+@pytest.fixture(autouse=True)
+def _no_pacing_on_replay(request: pytest.FixtureRequest, monkeypatch: pytest.MonkeyPatch) -> None:
+    """Replayed cassettes hit no server, so skip rate limits and crawl delays.
+
+    Not applied while recording (VCR_RECORD_MODE=once), nor to the tests of the limiter itself.
+    """
+    if os.environ.get("VCR_RECORD_MODE", "none") != "none":
+        return
+    if request.module.__name__.rsplit(".", 1)[-1] in {"test_http", "test_robots"}:
+        return
+    if request.node.get_closest_marker("real_pacing"):
+        return
+    from signal_connectors.base import RateLimiter
+
+    monkeypatch.setattr(RateLimiter, "rate", lambda self, domain: 1e9)
+    monkeypatch.setattr(RateLimiter, "defer", lambda self, domain, seconds: None)
+
+
+def pytest_configure(config: pytest.Config) -> None:
+    config.addinivalue_line("markers", "real_pacing: keep rate limits and backoff deferrals during replay")

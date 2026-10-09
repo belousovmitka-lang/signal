@@ -3,6 +3,7 @@ from datetime import datetime, timedelta, timezone
 from urllib.parse import parse_qs
 
 import httpx
+import pytest
 
 from signal_connectors.config import SourcesFile
 from signal_connectors.runner import run_source
@@ -80,6 +81,7 @@ async def test_mapping_paging_key_and_no_author_name(make_services, monkeypatch)
     assert calls[0]["filter"] == "withbody" and "q" not in calls[0]
 
 
+@pytest.mark.real_pacing
 async def test_backoff_field_defers_the_domain(make_services):
     handler, _ = api([(200, {"items": [item(1)], "has_more": False, "backoff": 7})])
     async with make_services(se_source({"communities": ["law"]}), handler) as svc:
