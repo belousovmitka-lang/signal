@@ -566,6 +566,27 @@ sources:
     queries:
       - {industry_hint: legal, keywords: ["legal billing software", "law firm intake"], params: {report: phrase_questions}, limit: 50}
 
+  edgar:
+    enabled: true
+    status: done
+    status_date: 2026-10-09
+    route: own_api
+    source_type: startup
+    cadence: daily
+    env: [SIGNAL_CONTACT_EMAIL]
+    rate_limit: {requests_per_second: 5, domains: [www.sec.gov]}     # SEC fair access: max 10/s
+    access_check:
+      robots: allowed
+      terms: allowed
+      decision: full
+      terms_url: https://www.sec.gov/os/accessing-edgar-data
+      checked_at: 2026-10-09
+      notes: >-
+        /cgi-bin/ is robots-disallowed, so daily form indexes under /Archives/ are used. Executives'
+        names (relatedPersonsList) and addresses are not stored.
+    queries:
+      - {limit: 400}
+
   bluesky:
     connector: search_api
     enabled: true

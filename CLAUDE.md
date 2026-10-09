@@ -288,7 +288,7 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 | Google News (keyword) | G2 | rss | Google News RSS search | hourly | blocked (2026-10-09): robots.txt disallows `/rss`, feeds are personal/non-commercial only; use G1 news search + `gdelt` |
 | GDELT | `gdelt` | own_api | GDELT DOC 2.0 API; free for commercial use with citation. Built, but **disabled**: returned 429 even at 1 request/20s (2026-10-09), and OR'd keyword queries were noisy. Revisit with one combined daily query or GDELT's bulk datasets | daily | todo (built, disabled) |
 | Wire services, business press, tech press, trade publications, press release wires, newsletters, company and industry blogs, local news, VC and accelerator blogs | G2 | rss | headlines + summaries; full text only where the feed provides it | hourly to daily | done (2026-10-09): 36 trade-press feeds live; more per industry map |
-| SEC EDGAR (Form D funding filings) | `edgar` | own_api | EDGAR full-text search and submissions APIs (set a User-Agent with contact email) | daily | todo |
+| SEC EDGAR (Form D funding filings) | `edgar` | own_api | `/cgi-bin/` is robots-disallowed, so: daily form index `/Archives/edgar/daily-index/<y>/QTR<n>/form.<date>.idx` → each Form D's `primary_doc.xml`. User-Agent with contact email; 5 req/s (SEC max 10). Executives' names and addresses not stored; pooled funds skipped | daily | done (2026-10-09) |
 | Layoff and shutdown trackers | G5, else G1 | public_pages | check terms per tracker | weekly | todo |
 
 **Government, regulatory, legal**
