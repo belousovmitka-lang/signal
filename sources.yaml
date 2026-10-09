@@ -435,6 +435,24 @@ sources:
           keep: [complaint_type, descriptor, agency, borough, status]
       - {limit: 100, params: {kind: ckan, base: "https://open.canada.ca/data"}}
 
+  huggingface:
+    enabled: true
+    status: done
+    status_date: 2026-10-09
+    route: own_api
+    source_type: startup
+    cadence: weekly
+    access_check:
+      robots: allowed
+      terms: allowed
+      decision: full
+      terms_url: https://huggingface.co/terms-of-service
+      checked_at: 2026-10-09
+      notes: Hub API, no key. robots.txt allows all; ToS has no clause on automated or API access.
+    queries:
+      - {params: {kind: spaces}, limit: 100}
+      - {params: {kind: models}, limit: 100}
+
   bluesky:
     connector: search_api
     enabled: true

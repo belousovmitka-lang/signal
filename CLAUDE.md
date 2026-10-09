@@ -336,7 +336,7 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 | BetaList, AlternativeTo | G5, else G1 | public_pages | check terms | weekly | todo |
 | Acquire.com, Flippa listings | G5, else G1 | public_pages | logged-out listings only | weekly | todo |
 | GitHub trending | `github` | public_pages / own_api | trending page or search by recent stars | daily | todo |
-| Hugging Face | `huggingface` | own_api | Hub API: trending models, spaces | weekly | todo |
+| Hugging Face | `huggingface` | own_api | Hub API `/api/spaces` and `/api/models` sorted by trendingScore, no key; snapshot (`filter_since = False`), id-only dedupe | weekly | done (2026-10-09) |
 | Kickstarter, Indiegogo | G5, else G1 | public_pages | check terms | weekly | todo |
 
 **Research and search data**
