@@ -38,7 +38,7 @@ signal_vcr = vcr.VCR(
     record_mode=os.environ.get("VCR_RECORD_MODE", "none"),
     match_on=["method", "scheme", "host", "path", "query"],
     filter_headers=["authorization", "x-api-key", "x-subscription-token", "cookie", "set-cookie"],
-    filter_query_parameters=["key", "api_key", "apikey", "token", "access_token", "client_secret"],
+    filter_query_parameters=["key", "api_key", "apikey", "token", "access_token", "client_secret", "user_key"],
     decode_compressed_response=True,
     before_record_response=_scrub_response,
 )

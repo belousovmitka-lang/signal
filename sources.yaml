@@ -527,6 +527,25 @@ sources:
       industry_subreddits: true      # one query per industry map
       user_agent: "web:signal-connectors:0.1 (by /u/REPLACE_ME)"
 
+  crunchbase:
+    enabled: false
+    status: paid_flag_off
+    status_date: 2026-10-09
+    paid: true
+    feature_flag: ENABLE_CRUNCHBASE
+    route: own_api
+    source_type: startup
+    cadence: daily
+    monthly_budget_usd: 0            # enterprise license (~$20k/year); calls metered as units
+    env: [CRUNCHBASE_KEY]
+    access_check:
+      robots: not_applicable
+      terms: unchecked               # storage rights come from the license: confirm before enabling
+      decision: pending
+      checked_at: 2026-10-09
+    queries:
+      - {limit: 500}
+
   bluesky:
     connector: search_api
     enabled: true
