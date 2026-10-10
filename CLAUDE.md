@@ -327,7 +327,7 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 |---|---|---|---|---|---|
 | Podcasts (Apple, Spotify, Podcast Index) | G8 | rss + own_api | Podcast Index API + RSS | weekly | todo |
 | YouTube, recorded conference talks, webinars on YouTube | G7 → G1 | search_api | own API blocked (see G7); G1 `youtube.com/watch` | daily | blocked (2026-10-09) |
-| Twitch | `twitch` | own_api | Helix API: streams, videos (VOD metadata) by category/keyword | weekly | todo |
+| Twitch | `twitch` | own_api | Keys work (app token + Helix verified 2026-10-10), but the Developer Services Agreement section VI forbids storing copies of Twitch content beyond a 24-hour cache without written authorization, and selling or commercially using Twitch data "or insights derived from that data" without permission. Needs Twitch's written permission | weekly | blocked (2026-10-10) |
 | Webinars hosted elsewhere | G5, else G1 | public_pages | public pages and descriptions | weekly | todo |
 | Event agendas (Eventbrite, Meetup, Luma, conference sites) | `events` + G1 | public_pages / own_api | Eventbrite has no public event search API: use G1; Meetup GraphQL API (check access); Luma and conference sites public pages | weekly | todo |
 
