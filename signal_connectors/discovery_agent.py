@@ -51,7 +51,8 @@ not no new how why what when who your you our we they their his her he she i me 
 about after over into than then out up down off just also amid says said say report reports news update updates vs via
 2024 2025 2026 2027 one two three first year years day week month
 post posts blog blogs forum forums re rss feed comment comments reply replies thread threads member members activity
-activities read more click here episode podcast webinar newsletter""".split())
+activities read more click here episode podcast webinar newsletter summary weekly monthly daily
+january february march april may june july august september october november december""".split())
 
 COST_PER_QUERY = {"exa": 0.007, "brave": 0.005}
 
