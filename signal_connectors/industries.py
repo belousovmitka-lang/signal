@@ -68,11 +68,25 @@ class Vocabulary(BaseModel):
     tools: list[str] = Field(default_factory=list)          # incumbent software: "Clio"
 
 
+class DiscoveryInfo(BaseModel):
+    """Set on maps written by the discovery agent: nothing here is collectable until a human reviews it."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    generated_at: date
+    needs_review: bool = True
+    queries: int = 0
+    cost_usd: float = 0.0
+    candidates_checked: int = 0
+    notes: str | None = None
+
+
 class Industry(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     industry: str
     name: str
+    discovery: DiscoveryInfo | None = None
     vocabulary: Vocabulary = Field(default_factory=Vocabulary)
     subreddits: list[str] = Field(default_factory=list)
     stackexchange_sites: list[str] = Field(default_factory=list)

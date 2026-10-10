@@ -119,6 +119,7 @@ class Defaults(_Strict):
     limit: int = Field(default=50, ge=1)
     # Monthly caps for paid APIs shared by several sources, keyed by provider ("brave", "exa").
     provider_budgets: dict[str, float] = Field(default_factory=dict)
+    discovery_monthly_budget_usd: float = Field(default=2.0, ge=0)   # Phase 6 discovery agent searches
 
 
 class SourceConfig(_Strict):
@@ -199,7 +200,9 @@ class SourcesFile(_Strict):
         return value
 
     def budgets(self) -> dict[str, float]:
-        return {name: s.monthly_budget_usd for name, s in self.sources.items()}
+        budgets = {name: s.monthly_budget_usd for name, s in self.sources.items()}
+        budgets.setdefault("discovery", self.defaults.discovery_monthly_budget_usd)
+        return budgets
 
     def add_industry_feeds(self, industries: dict[str, Industry]) -> None:
         """Append one query per live industry feed to sources with options.industry_feeds: true."""
@@ -259,7 +262,9 @@ def load_sources(path: Path | str, industries_dir: Path | None = INDUSTRIES_DIR)
     data = yaml.safe_load(Path(path).read_text(encoding="utf-8")) or {}
     sources = SourcesFile.model_validate(data)
     if industries_dir is not None and industries_dir.is_dir():
-        industries = load_industries(industries_dir)
+        # Drafts from the discovery agent are ignored until a human clears needs_review.
+        industries = {k: v for k, v in load_industries(industries_dir).items()
+                      if not (v.discovery and v.discovery.needs_review)}
         sources.add_industry_feeds(industries)
         sources.add_industry_forums(industries)
         sources.add_industry_subreddits(industries)

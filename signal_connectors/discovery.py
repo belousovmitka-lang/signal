@@ -67,23 +67,25 @@ class Discovery:
         self.exa_key = os.environ.get("EXA_API_KEY") or None
 
     async def urls(self, provider: Provider, text: str, domains: list[str], since: datetime | None,
-                   limit: int, lang: str = "en") -> list[str]:
+                   limit: int, lang: str = "en", exclude: list[str] | None = None) -> list[str]:
         if provider == "brave":
-            found = await self._brave(text, domains, since, limit, lang)
+            found = await self._brave(text, domains, since, limit, lang, exclude or [])
         elif provider == "exa":
-            found = await self._exa(text, domains, since, limit)
+            found = await self._exa(text, domains, since, limit, exclude or [])
         else:
             raise DiscoveryError(f"unknown provider {provider!r}")
         return list(dict.fromkeys(found))
 
     async def _brave(self, text: str, domains: list[str], since: datetime | None, limit: int,
-                     lang: str) -> list[str]:
+                     lang: str, exclude: list[str]) -> list[str]:
         if not self.brave_key:
             raise DiscoveryError("BRAVE_API_KEY is not set")
         now = utcnow()
         freshness = f"{since:%Y-%m-%d}to{now:%Y-%m-%d}" if since else "pw"
         headers = {"X-Subscription-Token": self.brave_key, "Accept": "application/json"}
         urls: list[str] = []
+        if exclude:
+            text = " ".join([text, *(f"-site:{d}" for d in exclude[:10])])
         for q in brave_queries(text, domains):
             offset, found = 0, 0
             while found < limit and offset <= BRAVE_MAX_OFFSET:
@@ -104,12 +106,15 @@ class Discovery:
                 offset += 1
         return urls
 
-    async def _exa(self, text: str, domains: list[str], since: datetime | None, limit: int) -> list[str]:
+    async def _exa(self, text: str, domains: list[str], since: datetime | None, limit: int,
+                   exclude: list[str]) -> list[str]:
         if not self.exa_key:
             raise DiscoveryError("EXA_API_KEY is not set")
         body: dict[str, object] = {"query": text, "type": "auto", "numResults": min(limit, EXA_MAX_BASE)}
         if domains:
             body["includeDomains"] = domains
+        elif exclude:
+            body["excludeDomains"] = exclude
         if since:
             body["startPublishedDate"] = since.strftime("%Y-%m-%dT%H:%M:%S.000Z")
         with self.costs.metered(self.source, usd=EXA_USD, provider="exa", note="discovery") as charge:

@@ -51,6 +51,8 @@ signal-connectors/
     industries.py           # industry seed map schema and loader
     forum_detect.py         # detect forum software + feeds from a logged-out page
     verify.py               # live checks for seed maps (liveness, robots, login walls, moved feeds)
+    discovery.py            # search APIs as pointers only: URLs in memory, never stored
+    discovery_agent.py      # Phase 6: draft industries/<key>.yaml from seeds, for human review
     parsing.py              # HTML to text, lenient dates
     smoke.py                # smoke CLI logic (scripts/smoke.py is the entry point)
     connectors/
@@ -69,6 +71,8 @@ signal-connectors/
     run.py                  # run due connectors on schedule
     smoke.py                # run one connector live: python scripts/smoke.py rss --limit 20
     verify_industries.py    # check every seed-map site and write statuses back
+    discover_industry.py    # python scripts/discover_industry.py <key> --name ... --roles ... --keywords ...
+    recheck_deletions.py    # purge posts deleted at the source (Bluesky, Mastodon, Lemmy, Reddit)
   tests/
     cassettes/
 ```
@@ -479,8 +483,14 @@ Work top to bottom. Finish each connector to its definition of done before start
 **Phase 5 — paid connectors (flag off until budgeted)** — done (2026-10-09)
 20. Done (2026-10-09): `newsapi`, `reddit` (own API), `crunchbase`, `keywords_paid` built behind feature flags (off). Blocked by public terms: `yelp`, `google_places`. Deferred: `pacer`, `listening`
 
-**Phase 6 — discovery agent**
+**Phase 6 — discovery agent** — done (2026-10-10)
 21. Given a new industry, run site-limited searches to find its communities, publications and associations; detect forum software; run the access check; write a new `industries/<industry>.yaml` for human review.
+    Built as `scripts/discover_industry.py` (`signal_connectors/discovery_agent.py`):
+    - ~7 Exa/Brave searches from seed roles and keywords (~$0.06 per industry; capped by `--budget` and `defaults.discovery_monthly_budget_usd`). Results are pointers only: reduced to site origins in memory.
+    - Each site's homepage is then fetched (robots.txt first) and classified from what the site itself returns: forum (software or forum path), publication (live feed), association (its own title). Then the usual `verify.py` checks.
+    - Every forum gets `terms: unchecked` and a `terms_url` to read, unless another map already decided that domain's terms (carried over).
+    - Jargon candidates come from frequent phrases in the publications' headlines. Subreddits are not searched (reddit.com is unreadable).
+    - The draft has `discovery.needs_review: true`; the config ignores such maps entirely until a human sets it to false.
 
 ---
 
