@@ -117,6 +117,8 @@ user_model:
   drop_in_exposure_budget: 8
   removed_retest_after_days: 60
   committed_other_cap: 0.10
+  committed_affinity: 0.9         # inside the committed problem's niche, ranking treats affinity as at least this
+  committed_demand_max: 0.25      # committed mode: paid demand at most this share of a page (evidence comes first)
   narrowing:
     child_share_of_positive: 0.60
     child_min_positive_events: 5

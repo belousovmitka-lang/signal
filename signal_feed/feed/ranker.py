@@ -82,10 +82,16 @@ class RankerV1:
         sims_saved = data.vectors[idx] @ data.vectors[saved].T if saved and idx else None
         sims_nfm = data.vectors[idx] @ data.vectors[nfm].T if nfm and idx else None
         draws = self.type_draws(state, rng)
+        # Committing to a problem is an explicit signal (section 6.7): its niche ranks as if well liked, without
+        # touching the learned map.
+        focus = set(data.industry.subtree(state.committed_niche)) \
+            if state.mode == "committed" and state.committed_niche in data.industry.nodes else set()
         feats, extra = [], []
         for k, c in enumerate(candidates):
             it = data.items[c.index]
             affinity, node = niche_affinity(data, state, it.niche_id, um.inherit)
+            if it.niche_id in focus:
+                affinity, node = max(affinity, um.committed_affinity), state.committed_niche
             hours = max((now - it.published_at).total_seconds() / 3600, 0.0)
             feats.append({
                 "affinity": affinity,

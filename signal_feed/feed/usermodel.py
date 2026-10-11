@@ -113,6 +113,10 @@ class UserState:
     saved: list[str] = field(default_factory=list)                # most recent first
     not_for_me: list[str] = field(default_factory=list)
     default: float = 0.1
+    mode: str = "exploring"                                       # exploring | committed (section 6.7)
+    committed_problem: int | None = None
+    committed_niche: int | None = None
+    committed_competitors: tuple[str, ...] = ()                   # lower-cased product names
 
     def niche_affinity(self, node: int) -> float:
         if node in self.removed:
@@ -155,6 +159,14 @@ def load_state(store: FeedStore, config: FeedConfig, user_id: str, now: datetime
         st.removed = set(s.scalars(select(UserRemovedRow.node_id).where(UserRemovedRow.user_id == user_id)))
         st.map_nodes = set(s.scalars(select(UserMapNodeRow.node_id).where(
             UserMapNodeRow.user_id == user_id, UserMapNodeRow.status.in_(ON_MAP))))
+        st.mode = user.mode or "exploring"
+        if st.mode == "committed" and user.committed_problem_id is not None:
+            problem = s.get(ProblemRow, user.committed_problem_id)
+            if problem is not None and problem.status == "active":
+                st.committed_problem, st.committed_niche = problem.id, problem.niche_id
+                st.committed_competitors = tuple(c.lower() for c in problem.competitors or [])
+            else:
+                st.mode = "exploring"        # the problem is gone: fall back rather than show an empty feed
         st.type_pref = dict(user.type_preference or {})
         st.type_evidence = {t: (float(a), float(b)) for t, (a, b) in prefs.get("type_evidence", {}).items()}
         st.source_pref = dict(user.source_preference or {})

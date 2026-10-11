@@ -61,6 +61,12 @@ class UserAction(BaseModel):
     user_id: str
 
 
+class ModeChange(BaseModel):
+    user_id: str
+    mode: Literal["exploring", "committed"]
+    problem_id: int | None = None          # required for committed
+
+
 class Decision(BaseModel):
     update_id: int
     approve: bool
@@ -167,6 +173,21 @@ def create_app(store: FeedStore, posts: PostsReader, config: FeedConfig, service
     def post_reset(a: UserAction) -> dict:
         _user(a.user_id)
         return _act(usermap.reset, a.user_id)
+
+    @app.post("/mode")
+    def post_mode(m: ModeChange) -> dict:
+        """Section 6.7: committed narrows the feed to one problem; exploring is the default."""
+        _user(m.user_id)
+        from .db import ProblemRow, UserRow
+        with store.session() as s, s.begin():
+            if m.mode == "committed":
+                problem = s.get(ProblemRow, m.problem_id) if m.problem_id is not None else None
+                if problem is None or problem.status != "active":
+                    raise HTTPException(status_code=422, detail="committed mode needs an active problem_id")
+            user = s.get(UserRow, m.user_id)
+            user.mode = m.mode
+            user.committed_problem_id = m.problem_id if m.mode == "committed" else None
+        return {"ok": True, "mode": m.mode}
 
     @app.get("/profile/niches/pending")
     def get_profile_pending(user_id: str) -> dict:

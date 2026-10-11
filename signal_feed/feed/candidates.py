@@ -20,6 +20,10 @@ from .usermodel import POSITIVE_ACTIONS, UserState
 
 PIN, DROP_IN, NICHE, SKILL_MATCH, SIMILAR, TRENDING, EXPLORE, FILL = (
     "pin", "drop_in", "niche_match", "skill_match", "similar_builders", "trending_nearby", "exploration", "fill")
+# Committed mode (section 6.7): the problem's evidence, its niche, posts naming its competitors, related demand.
+EVIDENCE, FOCUS_NICHE, COMPETITOR, RELATED_DEMAND = ("committed_evidence", "committed_niche", "committed_competitor",
+                                                     "committed_demand")
+COMMITTED_SOURCES = (EVIDENCE, FOCUS_NICHE, COMPETITOR, RELATED_DEMAND)
 
 
 @dataclass
@@ -103,6 +107,24 @@ def generate(data: FeedData, state: UserState, config: FeedConfig, store: FeedSt
             return sorted(indexes, key=lambda i: data.items[i].published_at, reverse=True)
         sims = data.vectors[indexes] @ centre
         return [indexes[k] for k in np.argsort(-sims)]
+
+    if state.mode == "committed" and state.committed_niche in data.industry.nodes:
+        niche = state.committed_niche
+        evidence = [i for i, it in enumerate(data.items) if it.problem_id == state.committed_problem]
+        take(evidence, EVIDENCE, target, niche)
+        take(nearest(data.subtree_items(niche), data.industry.centroids.get(niche)), FOCUS_NICHE, target // 2, niche)
+        if state.committed_competitors:
+            rivals = set(state.committed_competitors)
+            take([i for i, it in enumerate(data.items) if rivals & set(it.tools)], COMPETITOR, target // 4, niche)
+        # Related demand: from the problem's own niche; the parent's only when the niche has none.
+        demand = [i for i in data.subtree_items(niche) if data.items[i].post_type == "paid_demand"]
+        parent = data.industry.nodes[niche].parent_id
+        if not demand and parent is not None:
+            demand = [i for i in data.subtree_items(parent) if data.items[i].post_type == "paid_demand"]
+        if evidence and demand:     # closest to the problem first
+            centre = data.vectors[evidence].mean(axis=0)
+            demand = [demand[k] for k in np.argsort(-(data.vectors[demand] @ centre))]
+        take(demand, RELATED_DEMAND, target // 10, niche)
 
     # Guaranteed: pinned and dropped-in nodes.
     for node in [*state.pins, *(n for n, left in state.drop_ins.items() if left > 0)]:

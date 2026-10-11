@@ -45,6 +45,7 @@ class Item:
     quality: float
     toxicity: float
     author_role: str | None
+    tools: tuple[str, ...] = ()     # products the post names (lower-cased), for committed-mode competitors
 
 
 @dataclass
@@ -112,7 +113,8 @@ def load(store: FeedStore, posts: PostsReader) -> FeedData:
             similar_posts=max(0, (prob.post_count if prob else 1) - 1),
             trend=(prob.score_breakdown or {}).get("trend", 0.5) if prob else 0.5,
             intensity=row.intensity or 0.0, money=row.money_signal, buyer=row.buyer_likelihood or 0.0,
-            quality=row.quality or 0.0, toxicity=row.toxicity or 0.0, author_role=post.author_role))
+            quality=row.quality or 0.0, toxicity=row.toxicity or 0.0, author_role=post.author_role,
+            tools=tuple(t.lower() for t in (row.tools_mentioned or []))))
         vecs.append(row.embedding)
     # Pain and demand scores come from different formulas: rank each within its kind so the ranker can
     # compare a pain post with a tender.

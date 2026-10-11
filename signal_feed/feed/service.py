@@ -187,8 +187,8 @@ class FeedService:
                              config=cfg, arms=arms)
         # Filter-bubble guard (section 10): one leaf over half of the last 100 items -> 20% exploration.
         lc = cfg.learning
-        boost = lc.bubble_exploration if bubble_share(self.store, user_id, lc.bubble_window_impressions) \
-            > lc.bubble_leaf_share else None
+        boost = lc.bubble_exploration if state.mode != "committed" and bubble_share(
+            self.store, user_id, lc.bubble_window_impressions) > lc.bubble_leaf_share else None
         candidates = generate(data, state, cfg, self.store, now, self.rng, explore_more, boost)
         scored = ranker.score(data, state, candidates, now, self.rng)
         previous = [SimpleNamespace(index=data.by_id[p].index) for p in shown[-10:] if p in data.by_id]

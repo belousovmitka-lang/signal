@@ -211,6 +211,8 @@ class UserModelConfig(_Strict):
     drop_in_exposure_budget: int = Field(ge=0)
     removed_retest_after_days: int = Field(ge=0)
     committed_other_cap: Fraction = Field(ge=0, le=1)
+    committed_affinity: Fraction = Field(ge=0, le=1)
+    committed_demand_max: Fraction = Field(ge=0, le=1)
     narrowing: Narrowing
     rings: Rings
 

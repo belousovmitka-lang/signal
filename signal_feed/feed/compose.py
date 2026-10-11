@@ -10,7 +10,18 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta
 
 from ..config import FeedConfig
-from .candidates import DROP_IN, EXPLORE, PIN, SIMILAR, SKILL_MATCH, TRENDING
+from .candidates import (
+    COMMITTED_SOURCES,
+    COMPETITOR,
+    DROP_IN,
+    EVIDENCE,
+    EXPLORE,
+    PIN,
+    RELATED_DEMAND,
+    SIMILAR,
+    SKILL_MATCH,
+    TRENDING,
+)
 from .data import FeedData
 from .ranker import Scored
 from .usermodel import UserState
@@ -42,7 +53,15 @@ def explain(s: Scored, data: FeedData, state: UserState) -> str:
     src = s.candidate.source
     node = s.candidate.node if s.candidate.node in data.industry.nodes else it.niche_id
     leaf = data.industry.nodes[node].label
-    if src == PIN:
+    if src == EVIDENCE:
+        text = f"Committed: evidence for problem {it.problem_id}"
+    elif src == COMPETITOR:
+        text = f"Committed: mentions a competitor ({', '.join(sorted(set(it.tools) & set(state.committed_competitors)))})"
+    elif src == RELATED_DEMAND:
+        text = f"Committed: related paid demand in {leaf}"
+    elif src in COMMITTED_SOURCES:
+        text = f"Committed: {leaf}"
+    elif src == PIN:
         text = f"Pinned: {leaf}"
     elif src == DROP_IN:
         text = f"You added {leaf} · trying it for a few sessions"
@@ -67,12 +86,14 @@ def explain(s: Scored, data: FeedData, state: UserState) -> str:
     return text
 
 
-def collapse(scored: Sequence[Scored], data: FeedData) -> list[Scored]:
-    """The best-scoring post per problem (section 9 step 1); posts without a problem stand alone."""
+def collapse(scored: Sequence[Scored], data: FeedData, keep_all: int | None = None) -> list[Scored]:
+    """The best-scoring post per problem (section 9 step 1); posts without a problem stand alone. In
+    committed mode the committed problem (`keep_all`) keeps all its posts: they are its evidence."""
     best: dict[object, Scored] = {}
     for s in scored:
         it = data.items[s.index]
-        key = ("problem", it.problem_id) if it.problem_id is not None else ("post", it.post_id)
+        key = ("problem", it.problem_id) if it.problem_id is not None and it.problem_id != keep_all \
+            else ("post", it.post_id)
         if key not in best or s.score > best[key].score:
             best[key] = s
     return sorted(best.values(), key=lambda s: -s.score)
@@ -88,8 +109,17 @@ def compose(scored: Sequence[Scored], data: FeedData, state: UserState, config: 
     if exploration_floor:
         q = q.model_copy(update={"exploration_min": max(q.exploration_min, exploration_floor),
                                  "exploration_max": max(q.exploration_max, exploration_floor)})
+    committed = state.mode == "committed" and state.committed_niche is not None
+    if committed:   # section 6.7: everything outside the problem is capped; no forced exploration
+        q = q.model_copy(update={"exploration_min": 0.0, "paid_demand_min": 0.0})
+        focus = set(data.industry.subtree(state.committed_niche))
+        cap = math.floor(config.user_model.committed_other_cap * c.window)
+
+        def outside(s: Scored) -> bool:
+            return s.candidate.source not in COMMITTED_SOURCES and data.items[s.index].niche_id not in focus
+    others = 0
     size, window = c.page_size, c.window
-    pool = collapse(scored, data)
+    pool = collapse(scored, data, state.committed_problem if state.mode == "committed" else None)
     cats = {id(s): category(s, data) for s in pool}
     fresh_cut = now - timedelta(hours=c.fresh_hours)
     is_fresh = {id(s): data.items[s.index].published_at >= fresh_cut for s in pool}
@@ -125,6 +155,10 @@ def compose(scored: Sequence[Scored], data: FeedData, state: UserState, config: 
             break
         n = slot + 1
         allowed = list(pool)
+        if committed and others >= cap:
+            allowed = [s for s in allowed if not outside(s)]
+        if committed and counts[DEMAND] >= math.floor(config.user_model.committed_demand_max * c.window):
+            allowed = [s for s in allowed if cats[id(s)] != DEMAND]
         if not explore_more:
             if counts[CHANGE] >= math.floor(q.change_max * window):
                 allowed = [s for s in allowed if cats[id(s)] != CHANGE]
@@ -152,6 +186,9 @@ def compose(scored: Sequence[Scored], data: FeedData, state: UserState, config: 
             if options:
                 forced, rule = options, "fresh"
         options = forced if forced is not None else allowed
+        if not options and committed and others >= cap:
+            caught_up = True     # the problem's own items ran out; never fill past the cap
+            break
         if not options:
             options = list(pool)
         # Diversity first: a forced quota that can't be met without breaking it waits one slot.
@@ -161,6 +198,8 @@ def compose(scored: Sequence[Scored], data: FeedData, state: UserState, config: 
             rule = None if pick is not None else rule
         pick = pick or options[0]
         pool.remove(pick)
+        if committed and outside(pick):
+            others += 1
         cat = cats[id(pick)]
         if cat in counts:
             counts[cat] += 1

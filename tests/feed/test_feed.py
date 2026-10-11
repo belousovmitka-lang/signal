@@ -289,3 +289,30 @@ def test_drop_ins_spend_their_exposure_budget(world, feed_store, feed_config):
     assert any(i.score_breakdown["reason"].startswith("You added Farm equipment") for i in page.items)
     with feed_store.session() as s:
         assert s.get(UserDropInRow, (uid, node)).exposures_left == 1
+
+
+def test_committed_mode_narrows_the_feed_to_the_problem(world, feed_store, feed_config):
+    reader, nodes, _, raw, prob_id = world
+    client = TestClient(create_app(feed_store, reader, feed_config,
+                                   FeedService(feed_store, feed_config, FeedDataCache(feed_store, reader),
+                                               clock=lambda: NOW, seed=1)))
+    uid = client.post("/onboarding", json={"industries": ["Healthcare"]}).json()["user_id"]
+    client.get("/feed", params={"user_id": uid, "session_id": "cal"})                # calibration first
+    assert client.post("/mode", json={"user_id": uid, "mode": "committed"}).status_code == 422
+    assert client.post("/mode", json={"user_id": uid, "mode": "committed", "problem_id": 99999}).status_code == 422
+    with feed_store.session() as s, s.begin():
+        s.get(ProblemRow, prob_id).competitors = ["clio"]
+    assert client.post("/mode", json={"user_id": uid, "mode": "committed", "problem_id": prob_id}).json()["mode"] == "committed"
+    page = client.get("/feed", params={"user_id": uid, "session_id": "focus"}).json()
+    legal = set(nodes[k] for k in nodes if k.startswith("Legal"))
+    data = load(feed_store, reader)
+    outside = [i for i in page["items"] if data.by_id[i["post_id"]].niche_id not in legal
+               and not i["score_breakdown"]["source"].startswith("committed")]
+    assert page["items"] and len(outside) <= int(feed_config.user_model.committed_other_cap * 20)
+    assert any(i["score_breakdown"]["source"] == "committed_evidence" for i in page["items"])
+    assert any(i["post_type"] == "paid_demand" for i in page["items"])          # related demand is in scope
+    assert len(page["items"]) >= 15 and min(i["score"] for i in page["items"][:5]) > 0.5   # focus ranks high
+    assert not any(i["score_breakdown"].get("bubble_guard") for i in page["items"])
+    assert client.post("/mode", json={"user_id": uid, "mode": "exploring"}).json()["mode"] == "exploring"
+    with feed_store.session() as s:
+        assert s.get(UserRow, uid).committed_problem_id is None
