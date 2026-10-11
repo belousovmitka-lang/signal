@@ -71,7 +71,7 @@ forums:
 - name: TruckersReport
   url: https://www.thetruckersreport.com/truckingindustryforum/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   software: xenforo
   rss: https://www.thetruckersreport.com/truckingindustryforum/forums/-/index.rss
   robots: allowed
@@ -82,62 +82,61 @@ rss_feeds:
 - name: freightwaves
   url: https://www.freightwaves.com/news/feed
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   entries: 56
   full_text: true
 - name: supplychaindive
   url: https://www.supplychaindive.com/feeds/news/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   entries: 10
   full_text: false
 - name: dcvelocity
   url: https://www.dcvelocity.com/feeds/feed.rss
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   entries: 30
   full_text: false
 - name: ttnews
   url: https://www.ttnews.com/rss.xml
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   entries: 20
   full_text: false
 - name: logisticsmgmt
   url: https://feeds.feedburner.com/logisticsmgmt/latest
   status: live
-  checked_at: '2026-10-09'
-  notes: moved from https://www.logisticsmgmt.com/rss (found on homepage)
+  checked_at: '2026-10-10'
   entries: 40
   full_text: true
 - name: overdrive
   url: https://www.overdriveonline.com/rss
   status: dead
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: HTTP 404
 associations:
 - name: American Trucking Associations
   url: https://www.trucking.org/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
 - name: TIA
   url: https://www.tianet.org/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
 - name: FMCSA
   url: https://www.fmcsa.dot.gov/
   status: search_only
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: HTTP 403 to our bot
 job_boards:
 - name: CDLjobs.com
   url: https://www.cdljobs.com/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
 - name: TruckingTruth jobs
   url: https://www.truckingtruth.com/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
 podcasts:
 - name: What The Truck?!
   status: unverified

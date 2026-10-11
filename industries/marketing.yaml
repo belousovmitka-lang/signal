@@ -70,7 +70,7 @@ forums:
 - name: HubSpot Community
   url: https://community.hubspot.com/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   software: discourse
   rss: https://community.hubspot.com/posts.rss
   robots: allowed
@@ -80,14 +80,14 @@ forums:
 - name: Warrior Forum
   url: https://www.warriorforum.com/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   software: unknown
   robots: allowed
   terms: unchecked
 - name: Digital Point forums
   url: https://forums.digitalpoint.com/
   status: search_only
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: HTTP 403 to our bot; use the search route
   software: unknown
   robots: allowed
@@ -96,54 +96,54 @@ rss_feeds:
 - name: searchenginejournal
   url: https://www.searchenginejournal.com/feed/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   entries: 20
   full_text: false
 - name: adweek
   url: https://www.adweek.com/feed/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   entries: 10
   full_text: false
 - name: searchengineland
   url: https://searchengineland.com/feed
   status: blocked
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: HTTP 403 to our bot
   entries: 10
   full_text: true
 - name: marketingdive
   url: https://www.marketingdive.com/feeds/news/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   entries: 10
   full_text: false
 - name: martech
   url: https://martech.org/feed/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   entries: 10
   full_text: true
 - name: ppcland
   url: https://ppc.land/rss/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   entries: 100
   full_text: true
 associations:
 - name: American Marketing Association
   url: https://www.ama.org/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
 - name: MarketingProfs
   url: https://www.marketingprofs.com/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
 job_boards:
 - name: AMA career center
   url: https://careers.ama.org/
   status: dead
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: site unreachable (ConnectError)
 podcasts:
 - name: Marketing School

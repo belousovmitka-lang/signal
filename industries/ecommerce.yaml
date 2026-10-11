@@ -71,7 +71,7 @@ forums:
 - name: Shopify Community
   url: https://community.shopify.com/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   software: discourse
   rss: https://community.shopify.com/latest.rss
   robots: allowed
@@ -81,14 +81,14 @@ forums:
 - name: eBay Community
   url: https://community.ebay.com/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   software: khoros
   robots: allowed
   terms: unchecked
 - name: Amazon Seller Forums
   url: https://sellercentral.amazon.com/seller-forums
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   software: unknown
   robots: allowed
   terms: unchecked
@@ -96,50 +96,49 @@ rss_feeds:
 - name: modernretail
   url: https://www.modernretail.co/feed/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   entries: 10
   full_text: true
 - name: retaildive
   url: https://www.retaildive.com/feeds/news/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   entries: 10
   full_text: false
 - name: practicalecommerce
   url: https://www.practicalecommerce.com/feed
   status: blocked
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: robots.txt disallows
 - name: digitalcommerce360
   url: https://www.digitalcommerce360.com/feed/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   entries: 10
   full_text: true
 - name: ecommercebytes
   url: https://www.ecommercebytes.com/feed/
   status: dead
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: not a feed
   entries: 0
   full_text: false
 - name: marketplacepulse
   url: https://www.marketplacepulse.com/articles/recent.atom
   status: live
-  checked_at: '2026-10-09'
-  notes: moved from https://www.marketplacepulse.com/rss (found on homepage)
+  checked_at: '2026-10-10'
   entries: 20
   full_text: true
 associations:
 - name: National Retail Federation
   url: https://nrf.com/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
 job_boards:
 - name: Retail Dive jobs
   url: https://jobs.retaildive.com/
   status: dead
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: site unreachable (ConnectError)
 podcasts:
 - name: eCommerce Fuel

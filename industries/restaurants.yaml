@@ -71,37 +71,37 @@ rss_feeds:
 - name: restaurantdive
   url: https://www.restaurantdive.com/feeds/news/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   entries: 10
   full_text: false
 - name: nrn
   url: https://www.nrn.com/rss.xml
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   entries: 50
   full_text: false
 - name: skift
   url: https://skift.com/feed/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   entries: 10
   full_text: true
 - name: qsrmagazine
   url: https://www.qsrmagazine.com/feed/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   entries: 25
   full_text: true
 - name: fsrmagazine
   url: https://www.fsrmagazine.com/feed/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   entries: 25
   full_text: true
 - name: hospitalitynet
   url: https://www.hospitalitynet.org/news/global.xml
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: redirects to https://www.hospitalitynet.org/rss/news.xml
   entries: 20
   full_text: false
@@ -109,20 +109,21 @@ associations:
 - name: National Restaurant Association
   url: https://restaurant.org/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
 - name: AHLA
   url: https://www.ahla.com/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
 job_boards:
 - name: Culinary Agents
   url: https://culinaryagents.com/
-  status: live
-  checked_at: '2026-10-09'
+  status: search_only
+  checked_at: '2026-10-10'
+  notes: HTTP 403 to our bot
 - name: Poached
   url: https://poachedjobs.com/
   status: search_only
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: HTTP 403 to our bot
 podcasts:
 - name: Restaurant Unstoppable

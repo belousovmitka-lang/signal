@@ -75,7 +75,7 @@ forums:
 - name: AllNurses
   url: https://allnurses.com/
   status: search_only
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: HTTP 403 to our bot; use the search route
   software: unknown
   robots: allowed
@@ -83,7 +83,7 @@ forums:
 - name: Student Doctor Network
   url: https://forums.studentdoctor.net/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: redirects to https://forums.studentdoctor.net/forums/
   software: xenforo
   rss: https://forums.studentdoctor.net/forums/-/index.rss
@@ -94,7 +94,7 @@ forums:
 - name: DentalTown
   url: https://www.dentaltown.com/messageboard
   status: blocked
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: behind a login (https://www.dentaltown.com/login?url=%2fmessageboard%2fsite.aspx)
   software: unknown
   robots: allowed
@@ -103,60 +103,60 @@ rss_feeds:
 - name: fiercehealthcare
   url: https://www.fiercehealthcare.com/rss/xml
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   entries: 25
   full_text: false
 - name: statnews
   url: https://www.statnews.com/feed/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   entries: 20
   full_text: true
 - name: healthcaredive
   url: https://www.healthcaredive.com/feeds/news/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   entries: 10
   full_text: false
 - name: medcitynews
   url: https://medcitynews.com/feed/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   entries: 30
   full_text: false
 - name: healthcareitnews
   url: https://www.healthcareitnews.com/home/feed
   status: blocked
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: HTTP 403 to our bot
 - name: beckershospitalreview
   url: https://www.beckershospitalreview.com/feed/
   status: blocked
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: robots.txt disallows
 associations:
 - name: HIMSS
   url: https://www.himss.org/
   status: search_only
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: HTTP 403 to our bot
 - name: MGMA
   url: https://www.mgma.com/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
 - name: AANP
   url: https://www.aanp.org/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
 job_boards:
 - name: Health eCareers
   url: https://www.healthecareers.com/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
 - name: Nurse.com jobs
   url: https://www.nurse.com/jobs
   status: search_only
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: HTTP 403 to our bot
 podcasts:
 - name: This Week Health

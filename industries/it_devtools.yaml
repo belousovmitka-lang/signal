@@ -78,7 +78,7 @@ forums:
 - name: Spiceworks Community
   url: https://community.spiceworks.com/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   software: discourse
   rss: https://community.spiceworks.com/posts.rss
   robots: allowed
@@ -89,7 +89,7 @@ forums:
 - name: Lobsters
   url: https://lobste.rs/
   status: search_only
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: robots.txt disallows; use the search route
   software: unknown
   robots: disallowed
@@ -97,7 +97,7 @@ forums:
 - name: DEV Community
   url: https://dev.to/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   software: unknown
   rss: https://dev.to/feed
   robots: allowed
@@ -107,7 +107,7 @@ forums:
 - name: Cloudflare Community
   url: https://community.cloudflare.com/
   status: search_only
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: HTTP 403 to our bot; use the search route
   software: unknown
   robots: allowed
@@ -115,7 +115,7 @@ forums:
 - name: HashiCorp Discuss
   url: https://discuss.hashicorp.com/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   software: discourse
   rss: https://discuss.hashicorp.com/latest.rss
   robots: allowed
@@ -126,7 +126,7 @@ forums:
 - name: ServeTheHome forums
   url: https://forums.servethehome.com/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: redirects to https://forums.servethehome.com/index.php
   software: xenforo
   rss: https://forums.servethehome.com/index.php?forums/-/index.rss
@@ -139,52 +139,52 @@ rss_feeds:
 - name: infoq
   url: https://feed.infoq.com/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   entries: 15
   full_text: false
 - name: thenewstack
   url: https://thenewstack.io/feed/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   entries: 26
   full_text: true
 - name: theregister
   url: https://www.theregister.com/headlines.atom
   status: blocked
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: robots.txt disallows
 - name: bleepingcomputer
   url: https://www.bleepingcomputer.com/feed/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   entries: 15
   full_text: false
 - name: devops-com
   url: https://devops.com/feed/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   entries: 10
   full_text: true
 - name: arstechnica
   url: https://feeds.arstechnica.com/arstechnica/index
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   entries: 20
   full_text: true
 associations:
 - name: CompTIA
   url: https://www.comptia.org/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
 - name: LISA / USENIX
   url: https://www.usenix.org/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
 job_boards:
 - name: Dice
   url: https://www.dice.com/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
 podcasts:
 - name: MSP Radio
   status: unverified

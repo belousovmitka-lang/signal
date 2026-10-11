@@ -72,7 +72,7 @@ forums:
 - name: Practical Machinist
   url: https://www.practicalmachinist.com/forum/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   software: xenforo
   rss: https://www.practicalmachinist.com/forum/forums/-/index.rss
   robots: allowed
@@ -82,7 +82,7 @@ forums:
 - name: Eng-Tips
   url: https://www.eng-tips.com/
   status: search_only
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: bot challenge page; never bypass (rule 1); use the search route
   software: unknown
   robots: allowed
@@ -90,7 +90,7 @@ forums:
 - name: CNCzone
   url: https://www.cnczone.com/forums/
   status: search_only
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: HTTP 403 to our bot; use the search route
   software: unknown
   robots: allowed
@@ -98,7 +98,7 @@ forums:
 - name: PLCtalk
   url: https://www.plctalk.net/forums/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   software: xenforo
   rss: https://www.plctalk.net/forums/forums/-/index.rss
   robots: allowed
@@ -109,40 +109,38 @@ rss_feeds:
 - name: manufacturingdive
   url: https://www.manufacturingdive.com/feeds/news/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   entries: 10
   full_text: false
 - name: modernmachineshop
   url: https://www.mmsonline.com/rss/blog
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   entries: 10
   full_text: true
 - name: industryweek
   url: https://www.industryweek.com/__rss/website-scheduled-content.xml?input=%7B%22sectionAlias%22%3A%22home%22%7D
   status: live
-  checked_at: '2026-10-09'
-  notes: moved from https://www.industryweek.com/rss.xml (found on homepage)
+  checked_at: '2026-10-10'
   entries: 25
   full_text: true
 - name: automationworld
   url: https://www.automationworld.com/__rss/website-scheduled-content.xml?input=%7B%22sectionAlias%22%3A%22home%22%7D
   status: live
-  checked_at: '2026-10-09'
-  notes: moved from https://www.automationworld.com/rss (found on homepage)
+  checked_at: '2026-10-10'
   entries: 25
   full_text: true
 - name: assemblymag
   url: https://www.assemblymag.com/rss
   status: dead
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: not a feed
   entries: 0
   full_text: false
 - name: themanufacturer
   url: https://www.themanufacturer.com/feed/
   status: dead
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: not a feed
   entries: 0
   full_text: false
@@ -150,21 +148,21 @@ associations:
 - name: NAM
   url: https://nam.org/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
 - name: SME
   url: https://www.sme.org/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
 - name: OSHA newsroom
   url: https://www.osha.gov/news
   status: search_only
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: HTTP 403 to our bot
 job_boards:
 - name: iHireManufacturing
   url: https://www.ihiremanufacturing.com/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
 podcasts:
 - name: Manufacturing Happy Hour
   status: unverified

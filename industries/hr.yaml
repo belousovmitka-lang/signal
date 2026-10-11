@@ -70,57 +70,113 @@ forums:
 - name: SHRM community
   url: https://community.shrm.org/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: redirects to https://community.shrm.org/s/
+  locked: false
   software: unknown
   robots: allowed
+  terms: unchecked
 rss_feeds:
 - name: hrdive
   url: https://www.hrdive.com/feeds/news/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
+  locked: false
   entries: 10
   full_text: false
 - name: ere
   url: https://www.ere.net/rss.xml
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
+  locked: false
   entries: 10
   full_text: false
 - name: hrexecutive
   url: https://hrexecutive.com/feed/
   status: dead
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: HTTP 404
+  locked: false
 - name: hrmorning
   url: https://www.hrmorning.com/feed/
   status: blocked
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: robots.txt disallows
+  locked: false
+- name: hcamag
+  url: https://www.hcamag.com/us/rss
+  status: live
+  checked_at: '2026-10-10'
+  locked: false
+  entries: 62
+  full_text: true
+- name: benefitnews
+  url: https://www.benefitnews.com/feed?rss=true
+  status: live
+  checked_at: '2026-10-10'
+  locked: false
+  entries: 20
+  full_text: false
+- name: workforce
+  url: https://workforce.com/feed
+  status: dead
+  checked_at: '2026-10-10'
+  notes: HTTP 404
+  locked: false
+- name: recruitingdaily
+  url: https://recruitingdaily.com/feed/
+  status: live
+  checked_at: '2026-10-10'
+  locked: false
+  entries: 15
+  full_text: true
+- name: personneltoday
+  url: https://www.personneltoday.com/feed/
+  status: live
+  checked_at: '2026-10-10'
+  locked: false
+  entries: 15
+  full_text: true
+- name: hrreporter
+  url: https://www.hrreporter.com/rss
+  status: live
+  checked_at: '2026-10-10'
+  locked: false
+  entries: 31
+  full_text: true
 associations:
 - name: SHRM
   url: https://www.shrm.org/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
+  locked: false
 - name: Department of Labor newsroom
   url: https://www.dol.gov/newsroom/releases
   status: search_only
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: HTTP 403 to our bot
+  locked: false
 job_boards:
 - name: SHRM HRJobs
   url: https://hrjobs.shrm.org/
-  status: live
-  checked_at: '2026-10-09'
+  status: search_only
+  checked_at: '2026-10-10'
+  notes: HTTP 403 to our bot
+  locked: false
 podcasts:
 - name: HR Happy Hour
   status: unverified
+  locked: false
 - name: Recruiting Future
   status: unverified
+  locked: false
 - name: The Chad & Cheese Podcast
   status: unverified
+  locked: false
 youtube_channels:
 - name: SHRM
   status: unverified
+  locked: false
 - name: Paycor
   status: unverified
+  locked: false

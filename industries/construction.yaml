@@ -76,7 +76,7 @@ forums:
 - name: Contractor Talk
   url: https://www.contractortalk.com/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   software: xenforo
   rss: https://www.contractortalk.com/forums/-/index.rss
   robots: allowed
@@ -86,7 +86,7 @@ forums:
 - name: HVAC-Talk
   url: https://hvac-talk.com/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: redirects to https://www.hvac-talk.com/
   software: xenforo
   rss: https://www.hvac-talk.com/forums/-/index.rss
@@ -97,7 +97,7 @@ forums:
 - name: Mike Holt forums
   url: https://forums.mikeholt.com/
   status: search_only
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: HTTP 403 to our bot; use the search route
   software: unknown
   robots: allowed
@@ -105,7 +105,7 @@ forums:
 - name: Electrician Talk
   url: https://www.electriciantalk.com/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   software: xenforo
   rss: https://www.electriciantalk.com/forums/-/index.rss
   robots: allowed
@@ -115,7 +115,7 @@ forums:
 - name: PlumbingZone
   url: https://www.plumbingzone.com/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   software: xenforo
   rss: https://www.plumbingzone.com/forums/-/index.rss
   robots: allowed
@@ -126,63 +126,62 @@ rss_feeds:
 - name: constructiondive
   url: https://www.constructiondive.com/feeds/news/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   entries: 10
   full_text: false
 - name: enr
   url: https://www.enr.com/rss/articles
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   entries: 30
   full_text: true
 - name: jlc
   url: https://www.jlconline.com/feed/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   entries: 10
   full_text: true
 - name: achrnews
   url: https://www.achrnews.com/rss
   status: dead
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: not a feed
   entries: 0
   full_text: false
 - name: forconstructionpros
   url: https://www.forconstructionpros.com/rss
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   entries: 10
   full_text: true
 - name: ecmweb
   url: https://www.ecmweb.com/__rss/website-scheduled-content.xml?input=%7B%22sectionAlias%22%3A%22home%22%7D
   status: live
-  checked_at: '2026-10-09'
-  notes: moved from https://www.ecmweb.com/rss (found on homepage)
+  checked_at: '2026-10-10'
   entries: 25
   full_text: false
 associations:
 - name: AGC
   url: https://www.agc.org/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
 - name: NAHB
   url: https://www.nahb.org/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
 - name: ABC
   url: https://www.abc.org/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
 job_boards:
 - name: ConstructionJobs.com
   url: https://www.constructionjobs.com/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
 - name: iHireConstruction
   url: https://www.ihireconstruction.com/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
 podcasts:
 - name: The Construction Brothers
   status: unverified

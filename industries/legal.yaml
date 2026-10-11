@@ -72,80 +72,97 @@ forums:
 - name: Lawyerist community
   url: https://lawyerist.com/community/
   status: dead
-  checked_at: '2026-10-09'
-  notes: community page now redirects to a podcast episode; the community appears to be gone (checked
-    2026-10-09)
+  checked_at: '2026-10-10'
+  notes: community page redirects to a podcast episode; community gone (locked by review 2026-10-10)
+  locked: true
   software: unknown
   robots: allowed
+  terms: unchecked
 rss_feeds:
 - name: abovethelaw
   url: https://abovethelaw.com/feed/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
+  locked: false
   entries: 30
   full_text: true
 - name: artificiallawyer
   url: https://www.artificiallawyer.com/feed/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
+  locked: false
   entries: 10
   full_text: false
 - name: lawsites
   url: https://www.lawnext.com/feed
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
+  locked: false
   entries: 100
   full_text: false
 - name: lawdotcom
   url: https://www.law.com/rss/
   status: dead
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: HTTP 404
+  locked: false
 - name: abajournal
   url: https://www.abajournal.com/feed
   status: dead
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: HTTP 404
+  locked: false
 - name: legaltalknetwork
   url: https://legaltalknetwork.com/feed/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
+  locked: false
   entries: 100
   full_text: true
 associations:
 - name: American Bar Association
   url: https://www.americanbar.org/
   status: search_only
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: HTTP 403 to our bot
+  locked: false
 - name: NALA
   url: https://www.nala.org/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
+  locked: false
 - name: Clio Legal Trends Report
   url: https://www.clio.com/resources/legal-trends/
   status: search_only
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: HTTP 403 to our bot
+  locked: false
 job_boards:
 - name: ABA Career Center
   url: https://careers.americanbar.org/
   status: dead
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: site unreachable (ConnectError)
+  locked: false
 - name: LawCrossing
   url: https://www.lawcrossing.com/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
+  locked: false
 podcasts:
 - name: Legal Talk Network
   status: unverified
+  locked: false
 - name: Lawyerist Podcast
   status: unverified
+  locked: false
 - name: The Legal Toolkit
   status: unverified
+  locked: false
 youtube_channels:
 - name: Clio
   status: unverified
+  locked: false
 - name: Legal Eagle
   status: unverified
+  locked: false

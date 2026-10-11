@@ -140,3 +140,12 @@ async def test_check_link(tools):
     for link in links:
         await check_link(*tools, link, TODAY)
     assert [l.status for l in links] == ["live", "search_only", "dead", "unverified"]
+
+
+async def test_locked_entries_are_left_alone(tools):
+    forum = Forum(name="gone", url="https://ok.example/", status="dead", locked=True, notes="human said so")
+    feed = Feed(name="f", url="https://gone.example/feed", status="live", locked=True)
+    await check_forum(*tools, forum, TODAY)
+    await check_feed(*tools, feed, TODAY)
+    assert (forum.status, forum.notes, forum.checked_at) == ("dead", "human said so", None)
+    assert feed.status == "live" and feed.checked_at is None

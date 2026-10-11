@@ -66,70 +66,134 @@ forums:
 - name: BiggerPockets
   url: https://www.biggerpockets.com/forums
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
+  locked: false
   software: unknown
   robots: allowed
+  terms: unchecked
 - name: ActiveRain
   url: https://activerain.com/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
+  locked: false
   software: unknown
   robots: allowed
+  terms: unchecked
 rss_feeds:
 - name: inman
   url: https://www.inman.com/feed/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: redirects to http://feeds.feedburner.com/inmannews
+  locked: false
   entries: 18
   full_text: true
 - name: housingwire
   url: https://www.housingwire.com/feed/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
+  locked: false
   entries: 10
   full_text: false
 - name: therealdeal
   url: https://therealdeal.com/feed/
   status: blocked
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: HTTP 403 to our bot
+  locked: false
 - name: globest
   url: https://www.globest.com/feed/
   status: blocked
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: HTTP 403 to our bot
+  locked: false
 - name: realestatenews
   url: https://www.realestatenews.com/feed
   status: dead
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: not a feed
+  locked: false
   entries: 0
   full_text: false
+- name: rismedia
+  url: https://www.rismedia.com/feed/
+  status: live
+  checked_at: '2026-10-10'
+  locked: false
+  entries: 10
+  full_text: false
+- name: multihousingnews
+  url: https://www.multihousingnews.com/feed/
+  status: live
+  checked_at: '2026-10-10'
+  locked: false
+  entries: 100
+  full_text: true
+- name: cpexecutive
+  url: https://www.cpexecutive.com/feed/
+  status: blocked
+  checked_at: '2026-10-10'
+  notes: HTTP 403 to our bot
+  locked: false
+- name: nreionline
+  url: https://www.nreionline.com/rss.xml
+  status: dead
+  checked_at: '2026-10-10'
+  notes: site unreachable (HTTP 530)
+  locked: false
+- name: mpamag
+  url: https://www.mpamag.com/us/rss
+  status: live
+  checked_at: '2026-10-10'
+  locked: false
+  entries: 58
+  full_text: true
+- name: bisnow
+  url: https://www.bisnow.com/rss
+  status: live
+  checked_at: '2026-10-10'
+  notes: redirects to https://www.bisnow.com/rss/all
+  locked: false
+  entries: 10
+  full_text: true
+- name: propertymanagementinsider
+  url: https://www.propertymanagementinsider.com/feed
+  status: dead
+  checked_at: '2026-10-10'
+  notes: site unreachable (ConnectError)
+  locked: false
 associations:
 - name: National Association of Realtors
   url: https://www.nar.realtor/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
+  locked: false
 - name: NARPM
   url: https://www.narpm.org/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
+  locked: false
 job_boards:
 - name: NAR career center
   url: https://careers.nar.realtor/
   status: dead
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: site unreachable (ConnectError)
+  locked: false
 podcasts:
 - name: BiggerPockets Real Estate Podcast
   status: unverified
+  locked: false
 - name: Real Estate Rookie
   status: unverified
+  locked: false
 - name: Inman Access
   status: unverified
+  locked: false
 youtube_channels:
 - name: BiggerPockets
   status: unverified
+  locked: false
 - name: Inman
   status: unverified
+  locked: false

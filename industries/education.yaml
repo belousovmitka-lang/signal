@@ -71,7 +71,7 @@ forums:
 - name: A to Z Teacher Stuff forums
   url: https://forums.atozteacherstuff.com/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: redirects to https://forums.atozteacherstuff.com/index.php
   software: xenforo
   rss: https://forums.atozteacherstuff.com/index.php?forums/-/index.rss
@@ -83,7 +83,7 @@ forums:
 - name: Instructure Community
   url: https://community.canvaslms.com/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: redirects to https://community.instructure.com/en
   software: unknown
   robots: allowed
@@ -92,65 +92,64 @@ rss_feeds:
 - name: edsurge
   url: https://www.edsurge.com/articles_rss
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   entries: 50
   full_text: true
 - name: insidehighered
   url: https://www.insidehighered.com/rss.xml
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   entries: 10
   full_text: false
 - name: k12dive
   url: https://www.k12dive.com/feeds/news/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   entries: 10
   full_text: false
 - name: highereddive
   url: https://www.highereddive.com/feeds/news/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   entries: 10
   full_text: false
 - name: the74
   url: https://www.the74million.org/feed/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   entries: 25
   full_text: true
 - name: eschoolnews
   url: https://www.eschoolnews.com/feed/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   entries: 200
   full_text: true
 - name: edweek
   url: https://www.edweek.org/index.rss
   status: live
-  checked_at: '2026-10-09'
-  notes: moved from https://www.edweek.org/feed (found on homepage)
-  entries: 27
+  checked_at: '2026-10-10'
+  entries: 26
   full_text: false
 associations:
 - name: ISTE
   url: https://iste.org/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
 - name: EDUCAUSE
   url: https://www.educause.edu/
   status: search_only
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: HTTP 403 to our bot
 job_boards:
 - name: HigherEdJobs
   url: https://www.higheredjobs.com/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
 - name: SchoolSpring
   url: https://www.schoolspring.com/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
 podcasts:
 - name: Cult of Pedagogy
   status: unverified

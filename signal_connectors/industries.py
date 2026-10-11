@@ -31,6 +31,7 @@ class _Entry(BaseModel):
     status: Status = "unverified"
     checked_at: date | None = None
     notes: str | None = None
+    locked: bool = False           # status set by a human: verify_industries.py leaves it alone
 
 
 class Feed(_Entry):

@@ -34,6 +34,8 @@ async def robots_verdict(robots: RobotsChecker, url: str) -> str | None:
 
 
 async def check_feed(http: HttpClient, robots: RobotsChecker, feed: Feed, today: date) -> None:
+    if feed.locked:
+        return
     await _check_feed_url(http, robots, feed, today)
     if feed.status != "dead" or (feed.notes or "").startswith("site unreachable"):
         return
@@ -87,6 +89,8 @@ async def _check_feed_url(http: HttpClient, robots: RobotsChecker, feed: Feed, t
 
 
 async def check_forum(http: HttpClient, robots: RobotsChecker, forum: Forum, today: date) -> None:
+    if forum.locked:
+        return
     forum.checked_at = today
     if (verdict := await robots_verdict(robots, forum.url)) and verdict.startswith("dead"):
         forum.status, forum.notes, forum.robots = "dead", verdict[6:], "unchecked"
@@ -115,6 +119,8 @@ async def check_forum(http: HttpClient, robots: RobotsChecker, forum: Forum, tod
 
 
 async def check_link(http: HttpClient, robots: RobotsChecker, link: Link, today: date) -> None:
+    if link.locked:
+        return
     if not link.url:
         return
     link.checked_at = today

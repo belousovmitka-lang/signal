@@ -73,15 +73,17 @@ forums:
 - name: QuickBooks Community
   url: https://quickbooks.intuit.com/learn-support/en-us/community
   status: dead
-  checked_at: '2026-10-09'
-  notes: HTTP 504
+  checked_at: '2026-10-10'
+  notes: 'ReadTimeout: '
+  locked: false
   software: unknown
   robots: allowed
   terms: unchecked
 - name: AccountingWEB Any Answers
   url: https://www.accountingweb.co.uk/any-answers
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
+  locked: false
   software: unknown
   robots: allowed
   terms: forbidden
@@ -91,73 +93,131 @@ rss_feeds:
 - name: accountingtoday
   url: https://www.accountingtoday.com/feed?rss=true
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
+  locked: false
   entries: 10
   full_text: false
 - name: cpapracticeadvisor
   url: https://www.cpapracticeadvisor.com/feed/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
+  locked: false
   entries: 16
   full_text: false
 - name: goingconcern
   url: https://www.goingconcern.com/feed/
-  status: live
-  checked_at: '2026-10-09'
+  status: blocked
+  checked_at: '2026-10-10'
+  notes: HTTP 403 to our bot
+  locked: false
   entries: 100
   full_text: true
 - name: journalofaccountancy
   url: https://www.journalofaccountancy.com/news.xml
   status: dead
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: HTTP 404
+  locked: false
 - name: cpajournal
   url: https://www.cpajournal.com/feed/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
+  locked: false
   entries: 30
   full_text: true
 - name: accountingweb
   url: https://www.accountingweb.co.uk/rss
   status: dead
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: not a feed
+  locked: false
   entries: 0
   full_text: false
+- name: financial-planning
+  url: https://www.financial-planning.com/feed?rss=true
+  status: live
+  checked_at: '2026-10-10'
+  locked: false
+  entries: 10
+  full_text: false
+- name: cpatrendlines
+  url: https://cpatrendlines.com/feed/
+  status: live
+  checked_at: '2026-10-10'
+  locked: false
+  entries: 40
+  full_text: false
+- name: thetaxadviser
+  url: https://www.thetaxadviser.com/news.xml
+  status: dead
+  checked_at: '2026-10-10'
+  notes: HTTP 404
+  locked: false
+- name: cfodive
+  url: https://www.cfodive.com/feeds/news/
+  status: live
+  checked_at: '2026-10-10'
+  locked: false
+  entries: 10
+  full_text: false
+- name: accountingtoday-tax
+  url: https://www.accountingtoday.com/tax-practice?rss=true
+  status: live
+  checked_at: '2026-10-10'
+  notes: redirects to https://www.accountingtoday.com/tax?rss=true
+  locked: false
+  entries: 9
+  full_text: false
+- name: taxprofblog
+  url: https://taxprof.typepad.com/taxprof_blog/atom.xml
+  status: blocked
+  checked_at: '2026-10-10'
+  notes: HTTP 403 to our bot
+  locked: false
 associations:
 - name: AICPA
   url: https://www.aicpa-cima.com/
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
+  locked: false
 - name: NATP
   url: https://www.natptax.com/
   status: search_only
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: HTTP 403 to our bot
+  locked: false
 - name: IRS newsroom
   url: https://www.irs.gov/newsroom
   status: live
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
+  locked: false
 job_boards:
 - name: AICPA career center
   url: https://jobs.aicpa-cima.com/
   status: dead
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: site unreachable (ConnectError)
+  locked: false
 - name: AccountingJobsToday
   url: https://www.accountingjobstoday.com/
   status: search_only
-  checked_at: '2026-10-09'
+  checked_at: '2026-10-10'
   notes: HTTP 403 to our bot
+  locked: false
 podcasts:
 - name: Earmark
   status: unverified
+  locked: false
 - name: Cloud Accounting Podcast
   status: unverified
+  locked: false
 - name: Accounting Today Podcast
   status: unverified
+  locked: false
 youtube_channels:
 - name: Hector Garcia CPA
   status: unverified
+  locked: false
 - name: Karbon
   status: unverified
+  locked: false
