@@ -4,7 +4,8 @@
         --roles "veterinarian,vet tech,practice manager" --keywords "vet clinic,veterinary practice" \
         --tools "ezyVet,Cornerstone" --budget 0.25
 
-Writes industries/<key>.yaml (refuses to overwrite without --force). Searches are metered against
+Writes industries/drafts/<key>.yaml (refuses to overwrite without --force). Drafts are not loaded by
+anything; approving one = moving it to industries/ and setting discovery.needs_review: false. Searches are metered against
 the "discovery" budget and the shared Brave/Exa caps.
 """
 
@@ -26,7 +27,8 @@ def split(value: str | None) -> list[str]:
 
 
 async def main(args: argparse.Namespace) -> int:
-    out = Path(args.out) if args.out else INDUSTRIES_DIR / f"{args.key}.yaml"
+    out = Path(args.out) if args.out else INDUSTRIES_DIR / "drafts" / f"{args.key}.yaml"
+    out.parent.mkdir(parents=True, exist_ok=True)
     if out.exists() and not args.force:
         print(f"{out} exists; use --force to replace it")
         return 1

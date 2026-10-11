@@ -494,7 +494,7 @@ Work top to bottom. Finish each connector to its definition of done before start
     - Each site's homepage is then fetched (robots.txt first) and classified from what the site itself returns: forum (software or forum path), publication (live feed), association (its own title). Then the usual `verify.py` checks.
     - Every forum gets `terms: unchecked` and a `terms_url` to read, unless another map already decided that domain's terms (carried over).
     - Jargon candidates come from frequent phrases in the publications' headlines. Subreddits are not searched (reddit.com is unreadable).
-    - The draft has `discovery.needs_review: true`; the config ignores such maps entirely until a human sets it to false.
+    - Drafts are written to `industries/drafts/<key>.yaml`, which nothing loads (the feed work reads `industries/*.yaml` too). Approving a draft = move it to `industries/` and set `discovery.needs_review: false`; the config also ignores any map still marked needs_review.
 
 ---
 

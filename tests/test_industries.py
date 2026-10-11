@@ -15,7 +15,7 @@ TODAY = date(2026, 10, 9)
 
 def test_repo_industry_maps_are_valid_and_verified():
     industries = load_industries()
-    assert len(industries) == 15
+    assert len([i for i in industries.values() if not i.discovery]) == 15     # the original seed maps
     for key, ind in industries.items():
         assert ind.industry == key
         assert ind.vocabulary.roles and ind.vocabulary.pain_phrases and ind.subreddits
