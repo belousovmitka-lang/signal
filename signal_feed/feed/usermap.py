@@ -1,6 +1,11 @@
 """The user's niche map (section 6.5-6.6): membership, rings, positions and statuses, and the map
 actions (pin, unpin, drop-in, remove, nudge, reset).
 
+The map is silent (founder decision, 2026-10-11): it changes without telling the user how or why.
+`map_view` returns the full internal picture (flags, sources, exposures) for the weekly job and for
+debugging; `public_view` is what the app gets. Change-log rows are written for debugging and profile
+sync but never returned.
+
 Position: distance from the centre is 1 - affinity (the map has radius 1); the angle is fixed when a
 node joins. A node whose ancestor is on the map sits near that ancestor's angle; any other node takes
 the middle of the widest free gap, so the map never jumps between sessions.
@@ -161,6 +166,19 @@ def map_view(store: FeedStore, config: FeedConfig, user_id: str, now: datetime |
     return {"user_id": user_id, "radius": 1.0, "nodes": nodes}
 
 
+PUBLIC_FIELDS = ("node_id", "label", "path", "parent_id", "ring", "affinity", "radius", "angle", "x", "y", "pinned")
+
+
+def public_view(store: FeedStore, config: FeedConfig, user_id: str, now: datetime | None = None) -> dict:
+    """What the app draws: no flags, no sources, nothing that says how a node got where it is. A fading
+    node is shown as active; a context node (a parent whose child was promoted) keeps its status so it
+    can be drawn as background."""
+    full = map_view(store, config, user_id, now)
+    nodes = [{k: n[k] for k in PUBLIC_FIELDS} | {"status": "context" if n["status"] == "context" else "active"}
+             for n in full["nodes"]]
+    return {"user_id": user_id, "radius": full["radius"], "nodes": nodes}
+
+
 def node_detail(store: FeedStore, config: FeedConfig, user_id: str, node_id: int, now: datetime | None = None) -> dict:
     """Path, place on the map, and the user's activity in the node's subtree. No prose about why."""
     now = now or utcnow()
@@ -181,9 +199,10 @@ def node_detail(store: FeedStore, config: FeedConfig, user_id: str, node_id: int
             .group_by(EventRow.event_type)).all())
         path = [s.get(NicheRow, a).label for a in reversed(_ancestors(s, node_id))] + [niche.label]
     positive = sum(counts.get(t, 0) for t in ("save", "share", "id_build", "idea", "outreach", "interested"))
-    return {"node_id": node_id, "label": niche.label, "path": path, "on_map": node_id in view,
-            **({k: view[node_id][k] for k in ("ring", "affinity", "radius", "angle", "status", "flags", "source",
-                                               "pinned")} if node_id in view else {}),
+    placed = view.get(node_id)
+    return {"node_id": node_id, "label": niche.label, "path": path, "on_map": placed is not None,
+            **({k: placed[k] for k in ("ring", "affinity", "radius", "angle", "pinned")}
+               | {"status": "context" if placed["status"] == "context" else "active"} if placed else {}),
             "activity": {"saves": positive, "reads": counts.get("read", 0),
                          "skips": counts.get("scroll_past", 0) + counts.get("not_for_me", 0)}}
 

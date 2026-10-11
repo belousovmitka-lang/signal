@@ -174,9 +174,15 @@ def test_map_endpoints(world, feed_store, feed_config):
     assert client.post("/map/nudge", json={"user_id": uid, "node_id": farm, "direction": "less"}).status_code == 200
     detail = client.get(f"/map/node/{farm}", params={"user_id": uid}).json()
     assert detail["path"] == ["Agriculture", "Farm equipment"] and detail["pinned"] and detail["affinity"] == 0.7
-    assert set(detail["activity"]) == {"saves", "reads", "skips"} and "why" not in detail
+    assert set(detail["activity"]) == {"saves", "reads", "skips"} and not {"source", "flags", "why"} & set(detail)
+    # The map is silent: no flags, sources or change log reach the app.
+    node = next(n for n in client.get("/map", params={"user_id": uid}).json()["nodes"] if n["node_id"] == farm)
+    assert not {"flags", "source", "drop_in_exposures_left"} & set(node) and node["status"] == "active"
     history = client.get("/map/history", params={"user_id": uid}).json()
-    assert [c["kind"] for c in history["changes"]] == ["dropped_in", "pinned"]
+    assert set(history) == {"snapshots"}
+    with feed_store.session() as s:
+        assert [c.kind for c in s.scalars(select(MapChangeLogRow).where(MapChangeLogRow.user_id == uid))] == \
+            ["dropped_in", "pinned"]                                         # still logged internally
     assert client.post("/map/remove", json={"user_id": uid, "node_id": farm, "allow_retest": True}).status_code == 200
     assert client.post("/map/unpin", json={"user_id": uid, "node_id": farm}).status_code == 200
     assert client.post("/map/reset", json={"user_id": uid}).status_code == 200

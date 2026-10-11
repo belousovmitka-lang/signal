@@ -81,12 +81,14 @@ def main() -> int:
             client.post("/events", json={"user_id": uid, "events": saves})
         run_user(store, load_feed_config(settings.config_file), uid, utcnow(), WeeklyStats())
         m = client.get("/map", params={"user_id": uid}).json()
-        print(f"\nMap after saving {len(saves)} posts and one weekly run:")
+        print(f"\nMap after saving {len(saves)} posts and one weekly run (what the app gets: no messages):")
         for node in m["nodes"]:
             print(f"  {node['ring']:9} {node['affinity']:.2f}  r={node['radius']:.2f} angle={node['angle']:6.1f}  "
-                  f"{' > '.join(node['path'])[:50]:50} {node['status']:8} {','.join(node['flags'])}")
-        for change in client.get("/map/history", params={"user_id": uid}).json()["changes"]:
-            print(f"  change: {change['message']}")
+                  f"{' > '.join(node['path'])[:50]:50} {node['status']}")
+        from signal_feed.db import MapChangeLogRow
+        with store.session() as s:
+            for c in s.query(MapChangeLogRow).filter_by(user_id=uid).order_by(MapChangeLogRow.at):
+                print(f"  (internal log, never shown) {c.message}")
     shutil.rmtree(tmp.parent, ignore_errors=True)
     return 0
 

@@ -18,7 +18,7 @@ from .enrichment.schema import niche_seeds, skill_vocabulary
 from .events import BatchResult, BatchTooLargeError, EventBatch, UnknownUserError, log_events
 from .feed.data import FeedDataCache
 from .feed.service import FeedPage, FeedService
-from .db import MapChangeLogRow, UserMapSnapshotRow
+from .db import UserMapSnapshotRow
 from .feed import usermap
 from .feed.usermodel import UnknownNodeError, apply_events, onboard
 from .niches.tree import seed_labels
@@ -100,19 +100,19 @@ def create_app(store: FeedStore, posts: PostsReader, config: FeedConfig, service
     @app.get("/map")
     def get_map(user_id: str) -> dict:
         _user(user_id)
-        return usermap.map_view(store, config, user_id)
+        return usermap.public_view(store, config, user_id)
 
     @app.get("/map/history")
     def get_map_history(user_id: str) -> dict:
+        """Weekly snapshots for Replay. The map is silent: no change log, no statuses."""
         _user(user_id)
+        keep = ("node_id", "label", "path", "ring", "radius", "angle")
         with store.session() as s:
             snaps = list(s.scalars(select(UserMapSnapshotRow).where(UserMapSnapshotRow.user_id == user_id)
                                    .order_by(UserMapSnapshotRow.week)))
-            log = list(s.scalars(select(MapChangeLogRow).where(MapChangeLogRow.user_id == user_id)
-                                 .order_by(MapChangeLogRow.at)))
-        return {"snapshots": [{"week": x.week.isoformat(), **x.data} for x in snaps],
-                "changes": [{"at": c.at.isoformat(), "node_id": c.node_id, "kind": c.kind, "message": c.message}
-                            for c in log]}
+        return {"snapshots": [{"week": x.week.isoformat(),
+                               "nodes": [{k: n[k] for k in keep if k in n} for n in x.data.get("nodes", [])]}
+                              for x in snaps]}
 
     @app.get("/map/node/{node_id}")
     def get_map_node(node_id: int, user_id: str) -> dict:
