@@ -17,7 +17,7 @@ from collections import defaultdict
 from sqlalchemy import select
 
 from ..config import load_feed_config
-from ..db import FeedStore, NicheRow, ProblemRow
+from ..db import FeedStore, ProblemRow
 from ..llm_task import LLMTask
 from ..niches.growth import NicheGrower
 from ..niches.naming import NicheNamer
