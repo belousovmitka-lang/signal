@@ -1,0 +1,428 @@
+interactions:
+- request:
+    body: '{"query":"query($after: DateTime!, $cursor: String, $first: Int!, $comments:
+      Int!) {\n  posts(order: NEWEST, postedAfter: $after, after: $cursor, first:
+      $first) {\n    pageInfo { hasNextPage endCursor }\n    edges { node {\n      id
+      name tagline description url votesCount commentsCount createdAt\n      topics(first:
+      6) { edges { node { name } } }\n      comments(first: $comments, order: NEWEST)
+      {\n        edges { node { id body createdAt votesCount url user { id } } } }\n    }
+      }\n  }\n}","variables":{"after":"2026-10-08T00:00:00Z","cursor":null,"first":20,"comments":0}}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '576'
+      content-type:
+      - application/json
+      host:
+      - api.producthunt.com
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: POST
+    uri: https://api.producthunt.com/v2/api/graphql
+  response:
+    body:
+      string: "{\"data\": {\"posts\": {\"pageInfo\": {\"hasNextPage\": true, \"endCursor\":
+        \"MjA\"}, \"edges\": [{\"node\": {\"id\": \"1274930\", \"name\": \"XMetrix\",
+        \"tagline\": \"Your all in one workspace to create, schedule and grow on X\",
+        \"description\": \"XMetrix is an all-in-one workspace for X creators. Turn
+        messy thoughts into ready-to-post content, edit it in your own voice, and
+        schedule posts automatically. Save ideas, organize screenshots, generate catchy
+        bios, and create share cards and banners. Track your streaks, explore creator
+        leaderboards, and manage everything in one place. Less time figuring out what
+        to post, more time building and showing up on X.\", \"url\": \"https://www.producthunt.com/products/xmetrix?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+Signal+%28ID%3A+306578%29\",
+        \"votesCount\": 4, \"commentsCount\": 2, \"createdAt\": \"2026-10-10T07:01:00Z\",
+        \"topics\": {\"edges\": [{\"node\": {\"name\": \"Productivity\"}}, {\"node\":
+        {\"name\": \"Social Media\"}}]}, \"comments\": {\"edges\": []}}}, {\"node\":
+        {\"id\": \"1275076\", \"name\": \"FuelBar for Mac and Windows\", \"tagline\":
+        \"Every AI coding limit, on the edge of your screen.\", \"description\": \"FuelBar
+        sits on the edge of your screen and shows how much of your Claude, Codex,
+        Cursor, Copilot, Freebuff and Antigravity limits you\u2019ve used. It warns
+        you at 80% and says when a session finishes. No account needed. Pay once for
+        Mac and Windows.\", \"url\": \"https://www.producthunt.com/products/fuelbar-for-mac-and-windows?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+Signal+%28ID%3A+306578%29\",
+        \"votesCount\": 6, \"commentsCount\": 2, \"createdAt\": \"2026-10-10T07:01:00Z\",
+        \"topics\": {\"edges\": [{\"node\": {\"name\": \"Developer Tools\"}}, {\"node\":
+        {\"name\": \"Artificial Intelligence\"}}, {\"node\": {\"name\": \"GitHub\"}}]},
+        \"comments\": {\"edges\": []}}}, {\"node\": {\"id\": \"1272976\", \"name\":
+        \"Weatherling\", \"tagline\": \"Make it rain and snow on your Mac desktop\",
+        \"description\": \"Weatherling brings rain, snow, wind, and leaves to your
+        Mac desktop windows. It is private, lightweight, and playful, with collectible
+        Lings\u2122 who wander through the weather. Put rare Lings in rare boxes for
+        the highest score and share with friends.\", \"url\": \"https://www.producthunt.com/products/weatherling?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+Signal+%28ID%3A+306578%29\",
+        \"votesCount\": 6, \"commentsCount\": 1, \"createdAt\": \"2026-10-10T07:01:00Z\",
+        \"topics\": {\"edges\": [{\"node\": {\"name\": \"Mac\"}}, {\"node\": {\"name\":
+        \"Games\"}}, {\"node\": {\"name\": \"Entertainment\"}}]}, \"comments\": {\"edges\":
+        []}}}, {\"node\": {\"id\": \"1275327\", \"name\": \"Alloy Command\", \"tagline\":
+        \"Four AI perspectives. One answer you can inspect.\", \"description\": \"Ask
+        GPT, Claude, Gemini and Grok the same question. Alloy combines their responses
+        into one answer while keeping the originals available. Compare assumptions,
+        explore disagreements and ask follow-up questions in the same session. Try
+        it with a project plan, a product decision or an explanation you want to examine
+        more closely.\", \"url\": \"https://www.producthunt.com/products/alloy-command?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+Signal+%28ID%3A+306578%29\",
+        \"votesCount\": 2, \"commentsCount\": 1, \"createdAt\": \"2026-10-10T07:01:00Z\",
+        \"topics\": {\"edges\": [{\"node\": {\"name\": \"Artificial Intelligence\"}}]},
+        \"comments\": {\"edges\": []}}}, {\"node\": {\"id\": \"1275134\", \"name\":
+        \"DPP Hub\", \"tagline\": \"Manage, track, publish Digital Product Passports
+        with ease\", \"description\": \"DPP Hub is a digital platform for creating,
+        managing and publishing Digital Product Passports (DPP). Centralize product
+        data, materials, suppliers, certifications and documentation in one place.
+        Improve supply chain traceability, transparency and sustainability while preparing
+        for evolving EU regulations. Generate QR codes, manage multiple suppliers,
+        track product updates and integrate with existing business systems. Start
+        free with up to 5 products.\", \"url\": \"https://www.producthunt.com/products/dpp-hub?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+Signal+%28ID%3A+306578%29\",
+        \"votesCount\": 1, \"commentsCount\": 0, \"createdAt\": \"2026-10-10T07:01:00Z\",
+        \"topics\": {\"edges\": [{\"node\": {\"name\": \"Productivity\"}}, {\"node\":
+        {\"name\": \"SaaS\"}}, {\"node\": {\"name\": \"Tech\"}}]}, \"comments\": {\"edges\":
+        []}}}, {\"node\": {\"id\": \"1275474\", \"name\": \"RapReel\", \"tagline\":
+        \"Turn photos of your favorite people into AI rap videos\", \"description\":
+        \"Turn two portraits or one photo together into a personalized AI rap video.
+        Choose from four stages, add names or a topic for the lyrics, and preview
+        your stage for free before ordering. Get a vertical video with generated rap
+        vocals and music, ready to share. Pay per video from $2.99, with no subscription.
+        Your card is only charged once your video is ready.\", \"url\": \"https://www.producthunt.com/products/rapreel?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+Signal+%28ID%3A+306578%29\",
+        \"votesCount\": 1, \"commentsCount\": 1, \"createdAt\": \"2026-10-10T07:01:00Z\",
+        \"topics\": {\"edges\": [{\"node\": {\"name\": \"Music\"}}, {\"node\": {\"name\":
+        \"Artificial Intelligence\"}}, {\"node\": {\"name\": \"Photo & Video\"}}]},
+        \"comments\": {\"edges\": []}}}, {\"node\": {\"id\": \"1274781\", \"name\":
+        \"ReplyKaro\", \"tagline\": \"Instagram & Facebook auto-DM with flow builder
+        and AI. $3/mo\", \"description\": \"ReplyKaro turns Instagram and Facebook
+        comments into DMs automatically. Build visual flows with a drag-and-drop canvas,
+        add follow-gates, lead capture, delays and AI replies, then broadcast to subscribers.
+        Built on Meta's official API with built-in hourly send limits to keep your
+        account safe. A cheaper ManyChat alternative: free plan with 1,000 DMs/month,
+        paid from $3/month. Made for creators, coaches and shops.\", \"url\": \"https://www.producthunt.com/products/replykaro?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+Signal+%28ID%3A+306578%29\",
+        \"votesCount\": 1, \"commentsCount\": 1, \"createdAt\": \"2026-10-10T07:01:00Z\",
+        \"topics\": {\"edges\": [{\"node\": {\"name\": \"Social Media\"}}, {\"node\":
+        {\"name\": \"Marketing\"}}, {\"node\": {\"name\": \"Artificial Intelligence\"}}]},
+        \"comments\": {\"edges\": []}}}, {\"node\": {\"id\": \"1275374\", \"name\":
+        \"Tomato\", \"tagline\": \"browser that works for you for free, with local
+        model\", \"description\": \"I got tired of paying Claude to click buttons
+        for me. Every browser task meant spinning up an agent, burning tokens, and
+        eating up my memory. So I built one instead. Tomato is a Mac browser on Chromium.
+        Press Option Space, or just say \\\"Hey Tomato\\\", and talk to it. It plans,
+        clicks and types across your tabs, and it stops to ask before it sends anything.
+        The model runs on your Mac, so your pages never leave it. Bring your own Claude
+        or ChatGPT key if you'd rather. It's free. Actually free!\", \"url\": \"https://www.producthunt.com/products/tomato?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+Signal+%28ID%3A+306578%29\",
+        \"votesCount\": 2, \"commentsCount\": 1, \"createdAt\": \"2026-10-10T07:01:00Z\",
+        \"topics\": {\"edges\": [{\"node\": {\"name\": \"Productivity\"}}, {\"node\":
+        {\"name\": \"SaaS\"}}, {\"node\": {\"name\": \"Artificial Intelligence\"}}]},
+        \"comments\": {\"edges\": []}}}, {\"node\": {\"id\": \"1274646\", \"name\":
+        \"Hotel Lobby AI\", \"tagline\": \"Turn two photos into a viral AI duo music
+        video\", \"description\": \"Hotel Lobby AI turns two photos into a short video
+        of you and a friend performing the viral Hotel Lobby trend in the orange COLORS-style
+        booth, following the original moves, camera cuts and song. No prompt, no green
+        screen, no editing. Pick 5, 10 or 15 seconds and a model (Seedance or MiniMax
+        H3), then download an MP4 for TikTok, Reels or Shorts. The same two-photo
+        flow also makes the APT, Alors on Danse, Rumpelstiltskin and AI Zombie trends.\",
+        \"url\": \"https://www.producthunt.com/products/hotel-lobby-ai-7?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+Signal+%28ID%3A+306578%29\",
+        \"votesCount\": 1, \"commentsCount\": 1, \"createdAt\": \"2026-10-10T07:01:00Z\",
+        \"topics\": {\"edges\": [{\"node\": {\"name\": \"Social Media\"}}, {\"node\":
+        {\"name\": \"Artificial Intelligence\"}}, {\"node\": {\"name\": \"Video\"}}]},
+        \"comments\": {\"edges\": []}}}, {\"node\": {\"id\": \"1272534\", \"name\":
+        \"Claude Monitor\", \"tagline\": \"Never get cut off by a Claude usage limit
+        again\", \"description\": \"Since the June launch: Free plan support (Claude
+        stopped showing usage to Free accounts in August, so Claude Monitor reads
+        the limits that every reply still carries), an optional bar right above claude.ai's
+        chat box, and an interface in 8 languages. Plus the core: live 5-hour session
+        and weekly limits, per-model caps, extra usage credits, a countdown to every
+        reset, alerts at 80% and 95%, and 30 days of history. Open source, no account,
+        nothing leaves your browser.\", \"url\": \"https://www.producthunt.com/products/claude-usage-monitor-4?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+Signal+%28ID%3A+306578%29\",
+        \"votesCount\": 2, \"commentsCount\": 1, \"createdAt\": \"2026-10-10T07:01:00Z\",
+        \"topics\": {\"edges\": [{\"node\": {\"name\": \"Chrome Extensions\"}}, {\"node\":
+        {\"name\": \"Productivity\"}}, {\"node\": {\"name\": \"Developer Tools\"}},
+        {\"node\": {\"name\": \"GitHub\"}}]}, \"comments\": {\"edges\": []}}}, {\"node\":
+        {\"id\": \"1274689\", \"name\": \"InvoiceKit by RoohSites\", \"tagline\":
+        \"Professional invoices. No signup. No subscription.\", \"description\": \"Make
+        professional invoices in minutes with a free, browser-based invoice generator.
+        Add your business details, customize line items, calculate taxes and discounts,
+        and download a PDF \u2014 without creating an account or paying a subscription.
+        Supports multiple currencies, GST and VAT, with invoice data kept on your
+        device.\", \"url\": \"https://www.producthunt.com/products/invoicekit-by-roohsites?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+Signal+%28ID%3A+306578%29\",
+        \"votesCount\": 1, \"commentsCount\": 1, \"createdAt\": \"2026-10-10T07:01:00Z\",
+        \"topics\": {\"edges\": [{\"node\": {\"name\": \"Productivity\"}}, {\"node\":
+        {\"name\": \"Freelance\"}}, {\"node\": {\"name\": \"SaaS\"}}]}, \"comments\":
+        {\"edges\": []}}}, {\"node\": {\"id\": \"1275057\", \"name\": \"NetLanvas\",
+        \"tagline\": \"Live network topology mapping, self-hosted\", \"description\":
+        \"NetLanvas automatically discovers, maps, and monitors every device on your
+        network \u2014 live topology, VLAN awareness, historical snapshots, SNMP/security
+        auditing, and alerting. Open source (Apache 2.0), runs entirely on your own
+        hardware (Docker, Windows, or macOS). Nothing about your network ever leaves
+        the box \u2014 and now you can verify that yourself. First 100 beta users
+        who opt into telemetry get 6 months of Premium free.\", \"url\": \"https://www.producthunt.com/products/netlanvas?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+Signal+%28ID%3A+306578%29\",
+        \"votesCount\": 2, \"commentsCount\": 1, \"createdAt\": \"2026-10-10T07:01:00Z\",
+        \"topics\": {\"edges\": [{\"node\": {\"name\": \"Productivity\"}}, {\"node\":
+        {\"name\": \"Internet of Things\"}}, {\"node\": {\"name\": \"Tech\"}}]}, \"comments\":
+        {\"edges\": []}}}, {\"node\": {\"id\": \"1271399\", \"name\": \"PMWallets\",
+        \"tagline\": \"Find the Polymarket traders who actually make money\", \"description\":
+        \"PMWallets ranks Polymarket traders, not addresses, by realised profit computed
+        from the Polygon chain. Each profile shows win rate with a confidence interval,
+        style and categories, and you can stream any trader's fills in about a second
+        for copy trading.\", \"url\": \"https://www.producthunt.com/products/pmwallets?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+Signal+%28ID%3A+306578%29\",
+        \"votesCount\": 1, \"commentsCount\": 1, \"createdAt\": \"2026-10-10T07:01:00Z\",
+        \"topics\": {\"edges\": [{\"node\": {\"name\": \"Analytics\"}}, {\"node\":
+        {\"name\": \"Crypto\"}}, {\"node\": {\"name\": \"Developer Tools\"}}]}, \"comments\":
+        {\"edges\": []}}}, {\"node\": {\"id\": \"1274809\", \"name\": \"Marina Davar
+        on Healthcare Efficiency\", \"tagline\": \"Marina Davar\u2019s Perspective
+        on Healthcare Efficiency\", \"description\": \"Marina Davar shares practical
+        perspectives on improving healthcare efficiency through organized workflows,
+        effective communication, and better team coordination. Strong medical practice
+        management can help streamline daily operations, support staff productivity,
+        and improve patient experiences. By focusing on consistent processes and thoughtful
+        planning, healthcare practices can build reliable systems that support quality
+        care and smoother operations.\", \"url\": \"https://www.producthunt.com/products/marina-davar-on-healthcare-efficiency?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+Signal+%28ID%3A+306578%29\",
+        \"votesCount\": 1, \"commentsCount\": 0, \"createdAt\": \"2026-10-10T07:01:00Z\",
+        \"topics\": {\"edges\": [{\"node\": {\"name\": \"Health & Fitness\"}}]}, \"comments\":
+        {\"edges\": []}}}, {\"node\": {\"id\": \"1274575\", \"name\": \"ZoomMap\",
+        \"tagline\": \"Turn what you know into a layered knowledge map.\", \"description\":
+        \"Notes capture points, but the structure behind them often gets lost. ZoomMap
+        helps you build a layered knowledge map: put the big picture above the details,
+        nest cards, and draw connections. Open or fold layers to move between overview
+        and depth. Attach passages and images from your sources to show what supports
+        each idea. ZoomMap Agent asks questions and spots gaps as you think. When
+        you're ready, it can create cards and citations from your instructions. The
+        thinking stays yours.\", \"url\": \"https://www.producthunt.com/products/zoommap?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+Signal+%28ID%3A+306578%29\",
+        \"votesCount\": 1, \"commentsCount\": 1, \"createdAt\": \"2026-10-10T07:01:00Z\",
+        \"topics\": {\"edges\": [{\"node\": {\"name\": \"Productivity\"}}, {\"node\":
+        {\"name\": \"Notes\"}}, {\"node\": {\"name\": \"Artificial Intelligence\"}}]},
+        \"comments\": {\"edges\": []}}}, {\"node\": {\"id\": \"1275304\", \"name\":
+        \"AI Business Starter Kit\", \"tagline\": \"Helps small businesses save time
+        and grow with AI\", \"description\": \"AI Business Starter Kit helps small
+        businesses and entrepreneurs get started with AI. It includes practical AI
+        prompts, ready-to-use templates, a 30-day content calendar, and a beginner-friendly
+        guide. Everything is designed to help you save time, create better marketing
+        content, and grow your business with AI\u2014without needing advanced technical
+        skills.\", \"url\": \"https://www.producthunt.com/products/ai-business-starter-kit?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+Signal+%28ID%3A+306578%29\",
+        \"votesCount\": 1, \"commentsCount\": 1, \"createdAt\": \"2026-10-10T07:01:00Z\",
+        \"topics\": {\"edges\": [{\"node\": {\"name\": \"Productivity\"}}, {\"node\":
+        {\"name\": \"Marketing\"}}, {\"node\": {\"name\": \"Artificial Intelligence\"}}]},
+        \"comments\": {\"edges\": []}}}, {\"node\": {\"id\": \"1275293\", \"name\":
+        \"Crush Job\", \"tagline\": \"From job ad to job offer, in one desktop app\",
+        \"description\": \"Crush Job is one desktop app for the whole job hunt, on
+        Windows, macOS and Linux. Rezi Ninja tailors your resume and cover letter
+        to each posting and shows your Ninja Score before and after. Interview Killer
+        builds a battle card of STAR stories and likely questions. Mock It! runs a
+        spoken mock interview and scores you 0-100. Crush Coach listens to your interview
+        call, transcribes it live, and shows AI-suggested notes, grounded in your
+        prep, in a small overlay window. Start free, no card.\", \"url\": \"https://www.producthunt.com/products/crush-job?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+Signal+%28ID%3A+306578%29\",
+        \"votesCount\": 1, \"commentsCount\": 1, \"createdAt\": \"2026-10-10T07:01:00Z\",
+        \"topics\": {\"edges\": [{\"node\": {\"name\": \"Productivity\"}}, {\"node\":
+        {\"name\": \"Artificial Intelligence\"}}, {\"node\": {\"name\": \"Career\"}}]},
+        \"comments\": {\"edges\": []}}}, {\"node\": {\"id\": \"1274919\", \"name\":
+        \"Noor Yasser Tools\", \"tagline\": \"15 free SEO, marketing and developer
+        tools\u2014no sign-up\", \"description\": \"A focused suite of 15 browser-based
+        tools for SEO, GEO, marketing and software work. Audit page HTML, preview
+        SERP titles, build UTM links, calculate ROAS and break-even targets, research
+        competitor ads, validate JSON, decode JWTs, create cron expressions, generate
+        webhook HMAC signatures, build cURL requests and inspect URLs. Most tools
+        run locally in the browser, with clear outputs and no account required.\",
+        \"url\": \"https://www.producthunt.com/products/noor-yasser-tools?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+Signal+%28ID%3A+306578%29\",
+        \"votesCount\": 1, \"commentsCount\": 1, \"createdAt\": \"2026-10-10T07:01:00Z\",
+        \"topics\": {\"edges\": [{\"node\": {\"name\": \"Marketing\"}}, {\"node\":
+        {\"name\": \"SEO\"}}, {\"node\": {\"name\": \"Developer Tools\"}}]}, \"comments\":
+        {\"edges\": []}}}, {\"node\": {\"id\": \"1273614\", \"name\": \"Toonbee AI\",
+        \"tagline\": \"Turn a script into a cartoon video with one consistent cast\",
+        \"description\": \"Toonbee AI turns a script, or a one-line story idea, into
+        a narrated cartoon video. Upload a character once and it keeps the same face,
+        outfit and proportions in every scene, then adds AI voiceover and a soundtrack.
+        Pick from 10+ cartoon styles (3D, 2D, anime, storybook), export 16:9 for YouTube
+        or native 9:16 for Shorts and Reels, and use the result commercially. New
+        accounts get 100 free credits.\", \"url\": \"https://www.producthunt.com/products/toonbee-ai?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+Signal+%28ID%3A+306578%29\",
+        \"votesCount\": 2, \"commentsCount\": 1, \"createdAt\": \"2026-10-10T07:01:00Z\",
+        \"topics\": {\"edges\": [{\"node\": {\"name\": \"Artificial Intelligence\"}},
+        {\"node\": {\"name\": \"Animation\"}}, {\"node\": {\"name\": \"Video\"}}]},
+        \"comments\": {\"edges\": []}}}, {\"node\": {\"id\": \"1274718\", \"name\":
+        \"SlopTotal\", \"tagline\": \"VirusTotal for AI text. 23 engines, self-hosted
+        on CPU.\", \"description\": \"VirusTotal for AI slop \U0001F6E1\uFE0F SlopTotal
+        is an open-source, self-hosted AI text detector. Instead of relying on one
+        model, it runs 23 independent detection engines in parallel locally on CPU
+        to compute one calibrated score. \u26A1 23 Engines: Blends neural classifiers,
+        perplexity & heuristics \U0001F512 100% Local: Runs on CPU (4-8GB RAM) with
+        zero API calls \U0001F4DA Validated: Tested on pre-1920 prose to fix false
+        positives \U0001F4BB Open Source: MIT-licensed with live demo & Docker setup\",
+        \"url\": \"https://www.producthunt.com/products/sloptotal?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+Signal+%28ID%3A+306578%29\",
+        \"votesCount\": 2, \"commentsCount\": 1, \"createdAt\": \"2026-10-10T07:01:00Z\",
+        \"topics\": {\"edges\": [{\"node\": {\"name\": \"Open Source\"}}, {\"node\":
+        {\"name\": \"Artificial Intelligence\"}}, {\"node\": {\"name\": \"GitHub\"}}]},
+        \"comments\": {\"edges\": []}}}]}}}"
+    headers:
+      alt-svc:
+      - h3=":443"; ma=86400
+      cache-control:
+      - max-age=0, private, must-revalidate
+      cf-cache-status:
+      - DYNAMIC
+      cf-ray:
+      - a48a247bda8889e0-ORD
+      connection:
+      - keep-alive
+      content-length:
+      - '18562'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Sun, 11 Oct 2026 01:37:57 GMT
+      etag:
+      - W/"1ced8a4a2fefe542d03d724a114c72ef"
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - cloudflare
+      strict-transport-security:
+      - max-age=2592000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      x-permitted-cross-domain-policies:
+      - none
+      x-rate-limit-limit:
+      - '6250'
+      x-rate-limit-remaining:
+      - '6050'
+      x-rate-limit-reset:
+      - '829'
+      x-request-id:
+      - 4766e954-307a-4ae5-b171-75382a5d6cff
+      x-runtime:
+      - '0.216328'
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"query":"query($after: DateTime!, $cursor: String, $first: Int!, $comments:
+      Int!) {\n  posts(order: NEWEST, postedAfter: $after, after: $cursor, first:
+      $first) {\n    pageInfo { hasNextPage endCursor }\n    edges { node {\n      id
+      name tagline description url votesCount commentsCount createdAt\n      topics(first:
+      6) { edges { node { name } } }\n      comments(first: $comments, order: NEWEST)
+      {\n        edges { node { id body createdAt votesCount url user { id } } } }\n    }
+      }\n  }\n}","variables":{"after":"2026-10-08T00:00:00Z","cursor":"MjA","first":5,"comments":0}}'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '576'
+      content-type:
+      - application/json
+      host:
+      - api.producthunt.com
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: POST
+    uri: https://api.producthunt.com/v2/api/graphql
+  response:
+    body:
+      string: "{\"data\": {\"posts\": {\"pageInfo\": {\"hasNextPage\": true, \"endCursor\":
+        \"MjU\"}, \"edges\": [{\"node\": {\"id\": \"1275496\", \"name\": \"Vidu Q4\",
+        \"tagline\": \"Bring up to 15 images and 3 voices into one 4K scene\", \"description\":
+        \"Explore Vidu Q4, an AI video generation model with native audio, faster
+        motion quality, and stronger prompt control for creative work.\", \"url\":
+        \"https://www.producthunt.com/products/vidu-ai-2?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+Signal+%28ID%3A+306578%29\",
+        \"votesCount\": 7, \"commentsCount\": 1, \"createdAt\": \"2026-10-10T07:01:00Z\",
+        \"topics\": {\"edges\": [{\"node\": {\"name\": \"Artificial Intelligence\"}},
+        {\"node\": {\"name\": \"Video Art\"}}, {\"node\": {\"name\": \"Video\"}}]},
+        \"comments\": {\"edges\": []}}}, {\"node\": {\"id\": \"1275162\", \"name\":
+        \"KothaChobi\", \"tagline\": \"Record your screen, then edit the video by
+        deleting words\", \"description\": \"KothaChobi is a video studio for Mac
+        where the transcript is the editor. Write a script, record your screen, camera
+        and voice with a teleprompter, then delete words from the text and the cut
+        is made in the video. Autocut removes pauses, ums and retakes for you to review.
+        Add cursor zoom, captions, privacy blur and studio voice, then export horizontal
+        videos or vertical shorts. Speech-to-text runs offline on your Mac.\", \"url\":
+        \"https://www.producthunt.com/products/kothachobi?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+Signal+%28ID%3A+306578%29\",
+        \"votesCount\": 1, \"commentsCount\": 1, \"createdAt\": \"2026-10-10T07:01:00Z\",
+        \"topics\": {\"edges\": [{\"node\": {\"name\": \"Productivity\"}}, {\"node\":
+        {\"name\": \"Artificial Intelligence\"}}, {\"node\": {\"name\": \"Video\"}}]},
+        \"comments\": {\"edges\": []}}}, {\"node\": {\"id\": \"1268960\", \"name\":
+        \"Kehai\", \"tagline\": \"Cookieless web analytics with a forecast that grades
+        itself\", \"description\": \"Kehai is cookieless web analytics hosted in the
+        EU. Reports are counted from recorded events without sampling, and imported
+        or modeled numbers keep their own labels. The forecast tests itself on your
+        history and shows its error next to the answer. Pacing tells you mid-month
+        whether a target is still in reach. Sales and refunds come from the shop itself,
+        AI referrals and bots get their own reports, and a read-only MCP server lets
+        your assistant ask.\", \"url\": \"https://www.producthunt.com/products/kehai?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+Signal+%28ID%3A+306578%29\",
+        \"votesCount\": 2, \"commentsCount\": 1, \"createdAt\": \"2026-10-10T07:01:00Z\",
+        \"topics\": {\"edges\": [{\"node\": {\"name\": \"Analytics\"}}, {\"node\":
+        {\"name\": \"Marketing\"}}, {\"node\": {\"name\": \"Privacy\"}}]}, \"comments\":
+        {\"edges\": []}}}, {\"node\": {\"id\": \"1275448\", \"name\": \"FocusInOne\",
+        \"tagline\": \"Start focus on your computer. Your phone goes quiet.\", \"description\":
+        \"A minimal Smartphone launcher, notification silencing and a Pomodoro timer,
+        controlled from your computer. Join the private beta waitlist.\", \"url\":
+        \"https://www.producthunt.com/products/focusinone?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+Signal+%28ID%3A+306578%29\",
+        \"votesCount\": 2, \"commentsCount\": 1, \"createdAt\": \"2026-10-10T07:01:00Z\",
+        \"topics\": {\"edges\": [{\"node\": {\"name\": \"Productivity\"}}, {\"node\":
+        {\"name\": \"Time Tracking\"}}]}, \"comments\": {\"edges\": []}}}, {\"node\":
+        {\"id\": \"1274691\", \"name\": \"SupaMarketers\", \"tagline\": \"Turn marketing
+        tasks into usable results\", \"description\": \"Research markets and customers,
+        create marketing content and visuals, and track search signals. 84 ready-to-run
+        Apps, MCP tools for your AI client, daily or weekly Data refreshes. 1,000
+        Credits free to start \u2014 see the price before each run.\", \"url\": \"https://www.producthunt.com/products/supamarketers?utm_campaign=producthunt-api&utm_medium=api-v2&utm_source=Application%3A+Signal+%28ID%3A+306578%29\",
+        \"votesCount\": 2, \"commentsCount\": 1, \"createdAt\": \"2026-10-10T07:01:00Z\",
+        \"topics\": {\"edges\": [{\"node\": {\"name\": \"Marketing\"}}, {\"node\":
+        {\"name\": \"SaaS\"}}, {\"node\": {\"name\": \"Artificial Intelligence\"}}]},
+        \"comments\": {\"edges\": []}}}]}}}"
+    headers:
+      alt-svc:
+      - h3=":443"; ma=86400
+      cache-control:
+      - max-age=0, private, must-revalidate
+      cf-cache-status:
+      - DYNAMIC
+      cf-ray:
+      - a48a2480587d89e0-ORD
+      connection:
+      - keep-alive
+      content-length:
+      - '4054'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Sun, 11 Oct 2026 01:37:57 GMT
+      etag:
+      - W/"dbe0bfda4e1283aaf540353ea68226e8"
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - cloudflare
+      strict-transport-security:
+      - max-age=2592000; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      x-permitted-cross-domain-policies:
+      - none
+      x-rate-limit-limit:
+      - '6250'
+      x-rate-limit-remaining:
+      - '5950'
+      x-rate-limit-reset:
+      - '829'
+      x-request-id:
+      - a5f16d89-1dab-4d1f-8661-e35864efad9e
+      x-runtime:
+      - '0.059314'
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+version: 1

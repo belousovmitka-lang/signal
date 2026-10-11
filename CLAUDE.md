@@ -335,7 +335,7 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 
 | Platform | Connector | Route | Endpoint / method | Cadence | Status |
 |---|---|---|---|---|---|
-| Product Hunt | `producthunt` | own_api | GraphQL API v2; commercial use needs Product Hunt's permission (request it) | daily | awaiting approval |
+| Product Hunt | `producthunt` | own_api | GraphQL API v2 `posts(order: NEWEST, postedAfter:)` + optional comments; developer token works (2026-10-10). Docs: the API "must not be used for commercial purposes" without permission (requested from hello@producthunt.com); 6,250 complexity points/15 min; attribution requested. Built, disabled until permission | daily | awaiting approval |
 | Indie Hackers | — | — | answers our bot with 403 (Cloudflare) on its terms page and content (2026-10-09) | daily | blocked |
 | YC Requests for Startups | — | — | YC terms: "you will not engage in or use any data mining, robots, scraping or similar data gathering or extraction methods" (2026-10-09) | monthly | blocked |
 | BetaList, AlternativeTo | — | — | BetaList terms: personal, non-commercial viewing only, no commercial use (covers its RSS); AlternativeTo answers our bot with 403 (2026-10-09) | weekly | blocked |

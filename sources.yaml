@@ -741,6 +741,24 @@ sources:
     queries:
       - {params: {project: en.wikipedia, top: 100}, limit: 300}
 
+  producthunt:
+    enabled: false                   # API "must not be used for commercial purposes" without permission
+    status: awaiting_approval
+    status_date: 2026-10-10
+    route: own_api
+    source_type: startup
+    cadence: daily
+    env: [PRODUCTHUNT_TOKEN]
+    access_check:
+      robots: not_applicable
+      terms: unchecked               # commercial permission requested from hello@producthunt.com
+      decision: pending
+      terms_url: https://api.producthunt.com/v2/docs
+      checked_at: 2026-10-10
+      notes: Developer token works. Enable only after Product Hunt grants commercial use; attribution requested.
+    queries:
+      - {limit: 100, params: {comments_per_post: 5}}
+
   bluesky:
     connector: search_api
     enabled: true
