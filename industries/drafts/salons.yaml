@@ -1,0 +1,203 @@
+industry: salons
+name: Salons and spas
+discovery:
+  generated_at: '2026-10-11'
+  needs_review: true
+  queries: 9
+  cost_usd: 0.114
+  candidates_checked: 40
+  notes: 'Draft by the discovery agent (9 searches, $0.114), reviewed by Claude 2026-10-11. Terms: Cosmetology Forum
+    allowed (standard XenForo terms, no automation clause; quiet since Feb 2026); Salon Geek forbidden (no data
+    mining, robots or commercial use); John Amico ProBoards forbidden. Removed: City-Data (general forum), GetEstheticianJobs
+    (AI-generated posts), HairBoutique (celebrity hair chat), Beauty Business Days (celebrity listicles). Added
+    Modern Salon, Salon Today, Nails Magazine, Professional Beauty and Salon Business feeds (robots checked); American
+    Salon feed stale since 2021, Behind the Chair rate-limited us (429). Jargon curated. Move to industries/ and
+    set needs_review: false to collect.'
+vocabulary:
+  roles:
+  - salon owner
+  - hairstylist
+  - esthetician
+  - nail technician
+  - spa manager
+  - barber
+  - booth renter
+  - salon manager
+  - med spa owner
+  tasks:
+  - appointment booking
+  - client reminders
+  - booth rent collection
+  - commission payroll
+  - retail inventory
+  - deposits
+  - rebooking
+  - marketing to past clients
+  - staff scheduling
+  - color formulas
+  pain_phrases:
+  - no-shows
+  - last-minute cancellations
+  - stylist turnover
+  - booth renters leaving
+  - retail sales down
+  - rising product costs
+  - slow season
+  - chargebacks
+  - price increases
+  - clients ghosting
+  jargon:
+  - booth rental
+  - suite rental
+  - commission split
+  - rebooking rate
+  - retail-to-service ratio
+  - ticket average
+  - no-show fee
+  - deposit policy
+  - color bar
+  - chair rental
+  - med spa
+  - cosmetology license
+  - walk-ins
+  tools:
+  - Vagaro
+  - Boulevard
+  - Fresha
+  - GlossGenius
+  - Mangomint
+  - Square Appointments
+  - Meevo
+  - Phorest
+  - SalonBiz
+  - Booksy
+  - Zenoti
+subreddits:
+- salonowners
+- Hairstylist
+- Esthetics
+- Nails
+- Barber
+stackexchange_sites: []
+forums:
+- name: Cosmetology Forum – Beauty School, Hair & Makeup Industry Insights
+  url: https://cosmetologyforum.com/
+  status: live
+  checked_at: '2026-10-11'
+  locked: true
+  software: xenforo
+  rss: https://cosmetologyforum.com/forums/-/index.rss
+  robots: allowed
+  terms: allowed
+  terms_url: https://cosmetologyforum.com/help/terms/
+  terms_notes: 'Standard XenForo terms: no automation or commercial-use clause (read 2026-10-11).'
+- name: Salon Geek - Salon Professionals Forum
+  url: https://www.salongeek.com/
+  status: live
+  checked_at: '2026-10-11'
+  locked: true
+  software: xenforo
+  rss: https://www.salongeek.com/forums/-/index.rss
+  robots: allowed
+  terms: forbidden
+  terms_url: https://www.salongeek.com/tos
+  terms_notes: '2.1: license excludes ''any use of data mining, robots, or similar data gathering and extraction
+    tools'' and commercial use (read 2026-10-11).'
+- name: Home | John Amico Professional Hair Care
+  url: https://johnamico.proboards.com/
+  status: live
+  checked_at: '2026-10-11'
+  locked: true
+  software: proboards
+  rss: http://johnamico.proboards.com/rss/public
+  robots: allowed
+  terms: forbidden
+  terms_url: https://www.proboards.com/tos
+  terms_notes: 'ProBoards (VerticalScope) terms: users may not ''access, search, or collect data from the Website
+    by any means'', and no copying ''for any commercial purpose without the express written consent of ProBoards''
+    (read 2026-10-11). (carried over from an existing map)'
+rss_feeds:
+- name: Mocha Group
+  url: https://mochagroup.com.au/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: true
+- name: Salons India
+  url: https://www.salonsindia.com/blog/rss
+  status: live
+  checked_at: '2026-10-11'
+  notes: moved from https://www.salonsindia.com/rss (found on homepage)
+  locked: false
+  entries: 10
+  full_text: true
+- name: Modern Salon
+  url: https://www.modernsalon.com/rss
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 100
+  full_text: false
+- name: Salon Today
+  url: https://www.salontoday.com/rss
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 100
+  full_text: false
+- name: Nails Magazine
+  url: https://www.nailsmag.com/rss
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 100
+  full_text: false
+- name: Professional Beauty
+  url: https://professionalbeauty.co.uk/rss
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: false
+- name: Salon Business
+  url: https://salonbusiness.co.uk/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 12
+  full_text: false
+associations:
+- name: Professional Beauty Association
+  url: https://www.probeauty.org/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+- name: Ontario Professional Hairstylist Association
+  url: https://www.oph-association.ca/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+- name: IDI Community (International Dermal Institute)
+  url: https://community.dermalinstitute.com/feed
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+- name: National Hair & Beauty Federation
+  url: https://www.nhbf.co.uk/home/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+- name: Salon Association of India
+  url: https://salonassociationofindia.com/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+- name: Indian Beauty and Wellness Association
+  url: https://bwai.net.in/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+job_boards: []
+podcasts: []
+youtube_channels: []

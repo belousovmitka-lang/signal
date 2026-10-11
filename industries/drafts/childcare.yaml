@@ -1,0 +1,193 @@
+industry: childcare
+name: Childcare centers
+discovery:
+  generated_at: '2026-10-11'
+  needs_review: true
+  queries: 9
+  cost_usd: 0.114
+  candidates_checked: 40
+  notes: 'Draft by the discovery agent (9 searches, $0.114), reviewed by Claude 2026-10-11. Terms: The Daycare Room
+    (Forumotion: no copying without written permission, inactive since 2015) and Aussie Childcare Network (no feed;
+    terms forbid access by means the site doesn''t provide) forbidden; Daycare.com returns 403 to our bot, so blocked;
+    Standout Daycare is a Wix business site, not a forum, and its terms forbid bots, so removed. Dropped two stale
+    lesson-plan blogs, an SEO licensing-page farm (childcarecomp), K-12 news (The 74 is in education; Hechinger)
+    and a feed silent since 2021. Jargon curated (the auto list was licensing-guide headlines). Move to industries/
+    and set needs_review: false to collect.'
+vocabulary:
+  roles:
+  - childcare center director
+  - daycare owner
+  - family child care provider
+  - preschool director
+  - early childhood educator
+  - assistant director
+  - home daycare provider
+  tasks:
+  - enrollment
+  - tuition billing
+  - subsidy billing
+  - attendance tracking
+  - parent communication
+  - staff scheduling
+  - ratio compliance
+  - licensing paperwork
+  - daily reports
+  - waitlist management
+  - CACFP food program claims
+  pain_phrases:
+  - staff shortage
+  - teacher turnover
+  - late tuition payments
+  - subsidy reimbursement delays
+  - out of ratio
+  - licensing inspection
+  - waitlist
+  - parents not paying
+  - burnout
+  - low wages
+  jargon:
+  - ratios
+  - CDA credential
+  - QRIS
+  - CCDF
+  - child care subsidy
+  - CACFP
+  - licensing violation
+  - family child care
+  - Head Start
+  - pre-K
+  - infant room
+  - NAEYC accreditation
+  - tuition
+  - drop-off
+  tools:
+  - Brightwheel
+  - Procare
+  - Kangarootime
+  - HiMama
+  - Lillio
+  - Playground
+  - Tadpoles
+  - Famly
+  - Sandbox
+  - Jackrabbit Care
+subreddits:
+- ECEProfessionals
+- daycare
+- childcare
+stackexchange_sites: []
+forums:
+- name: Forum - Daycare.com Forum
+  url: https://forums.daycare.com/forum
+  status: blocked
+  checked_at: '2026-10-11'
+  locked: true
+  software: vbulletin
+  robots: allowed
+  terms: unchecked
+  notes: 403 to SignalBot (read 2026-10-11); not bypassed
+- name: 'Free forum : The Daycare Room'
+  url: https://thedaycareroom.canadian-forum.com/
+  status: live
+  checked_at: '2026-10-11'
+  locked: true
+  software: phpbb
+  rss: https://thedaycareroom.canadian-forum.com/feed/
+  robots: allowed
+  terms: forbidden
+  terms_url: https://www.forumotion.com/terms-of-service
+  terms_notes: 'Forumotion: users may not ''use, distribute, copy, reproduce'' site content without prior written
+    authorization; last posts 2013-2015 (read 2026-10-11).'
+- name: Forum
+  url: https://aussiechildcarenetwork.com.au/forum/
+  status: live
+  checked_at: '2026-10-11'
+  locked: true
+  software: phpbb
+  robots: allowed
+  terms: forbidden
+  terms_url: https://aussiechildcarenetwork.com.au/terms-and-conditions
+  terms_notes: 'Clause 8(ix): no ''accessing any content on the Service through any technology or means other than
+    those provided or authorized''; the forum offers no feed (read 2026-10-11).'
+rss_feeds:
+- name: Beyond the Crayons
+  url: https://beyondthecrayons.com/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: true
+- name: The Directors Club
+  url: https://thedirectorsclub.net/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: true
+- name: Child Care Director's Chair
+  url: https://www.childcaredirectorschair.com/blog-feed.xml
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 20
+  full_text: false
+- name: Child Care Business Owner Institute
+  url: https://childcarebusinessowner.com/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 2
+  full_text: false
+- name: National Association for Family Child Care
+  url: https://nafcc.org/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: true
+- name: The Director's Collective
+  url: https://www.thedirectorscollective.com/feed
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 20
+  full_text: true
+- name: Licensed Child Care Association of Oklahoma
+  url: https://www.lcaconnect.com/feed/rss2
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 5
+  full_text: true
+- name: Early Care & Education Consortium
+  url: https://www.ececonsortium.org/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: true
+associations:
+- name: Pennsylvania Child Care Association
+  url: https://www.pacca.org/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+- name: Australian Childcare Alliance
+  url: https://australianchildcarealliance.org.au/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+- name: NAEYC
+  url: https://www.naeyc.org/
+  status: blocked
+  checked_at: '2026-10-11'
+  locked: true
+  notes: 403 to SignalBot (2026-10-11)
+- name: Child Care Aware of America
+  url: https://www.childcareaware.org/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+job_boards: []
+podcasts: []
+youtube_channels: []
