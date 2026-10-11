@@ -115,3 +115,11 @@ def test_unreviewed_drafts_are_not_collected(tmp_path):
     draft.discovery.needs_review = False
     save_industry(draft, maps / "vet.yaml")
     assert len(load_sources(sources_yaml, industries_dir=maps).get("rss").queries) == 1
+
+
+def test_forum_feeds_are_recognised():
+    from signal_connectors.forum_detect import FORUM_FEED_PATTERNS
+    for url in ["http://autotechsonline.proboards.com/rss/public", "https://www.autoprofessionals.org/syndication.php",
+                "https://x.example/forums/-/index.rss", "https://x.example/external.php?type=RSS2"]:
+        assert FORUM_FEED_PATTERNS.search(url), url
+    assert not FORUM_FEED_PATTERNS.search("https://www.ratchetandwrench.com/feed/")

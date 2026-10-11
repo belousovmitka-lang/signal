@@ -45,6 +45,8 @@ def test_rss_source_pulls_live_feeds_once():
     ('<meta name="generator" content="vBulletin 5.7">', "vbulletin"),
     ('Powered by phpBB', "phpbb"),
     ('<div class="lia-component-x">', "khoros"),
+    ('<link href="https://storage.proboards.com/x.css">', "proboards"),
+    ('Powered By <a href="https://www.mybb.com" target="_blank">MyBB</a>', "mybb"),
     ("<html><body>hi</body></html>", "unknown"),
 ])
 def test_detect_software(html, software):

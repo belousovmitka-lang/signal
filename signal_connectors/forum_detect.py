@@ -23,7 +23,12 @@ DEFAULT_FEEDS = {
     "phpbb": ["/app.php/feed", "/feed.php"],
     "invision": [],
     "khoros": [],
+    "proboards": ["/rss/public"],
+    "mybb": ["/syndication.php"],
 }
+# Feed URLs that are themselves forum feeds, whatever the homepage says.
+FORUM_FEED_PATTERNS = re.compile(r"proboards\.com/rss|/syndication\.php|/forums?/-/index\.rss|external\.php\?type=rss|"
+                                 r"/app\.php/feed|/feed\.php|/latest\.rss|/posts\.rss", re.I)
 
 _SIGNATURES: list[tuple[str, re.Pattern[str]]] = [
     ("discourse", re.compile(r'<meta name="generator" content="Discourse|data-discourse-|discourse-cdn', re.I)),
@@ -32,6 +37,8 @@ _SIGNATURES: list[tuple[str, re.Pattern[str]]] = [
     ("phpbb", re.compile(r'phpBB|<body[^>]+id="phpbb"', re.I)),
     ("invision", re.compile(r'Invision Community|ipsApp|ips4', re.I)),
     ("khoros", re.compile(r'lia-component|khoros|lithium\.', re.I)),
+    ("proboards", re.compile(r'proboards\.com|ProBoards', re.I)),
+    ("mybb", re.compile(r'Powered By <a href="https?://www\.mybb\.com|MyBB', re.I)),
 ]
 
 _PRIVATE = re.compile(r"circle\.so|skool\.com|discord\.(gg|com)/invite", re.I)

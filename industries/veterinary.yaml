@@ -136,10 +136,11 @@ rss_feeds:
   full_text: false
 - name: vetsurgeon
   url: https://www.vetsurgeon.org/rss
-  status: live
+  status: blocked
   checked_at: '2026-10-10'
-  notes: moved from https://www.vetsurgeon.org/members/anonymous/activities/rss (found on homepage)
-  locked: false
+  notes: 'Community site (Working Communities Ltd). Terms: information ''solely for non-commercial personal
+    use''; no reuse ''for public or commercial'' purposes (read 2026-10-11).'
+  locked: true
   entries: 20
   full_text: false
 - name: evet
@@ -151,9 +152,11 @@ rss_feeds:
   full_text: false
 - name: vetnurse
   url: https://www.vetnurse.co.uk/members/anonymous/activities/rss
-  status: live
+  status: blocked
   checked_at: '2026-10-10'
-  locked: false
+  notes: Member community activity feed; same owner as VetSurgeon (Working Communities Ltd), whose terms
+    forbid commercial use; its own terms page is a stub (read 2026-10-11).
+  locked: true
   entries: 4
   full_text: false
 - name: letstalkveterinarytechnology
@@ -165,9 +168,11 @@ rss_feeds:
   full_text: true
 - name: members
   url: https://members.sonopath.com/feed/
-  status: live
+  status: blocked
   checked_at: '2026-10-10'
-  locked: false
+  notes: 'SonoPath members'' site; no terms published (2026-10-11): not collected until terms are read
+    or the owner agrees.'
+  locked: true
   entries: 10
   full_text: true
 - name: myvmg

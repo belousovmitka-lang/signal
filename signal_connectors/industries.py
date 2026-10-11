@@ -19,7 +19,7 @@ from .settings import REPO_ROOT
 INDUSTRIES_DIR = REPO_ROOT / "industries"
 
 Status = Literal["unverified", "live", "dead", "blocked", "private", "search_only"]
-ForumSoftware = Literal["discourse", "xenforo", "vbulletin", "phpbb", "invision", "khoros",
+ForumSoftware = Literal["discourse", "xenforo", "vbulletin", "phpbb", "invision", "khoros", "proboards", "mybb",
                         "custom", "unknown"]
 
 

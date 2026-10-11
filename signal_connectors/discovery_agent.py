@@ -28,7 +28,7 @@ import feedparser
 from selectolax.lexbor import LexborHTMLParser
 
 from .discovery import Discovery
-from .forum_detect import advertised_feeds, detect_software, wall_of
+from .forum_detect import FORUM_FEED_PATTERNS, advertised_feeds, detect_software, wall_of
 from .industries import DiscoveryInfo, Feed, Forum, Industry, Link, Vocabulary, load_industries
 from .services import Services
 from .verify import verify_industry
@@ -206,7 +206,9 @@ async def discover(services: Services, seeds: Seeds, *, budget_usd: float = 0.25
         if v is None:
             continue
         host = urlsplit(v.final_url).hostname or cand.origin
-        is_forum = v.software not in ("unknown", "custom") or bool(cand.paths) or bool(FORUM_HINT.search(v.final_url))
+        # A forum's own feed must go through the forum terms review, never in as a "publication".
+        is_forum = (v.software not in ("unknown", "custom") or bool(cand.paths) or bool(FORUM_HINT.search(v.final_url))
+                    or any(FORUM_FEED_PATTERNS.search(f) for f in v.feeds))
         if is_forum:
             prior = known.get(base_domain(host))   # terms belong to the organization, so match by domain
             forums.append(Forum(name=v.title, url=v.final_url, software=v.software,
