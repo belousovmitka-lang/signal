@@ -39,10 +39,11 @@ class FeedItem(BaseModel):
     published_at: datetime
     niche_path: list[str]
     money: dict | None
-    explanation: str
-    calibration: bool = False
+    calibration: bool = False  # show the Interested / Not for me answer buttons
     score: float | None
-    score_breakdown: dict      # for debugging and evaluation; the app must not show it
+    # For debugging and evaluation only: includes the internal `reason` the item was picked for. The app
+    # never shows why an item is in the feed.
+    score_breakdown: dict
 
 
 class FeedPage(BaseModel):
@@ -126,8 +127,7 @@ class FeedService:
         if not _has_impressions(self.store, user_id):
             deck = calibration_deck(data, state, self.config, self.rng)
             scored = self.ranker.score(data, state, deck, now)
-            rows = [(s, f"Calibration · is {data.industry.nodes[data.items[s.index].niche_id].label} for you?",
-                     "calibration") for s in scored]
+            rows = [(s, "calibration", "calibration") for s in scored]
             return self._log(data, user_id, session_id, rows, len(shown), caught_up=False, calibration=True)
         candidates = generate(data, state, self.config, self.store, now, self.rng, explore_more)
         scored = self.ranker.score(data, state, candidates, now)
@@ -143,7 +143,7 @@ class FeedService:
         with self.store.session() as s, s.begin():
             for k, (scored, explanation, rule) in enumerate(rows):
                 it = data.items[scored.index]
-                breakdown = scored.breakdown | ({"rule": rule} if rule else {})
+                breakdown = scored.breakdown | {"reason": explanation} | ({"rule": rule} if rule else {})
                 imp = ImpressionRow(user_id=user_id, session_id=session_id, item_type="post", item_id=it.post_id,
                                     position=offset + k, candidate_source=scored.candidate.source,
                                     explanation=explanation, score=scored.score, score_breakdown=breakdown,
@@ -160,7 +160,7 @@ class FeedService:
                     impression_id=imp.id, position=imp.position, post_id=it.post_id, problem_id=it.problem_id,
                     similar_posts=it.similar_posts, post_type=it.post_type, title=it.title, summary=it.summary,
                     url=it.url, source=it.source, published_at=it.published_at, niche_path=data.path(it.niche_id),
-                    money=it.money, explanation=explanation, calibration=calibration, score=scored.score,
+                    money=it.money, calibration=calibration, score=scored.score,
                     score_breakdown=breakdown))
         return FeedPage(user_id=user_id, session_id=session_id, items=items, cursor=str(offset + len(items)),
                         caught_up=caught_up, calibration=calibration)

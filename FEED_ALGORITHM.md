@@ -47,7 +47,7 @@ connectors ──► RawPost
           feed ─► app ─► events ─► [H] Learning loop (online + nightly + weekly)
 ```
 
-Outputs to the app: the **feed**, the **niche map** (rings, trajectory, weekly snapshots), **why-you're-seeing-this** explanations, and the **profile niches** (subject to user approval).
+Outputs to the app: the **feed**, the **niche map** (rings, trajectory, weekly snapshots), and the **profile niches** (subject to user approval).
 
 ---
 
@@ -163,6 +163,10 @@ Confidence is reported separately (low evidence = "early signal"), never hidden 
 2. **Calibration round:** the first session opens with 10 quick cards spanning the chosen industries and two wildcards; each answer ("Interested" / "Not for me") updates affinities immediately.
 3. **Similar builders:** until a user has 20 events, blend in what builders with similar quiz answers saved (weight decays to 0 by 100 events *(tune)*).
 
+**Skills are a small bonus, never a filter** *(2026-10-11, founder decision)*: nobody can list all their skills, and neither a resume nor LinkedIn captures them fully, so a skill the user didn't name must never cost them posts. Skill match is 8% of candidates (was 15%) and the skill feature's ranker coefficients are half the first values; skills a user never named stay neutral rather than negative, and they rise on their own from reactions (every event also updates the post's skills).
+
+**Open: a smarter skills quiz.** Asking for a list under-reports skills. Direction to design: infer skills from what the person has built or does (free-text "what have you built?", portfolio or repo links, job titles), mapped to the skill vocabulary by the LLM with confidence, plus a few quick either/or cards; treat the result as soft priors, and keep learning from reactions.
+
 ### 6.3 Events and their weights *(tune)*
 
 | Event | Weight | Notes |
@@ -217,11 +221,11 @@ Per session, gather ~500 candidates *(tune)* from these sources, then de-duplica
 
 | Source | Share target | How |
 |---|---|---|
-| Niche match | ~45% | nearest neighbours to the user's top niches (affinity-weighted centroids) |
-| Skill match | ~15% | posts whose `skills_needed` match the user's top skills |
+| Niche match | ~50% (was 45%) | nearest neighbours to the user's top niches (affinity-weighted centroids) |
+| Skill match | ~8% (was 15%) | posts whose `skills_needed` match the user's top skills |
 | Similar builders | ~10% | what builders with similar maps saved recently |
 | Trending nearby | ~10% | rising problems in parent and sibling niches |
-| Exploration | ~10% | niches outside the map, chosen by Thompson sampling |
+| Exploration | ~12% (was 10%) | niches outside the map, chosen by Thompson sampling |
 | Pins and drop-ins | as needed | guaranteed candidates for pinned and dropped nodes |
 | Followed builders | as needed | posts from builders the user follows (community phase) |
 | Company-posted problems | later | when the company side launches |
@@ -274,9 +278,9 @@ The ranked list becomes a feed through rules applied in order.
    - At least 40% of the first 10 items are under 48 hours old, when available
 4. **Pins and drop-ins:** guaranteed exposure as budgeted.
 5. **Session end:** after the strong items run out (predicted score below a floor *(tune)*), show "You're caught up" with an optional "Explore more" that switches to exploration-heavy items.
-6. **Explanation:** every item carries a short reason: "Citation verification · you saved 4 similar posts" or "Exploring: Insurance claims · new for you".
+6. **No visible explanation** *(changed 2026-10-11, founder decision)*: the feed never tells the user why an item is there ("the magic of a good feed is that no one sees why it is good"). Each item still gets an internal reason ("Citation verification · you saved 4 similar posts", "Exploring: Insurance claims"), logged with the impression and in `score_breakdown.reason` for debugging and evaluation; the app must not display it.
 
-**As built (2026-10-11):** `signal_feed/feed/compose.py`, one page of 20 at a time. Rules in order: best post per problem with "+N similar"; minimums for paid demand (15%) and exploration (10%) and freshness in the first 10 (40% under 48 h) are paced through the page (a slot is forced when the running count falls below share × position), maximums for change (20%) and exploration (15%) are hard; diversity (no repeat of problem or source next to each other, at most 2 of one post type in a row: `max_same_type_in_a_row`, relaxed from the spec's 1 on 2026-10-11; ≤ 3 of one leaf in any 10) wins over a quota for one slot; pins and drop-ins are spread evenly (up to 2 per page), and a drop-in spends one exposure per page it appears on; "You're caught up" when the best remaining score is below 0.5, and `GET /feed?explore=true` switches to mostly-exploration candidates with quotas off. Explanations: "Pinned: …", "You added … · trying it for a few sessions", "… · needs AI agents, one of your skills" (or "a skill in posts you liked" when learned), "… · builders like you saved this", "Rising in …", "Exploring: … · new for you", "… · close to N posts you liked", "… · in your Core / in your interests", with "· paid demand" on tenders. A new user's first page is the calibration deck (6.2): 8 cards across the chosen niches, alternating demand and non-demand, plus 2 wildcards from other industries. The spec's "never the same post type twice in a row" made a page alternate when the strongest posts were mostly one type, so the second type (often tenders) filled about every other slot even for a user who rejected it; hence 2 in a row.
+**As built (2026-10-11):** `signal_feed/feed/compose.py`, one page of 20 at a time. Rules in order: best post per problem with "+N similar"; minimums for paid demand (15%) and exploration (10%) and freshness in the first 10 (40% under 48 h) are paced through the page (a slot is forced when the running count falls below share × position), maximums for change (20%) and exploration (15%) are hard; diversity (no repeat of problem or source next to each other, at most 2 of one post type in a row: `max_same_type_in_a_row`, relaxed from the spec's 1 on 2026-10-11; ≤ 3 of one leaf in any 10) wins over a quota for one slot; pins and drop-ins are spread evenly (up to 2 per page), and a drop-in spends one exposure per page it appears on; "You're caught up" when the best remaining score is below 0.5, and `GET /feed?explore=true` switches to mostly-exploration candidates with quotas off. Internal reasons (logged, never shown): "Pinned: …", "You added … · trying it for a few sessions", "… · needs AI agents, one of your skills" (or "a skill in posts you liked" when learned), "… · builders like you saved this", "Rising in …", "Exploring: … · new for you", "… · close to N posts you liked", "… · in your Core / in your interests", with "· paid demand" on tenders. A new user's first page is the calibration deck (6.2): 8 cards across the chosen niches, alternating demand and non-demand, plus 2 wildcards from other industries. The spec's "never the same post type twice in a row" made a page alternate when the strongest posts were mostly one type, so the second type (often tenders) filled about every other slot even for a user who rejected it; hence 2 in a row.
 
 ---
 

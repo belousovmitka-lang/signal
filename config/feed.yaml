@@ -169,11 +169,11 @@ events:
 candidates:
   per_session: 500
   shares:
-    niche_match: 0.45
-    skill_match: 0.15
+    niche_match: 0.50
+    skill_match: 0.08             # was 0.15: a quiz never captures all of someone's skills (2026-10-11)
     similar_builders: 0.10
     trending_nearby: 0.10
-    exploration: 0.10
+    exploration: 0.12
   exclude_seen_days: 30
 
 # Stage F — ranking (section 8)
@@ -188,14 +188,15 @@ ranking:
   # v1: hand-set linear estimates of each action's probability (section 8.2), clipped to [0, 1].
   # Features run 0-1 except type_pref (-1..1) and source_pref (-cap..cap). `problem` is the post's
   # problem score as a percentile within its kind (pain or demand), so the two kinds compare fairly.
+  # `skill` coefficients were halved on 2026-10-11: listed skills are a small bonus, never a filter.
   v1:
     coefficients:
-      read:        {intercept: 0.15, affinity: 0.30, skill: 0.10, save_sim: 0.20, nfm_sim: -0.15, type_pref: 0.20, source_pref: 0.05, quality: 0.10, fresh: 0.05, social: 0.05}
-      save:        {affinity: 0.10, skill: 0.05, save_sim: 0.12, nfm_sim: -0.08, type_pref: 0.08, problem: 0.06, intensity: 0.03, money: 0.015, buyer: 0.01, social: 0.05}
-      id_build:    {affinity: 0.04, skill: 0.06, save_sim: 0.04, problem: 0.05, intensity: 0.02, money: 0.01, buyer: 0.01}
-      idea:        {affinity: 0.015, skill: 0.02, problem: 0.02, money: 0.005, buyer: 0.005}
+      read:        {intercept: 0.15, affinity: 0.30, skill: 0.05, save_sim: 0.20, nfm_sim: -0.15, type_pref: 0.20, source_pref: 0.05, quality: 0.10, fresh: 0.05, social: 0.05}
+      save:        {affinity: 0.10, skill: 0.025, save_sim: 0.12, nfm_sim: -0.08, type_pref: 0.08, problem: 0.06, intensity: 0.03, money: 0.015, buyer: 0.01, social: 0.05}
+      id_build:    {affinity: 0.04, skill: 0.03, save_sim: 0.04, problem: 0.05, intensity: 0.02, money: 0.01, buyer: 0.01}
+      idea:        {affinity: 0.015, skill: 0.01, problem: 0.02, money: 0.005, buyer: 0.005}
       outreach:    {affinity: 0.005, problem: 0.01, money: 0.005, buyer: 0.0075}
-      not_for_me:  {intercept: 0.10, affinity: -0.10, skill: -0.03, save_sim: -0.05, nfm_sim: 0.25, type_pref: -0.10}
+      not_for_me:  {intercept: 0.10, affinity: -0.10, skill: -0.015, save_sim: -0.05, nfm_sim: 0.25, type_pref: -0.10}
       scroll_past: {intercept: 0.45, affinity: -0.30, save_sim: -0.10, nfm_sim: 0.15, quality: -0.10, fresh: -0.05}
     similarity_low: 0.4           # embedding cosine mapped to 0..1 between these
     similarity_high: 0.8

@@ -1,5 +1,6 @@
 """Feed composition (section 9): collapse duplicates, mix quotas, diversity, guaranteed pins and
-drop-ins, the "You're caught up" floor, and a one-line explanation per item."""
+drop-ins, and the "You're caught up" floor. Each item also gets a one-line reason it was picked; it
+is logged for debugging and evaluation and never shown to the user."""
 
 from __future__ import annotations
 
@@ -21,7 +22,7 @@ DEMAND, CHANGE, EXPLORATION, CORE = "demand", "change", "exploration", "core"
 class Placed:
     scored: Scored
     category: str
-    explanation: str
+    explanation: str               # internal reason, logged with the impression, never shown
     forced: str | None = None      # why a rule put it here (quota name), for the score breakdown
 
 

@@ -269,7 +269,8 @@ def test_first_visit_is_calibration_then_the_feed(world, feed_store, feed_config
     shown = {i["post_id"] for i in cal["items"]}
     assert not shown & {i["post_id"] for i in page["items"]}                 # no repeats within 30 days
     first = page["items"][0]
-    assert first["explanation"] and first["score_breakdown"]["ranker"] == "v1" and first["summary"]
+    assert "explanation" not in first and "reason" not in first          # the app never says why
+    assert first["score_breakdown"]["reason"] and first["score_breakdown"]["ranker"] == "v1" and first["summary"]
     with feed_store.session() as s:
         assert s.query(ImpressionRow).filter_by(user_id=uid).count() == len(cal["items"]) + len(page["items"])
     assert client.get("/feed", params={"user_id": "ghost", "session_id": "x"}).status_code == 404
@@ -285,6 +286,6 @@ def test_drop_ins_spend_their_exposure_budget(world, feed_store, feed_config):
                             shown_at=NOW - timedelta(days=40), config_version=1))   # past calibration
     service = FeedService(feed_store, feed_config, FeedDataCache(feed_store, reader), clock=lambda: NOW, seed=1)
     page = service.page(uid, "s1")
-    assert any(i.explanation.startswith("You added Farm equipment") for i in page.items)
+    assert any(i.score_breakdown["reason"].startswith("You added Farm equipment") for i in page.items)
     with feed_store.session() as s:
         assert s.get(UserDropInRow, (uid, node)).exposures_left == 1

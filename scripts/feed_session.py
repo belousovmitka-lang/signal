@@ -4,8 +4,8 @@
     python scripts/feed_session.py --industries "IT and developer tools" --like tool_gap pain --pages 2
 
 Onboards a user, shows the calibration deck, answers it (Interested for --like post types, Not for me
-otherwise), then prints feed pages with each item's explanation. Real users are never touched: the
-feed database is copied to a temporary file first (SQLite only).
+otherwise), then prints feed pages with each item's internal reason (logged, never shown in the app).
+Real users are never touched: the feed database is copied to a temporary file first (SQLite only).
 """
 
 import argparse
@@ -64,7 +64,8 @@ def main() -> int:
         print(f"\nFeed page {n}: {len(page['items'])} items{' (caught up)' if page['caught_up'] else ''}")
         for it in page["items"]:
             extra = f" +{it['similar_posts']} similar" if it["similar_posts"] else ""
-            print(f"  {it['score']:5.2f}  {it['post_type']:11} {textwrap.shorten(it['explanation'], 58):58} "
+            reason = it["score_breakdown"].get("reason", "")
+            print(f"  {it['score']:5.2f}  {it['post_type']:11} {textwrap.shorten(reason, 58):58} "
                   f"| {textwrap.shorten(it['summary'] or it['title'] or '', 60)}{extra}")
     shutil.rmtree(tmp.parent, ignore_errors=True)
     return 0
