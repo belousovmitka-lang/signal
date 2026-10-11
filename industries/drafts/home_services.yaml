@@ -1,0 +1,277 @@
+industry: home_services
+name: Home services
+discovery:
+  generated_at: '2026-10-11'
+  needs_review: true
+  queries: 9
+  cost_usd: 0.114
+  candidates_checked: 40
+  notes: 'Draft by the discovery agent (9 searches, $0.114), reviewed by Claude 2026-10-11. Terms: UAMCC
+    allowed; LawnSite, Cleaning Talk, The Lawn Forum (VerticalScope) and three ProBoards forums forbidden;
+    The Cleaning Standard, IAHSP and LTK unchecked; a Czech casino site and a broken classifieds board
+    removed. Jargon curated (the auto list was award announcements). Move to industries/ and set needs_review:
+    false to collect.'
+vocabulary:
+  roles:
+  - house cleaner
+  - cleaning business owner
+  - landscaper
+  - lawn care operator
+  - pest control technician
+  - handyman
+  - remodeler
+  - home services owner
+  tasks:
+  - quoting
+  - scheduling
+  - route planning
+  - dispatch
+  - invoicing
+  - recurring billing
+  - crew management
+  - lead follow-up
+  - reviews
+  pain_phrases:
+  - no-show clients
+  - underbidding
+  - chasing payments
+  - crew turnover
+  - lead costs
+  - rescheduling for weather
+  - price shoppers
+  jargon:
+  - recurring service
+  - route density
+  - bid
+  - estimate
+  - home warranty
+  - junk removal
+  - commercial cleaning
+  - janitorial
+  - service area
+  tools:
+  - Jobber
+  - Housecall Pro
+  - ServiceTitan
+  - GorillaDesk
+  - Service Autopilot
+  - LMN
+  - ZenMaid
+subreddits:
+- lawncare
+- pestcontrol
+- Handyman
+- sweatystartup
+stackexchange_sites: []
+forums:
+- name: Lawn Care Forum
+  url: https://www.lawnsite.com/forums/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  software: xenforo
+  rss: https://www.lawnsite.com/forums/-/index.rss
+  robots: allowed
+  terms: forbidden
+  terms_url: https://www.lawnsite.com/help/terms/
+  terms_notes: 'VerticalScope: content ''for non-commercial, personal, or educational purposes only''
+    (read 2026-10-11).'
+- name: Forums, chapters and members · LTK
+  url: https://www.ltkpmp.com/community/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  software: unknown
+  robots: allowed
+  terms: unchecked
+  terms_notes: No terms page found (read 2026-10-11).
+- name: Cleaning Talk - Professional Cleaning and Restoration Forum
+  url: https://www.cleaningtalk.com/forums/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  software: xenforo
+  rss: https://www.cleaningtalk.com/forums/-/index.rss
+  robots: allowed
+  terms: forbidden
+  terms_url: https://www.cleaningtalk.com/help/terms/
+  terms_notes: 'VerticalScope: content ''for non-commercial, personal, or educational purposes only''
+    (read 2026-10-11).'
+- name: Home | www.usacleaningservices.com
+  url: https://usacleaning.proboards.com/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  software: proboards
+  rss: http://usacleaning.proboards.com/rss/public
+  robots: allowed
+  terms: forbidden
+  terms_url: https://www.proboards.com/tos
+  terms_notes: 'ProBoards (VerticalScope) terms: users may not ''access, search, or collect data from
+    the Website by any means'', and no copying ''for any commercial purpose without the express written
+    consent of ProBoards'' (read 2026-10-11).'
+- name: The Cleaning Standard
+  url: https://thecleaningstandard.com/forum/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  software: xenforo
+  rss: https://thecleaningstandard.com/forum/forums/-/index.rss
+  robots: allowed
+  terms: unchecked
+  terms_notes: Terms page not found (read 2026-10-11).
+- name: Home | Canada Cleaning Association
+  url: https://ijcsacanada.proboards.com/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  software: proboards
+  rss: http://ijcsacanada.proboards.com/rss/public
+  robots: allowed
+  terms: forbidden
+  terms_url: https://www.proboards.com/tos
+  terms_notes: 'ProBoards (VerticalScope) terms: users may not ''access, search, or collect data from
+    the Website by any means'', and no copying ''for any commercial purpose without the express written
+    consent of ProBoards'' (read 2026-10-11).'
+- name: XenForo
+  url: https://forum.uamcc.org/index.php
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  software: xenforo
+  rss: https://forum.uamcc.org/index.php?forums/-/index.rss
+  robots: allowed
+  terms: allowed
+  terms_url: https://forum.uamcc.org/index.php?help/terms/
+  terms_notes: Standard XenForo terms; nothing on automated access, commercial use or AI (read 2026-10-11).
+- name: Lawn Care Forum
+  url: https://www.thelawnforum.com/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  software: xenforo
+  rss: https://www.thelawnforum.com/forums/-/index.rss
+  robots: allowed
+  terms: forbidden
+  terms_url: https://www.thelawnforum.com/help/terms/
+  terms_notes: 'VerticalScope: content ''for non-commercial, personal, or educational purposes only''
+    (read 2026-10-11).'
+- name: Home | Pest Professional forum
+  url: https://pestpreventer.proboards.com/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  software: proboards
+  rss: http://pestpreventer.proboards.com/rss/public
+  robots: allowed
+  terms: forbidden
+  terms_url: https://www.proboards.com/tos
+  terms_notes: 'ProBoards (VerticalScope) terms: users may not ''access, search, or collect data from
+    the Website by any means'', and no copying ''for any commercial purpose without the express written
+    consent of ProBoards'' (read 2026-10-11).'
+- name: IAHSP | The business of Home Staging, Real Estate and Design
+  url: https://www.iahsp.com/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  software: invision
+  rss: https://www.iahsp.com/blog-feed.xml
+  robots: allowed
+  terms: unchecked
+  terms_url: https://www.iahsp.com/policies
+  terms_notes: Policies page renders only with JavaScript; likely a members' community (read 2026-10-11).
+rss_feeds:
+- name: qualifiedremodeler
+  url: https://www.qualifiedremodeler.com/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: true
+- name: servicemag
+  url: https://servicemag.org/feed.xml
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 50
+  full_text: false
+- name: contractormag
+  url: https://www.contractormag.com/__rss/website-scheduled-content.xml?input=%7B%22sectionAlias%22%3A%22home%22%7D
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 25
+  full_text: true
+- name: kbbonline
+  url: https://kbbonline.com/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 12
+  full_text: true
+- name: proremodeler
+  url: https://www.proremodeler.com/__rss/website-scheduled-content.xml?input=%7B%22sectionAlias%22%3A%22home%22%7D
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 25
+  full_text: true
+- name: housecallpro
+  url: https://www.housecallpro.com/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: true
+- name: contractorpressnews
+  url: https://contractorpressnews.farm/rss.xml
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 17
+  full_text: false
+- name: homeservicecontract
+  url: https://homeservicecontract.org/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: true
+- name: building-performance
+  url: https://building-performance.org/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: true
+- name: thehcpa
+  url: https://www.thehcpa.org/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: true
+associations:
+- name: National Association for the Remodeling Industry| NARI
+  url: https://nari.org/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+- name: Homepage - Association of Certified Handyman Professionals
+  url: https://handymanassociation.org/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+- name: CEDIA | The Association for Smart Home Professionals™
+  url: https://cedia.org/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+- name: National Association of Home Builders | NAHB
+  url: https://www.nahb.org/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+job_boards: []
+podcasts: []
+youtube_channels: []

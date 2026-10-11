@@ -151,10 +151,11 @@ forums:
   software: proboards
   rss: http://autotechsonline.proboards.com/rss/public
   robots: allowed
-  terms: unchecked
-  terms_url: https://autotechsonline.proboards.com/forum/help/terms/
-  terms_notes: Forum terms say nothing restrictive, but ProBoards' platform terms could not be found (read
-    2026-10-11).
+  terms: forbidden
+  terms_url: https://www.proboards.com/tos
+  terms_notes: 'ProBoards (VerticalScope) terms: users may not ''access, search, or collect data from
+    the Website by any means'', and no copying ''for any commercial purpose without the express written
+    consent of ProBoards'' (read 2026-10-11).'
 - name: autoprofessionals
   url: https://www.autoprofessionals.org/
   status: live
@@ -195,10 +196,11 @@ forums:
   software: proboards
   rss: http://paintlessdentremoval.proboards.com/rss/public
   robots: allowed
-  terms: unchecked
-  terms_url: https://paintlessdentremoval.proboards.com/help/terms/
-  terms_notes: Forum terms say nothing restrictive, but ProBoards' platform terms could not be found (read
-    2026-10-11).
+  terms: forbidden
+  terms_url: https://www.proboards.com/tos
+  terms_notes: 'ProBoards (VerticalScope) terms: users may not ''access, search, or collect data from
+    the Website by any means'', and no copying ''for any commercial purpose without the express written
+    consent of ProBoards'' (read 2026-10-11).'
 rss_feeds:
 - name: ratchetandwrench
   url: https://www.ratchetandwrench.com/__rss/website-scheduled-content.xml?input=%7B%22sectionAlias%22%3A%22home%22%7D
