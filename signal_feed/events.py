@@ -7,6 +7,7 @@ reject only that event and the rest are stored.
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from datetime import datetime, timedelta
 from typing import Literal
 
@@ -111,7 +112,9 @@ def _problem_id(item_id: str) -> int | None:
 
 
 def log_events(batch: EventBatch, store: FeedStore, posts: PostsReader, config: FeedConfig,
-               now: datetime | None = None) -> BatchResult:
+               now: datetime | None = None,
+               on_stored: Callable[[list[EventRow]], object] | None = None) -> BatchResult:
+    """`on_stored` gets the newly stored rows (not duplicates or rejects), e.g. to update the user model."""
     now = now or utcnow()
     ev = config.events
     if len(batch.events) > ev.max_batch_size:
@@ -156,6 +159,8 @@ def log_events(batch: EventBatch, store: FeedStore, posts: PostsReader, config: 
                 continue
             raise
         result.accepted = len(rows)
+        if on_stored is not None and rows:
+            on_stored(rows)
         return result
     raise AssertionError("unreachable")
 

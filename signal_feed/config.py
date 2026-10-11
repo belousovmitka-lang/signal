@@ -11,6 +11,7 @@ from pydantic import BaseModel, ConfigDict, Field, model_validator
 EventType = Literal[
     "impression", "scroll_past", "read", "expand", "open_source", "save", "share",
     "id_build", "idea", "outreach", "useful_yes", "useful_no", "not_for_me", "hide_source", "report",
+    "interested",
 ]
 EVENT_TYPES: tuple[str, ...] = get_args(EventType)
 
@@ -189,6 +190,15 @@ class Rings(_Strict):
 
 
 class UserModelConfig(_Strict):
+    prior_strength: float = Field(gt=0)
+    default_affinity: Fraction = Field(ge=0, le=1)
+    evidence_per_weight: float = Field(gt=0)
+    inherit: list[Fraction] = Field(min_length=1, max_length=3)
+    type_preference_rate: float = Field(ge=0)
+    source_preference_rate: float = Field(ge=0)
+    source_preference_cap: Fraction = Field(ge=0, le=1)
+    similar_builders_min_jaccard: Fraction = Field(ge=0, le=1)
+    too_small_step: Fraction = Field(ge=0, le=1)
     quiz_prior_affinity: Fraction = Field(ge=0, le=1)
     resume_prior_affinity: Fraction = Field(ge=0, le=1)
     calibration_cards: int = Field(ge=0)
@@ -250,11 +260,35 @@ class QualityFactor(_Strict):
     toxicity_penalty: Fraction = Field(ge=0, le=1)
 
 
+RankAction = Literal["read", "save", "id_build", "idea", "outreach", "not_for_me", "scroll_past"]
+RankFeature = Literal["intercept", "affinity", "skill", "save_sim", "nfm_sim", "type_pref", "source_pref",
+                      "problem", "intensity", "money", "buyer", "quality", "fresh", "social"]
+
+
+class RankerV1(_Strict):
+    coefficients: dict[RankAction, dict[RankFeature, float]]
+    similarity_low: Fraction = Field(ge=0, le=1)
+    similarity_high: Fraction = Field(ge=0, le=1)
+    similar_save_cosine: Fraction = Field(ge=0, le=1)
+    fresh_half_life_hours: float = Field(gt=0)
+    recent_saves: int = Field(gt=0)
+
+    @model_validator(mode="after")
+    def _every_action(self) -> RankerV1:
+        missing = set(get_args(RankAction)) - set(self.coefficients)
+        if missing:
+            raise ValueError(f"ranking.v1.coefficients is missing: {', '.join(sorted(missing))}")
+        if self.similarity_low >= self.similarity_high:
+            raise ValueError("ranking.v1.similarity_low must be below similarity_high")
+        return self
+
+
 class RankingConfig(_Strict):
     quality_factor: QualityFactor
     survey_every_n_items: int = Field(gt=0)
     value_model_blend: Fraction = Field(ge=0, le=1)
     v2_min_labeled_impressions: int = Field(gt=0)
+    v1: RankerV1
 
 
 class Quotas(_Strict):
@@ -279,6 +313,8 @@ class CompositionConfig(_Strict):
     fresh_share_first_10: Fraction = Field(ge=0, le=1)
     fresh_hours: int = Field(gt=0)
     caught_up_score_floor: float
+    page_size: int = Field(gt=0, le=100)
+    pins_per_page: int = Field(ge=0)
 
 
 class LearningConfig(_Strict):

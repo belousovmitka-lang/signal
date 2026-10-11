@@ -207,6 +207,8 @@ For each node the user engages with, check weekly:
 - **Exploring:** default. Feed composition as in section 9.
 - **Committed:** the user picked a problem. The feed narrows to that problem's niche, its evidence, competitors, related paid demand and builders working nearby; everything else is capped at 10% *(tune)*.
 
+**As built (2026-10-11, Phase 3):** `signal_feed/feed/usermodel.py`. `POST /onboarding` takes the quiz (industries may name a branch, "Healthcare > Pharmacy"; `GET /onboarding/options` lists industries, branches and skills) and stores each choice as Beta(0.6 × 2, 0.4 × 2): a weak prior that a few events move; untouched nodes count as 0.1. Each stored event updates the model in `POST /events`: evidence = weight × 0.25 (a save adds 1) on the post's leaf niche, 40% to its parent and 15% to its grandparent, and on its skills; type and source preferences move by 0.02 and 0.01 per unit of weight (sources capped at ±0.5). "Not for me" reasons route as in 6.3 (*too crowded* is only counted: no competition data yet); "Hide source" hides the source and touches no niche. Evidence above the prior halves every 21 days, applied when the state is read. Calibration answers are a new event, `interested` (+2). Not built yet: narrowing (6.5), map output (6.6), committed mode (6.7): Phase 4+.
+
 ---
 
 ## 7. Stage E — Candidate generation
@@ -225,6 +227,8 @@ Per session, gather ~500 candidates *(tune)* from these sources, then de-duplica
 | Company-posted problems | later | when the company side launches |
 
 Exclude: posts seen in the last 30 days, problems marked "already exists" or removed, hidden sources, posts with `spam_score` above threshold.
+
+**As built (2026-10-11):** `signal_feed/feed/candidates.py`. Sources fill their share of 500 in order: pins and drop-ins (guaranteed), niche match (the user's top 8 niches by affinity, each a share proportional to it, posts nearest the niche centroid first), skill match (skills with affinity ≥ 0.3), similar builders (quiz Jaccard ≥ 0.3, their positive actions in 30 days; share decays from 20 to 100 events), trending nearby (problems with trend ≥ 0.6 in parent and sibling niches), exploration (Thompson sampling: one Beta draw per niche off the map, best draws explored; a chosen industry's own branches don't count as off the map), then a `fill` top-up so a thin map never yields a thin feed. Excluded as specified, plus pain problems below the user's "too small" minimum.
 
 ---
 
@@ -249,6 +253,8 @@ For each candidate: probabilities of `read`, `save`, `id_build`, `idea`, `outrea
 ### 8.4 Value model (YouTube-style)
 About 1 in 30 items *(tune)* gets a one-tap "Was this useful?" after the user reads it. Train a model to predict the answer for every item and blend it into the score (start at 20% of the final score *(tune)*). This keeps the feed honest when clicks and value disagree.
 
+**As built (2026-10-11): v1 only** (`signal_feed/feed/ranker.py`). Features: niche affinity (best of leaf, parent × 0.9, grandparent × 0.8; 0 under a removed node), skill match, similarity to the last 20 liked and "not for me" posts (cosine 0.4–0.8 mapped to 0–1), type and source preference, problem rank, intensity, money, buyer, quality, freshness (halves every 72 h), similar builders' saves. Each action's probability is a linear function with hand-set coefficients in `ranking.v1`, clipped to [0, 1]. The problem feature is the post's problem score as a **percentile within its kind**: pain and demand scores come from different formulas, and mixing raw scores let tenders crowd the feed. Quality factor as specified. Not built: surveys and the value model (8.4, Phase 6), v2/v3 models.
+
 ---
 
 ## 9. Stage G — Feed composition
@@ -269,6 +275,8 @@ The ranked list becomes a feed through rules applied in order.
 4. **Pins and drop-ins:** guaranteed exposure as budgeted.
 5. **Session end:** after the strong items run out (predicted score below a floor *(tune)*), show "You're caught up" with an optional "Explore more" that switches to exploration-heavy items.
 6. **Explanation:** every item carries a short reason: "Citation verification · you saved 4 similar posts" or "Exploring: Insurance claims · new for you".
+
+**As built (2026-10-11):** `signal_feed/feed/compose.py`, one page of 20 at a time. Rules in order: best post per problem with "+N similar"; minimums for paid demand (15%) and exploration (10%) and freshness in the first 10 (40% under 48 h) are paced through the page (a slot is forced when the running count falls below share × position), maximums for change (20%) and exploration (15%) are hard; diversity (no repeat of problem, source or post type next to each other, ≤ 3 of one leaf in any 10) wins over a quota for one slot; pins and drop-ins are spread evenly (up to 2 per page), and a drop-in spends one exposure per page it appears on; "You're caught up" when the best remaining score is below 0.5, and `GET /feed?explore=true` switches to mostly-exploration candidates with quotas off. Explanations: "Pinned: …", "You added … · trying it for a few sessions", "… · needs AI agents, one of your skills" (or "a skill in posts you liked" when learned), "… · builders like you saved this", "Rising in …", "Exploring: … · new for you", "… · close to N posts you liked", "… · in your Core / in your interests", with "· paid demand" on tenders. A new user's first page is the calibration deck (6.2): 8 cards across the chosen niches, alternating demand and non-demand, plus 2 wildcards from other industries. Known tension: the "never the same post type twice in a row" rule makes a page alternate when the strongest posts are mostly one type, so the second type (often tenders) fills about every other slot even for a user who rejects it.
 
 ---
 
@@ -310,7 +318,8 @@ Tables (SQLAlchemy; in a separate feed database for now, movable to the connecto
 
 | Endpoint | Purpose |
 |---|---|
-| `GET /feed?session_id=&cursor=` | next feed items with explanations |
+| `GET /feed?session_id=&cursor=` | next feed items with explanations (built: also takes `user_id` until auth exists, and `explore=true` for "Explore more") |
+| `POST /onboarding`, `GET /onboarding/options` | quiz answers and the choices to show (added in Phase 3) |
 | `POST /events` | batch of user events |
 | `GET /map` | current map: nodes, rings, positions, parents, statuses (rising, fading, new) |
 | `GET /map/history` | weekly snapshots and change log for Replay |
@@ -364,7 +373,7 @@ Finish each phase with tests and a short demo script before starting the next.
 1. **Phase 0 — foundations:** tables, `config/feed.yaml`, event logging, `POST /events`. — done (2026-10-09): package `signal_feed/`, tests in `tests/feed/`, demo `scripts/feed_demo.py`. Feed tables live in a separate database for now (`FEED_DATABASE_URL`, default `data/feed.db`); raw posts are read read-only from the connectors' `DATABASE_URL`. `POST /events` takes `user_id` in the body until app auth exists.
 2. **Phase 1 — enrichment:** Stage A with schema validation, cost guard and a labeled sample of 200 posts to check tagging quality. — built (2026-10-09); run live (2026-10-10), prompt v5, post_type accuracy 86.9% over 15 types; backfill (2026-10-10): 7,068 posts, 3,161 `ok`, 2,249 `dropped`, 1,658 `skipped`; $0.54 through the Batch API, 90 escalations (1.8%). Embeddings paced to Voyage's no-card limits (3 requests, 10k tokens per minute) in `config/feed.yaml`. The 200 reference labels were written by Claude; 34 flagged `unsure` await human review.
 3. **Phase 2 — niche tree and problems:** seed tree, problem clustering and scoring; a script that prints the top problems per niche. — built (2026-10-11): `scripts/problems.py build | tree | top`; first run without LLM naming (Anthropic credit ran out), see 4 and 5 "As built". Seeded industry branches added (prompt v8 lists them; re-tag pending Anthropic credit, ~$2–3 because the prompt grew to ~5k tokens). Tagger moved to effort medium (prompt v7: industry 82.3%, kept-in-feed P 91.2% / R 78.5% on the eval set; ~$1.30 per full backfill).
-4. **Phase 3 — MVP feed:** user model with quiz priors and calibration, candidate generation, v1 linear ranker, feed composition with quotas, diversity and explanations; `GET /feed`.
+4. **Phase 3 — MVP feed:** user model with quiz priors and calibration, candidate generation, v1 linear ranker, feed composition with quotas, diversity and explanations; `GET /feed`. — built (2026-10-11): `signal_feed/feed/`, `POST /onboarding`, `GET /onboarding/options`, `GET /feed`; events update the user model; demo `scripts/feed_session.py` (runs on a throwaway copy of the feed database).
 5. **Phase 4 — map:** affinity-to-map conversion, pins, drop-ins, remove, nudge, weekly snapshots, change log, narrowing checks; all `/map` endpoints.
 6. **Phase 5 — profile sync:** pending updates and approval endpoints.
 7. **Phase 6 — learning:** "Was this useful?" surveys, Thompson-sampling exploration, filter-bubble guard, nightly v2 models once there is enough data.

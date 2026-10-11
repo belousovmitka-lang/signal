@@ -127,6 +127,16 @@ user_model:
   rings:
     core_min: 0.6
     regular_min: 0.3
+  # Phase 3 (2026-10-11):
+  prior_strength: 2.0             # alpha + beta of a quiz prior: a weak, easily moved belief
+  default_affinity: 0.1           # nodes the user never chose or touched
+  evidence_per_weight: 0.25       # Beta evidence per unit of event weight (a save, +4, adds 1)
+  inherit: [1.0, 0.9, 0.8]        # a post's niche affinity: max of leaf, parent x0.9, grandparent x0.8
+  type_preference_rate: 0.02      # per unit of event weight, clipped to [-1, 1]
+  source_preference_rate: 0.01
+  source_preference_cap: 0.5      # one source can never dominate
+  similar_builders_min_jaccard: 0.3   # quiz overlap for "builders like you"
+  too_small_step: 0.05            # "Not for me: too small" raises this user's minimum problem score
 
 # Events and their weights (section 6.3)
 events:
@@ -144,6 +154,7 @@ events:
     useful_yes: 3
     useful_no: -3
     not_for_me: -6
+    interested: 2                 # calibration card answer (section 6.2)
     hide_source: -4
     report: -20
   scroll_past_max_dwell_ms: 1500   # a scroll-past counts only below this dwell, fully visible
@@ -174,6 +185,23 @@ ranking:
   survey_every_n_items: 30
   value_model_blend: 0.20
   v2_min_labeled_impressions: 50000
+  # v1: hand-set linear estimates of each action's probability (section 8.2), clipped to [0, 1].
+  # Features run 0-1 except type_pref (-1..1) and source_pref (-cap..cap). `problem` is the post's
+  # problem score as a percentile within its kind (pain or demand), so the two kinds compare fairly.
+  v1:
+    coefficients:
+      read:        {intercept: 0.15, affinity: 0.30, skill: 0.10, save_sim: 0.20, nfm_sim: -0.15, type_pref: 0.20, source_pref: 0.05, quality: 0.10, fresh: 0.05, social: 0.05}
+      save:        {affinity: 0.10, skill: 0.05, save_sim: 0.12, nfm_sim: -0.08, type_pref: 0.08, problem: 0.06, intensity: 0.03, money: 0.015, buyer: 0.01, social: 0.05}
+      id_build:    {affinity: 0.04, skill: 0.06, save_sim: 0.04, problem: 0.05, intensity: 0.02, money: 0.01, buyer: 0.01}
+      idea:        {affinity: 0.015, skill: 0.02, problem: 0.02, money: 0.005, buyer: 0.005}
+      outreach:    {affinity: 0.005, problem: 0.01, money: 0.005, buyer: 0.0075}
+      not_for_me:  {intercept: 0.10, affinity: -0.10, skill: -0.03, save_sim: -0.05, nfm_sim: 0.25, type_pref: -0.10}
+      scroll_past: {intercept: 0.45, affinity: -0.30, save_sim: -0.10, nfm_sim: 0.15, quality: -0.10, fresh: -0.05}
+    similarity_low: 0.4           # embedding cosine mapped to 0..1 between these
+    similarity_high: 0.8
+    similar_save_cosine: 0.75     # "you saved N similar posts" counts saves at least this close
+    fresh_half_life_hours: 72
+    recent_saves: 20
 
 # Stage G — feed composition (section 9)
 composition:
@@ -189,6 +217,8 @@ composition:
   fresh_share_first_10: 0.40
   fresh_hours: 48
   caught_up_score_floor: 0.5
+  page_size: 20
+  pins_per_page: 2                # pinned and dropped-in nodes each get a slot per page, up to this many
 
 # Stage H — learning loop (section 10)
 learning:

@@ -225,6 +225,8 @@ class UserRow(FeedBase):
     auto_publish_profile: Mapped[bool] = mapped_column(Boolean, default=False)
     type_preference: Mapped[dict[str, float]] = mapped_column(JSON, default=dict)
     source_preference: Mapped[dict[str, float]] = mapped_column(JSON, default=dict)
+    # hidden_sources, served_problems ("already exists"), min_problem_score ("too small"), see section 6.3
+    feed_prefs: Mapped[dict[str, Any] | None] = mapped_column(NullableJSON)
 
 
 class UserQuizRow(FeedBase):
