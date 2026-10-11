@@ -1,0 +1,208 @@
+industry: fitness
+name: Fitness studios and gyms
+discovery:
+  generated_at: '2026-10-11'
+  needs_review: true
+  queries: 9
+  cost_usd: 0.114
+  candidates_checked: 40
+  notes: 'Draft by the discovery agent (9 searches, $0.114), reviewed by Claude 2026-10-11. All four forums
+    found are consumer lifting communities: StrongFirst, T-Nation and RealMuscle forbid automated or commercial
+    use; fitness.com''s terms were not found. A video-game sports forum and a duplicate association were
+    removed. The value here is the gym business feeds and newsletters. Move to industries/ and set needs_review:
+    false to collect.'
+vocabulary:
+  roles:
+  - gym owner
+  - studio owner
+  - personal trainer
+  - coach
+  - front desk manager
+  - yoga instructor
+  - boutique fitness owner
+  tasks:
+  - membership billing
+  - class scheduling
+  - lead follow-up
+  - onboarding
+  - retention
+  - trainer payroll
+  - check-ins
+  - waivers
+  pain_phrases:
+  - member churn
+  - failed payments
+  - no-shows to class
+  - cancellation requests
+  - trainer turnover
+  - low lead conversion
+  - price increases
+  jargon:
+  - churn
+  - LTV
+  - boutique studio
+  - class pack
+  - drop-in
+  - intro offer
+  - HVLC
+  - franchise
+  - retention rate
+  tools:
+  - Mindbody
+  - Glofox
+  - Zen Planner
+  - PushPress
+  - ABC Fitness
+  - Wodify
+  - Mariana Tek
+subreddits:
+- gymowners
+- personaltraining
+- fitnessbusiness
+stackexchange_sites: []
+forums:
+- name: The Forum
+  url: https://www.strongfirst.com/community/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  software: xenforo
+  rss: https://www.strongfirst.com/community/forums/-/index.rss
+  robots: allowed
+  terms: forbidden
+  terms_url: https://www.strongfirst.com/community/help/terms/
+  terms_notes: '''You may not access the Service through automated or programmatic means (such as through
+    a content scraper) without prior permission'' (read 2026-10-11).'
+- name: Real Muscle Forums - Body Building and fitness Forums
+  url: https://www.realmuscleforum.com/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  software: xenforo
+  rss: https://www.realmuscleforum.com/forums/-/index.rss
+  robots: allowed
+  terms: forbidden
+  terms_url: https://www.realmuscleforum.com/help/terms/
+  terms_notes: Personal use only; no re-publishing, reproducing or copying material (read 2026-10-11).
+- name: T Nation by Biotest - The Community for Enhanced Fitness
+  url: https://t-nation.com/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  software: discourse
+  rss: https://t-nation.com/posts.rss
+  robots: allowed
+  terms: forbidden
+  terms_url: https://t-nation.com/tos
+  terms_notes: Bans any 'Web scrape, robot, spider, or other automatic devices' to access or copy the
+    site (read 2026-10-11).
+- name: Fitness.com
+  url: https://www.fitness.com/en/forum/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  software: xenforo
+  rss: https://www.fitness.com/en/forum/forums/-/index.rss
+  robots: allowed
+  terms: unchecked
+  terms_notes: Terms page not found (404) (read 2026-10-11).
+rss_feeds:
+- name: gymownersforum
+  url: https://gymownersforum.com/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: true
+- name: twobrainbusiness
+  url: https://twobrainbusiness.com/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: true
+- name: gymowner
+  url: https://gymowner.academy/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: true
+- name: clubsolutionsmagazine
+  url: https://clubsolutionsmagazine.com/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 8
+  full_text: true
+- name: healthandfitness
+  url: https://www.healthandfitness.org/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 12
+  full_text: true
+- name: dsoa
+  url: https://dsoa.com/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 4
+  full_text: true
+- name: athletechnews
+  url: https://athletechnews.com/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 20
+  full_text: true
+- name: themifo
+  url: https://www.themifo.org/feed/
+  status: dead
+  checked_at: '2026-10-11'
+  notes: no entries
+  locked: false
+  entries: 0
+  full_text: false
+- name: exercise
+  url: https://www.exercise.org.nz/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: true
+- name: sgfitnessalliance
+  url: https://sgfitnessalliance.com/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 4
+  full_text: true
+- name: fitnessentrepreneur
+  url: https://rss.beehiiv.com/feeds/uqbzGE4cDH.xml
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 20
+  full_text: true
+- name: ohshit
+  url: https://www.ohshit.fitness/feed
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 20
+  full_text: true
+associations:
+- name: Fitness Business Association — Win, Keep & Grow Clients
+  url: https://home.fbafitness.com
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+- name: EHFA - European Health & Fitness Association
+  url: https://www.ehfa.eu/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+job_boards: []
+podcasts: []
+youtube_channels: []

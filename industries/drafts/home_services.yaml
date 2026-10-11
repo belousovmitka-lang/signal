@@ -133,7 +133,7 @@ forums:
   terms_notes: 'ProBoards (VerticalScope) terms: users may not ''access, search, or collect data from
     the Website by any means'', and no copying ''for any commercial purpose without the express written
     consent of ProBoards'' (read 2026-10-11).'
-- name: XenForo
+- name: UAMCC forum (mobile contract cleaners)
   url: https://forum.uamcc.org/index.php
   status: live
   checked_at: '2026-10-11'
