@@ -723,6 +723,8 @@ sources:
       - {params: {kind: issues}, keywords: ['label:"💎 Bounty"'], limit: 100}
       - {params: {kind: issues}, keywords: ['label:"feature request"'], limit: 200}
       - {params: {kind: repos, min_stars: 50}, limit: 100}
+      - {params: {kind: discussions}, keywords: ['"feature request"'], limit: 100}
+      - {params: {kind: discussions}, keywords: ['"is there a way"'], limit: 100}
 
   wikipedia:
     enabled: false                   # daily trending is mostly people in the news (true crime, celebrities): low signal

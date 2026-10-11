@@ -138,3 +138,36 @@ async def test_cassette_openstates(settings, monkeypatch):
                                since=datetime(2026, 9, 15, tzinfo=timezone.utc), collect=True)
     assert out.result.status == "ok" and out.result.fetched >= 15 and out.result.invalid == 0
     assert all(p.url.startswith("https://openstates.org/") and p.community for p in out.posts)
+
+
+async def test_github_discussions_graphql(make_services):
+    import json as _json
+    bodies = []
+
+    def handler(request):
+        body = _json.loads(request.content)
+        bodies.append(body)
+        node = {"title": "Is there a way to export to CSV?", "url": "https://github.com/acme/app/discussions/3",
+                "createdAt": "2026-10-07T10:00:00Z", "bodyText": "We copy rows by hand.", "upvoteCount": 4,
+                "answerChosenAt": None, "author": {"login": "octo"}, "category": {"name": "Q&A"},
+                "repository": {"nameWithOwner": "acme/app"}, "comments": {"totalCount": 2}}
+        return httpx.Response(200, json={"data": {"search": {"pageInfo": {"hasNextPage": False}, "nodes": [node, {}]}}})
+
+    async with make_services(src("github", {"params": {"kind": "discussions"}, "keywords": ['"is there a way"']}),
+                             handler) as svc:
+        out = await run_source(svc, svc.sources.get("github"), since=SINCE, collect=True)
+    (p,) = out.posts
+    assert p.source == "github:discussions" and p.community == "acme/app" and p.raw == {"category": "Q&A", "answered": False}
+    assert p.engagement == {"upvotes": 4, "comments": 2} and "octo" not in p.model_dump_json()
+    assert bodies[0]["variables"]["q"] == '"is there a way" created:>=2026-10-06T00:00:00Z'
+
+
+@signal_vcr.use_cassette("github_discussions.yaml")
+async def test_cassette_github_discussions(settings, monkeypatch):
+    _real_key(monkeypatch, "GITHUB_TOKEN")
+    sources = SourcesFile.model_validate(src("github", {"params": {"kind": "discussions"},
+                                                        "keywords": ['"feature request"'], "limit": 20}))
+    async with Services.open(settings, sources) as svc:
+        out = await run_source(svc, svc.sources.get("github"), since=SINCE, collect=True)
+    assert out.result.status == "ok" and out.result.fetched == 20 and out.result.invalid == 0
+    assert all("/discussions/" in p.url for p in out.posts)

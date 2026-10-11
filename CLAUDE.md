@@ -286,7 +286,7 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 | Chrome Web Store | G10 | — | robots.txt disallows review pages | weekly | blocked (2026-10-09) |
 | Shopify App Store, Salesforce AppExchange, Atlassian Marketplace, WordPress plugins | G10 | rss | WordPress plugins: done (2026-10-09). Shopify: ToS forbids robots. Atlassian: REST API disallowed by robots.txt. AppExchange: reviews load via internal APIs, no clean route | weekly | partly done |
 | Public feature boards (Canny, UserVoice, Productboard portals) | `feature_boards` | public_pages | robots.txt and terms allow reading; but Canny boards ship data only as an embedded JS object (not JSON, not a published interface) and UserVoice needs JavaScript. Revisit if a vendor offers a public feed or API | weekly | todo (deferred 2026-10-09) |
-| GitHub issues and discussions | `github` | own_api | REST search: feature-request issues (discussions need GraphQL: todo); usernames hashed; API terms forbid spam and selling personal data | daily | done (2026-10-09, issues) |
+| GitHub issues and discussions | `github` | own_api | REST search for feature-request issues; GraphQL `search(type: DISCUSSION)` for "feature request" and "is there a way" discussions (category qualifiers are ignored there; keywords + created:> work). Usernames hashed | daily | done (2026-10-10) |
 | Better Business Bureau | G5, else G1 | public_pages | check terms; default G1 | weekly | todo |
 
 **News, trade press, funding**

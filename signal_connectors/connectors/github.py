@@ -8,6 +8,8 @@ Search limit: 30 requests/minute; usernames are stored only as hashes.
 Queries:
   {params: {kind: issues}, keywords: ['label:bounty']}            -> /search/issues, newest first
   {params: {kind: repos, min_stars: 50}}                          -> /search/repositories created since cursor
+  {params: {kind: discussions}, keywords: ['"is there a way"']}   -> GraphQL search(type: DISCUSSION)
+(discussion search ignores category: qualifiers; keywords + created:> work.)
 """
 
 from __future__ import annotations
@@ -23,6 +25,12 @@ from ..privacy import hash_author
 from . import register
 
 API = "https://api.github.com"
+GRAPHQL = "https://api.github.com/graphql"
+DISCUSSIONS = """query($q: String!, $first: Int!, $after: String) {
+  search(query: $q, type: DISCUSSION, first: $first, after: $after) {
+    pageInfo { hasNextPage endCursor }
+    nodes { ... on Discussion { title url createdAt bodyText upvoteCount answerChosenAt
+      author { login } category { name } repository { nameWithOwner } comments { totalCount } } } } }"""
 PAGE = 100
 MAX_RESULTS = 1000     # the search API never returns more than 1,000 results per query
 
@@ -58,6 +66,10 @@ class GitHubConnector(BaseConnector):
         if not self.token:
             raise RuntimeError("GITHUB_TOKEN is not set")
         kind = query.params.get("kind", "issues")
+        if kind == "discussions":
+            async for post in self._discussions(query):
+                yield post
+            return
         path = "/search/issues" if kind == "issues" else "/search/repositories"
         params: dict[str, Any] = {"q": self.search_query(query, kind), "per_page": min(PAGE, query.limit), "page": 1,
                                   "sort": "created" if kind == "issues" else "stars", "order": "desc"}
@@ -123,3 +135,40 @@ class GitHubConnector(BaseConnector):
             query=query.query_text,
             raw={"topics": topics, "language": r.get("language"), "license": (r.get("license") or {}).get("spdx_id")},
         )
+
+    async def _discussions(self, query: SourceQuery) -> AsyncIterator[RawPost]:
+        text = " ".join([*query.keywords] + ([f"created:>={query.since:%Y-%m-%dT%H:%M:%SZ}"] if query.since else []))
+        headers = {"Authorization": f"Bearer {self.token}"}
+        after, fetched = None, 0
+        while fetched < query.limit:
+            response = await self.http.request("POST", GRAPHQL, headers=headers, json={
+                "query": DISCUSSIONS, "variables": {"q": text, "first": min(50, query.limit - fetched), "after": after}})
+            data = response.json() if response.status_code == 200 else {}
+            if response.status_code != 200 or data.get("errors"):
+                raise RuntimeError(f"GitHub GraphQL {response.status_code}: {str(data.get('errors') or response.text)[:160]}")
+            search = data["data"]["search"]
+            for d in search.get("nodes") or []:
+                if not d or not d.get("url"):
+                    continue
+                post = self.make_post(
+                    source="github:discussions",
+                    url=d["url"],
+                    title=d.get("title"),
+                    text=(d.get("bodyText") or "")[:8000],
+                    is_snippet=False,
+                    author_hash=hash_author((d.get("author") or {}).get("login"), "github"),
+                    community=(d.get("repository") or {}).get("nameWithOwner"),
+                    published_at=parse_date(d.get("createdAt")),
+                    language=None,
+                    engagement={"upvotes": d.get("upvoteCount"), "comments": (d.get("comments") or {}).get("totalCount")},
+                    industry_hint=query.industry_hint,
+                    query=query.query_text,
+                    raw={"category": (d.get("category") or {}).get("name"), "answered": bool(d.get("answerChosenAt"))},
+                )
+                if post:
+                    fetched += 1
+                    yield post
+            info = search.get("pageInfo") or {}
+            if not info.get("hasNextPage"):
+                return
+            after = info.get("endCursor")
