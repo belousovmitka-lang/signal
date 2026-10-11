@@ -63,3 +63,11 @@ def test_source_query_defaults():
     q = SourceQuery(keywords=["is there a tool", "paralegal"], since=datetime(2026, 1, 1))
     assert q.limit == 50 and q.since.tzinfo is timezone.utc
     assert q.query_text == "is there a tool paralegal"
+
+
+def test_future_dates_are_clamped_to_fetch_time():
+    fetched = datetime(2026, 10, 9, 12, 0, tzinfo=timezone.utc)
+    p = post(published_at=datetime(2026, 11, 4, 19, 0), fetched_at=fetched)
+    assert p.published_at == fetched and p.raw["claimed_published_at"].startswith("2026-11-04")
+    soon = post(published_at=datetime(2026, 10, 10, 6, 0), fetched_at=fetched)   # within a day: kept
+    assert soon.published_at == datetime(2026, 10, 10, 6, 0, tzinfo=timezone.utc)

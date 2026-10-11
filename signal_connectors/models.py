@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import re
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
@@ -18,6 +18,7 @@ Cadence = Literal["hourly", "daily", "weekly", "monthly"]
 RAW_MAX_STRING = 4000
 RAW_MAX_ITEMS = 50
 RAW_MAX_DEPTH = 6
+FUTURE_TOLERANCE = timedelta(days=1)
 _HEX64 = re.compile(r"[0-9a-f]{64}")
 
 
@@ -127,6 +128,15 @@ class RawPost(BaseModel):
     def _has_content(self) -> RawPost:
         if not self.text and not self.title:
             raise ValueError("a post needs a title or text")
+        return self
+
+    @model_validator(mode="after")
+    def _no_future_dates(self) -> RawPost:
+        """Feeds put event dates (webinars) or scheduled publication dates in pubDate. Anything more
+        than a day past fetch time is clamped to fetch time; the claimed date is kept in raw."""
+        if self.published_at > self.fetched_at + FUTURE_TOLERANCE:
+            self.raw = {**self.raw, "claimed_published_at": self.published_at.isoformat()}
+            self.published_at = self.fetched_at
         return self
 
 

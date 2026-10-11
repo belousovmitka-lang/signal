@@ -11,6 +11,7 @@ campaigns collapse through the normal text dedupe.
 from __future__ import annotations
 
 import os
+import re
 from collections.abc import AsyncIterator
 from datetime import timedelta
 from typing import Any
@@ -21,6 +22,7 @@ from ..parsing import html_to_text, parse_date
 from . import register
 
 API = "https://api.regulations.gov/v4"
+ATTACHMENT_ONLY = re.compile(r"^\s*(please\s+)?see\s+(the\s+)?attach(ed|ment)(\s+file\(?s?\)?)?[.!]*\s*$", re.I)
 PAGE = 250
 
 
@@ -62,6 +64,8 @@ class RegulationsGovConnector(BaseConnector):
     def _to_post(self, cid: str, a: dict[str, Any], query: SourceQuery) -> RawPost | None:
         if a.get("withdrawn"):
             return None
+        if ATTACHMENT_ONLY.match(html_to_text(a.get("comment") or "")):
+            return None     # "See attached file(s)": the content is in a PDF we don't fetch
         org = (a.get("organization") or "").strip() or None
         docket = a.get("docketId") or a.get("commentOnDocumentId")
         return self.make_post(

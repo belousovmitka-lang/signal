@@ -60,3 +60,10 @@ async def test_cassette_regulations_gov(settings, monkeypatch):
     assert out.result.status == "ok" and out.result.fetched >= 15 and out.result.invalid == 0
     assert all(p.url.startswith("https://www.regulations.gov/comment/SBA-") and "Submitted by" not in p.title
                for p in out.posts)
+
+
+@pytest.mark.parametrize("text", ["See Attached", "See attached file(s)", "Please see attachment.", " see the attached "])
+def test_attachment_only_comments_are_skipped(text):
+    from signal_connectors.connectors.regulations_gov import ATTACHMENT_ONLY
+    assert ATTACHMENT_ONLY.match(text)
+    assert not ATTACHMENT_ONLY.match("See attached, but in short: the form doubles our paperwork.")
