@@ -7,7 +7,8 @@ discovery:
   cost_usd: 0.057
   candidates_checked: 40
   notes: 'Draft by the discovery agent (9 searches), reviewed by Claude 2026-10-10: forum terms read and
-    recorded (1 allowed, 2 forbidden incl. Student Doctor Network carried over, 2 without published terms);
+    recorded (Foro Dentista and Dentistry Forums allowed; eDental Portal and Student Doctor Network forbidden;
+    DOMA is a paid members'' community; WebDental, Hygiene Hackers and Dental Club publish no terms);
     able2know removed (general Q&A site, personal-use-only terms); vocabulary curated; subreddits by name
     (unverified). Move to industries/ and set needs_review: false to start collecting.'
 vocabulary:
@@ -63,9 +64,10 @@ stackexchange_sites: []
 forums:
 - name: 'Dental Office Manager Community: Online Group | DOMA'
   url: https://dentalofficemanagers.com/community/
-  status: live
+  status: private
   checked_at: '2026-10-10'
-  locked: false
+  notes: 'Paid membership community (DOMA); posts are behind the paywall: not collectable (rule 1).'
+  locked: true
   software: unknown
   rss: https://dentalofficemanagers.com/feed/
   robots: allowed
@@ -79,8 +81,9 @@ forums:
   software: xenforo
   rss: https://www.dentistry-forums.com/forums/-/index.rss
   robots: allowed
-  terms: unchecked
+  terms: allowed
   terms_url: https://www.dentistry-forums.com/help/terms/
+  terms_notes: Standard XenForo terms; nothing on automated access, commercial use or AI (read 2026-10-10).
 - name: Forums - Dental Club Community
   url: https://club.dentaapp.com/forums/
   status: live
@@ -90,7 +93,7 @@ forums:
   rss: https://club.dentaapp.com/feed/
   robots: allowed
   terms: unchecked
-  terms_url: https://club.dentaapp.com/forums/forum/ethics-legal-issues-in-dentistry/
+  terms_notes: No terms page found (the detected link was a forum category) (2026-10-10).
 - name: Student Doctor Network Forums | Student Doctor Network Forums
   url: https://forums.studentdoctor.net/forums/
   status: live
