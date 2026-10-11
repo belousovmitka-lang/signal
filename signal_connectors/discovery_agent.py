@@ -12,7 +12,9 @@ Pipeline:
    bot challenges, moved feeds.
 5. Suggest jargon from the most frequent phrases in the publications' headlines.
 6. Write industries/<key>.yaml with discovery.needs_review: true. Every forum gets
-   terms: unchecked, so nothing is collected until a human reads its terms.
+   terms: unchecked, so nothing is collected until a human reads its terms; except terms already
+   decided in a map or reviewed draft (same domain), or set by a hosted platform (ProBoards,
+   Forumotion: forbidden). Communities on private hosts (Circle, Skool) are skipped.
 """
 
 from __future__ import annotations
@@ -29,7 +31,7 @@ from selectolax.lexbor import LexborHTMLParser
 
 from .discovery import Discovery
 from .forum_detect import FORUM_FEED_PATTERNS, advertised_feeds, detect_software, wall_of
-from .industries import DiscoveryInfo, Feed, Forum, Industry, Link, Vocabulary, load_industries
+from .industries import INDUSTRIES_DIR, DiscoveryInfo, Feed, Forum, Industry, Link, Vocabulary, load_industries
 from .services import Services
 from .verify import verify_industry
 
@@ -41,7 +43,20 @@ EXCLUDED = [
     "tiktok.com", "wikipedia.org", "amazon.com", "quora.com", "pinterest.com", "medium.com", "substack.com",
     "github.com", "news.ycombinator.com", "stackexchange.com", "stackoverflow.com", "bsky.app", "threads.net",
     "apple.com", "google.com", "glassdoor.com", "indeed.com", "yelp.com",
+    "city-data.com",                                   # general-purpose forum, matches every industry
 ]
+# Hosted forum platforms whose own terms bind every board on them (read by hand 2026-10-11).
+PLATFORM_TERMS = {
+    "proboards": ("https://www.proboards.com/tos",
+                  "ProBoards (VerticalScope) terms: users may not 'access, search, or collect data from the Website by "
+                  "any means', and no copying 'for any commercial purpose without the express written consent of "
+                  "ProBoards' (read 2026-10-11)."),
+    "forumotion": ("https://www.forumotion.com/terms-of-service",
+                   "Forumotion: users may not 'use, distribute, copy, reproduce' site content without prior written "
+                   "authorization (read 2026-10-11)."),
+}
+_FORUMOTION = re.compile(r'href="https?://(www\.)?forumotion\.com', re.I)
+_PRIVATE_HOST = re.compile(r"circle\.so|skool\.com", re.I)    # communities behind a login (CLAUDE.md 7.4)
 FORUM_HINT = re.compile(r"/(forums?|community|communities|board|boards|discuss|talk)(/|$)|^(forums?|community|discuss)\.", re.I)
 ASSOCIATION_HINT = re.compile(r"\b(association|society|institute|federation|council|chamber|guild|alliance|"
                               r"academy|college of|board of|union)\b", re.I)
@@ -145,6 +160,8 @@ class Visit:
     software: str
     feeds: list[str]
     terms_url: str | None
+    platform: str | None = None    # hosted forum platform with platform-wide terms
+    private: bool = False          # page embeds a private community host (Circle, Skool)
 
 
 async def visit(services: Services, origin: str, forum_path: str | None) -> Visit | None:
@@ -166,7 +183,10 @@ async def visit(services: Services, origin: str, forum_path: str | None) -> Visi
         if TERMS_LINK.search(a.text() or "") or TERMS_LINK.search(a.attributes.get("href") or ""):
             terms = urljoin(str(r.url), a.attributes["href"])
             break
-    return Visit(str(r.url), title, detect_software(r.text), advertised_feeds(r.text, str(r.url)), terms)
+    software = detect_software(r.text)
+    platform = "proboards" if software == "proboards" else "forumotion" if _FORUMOTION.search(r.text) else None
+    return Visit(str(r.url), title, software, advertised_feeds(r.text, str(r.url)), terms,
+                 platform=platform, private=bool(_PRIVATE_HOST.search(r.text)))
 
 
 async def discover(services: Services, seeds: Seeds, *, budget_usd: float = 0.25, max_sites: int = 40,
@@ -194,7 +214,8 @@ async def discover(services: Services, seeds: Seeds, *, budget_usd: float = 0.25
     candidates = sorted(group_origins(urls).values(), key=lambda c: -c.hits)[:max_sites]
     # Terms already read for another industry carry over (by host), so nobody reviews them twice.
     known: dict[str, Forum] = {}
-    for other in load_industries().values():
+    reviewed = [*load_industries().values(), *load_industries(INDUSTRIES_DIR / "drafts").values()]
+    for other in reviewed:
         for f in other.forums:
             if f.terms != "unchecked":
                 known[base_domain(urlsplit(f.url).hostname or "")] = f
@@ -210,13 +231,20 @@ async def discover(services: Services, seeds: Seeds, *, budget_usd: float = 0.25
         is_forum = (v.software not in ("unknown", "custom") or bool(cand.paths) or bool(FORUM_HINT.search(v.final_url))
                     or any(FORUM_FEED_PATTERNS.search(f) for f in v.feeds))
         if is_forum:
+            if v.private:
+                log.info("skipping %s: private community host", v.final_url)
+                continue
             prior = known.get(base_domain(host))   # terms belong to the organization, so match by domain
+            if prior:
+                terms, terms_url = prior.terms, prior.terms_url
+                notes = prior.terms_notes + " (carried over from an existing map)" if prior.terms_notes else None
+            elif v.platform:
+                terms, (terms_url, notes) = "forbidden", PLATFORM_TERMS[v.platform]
+            else:
+                terms, terms_url, notes = "unchecked", v.terms_url, None
             forums.append(Forum(name=v.title, url=v.final_url, software=v.software,
                                 rss=v.feeds[0] if v.feeds else None,
-                                terms=prior.terms if prior else "unchecked",
-                                terms_url=prior.terms_url if prior else v.terms_url,
-                                terms_notes=(prior.terms_notes + " (carried over from an existing map)")
-                                if prior and prior.terms_notes else None))
+                                terms=terms, terms_url=terms_url, terms_notes=notes))
         elif v.feeds:
             feeds.append(Feed(name=host.removeprefix("www.").split(".")[0], url=v.feeds[0]))
         elif ASSOCIATION_HINT.search(v.title):

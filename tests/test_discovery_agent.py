@@ -49,7 +49,8 @@ class Web:
             return httpx.Response(200, json={"results": [
                 {"url": "https://forum.vets.example/forums/clinic/1", "title": "SEARCH TITLE"},
                 {"url": "https://news.example/story"}, {"url": "https://assoc.example/about"},
-                {"url": "https://www.reddit.com/r/vettech/x"}, {"url": "https://www.studentdoctor.net/threads/1"}],
+                {"url": "https://www.reddit.com/r/vettech/x"}, {"url": "https://www.studentdoctor.net/threads/1"},
+                {"url": "https://vetboard.forumotion.example/forum/t1"}, {"url": "https://club.example/community/"}],
                 "costDollars": {"total": 0.007}})
         if host == "api.search.brave.com":
             return httpx.Response(200, json={"web": {"results": []}, "query": {}})
@@ -68,6 +69,12 @@ class Web:
         if host == "assoc.example":
             return httpx.Response(200, headers={"content-type": "text/html"},
                                   text="<title>National Veterinary Association</title>")
+        if host == "vetboard.forumotion.example":
+            return httpx.Response(200, headers={"content-type": "text/html"},
+                                  text='<title>Vet Board</title><a href="https://www.forumotion.com">Free forum</a>')
+        if host == "club.example":
+            return httpx.Response(200, headers={"content-type": "text/html"},
+                                  text='<title>Vet Club</title><script src="https://app.circle.so/x.js"></script>')
         if host == "www.studentdoctor.net":
             return httpx.Response(200, headers={"content-type": "text/html"},
                                   text='<html id="XF"><title>Student Doctor Network</title></html>')
@@ -93,6 +100,9 @@ async def test_discover_writes_a_reviewable_draft(make_services, tmp_path):
     assert vets.url == "https://forum.vets.example/forums/" and vets.status == "live"   # trimmed to the forum root
     sdn = forums["Student Doctor Network"]
     assert sdn.terms == "forbidden" and "carried over" in sdn.terms_notes    # decided in the healthcare map
+    board = forums["Vet Board"]
+    assert board.terms == "forbidden" and "Forumotion" in board.terms_notes       # platform-wide terms
+    assert "Vet Club" not in forums                                              # private Circle community
     assert [f.url for f in ind.rss_feeds] == ["https://news.example/feed"] and ind.rss_feeds[0].status == "live"
     assert [a.name for a in ind.associations] == ["National Veterinary Association"]
     assert all("SEARCH TITLE" not in f.name for f in ind.forums)          # names come from the sites
