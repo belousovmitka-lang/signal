@@ -2,17 +2,18 @@ industry: therapy_practices
 name: Therapy and counseling practices
 discovery:
   generated_at: '2026-10-11'
-  needs_review: true
+  needs_review: false
   queries: 9
   cost_usd: 0.057
   candidates_checked: 40
-  notes: 'Draft by the discovery agent (9 searches, $0.057), reviewed by Claude 2026-10-11. Terms: ClinPsy allowed
-    (standard XenForo terms; UK clinical psychology, mostly training and careers); Making Therapy Better forbidden
-    (Discourse ToS: no automated access); Student Doctor Network and two Forumotion boards forbidden (carried over
-    / platform terms). Removed: TheraLink (JavaScript app), SocialWorkU (career site), Imamother (off-topic), ACA
-    Australia (member login, kept as an association). Dropped a feed silent since 2021; added Behavioral Health
-    Business, Psychotherapy Networker and Practice of the Practice. Vocabulary curated. Move to industries/ and
-    set needs_review: false to collect.'
+  notes: 'Draft by the discovery agent (9 searches, $0.057), reviewed by Claude 2026-10-11. Terms: ClinPsy
+    allowed (standard XenForo terms; UK clinical psychology, mostly training and careers); Making Therapy
+    Better forbidden (Discourse ToS: no automated access); Student Doctor Network and two Forumotion boards
+    forbidden (carried over / platform terms). Removed: TheraLink (JavaScript app), SocialWorkU (career
+    site), Imamother (off-topic), ACA Australia (member login, kept as an association). Dropped a feed
+    silent since 2021; added Behavioral Health Business, Psychotherapy Networker and Practice of the Practice.
+    Vocabulary curated. Move to industries/ and set needs_review: false to collect. Approved by the user
+    2026-10-11.'
 vocabulary:
   roles:
   - therapist
@@ -93,9 +94,10 @@ forums:
   robots: allowed
   terms: forbidden
   terms_url: https://www.studentdoctor.net/online-service-agreement/
-  terms_notes: 'Content licensed CC BY-NC-SA 4.0: non-commercial only. (read 2026-10-09) (carried over from an existing
-    map) (carried over from an existing map)'
-- name: Therapists Making Therapy Better - Expert led communities on improving therapy practice outcomes and income
+  terms_notes: 'Content licensed CC BY-NC-SA 4.0: non-commercial only. (read 2026-10-09) (carried over
+    from an existing map) (carried over from an existing map)'
+- name: Therapists Making Therapy Better - Expert led communities on improving therapy practice outcomes
+    and income
   url: http://therapists.makingtherapybetter.com/
   status: live
   checked_at: '2026-10-11'
@@ -105,8 +107,8 @@ forums:
   robots: allowed
   terms: forbidden
   terms_url: http://therapists.makingtherapybetter.com/tos
-  terms_notes: 'Discourse ToS: ''You may not automate access to the forum, or monitor the forum, such as with a
-    web crawler'' (read 2026-10-11).'
+  terms_notes: 'Discourse ToS: ''You may not automate access to the forum, or monitor the forum, such
+    as with a web crawler'' (read 2026-10-11).'
 - name: ClinPsy - Clinical Psychology Forum
   url: https://clinpsy.com/
   status: live
@@ -128,8 +130,8 @@ forums:
   robots: allowed
   terms: forbidden
   terms_url: https://www.forumotion.com/terms-of-service
-  terms_notes: 'Forumotion: users may not ''use, distribute, copy, reproduce'' site content without prior written
-    authorization (read 2026-10-11).'
+  terms_notes: 'Forumotion: users may not ''use, distribute, copy, reproduce'' site content without prior
+    written authorization (read 2026-10-11).'
 - name: Attachment in Psychotherapy
   url: https://psychoanalytic.forumotion.com/
   status: live
@@ -140,8 +142,8 @@ forums:
   robots: allowed
   terms: forbidden
   terms_url: https://www.forumotion.com/terms-of-service
-  terms_notes: 'Forumotion: users may not ''use, distribute, copy, reproduce'' site content without prior written
-    authorization (read 2026-10-11).'
+  terms_notes: 'Forumotion: users may not ''use, distribute, copy, reproduce'' site content without prior
+    written authorization (read 2026-10-11).'
 rss_feeds:
 - name: Counselor Magazine
   url: https://counselormagazine.com/feed/

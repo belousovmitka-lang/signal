@@ -2,17 +2,18 @@ industry: salons
 name: Salons and spas
 discovery:
   generated_at: '2026-10-11'
-  needs_review: true
+  needs_review: false
   queries: 9
   cost_usd: 0.114
   candidates_checked: 40
-  notes: 'Draft by the discovery agent (9 searches, $0.114), reviewed by Claude 2026-10-11. Terms: Cosmetology Forum
-    allowed (standard XenForo terms, no automation clause; quiet since Feb 2026); Salon Geek forbidden (no data
-    mining, robots or commercial use); John Amico ProBoards forbidden. Removed: City-Data (general forum), GetEstheticianJobs
-    (AI-generated posts), HairBoutique (celebrity hair chat), Beauty Business Days (celebrity listicles). Added
-    Modern Salon, Salon Today, Nails Magazine, Professional Beauty and Salon Business feeds (robots checked); American
-    Salon feed stale since 2021, Behind the Chair rate-limited us (429). Jargon curated. Move to industries/ and
-    set needs_review: false to collect.'
+  notes: 'Draft by the discovery agent (9 searches, $0.114), reviewed by Claude 2026-10-11. Terms: Cosmetology
+    Forum allowed (standard XenForo terms, no automation clause; quiet since Feb 2026); Salon Geek forbidden
+    (no data mining, robots or commercial use); John Amico ProBoards forbidden. Removed: City-Data (general
+    forum), GetEstheticianJobs (AI-generated posts), HairBoutique (celebrity hair chat), Beauty Business
+    Days (celebrity listicles). Added Modern Salon, Salon Today, Nails Magazine, Professional Beauty and
+    Salon Business feeds (robots checked); American Salon feed stale since 2021, Behind the Chair rate-limited
+    us (429). Jargon curated. Move to industries/ and set needs_review: false to collect. Approved by
+    the user 2026-10-11.'
 vocabulary:
   roles:
   - salon owner
@@ -101,8 +102,8 @@ forums:
   robots: allowed
   terms: forbidden
   terms_url: https://www.salongeek.com/tos
-  terms_notes: '2.1: license excludes ''any use of data mining, robots, or similar data gathering and extraction
-    tools'' and commercial use (read 2026-10-11).'
+  terms_notes: '2.1: license excludes ''any use of data mining, robots, or similar data gathering and
+    extraction tools'' and commercial use (read 2026-10-11).'
 - name: Home | John Amico Professional Hair Care
   url: https://johnamico.proboards.com/
   status: live
@@ -113,9 +114,9 @@ forums:
   robots: allowed
   terms: forbidden
   terms_url: https://www.proboards.com/tos
-  terms_notes: 'ProBoards (VerticalScope) terms: users may not ''access, search, or collect data from the Website
-    by any means'', and no copying ''for any commercial purpose without the express written consent of ProBoards''
-    (read 2026-10-11). (carried over from an existing map)'
+  terms_notes: 'ProBoards (VerticalScope) terms: users may not ''access, search, or collect data from
+    the Website by any means'', and no copying ''for any commercial purpose without the express written
+    consent of ProBoards'' (read 2026-10-11). (carried over from an existing map)'
 rss_feeds:
 - name: Mocha Group
   url: https://mochagroup.com.au/feed/
