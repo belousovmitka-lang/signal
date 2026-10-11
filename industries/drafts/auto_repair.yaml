@@ -1,0 +1,301 @@
+industry: auto_repair
+name: Auto repair shops
+discovery:
+  generated_at: '2026-10-11'
+  needs_review: true
+  queries: 9
+  cost_usd: 0.057
+  candidates_checked: 40
+  notes: 'Draft by the discovery agent (9 searches, $0.057), reviewed by Claude 2026-10-11. Five forum
+    feeds the agent had filed as publications were moved to forums for terms review. Terms: The Truck
+    Stop and The Chicago Garage allowed; Chrysler 300 forum (VerticalScope) and F150gen14 forbidden; automotivediagsolutions
+    excluded (advertises dealer software suites); Honda-Tech, two ProBoards forums and four forums without
+    published terms unchecked. Most detected forums are car-owner DIY boards; the professional ones (Auto
+    Techs Online, Auto Professionals) have no readable terms yet. Move to industries/ and set needs_review:
+    false to collect.'
+vocabulary:
+  roles:
+  - auto mechanic
+  - automotive technician
+  - service advisor
+  - shop owner
+  - service manager
+  - parts manager
+  - body tech
+  - diesel tech
+  tasks:
+  - diagnostics
+  - estimates
+  - repair orders
+  - parts ordering
+  - scheduling
+  - inspections
+  - warranty claims
+  - invoicing
+  - customer approvals
+  pain_phrases:
+  - comebacks
+  - parts delays
+  - labor guide disputes
+  - flat rate pay
+  - waiting on approval
+  - technician shortage
+  - customers declining work
+  jargon:
+  - RO
+  - flat rate
+  - labor guide
+  - DVI
+  - OEM
+  - aftermarket
+  - ADAS calibration
+  - J2534
+  - TSB
+  - car count
+  tools:
+  - Tekmetric
+  - Shopmonkey
+  - Mitchell 1
+  - ALLDATA
+  - Identifix
+  - PartsTech
+  - AutoLeap
+subreddits:
+- Justrolledintotheshop
+- MechanicAdvice
+- Autobody
+stackexchange_sites: []
+forums:
+- name: Übersicht | Dieselschrauber
+  url: https://community.dieselschrauber.org/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  software: phpbb
+  rss: https://community.dieselschrauber.org/rdf.php
+  robots: allowed
+  terms: unchecked
+  terms_notes: No terms page found; German-language forum (read 2026-10-11).
+- name: VWDiesel.net The IDI, TDI, and mTDI source.
+  url: https://vwdiesel.net/forum/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  software: unknown
+  rss: https://vwdiesel.net/forum/index.php?type=rss;action=.xml
+  robots: allowed
+  terms: unchecked
+  terms_notes: No terms page found (read 2026-10-11).
+- name: Chrysler 300 forum
+  url: https://www.300cforumz.com/forums/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  software: xenforo
+  rss: https://www.300cforumz.com/forums/-/index.rss
+  robots: allowed
+  terms: forbidden
+  terms_url: https://www.300cforumz.com/help/terms/
+  terms_notes: 'VerticalScope: content ''for non-commercial, personal, or educational purposes only''
+    (read 2026-10-11).'
+- name: The Truck Stop
+  url: https://thetruckstop.us/forum/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  software: xenforo
+  rss: https://thetruckstop.us/forum/forums/-/index.rss
+  robots: allowed
+  terms: allowed
+  terms_url: https://thetruckstop.us/forum/help/terms/
+  terms_notes: Standard XenForo terms; nothing on automated access, commercial use or AI (read 2026-10-11).
+- name: Honda-Tech - Honda Forum Discussion
+  url: https://honda-tech.com/forums/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  software: vbulletin
+  rss: https://honda-tech.com/forums/external.php?type=RSS2
+  robots: allowed
+  terms: unchecked
+  terms_notes: 'Internet Brands forum; its terms page was not found (read 2026-10-11): decide or ask the
+    owner.'
+- name: Welcome to TCG | The Chicago Garage
+  url: https://www.thechicagogarage.com/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  software: xenforo
+  rss: https://www.thechicagogarage.com/forums/-/index.rss
+  robots: allowed
+  terms: allowed
+  terms_url: https://www.thechicagogarage.com/help/terms/
+  terms_notes: Standard XenForo terms; nothing on automated access, commercial use or AI (read 2026-10-11).
+- name: F150gen14 -- 2021+ Ford F-150, Tremor, Raptor Forum (14th Gen) | News, Owners, Community, Discussions
+  url: https://www.f150gen14.com/forum/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  software: xenforo
+  rss: https://www.f150gen14.com/forum/forums/-/index.rss
+  robots: allowed
+  terms: forbidden
+  terms_url: https://www.f150gen14.com/forum/help/terms/
+  terms_notes: Forbids copying content 'using any robot, spider, scraper or other automated means' and
+    commercial use (read 2026-10-11).
+- name: autotechsonline
+  url: https://autotechsonline.proboards.com/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  software: proboards
+  rss: http://autotechsonline.proboards.com/rss/public
+  robots: allowed
+  terms: unchecked
+  terms_url: https://autotechsonline.proboards.com/forum/help/terms/
+  terms_notes: Forum terms say nothing restrictive, but ProBoards' platform terms could not be found (read
+    2026-10-11).
+- name: autoprofessionals
+  url: https://www.autoprofessionals.org/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  software: mybb
+  rss: https://www.autoprofessionals.org/syndication.php
+  robots: allowed
+  terms: unchecked
+  terms_notes: No terms page found (MyBB) (read 2026-10-11).
+- name: fitechforum
+  url: https://fitechforum.com/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  software: unknown
+  rss: https://fitechforum.com/feed/
+  robots: allowed
+  terms: unchecked
+  terms_notes: No terms page found (read 2026-10-11).
+- name: automotivediagsolutions
+  url: https://www.automotivediagsolutions.com/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  software: mybb
+  rss: https://www.automotivediagsolutions.com/syndication.php
+  robots: allowed
+  terms: forbidden
+  terms_url: https://www.automotivediagsolutions.com/misc.php?action=help
+  terms_notes: 'Excluded: the site advertises full dealer diagnostic software suites (likely unlicensed
+    distribution) (read 2026-10-11).'
+- name: paintlessdentremoval
+  url: https://paintlessdentremoval.proboards.com/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  software: proboards
+  rss: http://paintlessdentremoval.proboards.com/rss/public
+  robots: allowed
+  terms: unchecked
+  terms_url: https://paintlessdentremoval.proboards.com/help/terms/
+  terms_notes: Forum terms say nothing restrictive, but ProBoards' platform terms could not be found (read
+    2026-10-11).
+rss_feeds:
+- name: ratchetandwrench
+  url: https://www.ratchetandwrench.com/__rss/website-scheduled-content.xml?input=%7B%22sectionAlias%22%3A%22home%22%7D
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 25
+  full_text: false
+- name: autoserviceworld
+  url: https://www.autoserviceworld.com/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 100
+  full_text: true
+- name: motor
+  url: https://www.motor.com/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 25
+  full_text: false
+- name: aftermarketnews
+  url: https://www.aftermarketnews.com/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: true
+- name: vehicleservicepros
+  url: https://www.vehicleservicepros.com/__rss/website-scheduled-content.xml?input=%7B%22sectionAlias%22%3A%22home%22%7D
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 25
+  full_text: true
+- name: garagewire
+  url: https://garagewire.co.uk/feed/
+  status: blocked
+  checked_at: '2026-10-11'
+  notes: HTTP 403 to our bot
+  locked: false
+- name: fenderbender
+  url: https://www.fenderbender.com/__rss/website-scheduled-content.xml?input=%7B%22sectionAlias%22%3A%22home%22%7D
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 25
+  full_text: true
+- name: asashop
+  url: https://www.asashop.org/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: true
+- name: aaspnj
+  url: https://aaspnj.org/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 12
+  full_text: true
+- name: nwautocare
+  url: https://www.nwautocare.org/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: true
+- name: aaspmn
+  url: https://www.aaspmn.org/feed/rss2
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 60
+  full_text: true
+- name: aaspi
+  url: https://www.aaspi.org/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 2
+  full_text: true
+- name: aaro
+  url: https://aaro.ca/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: true
+associations:
+- name: Automotive Service & Tire Alliance - Home
+  url: https://astausa.org/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+job_boards: []
+podcasts: []
+youtube_channels: []
