@@ -1,0 +1,173 @@
+industry: nonprofits
+name: Nonprofits
+discovery:
+  generated_at: '2026-10-11'
+  needs_review: true
+  queries: 9
+  cost_usd: 0.057
+  candidates_checked: 40
+  notes: 'Draft by the discovery agent (9 searches, $0.057), reviewed by Claude 2026-10-11. Forums: Grant Writing
+    Network (ProBoards) forbidden; Spark the Fire and Grab Your Grant communities are on Circle (private) and The
+    Nonprofit Ledger board has no threads, so removed; Wall Street Oasis and City-Data off-topic. Feeds: dropped
+    a spam Forumotion board, HRO Today (HR), the Effective Altruism Forum (off-topic), a test-post feed and an empty
+    one; added Nonprofit Quarterly, NTEN, Blue Avocado and SSIR (robots checked; Candid''s blog returns 403). Jargon
+    curated (the auto list came from the spam board). Move to industries/ and set needs_review: false to collect.'
+vocabulary:
+  roles:
+  - executive director
+  - development director
+  - grant writer
+  - volunteer coordinator
+  - nonprofit program manager
+  - board treasurer
+  - fundraising manager
+  - nonprofit finance director
+  tasks:
+  - grant applications
+  - grant reporting
+  - donor acknowledgments
+  - donation receipts
+  - volunteer scheduling
+  - board reporting
+  - event fundraising
+  - Form 990
+  - impact reporting
+  - data entry into the CRM
+  pain_phrases:
+  - donor retention
+  - grant deadlines
+  - burnout
+  - understaffed
+  - restricted funding
+  - duplicate donor records
+  - volunteer no-shows
+  - federal funding cuts
+  - overhead
+  - manual reporting
+  jargon:
+  - Form 990
+  - restricted funds
+  - unrestricted giving
+  - major gifts
+  - planned giving
+  - donor-advised fund
+  - capital campaign
+  - LYBUNT
+  - SYBUNT
+  - fiscal sponsor
+  - 501(c)(3)
+  - in-kind donations
+  - matching gifts
+  - theory of change
+  tools:
+  - Bloomerang
+  - Neon CRM
+  - Salesforce Nonprofit Cloud
+  - DonorPerfect
+  - Little Green Light
+  - Givebutter
+  - Blackbaud Raiser's Edge
+  - Virtuous
+  - Classy
+  - Instrumentl
+  - Submittable
+  - VolunteerHub
+  - Better Impact
+subreddits:
+- nonprofit
+- grantwriting
+- Fundraising
+- volunteer
+stackexchange_sites: []
+forums:
+- name: Home | AK Grant Writing
+  url: https://grantwritingnetwork.freeforums.net/
+  status: live
+  checked_at: '2026-10-11'
+  locked: true
+  software: proboards
+  rss: http://grantwritingnetwork.freeforums.net/rss/public
+  robots: allowed
+  terms: forbidden
+  terms_url: https://www.proboards.com/tos
+  terms_notes: 'ProBoards (VerticalScope) terms: users may not ''access, search, or collect data from the Website
+    by any means'', and no copying ''for any commercial purpose without the express written consent of ProBoards''
+    (read 2026-10-11).'
+rss_feeds:
+- name: The Nonprofit Alliance
+  url: https://tnpa.org/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: true
+- name: Nonprofit Leadership Alliance
+  url: https://nla1.org/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 9
+  full_text: true
+- name: Neon One
+  url: https://neonone.com/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 6
+  full_text: true
+- name: Chronicle of Philanthropy
+  url: https://www.philanthropy.com/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: false
+- name: The NonProfit Times
+  url: https://thenonprofittimes.com/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 18
+  full_text: true
+- name: Nonprofit Quarterly
+  url: https://nonprofitquarterly.org/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 12
+  full_text: false
+- name: NTEN
+  url: https://www.nten.org/feed
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: false
+- name: Blue Avocado
+  url: https://blueavocado.org/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: false
+- name: Stanford Social Innovation Review
+  url: https://ssir.org/site/rss_2.0
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 40
+  full_text: false
+associations:
+- name: National Council of Nonprofits
+  url: https://www.councilofnonprofits.org/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+- name: Association of Fundraising Professionals
+  url: https://afpglobal.org/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+job_boards: []
+podcasts: []
+youtube_channels: []
