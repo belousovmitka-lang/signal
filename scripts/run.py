@@ -10,6 +10,7 @@ Logs go to logs/run-<date>.log.
 
 import argparse
 import asyncio
+import fcntl
 import logging
 import sys
 from pathlib import Path
@@ -71,5 +72,13 @@ if __name__ == "__main__":
     p.add_argument("--only", help="comma-separated source names")
     p.add_argument("--concurrency", type=int, default=6)
     args = p.parse_args()
+    if not args.dry_run:
+        # cron fires every 15 minutes; a run can take longer. One run at a time.
+        lock = open(REPO_ROOT / "data" / "run.lock", "w")
+        try:
+            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:
+            print("another run is still in progress; skipping this tick")
+            sys.exit(0)
     setup_logging()
     sys.exit(asyncio.run(main(args)))
