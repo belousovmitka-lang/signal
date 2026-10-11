@@ -200,7 +200,14 @@ ranking:
     toxicity_penalty: 0.5
   survey_every_n_items: 30
   value_model_blend: 0.20
+  value_model_min_surveys: 200    # train the "Was this useful?" model once this many answers exist
   v2_min_labeled_impressions: 50000
+  # Thompson sampling over post types (section 10): the type_pref feature is a draw from each user's
+  # Beta per post type instead of the learned average. The prior is Beta(s/2, s/2): s = 10 keeps a new
+  # user's draws within about +-0.3 of neutral.
+  thompson_post_types: true
+  type_thompson_prior: 10
+  models_dir: data/models         # v2 model files (git-ignored)
   # v1: hand-set linear estimates of each action's probability (section 8.2), clipped to [0, 1].
   # Features run 0-1 except type_pref (-1..1) and source_pref (-cap..cap). `problem` is the post's
   # problem score as a percentile within its kind (pain or demand), so the two kinds compare fairly.

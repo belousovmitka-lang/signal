@@ -15,11 +15,11 @@ from sqlalchemy import func, select
 from signal_connectors.models import utcnow
 
 from ..config import FeedConfig
-from ..db import FeedStore, ImpressionRow, UserDropInRow
+from ..db import FeedStore, ImpressionRow, PostNicheRow, UserDropInRow
 from .candidates import DROP_IN, Candidate, generate
 from .compose import compose
 from .data import FeedData, FeedDataCache
-from .ranker import RankerV1
+from .ranker import RankerV1, RankerV2
 from .usermodel import UserState, load_state
 
 CALIBRATION = "calibration"
@@ -40,6 +40,7 @@ class FeedItem(BaseModel):
     niche_path: list[str]
     money: dict | None
     calibration: bool = False  # show the Interested / Not for me answer buttons
+    ask_useful: bool = False   # after the user reads it, ask "Was this useful?" (about 1 item in 30)
     score: float | None
     # For debugging and evaluation only: includes the internal `reason` the item was picked for. The app
     # never shows why an item is in the feed.
@@ -112,38 +113,75 @@ def calibration_deck(data: FeedData, state: UserState, config: FeedConfig, rng: 
     return deck
 
 
+def bubble_share(store: FeedStore, user_id: str, window: int) -> float:
+    """Share of the user's last `window` impressions taken by their most-shown leaf niche."""
+    with store.session() as s:
+        recent = select(ImpressionRow.item_id).where(ImpressionRow.user_id == user_id) \
+            .order_by(ImpressionRow.id.desc()).limit(window).subquery()
+        leaves = list(s.scalars(select(PostNicheRow.niche_id).join(recent, recent.c.item_id == PostNicheRow.post_id)
+                                .where(PostNicheRow.tree == "industry")))
+    if len(leaves) < window:
+        return 0.0
+    return max(leaves.count(n) for n in set(leaves)) / len(leaves)
+
+
 class FeedService:
     def __init__(self, store: FeedStore, config: FeedConfig, cache: FeedDataCache,
                  clock: Callable[[], datetime] = utcnow, seed: int | None = None) -> None:
         self.store, self.config, self.cache, self.clock = store, config, cache, clock
         self.rng = np.random.default_rng(seed)
+        self._models: tuple = ()
         self.ranker = RankerV1(config)
+
+    def current_ranker(self) -> RankerV1:
+        """v1, or v2 once a trained model was activated (after beating v1 offline); either one blends in
+        the active value model. Models are reloaded only when the active ones change."""
+        from ..db import ModelRow
+        from ..learning.models import V2Model, ValueModel
+        with self.store.session() as s:
+            active = tuple(s.execute(select(ModelRow.kind, ModelRow.id).where(ModelRow.status == "active")
+                                     .order_by(ModelRow.id)).all())
+        if active != self._models:
+            value = ValueModel.load_active(self.store)
+            v2 = V2Model.load(self.store) if any(k == "v2" for k, _ in active) else None
+            self.ranker = RankerV2(self.config, v2, value) if v2 is not None else RankerV1(self.config, value)
+            self._models = active
+        return self.ranker
 
     def page(self, user_id: str, session_id: str, explore_more: bool = False) -> FeedPage:
         now = self.clock()
         data = self.cache.get()
         state = load_state(self.store, self.config, user_id, now, self.config.ranking.v1.recent_saves)
         shown = _session_shown(self.store, user_id, session_id)
+        ranker = self.current_ranker()
         if not _has_impressions(self.store, user_id):
             deck = calibration_deck(data, state, self.config, self.rng)
-            scored = self.ranker.score(data, state, deck, now)
+            scored = ranker.score(data, state, deck, now)
             rows = [(s, "calibration", "calibration") for s in scored]
             return self._log(data, user_id, session_id, rows, len(shown), caught_up=False, calibration=True)
-        candidates = generate(data, state, self.config, self.store, now, self.rng, explore_more)
-        scored = self.ranker.score(data, state, candidates, now)
+        # Filter-bubble guard (section 10): one leaf over half of the last 100 items -> 20% exploration.
+        lc = self.config.learning
+        boost = lc.bubble_exploration if bubble_share(self.store, user_id, lc.bubble_window_impressions) \
+            > lc.bubble_leaf_share else None
+        candidates = generate(data, state, self.config, self.store, now, self.rng, explore_more, boost)
+        scored = ranker.score(data, state, candidates, now, self.rng)
         previous = [SimpleNamespace(index=data.by_id[p].index) for p in shown[-10:] if p in data.by_id]
-        placed, caught_up = compose(scored, data, state, self.config, now, previous, explore_more)
+        placed, caught_up = compose(scored, data, state, self.config, now, previous, explore_more, boost)
         rows = [(p.scored, p.explanation, p.forced) for p in placed]
-        return self._log(data, user_id, session_id, rows, len(shown), caught_up, calibration=False)
+        return self._log(data, user_id, session_id, rows, len(shown), caught_up, calibration=False,
+                         bubble_guard=boost is not None)
 
     def _log(self, data: FeedData, user_id: str, session_id: str, rows, offset: int, caught_up: bool,
-             calibration: bool) -> FeedPage:
+             calibration: bool, bubble_guard: bool = False) -> FeedPage:
         now = self.clock()
         items, impressions = [], []
+        every = self.config.ranking.survey_every_n_items
         with self.store.session() as s, s.begin():
+            seen_before = s.scalar(select(func.count()).select_from(ImpressionRow).where(ImpressionRow.user_id == user_id)) or 0
             for k, (scored, explanation, rule) in enumerate(rows):
                 it = data.items[scored.index]
-                breakdown = scored.breakdown | {"reason": explanation} | ({"rule": rule} if rule else {})
+                breakdown = scored.breakdown | {"reason": explanation} | ({"rule": rule} if rule else {}) \
+                    | ({"bubble_guard": True} if bubble_guard else {})
                 imp = ImpressionRow(user_id=user_id, session_id=session_id, item_type="post", item_id=it.post_id,
                                     position=offset + k, candidate_source=scored.candidate.source,
                                     explanation=explanation, score=scored.score, score_breakdown=breakdown,
@@ -161,6 +199,7 @@ class FeedService:
                     similar_posts=it.similar_posts, post_type=it.post_type, title=it.title, summary=it.summary,
                     url=it.url, source=it.source, published_at=it.published_at, niche_path=data.path(it.niche_id),
                     money=it.money, calibration=calibration, score=scored.score,
+                    ask_useful=not calibration and (seen_before + imp.position - offset + 1) % every == 0,
                     score_breakdown=breakdown))
         return FeedPage(user_id=user_id, session_id=session_id, items=items, cursor=str(offset + len(items)),
                         caught_up=caught_up, calibration=calibration)

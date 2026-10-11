@@ -159,6 +159,34 @@ class ProblemBuilder:
                 out.append((key, [evidence[k] for k in idx], unit[idx] @ c))
         return out
 
+    def rescore(self) -> int:
+        """Hourly job (section 10): refresh every active problem's score (trend moves with time) from its
+        current posts, without re-clustering. Returns how many were rescored."""
+        now = self.clock()
+        authorless = self.config.niches.authorless_counts_as_distinct
+        with self.store.session() as s, s.begin():
+            members: dict[int, list[str]] = defaultdict(list)
+            for pid, post_id in s.execute(select(ProblemPostRow.problem_id, ProblemPostRow.post_id)
+                                          .join(ProblemRow, ProblemRow.id == ProblemPostRow.problem_id)
+                                          .where(ProblemRow.status == "active")):
+                members[pid].append(post_id)
+            ids = {p for ps in members.values() for p in ps}
+            rows = {r.post_id: r for r in s.scalars(select(EnrichedPostRow).where(EnrichedPostRow.post_id.in_(ids)))}
+            raw = {p.id: p for p in self.posts.get_posts(list(ids))}
+            done = 0
+            for pid, post_ids in members.items():
+                evidence = [Evidence(rows[p], raw[p]) for p in post_ids if p in rows and p in raw]
+                if not evidence:
+                    continue
+                problem = s.get(ProblemRow, pid)
+                parts = components(evidence, self.cfg, now, authorless, problem.kind)
+                problem.score = score(parts, self.cfg, problem.kind)
+                problem.score_breakdown = {k: round(v, 4) for k, v in parts.items()}
+                problem.confidence = confidence(evidence, self.cfg)
+                problem.updated_at = now
+                done += 1
+        return done
+
     def run(self) -> ProblemStats:
         stats = ProblemStats()
         now = self.clock()

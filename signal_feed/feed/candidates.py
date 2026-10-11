@@ -66,7 +66,9 @@ def similar_builders_weight(config: FeedConfig, events: int) -> float:
 
 
 def generate(data: FeedData, state: UserState, config: FeedConfig, store: FeedStore, now: datetime,
-             rng: np.random.Generator, explore_more: bool = False) -> list[Candidate]:
+             rng: np.random.Generator, explore_more: bool = False,
+             exploration_share: float | None = None) -> list[Candidate]:
+    """`exploration_share` overrides the configured share (the filter-bubble guard raises it)."""
     cfg = config.candidates
     target = cfg.per_session
     seen = seen_post_ids(store, state.user_id, now - timedelta(days=cfg.exclude_seen_days))
@@ -114,7 +116,8 @@ def generate(data: FeedData, state: UserState, config: FeedConfig, store: FeedSt
     else:
         plan = [(NICHE, shares.niche_match), (SKILL_MATCH, shares.skill_match),
                 (SIMILAR, shares.similar_builders * similar_builders_weight(config, state.events)),
-                (TRENDING, shares.trending_nearby), (EXPLORE, shares.exploration)]
+                (TRENDING, shares.trending_nearby),
+                (EXPLORE, max(shares.exploration, exploration_share or 0.0))]
     top_niches = sorted(((n, state.niche_affinity(n)) for n in {*state.niche, *state.pins}
                          if n in data.industry.nodes and n not in state.removed), key=lambda x: -x[1])[:8]
     for source, share in plan:

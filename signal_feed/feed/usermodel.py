@@ -102,6 +102,7 @@ class UserState:
     drop_ins: dict[int, int] = field(default_factory=dict)       # node -> exposures left
     removed: set[int] = field(default_factory=set)
     type_pref: dict[str, float] = field(default_factory=dict)
+    type_evidence: dict[str, tuple[float, float]] = field(default_factory=dict)   # type -> (positive, negative)
     source_pref: dict[str, float] = field(default_factory=dict)
     hidden_sources: set[str] = field(default_factory=set)
     served_problems: set[int] = field(default_factory=set)
@@ -155,6 +156,7 @@ def load_state(store: FeedStore, config: FeedConfig, user_id: str, now: datetime
         st.map_nodes = set(s.scalars(select(UserMapNodeRow.node_id).where(
             UserMapNodeRow.user_id == user_id, UserMapNodeRow.status.in_(ON_MAP))))
         st.type_pref = dict(user.type_preference or {})
+        st.type_evidence = {t: (float(a), float(b)) for t, (a, b) in prefs.get("type_evidence", {}).items()}
         st.source_pref = dict(user.source_preference or {})
         st.hidden_sources = set(prefs.get("hidden_sources", []))
         st.served_problems = set(prefs.get("served_problems", []))
@@ -263,6 +265,10 @@ def apply_events(store: FeedStore, posts: PostsReader, config: FeedConfig, event
                     _bump(s, UserSkillAffinityRow, e.user_id, node, evidence,
                           priors.get(f"s{node}", um.default_affinity), config, now)
             if post_type and e.event_type != "hide_source":
+                te = dict(prefs.get("type_evidence", {}))
+                pos, neg = te.get(post_type, (0.0, 0.0))
+                te[post_type] = [round(pos + max(evidence, 0), 4), round(neg + max(-evidence, 0), 4)]
+                prefs["type_evidence"] = te
                 tp = dict(user.type_preference or {})
                 tp[post_type] = round(max(-1.0, min(1.0, tp.get(post_type, 0.0) + um.type_preference_rate * w)), 4)
                 user.type_preference = tp

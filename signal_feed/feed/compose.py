@@ -79,10 +79,15 @@ def collapse(scored: Sequence[Scored], data: FeedData) -> list[Scored]:
 
 
 def compose(scored: Sequence[Scored], data: FeedData, state: UserState, config: FeedConfig, now: datetime,
-            previous: Sequence[Scored] = (), explore_more: bool = False) -> tuple[list[Placed], bool]:
-    """Fill one page. Returns the items and whether the user is caught up (strong items ran out)."""
+            previous: Sequence[Scored] = (), explore_more: bool = False,
+            exploration_floor: float | None = None) -> tuple[list[Placed], bool]:
+    """Fill one page. Returns the items and whether the user is caught up (strong items ran out).
+    `exploration_floor` raises the exploration quota (the filter-bubble guard, section 10)."""
     c = config.composition
     q = c.quotas
+    if exploration_floor:
+        q = q.model_copy(update={"exploration_min": max(q.exploration_min, exploration_floor),
+                                 "exploration_max": max(q.exploration_max, exploration_floor)})
     size, window = c.page_size, c.window
     pool = collapse(scored, data)
     cats = {id(s): category(s, data) for s in pool}

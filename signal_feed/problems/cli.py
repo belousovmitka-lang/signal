@@ -3,6 +3,7 @@
     python scripts/problems.py build [--no-llm] [--no-split]   # seed, grow the tree, rebuild problems
     python scripts/problems.py tree [--skills] [--min-support N]
     python scripts/problems.py top [--niche LABEL] [--per-niche N] [--min-posts N]
+    python scripts/problems.py rescore      # hourly: refresh scores (trend) without re-clustering
 """
 
 from __future__ import annotations
@@ -127,6 +128,7 @@ def main() -> int:
     top.add_argument("--per-niche", type=int, default=3)
     top.add_argument("--min-posts", type=int, default=1)
     top.add_argument("--kind", choices=["pain", "demand"], help="only problems or only demand")
+    sub.add_parser("rescore", help="refresh problem scores (hourly)")
     args = parser.parse_args()
     logging.basicConfig(level=logging.WARNING, format="%(levelname)s %(name)s: %(message)s")
 
@@ -140,6 +142,8 @@ def main() -> int:
         except BudgetExceededError as exc:
             raise SystemExit(f"stopped: {exc}\n(the tree and problems from before this run are unchanged up to "
                              "the step that stopped; `build --no-llm` runs without Claude)") from None
+    elif args.command == "rescore":
+        print(f"rescored {ProblemBuilder(store, PostsReader(settings.posts_database_url), config).rescore()} problems")
     elif args.command == "tree":
         print_tree(store, SKILL if args.skills else INDUSTRY, args.min_support)
     else:

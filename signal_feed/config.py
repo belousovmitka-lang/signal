@@ -301,6 +301,10 @@ class RankingConfig(_Strict):
     survey_every_n_items: int = Field(gt=0)
     value_model_blend: Fraction = Field(ge=0, le=1)
     v2_min_labeled_impressions: int = Field(gt=0)
+    value_model_min_surveys: int = Field(gt=0)
+    thompson_post_types: bool
+    type_thompson_prior: float = Field(gt=0)
+    models_dir: str
     v1: RankerV1
 
 

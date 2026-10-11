@@ -400,6 +400,23 @@ class SurveyRow(FeedBase):
     answered_at: Mapped[datetime] = mapped_column(UTCDateTime)
 
 
+class ModelRow(FeedBase):
+    """Trained models (section 8.2, 8.4). `value` models keep their coefficients here; `v2` ranking models
+    keep a file path. A model starts as `candidate`; only one passing the offline comparison (Phase 7)
+    becomes `active`."""
+
+    __tablename__ = "models"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    kind: Mapped[str] = mapped_column(String(16), index=True)        # value | v2
+    status: Mapped[str] = mapped_column(String(16), index=True)      # candidate | active | retired
+    trained_at: Mapped[datetime] = mapped_column(UTCDateTime)
+    examples: Mapped[int] = mapped_column(Integer)
+    features: Mapped[list[str]] = mapped_column(JSON)
+    params: Mapped[dict[str, Any]] = mapped_column(JSON, default=dict)
+    metrics: Mapped[dict[str, Any]] = mapped_column(JSON, default=dict)
+
+
 # --- store ---------------------------------------------------------------------
 
 def _sqlite_pragmas(dbapi_conn: Any, _record: Any) -> None:

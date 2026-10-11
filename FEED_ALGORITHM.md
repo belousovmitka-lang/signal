@@ -299,6 +299,16 @@ The ranked list becomes a feed through rules applied in order.
 
 **Guard against filter bubbles:** if one leaf niche exceeds 50% of a user's last 100 impressions *(tune)*, raise exploration to 20% for the next sessions, except in committed mode.
 
+**As built (2026-10-11, Phase 6):** `signal_feed/learning/`.
+- *Real time:* events update affinities in `POST /events` (Phase 3).
+- *Hourly:* `scripts/problems.py rescore` refreshes every active problem's score (the trend moves with time) without re-clustering.
+- *Nightly:* `scripts/feed_nightly.py`. Training data comes from what the feed already logs: each impression's ranker features (`score_breakdown.features`) and what the user then did with it. The **value model** is a logistic regression on "Was this useful?" answers (≥ 200 needed), stored as coefficients in the `models` table and used at once. It is blended into the score as the expected survey weight, `(1 − 0.2) × score + 0.2 × (3·p − 3·(1 − p))`. The **v2 models** are one gradient-boosted classifier per action (scikit-learn's `HistGradientBoostingClassifier`: no new dependency; ≥ 50k labelled impressions needed), saved under `data/models/`. A trained v2 is registered as a `candidate` and never used until it is activated after beating v1 offline (section 13). A held-out-users AUC per action is recorded with each model.
+- *Surveys:* every 30th item a user sees carries `ask_useful` (never a calibration card); the app asks after the user reads it.
+- *Thompson sampling over post types:* the ranker's `type_pref` feature is one draw per post type per page from Beta(5 + positive evidence, 5 + negative evidence), mapped to −1..1. Niches were already explored by Thompson sampling (Phase 3).
+- *Filter-bubble guard:* as specified; when it fires, both the exploration share of candidates and the page's exploration quota go to 20% (committed mode doesn't exist yet, so no exception is needed).
+- *Similar-builder neighbours* are computed per request from quiz overlap, so there is nothing to rebuild nightly.
+- *Simulator* (`signal_feed/learning/sim.py`, demo `scripts/feed_simulate.py` on a throwaway database copy): builders with hidden tastes, who name only part of them in the quiz, use the real feed. First runs: the mean hidden interest of what's shown is 0.40–0.48 against 0.16–0.18 for a random feed, and the save rate rises over days (6.7% → 11.0% over 3 days with 10 builders). These are synthetic numbers that check the machinery, not evidence about real users.
+
 ---
 
 ## 11. Data model
@@ -386,7 +396,7 @@ Finish each phase with tests and a short demo script before starting the next.
 4. **Phase 3 — MVP feed:** user model with quiz priors and calibration, candidate generation, v1 linear ranker, feed composition with quotas, diversity and explanations; `GET /feed`. — built (2026-10-11): `signal_feed/feed/`, `POST /onboarding`, `GET /onboarding/options`, `GET /feed`; events update the user model; demo `scripts/feed_session.py` (runs on a throwaway copy of the feed database).
 5. **Phase 4 — map:** affinity-to-map conversion, pins, drop-ins, remove, nudge, weekly snapshots, change log, narrowing checks; all `/map` endpoints. — built (2026-10-11): `/map`, `/map/history`, `/map/node/{id}`, `/map/pin`, `/map/unpin`, `/map/drop-in`, `/map/remove`, `/map/nudge`, `/map/reset`; `scripts/map_weekly.py`; demo `scripts/feed_session.py --map`.
 6. **Phase 5 — profile sync:** pending updates and approval endpoints. — built (2026-10-11): `GET /profile/niches/pending`, `POST /profile/niches/approve`, `GET /profile/niches`, `POST /profile/niches/unpublish`, `POST /profile/auto-publish`; synced by the weekly job.
-7. **Phase 6 — learning:** "Was this useful?" surveys, Thompson-sampling exploration, filter-bubble guard, nightly v2 models once there is enough data.
+7. **Phase 6 — learning:** "Was this useful?" surveys, Thompson-sampling exploration, filter-bubble guard, nightly v2 models once there is enough data. — built (2026-10-11): see section 10 "As built"; `scripts/feed_nightly.py`, `scripts/problems.py rescore`, `scripts/feed_simulate.py`. No real usage data yet: value and v2 models train only on simulated builders so far.
 8. **Phase 7 — evaluation:** offline replay harness, metrics dashboard, A/B assignment.
 
 ---
