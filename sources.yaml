@@ -762,6 +762,25 @@ sources:
     queries:
       - {limit: 100, params: {comments_per_post: 5}}
 
+  eurlex:
+    enabled: true
+    status: done
+    status_date: 2026-10-10
+    route: own_api
+    source_type: government
+    cadence: daily
+    access_check:
+      robots: allowed
+      terms: allowed
+      decision: full
+      terms_url: https://op.europa.eu/en/web/about-us/legal-notices/publications-office-of-the-european-union-copyright
+      checked_at: 2026-10-10
+      notes: >-
+        CELLAR SPARQL endpoint (eur-lex.europa.eu itself serves bots a 202 challenge, not bypassed).
+        Reuse authorised under Decision 2011/833/EU. Sanctions acts excluded by default.
+    queries:
+      - {limit: 300}
+
   bluesky:
     connector: search_api
     enabled: true

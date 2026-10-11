@@ -1,0 +1,457 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - publications.europa.eu
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://publications.europa.eu/robots.txt
+  response:
+    body:
+      string: "<html>\r\n<head><title>301 Moved Permanently</title></head>\r\n<body>\r\n<center><h1>301
+        Moved Permanently</h1></center>\r\n</body>\r\n</html>\r\n"
+    headers:
+      cache-control:
+      - no-cache
+      connection:
+      - keep-alive
+      content-length:
+      - '134'
+      content-type:
+      - text/html
+      date:
+      - Sun, 11 Oct 2026 03:24:10 GMT
+      location:
+      - https://op.europa.eu/robots.txt
+    status:
+      code: 301
+      message: Moved Permanently
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - op.europa.eu
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://op.europa.eu/robots.txt
+  response:
+    body:
+      string: "User-agent: *\nAllow: /\n# === Sitemap ===\nSitemap: https://op.europa.eu/documents/d/global/sitemap_index-xml\n
+        \n# === Logout and Basket Pages ===\nDisallow: /c/portal/\nDisallow: /*/basket\n\n#
+        === auth and control panel Pages ===\nDisallow: /*/auth/\nDisallow: *control_panel\n\n#
+        === RDF & WebDAV Requests ===\nDisallow: *requestAction=rdf\nDisallow: /webdav/*\n
+        \n# === Dataset Version and Wrong URLs ===\nDisallow: /*/eu-vocabularies/dataset/*version\n
+        \n# === Short URL & Redirection Blocking ===\nDisallow: /s/*\nDisallow: /*shortUrl$\n
+        \n# === Allow Important Public Resources ===\nAllow: *SubjectFilterPortlet\n
+        \n# === Dynamic & State-Dependent Pages ===\n# Block dynamic pages that contain
+        session or state parameters\nDisallow: /*p_p_id=\nDisallow: /*p_p_lifecycle=\nDisallow:
+        /*p_p_state=\nDisallow: /*p_p_mode=\nDisallow: /*_publicationDetailsActions_\nDisallow:
+        /*_procurementDetailsActions_\nDisallow: /*WT_mc_id=\nDisallow: /*/portal/logout?*\nDisallow:
+        /*/web/public-procurement/procurement-details?*\nDisallow: /*/publication-detail?*\nDisallow:
+        /*/web/eu-vocabularies/semantic-knowledge-base?*\nDisallow: /*/web/eu-vocabularies/dataset?*\nDisallow:
+        /*/web/eu-vocabularies/concept?*\nDisallow: /*/web/who-is-who/person?*\n\n#
+        === Crawl budget Bing Web Master Tool ===\nDisallow: /flexpaper/\nDisallow:
+        /new-bookshop?\nDisallow: /*.gif$\n\n### The Universal Catch-All /language-*\n#
+        Allow crawling the clean base publication pages for all 24 languages\n# Allow:
+        /*/publication-detail/-/publication/*\n \n# Block cross-language trails for
+        all 24 languages across the whole portal\n# Disallow: /*/publication-detail/-/publication/*/language-*\n\n
+        # === Block other PORTAL websites ===\nDisallow: /*/web/dorie/*\nDisallow:
+        /*/web/style-guide/*\nDisallow: /*/web/comite255/*\nDisallow: /*/web/webanalytics/*\n\n#
+        === Specific User-Agent Rules ===\nUser-agent: Sogou web spider\nDisallow:
+        /\n \nUser-agent: PetalBot\nDisallow: /\n \nUser-agent: LinkedInBot\nAllow:
+        /\n \nUser-agent: facebookexternalhit\nAllow: /\n \nUser-agent: Twitterbot\nDisallow:"
+    headers:
+      cache-control:
+      - private, no-cache, no-store, must-revalidate
+      connection:
+      - keep-alive
+      content-length:
+      - '1989'
+      content-type:
+      - text/plain;charset=UTF-8
+      date:
+      - Sun, 11 Oct 2026 03:24:10 GMT
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      pragma:
+      - no-cache
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-azure-ref:
+      - 20261011T032410Z-15d65cf455c2gncthC1DTTfwmn0000001cng000000000anm
+      x-cache:
+      - CONFIG_NOCACHE
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      x-request-id:
+      - 084a8663-4a76-434f-9696-f1c9419a59a5
+    status:
+      code: 200
+      message: ''
+- request:
+    body: query=PREFIX+cdm%3A+%3Chttp%3A%2F%2Fpublications.europa.eu%2Fontology%2Fcdm%23%3E%0ASELECT+DISTINCT+%3Fcelex+%3Fdate+%3Ftitle+%3Ftype+WHERE+%7B%0A++%3Fwork+cdm%3Aresource_legal_id_celex+%3Fcelex+%3B%0A++++++++cdm%3Awork_date_document+%3Fdate+%3B%0A++++++++cdm%3Awork_has_resource-type+%3Ftype+.%0A++FILTER%28%3Fdate+%3E%3D+%222026-10-01%22%5E%5Exsd%3Adate%29%0A++FILTER%28%3Ftype+IN+%28%3Chttp%3A%2F%2Fpublications.europa.eu%2Fresource%2Fauthority%2Fresource-type%2FREG%3E%2C+%3Chttp%3A%2F%2Fpublications.europa.eu%2Fresource%2Fauthority%2Fresource-type%2FREG_IMPL%3E%2C+%3Chttp%3A%2F%2Fpublications.europa.eu%2Fresource%2Fauthority%2Fresource-type%2FREG_DEL%3E%2C+%3Chttp%3A%2F%2Fpublications.europa.eu%2Fresource%2Fauthority%2Fresource-type%2FDIR%3E%2C+%3Chttp%3A%2F%2Fpublications.europa.eu%2Fresource%2Fauthority%2Fresource-type%2FDIR_IMPL%3E%2C+%3Chttp%3A%2F%2Fpublications.europa.eu%2Fresource%2Fauthority%2Fresource-type%2FDIR_DEL%3E%2C+%3Chttp%3A%2F%2Fpublications.europa.eu%2Fresource%2Fauthority%2Fresource-type%2FDEC%3E%29%29%0A++%3Fexpr+cdm%3Aexpression_belongs_to_work+%3Fwork+%3B%0A++++++++cdm%3Aexpression_uses_language+%3Chttp%3A%2F%2Fpublications.europa.eu%2Fresource%2Fauthority%2Flanguage%2FENG%3E+%3B%0A++++++++cdm%3Aexpression_title+%3Ftitle+.%0A%7D+ORDER+BY+DESC%28%3Fdate%29+%3Fcelex+LIMIT+200+OFFSET+0
+    headers:
+      accept:
+      - application/sparql-results+json
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '1325'
+      content-type:
+      - application/x-www-form-urlencoded
+      host:
+      - publications.europa.eu
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: POST
+    uri: https://publications.europa.eu/webapi/rdf/sparql
+  response:
+    body:
+      string: "{\"head\": {\"link\": [], \"vars\": [\"celex\", \"date\", \"title\",
+        \"type\"]}, \"results\": {\"distinct\": false, \"ordered\": true, \"bindings\":
+        [{\"celex\": {\"type\": \"literal\", \"datatype\": \"http://www.w3.org/2001/XMLSchema#string\",
+        \"value\": \"32026D2261\"}, \"date\": {\"type\": \"literal\", \"datatype\":
+        \"http://www.w3.org/2001/XMLSchema#date\", \"value\": \"2026-10-09\"}, \"title\":
+        {\"type\": \"literal\", \"xml:lang\": \"en\", \"value\": \"Council Decision
+        (CFSP) 2026/2261 of 9 October 2026 amending Decision (CFSP) 2023/2135 concerning
+        restrictive measures in view of activities undermining the stability and political
+        transition of Sudan\"}, \"type\": {\"type\": \"uri\", \"value\": \"http://publications.europa.eu/resource/authority/resource-type/DEC\"}},
+        {\"celex\": {\"type\": \"literal\", \"datatype\": \"http://www.w3.org/2001/XMLSchema#string\",
+        \"value\": \"32026R2262\"}, \"date\": {\"type\": \"literal\", \"datatype\":
+        \"http://www.w3.org/2001/XMLSchema#date\", \"value\": \"2026-10-09\"}, \"title\":
+        {\"type\": \"literal\", \"xml:lang\": \"en\", \"value\": \"Council Implementing
+        Regulation (EU) 2026/2262 of 9 October 2026 implementing Regulation (EU) 2023/2147
+        concerning restrictive measures in view of activities undermining the stability
+        and political transition of Sudan\"}, \"type\": {\"type\": \"uri\", \"value\":
+        \"http://publications.europa.eu/resource/authority/resource-type/REG_IMPL\"}},
+        {\"celex\": {\"type\": \"literal\", \"datatype\": \"http://www.w3.org/2001/XMLSchema#string\",
+        \"value\": \"32026D2258\"}, \"date\": {\"type\": \"literal\", \"datatype\":
+        \"http://www.w3.org/2001/XMLSchema#date\", \"value\": \"2026-10-08\"}, \"title\":
+        {\"type\": \"literal\", \"xml:lang\": \"en\", \"value\": \"Council Decision
+        (CFSP) 2026/2258 of 8 October 2026 amending Decision (CFSP) 2024/2643 concerning
+        restrictive measures in view of Russia\u2019s destabilising activities\"},
+        \"type\": {\"type\": \"uri\", \"value\": \"http://publications.europa.eu/resource/authority/resource-type/DEC\"}},
+        {\"celex\": {\"type\": \"literal\", \"datatype\": \"http://www.w3.org/2001/XMLSchema#string\",
+        \"value\": \"32026D2264\"}, \"date\": {\"type\": \"literal\", \"datatype\":
+        \"http://www.w3.org/2001/XMLSchema#date\", \"value\": \"2026-10-08\"}, \"title\":
+        {\"type\": \"literal\", \"xml:lang\": \"en\", \"value\": \"Council Decision
+        (CFSP) 2026/2264 of 8 October 2026 amending Decision 2014/145/CFSP concerning
+        restrictive measures in respect of actions undermining or threatening the
+        territorial integrity, sovereignty and independence of Ukraine\"}, \"type\":
+        {\"type\": \"uri\", \"value\": \"http://publications.europa.eu/resource/authority/resource-type/DEC\"}},
+        {\"celex\": {\"type\": \"literal\", \"datatype\": \"http://www.w3.org/2001/XMLSchema#string\",
+        \"value\": \"32026R2241\"}, \"date\": {\"type\": \"literal\", \"datatype\":
+        \"http://www.w3.org/2001/XMLSchema#date\", \"value\": \"2026-10-08\"}, \"title\":
+        {\"type\": \"literal\", \"xml:lang\": \"en\", \"value\": \"Commission Implementing
+        Regulation (EU) 2026/2241 of 8\_October 2026 amending Implementing Regulation
+        (EU)\_2024/2746 laying down rules for the application of Council Regulation
+        (EC)\_No\_1217/2009 setting up the Farm Sustainability Data Network and repealing
+        Commission Implementing Regulation (EU)\_2015/220\"}, \"type\": {\"type\":
+        \"uri\", \"value\": \"http://publications.europa.eu/resource/authority/resource-type/REG_IMPL\"}},
+        {\"celex\": {\"type\": \"literal\", \"datatype\": \"http://www.w3.org/2001/XMLSchema#string\",
+        \"value\": \"32026R2245\"}, \"date\": {\"type\": \"literal\", \"datatype\":
+        \"http://www.w3.org/2001/XMLSchema#date\", \"value\": \"2026-10-08\"}, \"title\":
+        {\"type\": \"literal\", \"xml:lang\": \"en\", \"value\": \"Commission Implementing
+        Regulation (EU) 2026/2245 of 8\_October 2026 making imports of certain polyvinyl
+        alcohols originating in the People\u2019s Republic of China subject to registration
+        with a view to allowing the levy of anti-dumping duties on the imports subject
+        to registration\"}, \"type\": {\"type\": \"uri\", \"value\": \"http://publications.europa.eu/resource/authority/resource-type/REG_IMPL\"}},
+        {\"celex\": {\"type\": \"literal\", \"datatype\": \"http://www.w3.org/2001/XMLSchema#string\",
+        \"value\": \"32026R2257\"}, \"date\": {\"type\": \"literal\", \"datatype\":
+        \"http://www.w3.org/2001/XMLSchema#date\", \"value\": \"2026-10-08\"}, \"title\":
+        {\"type\": \"literal\", \"xml:lang\": \"en\", \"value\": \"Council Implementing
+        Regulation (EU) 2026/2257 of 8 October 2026 implementing Regulation (EU) 2024/2642
+        concerning restrictive measures in view of Russia\u2019s destabilising activities\"},
+        \"type\": {\"type\": \"uri\", \"value\": \"http://publications.europa.eu/resource/authority/resource-type/REG_IMPL\"}},
+        {\"celex\": {\"type\": \"literal\", \"datatype\": \"http://www.w3.org/2001/XMLSchema#string\",
+        \"value\": \"32026R2263\"}, \"date\": {\"type\": \"literal\", \"datatype\":
+        \"http://www.w3.org/2001/XMLSchema#date\", \"value\": \"2026-10-08\"}, \"title\":
+        {\"type\": \"literal\", \"xml:lang\": \"en\", \"value\": \"Council Implementing
+        Regulation (EU) 2026/2263 of 8 October 2026 implementing Regulation (EU) No
+        269/2014 concerning restrictive measures in respect of actions undermining
+        or threatening the territorial integrity, sovereignty and independence of
+        Ukraine\"}, \"type\": {\"type\": \"uri\", \"value\": \"http://publications.europa.eu/resource/authority/resource-type/REG_IMPL\"}},
+        {\"celex\": {\"type\": \"literal\", \"datatype\": \"http://www.w3.org/2001/XMLSchema#string\",
+        \"value\": \"32026R2287\"}, \"date\": {\"type\": \"literal\", \"datatype\":
+        \"http://www.w3.org/2001/XMLSchema#date\", \"value\": \"2026-10-08\"}, \"title\":
+        {\"type\": \"literal\", \"xml:lang\": \"en\", \"value\": \"Commission Implementing
+        Regulation (EU) 2026/2287 of 8\_October 2026 amending for the 362nd time Council
+        Regulation (EC)\_No\_881/2002 imposing certain specific restrictive measures
+        directed against certain persons and entities associated with the ISIL (Da'esh)
+        and Al-Qaida organisations\"}, \"type\": {\"type\": \"uri\", \"value\": \"http://publications.europa.eu/resource/authority/resource-type/REG_IMPL\"}},
+        {\"celex\": {\"type\": \"literal\", \"datatype\": \"http://www.w3.org/2001/XMLSchema#string\",
+        \"value\": \"32024L1799R(03)\"}, \"date\": {\"type\": \"literal\", \"datatype\":
+        \"http://www.w3.org/2001/XMLSchema#date\", \"value\": \"2026-10-07\"}, \"title\":
+        {\"type\": \"literal\", \"xml:lang\": \"en\", \"value\": \"Corrigendum to
+        Directive (EU) 2024/1799 of the European Parliament and of the Council of
+        13 June 2024 on common rules promoting the repair of goods and amending Regulation
+        (EU) 2017/2394 and Directives (EU) 2019/771 and (EU) 2020/1828 (OJ L, 2024/1799,
+        10.7.2024)\"}, \"type\": {\"type\": \"uri\", \"value\": \"http://publications.europa.eu/resource/authority/resource-type/DIR\"}},
+        {\"celex\": {\"type\": \"literal\", \"datatype\": \"http://www.w3.org/2001/XMLSchema#string\",
+        \"value\": \"32026D1347R(01)\"}, \"date\": {\"type\": \"literal\", \"datatype\":
+        \"http://www.w3.org/2001/XMLSchema#date\", \"value\": \"2026-10-07\"}, \"title\":
+        {\"type\": \"literal\", \"xml:lang\": \"en\", \"value\": \"Corrigendum to
+        Council Decision (EU) 2026/1347 of 4 June 2026 on the conclusion, on behalf
+        of the European Union, of the United Nations Convention against Cybercrime;
+        Strengthening International Cooperation for Combating Certain Crimes Committed
+        by Means of Information and Communications Technology Systems and for the
+        Sharing of Evidence in Electronic Form of Serious Crimes (OJ L, 2026/1347,
+        19.6.2026)\"}, \"type\": {\"type\": \"uri\", \"value\": \"http://publications.europa.eu/resource/authority/resource-type/DEC\"}},
+        {\"celex\": {\"type\": \"literal\", \"datatype\": \"http://www.w3.org/2001/XMLSchema#string\",
+        \"value\": \"32026M12602\"}, \"date\": {\"type\": \"literal\", \"datatype\":
+        \"http://www.w3.org/2001/XMLSchema#date\", \"value\": \"2026-10-07\"}, \"title\":
+        {\"type\": \"literal\", \"xml:lang\": \"en\", \"value\": \"Commission Decision
+        of 07/10/2026 declaring a concentration to be compatible with the common market
+        (Case No COMP/M.12602 - AP / GERRESHEIMER (PRIMARY PACKAGING PLASTICS BUSINESS))
+        according to Council Regulation (EC) No 139/2004 (Only the English text is
+        authentic)\"}, \"type\": {\"type\": \"uri\", \"value\": \"http://publications.europa.eu/resource/authority/resource-type/DEC\"}},
+        {\"celex\": {\"type\": \"literal\", \"datatype\": \"http://www.w3.org/2001/XMLSchema#string\",
+        \"value\": \"32026R2268\"}, \"date\": {\"type\": \"literal\", \"datatype\":
+        \"http://www.w3.org/2001/XMLSchema#date\", \"value\": \"2026-10-07\"}, \"title\":
+        {\"type\": \"literal\", \"xml:lang\": \"en\", \"value\": \"Commission Implementing
+        Regulation (EU) 2026/2268 of 7\_October 2026 amending Annexes\_V and XIV to
+        Implementing Regulation (EU)\_2021/404 as regards the entries for Canada,
+        the United Kingdom and the United States in the lists of third countries,
+        territories, or zones thereof authorised for the entry into the Union of consignments
+        of poultry and germinal products of poultry, and of fresh meat of poultry
+        and game birds\"}, \"type\": {\"type\": \"uri\", \"value\": \"http://publications.europa.eu/resource/authority/resource-type/REG_IMPL\"}},
+        {\"celex\": {\"type\": \"literal\", \"datatype\": \"http://www.w3.org/2001/XMLSchema#string\",
+        \"value\": \"32026R2269\"}, \"date\": {\"type\": \"literal\", \"datatype\":
+        \"http://www.w3.org/2001/XMLSchema#date\", \"value\": \"2026-10-07\"}, \"title\":
+        {\"type\": \"literal\", \"xml:lang\": \"en\", \"value\": \"Regulation (EU)
+        2026/2269 of the European Parliament and of the Council of 7 October 2026
+        on temporary trade-liberalisation measures applicable to certain products
+        originating in the Republic of Armenia\"}, \"type\": {\"type\": \"uri\", \"value\":
+        \"http://publications.europa.eu/resource/authority/resource-type/REG\"}},
+        {\"celex\": {\"type\": \"literal\", \"datatype\": \"http://www.w3.org/2001/XMLSchema#string\",
+        \"value\": \"32026D1099R(01)\"}, \"date\": {\"type\": \"literal\", \"datatype\":
+        \"http://www.w3.org/2001/XMLSchema#date\", \"value\": \"2026-10-06\"}, \"title\":
+        {\"type\": \"literal\", \"xml:lang\": \"en\", \"value\": \"Corrigendum to
+        Council Decision (EU) 2026/1099 of 27 April 2026 on the conclusion, on behalf
+        of the European Union, of the United Nations Convention on the International
+        Effects of Judicial Sales of Ships (the \u2018Beijing Convention on the Judicial
+        Sale of Ships\u2019) (OJ L, 2026/1099, 18.5.2026)\"}, \"type\": {\"type\":
+        \"uri\", \"value\": \"http://publications.europa.eu/resource/authority/resource-type/DEC\"}},
+        {\"celex\": {\"type\": \"literal\", \"datatype\": \"http://www.w3.org/2001/XMLSchema#string\",
+        \"value\": \"32026M12546\"}, \"date\": {\"type\": \"literal\", \"datatype\":
+        \"http://www.w3.org/2001/XMLSchema#date\", \"value\": \"2026-10-06\"}, \"title\":
+        {\"type\": \"literal\", \"xml:lang\": \"en\", \"value\": \"Commission Decision
+        of 06/10/2026 declaring a concentration to be compatible with the common market
+        (Case No COMP/M.12546 - SAMSUNG / GS E&C / JV) according to Council Regulation
+        (EC) No 139/2004 (Only the English text is authentic)\"}, \"type\": {\"type\":
+        \"uri\", \"value\": \"http://publications.europa.eu/resource/authority/resource-type/DEC\"}},
+        {\"celex\": {\"type\": \"literal\", \"datatype\": \"http://www.w3.org/2001/XMLSchema#string\",
+        \"value\": \"32026R2265\"}, \"date\": {\"type\": \"literal\", \"datatype\":
+        \"http://www.w3.org/2001/XMLSchema#date\", \"value\": \"2026-10-06\"}, \"title\":
+        {\"type\": \"literal\", \"xml:lang\": \"en\", \"value\": \"Commission Implementing
+        Regulation (EU) 2026/2265 of 6\_October 2026 concerning the classification
+        of certain goods in the Combined Nomenclature\"}, \"type\": {\"type\": \"uri\",
+        \"value\": \"http://publications.europa.eu/resource/authority/resource-type/REG_IMPL\"}},
+        {\"celex\": {\"type\": \"literal\", \"datatype\": \"http://www.w3.org/2001/XMLSchema#string\",
+        \"value\": \"32026M12483\"}, \"date\": {\"type\": \"literal\", \"datatype\":
+        \"http://www.w3.org/2001/XMLSchema#date\", \"value\": \"2026-10-05\"}, \"title\":
+        {\"type\": \"literal\", \"xml:lang\": \"en\", \"value\": \"Commission Decision
+        of 05/10/2026 declaring a concentration to be compatible with the common market
+        (Case No COMP/M.12483 - VWFS / DML) according to Council Regulation (EC) No
+        139/2004 (Only the English text is authentic)\"}, \"type\": {\"type\": \"uri\",
+        \"value\": \"http://publications.europa.eu/resource/authority/resource-type/DEC\"}},
+        {\"celex\": {\"type\": \"literal\", \"datatype\": \"http://www.w3.org/2001/XMLSchema#string\",
+        \"value\": \"32026M12528\"}, \"date\": {\"type\": \"literal\", \"datatype\":
+        \"http://www.w3.org/2001/XMLSchema#date\", \"value\": \"2026-10-05\"}, \"title\":
+        {\"type\": \"literal\", \"xml:lang\": \"en\", \"value\": \"Commission Decision
+        of 05/10/2026 declaring a concentration to be compatible with the common market
+        (Case No COMP/M.12528 - ACCENTURE / INDX / ALFAHEALTH) according to Council
+        Regulation (EC) No 139/2004 (Only the English text is authentic)\"}, \"type\":
+        {\"type\": \"uri\", \"value\": \"http://publications.europa.eu/resource/authority/resource-type/DEC\"}},
+        {\"celex\": {\"type\": \"literal\", \"datatype\": \"http://www.w3.org/2001/XMLSchema#string\",
+        \"value\": \"32026R2205\"}, \"date\": {\"type\": \"literal\", \"datatype\":
+        \"http://www.w3.org/2001/XMLSchema#date\", \"value\": \"2026-10-05\"}, \"title\":
+        {\"type\": \"literal\", \"xml:lang\": \"en\", \"value\": \"Commission Implementing
+        Regulation (EU) 2026/2205 of 5\_October 2026 on exceptional market support
+        measures for the eggs and poultrymeat sectors in Italy\"}, \"type\": {\"type\":
+        \"uri\", \"value\": \"http://publications.europa.eu/resource/authority/resource-type/REG_IMPL\"}},
+        {\"celex\": {\"type\": \"literal\", \"datatype\": \"http://www.w3.org/2001/XMLSchema#string\",
+        \"value\": \"32026R2208\"}, \"date\": {\"type\": \"literal\", \"datatype\":
+        \"http://www.w3.org/2001/XMLSchema#date\", \"value\": \"2026-10-05\"}, \"title\":
+        {\"type\": \"literal\", \"xml:lang\": \"en\", \"value\": \"Commission Implementing
+        Regulation (EU) 2026/2208 of 5\_October 2026 on exceptional market support
+        measures for the pigmeat sector in Italy\"}, \"type\": {\"type\": \"uri\",
+        \"value\": \"http://publications.europa.eu/resource/authority/resource-type/REG_IMPL\"}},
+        {\"celex\": {\"type\": \"literal\", \"datatype\": \"http://www.w3.org/2001/XMLSchema#string\",
+        \"value\": \"32026R2210\"}, \"date\": {\"type\": \"literal\", \"datatype\":
+        \"http://www.w3.org/2001/XMLSchema#date\", \"value\": \"2026-10-05\"}, \"title\":
+        {\"type\": \"literal\", \"xml:lang\": \"en\", \"value\": \"Commission Implementing
+        Regulation (EU) 2026/2210 of 5\_October 2026 amending Implementing Regulation
+        (EU)\_No\_79/2012 as regards statistical data that Member States are to communicate
+        to the Commission\"}, \"type\": {\"type\": \"uri\", \"value\": \"http://publications.europa.eu/resource/authority/resource-type/REG_IMPL\"}},
+        {\"celex\": {\"type\": \"literal\", \"datatype\": \"http://www.w3.org/2001/XMLSchema#string\",
+        \"value\": \"32026R2214\"}, \"date\": {\"type\": \"literal\", \"datatype\":
+        \"http://www.w3.org/2001/XMLSchema#date\", \"value\": \"2026-10-05\"}, \"title\":
+        {\"type\": \"literal\", \"xml:lang\": \"en\", \"value\": \"Commission Implementing
+        Regulation (EU) 2026/2214 of 5\_October 2026 correcting certain language versions
+        of Implementing Regulation (EU)\_2024/2215 establishing, pursuant to Regulation
+        (EU)\_2024/573 of the European Parliament and of the Council, minimum requirements
+        for the issuance of certificates to natural and legal persons and the conditions
+        for the mutual recognition of such certificates, as regards stationary refrigeration,
+        air conditioning and heat pump equipment, organic Rankine cycles and refrigeration
+        units of refrigerated trucks, refrigerated trailers, refrigerated light-duty
+        vehicles, intermodal containers and train wagons containing fluorinated greenhouse
+        gases or their alternatives\"}, \"type\": {\"type\": \"uri\", \"value\": \"http://publications.europa.eu/resource/authority/resource-type/REG_IMPL\"}},
+        {\"celex\": {\"type\": \"literal\", \"datatype\": \"http://www.w3.org/2001/XMLSchema#string\",
+        \"value\": \"32026R2199\"}, \"date\": {\"type\": \"literal\", \"datatype\":
+        \"http://www.w3.org/2001/XMLSchema#date\", \"value\": \"2026-10-02\"}, \"title\":
+        {\"type\": \"literal\", \"xml:lang\": \"en\", \"value\": \"Commission Implementing
+        Regulation (EU) 2026/2199 of 2\_October 2026 cancelling the Union authorisation
+        for the single biocidal product Nordkalk QL 0-2 in accordance with Regulation
+        (EU)\_No\_528/2012 of the European Parliament and of the Council and repealing
+        Implementing Regulation (EU)\_2024/1481\"}, \"type\": {\"type\": \"uri\",
+        \"value\": \"http://publications.europa.eu/resource/authority/resource-type/REG_IMPL\"}},
+        {\"celex\": {\"type\": \"literal\", \"datatype\": \"http://www.w3.org/2001/XMLSchema#string\",
+        \"value\": \"32026R2201\"}, \"date\": {\"type\": \"literal\", \"datatype\":
+        \"http://www.w3.org/2001/XMLSchema#date\", \"value\": \"2026-10-02\"}, \"title\":
+        {\"type\": \"literal\", \"xml:lang\": \"en\", \"value\": \"Commission Implementing
+        Regulation (EU) 2026/2201 of 2\_October 2026 amending Implementing Regulation
+        (EU)\_2023/1763 as regards an administrative change to the Union authorisation
+        of the biocidal product family Lactic acid Family \u2013 Quatchem\"}, \"type\":
+        {\"type\": \"uri\", \"value\": \"http://publications.europa.eu/resource/authority/resource-type/REG_IMPL\"}},
+        {\"celex\": {\"type\": \"literal\", \"datatype\": \"http://www.w3.org/2001/XMLSchema#string\",
+        \"value\": \"32026R2203\"}, \"date\": {\"type\": \"literal\", \"datatype\":
+        \"http://www.w3.org/2001/XMLSchema#date\", \"value\": \"2026-10-02\"}, \"title\":
+        {\"type\": \"literal\", \"xml:lang\": \"en\", \"value\": \"Commission Implementing
+        Regulation (EU) 2026/2203 of 2\_October 2026 amending Implementing Regulation
+        (EU)\_2024/2175 as regards minor changes to the Union authorisation of the
+        biocidal product family Contec Calcium Hypochlorite Product Family\"}, \"type\":
+        {\"type\": \"uri\", \"value\": \"http://publications.europa.eu/resource/authority/resource-type/REG_IMPL\"}},
+        {\"celex\": {\"type\": \"literal\", \"datatype\": \"http://www.w3.org/2001/XMLSchema#string\",
+        \"value\": \"32026R2238\"}, \"date\": {\"type\": \"literal\", \"datatype\":
+        \"http://www.w3.org/2001/XMLSchema#date\", \"value\": \"2026-10-02\"}, \"title\":
+        {\"type\": \"literal\", \"xml:lang\": \"en\", \"value\": \"Commission Implementing
+        Regulation (EU) 2026/2238 of 2\_October 2026 amending Annexes\_XIII and XV
+        to Implementing Regulation (EU)\_2021/404 as regards the entries for Namibia
+        in the lists of third countries or territories, or zones thereof authorised
+        for the entry into the Union of consignments of fresh meat and meat products
+        of certain ungulates\"}, \"type\": {\"type\": \"uri\", \"value\": \"http://publications.europa.eu/resource/authority/resource-type/REG_IMPL\"}},
+        {\"celex\": {\"type\": \"literal\", \"datatype\": \"http://www.w3.org/2001/XMLSchema#string\",
+        \"value\": \"32026D05200\"}, \"date\": {\"type\": \"literal\", \"datatype\":
+        \"http://www.w3.org/2001/XMLSchema#date\", \"value\": \"2026-10-01\"}, \"title\":
+        {\"type\": \"literal\", \"xml:lang\": \"en\", \"value\": \"Council Decision
+        of 1 October 2026 replacing a member of the Management Board of the European
+        Agency for Safety and Health at Work for Cyprus\"}, \"type\": {\"type\": \"uri\",
+        \"value\": \"http://publications.europa.eu/resource/authority/resource-type/DEC\"}},
+        {\"celex\": {\"type\": \"literal\", \"datatype\": \"http://www.w3.org/2001/XMLSchema#string\",
+        \"value\": \"32026D05201\"}, \"date\": {\"type\": \"literal\", \"datatype\":
+        \"http://www.w3.org/2001/XMLSchema#date\", \"value\": \"2026-10-01\"}, \"title\":
+        {\"type\": \"literal\", \"xml:lang\": \"en\", \"value\": \"Council Decision
+        of 1 October 2026 replacing a member of the Management Board of the European
+        Agency for Safety and Health at Work for Estonia\"}, \"type\": {\"type\":
+        \"uri\", \"value\": \"http://publications.europa.eu/resource/authority/resource-type/DEC\"}},
+        {\"celex\": {\"type\": \"literal\", \"datatype\": \"http://www.w3.org/2001/XMLSchema#string\",
+        \"value\": \"32026D2231\"}, \"date\": {\"type\": \"literal\", \"datatype\":
+        \"http://www.w3.org/2001/XMLSchema#date\", \"value\": \"2026-10-01\"}, \"title\":
+        {\"type\": \"literal\", \"xml:lang\": \"en\", \"value\": \"Council Decision
+        (CFSP) 2026/2231 of 1 October 2026 on an assistance measure under the European
+        Peace Facility to support the Balkan Medical Task Force\"}, \"type\": {\"type\":
+        \"uri\", \"value\": \"http://publications.europa.eu/resource/authority/resource-type/DEC\"}},
+        {\"celex\": {\"type\": \"literal\", \"datatype\": \"http://www.w3.org/2001/XMLSchema#string\",
+        \"value\": \"32026D2232\"}, \"date\": {\"type\": \"literal\", \"datatype\":
+        \"http://www.w3.org/2001/XMLSchema#date\", \"value\": \"2026-10-01\"}, \"title\":
+        {\"type\": \"literal\", \"xml:lang\": \"en\", \"value\": \"Council Decision
+        (EU) 2026/2232 of 1 October 2026 on the position to be taken on behalf of
+        the European Union within the Joint Committee established by the Agreement
+        on the withdrawal of the United Kingdom of Great Britain and Northern Ireland
+        from the European Union and the European Atomic Energy Community as regards
+        a joint declaration of the Union and the United Kingdom on the application
+        of Article 5 of the Windsor Framework\"}, \"type\": {\"type\": \"uri\", \"value\":
+        \"http://publications.europa.eu/resource/authority/resource-type/DEC\"}},
+        {\"celex\": {\"type\": \"literal\", \"datatype\": \"http://www.w3.org/2001/XMLSchema#string\",
+        \"value\": \"32026D2234\"}, \"date\": {\"type\": \"literal\", \"datatype\":
+        \"http://www.w3.org/2001/XMLSchema#date\", \"value\": \"2026-10-01\"}, \"title\":
+        {\"type\": \"literal\", \"xml:lang\": \"en\", \"value\": \"Council Decision
+        (EU) 2026/2234 of 1 October 2026 on the position to be taken on behalf of
+        the European Union within the Joint Committee established by the Agreement
+        on the withdrawal of the United Kingdom of Great Britain and Northern Ireland
+        from the European Union and the European Atomic Energy Community as regards
+        the adoption of a decision to amend Part I of Annex I to that Agreement\"},
+        \"type\": {\"type\": \"uri\", \"value\": \"http://publications.europa.eu/resource/authority/resource-type/DEC\"}},
+        {\"celex\": {\"type\": \"literal\", \"datatype\": \"http://www.w3.org/2001/XMLSchema#string\",
+        \"value\": \"32026D2251\"}, \"date\": {\"type\": \"literal\", \"datatype\":
+        \"http://www.w3.org/2001/XMLSchema#date\", \"value\": \"2026-10-01\"}, \"title\":
+        {\"type\": \"literal\", \"xml:lang\": \"en\", \"value\": \"Council Decision
+        (EU) 2026/2251 of 1 October 2026 on the signing of the Agreement between the
+        European Union and the Republic of Korea on the transfer of Passenger Name
+        Record (PNR) data for the prevention, detection, investigation and prosecution
+        of terrorist offences and serious crime\"}, \"type\": {\"type\": \"uri\",
+        \"value\": \"http://publications.europa.eu/resource/authority/resource-type/DEC\"}},
+        {\"celex\": {\"type\": \"literal\", \"datatype\": \"http://www.w3.org/2001/XMLSchema#string\",
+        \"value\": \"32026M12522\"}, \"date\": {\"type\": \"literal\", \"datatype\":
+        \"http://www.w3.org/2001/XMLSchema#date\", \"value\": \"2026-10-01\"}, \"title\":
+        {\"type\": \"literal\", \"xml:lang\": \"en\", \"value\": \"Commission Decision
+        of 01/10/2026 declaring a concentration to be compatible with the common market
+        (Case No COMP/M.12522 - BOSCH / TATA SONS / JV) according to Council Regulation
+        (EC) No 139/2004 (Only the English text is authentic)\"}, \"type\": {\"type\":
+        \"uri\", \"value\": \"http://publications.europa.eu/resource/authority/resource-type/DEC\"}},
+        {\"celex\": {\"type\": \"literal\", \"datatype\": \"http://www.w3.org/2001/XMLSchema#string\",
+        \"value\": \"32026R2188\"}, \"date\": {\"type\": \"literal\", \"datatype\":
+        \"http://www.w3.org/2001/XMLSchema#date\", \"value\": \"2026-10-01\"}, \"title\":
+        {\"type\": \"literal\", \"xml:lang\": \"en\", \"value\": \"Commission Implementing
+        Regulation (EU) 2026/2188 of 1\_October 2026 amending Annexes\_II and IV to
+        Implementing Regulation (EU)\_2021/404 as regards the entries for Egypt, the
+        United Kingdom and Uruguay in the lists of third countries or territories,
+        or zones thereof, authorised for the entry into the Union of consignments
+        of certain ungulates and certain categories of equine animals\"}, \"type\":
+        {\"type\": \"uri\", \"value\": \"http://publications.europa.eu/resource/authority/resource-type/REG_IMPL\"}},
+        {\"celex\": {\"type\": \"literal\", \"datatype\": \"http://www.w3.org/2001/XMLSchema#string\",
+        \"value\": \"32026R2220\"}, \"date\": {\"type\": \"literal\", \"datatype\":
+        \"http://www.w3.org/2001/XMLSchema#date\", \"value\": \"2026-10-01\"}, \"title\":
+        {\"type\": \"literal\", \"xml:lang\": \"en\", \"value\": \"Commission Implementing
+        Regulation (EU) 2026/2220 of 1\_October 2026 amending Annex\_I to Implementing
+        Regulation (EU)\_2023/594 laying down special disease control measures for
+        African swine fever\"}, \"type\": {\"type\": \"uri\", \"value\": \"http://publications.europa.eu/resource/authority/resource-type/REG_IMPL\"}},
+        {\"celex\": {\"type\": \"literal\", \"datatype\": \"http://www.w3.org/2001/XMLSchema#string\",
+        \"value\": \"32026R2227\"}, \"date\": {\"type\": \"literal\", \"datatype\":
+        \"http://www.w3.org/2001/XMLSchema#date\", \"value\": \"2026-10-01\"}, \"title\":
+        {\"type\": \"literal\", \"xml:lang\": \"en\", \"value\": \"Commission Implementing
+        Regulation (EU) 2026/2227 of 1\_October 2026 amending Annexes\_V and XIV to
+        Implementing Regulation (EU)\_2021/404 as regards the entries for Canada and
+        the United States in the lists of third countries, territories, or zones thereof
+        authorised for the entry into the Union of consignments of poultry and germinal
+        products of poultry, and of fresh meat of poultry and game birds\"}, \"type\":
+        {\"type\": \"uri\", \"value\": \"http://publications.europa.eu/resource/authority/resource-type/REG_IMPL\"}}]}}"
+    headers:
+      accept-ranges:
+      - bytes
+      connection:
+      - keep-alive
+      content-disposition:
+      - filename=sparql_2026-10-11_03-24-11Z.json
+      content-length:
+      - '24219'
+      content-type:
+      - application/sparql-results+json
+      date:
+      - Sun, 11 Oct 2026 03:24:11 GMT
+    status:
+      code: 200
+      message: OK
+version: 1
