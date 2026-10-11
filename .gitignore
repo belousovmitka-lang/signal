@@ -10,3 +10,6 @@ data/
 logs/
 !data/.gitkeep
 !logs/.gitkeep
+
+# macOS Finder metadata
+.DS_Store
