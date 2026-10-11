@@ -10,16 +10,21 @@ Skipped: bot accounts, deleted or removed posts. Each post is stored under its o
 
 from __future__ import annotations
 
+import logging
 import re
 from collections.abc import AsyncIterator
 from typing import Any
 from urllib.parse import urlsplit
+
+import httpx
 
 from ..base import BaseConnector
 from ..models import RawPost, SourceQuery
 from ..parsing import parse_date
 from ..privacy import hash_author
 from . import register
+
+log = logging.getLogger(__name__)
 
 DEFAULT_INSTANCE = "lemmy.world"
 PAGE = 50
@@ -100,13 +105,27 @@ class LemmyConnector(BaseConnector):
         )
 
     async def deleted(self, urls: list[str]) -> list[str]:
+        """Posts deleted or removed on their origin instance.
+
+        An origin whose robots.txt forbids the check counts as gone (we can't honor deletions there);
+        an unreachable one is skipped and checked again next run.
+        """
         gone = []
         for url in urls:
             api = post_api_url(url)
             if not api:
                 continue
-            await self.services.robots.require(api)
-            response = await self.http.get(api)
+            try:
+                if not await self.services.robots.allowed(api):
+                    if (await self.services.robots.rules_for(api)).unavailable:
+                        log.info("%s: can't reach %s; will re-check later", self.name, api)
+                    else:
+                        gone.append(url)      # robots.txt explicitly forbids the check
+                    continue
+                response = await self.http.get(api)
+            except httpx.HTTPError as exc:
+                log.info("%s: can't reach %s (%s); will re-check later", self.name, api, type(exc).__name__)
+                continue
             if response.status_code in (404, 410):
                 gone.append(url)
             elif response.status_code == 200:

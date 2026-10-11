@@ -46,8 +46,12 @@ def plan(services: Services, now: datetime | None = None, only: set[str] | None 
         if last is None or now - last >= INTERVALS[source.cadence] - SLACK:
             runs.append(source)
         if source.deletion_recheck_days:
-            last_check = services.store.last_run(f"{name}:recheck")
-            if last_check is None or now - last_check >= timedelta(days=source.deletion_recheck_days) - SLACK:
+            key = f"{name}:recheck"
+            last_check = services.store.last_run(key)
+            # A failed re-check is retried after a day: deletions shouldn't wait a full cycle.
+            every = timedelta(days=1 if services.store.last_run_status(key) == "failed"
+                              else source.deletion_recheck_days)
+            if last_check is None or now - last_check >= every - SLACK:
                 rechecks.append(source)
     return Plan(runs, rechecks, skipped)
 

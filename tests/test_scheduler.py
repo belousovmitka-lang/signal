@@ -60,3 +60,15 @@ async def test_concurrency_is_bounded(make_services, monkeypatch):
     async with make_services(cfg) as svc:
         results, _, _ = await run_due(svc, concurrency=3)
     assert len(results) == 8 and peak == 3
+
+
+async def test_failed_recheck_retries_after_a_day(make_services):
+    cfg = {"sources": {"social": {**fake(), "deletion_recheck_days": 7}}}
+    async with make_services(cfg) as svc:
+        now = utcnow()
+        svc.store.record_run(FetchResult(source="social", started_at=now, status="ok"))
+        svc.store.record_run(FetchResult(source="social:recheck", started_at=now - timedelta(days=1, minutes=1),
+                                         status="failed"))
+        assert [s.name for s in plan(svc, now).rechecks] == ["social"]
+        svc.store.record_run(FetchResult(source="social:recheck", started_at=now - timedelta(hours=2), status="ok"))
+        assert plan(svc, now).rechecks == []

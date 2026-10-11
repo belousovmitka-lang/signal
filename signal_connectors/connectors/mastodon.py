@@ -14,16 +14,21 @@ on its home server and purged when deleted (`deleted()`).
 
 from __future__ import annotations
 
+import logging
 import re
 from collections.abc import AsyncIterator
 from typing import Any
 from urllib.parse import quote, urlsplit
+
+import httpx
 
 from ..base import BaseConnector
 from ..models import RawPost, SourceQuery
 from ..parsing import html_to_text, parse_date
 from ..privacy import hash_author
 from . import register
+
+log = logging.getLogger(__name__)
 
 DEFAULT_INSTANCE = "mastodon.social"
 PAGE = 40
@@ -111,13 +116,27 @@ class MastodonConnector(BaseConnector):
         )
 
     async def deleted(self, urls: list[str]) -> list[str]:
-        """Posts gone from their home server, or whose author withdrew consent."""
+        """Posts gone from their home server, or whose author withdrew consent.
+
+        A home server whose robots.txt now forbids the check counts as gone (we can't honor deletions
+        there); an unreachable one is skipped and checked again next run.
+        """
         gone = []
         for url in urls:
             api = status_api_url(url)
             if not api:
                 continue
-            response = await self.http.get(api)
+            try:
+                if not await self.services.robots.allowed(api):
+                    if (await self.services.robots.rules_for(api)).unavailable:
+                        log.info("%s: can't reach %s; will re-check later", self.name, api)
+                    else:
+                        gone.append(url)      # robots.txt explicitly forbids the check
+                    continue
+                response = await self.http.get(api)
+            except httpx.HTTPError as exc:
+                log.info("%s: can't reach %s (%s); will re-check later", self.name, api, type(exc).__name__)
+                continue
             if response.status_code in (404, 410):
                 gone.append(url)
             elif response.status_code == 200 and not consents(response.json().get("account") or {}):

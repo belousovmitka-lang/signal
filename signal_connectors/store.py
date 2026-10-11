@@ -218,6 +218,12 @@ class Store:
             value = s.scalar(select(func.max(RunRow.started_at)).where(RunRow.source == source))
             return to_utc(value) if value else None
 
+    def last_run_status(self, source: str) -> str | None:
+        with self.session() as s:
+            row = s.scalars(select(RunRow).where(RunRow.source == source)
+                            .order_by(RunRow.started_at.desc()).limit(1)).first()
+            return row.status if row else None
+
     def last_success(self, source: str) -> datetime | None:
         """Start time of the last fully successful run (health reporting; fetching uses query cursors)."""
         stmt = select(func.max(RunRow.started_at)).where(RunRow.source == source, RunRow.status == "ok")

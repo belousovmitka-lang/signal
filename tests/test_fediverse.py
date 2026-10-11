@@ -166,3 +166,27 @@ async def test_cassette_lemmy_search(settings):
     for p in out.posts:
         assert p.source == "lemmy" and post_api_url(p.url) and p.title
         assert p.community and p.community.startswith("!") and p.published_at >= CASSETTE_SINCE
+
+
+async def test_recheck_survives_dead_servers_and_purges_robots_blocked(make_services):
+    statuses = {"1": status(1), "2": status(2, url="https://gone.example/@pat/2"),
+                "3": status(3, url="https://norobots.example/@pat/3")}
+    for i, s in enumerate(statuses.values()):
+        s["content"] = f"<p>Distinct post number {i} about manual billing work that is long enough.</p>"
+
+    def handler(request):
+        host, path = request.url.host, request.url.path
+        if host == "gone.example":
+            raise httpx.ConnectError("dns", request=request)
+        if path == "/robots.txt":
+            return httpx.Response(200, text="User-agent: *\nDisallow: /api/\n") if host == "norobots.example" \
+                else httpx.Response(404)
+        if path.startswith("/api/v1/timelines/tag/"):
+            return httpx.Response(200, json=list(statuses.values()))
+        return httpx.Response(200, json=statuses[path.rsplit("/", 1)[1]])
+
+    async with make_services(mastodon_source(), handler) as svc:
+        src = svc.sources.get("mastodon")
+        assert (await run_source(svc, src, since=SINCE)).result.new == 3
+        assert await recheck_deletions(svc, src) == 1         # robots-blocked purged; dead server kept for later
+        assert svc.store.count_posts("mastodon") == 2
