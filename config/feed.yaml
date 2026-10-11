@@ -5,7 +5,7 @@ version: 1
 
 # Stage A — enrichment (section 3)
 enrichment:
-  prompt_version: v5              # bump to re-enrich every post with the new prompt
+  prompt_version: v8                    # bump to re-enrich every post with the new prompt
   spam_drop_threshold: 0.7        # posts above this are kept but never ranked
   # Not shown in the feed (stored, counted, can be turned on later without re-tagging):
   drop_post_types: [research, listing, company_news, general_news, notice, opinion, guide, praise, spam, off_topic]
@@ -14,7 +14,7 @@ enrichment:
   max_input_chars: 6000           # longer posts are cut, with a marker the model sees
   tagger:                         # tags every post
     model: claude-haiku-5-5
-    effort: low
+    effort: medium
     max_tokens: 4000
   escalation:                     # re-tags posts the tagger was unsure about or declined
     model: claude-opus-5-5
@@ -44,10 +44,9 @@ embeddings:
   monthly_budget_usd: 5.0
   max_input_chars: 4000
   batch_size: 128
-  # Voyage limits without a payment method on the account; raise (or remove) once a card is added
-  # (the 200M free tokens still apply).
-  requests_per_minute: 3
-  tokens_per_minute: 10000
+  # Optional pacing, e.g. for an account without a payment method (3 requests, 10k tokens per minute).
+  # requests_per_minute: 3
+  # tokens_per_minute: 10000
 
 # Stage B — niche tree growth (section 4.2)
 niches:
@@ -55,11 +54,37 @@ niches:
   child_min_posts: 40
   child_min_authors: 15
   child_min_sources: 2
-  retire_after_weeks_below: 8
+  retire_after_weeks_below: 8     # support below child_min_posts this many weeks in a row
+  support_window_days: 90
+  # Most posts have no author (tenders, device reports, news): each one then counts as its own voice.
+  authorless_counts_as_distinct: true
+  pca_dims: 50                    # HDBSCAN runs on a PCA projection of the embeddings
+  hdbscan_min_samples: 5
+  merge_cosine: 0.92              # siblings whose centroids are this close are merged
+  assign_percentile: 10           # a child accepts posts above this percentile of its members' cosine
+  child_min_cosine: 0.55          # ...and never below this cosine, and only if closer to it than to its parent
+  child_min_cohesion: 0.62        # median member cosine to the centroid; looser clusters aren't niches
+  name_samples: 15                # pain statements shown to the namer
 
 # Stage C — problems (section 5)
 problems:
   cluster_cosine_threshold: 0.82
+  borderline_cosine: 0.78         # cluster pairs between this and the threshold go to an LLM check
+  merge_checks_per_run: 200       # cap on those checks (cost)
+  match_min_jaccard: 0.3          # a rebuilt cluster keeps an old problem's id at this post overlap
+  frequency_full_at_voices: 50    # frequency = log(1 + voices) / log(1 + this)
+  source_types_full_at: 4
+  trend_window_days: 28
+  buyer_min_likelihood: 0.67
+  confidence_full_at_posts: 20
+  early_signal_below: 0.5         # confidence under this is shown as "early signal"
+  # Tenders, job posts and gigs form "demand" items, clustered and scored apart from pain problems.
+  demand_types: [paid_demand]
+  demand_score_weights:
+    frequency: 0.40               # distinct buyers asking for the same thing
+    money_signal: 0.25            # share stating a budget, rate or contract value
+    trend: 0.20
+    source_diversity: 0.15
   score_weights:
     frequency: 0.20
     trend: 0.15

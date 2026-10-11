@@ -97,6 +97,15 @@ class NichesConfig(_Strict):
     child_min_authors: int = Field(gt=0)
     child_min_sources: int = Field(gt=0)
     retire_after_weeks_below: int = Field(gt=0)
+    support_window_days: int = Field(gt=0)
+    authorless_counts_as_distinct: bool
+    pca_dims: int = Field(gt=1)
+    hdbscan_min_samples: int = Field(gt=0)
+    merge_cosine: Fraction = Field(ge=0, le=1)
+    assign_percentile: float = Field(ge=0, le=100)
+    child_min_cosine: Fraction = Field(ge=0, le=1)
+    child_min_cohesion: Fraction = Field(ge=0, le=1)
+    name_samples: int = Field(gt=0)
 
 
 class ProblemScoreWeights(_Strict):
@@ -116,9 +125,40 @@ class ProblemScoreWeights(_Strict):
         return self
 
 
+class DemandScoreWeights(_Strict):
+    frequency: float
+    money_signal: float
+    trend: float
+    source_diversity: float
+
+    @model_validator(mode="after")
+    def _sum_to_one(self) -> DemandScoreWeights:
+        total = sum(self.model_dump().values())
+        if abs(total - 1) > 1e-6:
+            raise ValueError(f"demand score weights must sum to 1, got {total:.3f}")
+        return self
+
+
 class ProblemsConfig(_Strict):
     cluster_cosine_threshold: Fraction = Field(ge=0, le=1)
+    borderline_cosine: Fraction = Field(ge=0, le=1)
+    merge_checks_per_run: int = Field(ge=0)
+    match_min_jaccard: Fraction = Field(ge=0, le=1)
+    frequency_full_at_voices: int = Field(gt=0)
+    source_types_full_at: int = Field(gt=0)
+    trend_window_days: int = Field(gt=0)
+    buyer_min_likelihood: Fraction = Field(ge=0, le=1)
+    confidence_full_at_posts: int = Field(gt=0)
+    early_signal_below: Fraction = Field(ge=0, le=1)
     score_weights: ProblemScoreWeights
+    demand_types: list[TaggedPostType] = Field(min_length=1)
+    demand_score_weights: DemandScoreWeights
+
+    @model_validator(mode="after")
+    def _borderline_below_threshold(self) -> ProblemsConfig:
+        if self.borderline_cosine > self.cluster_cosine_threshold:
+            raise ValueError("problems.borderline_cosine must not exceed cluster_cosine_threshold")
+        return self
 
 
 class Propagation(_Strict):

@@ -1,0 +1,192 @@
+# Seeded second level of the industry tree (FEED_ALGORITHM.md section 4.1). These branches always
+# exist, even with no posts yet, so builders can pick them on day one; the tagger chooses a post's
+# first sub-niche from its industry's list. The weekly job grows new branches under and beside them.
+#
+# Branches name the work, not the buyer: a public tender goes under what it buys (a tender for
+# fleet servicing is Logistics > Fleet maintenance), never under a "procurement" branch.
+# Edit freely; renaming a branch re-files posts on the next re-tag.
+industries:
+  Accounting and finance:
+    - {name: Bookkeeping, covers: "transaction entry, reconciliation, month-end close, ledgers"}
+    - {name: Tax preparation, covers: "individual and business returns, tax planning, tax software"}
+    - {name: Payroll, covers: "payroll runs, payroll tax filings, contractor payments"}
+    - {name: Audit and assurance, covers: "audits, internal controls, audit evidence, sampling"}
+    - {name: Accounts payable and receivable, covers: "invoices, bill pay, collections, dunning"}
+    - {name: Financial reporting, covers: "statements, management reports, consolidation, FP&A"}
+    - {name: Practice management, covers: "running an accounting firm: clients, workflow, billing, staffing"}
+    - {name: Personal finance, covers: "budgeting, household money, financial advice for individuals"}
+    - {name: Banking and lending, covers: "loans, credit, bank operations, lending compliance"}
+    - {name: Investment and wealth, covers: "advisers, portfolios, funds, custody, investor reporting"}
+    - {name: Financial regulation, covers: "SEC, IRS and other rule changes, filings, compliance"}
+
+  Agriculture:
+    - {name: Crop production, covers: "planting, inputs, yields, crop planning, agronomy"}
+    - {name: Livestock and ranching, covers: "cattle, dairy, poultry, herd health, grazing"}
+    - {name: Farm equipment, covers: "machinery, repair, precision ag hardware, telematics"}
+    - {name: Farm management, covers: "records, budgets, farm software, labor, land"}
+    - {name: Commodity markets, covers: "prices, marketing grain, hedging, contracts"}
+    - {name: Agricultural policy and subsidies, covers: "USDA programs, CAP, farm bills, payments"}
+    - {name: Food supply chain, covers: "storage, processing, distribution, traceability"}
+    - {name: Sustainability and soil, covers: "regenerative practices, carbon, water, emissions"}
+    - {name: Agtech, covers: "drones, sensors, farm data, startups selling to farmers"}
+
+  Construction and trades:
+    - {name: Electrical work, covers: "electricians, wiring, panels, electrical contracting"}
+    - {name: Plumbing, covers: "plumbers, pipes, water heaters, drainage"}
+    - {name: HVAC, covers: "heating, cooling, ventilation installs and service"}
+    - {name: Estimating and bidding, covers: "takeoffs, quotes, bids, pricing jobs"}
+    - {name: Project management, covers: "schedules, subcontractors, RFIs, change orders, site coordination"}
+    - {name: Permits and inspections, covers: "building permits, codes, inspections, approvals"}
+    - {name: Field service and dispatch, covers: "scheduling crews, job tracking, service calls"}
+    - {name: Payments and cash flow, covers: "pay apps, retainage, liens, late payments, invoicing"}
+    - {name: Building maintenance and repair, covers: "facilities repair, roofing, renovation, upkeep contracts"}
+    - {name: Civil works and infrastructure, covers: "roads, bridges, utilities, public works projects"}
+    - {name: Safety and compliance, covers: "OSHA, site safety, training, incident reports"}
+    - {name: Contractor marketing and leads, covers: "getting jobs, lead services, reviews, websites"}
+
+  E-commerce and retail:
+    - {name: Online storefronts, covers: "Shopify, WooCommerce, store setup, themes, plugins"}
+    - {name: Marketplace selling, covers: "Amazon, eBay, Etsy, TikTok Shop sellers"}
+    - {name: Inventory management, covers: "stock levels, SKUs, forecasting, multi-channel inventory"}
+    - {name: Fulfillment and shipping, covers: "3PL, labels, carriers, returns logistics"}
+    - {name: Payments and checkout, covers: "payment processing, checkout, fraud, chargebacks"}
+    - {name: Customer service, covers: "support tickets, returns, reviews, chat"}
+    - {name: Product data and listings, covers: "catalogs, product descriptions, feeds, images"}
+    - {name: Retail stores and POS, covers: "physical retail, point of sale, store operations"}
+    - {name: Ecommerce marketing, covers: "ads, email, promotions, conversion for stores"}
+    - {name: Pricing and margins, covers: "fees, unit economics, repricing, profitability"}
+
+  Education:
+    - {name: Lesson planning, covers: "curriculum, lesson prep, teaching materials, worksheets"}
+    - {name: Grading and assessment, covers: "grading, tests, exams, feedback, rubrics"}
+    - {name: Classroom management, covers: "behavior, attendance, classroom routines"}
+    - {name: Special education, covers: "IEPs, accommodations, SEN support, therapy services"}
+    - {name: Student support and wellbeing, covers: "counseling, care, safeguarding, pastoral support"}
+    - {name: School administration, covers: "scheduling, enrollment, records, school operations and facilities"}
+    - {name: Higher education, covers: "universities, colleges, faculty, research admin, admissions"}
+    - {name: Education technology, covers: "LMS, edtech tools, devices, AI in classrooms"}
+    - {name: Adult and vocational training, covers: "apprenticeships, further education, skills programs"}
+    - {name: Teacher workforce, covers: "hiring, training, workload, teacher pipeline"}
+    - {name: Education policy and funding, covers: "rules, grants, accountability, school finance"}
+
+  HR and recruiting:
+    - {name: Recruiting and sourcing, covers: "finding candidates, outreach, job ads, recruiters"}
+    - {name: Interviewing and hiring, covers: "screening, interviews, assessments, offers"}
+    - {name: Onboarding, covers: "new hire paperwork, setup, training first weeks"}
+    - {name: Payroll and benefits, covers: "benefits admin, payroll, leave, compensation"}
+    - {name: Employee relations, covers: "complaints, investigations, discipline, engagement"}
+    - {name: Performance management, covers: "reviews, goals, feedback, promotions"}
+    - {name: HR compliance, covers: "labor law, I-9, DOL rules, policies, audits"}
+    - {name: Workforce scheduling, covers: "shifts, rostering, time and attendance"}
+    - {name: Training and development, covers: "learning programs, upskilling, certifications"}
+    - {name: Staffing agencies, covers: "temp staffing, contract placement, agency operations"}
+
+  Healthcare:
+    - {name: Clinical documentation, covers: "charting, notes, EHR data entry, scribing"}
+    - {name: Medical billing and coding, covers: "claims, coding, denials, revenue cycle"}
+    - {name: Patient scheduling and intake, covers: "appointments, referrals, forms, front desk"}
+    - {name: Pharmacy, covers: "dispensing, prescriptions, medication management, pharmacy operations"}
+    - {name: Nursing and staffing, covers: "nurse workload, shift staffing, agency staff, burnout"}
+    - {name: Medical devices, covers: "device failures, recalls, maintenance, device software"}
+    - {name: Mental health services, covers: "therapy, psychiatric care, behavioral health programs"}
+    - {name: Telehealth and remote care, covers: "virtual visits, remote monitoring, home care"}
+    - {name: Lab and diagnostics, covers: "lab tests, imaging, results, lab equipment"}
+    - {name: Health insurance and payers, covers: "prior authorization, coverage, payer rules, Medicare"}
+    - {name: Health IT and interoperability, covers: "EHR systems, integrations, data exchange, hospital IT"}
+    - {name: Healthcare compliance and privacy, covers: "HIPAA, FDA rules, accreditation, audits"}
+    - {name: Dental and specialty practices, covers: "dental, vision, physical therapy, small clinics"}
+
+  IT and developer tools:
+    - {name: Developer tooling, covers: "IDEs, CI, testing, code review, build tools"}
+    - {name: Cloud and infrastructure, covers: "servers, cloud costs, Kubernetes, hosting, data centers"}
+    - {name: DevOps and monitoring, covers: "deploys, observability, incidents, on-call"}
+    - {name: Security, covers: "vulnerabilities, access control, identity, security tooling"}
+    - {name: IT support and helpdesk, covers: "end-user support, tickets, device management, MSPs"}
+    - {name: Networking, covers: "networks, VoIP, connectivity, network operations"}
+    - {name: Data engineering, covers: "pipelines, databases, warehouses, data quality"}
+    - {name: AI and LLM engineering, covers: "models, inference, agents, AI tooling, evaluation"}
+    - {name: Web platforms and CMS, covers: "WordPress, plugins, site builders, web hosting panels"}
+    - {name: Enterprise software and licensing, covers: "ERP, licenses, SaaS administration, migrations"}
+    - {name: Open source maintenance, covers: "maintainers, issues, funding, project upkeep"}
+
+  Insurance:
+    - {name: Claims processing, covers: "claims intake, adjusting, settlement, fraud"}
+    - {name: Underwriting, covers: "risk assessment, pricing, submissions"}
+    - {name: Agency operations, covers: "running an agency, quoting, renewals, CRM"}
+    - {name: Health and Medicare insurance, covers: "Medicare plans, ACA, health plan enrollment"}
+    - {name: Property and casualty, covers: "home, auto, commercial property coverage"}
+    - {name: Life and annuities, covers: "life policies, annuities, retirement products"}
+    - {name: Insurance regulation, covers: "state filings, commissions, regulator rules"}
+    - {name: Policy administration, covers: "policy systems, endorsements, billing, documents"}
+    - {name: Insurtech, covers: "new insurance products and software companies"}
+
+  Legal:
+    - {name: Litigation support, covers: "discovery, briefs, citations, court filings, e-filing"}
+    - {name: Contract work, covers: "drafting, review, redlining, contract management"}
+    - {name: Legal research, covers: "case law, statutes, research tools, AI research"}
+    - {name: Law firm operations, covers: "billing, time tracking, intake, practice management"}
+    - {name: Court and case management, covers: "dockets, deadlines, case files, court systems"}
+    - {name: Compliance and regulatory law, covers: "regulatory filings, compliance programs, rule changes"}
+    - {name: Immigration law, covers: "visas, petitions, immigration case work"}
+    - {name: Family and estate law, covers: "divorce, custody, wills, probate"}
+    - {name: Intellectual property, covers: "patents, trademarks, copyright"}
+    - {name: Legal aid and access to justice, covers: "self-represented litigants, legal aid groups"}
+
+  Logistics and trucking:
+    - {name: Freight brokerage, covers: "brokers, load boards, carrier matching, rates"}
+    - {name: Fleet maintenance, covers: "truck and vehicle servicing, repairs, parts, inspections"}
+    - {name: Dispatch and routing, covers: "route planning, dispatch, load planning"}
+    - {name: Driver management, covers: "hours of service, driver hiring, retention, safety"}
+    - {name: Trucking compliance, covers: "FMCSA, ELDs, permits, IFTA, safety rules"}
+    - {name: Warehousing, covers: "warehouse operations, WMS, picking, storage"}
+    - {name: Last-mile delivery, covers: "parcel delivery, couriers, local delivery"}
+    - {name: Passenger and school transport, covers: "school buses, taxis, special-needs transport"}
+    - {name: Shipping and ports, covers: "ocean freight, ports, vessels, customs"}
+    - {name: Fuel and energy costs, covers: "diesel prices, fuel cards, electric trucks, charging"}
+    - {name: Autonomous and new vehicles, covers: "driverless trucks, EV fleets, new vehicle tech"}
+
+  Manufacturing:
+    - {name: Production planning, covers: "scheduling, MRP, capacity, work orders"}
+    - {name: Machining and fabrication, covers: "CNC, machine shops, welding, fabrication"}
+    - {name: Industrial automation, covers: "PLCs, robots, controls, SCADA"}
+    - {name: Quality control, covers: "inspection, defects, QMS, certifications"}
+    - {name: Maintenance and repair, covers: "equipment upkeep, downtime, CMMS, service contracts"}
+    - {name: Parts and supply sourcing, covers: "components, spare parts, suppliers, purchasing"}
+    - {name: Inventory and warehousing, covers: "raw materials, stock, shop-floor inventory"}
+    - {name: Plant safety, covers: "OSHA, incidents, safety training, hazards"}
+    - {name: Defense and aerospace manufacturing, covers: "defense parts, aerospace components, military supply"}
+    - {name: Energy and utilities equipment, covers: "power equipment, utilities, industrial energy"}
+
+  Marketing and agencies:
+    - {name: SEO, covers: "search rankings, AI search, technical SEO, content for search"}
+    - {name: Paid ads, covers: "Google Ads, Meta ads, PPC, ad spend"}
+    - {name: Email marketing, covers: "newsletters, email tools, deliverability"}
+    - {name: Social media marketing, covers: "social posting, creators, community, scheduling"}
+    - {name: Content production, covers: "writing, video, design, content workflows"}
+    - {name: Marketing analytics, covers: "attribution, measurement, reporting, ROAS"}
+    - {name: Agency operations, covers: "client management, reporting, pricing, staffing for agencies"}
+    - {name: Brand and PR, covers: "brand, press, reputation, partnerships"}
+    - {name: Marketing technology, covers: "martech stack, CRMs, automation tools, AI in marketing"}
+
+  Real estate:
+    - {name: Residential sales, covers: "agents, listings, buyers, showings, transactions"}
+    - {name: Property management, covers: "tenants, rent, maintenance, landlords"}
+    - {name: Commercial real estate, covers: "offices, retail space, leases, CRE deals"}
+    - {name: Mortgages and lending, covers: "mortgages, loan origination, rates"}
+    - {name: Housing development, covers: "building homes, land, construction costs, zoning"}
+    - {name: Social and supported housing, covers: "housing associations, social housing, supported living"}
+    - {name: Brokerage operations, covers: "running a brokerage, agent tools, compliance, CRM"}
+    - {name: Real estate investing, covers: "rentals, flips, investor tools, deal analysis"}
+    - {name: Housing policy, covers: "housing rules, NAR policy, affordability programs"}
+
+  Restaurants and hospitality:
+    - {name: Restaurant operations, covers: "kitchen, prep, food cost, daily operations"}
+    - {name: Ordering and POS, covers: "point of sale, online ordering, delivery apps"}
+    - {name: Staff scheduling and pay, covers: "shifts, tips, payroll, staffing"}
+    - {name: Hotels and lodging, covers: "hotels, short-term rentals, bookings, front desk"}
+    - {name: Food service contracts, covers: "catering, school and hospital food service, vending"}
+    - {name: Restaurant marketing, covers: "promotions, loyalty, reviews, menus"}
+    - {name: Franchising, covers: "franchise operations, multi-unit, expansion"}
+    - {name: Events and venues, covers: "event venues, bookings, entertainment"}
+    - {name: Travel, covers: "travel bookings, tourism, airlines and travel tech"}
+    - {name: Food safety and compliance, covers: "inspections, licensing, health codes"}

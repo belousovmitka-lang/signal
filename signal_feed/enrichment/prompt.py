@@ -8,7 +8,7 @@ from functools import cache
 
 from signal_connectors.models import RawPost
 
-from .schema import industry_names, skill_vocabulary
+from .schema import industry_names, niche_seeds, skill_vocabulary
 
 SYSTEM_TEMPLATE = """\
 You tag posts for Signal, an app that shows software builders real problems worth building. \
@@ -65,11 +65,15 @@ show a recurring problem someone could fix.
 </post_types>
 
 <industries>
+Each industry with its branches (name: what it covers):
 {industries}
 Other: none of the above, or no clear industry.
-Choose the one industry the problem lives in, not the topic of the publication. Add 0-2 narrower \
-niches in industry_subpath, broad to narrow, in 2-4 plain words each (e.g. "Litigation support", \
-"Citation checking"). Leave it empty when the post is too vague to place.
+Choose the one industry the problem lives in, not the topic of the publication. In \
+industry_subpath, give 0-2 narrower niches, broad to narrow. The first must be copied exactly from \
+that industry's branches when one fits; a tender or job post goes under the branch for the work \
+it buys, not under who buys it. Only if no branch fits, write a new one in 2-4 plain words. The \
+second, if any, is narrower still, in 2-4 plain words (e.g. Litigation support > "Citation \
+checking"). Leave industry_subpath empty when the post is too vague to place.
 </industries>
 
 <skills>
@@ -95,6 +99,9 @@ of view of the person who has it: "Checking citations in briefs before filing is
 Translate when the post is not in English. Null when no one has a problem or demand.
 - who_has_pain is a role, never a name: "practice manager", "small trucking company owner". Use \
 the author's self-described role when given.
+- tools_mentioned lists existing products, apps or services the post names (the tools people use or \
+complain about, a competitor of what a builder might make). Product names only, not companies \
+merely in the news. Empty when none are named.
 - money_signal only when the post states money tied to the demand or the problem: a budget, rate \
 or salary offered, a contract value, a price someone pays or would pay for a fix, or money lost \
 to the problem. Null for company revenue, funding rounds, valuations, stock moves and consumer \
@@ -106,7 +113,10 @@ product prices. Never invent amounts.
 
 @cache
 def system_prompt() -> str:
-    industries = "\n".join(f"{name}" for name in industry_names())
+    seeds = niche_seeds()
+    industries = "\n".join(
+        f"{name}\n" + "\n".join(f"  - {b}: {covers}" for b, covers in seeds.get(name, ()))
+        for name in industry_names())
     skills = "\n".join(f"{name}: {covers}" for name, covers in skill_vocabulary())
     return SYSTEM_TEMPLATE.format(industries=industries, skills=skills)
 

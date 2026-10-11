@@ -19,6 +19,7 @@ from ..config import TaggedPostType
 from ..settings import REPO_ROOT
 
 SKILLS_FILE = REPO_ROOT / "config" / "skills.yaml"
+NICHES_FILE = REPO_ROOT / "config" / "niches.yaml"
 
 PostType = Literal[TaggedPostType, "builder"]
 
@@ -46,6 +47,22 @@ def industry_names() -> tuple[str, ...]:
 
 
 @cache
+def niche_seeds() -> dict[str, tuple[tuple[str, str], ...]]:
+    """Seeded branches per industry (config/niches.yaml): industry -> ((name, covers), ...)."""
+    data = yaml.safe_load(Path(NICHES_FILE).read_text(encoding="utf-8"))["industries"]
+    unknown = set(data) - set(industry_names())
+    if unknown:
+        raise ValueError(f"config/niches.yaml names unknown industries: {', '.join(sorted(unknown))}")
+    out = {}
+    for industry, branches in data.items():
+        names = [b["name"] for b in branches]
+        if len({n.lower() for n in names}) != len(names):
+            raise ValueError(f"config/niches.yaml: duplicate branch under {industry}")
+        out[industry] = tuple((b["name"], b["covers"]) for b in branches)
+    return out
+
+
+@cache
 def skill_vocabulary() -> tuple[tuple[str, str], ...]:
     data = yaml.safe_load(Path(SKILLS_FILE).read_text(encoding="utf-8"))
     return tuple((s["name"], s["covers"]) for s in data["skills"])
@@ -60,13 +77,16 @@ def tag_output_model() -> type[BaseModel]:
         post_type=(TaggedPostType, ...),
         industry=(industry, Field(description="The one seeded industry this post is most about, or Other")),
         industry_subpath=(list[str], Field(
-            max_length=2, description="0-2 narrower niches inside the industry, broad to narrow, 2-4 plain words each")),
+            max_length=2, description="0-2 narrower niches inside the industry, broad to narrow; the first is one of "
+                                     "the industry's listed branches when one fits")),
         skills_needed=(list[str], Field(max_length=5, description="Skills a builder would need; prefer vocabulary names")),
         who_has_pain=(str | None, Field(description="Role of the person with the problem, e.g. 'litigation paralegal'; "
                                                     "null if no one has a problem")),
         pain_statement=(str | None, Field(description="One plain sentence describing the problem or demand; "
                                                       "null when no one has a problem or demand")),
         current_workaround=(str | None, Field(description="How they cope today, if stated or clearly implied")),
+        tools_mentioned=(list[str], Field(max_length=5, description="Existing products, apps or services the post "
+                                                                    "names, e.g. 'QuickBooks'; empty if none")),
         intensity=(Score, _score("Frustration, urgency, repetition")),
         money_signal=(MoneySignal | None, Field(description="Only money the post states; null otherwise")),
         buyer_likelihood=(Score, _score("Is the person with the problem likely the buyer or decision maker")),

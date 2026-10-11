@@ -68,6 +68,8 @@ class EnrichedPostRow(FeedBase):
     spam_score: Mapped[float | None] = mapped_column(Float)
     toxicity: Mapped[float | None] = mapped_column(Float)
     embedding: Mapped[list[float] | None] = mapped_column(NullableJSON)   # JSON on SQLite; a vector column on Postgres
+    pain_embedding: Mapped[list[float] | None] = mapped_column(NullableJSON)  # pain_statement alone (problem clustering)
+    tools_mentioned: Mapped[list[str] | None] = mapped_column(NullableJSON)  # existing products named in the post
     language: Mapped[str | None] = mapped_column(String(16))
     confidence: Mapped[float | None] = mapped_column(Float)
     escalated: Mapped[bool] = mapped_column(Boolean, default=False)
@@ -130,6 +132,32 @@ class NicheRow(FeedBase):
     merged_into_id: Mapped[int | None] = mapped_column(ForeignKey("niches.id"))
     version: Mapped[int] = mapped_column(Integer, default=1)
     created_at: Mapped[datetime] = mapped_column(UTCDateTime)
+    # A post descends into this child when its cosine to the centroid is at least this (set at creation
+    # from the cluster's own spread); None for seeded roots, which posts reach by their tagged name.
+    assign_min_cosine: Mapped[float | None] = mapped_column(Float)
+    # Seeded nodes (roots and config/niches.yaml branches) always exist: never retired or merged away.
+    seeded: Mapped[bool] = mapped_column(Boolean, default=False)
+
+
+class PostNicheRow(FeedBase):
+    """The deepest node a post sits in, per tree: one industry row per post, one skill row per skill."""
+
+    __tablename__ = "post_niches"
+
+    post_id: Mapped[str] = mapped_column(String(64), primary_key=True)
+    niche_id: Mapped[int] = mapped_column(ForeignKey("niches.id"), primary_key=True, index=True)
+    tree: Mapped[str] = mapped_column(String(16), index=True)
+    similarity: Mapped[float | None] = mapped_column(Float)   # cosine to the node's centroid
+
+
+class NicheSupportRow(FeedBase):
+    """Weekly support per node, for "retire after N weeks below threshold" (section 4.2 step 4)."""
+
+    __tablename__ = "niche_support"
+
+    niche_id: Mapped[int] = mapped_column(ForeignKey("niches.id"), primary_key=True)
+    week: Mapped[date] = mapped_column(Date, primary_key=True)   # Monday of the ISO week
+    support: Mapped[int] = mapped_column(Integer)
 
 
 class NicheVersionRow(FeedBase):
@@ -164,6 +192,13 @@ class ProblemRow(FeedBase):
     confidence: Mapped[float | None] = mapped_column(Float)
     score_breakdown: Mapped[dict[str, float]] = mapped_column(JSON, default=dict)
     updated_at: Mapped[datetime] = mapped_column(UTCDateTime)
+    # Problems are rebuilt each run; ids are kept by post overlap. A problem with no successor is
+    # marked gone, not deleted, because events and users may point at it.
+    status: Mapped[str] = mapped_column(String(16), default="active", index=True)   # active | gone
+    kind: Mapped[str] = mapped_column(String(16), default="pain", index=True)       # pain | demand
+    post_count: Mapped[int] = mapped_column(Integer, default=0)
+    roles: Mapped[list[str]] = mapped_column(JSON, default=list)        # most common who_has_pain
+    post_types: Mapped[dict[str, int]] = mapped_column(JSON, default=dict)
 
 
 class ProblemPostRow(FeedBase):
@@ -340,6 +375,29 @@ def _sqlite_pragmas(dbapi_conn: Any, _record: Any) -> None:
     cur.close()
 
 
+def _add_missing_columns(engine: Engine) -> None:
+    """create_all makes new tables but never alters old ones: add columns introduced since (all nullable
+    or defaulted). A real migration tool can replace this once the feed moves to Postgres."""
+    from sqlalchemy import inspect, text
+
+    insp = inspect(engine)
+    with engine.begin() as conn:
+        for table in FeedBase.metadata.sorted_tables:
+            if not insp.has_table(table.name):
+                continue
+            have = {c["name"] for c in insp.get_columns(table.name)}
+            for col in table.columns:
+                if col.name in have:
+                    continue
+                ddl = col.type.compile(dialect=engine.dialect)
+                default = col.default.arg if col.default is not None and not callable(col.default.arg) else None
+                if isinstance(default, (dict, list)):
+                    default = __import__("json").dumps(default)
+                clause = f" DEFAULT '{default}'" if isinstance(default, str) else (
+                    f" DEFAULT {int(default) if isinstance(default, bool) else default}" if default is not None else "")
+                conn.execute(text(f'ALTER TABLE {table.name} ADD COLUMN "{col.name}" {ddl}{clause}'))
+
+
 class FeedStore:
     def __init__(self, url: str) -> None:
         if url.startswith("sqlite:///") and not url.endswith(":memory:"):
@@ -348,6 +406,7 @@ class FeedStore:
         if self.engine.dialect.name == "sqlite":
             event.listen(self.engine, "connect", _sqlite_pragmas)
         FeedBase.metadata.create_all(self.engine)
+        _add_missing_columns(self.engine)
 
     def session(self) -> Session:
         return Session(self.engine, expire_on_commit=False)

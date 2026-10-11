@@ -177,6 +177,7 @@ class Enricher:
             post_type=out.post_type, industry_path=[out.industry, *out.industry_subpath],
             skills_needed=list(out.skills_needed), who_has_pain=scrub(out.who_has_pain),
             pain_statement=scrub(out.pain_statement), current_workaround=scrub(out.current_workaround),
+            tools_mentioned=[t.strip() for t in out.tools_mentioned if t.strip()],
             intensity=out.intensity, money_signal=money, buyer_likelihood=out.buyer_likelihood,
             quality=out.quality, spam_score=out.spam_score, toxicity=out.toxicity, language=out.language,
             confidence=out.confidence)
@@ -185,7 +186,7 @@ class Enricher:
              model: str | None = None, escalated: bool = False, **fields) -> EnrichedPostRow:
         return EnrichedPostRow(post_id=post.id, status=status, status_reason=reason, cost_usd=cost, model=model,
                                escalated=escalated, prompt_version=self.cfg.prompt_version,
-                               enriched_at=self.clock(), embedding=None, embedding_model=None,
+                               enriched_at=self.clock(), embedding=None, pain_embedding=None, embedding_model=None,
                                **({"language": post.language} | fields))
 
     def _save(self, row: EnrichedPostRow) -> None:
@@ -211,12 +212,22 @@ class Enricher:
     # --- embeddings ----------------------------------------------------------
 
     def embed_pending(self, limit: int | None = None) -> int:
-        """Embed `ok` rows that have no embedding yet: pain statement + title + start of the text."""
+        """Embed `ok` rows that lack vectors: the post (pain statement + title + start of the text) for
+        niches and retrieval, and the pain statement alone for problem clustering (section 5.1)."""
         if self.embedder is None:
             raise RuntimeError("no embedder configured")
+        ok = EnrichedPostRow.status == "ok"
+        done = self._embed(select(EnrichedPostRow).where(ok, EnrichedPostRow.embedding.is_(None)), limit,
+                           lambda row, post: embedding_text(row, post, self.config.embeddings.max_input_chars),
+                           "embedding")
+        self._embed(select(EnrichedPostRow).where(ok, EnrichedPostRow.pain_embedding.is_(None),
+                                                  EnrichedPostRow.pain_statement.is_not(None)), limit,
+                    lambda row, post: row.pain_statement, "pain_embedding")
+        return done
+
+    def _embed(self, stmt, limit: int | None, text_of, attr: str) -> int:
         ecfg = self.config.embeddings
-        stmt = select(EnrichedPostRow).where(EnrichedPostRow.status == "ok",
-                                             EnrichedPostRow.embedding.is_(None)).order_by(EnrichedPostRow.post_id)
+        stmt = stmt.order_by(EnrichedPostRow.post_id)
         if limit is not None:
             stmt = stmt.limit(limit)
         with self.store.session() as s:
@@ -226,7 +237,9 @@ class Enricher:
             chunk = rows[i:i + ecfg.batch_size]
             posts = {p.id: p for p in self.posts.get_posts([r.post_id for r in chunk])}
             chunk = [r for r in chunk if r.post_id in posts]
-            texts = [embedding_text(r, posts[r.post_id], ecfg.max_input_chars) for r in chunk]
+            if not chunk:
+                continue
+            texts = [text_of(r, posts[r.post_id]) for r in chunk]
             worst = sum(len(t) for t in texts) / 2 * ecfg.price_per_mtok / 1_000_000
             self.ledger.check("voyage", worst, ecfg.monthly_budget_usd, self.clock())
             result = self.embedder.embed(texts)
@@ -235,7 +248,8 @@ class Enricher:
             with self.store.session() as s, s.begin():
                 for row, vector in zip(chunk, result.vectors, strict=True):
                     db_row = s.get(EnrichedPostRow, row.post_id)
-                    db_row.embedding, db_row.embedding_model = vector, result.model
+                    setattr(db_row, attr, vector)
+                    db_row.embedding_model = result.model
             done += len(chunk)
         return done
 

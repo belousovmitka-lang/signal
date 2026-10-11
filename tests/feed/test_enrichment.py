@@ -25,7 +25,7 @@ def tags(**overrides):
     base = dict(post_type="pain", industry="Accounting and finance", industry_subpath=["Bookkeeping"],
                 skills_needed=["Document parsing"], who_has_pain="bookkeeper",
                 pain_statement="Copying invoices from email into QuickBooks takes hours every week.",
-                current_workaround="manual entry", intensity=0.8, money_signal=None, buyer_likelihood=0.7,
+                current_workaround="manual entry", tools_mentioned=["QuickBooks"], intensity=0.8, money_signal=None, buyer_likelihood=0.7,
                 quality=0.8, spam_score=0.0, toxicity=0.0, language="en", confidence=0.9)
     return tag_output_model()(**(base | overrides))
 
@@ -45,7 +45,7 @@ class FakeTagger:
         self.queues = {m.replace("_", "-"): list(q) for m, q in queues.items()}
         self.calls = []
 
-    def tag(self, call, system, user, *, fallbacks=False):
+    def tag(self, call, system, user, *, fallbacks=False, output_model=None):
         self.calls.append((call.model, fallbacks))
         item = self.queues[call.model].pop(0)
         if isinstance(item, Exception):
@@ -323,11 +323,13 @@ def test_embeddings_through_voyage(feed_store, feed_config, three_posts):
     assert enricher.embed_pending() == 1      # the dropped post is not embedded
     assert seen[0]["model"] == "voyage-4" and seen[0]["input_type"] == "document"
     assert seen[0]["input"][0].startswith("Copying invoices")
+    assert seen[1]["input"] == ["Copying invoices from email into QuickBooks takes hours every week."]
     row = rows(feed_store)[pain.id]
-    assert row.embedding == [0.1, 0.2] and row.embedding_model == "voyage-4"
+    assert row.embedding == [0.1, 0.2] and row.pain_embedding == [0.1, 0.2] and row.embedding_model == "voyage-4"
+    assert row.tools_mentioned == ["QuickBooks"]
     with feed_store.session() as s:
-        cost = s.query(FeedCostRow).filter(FeedCostRow.provider == "voyage").one()
-    assert cost.usd == pytest.approx(1000 * 0.06 / 1_000_000)
+        costs = s.query(FeedCostRow).filter(FeedCostRow.provider == "voyage").all()
+    assert len(costs) == 2 and costs[0].usd == pytest.approx(1000 * 0.06 / 1_000_000)
     assert enricher.embed_pending() == 0
 
 
@@ -365,3 +367,22 @@ def test_voyage_paces_under_free_tier_limits(feed_config):
     result = embedder.embed(["x" * 1400] * 8)   # ~467 estimated tokens each: two per request
     assert sizes == [2, 2, 2, 2] and len(result.vectors) == 8 and result.total_tokens == 40
     assert len(slept) == 3 and now[0] >= 120     # each request waits for the token window to clear
+
+
+def test_no_credit_stops_the_run_instead_of_marking_posts(feed_config):
+    import anthropic
+    import httpx2
+
+    from signal_feed.enrichment.costs import BillingError
+    from signal_feed.enrichment.llm import AnthropicTagger
+
+    response = httpx2.Response(400, request=httpx2.Request("POST", "https://api.anthropic.com/v1/messages"))
+
+    class Messages:
+        def create(self, **_):
+            raise anthropic.BadRequestError("Your credit balance is too low to access the Anthropic API.",
+                                            response=response, body=None)
+
+    client = type("Client", (), {"messages": Messages()})()
+    with pytest.raises(BillingError):
+        AnthropicTagger(client).tag(feed_config.enrichment.tagger, "s", "u")

@@ -24,6 +24,8 @@ feed = [
     "fastapi>=0.115",
     "uvicorn>=0.30",
     "anthropic>=1.13",
+    "numpy>=2.0",
+    "scikit-learn>=1.5",   # HDBSCAN (niche growth), agglomerative clustering (problems)
 ]
 dev = [
     "pytest>=8",

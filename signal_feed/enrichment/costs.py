@@ -28,6 +28,10 @@ class BudgetExceededError(RuntimeError):
     pass
 
 
+class BillingError(BudgetExceededError):
+    """The provider refused for billing reasons (e.g. no credit left): stop like an exhausted budget."""
+
+
 @dataclass(frozen=True)
 class Usage:
     model: str
