@@ -68,7 +68,7 @@ class RankerV1:
         if not rk.thompson_post_types or rng is None:
             return None
         half = rk.type_thompson_prior / 2
-        types = set(TAGGED_POST_TYPES) | set(state.type_evidence)
+        types = sorted(set(TAGGED_POST_TYPES) | set(state.type_evidence))   # sorted: same draws in every process
         return {t: 2 * rng.beta(half + state.type_evidence.get(t, (0, 0))[0],
                                 half + state.type_evidence.get(t, (0, 0))[1]) - 1 for t in types}
 

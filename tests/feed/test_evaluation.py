@@ -29,11 +29,13 @@ def with_experiment(config, *experiments):
         update={"experiments": [Experiment.model_validate(e) for e in experiments]})})
 
 
-def builders():
-    return [SimBuilder({"Legal": 0.95}, {"pain": 1.0, "tool_gap": 0.9, "paid_demand": 0.4}, ["Legal"]),
-            SimBuilder({"Healthcare": 0.95}, {"pain": 1.0, "paid_demand": 0.7}, ["Healthcare"]),
-            SimBuilder({"Legal": 0.9, "Agriculture": 0.6}, {"pain": 0.9, "change": 0.8}, ["Legal"]),
-            SimBuilder({"Healthcare": 0.9, "Legal": 0.5}, {"pain": 0.9, "tool_gap": 0.8}, ["Healthcare"])]
+def builders(copies=1):
+    """Fixed user ids, so the by-user held-out split is the same on every run."""
+    kinds = [({"Legal": 0.95}, {"pain": 1.0, "tool_gap": 0.9, "paid_demand": 0.4}, ["Legal"]),
+             ({"Healthcare": 0.95}, {"pain": 1.0, "paid_demand": 0.7}, ["Healthcare"]),
+             ({"Legal": 0.9, "Agriculture": 0.6}, {"pain": 0.9, "change": 0.8}, ["Legal"]),
+             ({"Healthcare": 0.9, "Legal": 0.5}, {"pain": 0.9, "tool_gap": 0.8}, ["Healthcare"])]
+    return [SimBuilder(*kinds[k % 4], user_id=f"sim-{k}") for k in range(4 * copies)]
 
 
 def test_ndcg_matches_hand_computation():
@@ -104,7 +106,7 @@ def test_replay_promotes_v2_only_when_it_beats_v1(world, feed_store, feed_config
     reader, *_ = world
     config = feed_config.model_copy(update={"ranking": feed_config.ranking.model_copy(
         update={"models_dir": str(tmp_path / "models")})})
-    simulate(feed_store, reader, config, builders() * 3, sessions=3, pages_per_session=1, start=NOW, seed=4)
+    simulate(feed_store, reader, config, builders(copies=3), sessions=3, pages_per_session=1, start=NOW, seed=4)
     assert compare(feed_store, config)["verdict"] == "no v2 candidate"
     row = train_v2(feed_store, config, min_impressions=50)
     report = promote_if_better(feed_store, config)

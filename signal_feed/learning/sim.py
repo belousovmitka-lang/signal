@@ -109,8 +109,8 @@ def simulate(store: FeedStore, posts: PostsReader, config: FeedConfig, builders:
     from ..feed.data import FeedDataCache
     service = FeedService(store, config, FeedDataCache(store, posts), clock=lambda: clock["now"], seed=seed)
     stats = SimStats()
-    for b in builders:
-        b.user_id = onboard(store, config, b.quiz, [], clock=lambda: clock["now"])
+    for b in builders:   # a preset user_id makes the held-out split (by user) reproducible
+        b.user_id = onboard(store, config, b.quiz, [], user_id=b.user_id, clock=lambda: clock["now"])
     for day in range(sessions):
         clock["now"] = start + timedelta(days=day, hours=9)
         saves_before, shown_before, interest = stats.saves, stats.shown, []
