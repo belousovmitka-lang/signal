@@ -79,5 +79,5 @@ async def run_due(services: Services, *, only: set[str] | None = None, concurren
                                    status="failed", errors=[str(exc)])
 
     results = list(await asyncio.gather(*(one(s) for s in p.runs)))
-    checks = [await _recheck(services, s) for s in p.rechecks]
+    checks = list(await asyncio.gather(*(_recheck(services, s) for s in p.rechecks)))
     return results, checks, p

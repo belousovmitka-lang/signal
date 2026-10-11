@@ -207,6 +207,9 @@ class BaseConnector(ABC):
     # False when the connector deliberately reads before `since` (sources that publish late, like
     # openFDA's MAUDE): the runner then doesn't drop items older than the cursor.
     filter_since: ClassVar[bool] = True
+    # >1 when queries hit different sites (one feed per query): the runner runs that many at once.
+    # Per-domain rate limits still apply.
+    parallel_queries: ClassVar[int] = 1
 
     def __init__(self, source: SourceConfig, services: Services) -> None:
         self.source = source

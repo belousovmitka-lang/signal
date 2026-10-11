@@ -93,3 +93,28 @@ def test_query_key_ignores_since_and_limit():
     from signal_connectors.models import SourceQuery
     a = SourceQuery(keywords=["x"], limit=5)
     assert a.key == SourceQuery(keywords=["x"], limit=50, since=utcnow()).key != SourceQuery(keywords=["y"]).key
+
+
+async def test_parallel_queries_and_budget_stop(make_services, monkeypatch):
+    from signal_connectors.base import BaseConnector
+    monkeypatch.setattr(fakes.FakeConnector, "parallel_queries", 4)
+    qs = [{"keywords": [f"k{i}"]} for i in range(8)]
+    async with make_services({"sources": {"fake": fake(queries=qs, count=2)}}) as svc:
+        r = (await run_source(svc, svc.sources.get("fake"))).result
+    assert r.status == "ok" and r.new == 16
+    async with make_services({"sources": {"fake": fake(queries=qs, count=2, cost_per_call=0.01, budget=0.05)}}) as svc:
+        r = (await run_source(svc, svc.sources.get("fake"))).result
+    # exactly 5 paid calls happen across the parallel queries, then one stop message
+    assert r.cost_usd == 0.05 and r.fetched <= 5 and len(r.errors) == 1 and "refusing" in r.errors[0]
+    assert issubclass(fakes.FakeConnector, BaseConnector)
+
+
+def test_recheck_candidates_newest_first_and_capped(store):
+    from datetime import datetime, timezone
+    from signal_connectors.models import RawPost
+    posts = [RawPost(source="s", source_type="social", route="own_api", url=f"https://x.example/{d}",
+                     text=f"post from day {d} with enough distinct text to keep apart", is_snippet=False,
+                     published_at=datetime(2026, 10, d, tzinfo=timezone.utc)) for d in (1, 5, 9)]
+    store.save_posts(posts)
+    rows = store.ids_for_recheck("s", datetime(2026, 10, 2, tzinfo=timezone.utc), limit=1)
+    assert [u for _, u in rows] == ["https://x.example/9"]

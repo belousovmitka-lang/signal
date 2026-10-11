@@ -189,6 +189,7 @@ sources:
     source_type: community
     cadence: daily
     deletion_recheck_days: 7
+    deletion_recheck_limit: 30       # 60s crawl delay: 30 checks = 30 minutes
     access_check:
       robots: allowed
       terms: allowed

@@ -43,6 +43,7 @@ class RssConnector(BaseConnector):
     connector = "rss"
     route = "rss"
     source_type = "news"
+    parallel_queries = 8     # one feed per query, on different sites
 
     async def fetch(self, query: SourceQuery) -> AsyncIterator[RawPost]:
         url = query.params.get("feed")

@@ -190,10 +190,12 @@ class Store:
         with self.session() as s:
             return s.scalar(stmt) or 0
 
-    def ids_for_recheck(self, source: str, published_after: datetime) -> list[tuple[str, str]]:
-        """(id, url) pairs for posts a platform's terms require us to re-check for deletion."""
-        stmt = select(PostRow.id, PostRow.url).where(
-            PostRow.source == source, PostRow.published_at >= published_after)
+    def ids_for_recheck(self, source: str, published_after: datetime,
+                        limit: int | None = None) -> list[tuple[str, str]]:
+        """(id, url) pairs, newest first, for posts a platform's terms require us to re-check for deletion."""
+        stmt = (select(PostRow.id, PostRow.url)
+                .where(PostRow.source == source, PostRow.published_at >= published_after)
+                .order_by(PostRow.published_at.desc()).limit(limit))
         with self.session() as s:
             return [(r.id, r.url) for r in s.execute(stmt)]
 

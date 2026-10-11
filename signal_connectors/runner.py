@@ -14,12 +14,13 @@ from datetime import datetime, timedelta, timezone
 from .config import SourceConfig
 from .connectors import get_connector_class
 from .costs import BudgetExceeded, QuotaExceeded
-from .models import FetchResult, RawPost, utcnow
+from .models import FetchResult, RawPost, SourceQuery, utcnow
 from .services import Services
 
 log = logging.getLogger(__name__)
 
 SAVE_BATCH = 100
+RECHECK_WINDOW_DAYS = 30
 
 
 @dataclass
@@ -60,7 +61,12 @@ async def run_source(
     if keywords:
         queries = [q.model_copy(update={"keywords": keywords}) for q in queries[:1]]
     failed_queries = 0
-    for query in queries:
+    stopped = asyncio.Event()      # budget or quota exhausted: queries not yet started are skipped
+
+    async def run_query(query: SourceQuery) -> None:
+        nonlocal failed_queries
+        if stopped.is_set():
+            return
         # Each query has its own cursor, so one failing feed or search never holds back the rest.
         cursor = services.store.get_cursor(source.name, query.key) if incremental else None
         query_since = since or cursor or lookback
@@ -99,15 +105,29 @@ async def run_source(
                 services.store.set_cursor(source.name, query.key, started)
         except (BudgetExceeded, QuotaExceeded) as exc:
             flush()
-            log.warning("%s: stopping, %s", source.name, exc)
-            result.errors.append(str(exc))
+            if not stopped.is_set():
+                log.warning("%s: stopping, %s", source.name, exc)
+                result.errors.append(str(exc))
+            stopped.set()
             failed_queries += 1
-            break
         except Exception as exc:
             flush()
             log.exception("%s: query %s failed", source.name, query.query_text or query.communities)
             result.errors.append(f"{type(exc).__name__}: {exc}")
             failed_queries += 1
+
+    width = max(1, connector.parallel_queries)
+    if width == 1:
+        for q in queries:
+            await run_query(q)
+    else:
+        gate = asyncio.Semaphore(width)
+
+        async def gated(q: SourceQuery) -> None:
+            async with gate:
+                await run_query(q)
+
+        await asyncio.gather(*(gated(q) for q in queries))
 
     result.invalid = connector.invalid
     result.cost_usd = round(services.costs.spent_this_month(source.name) - spent_before, 6)
@@ -134,7 +154,10 @@ async def recheck_deletions(services: Services, source: SourceConfig) -> int:
     if deleted_fn is None:
         return 0
     post_source = source.options.get("post_source", source.name)
-    rows = services.store.ids_for_recheck(post_source, datetime(1970, 1, 1, tzinfo=timezone.utc))
+    # Deletions mostly happen soon after posting: check the newest posts of the recent window first,
+    # capped per run so a slow API (Lemmy's 60s crawl delay) can't stall the scheduler.
+    rows = services.store.ids_for_recheck(post_source, utcnow() - timedelta(days=RECHECK_WINDOW_DAYS),
+                                          limit=source.deletion_recheck_limit)
     by_url = {url: post_id for post_id, url in rows}
     gone = await deleted_fn(list(by_url))
     purged = services.store.delete_posts([by_url[u] for u in gone if u in by_url])

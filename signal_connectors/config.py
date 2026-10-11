@@ -139,6 +139,7 @@ class SourceConfig(_Strict):
     rate_limit: RateLimit | None = None
     quota: Quota | None = None
     deletion_recheck_days: int | None = Field(default=None, ge=1)  # Reddit and X terms
+    deletion_recheck_limit: int = Field(default=200, ge=1)          # newest posts checked per re-check run
     queries: list[QueryConfig] = Field(default_factory=list)
     options: dict[str, Any] = Field(default_factory=dict)
     notes: str | None = None

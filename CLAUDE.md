@@ -49,6 +49,7 @@ signal-connectors/
     services.py             # bundle of shared services handed to every connector
     runner.py               # run one source: fetch, store, meter, record run; per-query cursors
     scheduler.py            # what's due by cadence (last run of any status), bounded concurrency, deletion re-checks
+    status.py               # collection health per source (scripts/status.py)
     industries.py           # industry seed map schema and loader
     forum_detect.py         # detect forum software + feeds from a logged-out page
     verify.py               # live checks for seed maps (liveness, robots, login walls, moved feeds)
@@ -74,6 +75,7 @@ signal-connectors/
     verify_industries.py    # check every seed-map site and write statuses back
     discover_industry.py    # python scripts/discover_industry.py <key> --name ... --roles ... --keywords ...
     recheck_deletions.py    # purge posts deleted at the source (Bluesky, Mastodon, Lemmy, Reddit)
+    status.py               # health table: last run, failure streak, new posts 7d, spend, stored totals
   tests/
     cassettes/
 ```
