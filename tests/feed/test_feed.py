@@ -217,7 +217,7 @@ def test_composition_collapses_paces_quotas_and_keeps_diversity(world, feed_stor
     assert len(page) == 20 and not caught_up
     assert types.count("paid_demand") >= 3 and types.count("change") <= 4
     assert all(a != b for a, b in zip(sources, sources[1:]))                 # no source twice in a row
-    assert all(a != b for a, b in zip(types, types[1:]))
+    assert not any(a == b == c for a, b, c in zip(types, types[1:], types[2:]))   # at most 2 of a type in a row
     assert all(p.explanation for p in page)
     high = feed_config.model_copy(update={"composition": feed_config.composition.model_copy(
         update={"caught_up_score_floor": 99})})

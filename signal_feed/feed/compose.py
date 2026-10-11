@@ -102,8 +102,10 @@ def compose(scored: Sequence[Scored], data: FeedData, state: UserState, config: 
         if not history:
             return True
         it, last = data.items[s.index], data.items[history[-1].index]
-        if (it.problem_id is not None and it.problem_id == last.problem_id) or it.source == last.source \
-                or it.post_type == last.post_type:
+        if (it.problem_id is not None and it.problem_id == last.problem_id) or it.source == last.source:
+            return False
+        run = history[-c.max_same_type_in_a_row:]
+        if len(run) == c.max_same_type_in_a_row and all(data.items[h.index].post_type == it.post_type for h in run):
             return False
         recent = history[-9:]
         return sum(data.items[h.index].niche_id == it.niche_id for h in recent) < c.max_same_leaf_per_10

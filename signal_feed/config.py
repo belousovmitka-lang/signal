@@ -310,6 +310,7 @@ class CompositionConfig(_Strict):
     window: int = Field(gt=0)
     quotas: Quotas
     max_same_leaf_per_10: int = Field(gt=0)
+    max_same_type_in_a_row: int = Field(gt=0)
     fresh_share_first_10: Fraction = Field(ge=0, le=1)
     fresh_hours: int = Field(gt=0)
     caught_up_score_floor: float
