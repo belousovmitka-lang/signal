@@ -19,6 +19,7 @@ Pipeline:
 
 from __future__ import annotations
 
+import asyncio
 import logging
 import re
 from collections import Counter
@@ -51,12 +52,17 @@ PLATFORM_TERMS = {
                   "ProBoards (VerticalScope) terms: users may not 'access, search, or collect data from the Website by "
                   "any means', and no copying 'for any commercial purpose without the express written consent of "
                   "ProBoards' (read 2026-10-11)."),
+    "verticalscope": (None,
+                      "VerticalScope network: content licensed 'for non-commercial, personal, or educational purposes "
+                      "only' (read 2026-10-11 on LawnSite, Cleaning Talk, PetForums, DogForum)."),
     "forumotion": ("https://www.forumotion.com/terms-of-service",
                    "Forumotion: users may not 'use, distribute, copy, reproduce' site content without prior written "
                    "authorization (read 2026-10-11)."),
 }
+_VERTICALSCOPE = re.compile(r"VerticalScope", re.I)
 _FORUMOTION = re.compile(r'href="https?://(www\.)?forumotion\.com', re.I)
 _PRIVATE_HOST = re.compile(r"circle\.so|skool\.com", re.I)    # communities behind a login (CLAUDE.md 7.4)
+VISIT_CONCURRENCY = 8
 FORUM_HINT = re.compile(r"/(forums?|community|communities|board|boards|discuss|talk)(/|$)|^(forums?|community|discuss)\.", re.I)
 ASSOCIATION_HINT = re.compile(r"\b(association|society|institute|federation|council|chamber|guild|alliance|"
                               r"academy|college of|board of|union)\b", re.I)
@@ -184,7 +190,8 @@ async def visit(services: Services, origin: str, forum_path: str | None) -> Visi
             terms = urljoin(str(r.url), a.attributes["href"])
             break
     software = detect_software(r.text)
-    platform = "proboards" if software == "proboards" else "forumotion" if _FORUMOTION.search(r.text) else None
+    platform = ("proboards" if software == "proboards" else "forumotion" if _FORUMOTION.search(r.text)
+                else "verticalscope" if _VERTICALSCOPE.search(r.text) else None)
     return Visit(str(r.url), title, software, advertised_feeds(r.text, str(r.url)), terms,
                  platform=platform, private=bool(_PRIVATE_HOST.search(r.text)))
 
@@ -222,8 +229,14 @@ async def discover(services: Services, seeds: Seeds, *, budget_usd: float = 0.25
     forums: list[Forum] = []
     feeds: list[Feed] = []
     associations: list[Link] = []
-    for cand in candidates:
-        v = await visit(services, cand.origin, next(iter(sorted(cand.paths)), None))
+    gate = asyncio.Semaphore(VISIT_CONCURRENCY)     # different sites; each domain is still paced by the limiter
+
+    async def gated_visit(cand: Candidate) -> Visit | None:
+        async with gate:
+            return await visit(services, cand.origin, next(iter(sorted(cand.paths)), None))
+
+    visits = await asyncio.gather(*(gated_visit(c) for c in candidates))
+    for cand, v in zip(candidates, visits):
         if v is None:
             continue
         host = urlsplit(v.final_url).hostname or cand.origin
@@ -240,6 +253,7 @@ async def discover(services: Services, seeds: Seeds, *, budget_usd: float = 0.25
                 notes = prior.terms_notes + " (carried over from an existing map)" if prior.terms_notes else None
             elif v.platform:
                 terms, (terms_url, notes) = "forbidden", PLATFORM_TERMS[v.platform]
+                terms_url = terms_url or v.terms_url
             else:
                 terms, terms_url, notes = "unchecked", v.terms_url, None
             forums.append(Forum(name=v.title, url=v.final_url, software=v.software,

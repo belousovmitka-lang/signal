@@ -120,6 +120,11 @@ class Defaults(_Strict):
     # Monthly caps for paid APIs shared by several sources, keyed by provider ("brave", "exa").
     provider_budgets: dict[str, float] = Field(default_factory=dict)
     discovery_monthly_budget_usd: float = Field(default=2.0, ge=0)   # Phase 6 discovery agent searches
+    # On-demand industries (on_demand.py): one Claude call per new industry request.
+    on_demand_monthly_budget_usd: float = Field(default=1.0, ge=0)
+    on_demand_model: str = "claude-sonnet-5"
+    on_demand_first_fill_days: int = Field(default=60, ge=1)        # history read for a brand-new map
+    on_demand_prices_per_mtok: dict[str, float] = Field(default_factory=lambda: {"input": 3.0, "output": 15.0})
 
 
 class SourceConfig(_Strict):
@@ -203,6 +208,7 @@ class SourcesFile(_Strict):
     def budgets(self) -> dict[str, float]:
         budgets = {name: s.monthly_budget_usd for name, s in self.sources.items()}
         budgets.setdefault("discovery", self.defaults.discovery_monthly_budget_usd)
+        budgets.setdefault("on_demand", self.defaults.on_demand_monthly_budget_usd)
         return budgets
 
     def add_industry_feeds(self, industries: dict[str, Industry]) -> None:

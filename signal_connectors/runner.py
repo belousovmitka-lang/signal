@@ -39,9 +39,12 @@ async def run_source(
     save: bool = True,
     collect: bool = False,
     incremental: bool = True,
+    industry: str | None = None,
 ) -> RunOutput:
+    """`industry` runs only that industry's queries (a first fill for a new map). The run is recorded
+    as "<source>:<industry>" so the source's own schedule is untouched; cursors and costs stay the source's."""
     started = utcnow()
-    result = FetchResult(source=source.name, started_at=started)
+    result = FetchResult(source=f"{source.name}:{industry}" if industry else source.name, started_at=started)
     out = RunOutput(result)
     spent_before = services.costs.spent_this_month(source.name)
 
@@ -58,6 +61,8 @@ async def run_source(
         return out
 
     queries = source.build_queries(defaults)
+    if industry:
+        queries = [q for q in queries if q.industry_hint == industry]
     if keywords:
         queries = [q.model_copy(update={"keywords": keywords}) for q in queries[:1]]
     failed_queries = 0

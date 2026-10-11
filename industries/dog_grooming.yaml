@@ -1,0 +1,224 @@
+industry: dog_grooming
+name: Dog grooming businesses
+discovery:
+  generated_at: '2026-10-11'
+  needs_review: false
+  queries: 6
+  cost_usd: 0.038
+  candidates_checked: 35
+  on_demand: true
+  request: Dog grooming
+  notes: Built on demand 2026-10-11 for the request 'Dog grooming'. 4 feeds passed the automatic checks
+    and are collected; 4 are held. 4 forums wait for a terms review (scripts/review_queue.py). Vocabulary
+    drafted by the planner; review when convenient. The planner call failed (no Anthropic credit), so
+    the vocabulary was written by Claude Code by hand on 2026-10-11.
+vocabulary:
+  roles:
+  - dog groomer
+  - grooming salon owner
+  - mobile groomer
+  - bather
+  - pet stylist
+  - kennel owner
+  tasks:
+  - appointment booking
+  - rebooking every 4-6 weeks
+  - vaccination record checks
+  - deposits
+  - client reminders
+  - van route planning
+  - pricing by breed and coat
+  - pet intake forms
+  - commission payroll
+  - retail add-ons
+  pain_phrases:
+  - no-shows
+  - late cancellations
+  - matted dogs
+  - aggressive dogs
+  - bite incidents
+  - groomer burnout
+  - back pain
+  - price increases
+  - staff turnover
+  - clients late for pickup
+  jargon:
+  - hand stripping
+  - de-shedding
+  - dematting
+  - breed trim
+  - puppy cut
+  - sanitary trim
+  - high-velocity dryer
+  - mobile grooming van
+  - NDGAA certification
+  - cage-free grooming
+  - add-on services
+  - groom interval
+  tools:
+  - MoeGo
+  - Gingr
+  - DaySmart Pet
+  - PetLinx
+  - Groomer.io
+  - Square Appointments
+  - Pawfinity
+  - Vagaro
+subreddits:
+- doggrooming
+- grooming
+- petgrooming
+stackexchange_sites: []
+forums:
+- name: Pet Grooming Courses and Dog & Cat Grooming Resources | Groomer Nation
+  url: https://www.groomernation.com.au/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  software: invision
+  rss: https://www.groomernation.com.au/blog-feed.xml
+  robots: allowed
+  terms: unchecked
+- name: UK Pet Forums Forum
+  url: https://www.petforums.co.uk/forums/
+  status: live
+  checked_at: '2026-10-11'
+  locked: true
+  software: xenforo
+  rss: https://www.petforums.co.uk/forums/-/index.rss
+  robots: allowed
+  terms: forbidden
+  terms_url: https://www.petforums.co.uk/help/terms
+  terms_notes: 'VerticalScope network: content licensed ''for non-commercial, personal, or educational
+    purposes only'' (read 2026-10-11 on LawnSite, Cleaning Talk, PetForums, DogForum).'
+- name: Australian Pet Groomers
+  url: https://australianpetgroomer.forumotion.net/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  software: phpbb
+  rss: https://australianpetgroomer.forumotion.net/feed/?f=21
+  robots: allowed
+  terms: forbidden
+  terms_url: https://www.forumotion.com/terms-of-service
+  terms_notes: 'Forumotion: users may not ''use, distribute, copy, reproduce'' site content without prior
+    written authorization (read 2026-10-11).'
+- name: Dog Forum
+  url: https://www.dogforum.com/
+  status: live
+  checked_at: '2026-10-11'
+  locked: true
+  software: xenforo
+  rss: https://www.dogforum.com/forums/-/index.rss
+  robots: allowed
+  terms: forbidden
+  terms_url: https://www.dogforum.com/help/terms
+  terms_notes: 'VerticalScope network: content licensed ''for non-commercial, personal, or educational
+    purposes only'' (read 2026-10-11 on LawnSite, Cleaning Talk, PetForums, DogForum).'
+- name: Home | PPGAI
+  url: https://www.ppgai.com/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  software: invision
+  rss: https://www.ppgai.com/blog-feed.xml
+  robots: allowed
+  terms: unchecked
+  terms_url: https://www.ppgai.com/terms-conditions
+rss_feeds:
+- name: digital
+  url: https://digital.groomertogroomer.com/feed/
+  status: blocked
+  checked_at: '2026-10-11'
+  notes: robots.txt disallows
+  locked: false
+- name: groomernews
+  url: https://groomernews.com/rss.xml
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 42
+  full_text: false
+- name: thegroomersforum
+  url: https://www.thegroomersforum.com/feed/
+  status: dead
+  checked_at: '2026-10-11'
+  notes: 'automatic check: no new items since 2024-07-16'
+  locked: true
+  entries: 10
+  full_text: true
+- name: groomertogroomer
+  url: https://www.groomertogroomer.com/feed/
+  status: dead
+  checked_at: '2026-10-11'
+  notes: 'automatic check: no new items since 2022-12-08'
+  locked: true
+  entries: 15
+  full_text: false
+- name: modernpetgroomer
+  url: https://modernpetgroomer.com/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: true
+- name: petfederation
+  url: https://petfederation.co.uk/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: false
+- name: iga
+  url: https://www.iga.sg/en/feed/
+  status: dead
+  checked_at: '2026-10-11'
+  notes: 'automatic check: no new items since 2017-05-08'
+  locked: true
+  entries: 5
+  full_text: true
+- name: coldnosesnews
+  url: https://coldnosesnews.com/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: true
+- name: caw
+  url: https://www.caw.ac.uk/feed/
+  status: blocked
+  checked_at: '2026-10-11'
+  notes: robots.txt disallows
+  locked: false
+- name: karnikonblack
+  url: https://karnikonblack.com/feed/
+  status: dead
+  checked_at: '2026-10-11'
+  notes: 'automatic check: no new items since 2025-04-22'
+  locked: true
+  entries: 6
+  full_text: true
+associations:
+- name: Professional Pet Groomers and Stylists Alliance
+  url: https://petgroomersandstylists.org/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+- name: APPGA - American Professional Pet Groomers Association
+  url: https://appga.org/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+- name: National Groomer Association of Canada
+  url: https://www.nationalgroomer.com/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+- name: APPGA - American Professional Pet Groomers Association
+  url: https://appga.org/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+job_boards: []
+podcasts: []
+youtube_channels: []

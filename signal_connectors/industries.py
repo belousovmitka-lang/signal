@@ -79,6 +79,8 @@ class DiscoveryInfo(BaseModel):
     queries: int = 0
     cost_usd: float = 0.0
     candidates_checked: int = 0
+    on_demand: bool = False        # generated for a user request and enabled by automatic checks (on_demand.py)
+    request: str | None = None     # the request that produced it
     notes: str | None = None
 
 
