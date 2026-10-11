@@ -1,0 +1,185 @@
+industry: property_management
+name: Property management
+discovery:
+  generated_at: '2026-10-11'
+  needs_review: true
+  queries: 9
+  cost_usd: 0.057
+  candidates_checked: 40
+  notes: 'Draft by the discovery agent (9 searches, $0.057), reviewed by Claude 2026-10-11. Terms: BiggerPockets
+    forbidden (no copying in any form without written permission; also recorded in the real estate map) and OpenRent
+    Community forbidden (no harvesting software, no copying). Removed off-topic forums (Leasehackr car leasing,
+    BangShift cars, GetLaw general legal) and feeds (a Dubai agency blog, Commercial Observer CRE deals, HousingWire,
+    already in real estate). Vocabulary curated. Move to industries/ and set needs_review: false to collect.'
+vocabulary:
+  roles:
+  - property manager
+  - landlord
+  - leasing agent
+  - maintenance coordinator
+  - HOA manager
+  - community manager
+  - portfolio manager
+  - assistant property manager
+  tasks:
+  - rent collection
+  - tenant screening
+  - move-in inspections
+  - move-out inspections
+  - work orders
+  - lease renewals
+  - owner statements
+  - vendor coordination
+  - security deposit accounting
+  - late notices
+  - unit turns
+  - HOA violation letters
+  pain_phrases:
+  - late rent
+  - evictions
+  - maintenance requests
+  - tenant turnover
+  - vacancy
+  - vendor no-shows
+  - owner reporting
+  - after-hours emergencies
+  - rent arrears
+  - fair housing complaints
+  - application fraud
+  jargon:
+  - NOI
+  - vacancy rate
+  - make-ready
+  - unit turn
+  - CAM charges
+  - Section 8
+  - HCV
+  - fair housing
+  - delinquency
+  - concessions
+  - trust accounting
+  - RUBS
+  - HOA dues
+  - reserve study
+  tools:
+  - AppFolio
+  - Buildium
+  - Yardi
+  - Rent Manager
+  - TenantCloud
+  - DoorLoop
+  - RentRedi
+  - Entrata
+  - RealPage
+  - Propertyware
+  - Property Meld
+  - Rentvine
+subreddits:
+- PropertyManagement
+- Landlord
+- HOA
+- realestateinvesting
+stackexchange_sites: []
+forums:
+- name: Real Estate Investing Forums, Tips & Advice | BiggerPockets
+  url: https://www.biggerpockets.com/forums
+  status: live
+  checked_at: '2026-10-11'
+  locked: true
+  software: unknown
+  robots: allowed
+  terms: forbidden
+  terms_url: https://www.biggerpockets.com/terms
+  terms_notes: 'Terms of Use: no Content ''may be used, copied, reproduced, distributed, republished, downloaded
+    ... in any form or by any means'' without express prior written permission (read 2026-10-11).'
+- name: OpenRent Landlord & Tenant Forum
+  url: https://community.openrent.co.uk/
+  status: live
+  checked_at: '2026-10-11'
+  locked: true
+  software: discourse
+  rss: https://community.openrent.co.uk/posts.rss
+  robots: allowed
+  terms: forbidden
+  terms_url: https://www.openrent.co.uk/terms
+  terms_notes: 'OpenRent terms: ''You will not use software or any other means to harvest information from the website''
+    and no copying without permission (read 2026-10-11).'
+rss_feeds:
+- name: Peter Lohmann's Newsletter
+  url: https://rss.beehiiv.com/feeds/iue8pEsTvJ.xml
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 20
+  full_text: true
+- name: Property Manager Insider
+  url: https://propertymanagerinsider.com/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: true
+- name: Multi-Housing News
+  url: https://www.multihousingnews.com/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 100
+  full_text: true
+- name: Multifamily Dive
+  url: https://www.multifamilydive.com/feeds/news/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: false
+- name: Propmodo
+  url: https://propmodo.com/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: true
+- name: Property Meld
+  url: https://propertymeld.com/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: true
+- name: Condominium Associates blog
+  url: https://www.condominiumassociates.com/feed/rss2
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 92
+  full_text: true
+associations:
+- name: National Property Management Association
+  url: https://www.npma.org/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+- name: Institute of Real Estate Management (IREM)
+  url: https://www.irem.org/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+- name: National Association of Residential Property Managers
+  url: https://www.narpm.org/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+- name: National Affordable Housing Management Association
+  url: https://www.nahma.org/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+- name: International Facility Management Association
+  url: https://www.ifma.org/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+job_boards: []
+podcasts: []
+youtube_channels: []

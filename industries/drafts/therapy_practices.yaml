@@ -1,0 +1,223 @@
+industry: therapy_practices
+name: Therapy and counseling practices
+discovery:
+  generated_at: '2026-10-11'
+  needs_review: true
+  queries: 9
+  cost_usd: 0.057
+  candidates_checked: 40
+  notes: 'Draft by the discovery agent (9 searches, $0.057), reviewed by Claude 2026-10-11. Terms: ClinPsy allowed
+    (standard XenForo terms; UK clinical psychology, mostly training and careers); Making Therapy Better forbidden
+    (Discourse ToS: no automated access); Student Doctor Network and two Forumotion boards forbidden (carried over
+    / platform terms). Removed: TheraLink (JavaScript app), SocialWorkU (career site), Imamother (off-topic), ACA
+    Australia (member login, kept as an association). Dropped a feed silent since 2021; added Behavioral Health
+    Business, Psychotherapy Networker and Practice of the Practice. Vocabulary curated. Move to industries/ and
+    set needs_review: false to collect.'
+vocabulary:
+  roles:
+  - therapist
+  - private practice owner
+  - LCSW
+  - LPC
+  - LMFT
+  - group practice owner
+  - psychologist
+  - practice manager
+  - biller
+  tasks:
+  - insurance credentialing
+  - claims submission
+  - prior authorizations
+  - progress notes
+  - treatment plans
+  - intake paperwork
+  - superbills
+  - client scheduling
+  - telehealth sessions
+  - clinician payroll
+  - good faith estimates
+  pain_phrases:
+  - insurance denials
+  - low reimbursement rates
+  - paperwork burnout
+  - late cancellations
+  - no-shows
+  - credentialing delays
+  - claim rejections
+  - clawbacks
+  - documentation time
+  - waitlist
+  jargon:
+  - CPT 90837
+  - CPT 90834
+  - superbill
+  - out-of-network
+  - sliding scale
+  - Good Faith Estimate
+  - No Surprises Act
+  - HIPAA
+  - telehealth
+  - EAP
+  - CAQH
+  - group practice
+  - 1099 clinicians
+  - ERA
+  - EOB
+  tools:
+  - SimplePractice
+  - TherapyNotes
+  - TheraNest
+  - Jane App
+  - Headway
+  - Alma
+  - Grow Therapy
+  - Rula
+  - Psychology Today directory
+  - Ensora
+  - Valant
+  - Sessions Health
+subreddits:
+- therapists
+- psychotherapy
+- socialwork
+- LCMHC
+stackexchange_sites: []
+forums:
+- name: Student Doctor Network Forums | Student Doctor Network Forums
+  url: https://forums.studentdoctor.net/forums/
+  status: live
+  checked_at: '2026-10-11'
+  locked: true
+  software: xenforo
+  rss: https://forums.studentdoctor.net/forums/-/index.rss
+  robots: allowed
+  terms: forbidden
+  terms_url: https://www.studentdoctor.net/online-service-agreement/
+  terms_notes: 'Content licensed CC BY-NC-SA 4.0: non-commercial only. (read 2026-10-09) (carried over from an existing
+    map) (carried over from an existing map)'
+- name: Therapists Making Therapy Better - Expert led communities on improving therapy practice outcomes and income
+  url: http://therapists.makingtherapybetter.com/
+  status: live
+  checked_at: '2026-10-11'
+  locked: true
+  software: discourse
+  rss: http://therapists.makingtherapybetter.com/posts.rss
+  robots: allowed
+  terms: forbidden
+  terms_url: http://therapists.makingtherapybetter.com/tos
+  terms_notes: 'Discourse ToS: ''You may not automate access to the forum, or monitor the forum, such as with a
+    web crawler'' (read 2026-10-11).'
+- name: ClinPsy - Clinical Psychology Forum
+  url: https://clinpsy.com/
+  status: live
+  checked_at: '2026-10-11'
+  locked: true
+  software: xenforo
+  rss: https://clinpsy.com/forums/-/index.rss
+  robots: allowed
+  terms: allowed
+  terms_url: https://clinpsy.com/help/terms/
+  terms_notes: 'Standard XenForo terms: no automation or commercial-use clause (read 2026-10-11).'
+- name: The Reflective Room
+  url: https://thereflectiveroom.forumotion.com/
+  status: live
+  checked_at: '2026-10-11'
+  locked: true
+  software: phpbb
+  rss: https://thereflectiveroom.forumotion.com/feed/?f=1
+  robots: allowed
+  terms: forbidden
+  terms_url: https://www.forumotion.com/terms-of-service
+  terms_notes: 'Forumotion: users may not ''use, distribute, copy, reproduce'' site content without prior written
+    authorization (read 2026-10-11).'
+- name: Attachment in Psychotherapy
+  url: https://psychoanalytic.forumotion.com/
+  status: live
+  checked_at: '2026-10-11'
+  locked: true
+  software: phpbb
+  rss: https://psychoanalytic.forumotion.com/feed/?f=3
+  robots: allowed
+  terms: forbidden
+  terms_url: https://www.forumotion.com/terms-of-service
+  terms_notes: 'Forumotion: users may not ''use, distribute, copy, reproduce'' site content without prior written
+    authorization (read 2026-10-11).'
+rss_feeds:
+- name: Counselor Magazine
+  url: https://counselormagazine.com/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: true
+- name: Psychotherapy Notes
+  url: https://www.psychotherapynotes.com/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: false
+- name: American Group Psychotherapy Association
+  url: https://agpa.org/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: true
+- name: Association for Behavioral and Cognitive Therapies
+  url: https://www.abct.org/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: false
+- name: Behavioral Health Business
+  url: https://bhbusiness.com/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: false
+- name: Psychotherapy Networker
+  url: https://www.psychotherapynetworker.org/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 25
+  full_text: false
+- name: Practice of the Practice
+  url: https://practiceofthepractice.com/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: false
+associations:
+- name: Society for the Advancement of Psychotherapy
+  url: https://societyforpsychotherapy.org/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+- name: Irish Association for Counselling and Psychotherapy
+  url: https://iacp.cloud/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+- name: Texas Counseling Association
+  url: https://txca.org/home
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+- name: European Association for Psychotherapy
+  url: https://www.europsyche.org/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+- name: Australian Counselling Association
+  url: https://theaca.net.au/home
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+job_boards: []
+podcasts: []
+youtube_channels: []

@@ -67,10 +67,13 @@ forums:
   url: https://www.biggerpockets.com/forums
   status: live
   checked_at: '2026-10-10'
-  locked: false
+  locked: true
   software: unknown
   robots: allowed
-  terms: unchecked
+  terms: forbidden
+  terms_url: https://www.biggerpockets.com/terms
+  terms_notes: 'Terms of Use: no Content ''may be used, copied, reproduced, distributed, republished,
+    downloaded ... in any form or by any means'' without express prior written permission (read 2026-10-11).'
 - name: ActiveRain
   url: https://activerain.com/
   status: live

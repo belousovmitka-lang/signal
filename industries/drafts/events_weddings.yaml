@@ -1,0 +1,191 @@
+industry: events_weddings
+name: Events and weddings
+discovery:
+  generated_at: '2026-10-11'
+  needs_review: true
+  queries: 9
+  cost_usd: 0.057
+  candidates_checked: 40
+  notes: 'Draft by the discovery agent (9 searches, $0.057), reviewed by Claude 2026-10-11. Terms: Event Expert
+    Forum allowed (standard XenForo terms; new forum, low volume); Legacy Events forbidden (Discourse ToS: no automated
+    access); International Wedding Institute forbidden (no robots or spiders). Removed: GetWeddingPlannerJobs (AI-generated
+    posts), ControlBooth (theatre tech; robots.txt blocks its terms page), Gregory Events (agency site). Dropped
+    VowAsia (celebrity weddings), Propared (vendor announcements) and Wedding Industry News (sporadic); added BizBash,
+    Catersource / Special Events and Smart Meetings. Vocabulary curated. Move to industries/ and set needs_review:
+    false to collect.'
+vocabulary:
+  roles:
+  - wedding planner
+  - event planner
+  - venue manager
+  - caterer
+  - wedding photographer
+  - DJ
+  - florist
+  - event coordinator
+  - rental company owner
+  tasks:
+  - client proposals
+  - contracts
+  - deposits and payment plans
+  - timelines
+  - vendor coordination
+  - seating charts
+  - BEOs
+  - inquiry follow-up
+  - floor plans
+  - rental inventory
+  - day-of coordination
+  - invoicing
+  pain_phrases:
+  - ghosting inquiries
+  - last-minute changes
+  - vendor no-shows
+  - late final payments
+  - price shoppers
+  - double bookings
+  - slow season
+  - scope creep
+  - cancellations
+  - chargebacks
+  jargon:
+  - BEO
+  - F&B minimum
+  - room block
+  - attrition
+  - run of show
+  - day-of coordinator
+  - inquiry-to-booking rate
+  - retainer
+  - force majeure
+  - load-in
+  - tablescape
+  - buyout
+  tools:
+  - HoneyBook
+  - Aisle Planner
+  - Tripleseat
+  - Planning Pod
+  - Dubsado
+  - 17hats
+  - Cvent
+  - Social Tables
+  - Perfect Venue
+  - Goodshuffle Pro
+  - The Knot Pro
+  - Zola
+subreddits:
+- weddingplanning
+- eventplanning
+- WeddingPhotography
+- Catering
+stackexchange_sites: []
+forums:
+- name: Event Expert Forum
+  url: https://www.eventexpertforum.com/
+  status: live
+  checked_at: '2026-10-11'
+  locked: true
+  software: xenforo
+  rss: https://www.eventexpertforum.com/forums/-/index.rss
+  robots: allowed
+  terms: allowed
+  terms_url: https://www.eventexpertforum.com/help/terms/
+  terms_notes: 'Standard XenForo terms: no automation or commercial-use clause (read 2026-10-11).'
+- name: IWI Hub Community for Wedding Professionals | International Wedding Institute
+  url: https://internationalweddinginstitute.com/community/
+  status: live
+  checked_at: '2026-10-11'
+  locked: true
+  software: unknown
+  robots: allowed
+  terms: forbidden
+  terms_url: https://internationalweddinginstitute.com/legal-information/
+  terms_notes: Legal notice forbids using 'un robot, notamment d'exploration (spider) ... permettant d'extraire,
+    réutiliser ou d'indexer' content (read 2026-10-11).
+- name: 'The Green Room - Welcome to the hub for information and idea-sharing on crafting sustainable events. Your
+    requests have '
+  url: https://forum.legacy-events.com/
+  status: live
+  checked_at: '2026-10-11'
+  locked: true
+  software: discourse
+  rss: https://forum.legacy-events.com/latest.rss
+  robots: allowed
+  terms: forbidden
+  terms_url: https://forum.legacy-events.com/tos
+  terms_notes: 'Discourse ToS: ''You may not automate access to the forum, or monitor the forum, such as with a
+    web crawler'' (read 2026-10-11).'
+rss_feeds:
+- name: Wedding Planners Directory
+  url: https://www.weddingplannersdirectory.com/rss
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 57
+  full_text: true
+- name: IAVM blog
+  url: https://blog.iavm.org/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: true
+- name: International Association of Venue Managers
+  url: https://iavm.org/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: true
+- name: Wedding Market News
+  url: https://weddingmarketnews.com/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: true
+- name: VOWS Magazine
+  url: https://www.vowsmagazine.com/index.php?rss=Article
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 20
+  full_text: false
+- name: Wedding Industry Professionals Association
+  url: https://www.wipa.org/feed/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: true
+- name: BizBash
+  url: https://www.bizbash.com/rss.xml
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 50
+  full_text: false
+- name: Catersource / Special Events
+  url: https://www.cater-event.com/rss.xml
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 50
+  full_text: false
+- name: Smart Meetings
+  url: https://www.smartmeetings.com/feed
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+  entries: 10
+  full_text: false
+associations:
+- name: National Association of Wedding Professionals
+  url: https://www.nawp.com/
+  status: live
+  checked_at: '2026-10-11'
+  locked: false
+job_boards: []
+podcasts: []
+youtube_channels: []
