@@ -22,7 +22,7 @@ from signal_feed.llm_task import LLMTask
 from signal_feed.niches.growth import NicheGrower, week_of
 from signal_feed.niches.naming import NicheName, NicheNamer, fallback_name
 from signal_feed.enrichment.schema import niche_seeds
-from signal_feed.niches.tree import INDUSTRY, SKILL, Tree, place_posts, seed_labels, seed_tree
+from signal_feed.niches.tree import INDUSTRY, SKILL, Tree, place_posts, placements, seed_labels, seed_tree
 from signal_feed.posts import PostsReader
 from signal_feed.problems.cluster import ProblemBuilder, SameProblem
 from signal_feed.problems.score import Evidence, components, score
@@ -98,7 +98,9 @@ def nodes(feed_store, **where):
 
 def test_seed_tree_is_idempotent(feed_store):
     labels = seed_labels()
-    assert len(labels[INDUSTRY]) == 16 and labels[INDUSTRY][-1] == "Other" and "Other skills" in labels[SKILL]
+    from signal_feed.enrichment.schema import industry_names
+    assert len(labels[INDUSTRY]) == len(industry_names()) + 1 and labels[INDUSTRY][-1] == "Other"
+    assert "Other skills" in labels[SKILL]
     total = len(labels[INDUSTRY]) + len(labels[SKILL]) + sum(len(b) for b in niche_seeds().values())
     assert seed_tree(feed_store) == total
     assert seed_tree(feed_store) == 0
@@ -112,8 +114,8 @@ def test_growth_splits_a_busy_niche_into_named_children(tmp_path, feed_store, co
     stats = NicheGrower(feed_store, reader, config, NicheNamer(None), clock=lambda: NOW).run()
     assert sorted(c for c in stats.created if c.startswith("Legal")) == ["Legal > Citation checking",
                                                                           "Legal > Legal billing"]
-    # Every post is tagged "AI agents", so that skill splits too (named by fallback: skills have no hints).
-    assert any(c.startswith("AI agents > ") for c in stats.created)
+    # Every post is tagged "AI agents", but the skill tree doesn't grow (grow_trees: [industry]).
+    assert not any(c.startswith("AI agents > ") for c in stats.created)
     children = {n.label: n for n in nodes(feed_store, level=2, tree=INDUSTRY, seeded=False)}
     assert all(n.assign_min_cosine is not None and n.tree == INDUSTRY for n in children.values())
     with feed_store.session() as s:
@@ -349,3 +351,81 @@ def test_loose_grown_niches_are_retired(tmp_path, feed_store, config):
     with feed_store.session() as s:
         version = s.query(NicheVersionRow).filter_by(niche_id=loose.id, change="retired").one()
     assert version.detail["reason"] == "loose" and version.detail["cohesion"] < config.niches.child_min_cohesion
+
+
+class FakeEmbedder:
+    """Embeds "<Industry> > <Branch>: ..." as a topic vector chosen by branch name."""
+
+    def __init__(self, by_branch):
+        self.by_branch, self.calls = by_branch, []
+
+    def embed(self, texts, input_type="document"):
+        from signal_feed.enrichment.embeddings import EmbedResult
+        self.calls.append((list(texts), input_type))
+        vecs = [self.by_branch.get(t.split(" > ")[1].split(":")[0], TOPICS["intake"] * -1).tolist() for t in texts]
+        return EmbedResult(vecs, 10 * len(texts), "voyage-4")
+
+
+def test_untagged_posts_go_to_the_clearly_nearest_branch(tmp_path, feed_store, config):
+    from signal_feed.niches.tree import embed_seed_labels
+    reader = build_corpus(tmp_path, feed_store, [("citations", 3, ["Legal", "Brief checking"], {}),
+                                                 ("billing", 2, ["Legal"], {})], spread=0.02)
+    seed_tree(feed_store)
+    embedder = FakeEmbedder({"Litigation support": TOPICS["citations"], "Law firm operations": TOPICS["billing"]})
+    total = sum(len(b) for b in niche_seeds().values())
+    assert embed_seed_labels(feed_store, embedder, config, clock=lambda: NOW) == total
+    assert embedder.calls[0][1] == "query" and embed_seed_labels(feed_store, embedder, config) == 0
+    with feed_store.session() as s:
+        rows = list(s.scalars(select(EnrichedPostRow)))
+        assert s.query(FeedCostRow).filter(FeedCostRow.provider == "voyage").count() == 1
+    labels = {n.id: n.label for n in nodes(feed_store)}
+
+    def placed_labels(margin):
+        return sorted(labels[p.niche_id] for p in placements(rows, Tree.load(feed_store, INDUSTRY),
+                                                             Tree.load(feed_store, SKILL), 0.0, margin)
+                      if p.tree == INDUSTRY)
+
+    assert placed_labels(0.04) == ["Law firm operations"] * 2 + ["Litigation support"] * 3
+    assert placed_labels(None) == ["Legal"] * 5             # tag only: no branch named "Brief checking"
+    assert placed_labels(5.0) == ["Legal"] * 5              # an impossible margin: every call is too close
+
+
+def test_editing_a_branch_description_re_embeds_it(feed_store, config, monkeypatch):
+    from signal_feed.niches import tree as tree_mod
+    seed_tree(feed_store)
+    embedder = FakeEmbedder({})
+    tree_mod.embed_seed_labels(feed_store, embedder)
+    seeds = dict(tree_mod.niche_seeds())
+    seeds["Legal"] = tuple((n, "now also covers e-discovery") if n == "Litigation support" else (n, c)
+                           for n, c in seeds["Legal"])
+    monkeypatch.setattr(tree_mod, "niche_seeds", lambda: seeds)
+    assert tree_mod.embed_seed_labels(feed_store, embedder) == 1
+    assert embedder.calls[-1][0] == ["Legal > Litigation support: now also covers e-discovery"]
+
+
+def test_a_branch_removed_from_the_config_is_retired_or_unseeded(feed_store, monkeypatch):
+    from signal_feed.niches import tree as tree_mod
+    seed_tree(feed_store)
+    with feed_store.session() as s, s.begin():
+        s.query(NicheRow).filter_by(label="Contract work").one().support = 12
+    seeds = dict(tree_mod.niche_seeds())
+    seeds["Legal"] = tuple(b for b in seeds["Legal"] if b[0] not in ("Contract work", "Immigration law"))
+    monkeypatch.setattr(tree_mod, "niche_seeds", lambda: seeds)
+    seed_tree(feed_store)
+    with feed_store.session() as s:
+        empty = s.query(NicheRow).filter_by(label="Immigration law").one()
+        busy = s.query(NicheRow).filter_by(label="Contract work").one()
+        assert (empty.status, empty.seeded) == ("retired", False)
+        assert (busy.status, busy.seeded) == ("active", False)       # now a grown niche
+
+
+def test_growth_can_include_the_skill_tree(tmp_path, feed_store, config):
+    reader = build_corpus(tmp_path, feed_store, LEGAL)
+    seed_tree(feed_store)
+    config = tweak(config, "niches", grow_trees=["industry", "skill"])
+    stats = NicheGrower(feed_store, reader, config, NicheNamer(None), clock=lambda: NOW).run()
+    assert any(c.startswith("AI agents > ") for c in stats.created)
+    # Turning skill growth off retires what it grew.
+    config = tweak(config, "niches", grow_trees=["industry"])
+    stats = NicheGrower(feed_store, reader, config, NicheNamer(None), clock=lambda: NOW).run()
+    assert stats.retired and all(r.startswith("AI agents > ") for r in stats.retired)

@@ -97,17 +97,17 @@ class NicheGrower:
         strict = self.cfg.child_min_cosine
         # First pass with each child's own floor only: what a niche attracts by its own definition is
         # what its cohesion is judged on (a strict floor would trim the loose tail and hide it).
-        place_posts(self.store, rows)
+        place_posts(self.store, rows, seed_margin=self.cfg.seed_match_margin)
         self._update_nodes(by_id, recent)
         for tree in (INDUSTRY, SKILL):
             stats.retired += self._retire(tree)
-        place_posts(self.store, rows, strict)
+        place_posts(self.store, rows, strict, self.cfg.seed_match_margin)
         if split:
-            for tree in (INDUSTRY, SKILL):
+            for tree in self.cfg.grow_trees:
                 stats.created += self._split(tree, by_id, raw, recent)
         for tree in (INDUSTRY, SKILL):
             stats.merged += self._merge(tree)
-        stats.placed = len(place_posts(self.store, rows, strict))
+        stats.placed = len(place_posts(self.store, rows, strict, self.cfg.seed_match_margin))
         self._update_nodes(by_id, recent, record_week=True)
         return stats
 
@@ -157,6 +157,12 @@ class NicheGrower:
         with self.store.session() as s, s.begin():
             for nid, node in t.nodes.items():
                 if node.parent_id is None or node.seeded:
+                    continue
+                if tree not in self.cfg.grow_trees:
+                    row = s.get(NicheRow, nid)
+                    row.status = "retired"
+                    self._version(s, row, "retired", {"parent_id": node.parent_id, "reason": "growth off"})
+                    out.append(" > ".join(t.path(nid)))
                     continue
                 if nid in cohesion and cohesion[nid] < self.cfg.child_min_cohesion:
                     row = s.get(NicheRow, nid)

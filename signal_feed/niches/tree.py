@@ -33,7 +33,8 @@ def seed_labels() -> dict[str, list[str]]:
 
 def seed_tree(store: FeedStore, clock: Callable[[], datetime] = utcnow) -> int:
     """Create missing roots and seeded industry branches. Idempotent; returns how many were created.
-    A seed removed from the config is left in place (it may hold posts and affinities)."""
+    A branch removed from config/niches.yaml is retired when empty; otherwise it becomes an ordinary
+    grown niche (its posts and affinities stay, and the usual retire rules apply)."""
     created = 0
 
     def add(s, tree: str, label: str, parent: NicheRow | None) -> NicheRow:
@@ -65,6 +66,16 @@ def seed_tree(store: FeedStore, clock: Callable[[], datetime] = utcnow) -> int:
                     add(s, INDUSTRY, name, root)
                 elif not existing.seeded:
                     existing.seeded = True   # a grown niche that a seed now names
+            wanted = {name.lower() for name, _ in branches}
+            for (parent_id, label), node in children.items():
+                if parent_id == root.id and node.seeded and label not in wanted:
+                    node.seeded = False
+                    change = "retired" if not node.support else "unseeded"
+                    if not node.support:
+                        node.status = "retired"
+                    node.version += 1
+                    s.add(NicheVersionRow(niche_id=node.id, version=node.version, change=change,
+                                          detail={"reason": "removed from config/niches.yaml"}, at=clock()))
     return created
 
 
@@ -76,6 +87,7 @@ class Tree:
     roots: dict[str, int]                                  # lowercased label -> root id
     children: dict[int, list[int]] = field(default_factory=lambda: defaultdict(list))
     centroids: dict[int, np.ndarray] = field(default_factory=dict)
+    labels: dict[int, np.ndarray] = field(default_factory=dict)        # seeded branches' label embeddings
 
     @classmethod
     def load(cls, store: FeedStore, tree: str) -> Tree:
@@ -89,6 +101,9 @@ class Tree:
             if n.centroid_embedding:
                 c = np.asarray(n.centroid_embedding, dtype=np.float32)
                 t.centroids[n.id] = c / (np.linalg.norm(c) or 1)
+            if n.seeded and n.label_embedding:
+                v = np.asarray(n.label_embedding, dtype=np.float32)
+                t.labels[n.id] = v / (np.linalg.norm(v) or 1)
         return t
 
     def path(self, node_id: int) -> list[str]:
@@ -106,6 +121,17 @@ class Tree:
             if node.seeded and node.label.lower() == wanted:
                 return child
         return None
+
+    def nearest_seed(self, parent: int, vec: np.ndarray | None, margin: float) -> int | None:
+        """The seeded child whose label embedding is clearly nearest the post (beats the runner-up by
+        `margin`); None when it's a close call or nothing is embedded yet."""
+        if vec is None:
+            return None
+        scored = sorted(((float(vec @ self.labels[c]), c) for c in self.children.get(parent, []) if c in self.labels),
+                        reverse=True)
+        if not scored or (len(scored) > 1 and scored[0][0] - scored[1][0] < margin):
+            return None
+        return scored[0][1]
 
     def subtree(self, node_id: int) -> list[int]:
         out, stack = [], [node_id]
@@ -148,16 +174,19 @@ def _unit(vec: list[float] | None) -> np.ndarray | None:
 
 
 def placements(rows: Iterable[EnrichedPostRow], industry: Tree, skill: Tree,
-               min_cosine: float = 0.0) -> list[PostNicheRow]:
+               min_cosine: float = 0.0, seed_margin: float | None = None) -> list[PostNicheRow]:
     """Where each post sits: one industry node, plus one node per tagged skill."""
     out: list[PostNicheRow] = []
     for row in rows:
         vec = _unit(row.embedding)
         top = (row.industry_path or [OTHER_INDUSTRY])[0].lower()
         root = industry.roots.get(top, industry.roots[OTHER_INDUSTRY.lower()])
-        start = root
+        start = None
         if len(row.industry_path or []) > 1:
-            start = industry.child_by_label(root, row.industry_path[1]) or root
+            start = industry.child_by_label(root, row.industry_path[1])      # the tag names a branch
+        if start is None and seed_margin is not None:
+            start = industry.nearest_seed(root, vec, seed_margin)            # else: nearest by meaning
+        start = start or root
         node, sim = industry.descend(start, vec, min_cosine)
         out.append(PostNicheRow(post_id=row.post_id, niche_id=node, tree=INDUSTRY, similarity=sim))
         seen: set[int] = set()
@@ -170,10 +199,49 @@ def placements(rows: Iterable[EnrichedPostRow], industry: Tree, skill: Tree,
     return out
 
 
-def place_posts(store: FeedStore, rows: list[EnrichedPostRow], min_cosine: float = 0.0) -> list[PostNicheRow]:
+def place_posts(store: FeedStore, rows: list[EnrichedPostRow], min_cosine: float = 0.0,
+                seed_margin: float | None = None) -> list[PostNicheRow]:
     """Recompute every placement (cheap: one dot product per child per level)."""
-    placed = placements(rows, Tree.load(store, INDUSTRY), Tree.load(store, SKILL), min_cosine)
+    placed = placements(rows, Tree.load(store, INDUSTRY), Tree.load(store, SKILL), min_cosine, seed_margin)
     with store.session() as s, s.begin():
         s.execute(delete(PostNicheRow))
         s.add_all(placed)
     return placed
+
+
+def seed_label_text(industry: str, name: str, covers: str) -> str:
+    return f"{industry} > {name}: {covers}"
+
+
+def embed_seed_labels(store: FeedStore, embedder, config=None, clock: Callable[[], datetime] = utcnow) -> int:
+    """Embed seeded branches that have no label embedding or whose config text changed. Returns how
+    many were embedded (155 short texts on a fresh tree: a fraction of a cent, metered when `config`
+    is given)."""
+    wanted = {(industry, name.lower()): seed_label_text(industry, name, covers)
+              for industry, branches in niche_seeds().items() for name, covers in branches}
+    with store.session() as s:
+        roots = {n.id: n.label for n in s.scalars(select(NicheRow).where(NicheRow.tree == INDUSTRY,
+                                                                         NicheRow.parent_id.is_(None)))}
+        todo = []
+        for n in s.scalars(select(NicheRow).where(NicheRow.tree == INDUSTRY, NicheRow.seeded.is_(True),
+                                                  NicheRow.parent_id.is_not(None))):
+            text = wanted.get((roots.get(n.parent_id), n.label.lower()))
+            if text and (n.label_embedding is None or n.label_text != text):
+                todo.append((n.id, text))
+    if not todo:
+        return 0
+    if config is not None:
+        from ..enrichment.costs import CostLedger, Usage
+        ledger = CostLedger(store)
+        ecfg = config.embeddings
+        worst = sum(len(t) for _, t in todo) / 2 * ecfg.price_per_mtok / 1_000_000
+        ledger.check("voyage", worst, ecfg.monthly_budget_usd, clock())
+    result = embedder.embed([t for _, t in todo], input_type="query")
+    if config is not None:
+        ledger.record(provider="voyage", purpose="embed", usage=Usage(result.model, result.total_tokens),
+                      usd=result.total_tokens * ecfg.price_per_mtok / 1_000_000, at=clock())
+    with store.session() as s, s.begin():
+        for (nid, text), vector in zip(todo, result.vectors, strict=True):
+            node = s.get(NicheRow, nid)
+            node.label_embedding, node.label_text = vector, text
+    return len(todo)

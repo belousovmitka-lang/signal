@@ -20,7 +20,7 @@ from ..db import FeedStore, NicheRow, ProblemRow
 from ..llm_task import LLMTask
 from ..niches.growth import NicheGrower
 from ..niches.naming import NicheNamer
-from ..niches.tree import INDUSTRY, SKILL, Tree, seed_tree
+from ..niches.tree import INDUSTRY, SKILL, Tree, embed_seed_labels, seed_tree
 from ..posts import PostsReader
 from ..settings import FeedSettings
 from .cluster import ProblemBuilder
@@ -34,6 +34,15 @@ def build(store: FeedStore, posts: PostsReader, config, use_llm: bool, split: bo
         from ..enrichment.llm import AnthropicTagger
         llm = LLMTask(store, config.enrichment, AnthropicTagger())
     print(f"seeded {seed_tree(store)} new nodes (roots and config/niches.yaml branches)")
+    from ..enrichment.schema import industry_names, niche_seeds
+    bare = [n for n in industry_names() if n not in niche_seeds()]
+    if bare:
+        print(f"note: no branches in config/niches.yaml for {', '.join(bare)} (posts stay on the industry)")
+    if os.environ.get("VOYAGE_API_KEY"):
+        from ..enrichment.embeddings import VoyageEmbedder
+        print(f"embedded {embed_seed_labels(store, VoyageEmbedder(config.embeddings), config)} branch descriptions")
+    else:
+        print("VOYAGE_API_KEY not set: branches are reached by tag only")
     g = NicheGrower(store, posts, config, NicheNamer(llm)).run(split=split)
     print(f"tree: {len(g.created)} new, {len(g.merged)} merged, {len(g.retired)} retired; {g.placed} placements")
     for line in g.created:

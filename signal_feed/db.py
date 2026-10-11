@@ -137,6 +137,10 @@ class NicheRow(FeedBase):
     assign_min_cosine: Mapped[float | None] = mapped_column(Float)
     # Seeded nodes (roots and config/niches.yaml branches) always exist: never retired or merged away.
     seeded: Mapped[bool] = mapped_column(Boolean, default=False)
+    # Seeded branches only: an embedding of "Industry > Branch: what it covers", so posts whose tag names
+    # no branch can still be placed by meaning; label_text detects edits to config/niches.yaml.
+    label_embedding: Mapped[list[float] | None] = mapped_column(NullableJSON)
+    label_text: Mapped[str | None] = mapped_column(Text)
 
 
 class PostNicheRow(FeedBase):

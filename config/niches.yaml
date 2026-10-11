@@ -44,6 +44,18 @@ industries:
     - {name: Safety and compliance, covers: "OSHA, site safety, training, incident reports"}
     - {name: Contractor marketing and leads, covers: "getting jobs, lead services, reviews, websites"}
 
+  Dental practices:
+    - {name: Patient scheduling and recall, covers: "appointments, recalls, no-shows, reminders"}
+    - {name: Dental billing and insurance, covers: "claims, insurance verification, PPOs, collections"}
+    - {name: Clinical charting and imaging, covers: "perio charting, X-rays, intraoral scans, notes"}
+    - {name: Practice management software, covers: "Dentrix, Eaglesoft, Open Dental, cloud PMS"}
+    - {name: Dental lab work, covers: "crowns, aligners, lab cases, turnaround"}
+    - {name: Dental staffing, covers: "hygienists, assistants, temp staff, hiring"}
+    - {name: Dental supplies and equipment, covers: "supplies ordering, equipment repair, sterilization"}
+    - {name: Patient communication and marketing, covers: "reviews, new patients, treatment acceptance"}
+    - {name: Dental compliance, covers: "OSHA, HIPAA, infection control, licensing"}
+    - {name: Group practices and DSOs, covers: "multi-location practices, DSOs, acquisitions"}
+
   E-commerce and retail:
     - {name: Online storefronts, covers: "Shopify, WooCommerce, store setup, themes, plugins"}
     - {name: Marketplace selling, covers: "Amazon, eBay, Etsy, TikTok Shop sellers"}
@@ -94,7 +106,7 @@ industries:
     - {name: Health insurance and payers, covers: "prior authorization, coverage, payer rules, Medicare"}
     - {name: Health IT and interoperability, covers: "EHR systems, integrations, data exchange, hospital IT"}
     - {name: Healthcare compliance and privacy, covers: "HIPAA, FDA rules, accreditation, audits"}
-    - {name: Dental and specialty practices, covers: "dental, vision, physical therapy, small clinics"}
+    - {name: Specialty practices, covers: "vision, physical therapy, dermatology, small specialty clinics"}
 
   IT and developer tools:
     - {name: Developer tooling, covers: "IDEs, CI, testing, code review, build tools"}
@@ -178,6 +190,18 @@ industries:
     - {name: Brokerage operations, covers: "running a brokerage, agent tools, compliance, CRM"}
     - {name: Real estate investing, covers: "rentals, flips, investor tools, deal analysis"}
     - {name: Housing policy, covers: "housing rules, NAR policy, affordability programs"}
+
+  Veterinary clinics:
+    - {name: Appointment scheduling, covers: "bookings, reminders, no-shows, triage calls"}
+    - {name: Medical records and charting, covers: "SOAP notes, records transfer, clinical notes"}
+    - {name: Practice management software, covers: "PIMS, clinic software, integrations"}
+    - {name: Billing and pet insurance, covers: "invoices, estimates, payment plans, pet insurance claims"}
+    - {name: Pharmacy and prescriptions, covers: "dispensing, controlled drugs, online pharmacy"}
+    - {name: Veterinary staffing, covers: "vets, techs, burnout, relief vets"}
+    - {name: Client communication, covers: "owner messages, reminders, reviews, follow-ups"}
+    - {name: Diagnostics and lab, covers: "lab tests, imaging, results"}
+    - {name: Large animal and livestock practice, covers: "farm calls, herd health, equine"}
+    - {name: Veterinary compliance, covers: "DEA, licensing, record rules"}
 
   Restaurants and hospitality:
     - {name: Restaurant operations, covers: "kitchen, prep, food cost, daily operations"}

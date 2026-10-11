@@ -33,7 +33,7 @@ class EmbedResult:
 
 
 class Embedder(Protocol):
-    def embed(self, texts: Sequence[str]) -> EmbedResult: ...
+    def embed(self, texts: Sequence[str], input_type: str = "document") -> EmbedResult: ...
 
 
 def _retryable(exc: BaseException) -> bool:
@@ -57,9 +57,9 @@ class VoyageEmbedder:
 
     @retry(retry=retry_if_exception(_retryable), stop=stop_after_attempt(5),
            wait=wait_exponential_jitter(initial=1, max=30), reraise=True)
-    def _post(self, texts: Sequence[str]) -> dict:
+    def _post(self, texts: Sequence[str], input_type: str = "document") -> dict:
         response = self.client.post(VOYAGE_URL, json={
-            "input": list(texts), "model": self.cfg.model, "input_type": "document",
+            "input": list(texts), "model": self.cfg.model, "input_type": input_type,
             "output_dimension": self.cfg.dimensions, "truncation": True})
         response.raise_for_status()
         return response.json()
@@ -91,13 +91,14 @@ class VoyageEmbedder:
                 return
             self.sleep(60 - (now - self._sent[0][0]) + 0.5)
 
-    def embed(self, texts: Sequence[str]) -> EmbedResult:
+    def embed(self, texts: Sequence[str], input_type: str = "document") -> EmbedResult:
+        """`input_type` "document" for posts; "query" for short descriptions matched against posts."""
         vectors: list[list[float]] = []
         total, model = 0, self.cfg.model
         for group in self._requests(texts):
             self._pace(sum(len(t) // CHARS_PER_TOKEN + 1 for t in group))
             try:
-                data = self._post(group)
+                data = self._post(group, input_type)
             except httpx.HTTPError as exc:
                 raise EmbeddingError(f"Voyage request failed: {exc}") from exc
             rows = sorted(data["data"], key=lambda d: d["index"])

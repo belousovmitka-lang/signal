@@ -105,6 +105,8 @@ class NichesConfig(_Strict):
     assign_percentile: float = Field(ge=0, le=100)
     child_min_cosine: Fraction = Field(ge=0, le=1)
     child_min_cohesion: Fraction = Field(ge=0, le=1)
+    seed_match_margin: Fraction = Field(ge=0, le=1)
+    grow_trees: list[Literal["industry", "skill"]]
     name_samples: int = Field(gt=0)
 
 

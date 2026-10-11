@@ -64,6 +64,13 @@ niches:
   assign_percentile: 10           # a child accepts posts above this percentile of its members' cosine
   child_min_cosine: 0.55          # ...and never below this cosine, and only if closer to it than to its parent
   child_min_cohesion: 0.62        # median member cosine to the centroid; looser clusters aren't niches
+  # A post whose tag names no seeded branch goes to the branch its embedding is nearest, when that
+  # branch beats the runner-up by this much (calibrated 2026-10-11: right ~97% on tagged posts).
+  seed_match_margin: 0.04
+  # Trees that grow new niches. Skills are off for now: clustering inside a skill groups posts by
+  # industry, not by sub-skill, so it produced noise ("WordPress site owner"). Grown niches of a tree
+  # not listed here are retired.
+  grow_trees: [industry]
   name_samples: 15                # pain statements shown to the namer
 
 # Stage C — problems (section 5)
