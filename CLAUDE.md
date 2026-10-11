@@ -48,6 +48,7 @@ signal-connectors/
     settings.py             # env settings (.env)
     services.py             # bundle of shared services handed to every connector
     runner.py               # run one source: fetch, store, meter, record run; per-query cursors
+    scheduler.py            # what's due by cadence (last run of any status), bounded concurrency, deletion re-checks
     industries.py           # industry seed map schema and loader
     forum_detect.py         # detect forum software + feeds from a logged-out page
     verify.py               # live checks for seed maps (liveness, robots, login walls, moved feeds)
@@ -68,7 +69,7 @@ signal-connectors/
       app_reviews.py
       ... one module per platform-specific connector in section 7
   scripts/
-    run.py                  # run due connectors on schedule
+    run.py                  # run due connectors on schedule: --once (cron), --loop, --dry-run, --only a,b
     smoke.py                # run one connector live: python scripts/smoke.py rss --limit 20
     verify_industries.py    # check every seed-map site and write statuses back
     discover_industry.py    # python scripts/discover_industry.py <key> --name ... --roles ... --keywords ...
@@ -143,6 +144,7 @@ Rules for every connector:
 - **robots.py:** caches robots.txt per domain for 24 hours; public-pages connectors must call it before every new path pattern.
 - **dedupe.py:** canonicalize URLs (strip tracking params), hash them; also hash normalized text to catch cross-posts.
 - **Scheduler cadences:** hourly for social and gigs, daily for communities, reviews and news, weekly for jobs and reports, monthly for research data.
+  Built (2026-10-10): `scripts/run.py --once` from cron (e.g. `*/15 * * * *` so hourly sources keep their cadence) or `--loop`. A source is due one interval after its last run of any status (5-minute slack), so failures wait for the next slot. Sources with `deletion_recheck_days` get a recorded `<name>:recheck` run on that schedule.
 
 ---
 

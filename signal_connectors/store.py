@@ -210,6 +210,12 @@ class Store:
         with self.session() as s, s.begin():
             s.add(RunRow(**result.model_dump()))
 
+    def last_run(self, source: str) -> datetime | None:
+        """Start time of the most recent run of any status (the scheduler's due check)."""
+        with self.session() as s:
+            value = s.scalar(select(func.max(RunRow.started_at)).where(RunRow.source == source))
+            return to_utc(value) if value else None
+
     def last_success(self, source: str) -> datetime | None:
         """Start time of the last fully successful run (health reporting; fetching uses query cursors)."""
         stmt = select(func.max(RunRow.started_at)).where(RunRow.source == source, RunRow.status == "ok")
