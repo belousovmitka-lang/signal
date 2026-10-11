@@ -505,8 +505,8 @@ sources:
 
   reddit:
     enabled: false
-    status: paid_flag_off
-    status_date: 2026-10-09
+    status: blocked
+    status_date: 2026-10-11
     paid: true
     feature_flag: ENABLE_REDDIT_API
     route: own_api
@@ -517,12 +517,13 @@ sources:
     deletion_recheck_days: 2         # Data API Terms: delete content removed by users
     access_check:
       robots: not_applicable
-      terms: unchecked               # needs Reddit's separate commercial agreement before enabling
-      decision: pending
+      terms: forbidden               # Reddit refused our commercial Data API request (2026-10-11)
+      decision: skip
       terms_url: https://redditinc.com/policies/data-api-terms
-      checked_at: 2026-10-09
+      checked_at: 2026-10-11
       notes: >-
-        Commercial use needs a separate agreement with Reddit; no ML/AI training on User Content without
+        Reddit refused our Data API request on 2026-10-11, so no route exists (robots.txt also disallows
+        our bot). Code kept behind the flag in case of a later agreement. Commercial use needs a separate agreement with Reddit; no ML/AI training on User Content without
         rightsholders' permission; delete data not required for the approved use case.
     options:
       industry_subreddits: true      # one query per industry map
