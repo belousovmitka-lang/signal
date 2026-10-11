@@ -138,6 +138,15 @@ user_model:
   similar_builders_min_jaccard: 0.3   # quiz overlap for "builders like you"
   too_small_step: 0.05            # "Not for me: too small" raises this user's minimum problem score
 
+# Map (section 6.5-6.6, Phase 4)
+map:
+  new_days: 7                     # a node added this recently is flagged "new"
+  rising_delta: 0.10              # affinity change since last week's snapshot that flags rising / fading
+  child_angle_spread_deg: 14      # children sit this far apart around their parent's angle
+  nudge_weight: 3                 # "Show more" / "Show less" counts as an event of this weight on the node
+  discover_min_positive_events: 5 # an off-map niche with this many positive events in the lookback and
+                                  # affinity >= rings.regular_min joins the map ("discovered")
+
 # Events and their weights (section 6.3)
 events:
   weights:

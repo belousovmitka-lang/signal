@@ -215,6 +215,14 @@ class UserModelConfig(_Strict):
     rings: Rings
 
 
+class MapConfig(_Strict):
+    new_days: int = Field(ge=0)
+    rising_delta: Fraction = Field(ge=0, le=1)
+    child_angle_spread_deg: float = Field(gt=0, lt=180)
+    nudge_weight: float = Field(gt=0)
+    discover_min_positive_events: int = Field(gt=0)
+
+
 class EventsConfig(_Strict):
     weights: dict[EventType, float]
     scroll_past_max_dwell_ms: int = Field(gt=0)
@@ -331,6 +339,7 @@ class FeedConfig(_Strict):
     niches: NichesConfig
     problems: ProblemsConfig
     user_model: UserModelConfig
+    map: MapConfig
     events: EventsConfig
     candidates: CandidatesConfig
     ranking: RankingConfig

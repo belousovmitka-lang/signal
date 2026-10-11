@@ -25,6 +25,7 @@ from ..db import (
     ProblemPostRow,
     ProblemRow,
     UserDropInRow,
+    UserMapNodeRow,
     UserNicheAffinityRow,
     UserPinRow,
     UserQuizRow,
@@ -34,6 +35,7 @@ from ..db import (
 )
 from ..niches.tree import INDUSTRY, SKILL
 from ..posts import PostsReader
+from .usermap import ON_MAP, add_to_map
 
 POSITIVE_ACTIONS = ("save", "share", "id_build", "idea", "outreach", "interested")
 
@@ -81,6 +83,9 @@ def onboard(store: FeedStore, config: FeedConfig, industries: Sequence[str], ski
             row_cls = UserNicheAffinityRow if key[0] == "n" else UserSkillAffinityRow
             s.add(row_cls(user_id=uid, node_id=int(key[1:]), alpha=mean * um.prior_strength,
                           beta=(1 - mean) * um.prior_strength, updated_at=now))
+        s.flush()
+        for n in niche_ids:
+            add_to_map(s, uid, n, "quiz", config, now)
     return uid
 
 
@@ -92,6 +97,7 @@ class UserState:
     niche: dict[int, float] = field(default_factory=dict)        # node -> affinity 0-1 (rows only)
     niche_uncertainty: dict[int, tuple[float, float]] = field(default_factory=dict)   # node -> (alpha, beta)
     skill: dict[int, float] = field(default_factory=dict)
+    map_nodes: set[int] = field(default_factory=set)               # on the map (active, context, fading)
     pins: dict[int, float] = field(default_factory=dict)
     drop_ins: dict[int, int] = field(default_factory=dict)       # node -> exposures left
     removed: set[int] = field(default_factory=set)
@@ -115,7 +121,7 @@ class UserState:
         return self.niche.get(node, self.default)
 
     def on_map(self, node: int) -> bool:
-        return node in self.niche or node in self.pins or node in self.drop_ins
+        return node in self.map_nodes or node in self.pins or node in self.drop_ins
 
 
 def _decayed(alpha: float, beta: float, prior: float, strength: float, days: float, half_life: float) -> tuple[float, float]:
@@ -146,6 +152,8 @@ def load_state(store: FeedStore, config: FeedConfig, user_id: str, now: datetime
         st.drop_ins = {r.node_id: r.exposures_left
                        for r in s.scalars(select(UserDropInRow).where(UserDropInRow.user_id == user_id))}
         st.removed = set(s.scalars(select(UserRemovedRow.node_id).where(UserRemovedRow.user_id == user_id)))
+        st.map_nodes = set(s.scalars(select(UserMapNodeRow.node_id).where(
+            UserMapNodeRow.user_id == user_id, UserMapNodeRow.status.in_(ON_MAP))))
         st.type_pref = dict(user.type_preference or {})
         st.source_pref = dict(user.source_preference or {})
         st.hidden_sources = set(prefs.get("hidden_sources", []))

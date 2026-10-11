@@ -325,6 +325,23 @@ class UserRemovedRow(FeedBase):
     removed_at: Mapped[datetime] = mapped_column(UTCDateTime)
 
 
+class UserMapNodeRow(FeedBase):
+    """Which niches are on a user's map (section 6.5-6.6). Affinities exist for many more nodes (events
+    propagate upward); membership is explicit: quiz choices, pins, drop-ins, promoted children and
+    niches discovered through exploration."""
+
+    __tablename__ = "user_map_nodes"
+
+    user_id: Mapped[str] = mapped_column(ForeignKey("users.id"), primary_key=True)
+    node_id: Mapped[int] = mapped_column(ForeignKey("niches.id"), primary_key=True)
+    # active | context (a parent whose child was promoted) | fading | off (left the map, kept for history)
+    status: Mapped[str] = mapped_column(String(16), default="active")
+    source: Mapped[str] = mapped_column(String(16))     # quiz | pin | drop_in | promoted | discovered
+    angle: Mapped[float] = mapped_column(Float)          # degrees, fixed when the node joins
+    added_at: Mapped[datetime] = mapped_column(UTCDateTime)
+    status_since: Mapped[datetime] = mapped_column(UTCDateTime)
+
+
 class UserMapSnapshotRow(FeedBase):
     __tablename__ = "user_map_snapshots"
 

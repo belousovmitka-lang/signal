@@ -5,8 +5,12 @@ No authentication yet: the user comes from the request until the app's auth exis
 
 from __future__ import annotations
 
+from typing import Literal
+
 from fastapi import FastAPI, HTTPException, Query
 from pydantic import BaseModel, Field
+
+from sqlalchemy import select
 
 from .config import FeedConfig, load_feed_config
 from .db import FeedStore
@@ -14,6 +18,8 @@ from .enrichment.schema import niche_seeds, skill_vocabulary
 from .events import BatchResult, BatchTooLargeError, EventBatch, UnknownUserError, log_events
 from .feed.data import FeedDataCache
 from .feed.service import FeedPage, FeedService
+from .db import MapChangeLogRow, UserMapSnapshotRow
+from .feed import usermap
 from .feed.usermodel import UnknownNodeError, apply_events, onboard
 from .niches.tree import seed_labels
 from .posts import PostsReader
@@ -29,6 +35,28 @@ class Quiz(BaseModel):
 
 
 class Onboarded(BaseModel):
+    user_id: str
+
+
+class NodeAction(BaseModel):
+    user_id: str
+    node_id: int
+
+
+class PinAction(NodeAction):
+    radius: float = Field(ge=0, le=1)          # 0 = the centre (affinity 1), 1 = the rim (affinity 0)
+    angle: float | None = None                 # degrees; keeps the current angle when omitted
+
+
+class RemoveAction(NodeAction):
+    allow_retest: bool = False
+
+
+class NudgeAction(NodeAction):
+    direction: Literal["more", "less"]
+
+
+class UserAction(BaseModel):
     user_id: str
 
 
@@ -57,6 +85,72 @@ def create_app(store: FeedStore, posts: PostsReader, config: FeedConfig, service
         if not store.user_exists(user_id):
             raise HTTPException(status_code=404, detail="unknown user")
         return service.page(user_id, session_id, explore_more=explore)
+
+    def _user(user_id: str) -> None:
+        if not store.user_exists(user_id):
+            raise HTTPException(status_code=404, detail="unknown user")
+
+    def _act(fn, *args, **kw) -> dict:
+        try:
+            fn(store, config, *args, **kw)
+        except usermap.MapError as exc:
+            raise HTTPException(status_code=404, detail=str(exc)) from None
+        return {"ok": True}
+
+    @app.get("/map")
+    def get_map(user_id: str) -> dict:
+        _user(user_id)
+        return usermap.map_view(store, config, user_id)
+
+    @app.get("/map/history")
+    def get_map_history(user_id: str) -> dict:
+        _user(user_id)
+        with store.session() as s:
+            snaps = list(s.scalars(select(UserMapSnapshotRow).where(UserMapSnapshotRow.user_id == user_id)
+                                   .order_by(UserMapSnapshotRow.week)))
+            log = list(s.scalars(select(MapChangeLogRow).where(MapChangeLogRow.user_id == user_id)
+                                 .order_by(MapChangeLogRow.at)))
+        return {"snapshots": [{"week": x.week.isoformat(), **x.data} for x in snaps],
+                "changes": [{"at": c.at.isoformat(), "node_id": c.node_id, "kind": c.kind, "message": c.message}
+                            for c in log]}
+
+    @app.get("/map/node/{node_id}")
+    def get_map_node(node_id: int, user_id: str) -> dict:
+        _user(user_id)
+        try:
+            return usermap.node_detail(store, config, user_id, node_id)
+        except usermap.MapError as exc:
+            raise HTTPException(status_code=404, detail=str(exc)) from None
+
+    @app.post("/map/pin")
+    def post_pin(a: PinAction) -> dict:
+        _user(a.user_id)
+        return _act(usermap.pin, a.user_id, a.node_id, a.radius, a.angle)
+
+    @app.post("/map/unpin")
+    def post_unpin(a: NodeAction) -> dict:
+        _user(a.user_id)
+        return _act(usermap.unpin, a.user_id, a.node_id)
+
+    @app.post("/map/drop-in")
+    def post_drop_in(a: NodeAction) -> dict:
+        _user(a.user_id)
+        return _act(usermap.drop_in, a.user_id, a.node_id)
+
+    @app.post("/map/remove")
+    def post_remove(a: RemoveAction) -> dict:
+        _user(a.user_id)
+        return _act(usermap.remove, a.user_id, a.node_id, a.allow_retest)
+
+    @app.post("/map/nudge")
+    def post_nudge(a: NudgeAction) -> dict:
+        _user(a.user_id)
+        return _act(usermap.nudge, a.user_id, a.node_id, a.direction)
+
+    @app.post("/map/reset")
+    def post_reset(a: UserAction) -> dict:
+        _user(a.user_id)
+        return _act(usermap.reset, a.user_id)
 
     @app.post("/events")
     def post_events(batch: EventBatch) -> BatchResult:
