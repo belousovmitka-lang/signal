@@ -1,0 +1,67 @@
+# Starter skill vocabulary (FEED_ALGORITHM.md section 4.1). The tagger prefers these names
+# so skills_needed stays consistent; Phase 2 seeds the skills tree from this list.
+skills:
+  - name: Web apps
+    covers: CRUD apps, dashboards, internal tools, admin panels
+  - name: Mobile apps
+    covers: iOS, Android, cross-platform
+  - name: Workflow automation
+    covers: Zapier-style glue, scheduled jobs, RPA, replacing manual copy-paste
+  - name: Integrations and APIs
+    covers: connecting SaaS tools, webhooks, syncing data between systems
+  - name: Data pipelines
+    covers: ETL, scraping public data, data cleaning, warehousing
+  - name: Analytics and reporting
+    covers: dashboards, BI, KPI tracking, financial reports
+  - name: Spreadsheets
+    covers: Excel/Sheets models, templates, add-ons
+  - name: Document parsing
+    covers: OCR, PDF extraction, forms, invoices, contracts
+  - name: Retrieval and search
+    covers: semantic search, RAG over documents or case law
+  - name: AI agents
+    covers: LLM agents that take actions, multi-step assistants
+  - name: LLM applications
+    covers: chat, summarization, drafting, classification with LLMs
+  - name: Machine learning
+    covers: training models, forecasting, computer vision, recommendation
+  - name: Scheduling and booking
+    covers: calendars, appointments, dispatch, rostering
+  - name: Payments and billing
+    covers: invoicing, subscriptions, payment collection, reconciliation
+  - name: Accounting and tax
+    covers: bookkeeping, tax prep, audit trails
+  - name: CRM and sales tools
+    covers: lead tracking, outreach, pipelines, quoting
+  - name: Marketing tools
+    covers: SEO, ads, email, social scheduling, content
+  - name: E-commerce
+    covers: storefronts, inventory, marketplaces, fulfillment
+  - name: Communication tools
+    covers: messaging, notifications, client portals, call handling
+  - name: Compliance and regulatory
+    covers: tracking rules, audits, reporting obligations, record keeping
+  - name: Security
+    covers: access control, vulnerability management, identity, backups
+  - name: DevOps and infrastructure
+    covers: CI/CD, cloud, monitoring, self-hosting
+  - name: Developer tools
+    covers: libraries, SDKs, IDE plugins, testing tools
+  - name: IoT and hardware
+    covers: sensors, devices, embedded, PLCs, telematics
+  - name: Maps and location
+    covers: routing, geofencing, field service, fleet tracking
+  - name: Healthcare IT
+    covers: EHR, clinical workflows, patient engagement, medical devices
+  - name: Legal tech
+    covers: case management, e-discovery, document assembly, docketing
+  - name: Education tech
+    covers: LMS, grading, lesson planning, student tracking
+  - name: Content and media
+    covers: video, audio, podcasts, transcription, publishing
+  - name: Design and UX
+    covers: UI design, prototyping, accessibility
+  - name: Marketplaces
+    covers: two-sided platforms, matching supply and demand
+  - name: Consulting and services
+    covers: done-for-you services, implementation, training

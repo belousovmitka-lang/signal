@@ -1,0 +1,165 @@
+# Every weight, threshold and quota the feed uses (FEED_ALGORITHM.md section 16).
+# Values are the spec's starting points: tune here, never in code.
+# Bump `version` on any change; it is stored with every event and impression.
+version: 1
+
+# Stage A — enrichment (section 3)
+enrichment:
+  prompt_version: v5              # bump to re-enrich every post with the new prompt
+  spam_drop_threshold: 0.7        # posts above this are kept but never ranked
+  # Not shown in the feed (stored, counted, can be turned on later without re-tagging):
+  drop_post_types: [research, listing, company_news, general_news, notice, opinion, guide, praise, spam, off_topic]
+  monthly_budget_usd: 50.0        # Claude API spend; checked against worst-case cost before every call
+  max_retries_invalid_json: 1     # then the post is marked needs_review
+  max_input_chars: 6000           # longer posts are cut, with a marker the model sees
+  tagger:                         # tags every post
+    model: claude-haiku-5-5
+    effort: low
+    max_tokens: 4000
+  escalation:                     # re-tags posts the tagger was unsure about or declined
+    model: claude-opus-5-5
+    effort: medium
+    max_tokens: 8000
+    below_confidence: 0.5
+    server_fallbacks: true        # fallbacks: "default" on sync calls (not allowed on batches)
+  batch_min_posts: 50             # use the Batch API (50% off) when at least this many posts are queued
+  prefilter:                      # cheap checks before any model call
+    min_chars: 30
+    # Structured records with no narrative: counted in aggregate later, not tagged one by one.
+    skip_sources: ["open_data:", "cfpb"]
+  prices_per_mtok:                # USD per million tokens (checked 2026-10-09)
+    claude-haiku-5-5: {input: 0.10, output: 0.50}
+    claude-sonnet-5-5: {input: 2.00, output: 10.00}
+    claude-opus-5-5: {input: 4.00, output: 20.00}
+    claude-opus-4-8: {input: 5.00, output: 25.00}
+  batch_discount: 0.5
+  cache_write_multiplier: 1.25
+  cache_read_multiplier: 0.1
+
+embeddings:
+  provider: voyage
+  model: voyage-4
+  dimensions: 1024
+  price_per_mtok: 0.06            # first 200M tokens are free; metered anyway
+  monthly_budget_usd: 5.0
+  max_input_chars: 4000
+  batch_size: 128
+  # Voyage limits without a payment method on the account; raise (or remove) once a card is added
+  # (the 200M free tokens still apply).
+  requests_per_minute: 3
+  tokens_per_minute: 10000
+
+# Stage B — niche tree growth (section 4.2)
+niches:
+  split_min_support_90d: 200      # a node is clustered once it has this many posts in 90 days
+  child_min_posts: 40
+  child_min_authors: 15
+  child_min_sources: 2
+  retire_after_weeks_below: 8
+
+# Stage C — problems (section 5)
+problems:
+  cluster_cosine_threshold: 0.82
+  score_weights:
+    frequency: 0.20
+    trend: 0.15
+    intensity: 0.15
+    money_signal: 0.20
+    tool_gap: 0.10
+    source_diversity: 0.10
+    buyer_likelihood: 0.10
+
+# Stage D — user model (section 6)
+user_model:
+  quiz_prior_affinity: 0.6
+  resume_prior_affinity: 0.5
+  calibration_cards: 10
+  calibration_wildcards: 2
+  similar_builders_full_until_events: 20
+  similar_builders_zero_at_events: 100
+  propagation:
+    parent: 0.40
+    grandparent: 0.15
+  evidence_half_life_days: 21
+  drop_in_affinity: 0.35
+  drop_in_exposure_budget: 8
+  removed_retest_after_days: 60
+  committed_other_cap: 0.10
+  narrowing:
+    child_share_of_positive: 0.60
+    child_min_positive_events: 5
+    lookback_weeks: 4
+    promoted_affinity_factor: 0.9
+    fade_min_negative_events: 10
+    fade_weeks_without_positive: 3
+  rings:
+    core_min: 0.6
+    regular_min: 0.3
+
+# Events and their weights (section 6.3)
+events:
+  weights:
+    impression: 0
+    scroll_past: -0.3
+    read: 1
+    expand: 0.5
+    open_source: 1.5
+    save: 4
+    share: 3
+    id_build: 5
+    idea: 8
+    outreach: 12
+    useful_yes: 3
+    useful_no: -3
+    not_for_me: -6
+    hide_source: -4
+    report: -20
+  scroll_past_max_dwell_ms: 1500   # a scroll-past counts only below this dwell, fully visible
+  read_min_share_of_expected: 0.6  # a read counts only at >= this share of expected reading time
+  reading_words_per_minute: 230
+  reading_min_expected_ms: 3000    # floor for very short posts and snippets
+  max_batch_size: 500
+  max_clock_skew_seconds: 300      # client timestamps further in the future are rejected
+  max_age_days: 30                 # older client timestamps are rejected (stale offline batches)
+
+# Stage E — candidate generation (section 7)
+candidates:
+  per_session: 500
+  shares:
+    niche_match: 0.45
+    skill_match: 0.15
+    similar_builders: 0.10
+    trending_nearby: 0.10
+    exploration: 0.10
+  exclude_seen_days: 30
+
+# Stage F — ranking (section 8)
+ranking:
+  quality_factor:
+    base: 0.6
+    problem_score: 0.4
+    toxicity_penalty: 0.5
+  survey_every_n_items: 30
+  value_model_blend: 0.20
+  v2_min_labeled_impressions: 50000
+
+# Stage G — feed composition (section 9)
+composition:
+  window: 20
+  quotas:
+    core_regular: 0.60
+    paid_demand_min: 0.15
+    change_max: 0.20
+    exploration_min: 0.10
+    exploration_max: 0.15
+    builder_max: 0.15
+  max_same_leaf_per_10: 3
+  fresh_share_first_10: 0.40
+  fresh_hours: 48
+  caught_up_score_floor: 0.5
+
+# Stage H — learning loop (section 10)
+learning:
+  bubble_leaf_share: 0.50
+  bubble_window_impressions: 100
+  bubble_exploration: 0.20

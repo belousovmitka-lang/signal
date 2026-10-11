@@ -1,0 +1,2029 @@
+labeler: Claude (claude-opus-5-5), 2026-10-09, reading each post in full; reviewed by the user 2026-10-10 (approved; asked to split
+  noise). The noise split is Claude's, unreviewed.
+guide: 'Labels follow the tagging prompt v4 definitions. Actionable: pain, paid_demand, tool_gap, change, idea. Everything else says
+  what the post is: research (papers), listing (bare model/app/repo/publication listings), company_news (one company: earnings, expansions,
+  exec moves, rankings, promos), general_news (accidents, prizes, investigations, outlooks, price tickers), notice (routine official
+  notices), opinion, guide (how-to, explainer, advice), praise (positive reviews), spam (ads, self-promotion, adult), off_topic (personal
+  chat, politics, bare links). Launches, rules, rulings and data releases are change. Tenders are paid_demand with buyer high and intensity
+  low unless the notice states urgency. money = the post states an amount someone pays, budgets or loses. unsure = review first. Set
+  reviewed: true after checking a label.'
+labels:
+- post_id: bd0ad65488b1f7240d56951d9a8ac3c6e1447aee529c523c590042a9d76871dc
+  source: rss:adinaflores.substack
+  post_type: general_news
+  industry: Other
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: local investigative news
+- post_id: 498152fad17a46e8bf87b5d4db715021e715af7306884000ee3a99727637e953
+  source: rss:whatteachershavetosay.substack
+  post_type: pain
+  industry: Education
+  money: false
+  spam: false
+  intensity: medium
+  buyer: medium
+  who_has_pain: teacher
+  pain_statement: Planning each week's lessons takes hours of decisions and rewriting materials.
+  unsure: true
+  note: pain told through an AI-workflow how-to; could be noise
+  reviewed: true
+- post_id: a5e20695851e1ed0a86d4a51f9dba111333d1d02cff630b7641fa061337598d3
+  source: hackernews
+  post_type: off_topic
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: one-off outage
+- post_id: f0c40187ad8d94c5c291ea82e85b49eabe83a94ff1875bb2da37e484b06644ee
+  source: rss:mindslice.substack
+  post_type: guide
+  industry: Other
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  unsure: true
+  note: fuel-price explainer; arguably a change signal for trucking
+- post_id: 0d3b83b1ededfb77c1816f2e655c828beac93b24ad7b847da1bfe673f3c4d615
+  source: rss:aifromthefield.substack
+  post_type: change
+  industry: Real estate
+  money: false
+  spam: false
+  intensity: medium
+  buyer: medium
+  who_has_pain: real estate agent
+  pain_statement: Agents must check which AI uses of client data fit NAR's new brokerage AI policy template.
+  reviewed: true
+- post_id: 553233e4cea4786c20a2d6226b5aadd3b15863968d7363ec50404a096e14206d
+  source: rss:sdcourse.substack
+  post_type: guide
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: tutorial
+- post_id: 3abd9fde79e820c84a6ef9e301cd8116a9ab2047994118c6b3df36b64398818b
+  source: rss:nolanfmelson.substack
+  post_type: tool_gap
+  industry: HR and recruiting
+  money: false
+  spam: false
+  intensity: medium
+  buyer: medium
+  who_has_pain: recruiter
+  pain_statement: AI recruiting outreach tools send unfilled template messages that erode candidate trust.
+  unsure: true
+  note: opinion piece; tool_gap vs noise
+  reviewed: true
+- post_id: edece013e4efb19193a38308d036714649917f091b42d6edacdbd097c286a9e7
+  source: rss:healthapiguy.substack
+  post_type: opinion
+  industry: Healthcare
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: opinion on vertical SaaS / EHRs
+- post_id: af102a00b67c4ee29d2396bef68a335132f781c901b1c7b5f325fff8de038f32
+  source: rss:aaditya005.substack
+  post_type: pain
+  industry: Marketing and agencies
+  money: false
+  spam: false
+  intensity: medium
+  buyer: high
+  who_has_pain: e-commerce seller
+  pain_statement: Sellers can't tell which ad spend is incremental because platform attribution overstates ROAS.
+  unsure: true
+  note: advice article built on a real measurement problem; also mentions Google removing attribution models
+  reviewed: true
+- post_id: 7d73ba7e71cdb2c2dfceff870781b4623e22d1528e2e728206831415e8d74f4c
+  source: rss:dhruva.substack
+  post_type: opinion
+  industry: Manufacturing
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: stock analysis
+- post_id: 8749db425fce479bea83076df15f3a07c83addf4370b6e533e87c40cd9fb7b31
+  source: rss:seanwittig.substack
+  post_type: pain
+  industry: Construction and trades
+  money: false
+  spam: false
+  intensity: high
+  buyer: high
+  who_has_pain: electrical subcontractor owner
+  pain_statement: Small subcontractors wait 30+ days for payment when a contractor's accounting rejects paperwork, straining payroll.
+  reviewed: true
+- post_id: 693e90c956320dd5d26bd545c3f290cc0ffc9ec87280e87dd8b34ac2448079bd
+  source: rss:aiedusimplified.substack
+  post_type: listing
+  industry: Education
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: publication announcement
+- post_id: 4f7e19392e24ff00e7dbd0cded43d76580f16bfda4b0708570053d9c2bcbc712
+  source: rss:mintpf.substack
+  post_type: change
+  industry: Insurance
+  money: false
+  spam: false
+  intensity: medium
+  buyer: medium
+  who_has_pain: insurance distributor
+  pain_statement: Indian insurers and distributors face proposed commission caps from IRDAI.
+  reviewed: true
+- post_id: 68743272b5db82df3f8fff1abe2cb6c502ee1e7d26a7449f11949a92abc0739e
+  source: wordpress:mailpoet:support
+  post_type: tool_gap
+  industry: Marketing and agencies
+  money: false
+  spam: false
+  intensity: high
+  buyer: medium
+  who_has_pain: website owner
+  pain_statement: MailPoet's send step shows a blank page, so no newsletter can be sent.
+  unsure: true
+  note: plugin bug report; industry could be IT
+  reviewed: true
+- post_id: ba696f89d9cbc3e8d0333be9ccd1369babd174516b76cb5b8fd356a8d69e333f
+  source: rss:nimbuskey.substack
+  post_type: change
+  industry: Healthcare
+  money: false
+  spam: false
+  intensity: low
+  buyer: medium
+  who_has_pain: hospital CIO
+  pain_statement: Hospitals must decide how much access Oracle's new healthcare AI agents get to clinical and revenue systems.
+  reviewed: true
+- post_id: 47f20901cdfbc0aef3b40163627c85af32e9166faa9660f1d2fb3372e9d27352
+  source: rss:themedisunblog.substack
+  post_type: guide
+  industry: Healthcare
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: career advice
+- post_id: 639fc3128b1f5bccd12754b8714477c109e7f4bc889041da4bd3a2ccb682b4e0
+  source: rss:aayushostwal2.substack
+  post_type: guide
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: engineering write-up
+- post_id: 9cc3782e1a6fdcdd019a3ca2a55fe9afad3f2991f39ab7b83dbecf239d34a559
+  source: rss:medicaremonopoly.substack
+  post_type: change
+  industry: Insurance
+  money: false
+  spam: false
+  intensity: medium
+  buyer: medium
+  who_has_pain: Medicare insurance agent
+  pain_statement: Medicare agents must re-check clients' drug plans after 2027 premium and plan changes.
+  reviewed: true
+- post_id: 6d0fa99ef681a8aab1a7ed46aa029d25bf2ea5209439c36eddefa79b50baa4ec
+  source: rss:fieldintel.substack
+  post_type: change
+  industry: Agriculture
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  pain_statement: Regenerative agriculture brands and EU CAP budget talks are shifting farm economics.
+  unsure: true
+  note: news roundup; change vs noise
+  reviewed: true
+- post_id: 6c0539323eab510a703e8eb630f6219dfadb96a7db7b13a56ac65df48089234f
+  source: rss:chalsarboleya.substack
+  post_type: guide
+  industry: Marketing and agencies
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: consultant advice
+- post_id: 2e01c5d39a5097cc4f6ac3a633dffb04ffaf7c304afdcd771ebfdd60da22557f
+  source: rss:seangeiger.substack
+  post_type: change
+  industry: Healthcare
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  who_has_pain: physician
+  pain_statement: Utah now lets an AI prescribe new acne treatments in a pilot, under physician review.
+  reviewed: true
+- post_id: 2bd625998480c18eb6c924c50b833878e7d578d9f11d0bffe71e4d5504f10886
+  source: rss:geodnetinfo.substack
+  post_type: company_news
+  industry: Other
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  unsure: true
+  note: company newsletter; mild self-promotion
+- post_id: a6c1d35378340ba9c9f09f43fc422ba71f2afd43d859b02ce703c7de79bc01f6
+  source: rss:andreasmueller.substack
+  post_type: opinion
+  industry: Real estate
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: housing-market commentary
+- post_id: 10b45b0c48c4bd23dc068617a78fb2de2b4cfa398d3808e83ca04706c649222c
+  source: rss:ecommercesea.substack
+  post_type: pain
+  industry: E-commerce and retail
+  money: false
+  spam: false
+  intensity: medium
+  buyer: high
+  who_has_pain: e-commerce brand owner
+  pain_statement: Marketplace sellers have no report of contribution margin after platform fees, ads, vouchers and creators.
+  unsure: true
+  note: advice article; the gap ('nobody reports it') is real
+  reviewed: true
+- post_id: d0362eaeaa2ce6e19210ae592d845a648a4bf337d3cdfc89b011366e24020553
+  source: rss:lisgroup.substack
+  post_type: change
+  industry: Insurance
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  pain_statement: South Carolina moved to take over a struggling life insurer, and its ratings were cut.
+  reviewed: true
+- post_id: 986790ad92907b827fc1638ab112164dd520d97a5cb4dce443d08329248a0fa7
+  source: rss:contechroundup.substack
+  post_type: opinion
+  industry: Construction and trades
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: industry newsletter on AI evals
+- post_id: 062a6551f9d3fa771694c86670961c74b943f9b063e7f9ec1c0837eedb4f6040
+  source: rss:intelligencebriefing.substack
+  post_type: opinion
+  industry: Marketing and agencies
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: opinion
+- post_id: 85ad54805af2446fc044abc4a5d0d09d926ae1daed87ca1e85d2771c7ddb8f17
+  source: rss:thedatadriventrades.substack
+  post_type: pain
+  industry: Construction and trades
+  money: true
+  spam: false
+  intensity: medium
+  buyer: high
+  who_has_pain: home-service contractor
+  pain_statement: Contractors pay for Google Local Services leads, but about 41% of them can't be booked.
+  unsure: true
+  note: benchmark report; pain vs change; industry could be Marketing
+  reviewed: true
+- post_id: 564ae29571528852c34a2edd07dd9d562dc264592bb492a8e4ecfb50bfb56063
+  source: rss:zerorfi.substack
+  post_type: opinion
+  industry: Construction and trades
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: commentary on a Bain report
+- post_id: 382822d37ba3ea54895041252df13016c67f517c20022223a41a4fe752efb650
+  source: wordpress:wordpress-seo:support
+  post_type: tool_gap
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  who_has_pain: WordPress site owner
+  pain_statement: Yoast SEO throws PHP deprecation warnings on the login page.
+  note: plugin bug report
+  reviewed: true
+- post_id: c3a5ed41ac52c9623c6c23a10d9b80cb93754534359b8b39ed8cb848618ce741
+  source: rss:restauranttechnology.substack
+  post_type: guide
+  industry: Restaurants and hospitality
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  unsure: true
+  note: sponsored tax advice; mild promotion
+- post_id: 013598cdd7cdfe92445525009423f582f38ef6b6d7c94c1673163d6091b9fac1
+  source: rss:boyinsurance.substack
+  post_type: spam
+  industry: Insurance
+  money: false
+  spam: true
+  intensity: low
+  buyer: low
+  note: 'agency ranking itself first: SEO self-promotion'
+- post_id: 28efefa5465d123de0b7abf031b9678612be26be3a68b3aba18325e72894e276
+  source: wordpress:woocommerce:support
+  post_type: tool_gap
+  industry: E-commerce and retail
+  money: false
+  spam: false
+  intensity: low
+  buyer: medium
+  who_has_pain: online store owner
+  pain_statement: After a WooCommerce update the Toman currency symbol displays on the wrong side.
+  note: Persian
+  reviewed: true
+- post_id: 95cfe2e6ee24650aa671b6cbb7c7f528aa3fb12852476af95d3b7111f7bd05b4
+  source: rss:suelanimadsen.substack
+  post_type: general_news
+  industry: Agriculture
+  money: false
+  spam: false
+  intensity: medium
+  buyer: low
+  unsure: true
+  note: ranchers' wolf conflicts; local policy news, could be pain
+- post_id: 67683b0127f2c446ee2e934c3c9e913c5e6d6ba6213cd0b4ff3ec979975d1c57
+  source: stackexchange
+  post_type: off_topic
+  industry: Accounting and finance
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: finance question
+- post_id: aacbfcc1da1066971251261428663087952a5085f4ee17f3aae72c3754af870d
+  source: rss:demandcollective.substack
+  post_type: guide
+  industry: Marketing and agencies
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: guide with sponsor ads
+- post_id: 7fb34fe39f7f86f37975e0b1c49f9fd34c48088b8db9cc767ffc912f1ca86b41
+  source: rss:medium
+  post_type: opinion
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: personal reflection
+- post_id: 09be1a6ff08640d07caf79259f45a9c92eaaf323c4ae4c24a363ac4c2f2fb978
+  source: wordpress:updraftplus:support
+  post_type: tool_gap
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: medium
+  buyer: low
+  who_has_pain: website owner
+  pain_statement: UpdraftPlus warns about extra whitespace and backups downloaded through WordPress come out corrupted.
+  note: plugin bug report
+  reviewed: true
+- post_id: f1af5a03ee98245433128c5737aad0ee4cb4d2e84d6332bc1653157b3f4d5c1a
+  source: rss:joeapfelbaum.substack
+  post_type: guide
+  industry: Construction and trades
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: marketing advice for painters
+- post_id: 46635660c0ff3f078301ac7e13b42aca216f4273595ca3463e4f578a9d633b75
+  source: rss:linas.substack
+  post_type: change
+  industry: Accounting and finance
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  who_has_pain: small business owner
+  pain_statement: AmEx and Perplexity launched read-only AI CFO tools for small businesses.
+  reviewed: true
+- post_id: d030f92ac7f19f9208409f2540c226ed462b3b4d1d24e729396576172c69984e
+  source: bluesky
+  post_type: change
+  industry: Logistics and trucking
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  who_has_pain: fleet operator
+  pain_statement: FedEx expects $300M of electric trucks to save $800M in diesel.
+  reviewed: true
+- post_id: 27365eb28da5e85bb623038dcafacd5b058abd722e76f2d143c91b515eba548a
+  source: mastodon
+  post_type: spam
+  industry: HR and recruiting
+  money: false
+  spam: true
+  intensity: low
+  buyer: low
+  note: tool self-promotion with link and hashtags
+- post_id: 188b6969187cc111e4cde60c3add8b4507a20d162b611fb56ce5c45544eaf61e
+  source: bluesky
+  post_type: change
+  industry: Logistics and trucking
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  pain_statement: Honda will test wireless charging for trucks moving on a highway.
+  reviewed: true
+- post_id: 38925014f98e8ed6a33dfbd8a8a0a6a87b9a39eae5c71c1a00b32e3641d1a1a8
+  source: mastodon
+  post_type: spam
+  industry: Other
+  money: false
+  spam: true
+  intensity: low
+  buyer: low
+  unsure: true
+  note: 'hashtag-stuffed link share; reposted (see #52)'
+- post_id: d5d8bcac5b53a9ff08d7596b08ec6589bf9c7859b0bd1c7f5639b5c72518777b
+  source: bluesky
+  post_type: idea
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: medium
+  who_has_pain: developer reviewing pull requests
+  pain_statement: Reviewing pull requests is slow without grouping changes into logical parts.
+  unsure: true
+  note: 'builder launching own tool: idea vs change'
+  reviewed: true
+- post_id: 767568031895085d99e4e7015131036e3fa4f503aa984a478a595de3222d3bba
+  source: mastodon
+  post_type: listing
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  unsure: true
+  note: self-introduction of a free sysadmin site
+- post_id: a4c5f289e964c691c4afced4ab20923ff9ccb8bf9f535c2bb8678b3653e6af8e
+  source: bluesky
+  post_type: opinion
+  industry: Other
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+- post_id: 76bc56302999d1995557391e0738eb584bfc7f3f3a804918c0b261d57a9a6609
+  source: mastodon
+  post_type: opinion
+  industry: Agriculture
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: link to an opinion article
+- post_id: 29dbb5fa19d0a2133bdec4a78a0190cda4f3a11047c5a8e89cf314ed946c3212
+  source: bluesky
+  post_type: tool_gap
+  industry: Other
+  money: false
+  spam: false
+  intensity: medium
+  buyer: low
+  who_has_pain: Acrobat user
+  pain_statement: Adobe Acrobat doesn't work reliably.
+  unsure: true
+  note: one-line complaint; maybe noise
+  reviewed: true
+- post_id: ce9ef1f712a7d77e7e9f38de6cd3a60440776f986d381a60009c770fa87c4e38
+  source: mastodon
+  post_type: general_news
+  industry: Agriculture
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+- post_id: 9430770bd257b63314157ce024acee43443e8c4b5ba5a0331448582d3c4d2a12
+  source: bluesky
+  post_type: general_news
+  industry: Legal
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: court filing gossip
+- post_id: cbce991ddbd647f66e4b9e017a6ec0c04781279632bbadcb9609ec7aecf5a055
+  source: mastodon
+  post_type: spam
+  industry: Other
+  money: false
+  spam: true
+  intensity: low
+  buyer: low
+  unsure: true
+  note: 'repost of #44'
+- post_id: ef7bad6ede0b64f5241edfd70e3ef786626359a259303fdd60ee1a70338c31ec
+  source: bluesky
+  post_type: change
+  industry: HR and recruiting
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  pain_statement: HackerRank launched an AI interviewer for job interviews.
+  reviewed: true
+- post_id: e4d8015f335fe11b9aec529e9df0f1a98cadae16902e5de29a01ef21a2140cab
+  source: mastodon
+  post_type: spam
+  industry: Other
+  money: false
+  spam: true
+  intensity: low
+  buyer: low
+  note: adult content
+- post_id: d196565a634df3e668f834638c44f839b0e636c28d0c5b6fbc8f63e3e4280818
+  source: bluesky
+  post_type: change
+  industry: Logistics and trucking
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  pain_statement: Kodiak plans driverless long-haul trucking launches by year end.
+  reviewed: true
+- post_id: dc680f372be751f6c8b36b32ed60e872c5779b6a90258b2b111bf8573e1b0816
+  source: mastodon
+  post_type: spam
+  industry: Real estate
+  money: false
+  spam: true
+  intensity: low
+  buyer: low
+  note: blog self-promotion with hashtags
+- post_id: ebd337010c5d4b51a662826a3c3204eaa4a99a46b47d3f88fa38503e21ccd147
+  source: bluesky
+  post_type: off_topic
+  industry: Other
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: politics
+- post_id: bf0aba0b5f778927a6a80e4146d89123ed78b0ff84064117a66d150845fbc286
+  source: mastodon
+  post_type: spam
+  industry: Real estate
+  money: false
+  spam: true
+  intensity: low
+  buyer: low
+  note: blog self-promotion with hashtags
+- post_id: a3493f4ad64c3597c32c6c401059ef6daf911d3282bb25bad83872665735f7bb
+  source: bluesky
+  post_type: opinion
+  industry: Healthcare
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: aside about a pharmacy chain chatbot
+- post_id: 322b65a80807de196c4aa09b6feb178ed5c6f0a8857b934e6a89da3674456229
+  source: mastodon
+  post_type: spam
+  industry: Other
+  money: false
+  spam: true
+  intensity: low
+  buyer: low
+  note: adult content
+- post_id: 838c7e6a93a57e1ac111f0344300897f7d8bfc5437cd52ce2d3694eb4659fd4a
+  source: bluesky
+  post_type: opinion
+  industry: Agriculture
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: opinion on farm emissions
+- post_id: 270d63ae2c7b8395c8f9883937f58850964731cf3455ca53d5ec4b9fa1bf6a32
+  source: mastodon
+  post_type: tool_gap
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: high
+  buyer: low
+  who_has_pain: Linux sysadmin
+  pain_statement: systemd tools page output by default, so sysadmins must add --no-pager everywhere.
+  note: angry rant; toxicity aimed at software
+  reviewed: true
+- post_id: 777b3d5272b29f1c9045adf90ac8e815e9a9d3c7055913d92195636a04c1aef4
+  source: bluesky
+  post_type: opinion
+  industry: Other
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+- post_id: 709d0cc64e07aa9f6ed0a729c12b142ba8a23f2e09ff33b01af7d3f01193aa6e
+  source: mastodon
+  post_type: general_news
+  industry: Healthcare
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: prize announcement
+- post_id: 15ffab47d712cd326eb1b373544eda5783a846cb69405598c64f038b4b7570ec
+  source: bluesky
+  post_type: off_topic
+  industry: Other
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+- post_id: 3a6ed6607aecbbcfd1b5ed1077e96865d4f49dd2cf9f7be284c227938b77b1bf
+  source: mastodon
+  post_type: opinion
+  industry: Agriculture
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: French climate thread
+- post_id: 2515001c4fe6fb32c1467cb0bc4449f456c03ad0f6ba77dae09b44af45712586
+  source: bluesky
+  post_type: opinion
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: opinion
+- post_id: bb584b206d51f60ced1c3ef1a81d52f02e64a775936a843041c29bd68340b53d
+  source: mastodon
+  post_type: change
+  industry: Accounting and finance
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  pain_statement: Accounting staffing startup MAVI raised $4M betting on demand for AI-skilled accountants.
+  reviewed: true
+- post_id: ec9df152c8f97c0cee9c04e64aab011611f24847b32737d01a835521867dff3a
+  source: bluesky
+  post_type: paid_demand
+  industry: Other
+  money: false
+  spam: false
+  intensity: low
+  buyer: high
+  who_has_pain: baseball team
+  pain_statement: The New York Mets are hiring data scientists and analytics staff.
+  note: job openings, no salary
+  reviewed: true
+- post_id: 0d2a3ff5c0456f8a963c4428a25f069285b4dc2b5458a71f346a30c72c69fb13
+  source: mastodon
+  post_type: spam
+  industry: Other
+  money: false
+  spam: true
+  intensity: low
+  buyer: low
+  note: adult content
+- post_id: 6b90198f7be3ddfe969b44de2f3c21ae63d77502c0c86e55c3e3e9caa93d654d
+  source: bluesky
+  post_type: off_topic
+  industry: Other
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: bare link
+- post_id: b170bf2c2d683067ba07df300ce17900d448d44c4ba547ae479fbc694784d46b
+  source: mastodon
+  post_type: spam
+  industry: Other
+  money: false
+  spam: true
+  intensity: low
+  buyer: low
+  note: adult content
+- post_id: 315627f4cf4dc609c3a45c654398c976163684c69c9901bafa8b2f41042b43ac
+  source: bluesky
+  post_type: change
+  industry: Logistics and trucking
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  pain_statement: Oil tanker charter costs are so high they keep fuel prices up.
+  unsure: true
+  note: news share; change vs noise
+  reviewed: true
+- post_id: 992eca9e3161e2d7f27b4835aa97040128cfea82d06197711492de899eed8524
+  source: mastodon
+  post_type: spam
+  industry: Marketing and agencies
+  money: false
+  spam: true
+  intensity: low
+  buyer: low
+  note: upvote request for a listed tool
+- post_id: d202f3bd44c38d7312feeab89974c757199a8ec983913ed826023dff8f49e999
+  source: bluesky
+  post_type: change
+  industry: Insurance
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  who_has_pain: property and casualty insurer
+  pain_statement: Insurers are getting calls from consumers' AI assistants; Liberate launched a tool to detect them.
+  reviewed: true
+- post_id: a12dcfc5c9a5d4a17b8313bb19d2e605e3e3f546c164814b39576b4f05d6ff24
+  source: rss:ttnews
+  post_type: change
+  industry: Logistics and trucking
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  pain_statement: The US struck a deal to buy diesel from Russia.
+  reviewed: true
+- post_id: c178aeaed2769308a9c4c3092dc22c1adb29e726856c3977c608dfbc75f5be63
+  source: rss:constructiondive
+  post_type: company_news
+  industry: Construction and trades
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: company business news
+- post_id: 670d15f0df211e09f557be93e80480a12b9e24f1f2f9283fa7fd1eb985539a6f
+  source: rss:insurancejournal
+  post_type: general_news
+  industry: Other
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: aviation accident report
+- post_id: fbe295bf6651af9539cfca290c31077495eddccfc29f78666597023487c14148
+  source: rss:arstechnica
+  post_type: general_news
+  industry: Other
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+- post_id: 6d57e675dd7c820ed686f5820af10555f22352b91d3f3cb870b26748cc2bd98f
+  source: rss:ecmweb
+  post_type: change
+  industry: Construction and trades
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  who_has_pain: electrician
+  pain_statement: New electrical products shown at NECA 2026.
+  unsure: true
+  note: product gallery; change vs noise
+  reviewed: true
+- post_id: 53357f8f8a4a4932a7dde172932dee34e940d17f905d8ceebb62a885497daed0
+  source: rss:martech
+  post_type: opinion
+  industry: Marketing and agencies
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: opinion
+- post_id: ccddfebe3369067cf21a9d5808b07de898c540d0fa6924ecc9cb11cf7f88a910
+  source: rss:restaurantdive
+  post_type: company_news
+  industry: Restaurants and hospitality
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: franchise business news
+- post_id: b3609542003ce7e4f2191f38c99b8bbbccedcd0a1125b1fb04786220c4ee825b
+  source: rss:digitalcommerce360
+  post_type: company_news
+  industry: E-commerce and retail
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: earnings news
+- post_id: b64311cd55ad292e09ef9c282bb051f0a38c613ae9d9347e21126f7a448bc62c
+  source: rss:nrn
+  post_type: company_news
+  industry: Restaurants and hospitality
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: expansion news
+- post_id: 8eef75578cdfe2384641dcfbb7dcd2aa003ba1c358df582806657ba5d4b0eb97
+  source: rss:artificiallawyer
+  post_type: change
+  industry: Legal
+  money: false
+  spam: false
+  intensity: low
+  buyer: medium
+  who_has_pain: lawyer
+  pain_statement: Legora launched 250+ skills for legal AI agents.
+  reviewed: true
+- post_id: 9b9779e455351923f49761ebb583868a1eac09c10661b6bb8e1bcc138967cbac
+  source: rss:cpapracticeadvisor
+  post_type: company_news
+  industry: Accounting and finance
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: firm ranking press release
+- post_id: 8a9353ada30c09141e5c9495a293ab7a37534850b6974a6716ceed6adb9cd1eb
+  source: rss:infoq
+  post_type: opinion
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: conference panel
+- post_id: dc31ceb007da56b22023d828d24d65974792a3196082ed0f0ef1b02e6a0be6dd
+  source: rss:agriculture-com
+  post_type: general_news
+  industry: Agriculture
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: daily price ticker
+- post_id: f13180ae31ebd02727e2f61039f461a834dee66e6c4ad0ebe4a61a3b6d728981
+  source: rss:devops-com
+  post_type: change
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  who_has_pain: documentation maintainer
+  pain_statement: Docsy moved to the Linux Foundation and added support for AI agents reading docs.
+  reviewed: true
+- post_id: bf18b1401fa608a080a3e44ad4a009ae993314b275dc3dedbab1478a34a9f60e
+  source: rss:hospitalitynet
+  post_type: idea
+  industry: Other
+  money: false
+  spam: false
+  intensity: low
+  buyer: medium
+  who_has_pain: local chamber of commerce
+  pain_statement: Cities lack a data-driven index of business openings, closures and vacancies.
+  unsure: true
+  note: proposal by a chamber chair; industry unclear (hospitality publication)
+  reviewed: true
+- post_id: 7354f0c97f6a5b19f2b9e08f89a214b0a576a5aea38db943bfd13b0a9ddea76b
+  source: rss:farmprogress
+  post_type: change
+  industry: Agriculture
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  who_has_pain: farmer
+  pain_statement: New farm machinery and AI features shown at fall shows.
+  reviewed: true
+- post_id: 052db3fdb2d2407f0a97bdbaff07079dc92f2bd8b968068488eede0d91517ff2
+  source: rss:marketingdive
+  post_type: company_news
+  industry: Marketing and agencies
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: exec interview
+- post_id: a2a169ab094b0d402baec6815e45a4a3316c5fdac87840754849c511528c8f04
+  source: rss:lawsites
+  post_type: change
+  industry: Legal
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  pain_statement: An appeals court ruled for Thomson Reuters against AI legal research firm ROSS on copyright.
+  reviewed: true
+- post_id: c07ae8908c8a4693675d8bdcbc219d18975a8c4330c84b31f3fc0c1368ff32f1
+  source: rss:qsrmagazine
+  post_type: company_news
+  industry: Restaurants and hospitality
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: promotion news
+- post_id: 7fc2135322d1f9ffe0dcb20f29a4916251b4a46d3744bcb1768e1c534743ec21
+  source: rss:adweek
+  post_type: company_news
+  industry: Marketing and agencies
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: exec moves
+- post_id: debf70200332a07ca5a7b44ed47ebb8b2b0edf97b8604149c733ada511ce818e
+  source: rss:modernretail
+  post_type: company_news
+  industry: E-commerce and retail
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: brand case study
+- post_id: 84cc86d873f620fad1f0f31a12704c42c687694619491f4cf09a541298bf6941
+  source: rss:jlc
+  post_type: change
+  industry: Construction and trades
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  who_has_pain: framer
+  pain_statement: A new steel reinforcer lets builders cut larger notches in floor joists.
+  unsure: true
+  note: product announcement
+  reviewed: true
+- post_id: 7e5efb410182e4f2ba7e100a16274a10d723e03bd54bef60015f364cfa343710
+  source: rss:medium-small-business
+  post_type: guide
+  industry: Marketing and agencies
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: generic advice
+- post_id: 760da12a5f0dda28908d26ba78bd13e56c566952215f350623664f283aeb4be5
+  source: rss:cpajournal
+  post_type: research
+  industry: Accounting and finance
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: academic article on AI in audit
+- post_id: 4f0a1ef5f24c2d3dd34acec6666790502d545b877ad4128e015805f0337f5f4a
+  source: rss:enr
+  post_type: general_news
+  industry: Construction and trades
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: economic outlook
+- post_id: 6f1328e09ba1d235bc607551175d91389c8de64f7c25174e18dcd2dbdebd59ea
+  source: rss:highereddive
+  post_type: change
+  industry: Education
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  pain_statement: Arizona State offers a three-year teaching degree to widen the teacher pipeline.
+  unsure: true
+  note: change vs noise
+  reviewed: true
+- post_id: b0ba57a3dffbd0e0697b20d63b8cf3f56b28ec41ff304c515013496ad03eac60
+  source: rss:hrdive
+  post_type: change
+  industry: Education
+  money: true
+  spam: false
+  intensity: medium
+  buyer: medium
+  who_has_pain: college international student office
+  pain_statement: DHS proposes fees up to $70K per student for Optional Practical Training, charged to colleges.
+  unsure: true
+  note: could be HR (employers of OPT workers)
+  reviewed: true
+- post_id: bce2a154437845948213d1108c81c3c075a91d6a86f613d9fb8f5e7e6f185eeb
+  source: rss:insidehighered
+  post_type: general_news
+  industry: Education
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: prize news
+- post_id: 7cbff7ad51c705a0042e19657ec126c9e6ca46378e17e6ce4ea96d036f3dd218
+  source: rss:forconstructionpros
+  post_type: company_news
+  industry: Construction and trades
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: company-written promo article
+- post_id: c5e15c880538fdce5a8b98bec6d19926539f0527d51cbbcac6e90c175bacb17d
+  source: rss:eschoolnews
+  post_type: opinion
+  industry: Education
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: teacher opinion
+- post_id: 268dc1b809e4ae14819992d83066e1a8052d9f47c2f7bb287b739f959e6ae103
+  source: rss:searchenginejournal
+  post_type: guide
+  industry: Marketing and agencies
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: advice
+- post_id: 6158f6fc2cb62ab002dc38556cc9afaf6003320ad1791fa4ea63bc422bda9b7d
+  source: rss:fsrmagazine
+  post_type: company_news
+  industry: Restaurants and hospitality
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: venue news
+- post_id: 06f143dc2e1825312841f6d245a9fb41595a34f18f33fd1f7ecef6b3befb1c43
+  source: rss:agweb
+  post_type: change
+  industry: Agriculture
+  money: false
+  spam: false
+  intensity: medium
+  buyer: low
+  who_has_pain: corn farmer
+  pain_statement: USDA unexpectedly raised its corn yield forecast and corn prices fell.
+  unsure: true
+  note: market news; change vs noise
+  reviewed: true
+- post_id: a384c5dbdadac05e0ed971ef2747868680a1a64fd3d299e29aee47e043ea0e28
+  source: rss:edweek
+  post_type: opinion
+  industry: Education
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: risk article
+- post_id: b3984debe8dbf5157077999c77de7e5d56700f5878d967267297d00a29cd6d7a
+  source: rss:accountingtoday
+  post_type: opinion
+  industry: Accounting and finance
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: generic article
+- post_id: d8c58629f0f46c32f8b56fafb903f9b2660672163cc0c7660c34028577d22140
+  source: uk_tenders:find_a_tender
+  post_type: paid_demand
+  industry: Logistics and trucking
+  money: true
+  spam: false
+  intensity: low
+  buyer: high
+  who_has_pain: waste management fleet operator
+  pain_statement: A UK environmental firm is tendering a £1.6M contract to service and repair its HGV fleet.
+  reviewed: true
+- post_id: c55d39c611551be47ec65574545584f1a78265fea6337be7f8a39c3aaf38851e
+  source: ted
+  post_type: paid_demand
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: high
+  who_has_pain: local government
+  pain_statement: A French municipal authority is tendering IT outsourcing and helpdesk services.
+  note: French
+  reviewed: true
+- post_id: ad620abd836c2c23ea0605205a8c3d14b109bf04594728225594ea88b97b7a09
+  source: openfda
+  post_type: pain
+  industry: Healthcare
+  money: false
+  spam: false
+  intensity: medium
+  buyer: low
+  who_has_pain: diabetes patient
+  pain_statement: Continuous glucose monitors give erroneous readings.
+  unsure: true
+  note: manufacturer boilerplate; little signal in this record
+  reviewed: true
+- post_id: 3d0b9471f3c355baa47fd1a3c4b3aaaceb39af234036156f91567d168b1d893f
+  source: uk_tenders:contracts_finder
+  post_type: paid_demand
+  industry: Other
+  money: true
+  spam: false
+  intensity: low
+  buyer: high
+  who_has_pain: defence procurement
+  pain_statement: The UK MoD wants 100 spare battery carriers for a detector unit (£100k).
+  note: defence spare parts
+  reviewed: true
+- post_id: c998d9bf19e2e2d7356fd25974c58e8f7ae192cefdb49c1919a3c021c87e559a
+  source: federal_register
+  post_type: change
+  industry: Education
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  who_has_pain: scholarship granting organization
+  pain_statement: New IRS temporary rules set up the federal scholarship tax credit for 2027.
+  unsure: true
+  note: could be Accounting (tax)
+  reviewed: true
+- post_id: 2fe17e5a1aee15566bf19282826fbd4a3c89e39629fa95d50193bd6a5c482fdd
+  source: uk_tenders:find_a_tender
+  post_type: paid_demand
+  industry: Real estate
+  money: true
+  spam: false
+  intensity: low
+  buyer: high
+  who_has_pain: housing association
+  pain_statement: A UK housing association is buying a £1.2M integrated housing management system.
+  reviewed: true
+- post_id: 879fb7d3ca6f1ffdd9fc83efc19c4a8b926f9dea43e9ddbf79e526121a8f1599
+  source: ted
+  post_type: paid_demand
+  industry: Logistics and trucking
+  money: false
+  spam: false
+  intensity: low
+  buyer: high
+  who_has_pain: regional transport authority
+  pain_statement: A Dutch transport company needs software for demand-responsive special-needs transport by 2028.
+  note: Dutch
+  reviewed: true
+- post_id: 37f57c02ba45270aabc66278960965138b4ce216014715e0115e2c2abcc2b8be
+  source: openfda
+  post_type: pain
+  industry: Healthcare
+  money: false
+  spam: false
+  intensity: medium
+  buyer: low
+  who_has_pain: insulin pump user
+  pain_statement: Glucose sensors fall off and leave insulin pump users with high blood sugar.
+  reviewed: true
+- post_id: 7110e3e75da1d24225202ce11d2d12a73397b89cd620358ff3543966bbb76058
+  source: uk_tenders:contracts_finder
+  post_type: paid_demand
+  industry: Construction and trades
+  money: true
+  spam: false
+  intensity: low
+  buyer: high
+  who_has_pain: rail infrastructure contractor
+  pain_statement: HS2 contractor seeks fire engineering services worth £2.5M.
+  reviewed: true
+- post_id: 8ba9b6cd8741f13cf6aa25e440a566adcfd6836950e3a200d3f260e89013044e
+  source: federal_register
+  post_type: change
+  industry: Other
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  pain_statement: USTR asks for public comments ahead of the 2027 USMCA review.
+  note: trade policy
+  reviewed: true
+- post_id: 53fc982ac8f7f1384b11e36cd35c578d6615df1111a70c48e37ba969c86c10c4
+  source: uk_tenders:find_a_tender
+  post_type: paid_demand
+  industry: Construction and trades
+  money: true
+  spam: false
+  intensity: low
+  buyer: high
+  who_has_pain: NHS mental health trust
+  pain_statement: An NHS trust is tendering £525k of refurbishment works to expand a mental health unit.
+  reviewed: true
+- post_id: 2021946de550029de94136a37d78347de656df7224933cb5db4435d1bba9c1ab
+  source: ted
+  post_type: paid_demand
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: high
+  who_has_pain: university
+  pain_statement: A German university is buying a redundant all-flash SAN with installation and migration.
+  note: German
+  reviewed: true
+- post_id: 92e5fb3ddfec8b7ba9f8d8db60f48365cbc1c65649c1a7d4c4aa9b54feb0d210
+  source: openfda
+  post_type: pain
+  industry: Healthcare
+  money: false
+  spam: false
+  intensity: medium
+  buyer: low
+  who_has_pain: diabetes patient
+  pain_statement: Glucose sensors report readings far below a reference meter, which is clinically significant.
+  reviewed: true
+- post_id: 600bb5319ef0d3db4e8768fd9398aa8e8762f36e33ea198b2085041f4f9dc818
+  source: uk_tenders:contracts_finder
+  post_type: paid_demand
+  industry: Other
+  money: true
+  spam: false
+  intensity: low
+  buyer: high
+  who_has_pain: London borough council
+  pain_statement: A London council is buying highway tree work (£90k).
+  note: arboriculture; no industry fits
+  reviewed: true
+- post_id: a43d46ef6a82c6f2ebed6664db7dd0cae6edb9cb51e27aee4565bc7b4967a6b2
+  source: federal_register
+  post_type: notice
+  industry: Education
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: technical corrections only, no new requirements
+- post_id: 8b8eda3ea34b61ed8d53a317503fb15717a7647d995b095b91a6ea16609ad1f1
+  source: uk_tenders:find_a_tender
+  post_type: paid_demand
+  industry: Real estate
+  money: true
+  spam: false
+  intensity: low
+  buyer: high
+  who_has_pain: housing association
+  pain_statement: A housing group is tendering £1.37M of support services at a supported housing site.
+  unsure: true
+  note: supported housing; could be Healthcare or Other
+  reviewed: true
+- post_id: ca7ddfa2c2975fb73613a0be590371c310a3ea9d6f5becb40339e072f4745e48
+  source: ted
+  post_type: paid_demand
+  industry: Healthcare
+  money: false
+  spam: false
+  intensity: low
+  buyer: high
+  who_has_pain: hospital
+  pain_statement: A German hospital needs an SAP S/4HANA conversion and managed services.
+  unsure: true
+  note: 'hospital ERP: Healthcare vs IT'
+  reviewed: true
+- post_id: a0b19f9dfad9c8df2334c64a1925045d1335c297f7d0b48bf7df7188310cfa29
+  source: openfda
+  post_type: pain
+  industry: Healthcare
+  money: false
+  spam: false
+  intensity: medium
+  buyer: low
+  who_has_pain: patient with a neurostimulator implant
+  pain_statement: Implanted incontinence stimulators lose electrode contact and have to be surgically replaced.
+  reviewed: true
+- post_id: bce3f05974d3c8b4075b01cea054ad27e9efc0290bb49a66461f4f23c0940c4b
+  source: uk_tenders:contracts_finder
+  post_type: paid_demand
+  industry: Construction and trades
+  money: true
+  spam: false
+  intensity: low
+  buyer: high
+  who_has_pain: school trust
+  pain_statement: A primary academy is tendering chimney removal and electrical works (£25k).
+  reviewed: true
+- post_id: 15443cc391369950fdd6d1f1eaa6eaf95f15f3284a0ae794868c0f408389221e
+  source: federal_register
+  post_type: change
+  industry: Accounting and finance
+  money: false
+  spam: false
+  intensity: medium
+  buyer: medium
+  who_has_pain: registered investment adviser
+  pain_statement: The SEC proposes new custody and reporting rules for crypto assets held by funds and advisers.
+  reviewed: true
+- post_id: 518c01f596694694e437e53b95c3c2730fb021d0c9bc2ce1bc477113c9001f59
+  source: uk_tenders:find_a_tender
+  post_type: paid_demand
+  industry: Other
+  money: true
+  spam: false
+  intensity: low
+  buyer: high
+  who_has_pain: parish council
+  pain_statement: A parish council wants a three-year rural grass cutting contract (£30k).
+  note: grounds maintenance; no industry fits
+  reviewed: true
+- post_id: 9b1e3b4b4ac6aa93297173c6ed79148534e0095f0445230566d7e7aab2003b10
+  source: ted
+  post_type: paid_demand
+  industry: Education
+  money: false
+  spam: false
+  intensity: low
+  buyer: high
+  who_has_pain: regional education authority
+  pain_statement: The Flemish government is tendering a SaaS testing platform and item bank for large-scale exams.
+  note: Dutch
+  reviewed: true
+- post_id: 52452d44dfb938f867ecb29be0a16264ba7aad57858bfaae1f7a2ca54d74ce13
+  source: openfda
+  post_type: pain
+  industry: Healthcare
+  money: false
+  spam: false
+  intensity: medium
+  buyer: low
+  who_has_pain: infusion pump user
+  pain_statement: Infusion set tape stops sticking in heat.
+  reviewed: true
+- post_id: ebc611580f9739f299728d7b59e48a642661be4efc91a0b8c1792a934e5658fb
+  source: uk_tenders:contracts_finder
+  post_type: paid_demand
+  industry: Healthcare
+  money: true
+  spam: false
+  intensity: low
+  buyer: high
+  who_has_pain: county council
+  pain_statement: Kent County Council will procure a £1.1M mental health assessment service.
+  reviewed: true
+- post_id: 9f5dfa7f25c1c2b735910f4a7c82b5deac8a52b23a0f462bec187bdb7d397fda
+  source: federal_register
+  post_type: change
+  industry: Other
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  who_has_pain: airline maintenance
+  pain_statement: The FAA requires replacing a turbine seal on certain Engine Alliance engines.
+  note: aviation
+  reviewed: true
+- post_id: 86cb9432c3ac3c0d6b769525c7b048fc14316df7bd893aa68abaa34058a865f1
+  source: uk_tenders:find_a_tender
+  post_type: paid_demand
+  industry: Construction and trades
+  money: true
+  spam: false
+  intensity: low
+  buyer: high
+  who_has_pain: London borough council
+  pain_statement: Islington is tendering supply, installation and maintenance of bike hangars (up to £3.27M).
+  reviewed: true
+- post_id: 50b4a5cef31fa700897e95f975346cf33745b4aa694cd67f37412f55c334b6b3
+  source: ted
+  post_type: paid_demand
+  industry: IT and developer tools
+  money: true
+  spam: false
+  intensity: low
+  buyer: high
+  who_has_pain: municipality
+  pain_statement: A Dutch municipality is outsourcing its migration to an IaaS environment (€1M).
+  note: Dutch
+  reviewed: true
+- post_id: 28020f7b768f08e6a8c21b64fa0932c2ee922a57bf3ccdac0caf786108648551
+  source: openfda
+  post_type: pain
+  industry: Healthcare
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  who_has_pain: hospital pharmacy staff
+  pain_statement: A medication dispensing cabinet lost its connection to the remote manager.
+  unsure: true
+  note: one-off, already fixed
+  reviewed: true
+- post_id: b9e5f66e3e37188f47843b2da8b86176b6a572a8d9cbb88f6c4e8f819a3d5f47
+  source: uk_tenders:contracts_finder
+  post_type: paid_demand
+  industry: Other
+  money: true
+  spam: false
+  intensity: low
+  buyer: high
+  who_has_pain: London borough council
+  pain_statement: A London council is buying tree work (£90k).
+  note: arboriculture
+  reviewed: true
+- post_id: 95438354c7078b01a8806e594a2f1eec734b47c766242eb26d94606fca7b39d2
+  source: federal_register
+  post_type: notice
+  industry: Other
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: FM channel allotment
+- post_id: a10f6329c4cc1927ac1b829b8530de03491bf292fb7d5318b8fee941f949aa3f
+  source: uk_tenders:find_a_tender
+  post_type: paid_demand
+  industry: Construction and trades
+  money: false
+  spam: false
+  intensity: low
+  buyer: high
+  who_has_pain: university
+  pain_statement: A university is replacing a vertical lifting platform in a gallery.
+  reviewed: true
+- post_id: 47af483dc2b79d3b7db4e6e461c5d1d574e8faf362c84cd60574f20a56a36f25
+  source: ted
+  post_type: paid_demand
+  industry: IT and developer tools
+  money: true
+  spam: false
+  intensity: low
+  buyer: high
+  who_has_pain: regional government
+  pain_statement: A Czech region is buying identity and access management for its information systems (CZK 11.5M).
+  note: Czech
+  reviewed: true
+- post_id: ab5d20ce745f5347f69349a1875d0f87bdb8daabb995932c9feb395abbbf4148
+  source: openfda
+  post_type: pain
+  industry: Healthcare
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  who_has_pain: diabetes patient
+  pain_statement: A glucose monitor's alarm reportedly failed.
+  unsure: true
+  note: manufacturer boilerplate; no problem found
+  reviewed: true
+- post_id: 0949b5c2a7b11e3bb19412a7abad0816240d83e564d69741df0b1fb8e62ad507
+  source: uk_tenders:contracts_finder
+  post_type: paid_demand
+  industry: Education
+  money: true
+  spam: false
+  intensity: low
+  buyer: high
+  who_has_pain: further education college group
+  pain_statement: A college group wants suppliers to recruit adult learners, paid per eligible learner (£400k).
+  reviewed: true
+- post_id: 331f31df05379119b57fb7770ff419a1e44c752366ef31829b5b4f24199bfa87
+  source: federal_register
+  post_type: change
+  industry: Other
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  who_has_pain: small business owner in Ohio
+  pain_statement: A federal disaster declaration opens SBA disaster loans for Ohio storm damage.
+  unsure: true
+  note: change vs noise
+  reviewed: true
+- post_id: 98f683faa8a23377cc7a89cab229eb701bdb3482439ee42b6db748c1194f5b2e
+  source: uk_tenders:find_a_tender
+  post_type: paid_demand
+  industry: Other
+  money: true
+  spam: false
+  intensity: low
+  buyer: high
+  who_has_pain: secondary school
+  pain_statement: A school is tendering a £1M cleaning contract.
+  unsure: true
+  note: facilities services; Education vs Other
+  reviewed: true
+- post_id: 6d69b0c7313b21944a9f37b53f2d77d1c6c08b03861b237ee9825d5775ae8763
+  source: ted
+  post_type: paid_demand
+  industry: IT and developer tools
+  money: true
+  spam: false
+  intensity: low
+  buyer: high
+  who_has_pain: broadcaster
+  pain_statement: RAI is tendering voice and data network management and NOC services (€13.6M).
+  note: Italian
+  reviewed: true
+- post_id: 379414a721c76819d0f6a430af547c489f029c8138e3ecd4322055a7f4afd6c9
+  source: openfda
+  post_type: pain
+  industry: Healthcare
+  money: false
+  spam: false
+  intensity: medium
+  buyer: low
+  who_has_pain: surgical team
+  pain_statement: A surgical robot's generator failed to read instruments before a procedure.
+  reviewed: true
+- post_id: 52c0970a8d1a1559913d25e849bade8f0330cd769d191edc59346916b18973fb
+  source: uk_tenders:contracts_finder
+  post_type: paid_demand
+  industry: Construction and trades
+  money: true
+  spam: false
+  intensity: low
+  buyer: high
+  who_has_pain: NHS mental health trust
+  pain_statement: An NHS trust is tendering a £1.7M new mental health emergency unit.
+  reviewed: true
+- post_id: 296f6163bdd13873f47fba2130fa46ffbb3187f1a9d8d842f898d7418c5c9070
+  source: federal_register
+  post_type: notice
+  industry: Other
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: airspace amendment
+- post_id: 1ece3c8e09e1e9fcd570445a6fd67a6f899fd3ceae3e7b3c091a50227dc27ea5
+  source: rss:arxiv-cs.CY
+  post_type: research
+  industry: Other
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: academic paper
+- post_id: 8438657c27c942dc7c367dbc2727a9361a66307679ab2962d4b8cca0993744e6
+  source: rss:arxiv-econ.GN
+  post_type: research
+  industry: Other
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: academic paper
+- post_id: caccb36d5d0bea61a7d42715aa7c761892066ca20eb8b7073809c3f2771b0dcb
+  source: rss:arxiv-cs.CE
+  post_type: research
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  unsure: true
+  note: paper; describes AI service operators' cost-planning problem
+- post_id: 8fd1c0eb9091e293021c1f921b12bd660f8350d8b63e079381f1d63ab30b7093
+  source: rss:arxiv-cs.HC
+  post_type: research
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: academic paper
+- post_id: 5346e4e8bda256e2b4925f713596fac841e1d40fcf6f5c341079119e05e0cb2c
+  source: rss:arxiv-cs.SE
+  post_type: research
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: academic paper
+- post_id: 2feedff99204c39b83c61db15ee135bb95333bb9818a703a319657d27f2f9e94
+  source: rss:arxiv-cs.CY
+  post_type: research
+  industry: Other
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: academic paper
+- post_id: fb6f4f21166c33ac074330e6ac22e50f04bc91a0cc72bfb4a9c87a7add1cca9c
+  source: rss:arxiv-econ.GN
+  post_type: research
+  industry: Other
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: academic paper
+- post_id: c4edc6ab6ac29d15c5d88fb20bd752aa18277695fe5939cd184e801aca4d3ed3
+  source: rss:arxiv-cs.CE
+  post_type: research
+  industry: Manufacturing
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: academic paper
+- post_id: 989511beccf43376a0d2b69e9d5b6c3c9b05aca2bfb430be9e1f5a86a576a5f4
+  source: rss:arxiv-cs.HC
+  post_type: research
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: academic paper
+- post_id: a1ab668931944826364ab1eb9df7d0042c3856e78a38e81271e6e75c34baab0f
+  source: rss:arxiv-cs.SE
+  post_type: research
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: academic paper
+- post_id: 479d5859c084e86035c2322eee0f4c6067864344e7e6219b3601ff9b4975bcdc
+  source: rss:arxiv-cs.CY
+  post_type: research
+  industry: Other
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: 'same paper as #152 (cross-listed arXiv feed)'
+- post_id: 825018c2971b5b720e6d397025b0856fac69b418b85205282f752ec11ed685f3
+  source: rss:arxiv-econ.GN
+  post_type: research
+  industry: Accounting and finance
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: academic paper
+- post_id: 3d56e8c43dd101023007d21e6fcaae82c65b1c4d1cd341e70a57dc31a13d333c
+  source: rss:arxiv-cs.CE
+  post_type: research
+  industry: Manufacturing
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: academic paper
+- post_id: fe9db2cb9cf4f45e6ac3897a8d9f31394ae8da115bdb74456eec475dd87ae24b
+  source: rss:arxiv-cs.HC
+  post_type: research
+  industry: Education
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: academic paper
+- post_id: d1e68750c6b8c022036fcac0012a40dadf10640f21b22330df280fa6358c5ddd
+  source: rss:arxiv-cs.SE
+  post_type: research
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: academic paper
+- post_id: 0255002a3d14bf7ad113c2c847b1124c5ced1ab8da63a41d38f69a8966b7762d
+  source: wordpress:wordfence
+  post_type: praise
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: positive review (Spanish)
+- post_id: 65bee660f4c736fbc2abeb984aaf295922c8744da06085f3604ef6764c450f15
+  source: wordpress:updraftplus
+  post_type: praise
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: positive review
+- post_id: 3166c12a561049b4145c5875e2413663c157fa5acd31f8407a5d46c42e23fb63
+  source: wordpress:seo-by-rank-math
+  post_type: praise
+  industry: Marketing and agencies
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: positive review
+- post_id: de475088e447310bbad73fd08588c3dc5435d5831fd3e01ecdc56430fd1eae48
+  source: wordpress:bookly-responsive-appointment-booking-tool
+  post_type: praise
+  industry: Other
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  unsure: true
+  note: positive review with a minor UI suggestion (Italian)
+- post_id: df4921a58e8779a0b4f4d702a0c75fb8cba788aa64690bfaa8b71da90acc3e4d
+  source: wordpress:contact-form-7
+  post_type: tool_gap
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: high
+  buyer: medium
+  who_has_pain: website owner
+  pain_statement: A Contact Form 7 auto-update suddenly required PHP 8.3 and took a working site offline.
+  reviewed: true
+- post_id: da8e8690ad7e84f29a9bddadc8e973bbc3ade5502185929e3976eeba5d91216b
+  source: wordpress:wordfence
+  post_type: praise
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: positive review
+- post_id: fba55ccfcbfb4b0020663c467f508144e380bd484139e89f96e4c3c62b0a7cdf
+  source: wordpress:updraftplus
+  post_type: praise
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: positive review
+- post_id: 8a02590f556ca1dfbab3a66413f960c6acb591ed24ba2579e72b26999c7cbcc3
+  source: wordpress:seo-by-rank-math
+  post_type: praise
+  industry: Marketing and agencies
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: positive review (Portuguese)
+- post_id: d5e5e3d02b581def7b9938f5f7e9a3066c712474129e91704839edb4fbced98a
+  source: wordpress:bookly-responsive-appointment-booking-tool
+  post_type: praise
+  industry: Other
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: positive review
+- post_id: 8fc2a2e54c773c7eacbe0c6f9958a320ca53a225c623221f546e4821a84db90f
+  source: wordpress:contact-form-7
+  post_type: tool_gap
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: high
+  buyer: medium
+  who_has_pain: web developer
+  pain_statement: Contact Form 7 6.2 removed shortcodes from the form list, slowing developers who embed forms by hand.
+  note: Russian + English
+  reviewed: true
+- post_id: 4e89ad36a48058f21317d4bae3cfb6f3a0fedf42859d7b216f7ce70979e1a33d
+  source: wordpress:wordfence
+  post_type: praise
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: positive review
+- post_id: 6f59d65a25dc16038302e581666f39587182f8ad0cfc6d59c007c3e25e647cbd
+  source: wordpress:updraftplus
+  post_type: praise
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: positive review
+- post_id: 857ee6a77c062a75f3d2f846477879ef871bd5a49fddcbab6a93124ce34ca721
+  source: wordpress:seo-by-rank-math
+  post_type: praise
+  industry: Marketing and agencies
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: positive review
+- post_id: ca0da3026d2c4ba2b569ccb91ff0917f2b11d020aea6de792e0a79206b39b71e
+  source: wordpress:bookly-responsive-appointment-booking-tool
+  post_type: praise
+  industry: Other
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: positive review
+- post_id: 4eec53c8531bd9921a1dfbf3a86be6c5c685a7acc2ab9b1a06da6a25e228ab88
+  source: wordpress:wordfence
+  post_type: praise
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: positive review
+- post_id: b59aa843ab90271418393e623ed670931be7864e2d16c6f768933b0806976133
+  source: huggingface:models
+  post_type: listing
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: model listing
+- post_id: f32b50c64d329e87bf2736eea85738a37c58ee310ccf045fd761c5d303fb4084
+  source: huggingface:spaces
+  post_type: listing
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: space listing
+- post_id: ff824fa1341603ec7116aaaf22ab1070c5cdfdad964df887bc4cbd1d2ab6d12c
+  source: huggingface:models
+  post_type: listing
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: model listing
+- post_id: 2f021764eb7072df6696077bad022a9b08415992279013196fe3f18fa7e6d3f9
+  source: huggingface:spaces
+  post_type: listing
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: space listing
+- post_id: ccb95b1f486cdf06b23fe257ed197bd4cd889c79c7e64257c1df5d2863412e94
+  source: huggingface:models
+  post_type: listing
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: model listing
+- post_id: 54dacdcf6320c2ed32e550f94e507b5c4bb7163b406837d35d1114e24f167e5b
+  source: huggingface:spaces
+  post_type: listing
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: toy demo
+- post_id: d18169f7487f91bf080ea4fcec9a1e777cb7371c33ae46eac0c31d001a904aec
+  source: huggingface:models
+  post_type: listing
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: model listing
+- post_id: 82073f5430aac63af208e79b8bb24d706cf2d89f2683842dcfb0fa8949b8c95c
+  source: huggingface:spaces
+  post_type: listing
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: tool listing
+- post_id: bcc7d983eed9a3d78a69c85e7643a37c0c32fd336c447cc04914be1f00772ebb
+  source: huggingface:models
+  post_type: listing
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: model listing
+- post_id: 622997cb4f3f180f4e09339e54bd75ca6e4785b8458905dd3f70da31dff4342c
+  source: huggingface:spaces
+  post_type: listing
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: space listing
+- post_id: 18ef255e1404f7e332f7b146b6623361986833d577f6bceeb17dbf06028f1bf5
+  source: huggingface:models
+  post_type: listing
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: model listing
+- post_id: 5990cb1ccacd9c3c7c978e717d85f34d93149dad1187d407816bd3bd81e41e9a
+  source: huggingface:spaces
+  post_type: guide
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: guide
+- post_id: 5774086c4be745d1348343653b8d970282b1bcc43d1af0e18c6f5151d7caf07d
+  source: huggingface:models
+  post_type: listing
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  unsure: true
+  note: major model release listing; could be change
+- post_id: 175940344322349688832a1e5fe67b8787bd7e3452dda049525961be03a5788f
+  source: huggingface:spaces
+  post_type: listing
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: space listing
+- post_id: f47533c9137700041071d9f717c8c0d763fcb2246e1db808499cde9c85cbe038
+  source: huggingface:models
+  post_type: listing
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: model listing
+- post_id: aabacb4ab8229f8309ea44ff73a5835e8ed26d98c50fb835a12fd30b00493e4a
+  source: huggingface:spaces
+  post_type: listing
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: space listing
+- post_id: da83bf4dbbcb4923dc35d77eb4b16b7bf073f3a021388cbc47bcd80d5cecabce
+  source: huggingface:models
+  post_type: listing
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: model listing
+- post_id: b7e77e6e27793a8ac97c58207f6d20e0673f0aa72b8e86d4a81afb0e36bd6de0
+  source: huggingface:spaces
+  post_type: listing
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: space listing
+- post_id: 62f733b3bfd59254aac07167c9fc9180aee55cf3d7fbaa77f9d0b904ba519b38
+  source: huggingface:models
+  post_type: listing
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: model listing
+- post_id: 3655f29a0e34e46f7f972a11eb88903cd3879cb8e93941d55fd629aac896ebfa
+  source: huggingface:spaces
+  post_type: listing
+  industry: IT and developer tools
+  money: false
+  spam: false
+  intensity: low
+  buyer: low
+  note: space listing
