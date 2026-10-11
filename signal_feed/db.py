@@ -400,6 +400,17 @@ class SurveyRow(FeedBase):
     answered_at: Mapped[datetime] = mapped_column(UTCDateTime)
 
 
+class ExperimentAssignmentRow(FeedBase):
+    """Sticky A/B arms (section 13): a user keeps their arm even if the shares are edited later."""
+
+    __tablename__ = "experiment_assignments"
+
+    user_id: Mapped[str] = mapped_column(ForeignKey("users.id"), primary_key=True)
+    experiment: Mapped[str] = mapped_column(String(64), primary_key=True)
+    arm: Mapped[str] = mapped_column(String(64))
+    assigned_at: Mapped[datetime] = mapped_column(UTCDateTime)
+
+
 class ModelRow(FeedBase):
     """Trained models (section 8.2, 8.4). `value` models keep their coefficients here; `v2` ranking models
     keep a file path. A model starts as `candidate`; only one passing the offline comparison (Phase 7)

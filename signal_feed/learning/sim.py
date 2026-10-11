@@ -4,8 +4,9 @@ database: callers use a throwaway copy.
 
 A simulated builder likes some industries and post types (hidden from the system). For each item they
 see, `interest` = industry taste x type taste. They read with probability rising in interest, save and
-"I'd build this" only after reading, answer "Not for me" or scroll past what they don't like, and answer
-"Was this useful?" from their taste. Time moves forward one day per session.
+"I'd build this" only after reading, sometimes turn a save into an idea and an idea into outreach, answer
+"Not for me" or scroll past what they don't like, and answer "Was this useful?" from their taste. Time
+moves forward one day per session.
 """
 
 from __future__ import annotations
@@ -41,6 +42,7 @@ class SimStats:
     pages: int = 0
     shown: int = 0
     saves: int = 0
+    ideas: int = 0
     reads: int = 0
     not_for_me: int = 0
     surveys: int = 0
@@ -84,6 +86,11 @@ def _respond(b: SimBuilder, page: FeedPage, session: str, at: datetime, rng: np.
                 stats.saves += 1
                 if rng.random() < 0.3 * interest:
                     ev(item, "id_build")
+                if rng.random() < 0.25 * interest:
+                    ev(item, "idea")
+                    stats.ideas += 1
+                    if rng.random() < 0.3 * interest:
+                        ev(item, "outreach")
             if item.ask_useful:
                 ev(item, "useful_yes" if interest >= 0.4 else "useful_no")
                 stats.surveys += 1

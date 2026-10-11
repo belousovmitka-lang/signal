@@ -147,6 +147,23 @@ map:
   discover_min_positive_events: 5 # an off-map niche with this many positive events in the lookback and
                                   # affinity >= rings.regular_min joins the map ("discovered")
 
+# Evaluation (section 13, Phase 7)
+evaluation:
+  ndcg_k: 20
+  # A v2 candidate is activated only if, replayed on held-out users' sessions, it beats v1 on NDCG@20
+  # for saves by at least `min_gain` and is no worse than `idea_tolerance` on ideas.
+  min_sessions: 30
+  min_gain: 0.01
+  idea_tolerance: 0.0
+  # A/B tests (section 13 "Online"). Each user is assigned once per experiment and keeps the arm.
+  # An arm's `overrides` are config values by dotted path; `ranker: v2` uses the given v2 model.
+  # Example:
+  #   - name: explore-15
+  #     arms:
+  #       control: {share: 0.5}
+  #       more-exploration: {share: 0.5, overrides: {candidates.shares.exploration: 0.15}}
+  experiments: []
+
 # Profile sync (section 6.6, Phase 5)
 profile:
   # A niche in Core is suggested for the profile once the user has this many positive actions in it

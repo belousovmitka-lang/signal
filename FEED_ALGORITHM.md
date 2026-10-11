@@ -372,6 +372,12 @@ Every feed item response includes a `score_breakdown` (hidden from users, used f
 
 **Online:** A/B tests with per-user assignment; ship only changes that improve the north star without hurting "Not for me" rate or diversity.
 
+**As built (2026-10-11, Phase 7):** `signal_feed/evaluation/`.
+- *Metrics* (`scripts/feed_metrics.py`, text or `--json`; the dashboard is this report): every number above, over a window (default 7 days), calibration cards excluded. Definitions, where the spec leaves room: save rate = saves per 100 items shown, plus the share of sessions with a save; idea conversion = ideas per save; outreach rate = outreach per idea; diversity = distinct leaf niches and distinct sources per block of 20 consecutive items in a session; exploration acceptance = saves per exploration item shown; coverage = active problems with a post shown to anyone in 30 days; retention d7 / d30 = came back in days 7–13 / 30–59 after their first item. Guardrails: dwell minutes per user, sessions per user per day, scroll depth (items per session).
+- *Offline replay* (`scripts/feed_evaluate.py [--promote]`): held-out users (the same split v2 training uses), each session re-ranked from the features and quality factor logged at impression time; NDCG@20 on saves and on ideas for the logged order, v1, and the latest v2 candidate. A candidate is activated only with ≥ 30 held-out sessions containing a save, saves NDCG ≥ v1 + 0.01, and ideas NDCG not worse; the comparison is stored on the model.
+- *A/B tests:* experiments live in `evaluation.experiments`. Each arm has a share, config overrides by dotted path (validated, so a typo fails), and optionally `ranker: v2` with a model id. Users are assigned by a stable hash on first sight and the arm is stored (sticky when shares are edited), and every impression records the user's arms. `scripts/feed_metrics.py --experiment NAME` reports per arm and applies the ship rule: north star significantly better (two-proportion z ≥ 1.96), "Not for me" rate not significantly higher, diversity not down more than 5%.
+- *First end-to-end run* (simulated, 40 builders × 7 days on the real corpus): north star 33 of 40, 8.5 saves per 100 items, 10 niches and 8 sources per 20 items, coverage 56%. Offline, a v2 trained on that behaviour beat v1 on held-out builders (saves NDCG 0.356 vs 0.288, ideas 0.253 vs 0.221), and the logged order matched v1 (0.2878 vs 0.2877) as it should. Synthetic numbers: they check the machinery, not the product.
+
 ---
 
 ## 14. Safety and privacy
@@ -397,7 +403,7 @@ Finish each phase with tests and a short demo script before starting the next.
 5. **Phase 4 — map:** affinity-to-map conversion, pins, drop-ins, remove, nudge, weekly snapshots, change log, narrowing checks; all `/map` endpoints. — built (2026-10-11): `/map`, `/map/history`, `/map/node/{id}`, `/map/pin`, `/map/unpin`, `/map/drop-in`, `/map/remove`, `/map/nudge`, `/map/reset`; `scripts/map_weekly.py`; demo `scripts/feed_session.py --map`.
 6. **Phase 5 — profile sync:** pending updates and approval endpoints. — built (2026-10-11): `GET /profile/niches/pending`, `POST /profile/niches/approve`, `GET /profile/niches`, `POST /profile/niches/unpublish`, `POST /profile/auto-publish`; synced by the weekly job.
 7. **Phase 6 — learning:** "Was this useful?" surveys, Thompson-sampling exploration, filter-bubble guard, nightly v2 models once there is enough data. — built (2026-10-11): see section 10 "As built"; `scripts/feed_nightly.py`, `scripts/problems.py rescore`, `scripts/feed_simulate.py`. No real usage data yet: value and v2 models train only on simulated builders so far.
-8. **Phase 7 — evaluation:** offline replay harness, metrics dashboard, A/B assignment.
+8. **Phase 7 — evaluation:** offline replay harness, metrics dashboard, A/B assignment. — built (2026-10-11): see section 13 "As built"; `scripts/feed_metrics.py`, `scripts/feed_evaluate.py`, experiments in `config/feed.yaml`.
 
 ---
 

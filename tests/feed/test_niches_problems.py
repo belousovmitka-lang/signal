@@ -35,6 +35,13 @@ TOPICS = {name: v / np.linalg.norm(v) for name, v in
           (("citations", rng.normal(size=DIM)), ("billing", rng.normal(size=DIM)), ("intake", rng.normal(size=DIM)))}
 
 
+@pytest.fixture(autouse=True)
+def _fresh_rng():
+    """Each test draws the same vectors, whatever ran before it."""
+    global rng
+    rng = np.random.default_rng(1)
+
+
 def vec(topic, spread=0.15):
     v = TOPICS[topic] + rng.normal(scale=spread, size=DIM)
     return (v / np.linalg.norm(v)).tolist()

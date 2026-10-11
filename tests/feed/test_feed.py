@@ -36,7 +36,6 @@ from signal_feed.posts import PostsReader
 
 NOW = datetime(2026, 10, 11, 12, 0, tzinfo=timezone.utc)
 DIM = 16
-rng = np.random.default_rng(3)
 
 # (industry, branch, post_type, how many, sources)
 WORLD = [
@@ -56,6 +55,7 @@ def unit(v):
 
 @pytest.fixture
 def world(tmp_path, feed_store):
+    rng = np.random.default_rng(3)          # per fixture: the same world whatever ran before
     seed_tree(feed_store)
     with feed_store.session() as s:
         nodes = {(n.label if n.parent_id is None else f"{s.get(NicheRow, n.parent_id).label} > {n.label}"): n.id

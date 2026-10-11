@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Literal, get_args
+from typing import Any, Literal, get_args
 
 import yaml
 from pydantic import BaseModel, ConfigDict, Field, model_validator
@@ -223,6 +223,33 @@ class MapConfig(_Strict):
     discover_min_positive_events: int = Field(gt=0)
 
 
+class ExperimentArm(_Strict):
+    share: Fraction = Field(gt=0, le=1)
+    overrides: dict[str, Any] = Field(default_factory=dict)   # dotted config path -> value
+    ranker: Literal["v1", "v2"] | None = None
+    model_id: int | None = None                              # with ranker v2: which model (else the active one)
+
+
+class Experiment(_Strict):
+    name: str = Field(min_length=1, max_length=64)
+    arms: dict[str, ExperimentArm] = Field(min_length=2)
+
+    @model_validator(mode="after")
+    def _shares_sum_to_one(self) -> Experiment:
+        total = sum(a.share for a in self.arms.values())
+        if abs(total - 1) > 1e-6:
+            raise ValueError(f"experiment {self.name}: arm shares must sum to 1, got {total:.3f}")
+        return self
+
+
+class EvaluationConfig(_Strict):
+    ndcg_k: int = Field(gt=0)
+    min_sessions: int = Field(gt=0)
+    min_gain: float = Field(ge=0)
+    idea_tolerance: float = Field(ge=0)
+    experiments: list[Experiment] = Field(default_factory=list)
+
+
 class ProfileConfig(_Strict):
     min_positive_events: int = Field(ge=0)
     resuggest_after_days: int = Field(ge=0)
@@ -350,6 +377,7 @@ class FeedConfig(_Strict):
     user_model: UserModelConfig
     map: MapConfig
     profile: ProfileConfig
+    evaluation: EvaluationConfig
     events: EventsConfig
     candidates: CandidatesConfig
     ranking: RankingConfig

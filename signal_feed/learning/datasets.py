@@ -32,12 +32,15 @@ class Dataset:
     y: dict[str, np.ndarray]           # action -> 0/1 per row
     users: np.ndarray                  # user id per row (for user-level splits)
     impression_ids: np.ndarray
+    sessions: np.ndarray               # "user/session" per row (offline replay ranks within a session)
+    logged_scores: np.ndarray          # the score the feed used when it showed the item
+    quality: np.ndarray                # the logged quality factor (replay re-uses it)
 
 
 def impressions_dataset(store: FeedStore) -> Dataset:
     with store.session() as s:
         imps = list(s.execute(select(ImpressionRow.id, ImpressionRow.user_id, ImpressionRow.session_id,
-                                     ImpressionRow.item_id, ImpressionRow.score_breakdown)
+                                     ImpressionRow.item_id, ImpressionRow.score_breakdown, ImpressionRow.score)
                               .where(ImpressionRow.candidate_source != "calibration")))
         acted: dict[tuple, set[str]] = defaultdict(set)
         for imp_id, uid, sid, item, etype, weight in s.execute(select(
@@ -48,8 +51,8 @@ def impressions_dataset(store: FeedStore) -> Dataset:
             if imp_id is not None:
                 acted[("imp", imp_id)].add(etype)
             acted[("item", uid, sid, item)].add(etype)
-    rows, ys, users, ids = [], defaultdict(list), [], []
-    for imp_id, uid, sid, item, breakdown in imps:
+    rows, ys, users, ids, sessions, logged, quality = [], defaultdict(list), [], [], [], [], []
+    for imp_id, uid, sid, item, breakdown, score in imps:
         feats = (breakdown or {}).get("features")
         if not feats:
             continue
@@ -59,8 +62,12 @@ def impressions_dataset(store: FeedStore) -> Dataset:
             ys[action].append(1 if action in done else 0)
         users.append(uid)
         ids.append(imp_id)
+        sessions.append(f"{uid}/{sid}")
+        logged.append(score or 0.0)
+        quality.append(breakdown.get("quality_factor", 1.0))
     x = np.asarray(rows, dtype=np.float32).reshape(-1, len(FEATURES))
-    return Dataset(x, {a: np.asarray(ys[a], dtype=np.int8) for a in ACTIONS}, np.asarray(users), np.asarray(ids))
+    return Dataset(x, {a: np.asarray(ys[a], dtype=np.int8) for a in ACTIONS}, np.asarray(users), np.asarray(ids),
+                   np.asarray(sessions), np.asarray(logged, dtype=np.float64), np.asarray(quality, dtype=np.float64))
 
 
 def survey_dataset(store: FeedStore) -> tuple[np.ndarray, np.ndarray]:
