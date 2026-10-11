@@ -19,6 +19,7 @@ from .events import BatchResult, BatchTooLargeError, EventBatch, UnknownUserErro
 from .feed.data import FeedDataCache
 from .feed.service import FeedPage, FeedService
 from .db import UserMapSnapshotRow
+from .feed import profile as profiles
 from .feed import usermap
 from .feed.usermodel import UnknownNodeError, apply_events, onboard
 from .niches.tree import seed_labels
@@ -58,6 +59,21 @@ class NudgeAction(NodeAction):
 
 class UserAction(BaseModel):
     user_id: str
+
+
+class Decision(BaseModel):
+    update_id: int
+    approve: bool
+
+
+class Decisions(BaseModel):
+    user_id: str
+    decisions: list[Decision] = Field(min_length=1, max_length=100)
+
+
+class AutoPublish(BaseModel):
+    user_id: str
+    on: bool
 
 
 def create_app(store: FeedStore, posts: PostsReader, config: FeedConfig, service: FeedService | None = None) -> FastAPI:
@@ -151,6 +167,38 @@ def create_app(store: FeedStore, posts: PostsReader, config: FeedConfig, service
     def post_reset(a: UserAction) -> dict:
         _user(a.user_id)
         return _act(usermap.reset, a.user_id)
+
+    @app.get("/profile/niches/pending")
+    def get_profile_pending(user_id: str) -> dict:
+        _user(user_id)
+        return {"updates": profiles.pending_updates(store, config, user_id)}
+
+    @app.post("/profile/niches/approve")
+    def post_profile_approve(d: Decisions) -> dict:
+        """Approve (approve=true) or decline (approve=false) pending updates."""
+        _user(d.user_id)
+        try:
+            return {"decided": profiles.decide(store, d.user_id, [(x.update_id, x.approve) for x in d.decisions])}
+        except profiles.ProfileError as exc:
+            raise HTTPException(status_code=404, detail=str(exc)) from None
+
+    @app.get("/profile/niches")
+    def get_profile_niches(user_id: str, audience: Literal["public", "connection", "self"] = "public") -> dict:
+        _user(user_id)
+        return profiles.profile_niches(store, user_id, audience)
+
+    @app.post("/profile/niches/unpublish")
+    def post_profile_unpublish(a: NodeAction) -> dict:
+        _user(a.user_id)
+        if not profiles.unpublish(store, a.user_id, a.node_id):
+            raise HTTPException(status_code=404, detail="not on the profile")
+        return {"ok": True}
+
+    @app.post("/profile/auto-publish")
+    def post_auto_publish(a: AutoPublish) -> dict:
+        _user(a.user_id)
+        profiles.set_auto_publish(store, a.user_id, a.on)
+        return {"ok": True}
 
     @app.post("/events")
     def post_events(batch: EventBatch) -> BatchResult:

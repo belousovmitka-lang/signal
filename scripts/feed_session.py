@@ -89,6 +89,8 @@ def main() -> int:
         with store.session() as s:
             for c in s.query(MapChangeLogRow).filter_by(user_id=uid).order_by(MapChangeLogRow.at):
                 print(f"  (internal log, never shown) {c.message}")
+        for u in client.get("/profile/niches/pending", params={"user_id": uid}).json()["updates"]:
+            print(f"  profile suggestion: {u['action']} {' > '.join(u['path'])}?")
     shutil.rmtree(tmp.parent, ignore_errors=True)
     return 0
 

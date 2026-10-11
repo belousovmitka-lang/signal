@@ -20,7 +20,7 @@ def main() -> int:
     settings = FeedSettings.from_env()
     stats = run_weekly(FeedStore(settings.feed_database_url), load_feed_config(settings.config_file))
     print(f"{stats.users} users, {stats.snapshots} snapshots, {stats.migrated} rows moved off changed niches, "
-          f"{stats.reopened} removed niches re-opened")
+          f"{stats.reopened} removed niches re-opened, {stats.profile_updates} profile suggestions")
     for label, items in (("promoted", stats.promoted), ("discovered", stats.discovered),
                          ("fading", stats.fading), ("left the map", stats.dropped)):
         for item in items:

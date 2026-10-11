@@ -223,6 +223,11 @@ class MapConfig(_Strict):
     discover_min_positive_events: int = Field(gt=0)
 
 
+class ProfileConfig(_Strict):
+    min_positive_events: int = Field(ge=0)
+    resuggest_after_days: int = Field(ge=0)
+
+
 class EventsConfig(_Strict):
     weights: dict[EventType, float]
     scroll_past_max_dwell_ms: int = Field(gt=0)
@@ -340,6 +345,7 @@ class FeedConfig(_Strict):
     problems: ProblemsConfig
     user_model: UserModelConfig
     map: MapConfig
+    profile: ProfileConfig
     events: EventsConfig
     candidates: CandidatesConfig
     ranking: RankingConfig

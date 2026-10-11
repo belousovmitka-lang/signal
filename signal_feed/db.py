@@ -374,6 +374,17 @@ class ProfilePendingUpdateRow(FeedBase):
     decided_at: Mapped[datetime | None] = mapped_column(UTCDateTime)
 
 
+class UserProfileNicheRow(FeedBase):
+    """Niches published on the user's profile (section 6.6 / 14): only ever after approval, or with
+    auto-publish on."""
+
+    __tablename__ = "user_profile_niches"
+
+    user_id: Mapped[str] = mapped_column(ForeignKey("users.id"), primary_key=True)
+    node_id: Mapped[int] = mapped_column(ForeignKey("niches.id"), primary_key=True)
+    published_at: Mapped[datetime] = mapped_column(UTCDateTime)
+
+
 class SurveyRow(FeedBase):
     """"Was this useful?" answers (section 8.4)."""
 

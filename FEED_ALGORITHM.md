@@ -336,6 +336,7 @@ Tables (SQLAlchemy; in a separate feed database for now, movable to the connecto
 | `GET /map/node/{id}` | path, saves, reads, skips, and where it sits (no prose about why) |
 | `POST /map/unpin`, `POST /map/reset` | added in Phase 4: undo a pin; reset the map to the quiz (section 14) |
 | `GET /profile/niches/pending` and `POST /profile/niches/approve` | profile sync with user approval |
+| `GET /profile/niches?audience=`, `POST /profile/niches/unpublish`, `POST /profile/auto-publish` | added in Phase 5: the published profile (public = broad areas), taking a niche off, auto-publish |
 | `POST /mode` | switch exploring / committed |
 
 Every feed item response includes a `score_breakdown` (hidden from users, used for debugging and evaluation).
@@ -371,6 +372,8 @@ Every feed item response includes a `score_breakdown` (hidden from users, used f
 - Niche data is personal: profile niches publish only with user approval; public profiles show broad areas, connections see exact niches; raw events never leave the backend.
 - Users can see and reset their map at any time.
 
+**Profile sync as built (2026-10-11, Phase 5):** `signal_feed/feed/profile.py`. A Core niche on the map is suggested for the profile once the user has ≥ 3 positive actions in it or pinned it there (quiz choices start in Core, so without that rule every new user would be asked about their own answers); a published niche that left the map, or was removed, is suggested for removal. Suggestions are neutral (`GET /profile/niches/pending`: niche, path, add or remove, nothing about why), decided with `POST /profile/niches/approve` (approve or decline per update); a declined niche isn't offered again for 90 days; a suggestion that stops holding (the niche left Core) is withdrawn. Auto-publish (`POST /profile/auto-publish`) applies updates at once and records them as approved. `GET /profile/niches?audience=public` returns only broad areas (the industries); `connection` and `self` return the exact niches; `POST /profile/niches/unpublish` takes one off directly. Sync runs in the weekly job and whenever pending updates are read. Until app auth exists, the audience is a query parameter: the app must pass `public` for anyone but the user and their connections.
+
 ---
 
 ## 15. Build order
@@ -382,7 +385,7 @@ Finish each phase with tests and a short demo script before starting the next.
 3. **Phase 2 — niche tree and problems:** seed tree, problem clustering and scoring; a script that prints the top problems per niche. — built (2026-10-11): `scripts/problems.py build | tree | top`; first run without LLM naming (Anthropic credit ran out), see 4 and 5 "As built". Seeded industry branches added (prompt v8 lists them; re-tag pending Anthropic credit, ~$2–3 because the prompt grew to ~5k tokens). Tagger moved to effort medium (prompt v7: industry 82.3%, kept-in-feed P 91.2% / R 78.5% on the eval set; ~$1.30 per full backfill).
 4. **Phase 3 — MVP feed:** user model with quiz priors and calibration, candidate generation, v1 linear ranker, feed composition with quotas, diversity and explanations; `GET /feed`. — built (2026-10-11): `signal_feed/feed/`, `POST /onboarding`, `GET /onboarding/options`, `GET /feed`; events update the user model; demo `scripts/feed_session.py` (runs on a throwaway copy of the feed database).
 5. **Phase 4 — map:** affinity-to-map conversion, pins, drop-ins, remove, nudge, weekly snapshots, change log, narrowing checks; all `/map` endpoints. — built (2026-10-11): `/map`, `/map/history`, `/map/node/{id}`, `/map/pin`, `/map/unpin`, `/map/drop-in`, `/map/remove`, `/map/nudge`, `/map/reset`; `scripts/map_weekly.py`; demo `scripts/feed_session.py --map`.
-6. **Phase 5 — profile sync:** pending updates and approval endpoints.
+6. **Phase 5 — profile sync:** pending updates and approval endpoints. — built (2026-10-11): `GET /profile/niches/pending`, `POST /profile/niches/approve`, `GET /profile/niches`, `POST /profile/niches/unpublish`, `POST /profile/auto-publish`; synced by the weekly job.
 7. **Phase 6 — learning:** "Was this useful?" surveys, Thompson-sampling exploration, filter-bubble guard, nightly v2 models once there is enough data.
 8. **Phase 7 — evaluation:** offline replay harness, metrics dashboard, A/B assignment.
 

@@ -147,6 +147,13 @@ map:
   discover_min_positive_events: 5 # an off-map niche with this many positive events in the lookback and
                                   # affinity >= rings.regular_min joins the map ("discovered")
 
+# Profile sync (section 6.6, Phase 5)
+profile:
+  # A niche in Core is suggested for the profile once the user has this many positive actions in it
+  # (or pinned it there): quiz choices start in Core, and suggesting them all at once would be noise.
+  min_positive_events: 3
+  resuggest_after_days: 90        # a declined suggestion isn't offered again before this
+
 # Events and their weights (section 6.3)
 events:
   weights:

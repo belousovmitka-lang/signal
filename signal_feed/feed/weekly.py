@@ -24,11 +24,13 @@ from ..db import (
     FeedStore,
     NicheRow,
     PostNicheRow,
+    ProfilePendingUpdateRow,
     UserDropInRow,
     UserMapNodeRow,
     UserMapSnapshotRow,
     UserNicheAffinityRow,
     UserPinRow,
+    UserProfileNicheRow,
     UserRemovedRow,
     UserRow,
 )
@@ -46,6 +48,7 @@ class WeeklyStats:
     dropped: list[str] = field(default_factory=list)
     reopened: int = 0
     snapshots: int = 0
+    profile_updates: int = 0
 
 
 def week_of(day: datetime):
@@ -72,7 +75,12 @@ def migrate_tree_changes(store: FeedStore) -> int:
                 node = target[node]
             return node
 
-        for cls in (UserNicheAffinityRow, UserMapNodeRow, UserPinRow, UserDropInRow, UserRemovedRow):
+        for u in s.scalars(select(ProfilePendingUpdateRow).where(ProfilePendingUpdateRow.node_id.in_(target),
+                                                                 ProfilePendingUpdateRow.status == "pending")):
+            u.node_id = final(u.node_id)
+            moved += 1
+        for cls in (UserNicheAffinityRow, UserMapNodeRow, UserPinRow, UserDropInRow, UserRemovedRow,
+                    UserProfileNicheRow):
             for row in list(s.scalars(select(cls).where(cls.node_id.in_(target)))):
                 to = final(row.node_id)
                 existing = s.get(cls, (row.user_id, to))
@@ -192,6 +200,8 @@ def run_user(store: FeedStore, config: FeedConfig, user_id: str, now: datetime, 
         s.merge(UserMapSnapshotRow(user_id=user_id, week=week_of(now), created_at=now,
                                    data={"nodes": [{k: n[k] for k in keep} for n in view["nodes"]]}))
     stats.snapshots += 1
+    from .profile import sync
+    stats.profile_updates += sync(store, config, user_id, clock=lambda: now)
 
 
 def run_weekly(store: FeedStore, config: FeedConfig, clock: Callable[[], datetime] = utcnow) -> WeeklyStats:
