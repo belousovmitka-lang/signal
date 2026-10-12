@@ -63,13 +63,17 @@ class RssConnector(BaseConnector):
 
         community, language, domain = feed_meta(parsed, url, query.params.get("community") or None, name)
         for entry in parsed.entries:
-            fields = entry_fields(entry, url, name, community, language, domain)
+            fields = entry_fields(self.prepare(entry), url, name, community, language, domain)
             if fields is None:
                 self.invalid += 1
                 continue
             post = self.make_post(industry_hint=query.industry_hint, **self.adapt(fields, entry, query))
             if post is not None:
                 yield post
+
+    def prepare(self, entry: Any) -> Any:
+        """Hook to repair an entry before it is read (see podcasts: episodes linked only by enclosure)."""
+        return entry
 
     def adapt(self, fields: dict[str, Any], entry: Any, query: SourceQuery) -> dict[str, Any]:
         """Hook for feed-based connectors that refine the fields (see classic_forum)."""

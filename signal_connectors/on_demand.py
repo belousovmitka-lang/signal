@@ -10,8 +10,9 @@
 3. Check feeds automatically (assess_feed): recent, enough items, not a page farm, no spam,
    headlines that match the industry's vocabulary. Passing feeds are enabled; the rest are held
    (status unverified, locked, with the reason) for a human.
-4. Job boards: each incumbent tool is tried as a public Greenhouse, Lever or Ashby board
-   (connectors/job_boards.py find_boards); boards that clearly belong to that company are added.
+4. Job boards and podcasts: each incumbent tool is tried as a public Greenhouse, Lever or Ashby board
+   (connectors/job_boards.py find_boards); boards that clearly belong to that company are added. With a
+   Podcast Index key, live English shows matching the vocabulary are added (connectors/podcasts.py).
 5. Forums are never enabled automatically (rule 2): their terms must be read by a person. They wait
    in the review queue (scripts/review_queue.py) with terms: unchecked, unless a platform's or an
    earlier review's terms already decided them.
@@ -37,6 +38,7 @@ import feedparser
 
 from .config import load_sources
 from .connectors.job_boards import find_boards
+from .connectors.podcasts import find_shows
 from .discovery_agent import Seeds, discover
 from .industries import INDUSTRIES_DIR, Feed, Industry, Link, load_industries, save_industry
 from .parsing import parse_date
@@ -53,7 +55,7 @@ SPAM = re.compile(r"\b(casino|porn|torrent|viagra|escort|betting|xxx|3gp|crack(e
 _GENERIC = set("""business businesses owner owners manager managers management service services software tool tools
 company companies professional professionals industry small team staff work worker workers client clients customer
 customers system systems online digital best guide tips with from your their about that this have more help""".split())
-FIRST_FILL_SOURCES = ("rss", "classic_forum", "job_boards")
+FIRST_FILL_SOURCES = ("rss", "classic_forum", "job_boards", "podcasts")
 # Verdicts that need no human: the feed is simply asleep, empty or unreachable.
 _DEAD = re.compile(r"^(no new items|only \d+ items|HTTP \d+|fetch failed|robots\.txt)")
 LOCK_DIR = Path(__file__).resolve().parent.parent / "data"
@@ -92,6 +94,7 @@ class OnDemandResult:
     feeds_skipped: dict[str, str] = field(default_factory=dict)    # asleep or unreachable; no review needed
     forums_queued: list[str] = field(default_factory=list)          # waiting for a terms review
     job_boards: list[str] = field(default_factory=list)             # incumbent tools' public ATS boards
+    podcasts: list[str] = field(default_factory=list)               # show feeds found on Podcast Index
     first_fill: dict[str, Any] = field(default_factory=dict)        # source -> {status, new}
     cost_usd: float = 0.0
 
@@ -302,6 +305,17 @@ async def ensure_industry(services: Services, request: IndustryRequest, *, colle
                 industry.job_boards.append(Link(name=tool, url=b.url, status="live", checked_at=today, locked=True,
                                                 notes=f"{b.ats} board, {b.jobs} open jobs (on demand)"))
                 result.job_boards.append(b.url)
+        if os.environ.get("PODCASTINDEX_KEY") and os.environ.get("PODCASTINDEX_SECRET"):
+            try:
+                shows = await find_shows(services.http, plan.name, plan.roles, [], terms, today)
+            except Exception as exc:      # podcasts are a bonus; never fail the map over them
+                log.warning("on_demand: podcast search failed (%s)", exc)
+                shows = []
+            for _, feed in shows:
+                industry.podcasts.append(Link(name=feed.get("title") or feed["url"], url=feed["url"], status="live",
+                                              checked_at=today, locked=True,
+                                              notes=f"Podcast Index {feed['id']}, {feed.get('episodeCount')} episodes"))
+                result.podcasts.append(feed["url"])
 
         info = industry.discovery
         info.needs_review, info.on_demand, info.request = False, True, request.name

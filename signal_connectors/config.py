@@ -257,6 +257,20 @@ class SourcesFile(_Strict):
                         source.queries.append(QueryConfig(industry_hint=key,
                                                           params={"board": board.url, "company": board.name}))
 
+    def add_industry_podcasts(self, industries: dict[str, Industry]) -> None:
+        """One query per live show feed in the maps' podcasts, for options.industry_podcasts."""
+        for source in self.sources.values():
+            if not source.options.get("industry_podcasts"):
+                continue
+            have = {q.params.get("feed") for q in source.queries}
+            for key, industry in industries.items():
+                for show in industry.podcasts:
+                    if show.status == "live" and show.url and show.url not in have:
+                        have.add(show.url)
+                        source.queries.append(QueryConfig(industry_hint=key, params={
+                            "feed": show.url, "name": re.sub(r"[^a-z0-9]+", "-", show.name.lower()).strip("-")[:40],
+                            "community": show.name}))
+
     def add_industry_subreddits(self, industries: dict[str, Industry]) -> None:
         """One query per industry map (its subreddits) for sources with options.industry_subreddits."""
         for source in self.sources.values():
@@ -294,6 +308,7 @@ def load_sources(path: Path | str, industries_dir: Path | None = INDUSTRIES_DIR)
         sources.add_industry_feeds(industries)
         sources.add_industry_forums(industries)
         sources.add_industry_job_boards(industries)
+        sources.add_industry_podcasts(industries)
         sources.add_industry_subreddits(industries)
         sources.add_industry_templates(industries)
     return sources

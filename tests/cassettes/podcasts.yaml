@@ -1,0 +1,2240 @@
+interactions:
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - feeds.buzzsprout.com
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://feeds.buzzsprout.com/robots.txt
+  response:
+    body:
+      string: 'User-agent: *
+
+        Disallow: /101612.rss
+
+        '
+    headers:
+      accept-ranges:
+      - bytes
+      age:
+      - '234'
+      cf-cache-status:
+      - HIT
+      cf-ray:
+      - a492e7f3783c241d-IAD
+      connection:
+      - keep-alive
+      content-length:
+      - '36'
+      content-type:
+      - text/plain
+      date:
+      - Mon, 12 Oct 2026 03:09:29 GMT
+      last-modified:
+      - Tue, 22 Apr 2025 18:08:34 GMT
+      server:
+      - cloudflare
+      strict-transport-security:
+      - max-age=63072000; includeSubDomains
+      vary:
+      - Origin
+      x-cache:
+      - miss
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - application/rss+xml, application/atom+xml, application/xml;q=0.9, text/xml;q=0.8,
+        */*;q=0.5
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - feeds.buzzsprout.com
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://feeds.buzzsprout.com/1.rss
+  response:
+    body:
+      string: ''
+    headers:
+      age:
+      - '3670'
+      cache-control:
+      - max-age=21600, public
+      cf-cache-status:
+      - HIT
+      cf-ray:
+      - a492e7f7adc8241d-IAD
+      connection:
+      - keep-alive
+      content-length:
+      - '0'
+      content-type:
+      - text/html; charset=utf-8
+      date:
+      - Mon, 12 Oct 2026 03:09:30 GMT
+      location:
+      - https://rss.buzzsprout.com/1.rss
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - cloudflare
+      strict-transport-security:
+      - max-age=63072000; includeSubDomains
+      vary:
+      - Sec-Fetch-Site, Origin
+      x-cache:
+      - miss
+      x-content-type-options:
+      - nosniff
+      x-download-options:
+      - noopen
+      x-frame-options:
+      - SAMEORIGIN
+      x-permitted-cross-domain-policies:
+      - none
+      x-request-id:
+      - 71bfd350-d727-4853-bf3e-ed674d51e60c
+      x-runtime:
+      - '0.002066'
+      x-xss-protection:
+      - '0'
+    status:
+      code: 301
+      message: Moved Permanently
+- request:
+    body: ''
+    headers:
+      accept:
+      - application/rss+xml, application/atom+xml, application/xml;q=0.9, text/xml;q=0.8,
+        */*;q=0.5
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - rss.buzzsprout.com
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://rss.buzzsprout.com/1.rss
+  response:
+    body:
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<?xml-stylesheet href=\"https://rss.buzzsprout.com/styles.xsl\"
+        type=\"text/xsl\"?>\n<rss version=\"2.0\" xmlns:itunes=\"http://www.itunes.com/dtds/podcast-1.0.dtd\"
+        xmlns:podcast=\"https://podcastindex.org/namespace/1.0\" xmlns:content=\"http://purl.org/rss/1.0/modules/content/\"
+        xmlns:psc=\"http://podlove.org/simple-chapters\" xmlns:atom=\"http://www.w3.org/2005/Atom\">\n<channel>\n
+        \ <atom:link href=\"https://rss.buzzsprout.com/1.rss\" rel=\"self\" type=\"application/rss+xml\"
+        />\n  <atom:link href=\"https://pubsubhubbub.appspot.com/\" rel=\"hub\" xmlns=\"http://www.w3.org/2005/Atom\"
+        />\n  <title>How to Start a Podcast</title>\n\n  <lastBuildDate>Tue, 06 Oct
+        2026 14:50:47 -0400</lastBuildDate>\n  <link>https://www.buzzsprout.com/1</link>\n
+        \ <language>en-us</language>\n  <copyright>\xA9 2026 How to Start a Podcast</copyright>\n
+        \ <podcast:locked>yes</podcast:locked>\n  <podcast:location geo=\"geo:30.3321838,-81.65565099999999\">Jacksonville,
+        FL, USA</podcast:location>\n    <podcast:guid>7d1a25c1-c5d2-540b-95eb-ba83ec2521de</podcast:guid>\n
+        \ <itunes:author>Buzzsprout</itunes:author>\n  <itunes:type>serial</itunes:type>\n
+        \ <itunes:explicit>false</itunes:explicit>\n  <description><![CDATA[<p>\u201CHow
+        to Start a Podcast\u201D is a serial podcast that teaches you how to create
+        a podcast from scratch. Presented by Buzzsprout, this podcast is perfect for
+        the newbie podcaster, the established podcaster who wants to make sure they
+        have all their bases covered, or someone who wants to learn more about what
+        it\u2019s like to make a podcast. Start your podcast for FREE at Buzzsprout.com</p>]]></description>\n
+        \ <generator>Buzzsprout (https://www.buzzsprout.com)</generator>\n  <itunes:keywords>podcasting,
+        how to podcast, podcast strategies, podcast tutorial</itunes:keywords>\n  <itunes:owner>\n
+        \   <itunes:name>Buzzsprout</itunes:name>\n  </itunes:owner>\n  <image>\n
+        \    <url>https://storage.buzzsprout.com/tprx03v0tizrqo5txtadsc7on396?.jpg</url>\n
+        \    <title>How to Start a Podcast</title>\n     <link>https://www.buzzsprout.com/1</link>\n
+        \ </image>\n  <itunes:image href=\"https://storage.buzzsprout.com/tprx03v0tizrqo5txtadsc7on396?.jpg\"
+        />\n  <itunes:category text=\"Education\">\n    <itunes:category text=\"How
+        To\" />\n  </itunes:category>\n  <itunes:category text=\"Education\">\n    <itunes:category
+        text=\"Courses\" />\n  </itunes:category>\n  <itunes:category text=\"Education\"
+        />\n  <item>\n    <itunes:title>The Key to Making Your Podcast Stand Out //
+        Eric Nuzum</itunes:title>\n    <title>The Key to Making Your Podcast Stand
+        Out // Eric Nuzum</title>\n    <itunes:summary><![CDATA[In this special bonus
+        episode, Travis sits down with one of the godfathers of podcasting - Eric
+        Nuzum.  Eric created and developed podcasts such as TED Radio Hour, Invisibilia,
+        Fresh Air with Terry Gross, and many others and he shares that wisdom and
+        expertise in his new book Make Noise: A Creator's Guide To Podcasting And
+        Great Audio Storytelling. ]]></itunes:summary>\n    <description><![CDATA[<p>In
+        this special bonus episode, Travis sits down with one of the godfathers of
+        podcasting - Eric Nuzum.<br/><br/>Eric created and developed podcasts such
+        as <em>TED Radio Hour</em>, <em>Invisibilia</em>, <em>Fresh Air with Terry
+        Gross</em>, and many others and he shares that wisdom and expertise in his
+        new book <a href='https://www.amazon.com/Make-Noise-Creators-Podcasting-Storytelling/dp/1523504552/ref=sr_1_2?keywords=make+noise&amp;qid=1579813278&amp;sr=8-2'><b>Make
+        Noise: A Creator&apos;s Guide To Podcasting And Great Audio Storytelling.</b></a></p>]]></description>\n
+        \   <content:encoded><![CDATA[<p>In this special bonus episode, Travis sits
+        down with one of the godfathers of podcasting - Eric Nuzum.<br/><br/>Eric
+        created and developed podcasts such as <em>TED Radio Hour</em>, <em>Invisibilia</em>,
+        <em>Fresh Air with Terry Gross</em>, and many others and he shares that wisdom
+        and expertise in his new book <a href='https://www.amazon.com/Make-Noise-Creators-Podcasting-Storytelling/dp/1523504552/ref=sr_1_2?keywords=make+noise&amp;qid=1579813278&amp;sr=8-2'><b>Make
+        Noise: A Creator&apos;s Guide To Podcasting And Great Audio Storytelling.</b></a></p>]]></content:encoded>\n
+        \   <enclosure url=\"https://dts.podtrac.com/redirect.mp3/www.buzzsprout.com/1/episodes/2562823-the-key-to-making-your-podcast-stand-out-eric-nuzum.mp3\"
+        length=\"25757065\" type=\"audio/mpeg\" />\n    <link>https://www.buzzsprout.com/1/2562823</link>\n
+        \   <itunes:author>Eric Nuzum</itunes:author>\n    <guid isPermaLink=\"false\">Buzzsprout-2562823</guid>\n
+        \   <pubDate>Fri, 02 Oct 2026 16:00:00 -0400</pubDate>\n    <podcast:transcript
+        url=\"https://www.buzzsprout.com/1/2562823/transcript\" type=\"text/html\"
+        />\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/2562823/transcript.json\"
+        type=\"application/json\" />\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/2562823/transcript.srt\"
+        type=\"application/x-subrip\" />\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/2562823/transcript.vtt\"
+        type=\"text/vtt\" />\n    <itunes:duration>2144</itunes:duration>\n    <itunes:keywords></itunes:keywords>\n
+        \   <itunes:season>1</itunes:season>\n    <itunes:episodeType>bonus</itunes:episodeType>\n
+        \   <itunes:explicit>false</itunes:explicit>\n  </item>\n  <item>\n    <itunes:title>Podcast
+        promotion: launching and growing your show</itunes:title>\n    <title>Podcast
+        promotion: launching and growing your show</title>\n    <itunes:summary><![CDATA[In
+        Episode 10 of How to Start a Podcast, you'll learn how to launch a new podcast
+        and our top 5 marketing strategies to gain momentum early.  Next Steps: How
+        to set up an Instagram account for your podcast (Video) Top 6 Ways to Promote
+        a New Podcast (Video)Grow Your Podcast By Advertising in Podcast Apps (Blog)]]></itunes:summary>\n
+        \   <description><![CDATA[<p>In Episode 10 of How to Start a Podcast, you&apos;ll
+        learn how to launch a new podcast and our top 5 marketing strategies to gain
+        momentum early.<br/><br/><b>Next Steps:</b></p><ul><li><a href='https://youtu.be/600qFHQzvC0'>How
+        to set up an Instagram account for your podcast</a> (Video)\_</li><li><a href='https://youtu.be/qWqAnWQFfyA'>Top
+        6 Ways to Promote a New Podcast</a> (Video)</li><li><a href='https://www.buzzsprout.com/blog/advertising-in-podcast-apps'>Grow
+        Your Podcast By Advertising in Podcast Apps</a> (Blog)</li></ul>]]></description>\n
+        \   <content:encoded><![CDATA[<p>In Episode 10 of How to Start a Podcast,
+        you&apos;ll learn how to launch a new podcast and our top 5 marketing strategies
+        to gain momentum early.<br/><br/><b>Next Steps:</b></p><ul><li><a href='https://youtu.be/600qFHQzvC0'>How
+        to set up an Instagram account for your podcast</a> (Video)\_</li><li><a href='https://youtu.be/qWqAnWQFfyA'>Top
+        6 Ways to Promote a New Podcast</a> (Video)</li><li><a href='https://www.buzzsprout.com/blog/advertising-in-podcast-apps'>Grow
+        Your Podcast By Advertising in Podcast Apps</a> (Blog)</li></ul>]]></content:encoded>\n
+        \   <enclosure url=\"https://dts.podtrac.com/redirect.mp3/www.buzzsprout.com/1/episodes/10167133-podcast-promotion-launching-and-growing-your-show.mp3\"
+        length=\"18505549\" type=\"audio/mpeg\" />\n    <itunes:author>Buzzsprout</itunes:author>\n
+        \   <guid isPermaLink=\"false\">Buzzsprout-10167133</guid>\n    <pubDate>Wed,
+        10 Jan 2024 00:00:00 -0500</pubDate>\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10167133/transcript\"
+        type=\"text/html\" />\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10167133/transcript.json\"
+        type=\"application/json\" />\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10167133/transcript.srt\"
+        type=\"application/x-subrip\" />\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10167133/transcript.vtt\"
+        type=\"text/vtt\" />\n    <podcast:chapters url=\"https://www.buzzsprout.com/1/10167133/chapters.json\"
+        type=\"application/json\" />\n    <psc:chapters>\n  <psc:chapter start=\"0:00\"
+        title=\"Don&#39;t trip at the finish line\" />\n  <psc:chapter start=\"1:36\"
+        title=\"The Grand Opening\" />\n  <psc:chapter start=\"3:07\" title=\"The
+        Soft Open\" />\n  <psc:chapter start=\"11:07\" title=\"5x Marketing Strategies\"
+        />\n  <psc:chapter start=\"23:26\" title=\"Next steps\" />\n</psc:chapters>\n
+        \   <itunes:duration>1540</itunes:duration>\n    <itunes:keywords></itunes:keywords>\n
+        \   <itunes:season>1</itunes:season>\n    <itunes:episode>10</itunes:episode>\n
+        \   <itunes:episodeType>full</itunes:episodeType>\n    <itunes:explicit>false</itunes:explicit>\n
+        \ </item>\n  <item>\n    <itunes:title>Podcast directories: Apple, Spotify,
+        and Google Podcasts</itunes:title>\n    <title>Podcast directories: Apple,
+        Spotify, and Google Podcasts</title>\n    <itunes:summary><![CDATA[In Episode
+        09 of How to Start a Podcast, you'll learn how to submit your new podcast
+        to all the top listening apps and directories.  Next Steps: Submit your Show
+        to Apple Podcasts (Blog) Submit your Show to Spotify (Blog)Submit your show
+        to Google Podcasts (Blog)Submit your show to the Podcast Index (Submission
+        Form)]]></itunes:summary>\n    <description><![CDATA[<p>In Episode 09 of How
+        to Start a Podcast, you&apos;ll learn how to submit your new podcast to all
+        the top listening apps and directories.<br/><br/><b>Next Steps:</b></p><ul><li><a
+        href='https://www.buzzsprout.com/blog/submit-apple-podcasts'>Submit your Show
+        to Apple Podcasts</a> (Blog)\_</li><li><a href='https://www.buzzsprout.com/blog/submit-podcast-spotify'>Submit
+        your Show to Spotify</a> (Blog)</li><li><a href='https://www.buzzsprout.com/blog/submit-google-podcasts'>Submit
+        your show to Google Podcasts</a> (Blog)</li><li><a href='https://podcastindex.org/add'>Submit
+        your show to the Podcast Index</a> (Submission Form)</li></ul>]]></description>\n
+        \   <content:encoded><![CDATA[<p>In Episode 09 of How to Start a Podcast,
+        you&apos;ll learn how to submit your new podcast to all the top listening
+        apps and directories.<br/><br/><b>Next Steps:</b></p><ul><li><a href='https://www.buzzsprout.com/blog/submit-apple-podcasts'>Submit
+        your Show to Apple Podcasts</a> (Blog)\_</li><li><a href='https://www.buzzsprout.com/blog/submit-podcast-spotify'>Submit
+        your Show to Spotify</a> (Blog)</li><li><a href='https://www.buzzsprout.com/blog/submit-google-podcasts'>Submit
+        your show to Google Podcasts</a> (Blog)</li><li><a href='https://podcastindex.org/add'>Submit
+        your show to the Podcast Index</a> (Submission Form)</li></ul>]]></content:encoded>\n
+        \   <enclosure url=\"https://dts.podtrac.com/redirect.mp3/www.buzzsprout.com/1/episodes/10166258-podcast-directories-apple-spotify-and-google-podcasts.mp3\"
+        length=\"14763020\" type=\"audio/mpeg\" />\n    <itunes:author>Buzzsprout</itunes:author>\n
+        \   <guid isPermaLink=\"false\">Buzzsprout-10166258</guid>\n    <pubDate>Tue,
+        09 Jan 2024 00:00:00 -0500</pubDate>\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10166258/transcript\"
+        type=\"text/html\" />\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10166258/transcript.json\"
+        type=\"application/json\" />\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10166258/transcript.srt\"
+        type=\"application/x-subrip\" />\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10166258/transcript.vtt\"
+        type=\"text/vtt\" />\n    <podcast:chapters url=\"https://www.buzzsprout.com/1/10166258/chapters.json\"
+        type=\"application/json\" />\n    <psc:chapters>\n  <psc:chapter start=\"0:00\"
+        title=\"It&#39;s like a phone book...\" />\n  <psc:chapter start=\"0:30\"
+        title=\"What is a podcast directory?\" />\n  <psc:chapter start=\"4:48\" title=\"Apple
+        Podcasts\" />\n  <psc:chapter start=\"10:20\" title=\"Spotify\" />\n  <psc:chapter
+        start=\"12:34\" title=\"Google Podcasts\" />\n  <psc:chapter start=\"13:44\"
+        title=\"Podcast Index\" />\n  <psc:chapter start=\"15:18\" title=\"Other Directories\"
+        />\n  <psc:chapter start=\"19:00\" title=\"Next steps\" />\n</psc:chapters>\n
+        \   <itunes:duration>1228</itunes:duration>\n    <itunes:keywords></itunes:keywords>\n
+        \   <itunes:season>1</itunes:season>\n    <itunes:episode>9</itunes:episode>\n
+        \   <itunes:episodeType>full</itunes:episodeType>\n    <itunes:explicit>false</itunes:explicit>\n
+        \ </item>\n  <item>\n    <itunes:title>Podcast hosting: setting up your show
+        on Buzzsprout</itunes:title>\n    <title>Podcast hosting: setting up your
+        show on Buzzsprout</title>\n    <itunes:summary><![CDATA[In Episode 08 of
+        How to Start a Podcast, you'll learn how to set up your podcast and upload
+        your first episode using Buzzsprout.  Next Steps: Next Level Tools to Power
+        Up Your Podcast [Buzzsprout Overview] (VideoMake Your Podcast Sound Professional
+        with Mixing and Mastering (Video)Buzzsprout's Help Section Other Things We
+        Mentioned: TranscriptionsPodcast WebsitesMagic MasteringVisual Soundbites]]></itunes:summary>\n
+        \   <description><![CDATA[<p>In Episode 08 of How to Start a Podcast, you&apos;ll
+        learn how to set up your podcast and upload your first episode using Buzzsprout.<br/><br/><b>Next
+        Steps:</b></p><ul><li><a href='https://youtu.be/2VDNxqFBq7I'>Next Level Tools
+        to Power Up Your Podcast [Buzzsprout Overview]</a><a href='https://youtu.be/9KwvE4nrGX4'>
+        </a>(Video</li><li><a href='https://youtu.be/oGG8fVljQdg'>Make Your Podcast
+        Sound Professional with Mixing and Mastering</a> (Video)</li><li><a href='https://www.buzzsprout.com/help'>Buzzsprout&apos;s
+        Help Section</a></li></ul><p><br/><b>Other Things We Mentioned:</b></p><ul><li><a
+        href='https://www.buzzsprout.com/help/60-transcripts'>Transcriptions</a></li><li><a
+        href='https://www.buzzsprout.com/help/10-site-theme'>Podcast Websites</a></li><li><a
+        href='https://www.buzzsprout.com/help/67-magic-mastering'>Magic Mastering</a></li><li><a
+        href='https://www.buzzsprout.com/help/57-setup-visual-soundbite'>Visual Soundbites</a></li></ul>]]></description>\n
+        \   <content:encoded><![CDATA[<p>In Episode 08 of How to Start a Podcast,
+        you&apos;ll learn how to set up your podcast and upload your first episode
+        using Buzzsprout.<br/><br/><b>Next Steps:</b></p><ul><li><a href='https://youtu.be/2VDNxqFBq7I'>Next
+        Level Tools to Power Up Your Podcast [Buzzsprout Overview]</a><a href='https://youtu.be/9KwvE4nrGX4'>
+        </a>(Video</li><li><a href='https://youtu.be/oGG8fVljQdg'>Make Your Podcast
+        Sound Professional with Mixing and Mastering</a> (Video)</li><li><a href='https://www.buzzsprout.com/help'>Buzzsprout&apos;s
+        Help Section</a></li></ul><p><br/><b>Other Things We Mentioned:</b></p><ul><li><a
+        href='https://www.buzzsprout.com/help/60-transcripts'>Transcriptions</a></li><li><a
+        href='https://www.buzzsprout.com/help/10-site-theme'>Podcast Websites</a></li><li><a
+        href='https://www.buzzsprout.com/help/67-magic-mastering'>Magic Mastering</a></li><li><a
+        href='https://www.buzzsprout.com/help/57-setup-visual-soundbite'>Visual Soundbites</a></li></ul>]]></content:encoded>\n
+        \   <enclosure url=\"https://dts.podtrac.com/redirect.mp3/www.buzzsprout.com/1/episodes/10137707-podcast-hosting-setting-up-your-show-on-buzzsprout.mp3\"
+        length=\"15770221\" type=\"audio/mpeg\" />\n    <itunes:author>Buzzsprout</itunes:author>\n
+        \   <guid isPermaLink=\"false\">Buzzsprout-10137707</guid>\n    <pubDate>Mon,
+        08 Jan 2024 00:00:00 -0500</pubDate>\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10137707/transcript\"
+        type=\"text/html\" />\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10137707/transcript.json\"
+        type=\"application/json\" />\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10137707/transcript.srt\"
+        type=\"application/x-subrip\" />\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10137707/transcript.vtt\"
+        type=\"text/vtt\" />\n    <podcast:chapters url=\"https://www.buzzsprout.com/1/10137707/chapters.json\"
+        type=\"application/json\" />\n    <psc:chapters>\n  <psc:chapter start=\"0:00\"
+        title=\"Intro\" />\n  <psc:chapter start=\"0:55\" title=\"Signing up for Buzzsprout\"
+        />\n  <psc:chapter start=\"9:44\" title=\"Upload your first episode\" />\n
+        \ <psc:chapter start=\"13:08\" title=\"Features unique to Buzzsprout\" />\n
+        \ <psc:chapter start=\"19:20\" title=\"Next steps\" />\n</psc:chapters>\n
+        \   <itunes:duration>1312</itunes:duration>\n    <itunes:keywords></itunes:keywords>\n
+        \   <itunes:season>1</itunes:season>\n    <itunes:episode>8</itunes:episode>\n
+        \   <itunes:episodeType>full</itunes:episodeType>\n    <itunes:explicit>false</itunes:explicit>\n
+        \ </item>\n  <item>\n    <itunes:title>Podcast artwork: how to create your
+        artwork</itunes:title>\n    <title>Podcast artwork: how to create your artwork</title>\n
+        \   <itunes:summary><![CDATA[In Episode 07 of How to Start a Podcast, you'll
+        learn how to create stunning podcast artwork that stands out in Apple Podcasts
+        and Spotify.  Next Steps: How to Design Stunning Podcast Cover Art (Blog)How
+        to Design Podcast Cover Art (Video)Pro Graphic Designer REACTS to Podcast
+        Artwork!! (Video) Artwork Design Tools: Pexels (Royalty-Free Images)TinyPNGCanva99designs]]></itunes:summary>\n
+        \   <description><![CDATA[<p>In Episode 07 of How to Start a Podcast, you&apos;ll
+        learn how to create stunning podcast artwork that stands out in Apple Podcasts
+        and Spotify.<br/><br/><b>Next Steps:</b></p><ul><li><a href='https://www.buzzsprout.com/blog/10-tips-create-awesome-podcast-artwork'>How
+        to Design Stunning Podcast Cover Art </a>(Blog)</li><li><a href='https://youtu.be/9KwvE4nrGX4'>How
+        to Design Podcast Cover Art</a> (Video)</li><li><a href='https://youtu.be/BnOOphe7k3k'>Pro
+        Graphic Designer REACTS to Podcast Artwork!!</a> (Video)</li></ul><p><br/><b>Artwork
+        Design Tools:</b></p><ul><li>Pexels (Royalty-Free Images)</li><li>TinyPNG</li><li>Canva</li><li>99designs</li></ul>]]></description>\n
+        \   <content:encoded><![CDATA[<p>In Episode 07 of How to Start a Podcast,
+        you&apos;ll learn how to create stunning podcast artwork that stands out in
+        Apple Podcasts and Spotify.<br/><br/><b>Next Steps:</b></p><ul><li><a href='https://www.buzzsprout.com/blog/10-tips-create-awesome-podcast-artwork'>How
+        to Design Stunning Podcast Cover Art </a>(Blog)</li><li><a href='https://youtu.be/9KwvE4nrGX4'>How
+        to Design Podcast Cover Art</a> (Video)</li><li><a href='https://youtu.be/BnOOphe7k3k'>Pro
+        Graphic Designer REACTS to Podcast Artwork!!</a> (Video)</li></ul><p><br/><b>Artwork
+        Design Tools:</b></p><ul><li>Pexels (Royalty-Free Images)</li><li>TinyPNG</li><li>Canva</li><li>99designs</li></ul>]]></content:encoded>\n
+        \   <enclosure url=\"https://dts.podtrac.com/redirect.mp3/www.buzzsprout.com/1/episodes/10136723-podcast-artwork-how-to-create-your-artwork.mp3\"
+        length=\"16101604\" type=\"audio/mpeg\" />\n    <itunes:author>Buzzsprout</itunes:author>\n
+        \   <guid isPermaLink=\"false\">Buzzsprout-10136723</guid>\n    <pubDate>Sun,
+        07 Jan 2024 00:00:00 -0500</pubDate>\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10136723/transcript\"
+        type=\"text/html\" />\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10136723/transcript.json\"
+        type=\"application/json\" />\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10136723/transcript.srt\"
+        type=\"application/x-subrip\" />\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10136723/transcript.vtt\"
+        type=\"text/vtt\" />\n    <podcast:chapters url=\"https://www.buzzsprout.com/1/10136723/chapters.json\"
+        type=\"application/json\" />\n    <psc:chapters>\n  <psc:chapter start=\"0:00\"
+        title=\"No microphones\" />\n  <psc:chapter start=\"0:58\" title=\"Why is
+        artwork important?\" />\n  <psc:chapter start=\"3:29\" title=\"Artwork specs\"
+        />\n  <psc:chapter start=\"6:43\" title=\"Design tips\" />\n  <psc:chapter
+        start=\"17:39\" title=\"Why we like Canva\" />\n  <psc:chapter start=\"20:14\"
+        title=\"Next steps\" />\n</psc:chapters>\n    <itunes:duration>1339</itunes:duration>\n
+        \   <itunes:keywords></itunes:keywords>\n    <itunes:season>1</itunes:season>\n
+        \   <itunes:episode>7</itunes:episode>\n    <itunes:episodeType>full</itunes:episodeType>\n
+        \   <itunes:explicit>false</itunes:explicit>\n  </item>\n  <item>\n    <itunes:title>Podcast
+        editing: practical podcast editing tips</itunes:title>\n    <title>Podcast
+        editing: practical podcast editing tips</title>\n    <itunes:summary><![CDATA[In
+        Episode 06 of How to Start a Podcast, you'll learn how to edit your podcast
+        episodes and how to choose your editing software.  Next Steps: How to Edit
+        a Podcast in Audacity (Video)How to Edit a Podcast in GarageBand (Video)How
+        to Edit a Podcast in Descript (Video)7 Best Places to Get Free Music for Your
+        Podcast (Video)]]></itunes:summary>\n    <description><![CDATA[<p>In Episode
+        06 of How to Start a Podcast, you&apos;ll learn how to edit your podcast episodes
+        and how to choose your editing software.<br/><br/><b>Next Steps:</b></p><ul><li><a
+        href='https://youtu.be/Zw9nkEHQ5B8'>How to Edit a Podcast in Audacity</a>
+        (Video)</li><li><a href='https://youtu.be/mATGO5ayrzc'>How to Edit a Podcast
+        in GarageBand</a> (Video)</li><li><a href='https://youtu.be/nxQnUz6_62Y'>How
+        to Edit a Podcast in Descript</a> (Video)</li><li><a href='https://youtu.be/4rSTtSZC8A0'>7
+        Best Places to Get Free Music for Your Podcast</a> (Video)</li></ul>]]></description>\n
+        \   <content:encoded><![CDATA[<p>In Episode 06 of How to Start a Podcast,
+        you&apos;ll learn how to edit your podcast episodes and how to choose your
+        editing software.<br/><br/><b>Next Steps:</b></p><ul><li><a href='https://youtu.be/Zw9nkEHQ5B8'>How
+        to Edit a Podcast in Audacity</a> (Video)</li><li><a href='https://youtu.be/mATGO5ayrzc'>How
+        to Edit a Podcast in GarageBand</a> (Video)</li><li><a href='https://youtu.be/nxQnUz6_62Y'>How
+        to Edit a Podcast in Descript</a> (Video)</li><li><a href='https://youtu.be/4rSTtSZC8A0'>7
+        Best Places to Get Free Music for Your Podcast</a> (Video)</li></ul>]]></content:encoded>\n
+        \   <enclosure url=\"https://dts.podtrac.com/redirect.mp3/www.buzzsprout.com/1/episodes/10136273-podcast-editing-practical-podcast-editing-tips.mp3\"
+        length=\"18042269\" type=\"audio/mpeg\" />\n    <itunes:author>Buzzsprout</itunes:author>\n
+        \   <guid isPermaLink=\"false\">Buzzsprout-10136273</guid>\n    <pubDate>Sat,
+        06 Jan 2024 00:00:00 -0500</pubDate>\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10136273/transcript\"
+        type=\"text/html\" />\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10136273/transcript.json\"
+        type=\"application/json\" />\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10136273/transcript.srt\"
+        type=\"application/x-subrip\" />\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10136273/transcript.vtt\"
+        type=\"text/vtt\" />\n    <podcast:chapters url=\"https://www.buzzsprout.com/1/10136273/chapters.json\"
+        type=\"application/json\" />\n    <psc:chapters>\n  <psc:chapter start=\"0:00\"
+        title=\"Dear John\" />\n  <psc:chapter start=\"0:48\" title=\"Why is editing
+        important?\" />\n  <psc:chapter start=\"7:17\" title=\"Where to find podcast
+        music\" />\n  <psc:chapter start=\"10:54\" title=\"Copyright music myths\"
+        />\n  <psc:chapter start=\"12:18\" title=\"The best approach to editing\"
+        />\n  <psc:chapter start=\"16:10\" title=\"How to edit your recording\" />\n
+        \ <psc:chapter start=\"22:19\" title=\"Export settings\" />\n  <psc:chapter
+        start=\"23:24\" title=\"Next steps\" />\n</psc:chapters>\n    <itunes:duration>1501</itunes:duration>\n
+        \   <itunes:keywords></itunes:keywords>\n    <itunes:season>1</itunes:season>\n
+        \   <itunes:episode>6</itunes:episode>\n    <itunes:episodeType>full</itunes:episodeType>\n
+        \   <itunes:explicit>false</itunes:explicit>\n  </item>\n  <item>\n    <itunes:title>Podcast
+        recording: setup and record your podcast</itunes:title>\n    <title>Podcast
+        recording: setup and record your podcast</title>\n    <itunes:summary><![CDATA[In
+        Episode 05 of How to Start a Podcast, you'll learn how to set up and record
+        a professional podcast from the comfort of your own home.  Next Steps: Can
+        a Samson Q2U sound like a Shure SM7B? MIC BATTLE! (Video)How to Record a Podcast
+        Remotely [The Ultimate Guide] (Video)Acoustic Treatment for Podcasters (Blog)]]></itunes:summary>\n
+        \   <description><![CDATA[<p>In Episode 05 of How to Start a Podcast, you&apos;ll
+        learn how to set up and record a professional podcast from the comfort of
+        your own home.<br/><br/><b>Next Steps:</b></p><ul><li><a href='https://youtu.be/wj4K-AvP7-0'>Can
+        a Samson Q2U sound like a Shure SM7B? MIC BATTLE!</a> (Video)</li><li><a href='https://youtu.be/LFnDq6t91bw'>How
+        to Record a Podcast Remotely [The Ultimate Guide]</a> (Video)</li><li><a href='https://www.buzzsprout.com/blog/sound-treatment-for-podcasters'>Acoustic
+        Treatment for Podcasters</a> (Blog)</li></ul>]]></description>\n    <content:encoded><![CDATA[<p>In
+        Episode 05 of How to Start a Podcast, you&apos;ll learn how to set up and
+        record a professional podcast from the comfort of your own home.<br/><br/><b>Next
+        Steps:</b></p><ul><li><a href='https://youtu.be/wj4K-AvP7-0'>Can a Samson
+        Q2U sound like a Shure SM7B? MIC BATTLE!</a> (Video)</li><li><a href='https://youtu.be/LFnDq6t91bw'>How
+        to Record a Podcast Remotely [The Ultimate Guide]</a> (Video)</li><li><a href='https://www.buzzsprout.com/blog/sound-treatment-for-podcasters'>Acoustic
+        Treatment for Podcasters</a> (Blog)</li></ul>]]></content:encoded>\n    <enclosure
+        url=\"https://dts.podtrac.com/redirect.mp3/www.buzzsprout.com/1/episodes/10131023-podcast-recording-setup-and-record-your-podcast.mp3\"
+        length=\"15103659\" type=\"audio/mpeg\" />\n    <itunes:author>Buzzsprout</itunes:author>\n
+        \   <guid isPermaLink=\"false\">Buzzsprout-10131023</guid>\n    <pubDate>Fri,
+        05 Jan 2024 00:00:00 -0500</pubDate>\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10131023/transcript\"
+        type=\"text/html\" />\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10131023/transcript.json\"
+        type=\"application/json\" />\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10131023/transcript.srt\"
+        type=\"application/x-subrip\" />\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10131023/transcript.vtt\"
+        type=\"text/vtt\" />\n    <podcast:chapters url=\"https://www.buzzsprout.com/1/10131023/chapters.json\"
+        type=\"application/json\" />\n    <psc:chapters>\n  <psc:chapter start=\"0:00\"
+        title=\"Intro\" />\n  <psc:chapter start=\"1:02\" title=\"Create an outline\"
+        />\n  <psc:chapter start=\"4:33\" title=\"Where to record your podcast\" />\n
+        \ <psc:chapter start=\"7:29\" title=\"Hooking up your equipment\" />\n  <psc:chapter
+        start=\"10:22\" title=\"Recording software tips\" />\n  <psc:chapter start=\"11:59\"
+        title=\"Mic technique\" />\n  <psc:chapter start=\"18:40\" title=\"Next steps\"
+        />\n</psc:chapters>\n    <itunes:duration>1256</itunes:duration>\n    <itunes:keywords></itunes:keywords>\n
+        \   <itunes:season>1</itunes:season>\n    <itunes:episode>5</itunes:episode>\n
+        \   <itunes:episodeType>full</itunes:episodeType>\n    <itunes:explicit>false</itunes:explicit>\n
+        \ </item>\n  <item>\n    <itunes:title>Podcast software: best recording and
+        editing software</itunes:title>\n    <title>Podcast software: best recording
+        and editing software</title>\n    <itunes:summary><![CDATA[In Episode 04 of
+        How to Start a Podcast, we cover the best recording and editing software for
+        new podcasters.  Next Steps: How to Record a Podcast on Zoom [Best Settings
+        for 2022] (Blog)Best Podcast Recording &amp; Editing Software (Video)Top 3
+        Transcription Services for Podcasters (Video) Remote Recording Software: ZoomRiversideSquadcast
+        Editing Software: GarageBandAudacityHindenburg Journalist ProDescript Other
+        Software: Otter.aiMagic MasteringAudio Hijack]]></itunes:summary>\n    <description><![CDATA[<p>In
+        Episode 04 of How to Start a Podcast, we cover the best recording and editing
+        software for new podcasters.<br/><br/><b>Next Steps:</b></p><ul><li><a href='https://www.buzzsprout.com/blog/record-podcast-on-zoom'>How
+        to Record a Podcast on Zoom [Best Settings for 2022]</a> (Blog)</li><li><a
+        href='https://youtu.be/s_pfnOU9g_k'>Best Podcast Recording &amp; Editing Software</a>
+        (Video)</li><li><a href='https://youtu.be/YrylI5tprS4'>Top 3 Transcription
+        Services for Podcasters</a> (Video)</li></ul><p><br/><b>Remote Recording Software:</b></p><ul><li>Zoom</li><li>Riverside</li><li>Squadcast</li></ul><p><br/><b>Editing
+        Software:</b></p><ul><li>GarageBand</li><li>Audacity</li><li>Hindenburg Journalist
+        Pro</li><li>Descript</li></ul><p><b><br/>Other Software:</b></p><ul><li>Otter.ai</li><li>Magic
+        Mastering</li><li>Audio Hijack</li></ul>]]></description>\n    <content:encoded><![CDATA[<p>In
+        Episode 04 of How to Start a Podcast, we cover the best recording and editing
+        software for new podcasters.<br/><br/><b>Next Steps:</b></p><ul><li><a href='https://www.buzzsprout.com/blog/record-podcast-on-zoom'>How
+        to Record a Podcast on Zoom [Best Settings for 2022]</a> (Blog)</li><li><a
+        href='https://youtu.be/s_pfnOU9g_k'>Best Podcast Recording &amp; Editing Software</a>
+        (Video)</li><li><a href='https://youtu.be/YrylI5tprS4'>Top 3 Transcription
+        Services for Podcasters</a> (Video)</li></ul><p><br/><b>Remote Recording Software:</b></p><ul><li>Zoom</li><li>Riverside</li><li>Squadcast</li></ul><p><br/><b>Editing
+        Software:</b></p><ul><li>GarageBand</li><li>Audacity</li><li>Hindenburg Journalist
+        Pro</li><li>Descript</li></ul><p><b><br/>Other Software:</b></p><ul><li>Otter.ai</li><li>Magic
+        Mastering</li><li>Audio Hijack</li></ul>]]></content:encoded>\n    <enclosure
+        url=\"https://dts.podtrac.com/redirect.mp3/www.buzzsprout.com/1/episodes/10050562-podcast-software-best-recording-and-editing-software.mp3\"
+        length=\"17059504\" type=\"audio/mpeg\" />\n    <itunes:author>Buzzsprout</itunes:author>\n
+        \   <guid isPermaLink=\"false\">Buzzsprout-10050562</guid>\n    <pubDate>Thu,
+        04 Jan 2024 00:00:00 -0500</pubDate>\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10050562/transcript\"
+        type=\"text/html\" />\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10050562/transcript.json\"
+        type=\"application/json\" />\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10050562/transcript.srt\"
+        type=\"application/x-subrip\" />\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10050562/transcript.vtt\"
+        type=\"text/vtt\" />\n    <podcast:chapters url=\"https://www.buzzsprout.com/1/10050562/chapters.json\"
+        type=\"application/json\" />\n    <psc:chapters>\n  <psc:chapter start=\"0:00\"
+        title=\"Shots fired\" />\n  <psc:chapter start=\"1:37\" title=\"Remote recording
+        software\" />\n  <psc:chapter start=\"8:53\" title=\"Editing software\" />\n
+        \ <psc:chapter start=\"16:18\" title=\"Other podcast software\" />\n  <psc:chapter
+        start=\"21:48\" title=\"Next steps\" />\n</psc:chapters>\n    <itunes:duration>1419</itunes:duration>\n
+        \   <itunes:keywords></itunes:keywords>\n    <itunes:season>1</itunes:season>\n
+        \   <itunes:episode>4</itunes:episode>\n    <itunes:episodeType>full</itunes:episodeType>\n
+        \   <itunes:explicit>false</itunes:explicit>\n  </item>\n  <item>\n    <itunes:title>Podcast
+        equipment: best mics, mixers, and more</itunes:title>\n    <title>Podcast
+        equipment: best mics, mixers, and more</title>\n    <itunes:summary><![CDATA[In
+        Episode 03 of How to Start a Podcast, you'll learn how to choose a good microphone
+        and which accessories we recommend for 1-person, 2-person, and 4-person podcast
+        setups.  Next Steps: How to Record a Podcast on Zoom [Best Settings for 2022]
+        (Blog)Long Distance Podcast Recording on a Budget with Zoom (Video)Samson
+        Q2U Review: Best Mic for New Podcasters (Video)Can a Samson Q2U sound like
+        a Shure SM7B? MIC BATTLE! (Video)Blue Yeti Review: Is it a good choice for
+        podcasters? (Video) Gear We R...]]></itunes:summary>\n    <description><![CDATA[<p>In
+        Episode 03 of How to Start a Podcast, you&apos;ll learn how to choose a good
+        microphone and which accessories we recommend for 1-person, 2-person, and
+        4-person podcast setups.<br/><br/><b>Next Steps:</b></p><ul><li><a href='https://www.buzzsprout.com/blog/record-podcast-on-zoom'>How
+        to Record a Podcast on Zoom [Best Settings for 2022]</a> (Blog)</li><li><a
+        href='https://youtu.be/HH37iHiXUhY'>Long Distance Podcast Recording on a Budget
+        with Zoom</a> (Video)</li><li><a href='https://youtu.be/poBBbUJOH5g'>Samson
+        Q2U Review: Best Mic for New Podcasters</a> (Video)</li><li><a href='https://youtu.be/wj4K-AvP7-0'>Can
+        a Samson Q2U sound like a Shure SM7B? MIC BATTLE!</a> (Video)</li><li><a href='https://youtu.be/xluhIhn9viU'>Blue
+        Yeti Review: Is it a good choice for podcasters?</a> (Video)</li></ul><p><br/><b>Gear
+        We Recommend:</b></p><ul><li><a href='https://amzn.to/3HLh8Tf'>Samson Q2U</a>
+        (Microphone)</li><li><a href='https://amzn.to/3tmhf2k'>Rode PodMic</a> (Microphone)</li><li><a
+        href='https://amzn.to/3MbKAoB'>Samson SM7B</a> (Microphone)</li><li><a href='https://amzn.to/3HxlZan'>Rode
+        PSA1</a> (Boom Arm)</li><li><a href='https://amzn.to/3IBZ52R'>Focusrite Scarlett
+        2i2</a> (Audio Interface)</li><li><a href='https://amzn.to/3ILHCVC'>Rodecaster
+        Pro</a> (Audio Mixer)</li></ul>]]></description>\n    <content:encoded><![CDATA[<p>In
+        Episode 03 of How to Start a Podcast, you&apos;ll learn how to choose a good
+        microphone and which accessories we recommend for 1-person, 2-person, and
+        4-person podcast setups.<br/><br/><b>Next Steps:</b></p><ul><li><a href='https://www.buzzsprout.com/blog/record-podcast-on-zoom'>How
+        to Record a Podcast on Zoom [Best Settings for 2022]</a> (Blog)</li><li><a
+        href='https://youtu.be/HH37iHiXUhY'>Long Distance Podcast Recording on a Budget
+        with Zoom</a> (Video)</li><li><a href='https://youtu.be/poBBbUJOH5g'>Samson
+        Q2U Review: Best Mic for New Podcasters</a> (Video)</li><li><a href='https://youtu.be/wj4K-AvP7-0'>Can
+        a Samson Q2U sound like a Shure SM7B? MIC BATTLE!</a> (Video)</li><li><a href='https://youtu.be/xluhIhn9viU'>Blue
+        Yeti Review: Is it a good choice for podcasters?</a> (Video)</li></ul><p><br/><b>Gear
+        We Recommend:</b></p><ul><li><a href='https://amzn.to/3HLh8Tf'>Samson Q2U</a>
+        (Microphone)</li><li><a href='https://amzn.to/3tmhf2k'>Rode PodMic</a> (Microphone)</li><li><a
+        href='https://amzn.to/3MbKAoB'>Samson SM7B</a> (Microphone)</li><li><a href='https://amzn.to/3HxlZan'>Rode
+        PSA1</a> (Boom Arm)</li><li><a href='https://amzn.to/3IBZ52R'>Focusrite Scarlett
+        2i2</a> (Audio Interface)</li><li><a href='https://amzn.to/3ILHCVC'>Rodecaster
+        Pro</a> (Audio Mixer)</li></ul>]]></content:encoded>\n    <enclosure url=\"https://dts.podtrac.com/redirect.mp3/www.buzzsprout.com/1/episodes/10043029-podcast-equipment-best-mics-mixers-and-more.mp3\"
+        length=\"20798498\" type=\"audio/mpeg\" />\n    <itunes:author></itunes:author>\n
+        \   <guid isPermaLink=\"false\">Buzzsprout-10043029</guid>\n    <pubDate>Wed,
+        03 Jan 2024 00:00:00 -0500</pubDate>\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10043029/transcript\"
+        type=\"text/html\" />\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10043029/transcript.json\"
+        type=\"application/json\" />\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10043029/transcript.srt\"
+        type=\"application/x-subrip\" />\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10043029/transcript.vtt\"
+        type=\"text/vtt\" />\n    <podcast:chapters url=\"https://www.buzzsprout.com/1/10043029/chapters.json\"
+        type=\"application/json\" />\n    <psc:chapters>\n  <psc:chapter start=\"0:00\"
+        title=\"Microphones!!\" />\n  <psc:chapter start=\"0:40\" title=\"How to choose
+        a mic\" />\n  <psc:chapter start=\"6:28\" title=\"Mics we recommend\" />\n
+        \ <psc:chapter start=\"14:07\" title=\"Podcast setups\" />\n  <psc:chapter
+        start=\"26:54\" title=\"Next steps\" />\n</psc:chapters>\n    <itunes:duration>1731</itunes:duration>\n
+        \   <itunes:keywords></itunes:keywords>\n    <itunes:season>1</itunes:season>\n
+        \   <itunes:episode>3</itunes:episode>\n    <itunes:episodeType>full</itunes:episodeType>\n
+        \   <itunes:explicit>false</itunes:explicit>\n  </item>\n  <item>\n    <itunes:title>Podcast
+        format: co-hosts, style, and episode length</itunes:title>\n    <title>Podcast
+        format: co-hosts, style, and episode length</title>\n    <itunes:summary><![CDATA[In
+        Episode 02 of How to Start a Podcast, you'll learn how to pick the best format
+        for your show, how long your podcast episodes should be, and the qualities
+        to look for in a co-host.  Next Steps: How to Write a Podcast Script [8 Free
+        Script Templates] (Blog)How Long Should a Podcast Episode Be? (Blog)Top 5
+        Podcast Interview Questions (Video)]]></itunes:summary>\n    <description><![CDATA[<p>In
+        Episode 02 of How to Start a Podcast, you&apos;ll learn how to pick the best
+        format for your show, how long your podcast episodes should be, and the qualities
+        to look for in a co-host.<br/><br/><b>Next Steps:</b></p><ul><li><a href='https://www.buzzsprout.com/blog/write-podcast-script-examples'>How
+        to Write a Podcast Script [8 Free Script Templates]</a> (Blog)</li><li><a
+        href='https://www.buzzsprout.com/blog/how-long-should-a-podcast-be'>How Long
+        Should a Podcast Episode Be?</a> (Blog)</li><li><a href='https://youtu.be/BKUaNiQ7zH4'>Top
+        5 Podcast Interview Questions</a> (Video)</li></ul>]]></description>\n    <content:encoded><![CDATA[<p>In
+        Episode 02 of How to Start a Podcast, you&apos;ll learn how to pick the best
+        format for your show, how long your podcast episodes should be, and the qualities
+        to look for in a co-host.<br/><br/><b>Next Steps:</b></p><ul><li><a href='https://www.buzzsprout.com/blog/write-podcast-script-examples'>How
+        to Write a Podcast Script [8 Free Script Templates]</a> (Blog)</li><li><a
+        href='https://www.buzzsprout.com/blog/how-long-should-a-podcast-be'>How Long
+        Should a Podcast Episode Be?</a> (Blog)</li><li><a href='https://youtu.be/BKUaNiQ7zH4'>Top
+        5 Podcast Interview Questions</a> (Video)</li></ul>]]></content:encoded>\n
+        \   <enclosure url=\"https://dts.podtrac.com/redirect.mp3/www.buzzsprout.com/1/episodes/10035763-podcast-format-co-hosts-style-and-episode-length.mp3\"
+        length=\"15171768\" type=\"audio/mpeg\" />\n    <itunes:author>Buzzsprout</itunes:author>\n
+        \   <guid isPermaLink=\"false\">Buzzsprout-10035763</guid>\n    <pubDate>Tue,
+        02 Jan 2024 00:00:00 -0500</pubDate>\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10035763/transcript\"
+        type=\"text/html\" />\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10035763/transcript.json\"
+        type=\"application/json\" />\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10035763/transcript.srt\"
+        type=\"application/x-subrip\" />\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10035763/transcript.vtt\"
+        type=\"text/vtt\" />\n    <podcast:chapters url=\"https://www.buzzsprout.com/1/10035763/chapters.json\"
+        type=\"application/json\" />\n    <psc:chapters>\n  <psc:chapter start=\"0:00\"
+        title=\"28... 27... 26...\" />\n  <psc:chapter start=\"1:17\" title=\"What
+        kind of podcast should you make?\" />\n  <psc:chapter start=\"6:44\" title=\"How
+        to pick a co-host\" />\n  <psc:chapter start=\"11:06\" title=\"Podcast episode
+        formats\" />\n  <psc:chapter start=\"14:06\" title=\"How long should your
+        episodes be?\" />\n  <psc:chapter start=\"15:53\" title=\"Publishing frequency\"
+        />\n  <psc:chapter start=\"19:32\" title=\"Next steps\" />\n</psc:chapters>\n
+        \   <itunes:duration>1262</itunes:duration>\n    <itunes:keywords></itunes:keywords>\n
+        \   <itunes:season>1</itunes:season>\n    <itunes:episode>2</itunes:episode>\n
+        \   <itunes:episodeType>full</itunes:episodeType>\n    <itunes:explicit>false</itunes:explicit>\n
+        \ </item>\n  <item>\n    <itunes:title>Podcast concept: name, niche, and goals</itunes:title>\n
+        \   <title>Podcast concept: name, niche, and goals</title>\n    <itunes:summary><![CDATA[In
+        Episode 01 of How to Start a Podcast, you'll learn how to pick the right niche
+        for your podcast and how to create the perfect name for your new show.  Next
+        Steps: Podcast Name Generator (Tool)How to name your podcast (Video)How to
+        identify your podcast's niche (Video)80 Podcasting Tips to Start a Successful
+        Podcast (Blog) Resources We Mentioned: NameCheckr.com]]></itunes:summary>\n
+        \   <description><![CDATA[<p>In Episode 01 of How to Start a Podcast, you&apos;ll
+        learn how to pick the right niche for your podcast and how to create the perfect
+        name for your new show.<br/><br/><b>Next Steps:</b></p><ul><li><a href='https://www.buzzsprout.com/podcast-name-generator'>Podcast
+        Name Generator</a> (Tool)</li><li><a href='https://youtu.be/KaMteHKjG2g'>How
+        to name your podcast</a> (Video)</li><li><a href='https://youtu.be/RAm8CjN2w_8'>How
+        to identify your podcast&apos;s niche</a> (Video)</li><li><a href='https://www.buzzsprout.com/blog/podcasting-tips'>80
+        Podcasting Tips to Start a Successful Podcast</a> (Blog)</li></ul><p><br/><b>Resources
+        We Mentioned:</b></p><ul><li><a href='https://www.namecheckr.com/'>NameCheckr.com</a></li></ul>]]></description>\n
+        \   <content:encoded><![CDATA[<p>In Episode 01 of How to Start a Podcast,
+        you&apos;ll learn how to pick the right niche for your podcast and how to
+        create the perfect name for your new show.<br/><br/><b>Next Steps:</b></p><ul><li><a
+        href='https://www.buzzsprout.com/podcast-name-generator'>Podcast Name Generator</a>
+        (Tool)</li><li><a href='https://youtu.be/KaMteHKjG2g'>How to name your podcast</a>
+        (Video)</li><li><a href='https://youtu.be/RAm8CjN2w_8'>How to identify your
+        podcast&apos;s niche</a> (Video)</li><li><a href='https://www.buzzsprout.com/blog/podcasting-tips'>80
+        Podcasting Tips to Start a Successful Podcast</a> (Blog)</li></ul><p><br/><b>Resources
+        We Mentioned:</b></p><ul><li><a href='https://www.namecheckr.com/'>NameCheckr.com</a></li></ul>]]></content:encoded>\n
+        \   <enclosure url=\"https://dts.podtrac.com/redirect.mp3/www.buzzsprout.com/1/episodes/10027868-podcast-concept-name-niche-and-goals.mp3\"
+        length=\"16398053\" type=\"audio/mpeg\" />\n    <itunes:author>Buzzsprout</itunes:author>\n
+        \   <guid isPermaLink=\"false\">Buzzsprout-10027868</guid>\n    <pubDate>Mon,
+        01 Jan 2024 00:00:00 -0500</pubDate>\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10027868/transcript\"
+        type=\"text/html\" />\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10027868/transcript.json\"
+        type=\"application/json\" />\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10027868/transcript.srt\"
+        type=\"application/x-subrip\" />\n    <podcast:transcript url=\"https://www.buzzsprout.com/1/10027868/transcript.vtt\"
+        type=\"text/vtt\" />\n    <podcast:chapters url=\"https://www.buzzsprout.com/1/10027868/chapters.json\"
+        type=\"application/json\" />\n    <psc:chapters>\n  <psc:chapter start=\"0:00\"
+        title=\"Finger Guns\" />\n  <psc:chapter start=\"0:32\" title=\"Who are we?\"
+        />\n  <psc:chapter start=\"2:25\" title=\"Why should you start a podcast?\"
+        />\n  <psc:chapter start=\"5:10\" title=\"Creating good goals\" />\n  <psc:chapter
+        start=\"8:04\" title=\"Choose your niche\" />\n  <psc:chapter start=\"13:57\"
+        title=\"Naming your podcast\" />\n  <psc:chapter start=\"19:36\" title=\"No
+        artwork (yet)\" />\n  <psc:chapter start=\"21:29\" title=\"Next steps\" />\n</psc:chapters>\n
+        \   <itunes:duration>1364</itunes:duration>\n    <itunes:keywords></itunes:keywords>\n
+        \   <itunes:season>1</itunes:season>\n    <itunes:episode>1</itunes:episode>\n
+        \   <itunes:episodeType>full</itunes:episodeType>\n    <itunes:explicit>false</itunes:explicit>\n
+        \ </item>\n</channel>\n</rss>\n"
+    headers:
+      age:
+      - '5464'
+      cache-control:
+      - max-age=21600, public, stale-while-revalidating=600
+      cf-cache-status:
+      - HIT
+      cf-ray:
+      - a492e7f93eeec7c1-IAD
+      connection:
+      - keep-alive
+      content-length:
+      - '42222'
+      content-type:
+      - text/xml; charset=utf-8
+      date:
+      - Mon, 12 Oct 2026 03:09:30 GMT
+      etag:
+      - W/"b438547f5a730da69e9875b9c5d85650"
+      last-modified:
+      - Tue, 06 Oct 2026 18:55:48 GMT
+      server:
+      - cloudflare
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin
+      via:
+      - 1.1 9c6666844f92bfc6b8685747b641abc6.cloudfront.net (CloudFront)
+      x-amz-cf-id:
+      - zEG1HXvljA-sLYgeMDRrkKP88B9hcAdnfvFhxxmLl_YcP1J1R_gN4Q==
+      x-amz-cf-pop:
+      - IAD89-P2
+      x-amz-meta-podcast-etag:
+      - 2219882937d2bfc2a6812b83731aff1f
+      x-cache:
+      - Miss from cloudfront
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - www.buzzsprout.com
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://www.buzzsprout.com/robots.txt
+  response:
+    body:
+      string: 'User-agent: *
+
+        Disallow: /101612.rss
+
+        '
+    headers:
+      accept-ranges:
+      - bytes
+      age:
+      - '174'
+      cf-cache-status:
+      - HIT
+      cf-ray:
+      - a492e7fb6fdc4649-IAD
+      connection:
+      - keep-alive
+      content-length:
+      - '36'
+      content-type:
+      - text/plain
+      date:
+      - Mon, 12 Oct 2026 03:09:30 GMT
+      last-modified:
+      - Tue, 22 Apr 2025 18:08:34 GMT
+      server:
+      - cloudflare
+      strict-transport-security:
+      - max-age=63072000; includeSubDomains
+      vary:
+      - Origin
+      x-cache:
+      - miss
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - www.buzzsprout.com
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://www.buzzsprout.com/1/2562823/transcript.vtt
+  response:
+    body:
+      string: "WEBVTT\n\n00:00:00.300 --> 00:00:01.524\n<v SPEAKER_00>Hey, Travis
+        Albritton here.\n\n00:00:01.564 --> 00:00:11.505\n<v SPEAKER_00>So I hope
+        these episodes have been super helpful for you getting your show off the ground
+        and having the confidence that you need to really launch a podcast, which
+        is such an incredible thing.\n\n00:00:11.544 --> 00:00:30.881\n<v SPEAKER_00>Now,
+        I recently had the opportunity to sit down for a conversation with Eric Newsom,
+        who has been an executive producer on some of the biggest podcasts in the
+        world, many of NPR's podcasts, Ted's podcasts, and just brings a lot of insight
+        and depth of wisdom to podcasting.\n\n00:00:30.920 --> 00:00:35.088\n<v SPEAKER_00>And
+        so I wanted to share this with you as kind of like a podcasting 201.\n\n00:00:35.607
+        --> 00:00:45.685\n<v SPEAKER_00>This interview is what to do once you have
+        your show going and you really want to see what's the next step, what's the
+        next level that I can get to with my podcast.\n\n00:00:45.965 --> 00:00:49.773\n<v
+        SPEAKER_00>He just wrote a brand new book on podcasting called Make Noise.\n\n00:00:50.213
+        --> 00:00:52.579\n<v SPEAKER_00>I will leave a link to the book in the episode
+        description.\n\n00:00:52.618 --> 00:00:53.820\n<v SPEAKER_00>It's a fantastic
+        book.\n\n00:00:54.182 --> 00:00:58.210\n<v SPEAKER_00>So I hope that this
+        conversation is helpful for you and that you get a lot out of it.\n\n00:00:58.691
+        --> 00:01:01.597\n<v SPEAKER_00>And without further ado, here's my conversation
+        with Eric Newsom.\n\n00:01:05.471 --> 00:01:14.826\n<v SPEAKER_01>So my name
+        is Eric Newsom, and I spent most of the early part of my career in broadcast
+        and eventually worked my way up to working at NPR.\n\n00:01:14.867 --> 00:01:28.808\n<v
+        SPEAKER_01>And I started there in 2004, and less than a year later, I was
+        in the cafeteria line at NPR, and the guy who was our COO at the time was
+        behind me trying to make some kind of awkward chitchat.\n\n00:01:29.349 -->
+        00:01:31.332\n<v SPEAKER_01>He says, well, what's interesting that you've
+        seen lately?\n\n00:01:31.393 --> 00:01:33.295\n<v SPEAKER_01>And I said, well,
+        there's this podcasting thing.\n\n00:01:33.334 --> 00:01:36.819\n<v SPEAKER_01>And
+        I started explaining to him in the lunch line, just to kind of make conversation.\n\n00:01:36.859
+        --> 00:01:40.965\n<v SPEAKER_01>He's like, oh, come by and give me a little
+        spiel on it.\n\n00:01:41.025 --> 00:01:44.049\n<v SPEAKER_01>And so I came,
+        I made an appointment, went and gave him a spiel.\n\n00:01:44.069 --> 00:01:50.938\n<v
+        SPEAKER_01>A couple of weeks later, he shows back up at my door and says,
+        you have a team of eight and you have 12 weeks.\n\n00:01:51.439 --> 00:01:54.265\n<v
+        SPEAKER_01>And at the end of that 12 weeks, we want there to be NPR podcasts.\n\n00:01:54.965
+        --> 00:01:55.706\n<v SPEAKER_01>I'm like, okay.\n\n00:01:55.867 --> 00:01:57.269\n<v
+        SPEAKER_01>And we actually delivered it a month.\n\n00:01:57.290 --> 00:01:58.070\n<v
+        SPEAKER_01>We got an extra month.\n\n00:01:58.912 --> 00:01:59.492\n<v SPEAKER_01>We
+        delivered it.\n\n00:01:59.533 --> 00:02:00.894\n<v SPEAKER_01>It was 32 podcasts.\n\n00:02:01.135
+        --> 00:02:06.745\n<v SPEAKER_01>And then for the following decade, I kind
+        of remained kind of the editorial lead on NPR podcasts, both podcasts.\n\n00:02:06.745
+        --> 00:02:16.459\n<v SPEAKER_01>figuring out how to take NPR programming and
+        have it thrive in the podcast world, sound authentic there, and also making
+        new things that were intended originally to be in that space.\n\n00:02:17.139
+        --> 00:02:18.722\n<v SPEAKER_01>And did that for a decade.\n\n00:02:18.923
+        --> 00:02:32.382\n<v SPEAKER_01>And then a couple of years ago, probably four
+        and a half years or so ago, I left NPR and went to Audible, which is part
+        of the Amazon extended universe, and created the original content team there.\n\n00:02:32.802
+        --> 00:02:45.401\n<v SPEAKER_01>And Then about a year or so ago, one of my
+        friends and I left and started Magnificent Noise, which is a podcast production
+        and consultation company based in New York.\n\n00:02:45.962 --> 00:02:51.152\n<v
+        SPEAKER_00>And so now you have your first podcast-related book, Make Noise.\n\n00:02:51.334
+        --> 00:02:51.493\n<v SPEAKER_00>Yeah.\n\n00:02:51.854 --> 00:03:03.457\n<v
+        SPEAKER_00>And as I was going through and reading it, and specifically one
+        of the things that you harp on, which we'll dive into about the 10-word description,
+        I was like, let me go back to the front cover and see if he...\n\n00:03:04.019
+        --> 00:03:05.760\n<v SPEAKER_00>followed his own rules, and you did.\n\n00:03:06.342
+        --> 00:03:10.627\n<v SPEAKER_00>You even got an extra word to spare, A Creator's
+        Guide to Podcasting and Great Audio Storytelling.\n\n00:03:11.788 --> 00:03:16.754\n<v
+        SPEAKER_00>So why did you feel like now was the time to publish this book?\n\n00:03:17.395
+        --> 00:03:23.022\n<v SPEAKER_00>You've been in podcasting basically since
+        the beginning, longer than just about anyone listening to this episode.\n\n00:03:23.905
+        --> 00:03:29.771\n<v SPEAKER_00>So why did you feel like now was a really
+        good time to bring this book out into the world and to promote\n\n00:03:30.473
+        --> 00:03:30.513\n<v UNKNOWN>it?\n\n00:03:30.513 --> 00:03:33.635\n<v SPEAKER_01>That's
+        a really good question because I think there's two factors.\n\n00:03:33.675
+        --> 00:03:51.391\n<v SPEAKER_01>One, I think we are now at the point where
+        there is such a groundswell of interest in podcasting that having a book about
+        podcast creation that isn't like tips for equipment to buy or how to make
+        money at it but is really focused on how to do something well, that's a commercially
+        viable product now.\n\n00:03:51.692 --> 00:03:57.157\n<v SPEAKER_01>And I
+        don't think even a couple years ago it was when I've been approached a couple
+        times about doing this over the years.\n\n00:03:57.296 --> 00:03:59.699\n<v
+        SPEAKER_01>And I'm like, I just don't think it's\u2013 I think it's a niche
+        product.\n\n00:03:59.799 --> 00:04:02.844\n<v SPEAKER_01>I don't think it's\u2013
+        It's going to be worth my time to spend time writing that book.\n\n00:04:03.586
+        --> 00:04:09.719\n<v SPEAKER_01>And the last time I was asked about it, I
+        said yes and was kind of shocked at the reaction.\n\n00:04:09.819 --> 00:04:15.953\n<v
+        SPEAKER_01>And one of the great things about seeing podcasting evolve is watching
+        at points like this.\n\n00:04:16.514 --> 00:04:32.053\n<v SPEAKER_01>that
+        this is a profession and a vocation and a hobby, and there are tools for it,
+        both a book or microphones or recording units or things that were literally
+        unimaginable four or five years ago.\n\n00:04:32.074 --> 00:04:45.151\n<v
+        SPEAKER_01>Now, I'm a big fan of the Rodecaster Pro, which is a little desktop
+        unit that I advocate a lot of podcasters buy because it's$600, containing
+        technology that would have cost you$10,000,$15,000 to duplicate forever.\n\n00:04:45.151
+        --> 00:04:46.394\n<v SPEAKER_01>Four or five years ago.\n\n00:04:46.413 -->
+        00:04:48.338\n<v SPEAKER_01>I mean, that to me is exciting and amazing.\n\n00:04:48.398
+        --> 00:04:57.499\n<v SPEAKER_01>So first, I think we've kind of matured into
+        being an industry now that can support that kind of thinking and a product
+        like a book.\n\n00:04:57.699 --> 00:04:59.524\n<v SPEAKER_01>And the second
+        reason is...\n\n00:05:01.047 --> 00:05:03.151\n<v SPEAKER_01>There's so many
+        new podcasts.\n\n00:05:03.452 --> 00:05:17.365\n<v SPEAKER_01>And the thing
+        that surprises me as someone who is a consultant for a lot of people, individuals,
+        and I work with people who are sitting around their kitchen table trying to
+        figure things out, up to some of the largest media companies in the world.\n\n00:05:17.786
+        --> 00:05:32.730\n<v SPEAKER_01>And the conversations they have are almost
+        identical, even though you have many more dollars, much bigger names and crazy
+        resources compared to people who are trying to figure out how to do this with
+        their friend.\n\n00:05:33.211 --> 00:05:34.851\n<v SPEAKER_01>Their obstacles
+        are often the same.\n\n00:05:34.891 --> 00:05:39.196\n<v SPEAKER_01>They're
+        kind of concerns or fears of how to get into this.\n\n00:05:39.857 --> 00:05:41.617\n<v
+        SPEAKER_01>And they get stuck on the same things too.\n\n00:05:42.319 -->
+        00:05:52.867\n<v SPEAKER_01>And so when I started to realize how universal
+        a lot of the problems are that prevent people from being able to achieve what
+        they want to do, I'm like, there's solutions to that.\n\n00:05:53.088 -->
+        00:05:54.569\n<v SPEAKER_01>I've struggled through this a lot myself.\n\n00:05:55.250
+        --> 00:06:02.456\n<v SPEAKER_01>So I just, and I was also worried when I was
+        first asked about this book that I could write about a chapter and that would
+        be about it.\n\n00:06:03.096 --> 00:06:06.223\n<v SPEAKER_01>And so I had
+        a couple of days off for some reason.\n\n00:06:06.244 --> 00:06:07.827\n<v
+        SPEAKER_01>I sat down and said, okay, I'm just going to try.\n\n00:06:07.848
+        --> 00:06:09.612\n<v SPEAKER_01>I didn't even say yes to writing the book.\n\n00:06:09.632
+        --> 00:06:10.975\n<v SPEAKER_01>I'm just going to try to write a chapter.\n\n00:06:11.014
+        --> 00:06:15.264\n<v SPEAKER_01>And I sat down and I thought about what frustrates
+        people and I just started.\n\n00:06:15.305 --> 00:06:21.880\n<v SPEAKER_01>And
+        it became very clear to me that there was something to be said to an increasingly
+        growing community of people.\n\n00:06:22.586 --> 00:06:40.273\n<v SPEAKER_00>Well,
+        and what I appreciate about the angle that you took with the book is that
+        it's not, it is and it isn't a book for beginner podcasters in the sense that
+        if you're just getting started, it's a very valuable resource to help you
+        avoid some of those early mistakes, classic mistakes, rookie mistakes that
+        you see.\n\n00:06:41.134 --> 00:06:53.192\n<v SPEAKER_00>But it's also extremely
+        challenging to, Even for someone like myself that's been in podcasting for
+        years, you start reading through this and you're like, I don't do half the
+        stuff that I even intellectually know I should be doing.\n\n00:06:53.233 -->
+        00:07:01.947\n<v SPEAKER_00>And one that I want to really spend some time
+        with, because I feel like it would be the most valuable for people listening,
+        is the 10-word description.\n\n00:07:02.968 --> 00:07:08.336\n<v SPEAKER_00>Because
+        one of my constant wrestling matches is that I, as a...\n\n00:07:09.077 -->
+        00:07:12.684\n<v SPEAKER_00>As a creative outlet, I want my podcast to be
+        self-serving in certain ways.\n\n00:07:13.165 --> 00:07:15.348\n<v SPEAKER_00>I
+        want to wake up excited about making new episodes.\n\n00:07:15.389 --> 00:07:17.391\n<v
+        SPEAKER_00>I want to expand my creativity.\n\n00:07:17.411 --> 00:07:19.235\n<v
+        SPEAKER_00>I want to try new things, experiment with new things.\n\n00:07:20.357
+        --> 00:07:27.730\n<v SPEAKER_00>But you do a really good job of kind of helping
+        push against that in a really good way and the importance of staying focused.\n\n00:07:28.230
+        --> 00:07:37.526\n<v SPEAKER_00>And and really being laser focused on why
+        does your podcast exist for the expectations of your listeners and making
+        sure you over deliver on that.\n\n00:07:37.586 --> 00:07:43.757\n<v SPEAKER_00>So
+        I'd love to just maybe even if you want to just share the anecdote that you
+        had about your yoga teacher and kind of going through that exercise.\n\n00:07:43.776
+        --> 00:07:44.798\n<v SPEAKER_00>So I thought that was a good story.\n\n00:07:44.838
+        --> 00:07:50.588\n<v SPEAKER_00>And I think we'll flesh out the importance
+        of having a really clear idea of what your podcast is about.\n\n00:07:51.028
+        --> 00:07:59.940\n<v SPEAKER_01>Yeah, I think a lot of my work is, just in
+        general, a lot of my work, including this book, is simply taking people's
+        heads and pointing them in a slightly different direction.\n\n00:08:01.023
+        --> 00:08:05.509\n<v SPEAKER_01>They're worried about what they're going to
+        do whenever someone says they want to do a podcast, and I say, what is it?\n\n00:08:05.910
+        --> 00:08:08.613\n<v SPEAKER_01>They often describe it from a very features-based
+        perspective.\n\n00:08:08.754 --> 00:08:13.581\n<v SPEAKER_01>Oh, I'm going
+        to have conversations with women filmmakers about women in film.\n\n00:08:14.485
+        --> 00:08:16.550\n<v SPEAKER_01>That's a feature that's not a benefit.\n\n00:08:17.012
+        --> 00:08:25.495\n<v SPEAKER_01>And I always try to get people when that perspective
+        shift is, and this is where my history as a broadcaster comes in, of let's
+        think about the audience for that.\n\n00:08:26.112 --> 00:08:29.797\n<v SPEAKER_01>Let's
+        not think about what you are at this moment.\n\n00:08:30.096 --> 00:08:31.718\n<v
+        SPEAKER_01>Let's start with the listener.\n\n00:08:32.159 --> 00:08:37.206\n<v
+        SPEAKER_01>It used to be part of my kind of standard stump speech.\n\n00:08:37.245
+        --> 00:08:42.232\n<v SPEAKER_01>I would say even the yoga instructor down
+        the street has a podcast.\n\n00:08:42.373 --> 00:08:47.639\n<v SPEAKER_01>And
+        one day I was in yoga class and my yoga instructor came up to me and said,
+        can I talk to you after class?\n\n00:08:48.100 --> 00:08:53.669\n<v SPEAKER_01>My
+        first thought was like, oh, what did I do that required a talking to after
+        class?\n\n00:08:53.730 --> 00:08:55.011\n<v SPEAKER_01>I'm like, oh, I didn't
+        want to think about this.\n\n00:08:55.432 --> 00:08:56.654\n<v SPEAKER_01>And
+        I kind of forgot about it.\n\n00:08:56.735 --> 00:09:04.970\n<v SPEAKER_01>And
+        then he kind of came he came up to me like that day or a day later next class
+        and said, hey, you know, everybody tells me I should have a podcast.\n\n00:09:05.431
+        --> 00:09:10.620\n<v SPEAKER_01>And I'm like, oh, now even my yoga instructor
+        has a podcast or wants to have a podcast.\n\n00:09:11.282 --> 00:09:21.061\n<v
+        SPEAKER_01>And so I sat down with him and I started kind of talking about
+        some of the concepts that I use with broadcasters or media people and realized
+        they were far too advanced for where he was at.\n\n00:09:21.400 --> 00:09:27.854\n<v
+        SPEAKER_01>He just had this passion to talk to people and he had something
+        to say, but he had no idea of how to think about it.\n\n00:09:28.094 --> 00:09:34.743\n<v
+        SPEAKER_01>And so I ended up drawing on a piece of paper, a circle or what
+        became a circle with a couple of points on it.\n\n00:09:35.043 --> 00:09:51.024\n<v
+        SPEAKER_01>And it kind of developed an exercise that I still use with people
+        all the time, whether I'm doing it in a bar napkin or on a dry erase board
+        in a conference room where we talk about who is the audience for this, get
+        incredibly specific about who they are and what journey are you putting them
+        on?\n\n00:09:51.365 --> 00:10:01.134\n<v SPEAKER_01>And that's why it becomes
+        a circle because all these things kind of flow into each other of asking yourself,
+        what do you have to say to that person once you've defined them?\n\n00:10:01.556
+        --> 00:10:02.476\n<v SPEAKER_01>And you get very specific.\n\n00:10:02.557
+        --> 00:10:04.739\n<v SPEAKER_01>I make people look up pictures and print them
+        out.\n\n00:10:04.778 --> 00:10:05.759\n<v SPEAKER_01>We put them up on the
+        wall.\n\n00:10:06.100 --> 00:10:07.802\n<v SPEAKER_01>We give them names and
+        fake bios.\n\n00:10:07.822 --> 00:10:11.666\n<v SPEAKER_01>And then we consolidate
+        them all into what we think the person is.\n\n00:10:12.866 --> 00:10:13.807\n<v
+        SPEAKER_01>What do you have to say to them?\n\n00:10:14.089 --> 00:10:14.668\n<v
+        SPEAKER_01>Who are you?\n\n00:10:14.729 --> 00:10:17.312\n<v SPEAKER_01>What
+        version of yourself or what is your voice in this?\n\n00:10:17.371 --> 00:10:19.153\n<v
+        SPEAKER_01>What is your perspective, your personality?\n\n00:10:20.034 -->
+        00:10:22.239\n<v SPEAKER_01>And then what is the outcome, the desired outcome?\n\n00:10:23.541
+        --> 00:10:26.446\n<v SPEAKER_01>And then we get into this exercise that I
+        kind of force people into.\n\n00:10:26.485 --> 00:10:34.558\n<v SPEAKER_01>And
+        the way I usually do it now, since I'm always evolving this exercise, is I
+        make people write it, and then they kind of hide it from everyone.\n\n00:10:34.578
+        --> 00:10:37.062\n<v SPEAKER_01>And during the rest of the workshop, they
+        can edit it.\n\n00:10:37.182 --> 00:10:44.816\n<v SPEAKER_01>And at the end
+        of the workshop, everyone reads their versions of these 10-word descriptions
+        that describe your project and nothing else in the world.\n\n00:10:45.517
+        --> 00:10:53.567\n<v SPEAKER_01>No one in the room should be able to say,
+        yeah, there's also another podcast of women talking to women filmmakers about
+        women's film.\n\n00:10:53.886 --> 00:10:54.727\n<v SPEAKER_01>There are others.\n\n00:10:55.109
+        --> 00:10:56.711\n<v SPEAKER_01>So what makes yours distinct?\n\n00:10:57.130
+        --> 00:11:02.638\n<v SPEAKER_01>Are you focusing on filmmakers in the Minneapolis-St.\n\n00:11:02.677
+        --> 00:11:03.239\n<v SPEAKER_01>Paul area?\n\n00:11:03.318 --> 00:11:10.287\n<v
+        SPEAKER_01>Are you talking about a specific age or a specific genre of film
+        or a specific time period in which films were made?\n\n00:11:10.727 --> 00:11:13.289\n<v
+        SPEAKER_01>Include that in your description.\n\n00:11:13.330 --> 00:11:18.075\n<v
+        SPEAKER_01>So you're literally describing one podcast in a world of almost
+        a million others, right?\n\n00:11:18.095 --> 00:11:31.647\n<v SPEAKER_01>And
+        that provides you with an editorial lens that you can then use to make all
+        kinds of decisions about what's right for your podcast from its title, how
+        it describes itself, its artwork, the type of guests you have, the kind of
+        conversations you have.\n\n00:11:32.246 --> 00:11:38.013\n<v SPEAKER_01>The
+        answer to those five questions, the basic things that go around the circle
+        in the 10-word exercise, you have that.\n\n00:11:38.072 --> 00:11:40.094\n<v
+        SPEAKER_01>You have a huge amount of clarity.\n\n00:11:40.715 --> 00:11:46.024\n<v
+        SPEAKER_01>that you never would have had before or spent years kind of figuring
+        out one episode at a time.\n\n00:11:47.145 --> 00:11:49.109\n<v SPEAKER_01>And
+        many people don't have years to figure it out.\n\n00:11:49.970 --> 00:11:50.171\n<v
+        SPEAKER_00>Sure.\n\n00:11:50.211 --> 00:11:50.390\n<v SPEAKER_00>Yeah.\n\n00:11:50.451
+        --> 00:11:53.495\n<v SPEAKER_00>Most people starting podcasts aren't funded.\n\n00:11:53.876
+        --> 00:11:59.927\n<v SPEAKER_00>It's all, you know, I've got a spare bedroom
+        and a microphone and maybe this will work and maybe it won't.\n\n00:12:00.567
+        --> 00:12:02.991\n<v SPEAKER_00>And so, and I think something that you...\n\n00:12:04.052
+        --> 00:12:11.407\n<v SPEAKER_00>If I had to kind of create a second subtitle
+        for your book, it would be saving the world from mediocre podcast.\n\n00:12:11.908
+        --> 00:12:12.451\n<v SPEAKER_00>Trying to.\n\n00:12:14.025 --> 00:12:19.451\n<v
+        SPEAKER_00>And not to say that anyone can't just buy a microphone and start
+        a podcast with their friends.\n\n00:12:19.491 --> 00:12:20.893\n<v SPEAKER_00>I
+        think that's the beauty of podcasting.\n\n00:12:21.833 --> 00:12:24.697\n<v
+        SPEAKER_00>But really appropriately matching the expectations.\n\n00:12:25.177
+        --> 00:12:43.759\n<v SPEAKER_00>That if you dream of creating a podcast that
+        has a worldwide impact and is getting tens of thousands of downloads every
+        single episode, then there's a certain threshold that you need to reach in
+        the quality of your content and in the way that you stay focused on your lane
+        and what makes you unique to set yourself up for that kind of success.\n\n00:12:45.181
+        --> 00:12:48.346\n<v SPEAKER_00>Would you say that that is true or am I totally
+        misjudging?\n\n00:12:48.385 --> 00:12:48.907\n<v SPEAKER_00>No,\n\n00:12:49.587
+        --> 00:12:52.312\n<v SPEAKER_01>it's actually quite deliberate.\n\n00:12:53.033
+        --> 00:12:59.823\n<v SPEAKER_01>I spend a lot of my professional time kind
+        of looking at things that work that other people do and that I do too.\n\n00:12:59.903
+        --> 00:13:03.769\n<v SPEAKER_01>But obviously I do so many things and the
+        rest of the world does a lot of other things.\n\n00:13:03.929 --> 00:13:09.038\n<v
+        SPEAKER_01>So I spend a lot of time looking at things, trying to kind of deconstruct
+        why things don't work.\n\n00:13:09.899 --> 00:13:14.567\n<v SPEAKER_01>and
+        why they do work, and then trying to figure out, okay, what's my spin on that
+        thing?\n\n00:13:14.606 --> 00:13:26.649\n<v SPEAKER_01>From starting my company
+        to the work we did at Audible to lots of things at NPR, the inspiration for
+        A Bright Idea was actually watching other people struggle with the same problem.\n\n00:13:27.230
+        --> 00:13:30.816\n<v SPEAKER_01>And I can't help but apply that to many aspects
+        of my life.\n\n00:13:31.037 --> 00:14:06.749\n<v SPEAKER_01>And when I give
+        talks, one of the things that surprises people pleasantly that they recognize
+        this because I do it very deliberately is a lot of times when you see a podcast
+        or someone with some modicum of success get up on a stage, it's basically
+        show and tell and brag about how great I am and the work I've done and shouldn't
+        you be\u2013 Thank you so much.\n\n00:14:14.597 --> 00:14:17.081\n<v SPEAKER_01>And
+        you are passionate about doing it.\n\n00:14:17.121 --> 00:14:17.842\n<v SPEAKER_01>They
+        love it.\n\n00:14:17.883 --> 00:14:26.193\n<v SPEAKER_01>That to me is just
+        as successful as S-Town or Ted Radio Hour or the Joe Rogan experience with
+        millions of downloads.\n\n00:14:26.794 --> 00:14:34.927\n<v SPEAKER_01>And
+        you can equally have things that are at that level that end up failing because
+        even though they're being downloaded millions of times, they've kind of lost
+        their spark.\n\n00:14:34.966 --> 00:14:37.509\n<v SPEAKER_01>They're not really
+        kind of innovating anymore, so on and so forth.\n\n00:14:38.071 --> 00:14:48.840\n<v
+        SPEAKER_01>So I think that success is really one of the benefits of defining
+        your audience and understanding who you're speaking to is it gives you a real
+        clear set of expectations around what success means.\n\n00:14:49.761 --> 00:14:53.311\n<v
+        SPEAKER_01>And you can have all the passion in the world towards doing a podcast.\n\n00:14:53.511
+        --> 00:15:06.678\n<v SPEAKER_01>And if your expectations are off about what
+        you should be hearing back, what you should be seeing as downloads, what you
+        consider to be worth your time, it can deflate that passion.\n\n00:15:06.759
+        --> 00:15:08.864\n<v SPEAKER_01>And I think that's a crime.\n\n00:15:09.424
+        --> 00:15:14.653\n<v SPEAKER_01>You know, passion is the one thing you can't\u2013
+        passion and curiosity are the two things in podcasting that you can't fake.\n\n00:15:15.114
+        --> 00:15:18.919\n<v SPEAKER_01>You can't kind of get up in the morning and
+        say, okay, I'm going to be passionate and curious today.\n\n00:15:18.940 -->
+        00:15:20.241\n<v SPEAKER_01>I'm going to force my way through it.\n\n00:15:20.682
+        --> 00:15:21.823\n<v SPEAKER_01>You can't fake it until you make it.\n\n00:15:21.884
+        --> 00:15:22.946\n<v SPEAKER_01>You have to have it.\n\n00:15:22.966 --> 00:15:31.679\n<v
+        SPEAKER_01>And there are people who throw tons of money at podcasting and
+        tons of time at podcasting, tons of resources, and they don't have those two
+        things.\n\n00:15:32.160 --> 00:15:34.865\n<v SPEAKER_01>And they just\u2013
+        and it ends up kind of flopping.\n\n00:15:34.904 --> 00:15:36.547\n<v SPEAKER_01>And
+        then they're curious as to why.\n\n00:15:36.567 --> 00:15:36.947\n<v SPEAKER_01>Yeah.\n\n00:15:37.437
+        --> 00:15:49.716\n<v SPEAKER_01>So when I hear someone stand up in a Q&A session
+        at a talk or whatever, and they tell me about their podcast they're making,
+        and you can kind of tell them their voice that they're expecting me to be
+        dismissive of them.\n\n00:15:49.736 --> 00:15:55.647\n<v SPEAKER_01>I'm actually,
+        I'm giving them my best thinking of like, okay, you want to make a podcast
+        for people who knit?\n\n00:15:55.687 --> 00:15:58.091\n<v SPEAKER_01>Here's
+        three things you should think about.\n\n00:15:58.171 --> 00:16:02.999\n<v
+        SPEAKER_01>And this is how you can be the voice of a group of people who care
+        about this the way you do.\n\n00:16:03.931 --> 00:16:06.134\n<v SPEAKER_01>And
+        I think that's really an important thing.\n\n00:16:06.254 --> 00:16:14.288\n<v
+        SPEAKER_01>And if you walk into podcasting thinking you're going to make a
+        million dollars or every episode needs to have a million downloads, I can
+        tell you now there's no mystery to that.\n\n00:16:14.327 --> 00:16:15.629\n<v
+        SPEAKER_01>You're probably going to fail.\n\n00:16:16.530 --> 00:16:22.620\n<v
+        SPEAKER_01>But if you set your expectations according to, like, I have things
+        to say that I won't be able to sleep at night unless I'm able to say them.\n\n00:16:23.388
+        --> 00:16:28.716\n<v SPEAKER_01>Or I care about something so much that I want
+        to be part of the conversation around that thing.\n\n00:16:28.736 --> 00:16:30.278\n<v
+        SPEAKER_01>That's passion driving it.\n\n00:16:30.720 --> 00:16:33.924\n<v
+        SPEAKER_01>And all the other markers of success originate from that passion.\n\n00:16:34.767
+        --> 00:16:39.573\n<v SPEAKER_01>Joe Rogan didn't get into podcasting for any
+        other reason other than it was fun.\n\n00:16:39.594 --> 00:16:43.059\n<v SPEAKER_01>He
+        had something to say, and basically it was fun.\n\n00:16:43.773 --> 00:16:45.035\n<v
+        SPEAKER_01>Marc Maron, fun.\n\n00:16:45.076 --> 00:16:48.443\n<v SPEAKER_01>Roman
+        Mars, fun.\n\n00:16:48.484 --> 00:16:49.967\n<v SPEAKER_01>Ira Glass, fun.\n\n00:16:50.008
+        --> 00:16:55.400\n<v SPEAKER_01>And then they figured out how to make it into
+        something that was big.\n\n00:16:55.902 --> 00:16:57.446\n<v SPEAKER_01>But
+        it started off just being fun.\n\n00:16:57.466 --> 00:17:01.576\n<v SPEAKER_00>Yeah,
+        you don't make a podcast so you can be sponsored by Cash App.\n\n00:17:02.014
+        --> 00:17:03.356\n<v SPEAKER_01>Right, right.\n\n00:17:03.457 --> 00:17:08.086\n<v
+        SPEAKER_01>But there's this comical New York Times article that came out a
+        couple months ago of this woman.\n\n00:17:08.205 --> 00:17:14.758\n<v SPEAKER_01>She
+        and her friend put out a marketing podcast and stopped a couple months later
+        because they hadn't gotten any sponsorship offers.\n\n00:17:15.459 --> 00:17:18.403\n<v
+        SPEAKER_01>It's just like, is this an Onion article?\n\n00:17:18.464 --> 00:17:22.672\n<v
+        SPEAKER_01>It just reads like it's\u2013 what were they thinking was going
+        to happen?\n\n00:17:23.113 --> 00:17:23.192\n<v UNKNOWN>Yeah.\n\n00:17:23.310
+        --> 00:17:42.737\n<v SPEAKER_01>I think that some podcasts that could be very
+        good embracing what they are and have a fruitful, long life and really be
+        a rewarding experience both for the creator and the audience, they get discouraged
+        and stop because they just don't understand how to set expectations.\n\n00:17:42.817
+        --> 00:17:45.601\n<v SPEAKER_01>I think that's an important part of the creative
+        process.\n\n00:17:46.732 --> 00:17:47.153\n<v SPEAKER_00>For sure.\n\n00:17:47.192
+        --> 00:17:53.659\n<v SPEAKER_00>Well, and you touch on this a little bit in
+        the book about the balance of ambition versus resources.\n\n00:17:54.440 -->
+        00:17:59.865\n<v SPEAKER_00>And you couch it in the terms of like, if you're
+        doing a live radio show, there's only so much editing you can do.\n\n00:18:01.086
+        --> 00:18:06.090\n<v SPEAKER_00>But if you have three months to plan out this
+        serial podcast, then you can do a lot more.\n\n00:18:06.810 --> 00:18:14.438\n<v
+        SPEAKER_00>But even applying that to time and financial resources for independent
+        podcasters versus the podcast that a lot of people...\n\n00:18:14.999 -->
+        00:18:18.321\n<v SPEAKER_00>C is being like, this is what a successful podcast
+        sounds like.\n\n00:18:18.823 --> 00:18:23.267\n<v SPEAKER_00>It can be very
+        overwhelming to think, well, that's what I have to do to make a podcast.\n\n00:18:24.588
+        --> 00:18:36.921\n<v SPEAKER_00>But kind of what you were talking about, what
+        counts as success for an NPR-style podcast with a team of 15 people is totally
+        different than someone talking about what they're passionate about in their
+        bedroom.\n\n00:18:37.842 --> 00:18:39.784\n<v SPEAKER_00>So I thought that
+        was just a great point that you made in the book.\n\n00:18:40.484 --> 00:18:40.865\n<v
+        SPEAKER_01>Well, thank you.\n\n00:18:41.065 --> 00:18:43.146\n<v SPEAKER_01>I
+        think that a lot of people...\n\n00:18:45.154 --> 00:19:00.711\n<v SPEAKER_01>get
+        very confused about the amount of resources they should be putting into something
+        and think that they can spend their way, some companies think they can spend
+        their way to success, and other people think that I have to lower my editorial
+        ambition because I only have so much time.\n\n00:19:00.751 --> 00:19:02.713\n<v
+        SPEAKER_01>And I think both those are absolutely wrong.\n\n00:19:02.755 -->
+        00:19:13.067\n<v SPEAKER_01>My company works on a podcast with Esther Perel,
+        where she is giving therapy to romantic couples, and it's called Where Should
+        We Begin?\n\n00:19:13.086 --> 00:19:18.895\n<v SPEAKER_01>And then there's
+        another new one we're doing with Esther, How's Work?, which is looking at
+        work relationships.\n\n00:19:19.457 --> 00:19:25.967\n<v SPEAKER_01>And that
+        whole podcast is designed around having a very limited resource, which is
+        Esther's time.\n\n00:19:26.007 --> 00:19:31.895\n<v SPEAKER_01>That she doesn't
+        have time to sit there and spend 15 hours to prep something and write a huge
+        long script and whatever.\n\n00:19:32.317 --> 00:19:40.409\n<v SPEAKER_01>We
+        get her in little grabs and dribbles throughout her schedule, and so we had
+        to design the podcast Not about money, not about...\n\n00:19:41.872 --> 00:19:46.239\n<v
+        SPEAKER_01>The best asset we had was the most limited thing we had, which
+        was her time.\n\n00:19:46.900 --> 00:19:51.708\n<v SPEAKER_01>And so we kind
+        of figured out how to make the podcast with that as a factor.\n\n00:19:51.748
+        --> 00:19:56.476\n<v SPEAKER_01>Other podcasts have different creative restrictions.\n\n00:19:57.396
+        --> 00:19:59.580\n<v SPEAKER_01>I am a believer that creative restrictions
+        actually...\n\n00:19:59.621 --> 00:20:04.368\n<v SPEAKER_01>Editorial restrictions,
+        time restrictions, asset resource restrictions...\n\n00:20:05.564 --> 00:20:10.651\n<v
+        SPEAKER_01>inspire creativity because people want to come up with solutions
+        to problems.\n\n00:20:11.191 --> 00:20:18.361\n<v SPEAKER_01>So if you don't
+        have a lot of time or you don't have a lot of help or you don't have a lot
+        of money, that doesn't mean you can't do something really exciting.\n\n00:20:18.381
+        --> 00:20:22.046\n<v SPEAKER_01>It just means you have to think about how
+        to work with those realities, right?\n\n00:20:22.507 --> 00:20:28.453\n<v
+        SPEAKER_01>If I have two arms and I lose one arm, I'm not going to say, okay,
+        well, I'm done living now.\n\n00:20:28.575 --> 00:20:30.217\n<v SPEAKER_01>I
+        figured out how to live with one arm.\n\n00:20:30.926 --> 00:20:31.146\n<v
+        SPEAKER_01>Right.\n\n00:20:31.587 --> 00:20:38.935\n<v SPEAKER_01>So with
+        any scarcity of resource is something that is almost any scarcity of resources,
+        something you can kind of counterbalance with something else.\n\n00:20:39.656
+        --> 00:20:51.089\n<v SPEAKER_00>So I want to get into some, I guess, some
+        more practical questions that I think will specifically relate to questions
+        that independent podcasters would have, because that's most of the people
+        that will be listening to this.\n\n00:20:51.809 --> 00:20:55.193\n<v SPEAKER_00>The
+        first one would be the nature of the launch.\n\n00:20:55.835 --> 00:21:06.630\n<v
+        SPEAKER_00>and how much of early success is attributed to the connections
+        and exposure and the network that you have and can tap versus the quality
+        of the content itself.\n\n00:21:07.951 --> 00:21:14.820\n<v SPEAKER_00>Because
+        I know a lot of independent podcasters feel like, well, I'm in control of
+        making a podcast I'm proud of, but I'm not friends with Marc Maron.\n\n00:21:14.881
+        --> 00:21:16.202\n<v SPEAKER_00>I'm not friends with Joe Rogan.\n\n00:21:16.522
+        --> 00:21:20.669\n<v SPEAKER_00>I'm not a part of the NPR podcast network
+        and getting airtime on all those other shows.\n\n00:21:21.349 --> 00:21:31.398\n<v
+        SPEAKER_00>So for them, for an independent podcaster that's trying to pop,
+        that's trying to really have a great launch and get some positive momentum,
+        what are the things that they could focus on that might be more in their control?\n\n00:21:31.998
+        --> 00:21:34.221\n<v SPEAKER_01>Well, there's a lot more in control than most
+        people think.\n\n00:21:34.762 --> 00:21:41.314\n<v SPEAKER_01>I think people
+        look at the resources that some podcasters have, and they think, I don't have
+        that, so I can't set my ambitions high.\n\n00:21:41.334 --> 00:21:43.636\n<v
+        SPEAKER_01>But again, there's a workaround for almost everything.\n\n00:21:44.818
+        --> 00:21:54.536\n<v SPEAKER_01>I say all this with the caveat that the best
+        marketing plan starts with a tenacious effort to just make the next episode
+        better than the last one.\n\n00:21:55.318 --> 00:21:57.103\n<v SPEAKER_01>How
+        can I make it better?\n\n00:21:57.163 --> 00:21:59.688\n<v SPEAKER_01>How
+        can I be sharper if I'm interviewing someone?\n\n00:21:59.728 --> 00:22:03.916\n<v
+        SPEAKER_01>How can I get something out of that conversation that person hasn't
+        said 80 times?\n\n00:22:04.518 --> 00:22:09.147\n<v SPEAKER_01>If I'm doing
+        a narrative, how can I bring more to the story or tell a better version of
+        the story?\n\n00:22:09.568 --> 00:22:14.499\n<v SPEAKER_01>And just being
+        relentless in pursuing being a little bit better every time you do it.\n\n00:22:14.980
+        --> 00:22:19.834\n<v SPEAKER_01>Because you can have the best marketing resources
+        in the world and a crappy show.\n\n00:22:19.874 --> 00:22:25.451\n<v SPEAKER_01>And
+        it's what you'll see, or even you see all this all the time when celebrities
+        jump in, there's a huge splash.\n\n00:22:25.510 --> 00:22:26.795\n<v SPEAKER_01>And
+        then where are they two months later?\n\n00:22:27.719 --> 00:22:32.163\n<v
+        SPEAKER_01>You know, if they're still doing it, it's not as, you know, they're
+        not as high up in the charts.\n\n00:22:32.482 --> 00:22:34.164\n<v SPEAKER_01>They're
+        not commanding the attention they were.\n\n00:22:34.204 --> 00:22:41.592\n<v
+        SPEAKER_01>People aren't as excited about it because they've heard the reality
+        and the reality isn't all that great many times, not all the time, obviously.\n\n00:22:41.672
+        --> 00:22:49.599\n<v SPEAKER_01>But so I think that having great content is
+        key number one and always trying to improve it is part of that as well.\n\n00:22:50.760
+        --> 00:23:03.218\n<v SPEAKER_01>So if you don't know a Mark Maron or you don't
+        know a Joe Rogan or don't have an NPR or Radiotopia or whatever, how can you
+        create something that may not be one friend but is a bunch of other friends?\n\n00:23:04.200
+        --> 00:23:15.837\n<v SPEAKER_01>So if you are making a podcast about beekeeping
+        and you are trying to make it a podcast for other enthusiasts in beekeeping,
+        where do those people congregate?\n\n00:23:15.877 --> 00:23:21.827\n<v SPEAKER_01>They
+        congregate in Facebook groups and conventions and newsletters and websites
+        and forums and whatever.\n\n00:23:22.067 --> 00:23:23.590\n<v SPEAKER_01>You
+        can sit there and list off without...\n\n00:23:24.554 --> 00:23:25.715\n<v
+        SPEAKER_01>spending a lot of time.\n\n00:23:26.036 --> 00:23:27.478\n<v SPEAKER_01>Where
+        do these people congregate?\n\n00:23:28.259 --> 00:23:45.560\n<v SPEAKER_01>And
+        as I mentioned this in the book, it's actually all ideas that I've stolen
+        over the years from various guerrilla marketers that you really have to build
+        a network of people who are connected to the subject matter, who have a little
+        bit of influence, even a tiny bit of influence.\n\n00:23:46.102 --> 00:23:47.103\n<v
+        SPEAKER_01>And if you look at...\n\n00:23:47.364 --> 00:23:47.943\n<v SPEAKER_01>If
+        you get...\n\n00:23:48.938 --> 00:23:57.967\n<v SPEAKER_01>20 people to tweet
+        on your behalf who are reaching the people you care about or who have those
+        friends, that's more powerful than one big, huge thing.\n\n00:23:57.987 -->
+        00:24:06.315\n<v SPEAKER_01>If you're trying to make a podcast about beekeeping,
+        you actually don't want Mark Maron tweeting about you because most of his
+        audience aren't going to care about what you're talking about.\n\n00:24:06.855
+        --> 00:24:13.722\n<v SPEAKER_01>But if you go to the people who do care, find
+        out where they are, build yourself into that community and say, hey, I'm doing
+        this for our community.\n\n00:24:13.962 --> 00:24:15.243\n<v SPEAKER_01>Would
+        you like to be part of it?\n\n00:24:15.904 --> 00:24:23.333\n<v SPEAKER_01>The
+        story in the book I tell, which has proven true time and time again, which
+        is a podcaster I was working with as a client.\n\n00:24:23.353 --> 00:24:24.192\n<v
+        SPEAKER_01>I just like this guy.\n\n00:24:24.212 --> 00:24:27.596\n<v SPEAKER_01>I
+        don't even really charge him very often, but I like this guy.\n\n00:24:27.616
+        --> 00:24:29.459\n<v SPEAKER_01>He's like, I feel kind of flatlined.\n\n00:24:29.519
+        --> 00:24:31.361\n<v SPEAKER_01>I can't get my numbers to grow.\n\n00:24:31.401
+        --> 00:24:34.463\n<v SPEAKER_01>And I said, for six weeks, start off every
+        episode.\n\n00:24:34.483 --> 00:24:35.765\n<v SPEAKER_01>He's doing a weekly
+        podcast.\n\n00:24:35.785 --> 00:24:41.030\n<v SPEAKER_01>Start off every episode
+        with, if you love this podcast, I need something from you to help it grow.\n\n00:24:41.050
+        --> 00:24:43.093\n<v SPEAKER_01>I need you to tell one person.\n\n00:24:43.816
+        --> 00:24:50.266\n<v SPEAKER_01>I need you to tell one, write an email, a
+        tweet, Facebook post, reach out to someone and tell one person.\n\n00:24:50.286
+        --> 00:24:55.515\n<v SPEAKER_01>And six weeks went by and I'm talking to him
+        and I call him up and he's like, something's wrong.\n\n00:24:55.535 --> 00:24:56.757\n<v
+        SPEAKER_01>I don't understand what's happening.\n\n00:24:57.037 --> 00:24:57.838\n<v
+        SPEAKER_01>Like, what is happening?\n\n00:24:57.878 --> 00:24:59.540\n<v SPEAKER_01>He's
+        like, my numbers are up 35%.\n\n00:25:01.078 --> 00:25:02.101\n<v SPEAKER_01>There's
+        no mystery to that.\n\n00:25:02.141 --> 00:25:05.425\n<v SPEAKER_01>You asked
+        your audience of people who love you and care for you.\n\n00:25:05.465 -->
+        00:25:09.992\n<v SPEAKER_01>And in his case, when he was already doing like
+        a listener support thing, they were giving him money.\n\n00:25:10.012 -->
+        00:25:15.501\n<v SPEAKER_01>He said, look, what I need from you now to really
+        keep this going is just to share it with somebody.\n\n00:25:15.682 --> 00:25:16.483\n<v
+        SPEAKER_01>And they did it.\n\n00:25:17.545 --> 00:25:18.145\n<v SPEAKER_01>And
+        it worked.\n\n00:25:18.826 --> 00:25:20.450\n<v SPEAKER_01>It didn't cost
+        a dime.\n\n00:25:21.446 --> 00:25:31.227\n<v SPEAKER_01>I say frequently,
+        and people raise their eyebrows when I say this, who are at larger companies,
+        because they spend a lot advertising podcasts.\n\n00:25:31.406 --> 00:25:36.176\n<v
+        SPEAKER_01>I tell them I have never seen anyone spend a dollar advertising
+        a podcast that paid back.\n\n00:25:37.278 --> 00:25:38.240\n<v SPEAKER_01>I
+        just don't think it works.\n\n00:25:39.165 --> 00:25:42.412\n<v SPEAKER_01>I
+        do see network effect of, I love this.\n\n00:25:42.471 --> 00:25:42.992\n<v
+        SPEAKER_01>Listen to it.\n\n00:25:43.032 --> 00:25:43.693\n<v SPEAKER_01>You'll
+        love it too.\n\n00:25:43.753 --> 00:25:44.434\n<v SPEAKER_01>That works.\n\n00:25:45.257
+        --> 00:25:52.147\n<v SPEAKER_01>You know, bringing people onto your podcast
+        and kind of you being guests, kind of swapping guest spots on each other's
+        podcast works.\n\n00:25:52.990 --> 00:25:55.795\n<v SPEAKER_01>Dropping in
+        promos into one podcast feed works.\n\n00:25:56.997 --> 00:25:59.119\n<v SPEAKER_01>Dropping
+        an episode into a podcast feed works.\n\n00:25:59.280 --> 00:26:01.585\n<v
+        SPEAKER_01>Like all this stuff works and it doesn't cost anything.\n\n00:26:02.538
+        --> 00:26:13.942\n<v SPEAKER_01>And if you can't do that on a massive scale,
+        like a Radiotopia or a Stitcher, you can do it on your friends and other podcasters
+        or find people in like a ring of influence where you can all support each
+        other.\n\n00:26:14.983 --> 00:26:20.655\n<v SPEAKER_01>One thing I mentioned
+        in the book is find five other podcasters and agree that every week you're
+        all going to promote one of you.\n\n00:26:21.353 --> 00:26:29.910\n<v SPEAKER_01>And
+        you just circle it around so everyone gets a turn being in the spotlight,
+        and you spend the other four or five weeks giving the spotlight.\n\n00:26:30.391
+        --> 00:26:31.393\n<v SPEAKER_01>And that works.\n\n00:26:31.733 --> 00:26:42.375\n<v
+        SPEAKER_01>We figured that out at NPR, and NPR still follows those tactics
+        today that we developed of the best marketing we have is just telling people
+        who probably are interested that they would like it.\n\n00:26:43.207 --> 00:26:48.836\n<v
+        SPEAKER_00>Well, and I love how everything kind of comes back to understanding
+        your listener super well.\n\n00:26:49.317 --> 00:27:02.521\n<v SPEAKER_00>The
+        better you understand the listener, the better able you are to make those
+        decisions about what to include and not include in your podcast, where to
+        find more of them, how to speak to their pain points and why they would want
+        to listen to a show like that.\n\n00:27:02.942 --> 00:27:05.468\n<v SPEAKER_00>So
+        I love that it all kind of comes full circle.\n\n00:27:06.088 --> 00:27:13.381\n<v
+        SPEAKER_00>Now, one other thing I want to make sure that we have time for
+        is you go pretty in-depth in the book on the art of interviewing.\n\n00:27:13.421
+        --> 00:27:24.400\n<v SPEAKER_00>And I call it the art of interviewing because
+        every single person brings their own sense of curiosity and their own angle
+        of the kinds of questions they like to ask and the process that they have.\n\n00:27:25.000
+        --> 00:27:26.242\n<v SPEAKER_00>But I would love just to hear...\n\n00:27:26.743
+        --> 00:27:32.938\n<v SPEAKER_00>You walk through kind of the process of preparing
+        for an interview, what goes into that.\n\n00:27:32.978 --> 00:27:45.605\n<v
+        SPEAKER_00>And then even after the interview is done, when you have all the
+        tape that you're going to have and you have to figure out what's going to
+        make it into the final episode, what kind of decisions that you make as a
+        producer to really create the best episode possible?\n\n00:27:46.301 --> 00:27:49.626\n<v
+        SPEAKER_01>That's an interesting question because of all the things I wrote
+        about in the book.\n\n00:27:50.327 --> 00:27:55.075\n<v SPEAKER_01>Interviewing
+        is the thing that I think I am weakest at and have struggled the most with.\n\n00:27:56.916
+        --> 00:27:58.619\n<v SPEAKER_01>There's two basic forms of interviews.\n\n00:27:58.640
+        --> 00:28:06.510\n<v SPEAKER_01>One is when you're out in the field working
+        on a narrative story and you're interviewing people who will be part of your
+        narrative story that you're producing.\n\n00:28:06.530 --> 00:28:12.358\n<v
+        SPEAKER_01>If you hear any clip in any narrative podcast, that came out of
+        an interview most likely.\n\n00:28:12.880 --> 00:28:14.623\n<v SPEAKER_01>And
+        I love doing that.\n\n00:28:14.702 --> 00:28:17.026\n<v SPEAKER_01>And actually,
+        I think I'm competent at it.\n\n00:28:17.046 --> 00:28:23.516\n<v SPEAKER_01>I
+        am not someone who shines in a situation like what we're doing, being the
+        questioner.\n\n00:28:23.536 --> 00:28:27.122\n<v SPEAKER_01>I find it really
+        difficult for me to do.\n\n00:28:27.162 --> 00:28:31.648\n<v SPEAKER_01>And
+        I've struggled with it to the point that I don't really do that much of it
+        anymore.\n\n00:28:32.169 --> 00:28:36.576\n<v SPEAKER_01>Because I just think
+        there's other people I'd rather put in the position of doing it because they're
+        stronger at it.\n\n00:28:37.196 --> 00:28:42.743\n<v SPEAKER_01>But in my
+        struggles with it, I've learned a couple perspective approaches that I think
+        really help.\n\n00:28:42.804 --> 00:28:56.000\n<v SPEAKER_01>And the first
+        one is to stop pretending to be Terry Gross or Howard Stern or Trevor Noah
+        or Ellen or whomever you admire who's an interviewer and just trying to be
+        that person like you're a play acting.\n\n00:28:56.501 --> 00:29:02.488\n<v
+        SPEAKER_01>And I think that's where most interviews go sideways is people
+        forget to just be themselves.\n\n00:29:03.248 --> 00:29:07.992\n<v SPEAKER_01>If
+        you don't have a sense of wonder about your subject, there's lots that you
+        want to ask them.\n\n00:29:08.573 --> 00:29:11.455\n<v SPEAKER_01>If you're
+        curious, you shouldn't be doing that interview.\n\n00:29:12.037 --> 00:29:16.461\n<v
+        SPEAKER_01>They aren't the right booking or you weren't the right host for
+        that conversation.\n\n00:29:17.321 --> 00:29:23.227\n<v SPEAKER_01>And so
+        that's like number one, 80% of problems are solved with just that perspective
+        shift.\n\n00:29:24.008 --> 00:29:26.795\n<v SPEAKER_01>But, you know, so let's
+        say you are really curious.\n\n00:29:28.097 --> 00:29:29.682\n<v SPEAKER_01>You
+        want to go in and interview someone.\n\n00:29:30.042 --> 00:29:33.892\n<v
+        SPEAKER_01>I make my staff do this when we are doing interviews.\n\n00:29:33.972
+        --> 00:29:40.087\n<v SPEAKER_01>I train people that we work with to think
+        like this of you walk into that interview with a plan.\n\n00:29:40.849 -->
+        00:29:42.834\n<v SPEAKER_01>You know what you're going to talk about.\n\n00:29:42.875
+        --> 00:29:46.041\n<v SPEAKER_01>You know what order you're going to talk about
+        things in.\n\n00:29:46.803 --> 00:29:48.426\n<v SPEAKER_01>You have written
+        out questions.\n\n00:29:48.467 --> 00:29:57.185\n<v SPEAKER_01>You've debated
+        questions with your colleagues, or if you have them, or had someone to give
+        you feedback and give you like, what are we really trying to find out here?\n\n00:29:57.205
+        --> 00:29:58.148\n<v SPEAKER_01>What are we trying to know?\n\n00:29:58.837
+        --> 00:29:59.980\n<v SPEAKER_01>What are we trying to learn?\n\n00:30:00.000
+        --> 00:30:06.373\n<v SPEAKER_01>And you come up with a real rigorous plan
+        and then you go into the interview prepared to throw it out if you want to.\n\n00:30:06.393
+        --> 00:30:09.057\n<v SPEAKER_01>I often counsel people.\n\n00:30:09.077 -->
+        00:30:14.048\n<v SPEAKER_01>We went out and did a field recording the other
+        day of like, you know what you need to get in this interview.\n\n00:30:14.127
+        --> 00:30:16.593\n<v SPEAKER_01>You know what the table stakes are for this
+        to be an interview.\n\n00:30:17.094 --> 00:30:19.778\n<v SPEAKER_01>So go
+        in, get that, and then don't worry about the rest.\n\n00:30:20.438 --> 00:30:23.462\n<v
+        SPEAKER_01>You'll remember questions that were on your list.\n\n00:30:23.982
+        --> 00:30:25.204\n<v SPEAKER_01>You'll think of new questions.\n\n00:30:25.665
+        --> 00:30:28.269\n<v SPEAKER_01>You'll be listening so that you'll follow
+        up on things.\n\n00:30:28.810 --> 00:30:40.048\n<v SPEAKER_01>And just make
+        sure that you have both the discipline to have a roadmap of where to go, but
+        then the freedom of allowing yourself to just follow what the moment feels
+        right.\n\n00:30:40.709 --> 00:30:48.121\n<v SPEAKER_01>And trust that that's
+        probably, if you find it an interesting subject, most other people in your
+        audience are also going to find it interesting.\n\n00:30:48.821 --> 00:30:53.568\n<v
+        SPEAKER_01>Then you scale this depending on the amount of resource and time
+        you have.\n\n00:30:54.509 --> 00:31:06.468\n<v SPEAKER_01>Afterwards, what
+        I like to do, my process is I use a program called Descript, which is a fantastic
+        program where you dump audio files in and it does an AI transcript kind of
+        on the fly.\n\n00:31:06.508 --> 00:31:11.955\n<v SPEAKER_01>And you can edit
+        the text and it actually creates a Pro Tools and audition session for you.\n\n00:31:12.396
+        --> 00:31:14.060\n<v SPEAKER_01>based off the cuts you make.\n\n00:31:14.080
+        --> 00:31:19.575\n<v SPEAKER_01>So we often make the first cut of an interview
+        in Descript just based off paper without even listening to it.\n\n00:31:20.076
+        --> 00:31:24.528\n<v SPEAKER_01>But you go back in once you've had that, you've
+        dumped into Descript and it happens like in a minute.\n\n00:31:25.028 -->
+        00:31:30.114\n<v SPEAKER_01>And I believe for even an entry level interview,
+        you get a certain amount of time that they will do it for free.\n\n00:31:30.173
+        --> 00:31:31.076\n<v SPEAKER_01>So it's very low cost.\n\n00:31:32.037 -->
+        00:31:36.763\n<v SPEAKER_01>And you look at what you have and you read it
+        and you, I'd mark it up like, okay, this is this section.\n\n00:31:36.804
+        --> 00:31:39.667\n<v SPEAKER_01>This is about when they were learning to play
+        guitar.\n\n00:31:39.688 --> 00:31:41.971\n<v SPEAKER_01>And this is a section
+        about their first band.\n\n00:31:42.152 --> 00:31:44.174\n<v SPEAKER_01>And
+        this is a section about their recording contract.\n\n00:31:44.555 --> 00:31:46.357\n<v
+        SPEAKER_01>And this is a section when they wrote the song.\n\n00:31:47.019
+        --> 00:31:47.179\n<v SPEAKER_01>Right.\n\n00:31:47.479 --> 00:31:48.180\n<v
+        SPEAKER_01>And I kind of write this.\n\n00:31:48.220 --> 00:31:50.443\n<v
+        SPEAKER_01>I'm like, which, where do I want to start this conversation?\n\n00:31:50.483
+        --> 00:31:51.505\n<v SPEAKER_01>And how do I make it flow?\n\n00:31:51.525
+        --> 00:31:55.611\n<v SPEAKER_01>And I make little notes and treat an interview.\n\n00:31:55.651
+        --> 00:31:56.392\n<v SPEAKER_01>Like it's a story.\n\n00:31:57.082 --> 00:32:02.810\n<v
+        SPEAKER_01>Like you're actually creating something that is meant to be listened
+        to in an order as if it was you were telling a story.\n\n00:32:02.851 -->
+        00:32:07.478\n<v SPEAKER_01>And even very technical interviews still can follow
+        into that same flow.\n\n00:32:07.519 --> 00:32:09.481\n<v SPEAKER_01>And that's
+        when you start to edit.\n\n00:32:09.602 --> 00:32:14.809\n<v SPEAKER_01>And
+        whether you have an hour to edit or 20 hours to edit, there's a version of
+        that process that you can use.\n\n00:32:15.711 --> 00:32:19.597\n<v SPEAKER_01>If
+        I only have an hour to edit something and sometimes when you're editing on
+        deadline, it's the reality of it.\n\n00:32:20.538 --> 00:32:24.567\n<v SPEAKER_01>Okay,
+        what are the most important beats here and how do I get rid of everything
+        else?\n\n00:32:25.509 --> 00:32:28.237\n<v SPEAKER_01>And don't worry about
+        time because in podcasting there are no rules.\n\n00:32:28.297 --> 00:32:30.040\n<v
+        SPEAKER_01>You can make it whatever length you want to usually.\n\n00:32:30.060
+        --> 00:32:33.529\n<v SPEAKER_01>Make it as good as it needs to be and not
+        a minute longer.\n\n00:32:34.409 --> 00:32:35.069\n<v SPEAKER_00>No, I love
+        that.\n\n00:32:35.089 --> 00:32:36.131\n<v SPEAKER_00>I love that advice.\n\n00:32:36.550
+        --> 00:32:50.267\n<v SPEAKER_00>And I was, on first reading, overwhelmed by
+        the amount of editing that goes into, because your background is NPR, some
+        of those shows where it's 15 hours at times of prep for an interview.\n\n00:32:50.307
+        --> 00:32:56.855\n<v SPEAKER_00>And then that long, if not longer, on the
+        backside to actually create the episodes.\n\n00:32:57.496 --> 00:33:04.544\n<v
+        SPEAKER_00>And for me, it just gave me a real appreciation for when I listen
+        to a podcast episode Exactly.\n\n00:33:04.664 --> 00:33:09.310\n<v SPEAKER_00>And
+        that's totally fine.\n\n00:33:09.432 --> 00:33:19.886\n<v SPEAKER_00>I don't
+        have to be NPR to have a great podcast.\n\n00:33:19.886 --> 00:33:25.894\n<v
+        SPEAKER_01>No, and you could also think of the reality of what if you have
+        time to...\n\n00:33:26.115 --> 00:33:30.101\n<v SPEAKER_01>I always tell people,
+        take the amount of time you have to spend on an episode and divide it in half.\n\n00:33:30.622
+        --> 00:33:33.326\n<v SPEAKER_01>Half of it should be before you do the interview
+        and half of it afterwards.\n\n00:33:33.946 --> 00:33:37.270\n<v SPEAKER_01>And
+        if you only have two or three hours, you can devote to it.\n\n00:33:37.290
+        --> 00:33:38.532\n<v SPEAKER_01>And there are many people that's the case.\n\n00:33:39.233
+        --> 00:33:46.463\n<v SPEAKER_01>Hour and a half thinking about how you want
+        to do the episode, hour and a half afterwards to clean it up and get rid of
+        the stuff that doesn't really feel exciting to you.\n\n00:33:46.503 --> 00:33:47.905\n<v
+        SPEAKER_01>And that's enough.\n\n00:33:48.625 --> 00:33:51.469\n<v SPEAKER_01>I
+        think any investment of time is a good investment of time.\n\n00:33:51.489
+        --> 00:33:53.132\n<v SPEAKER_01>I see some of these people.\n\n00:33:53.152
+        --> 00:33:56.836\n<v SPEAKER_01>I just talked to a couple of them for my media
+        tour.\n\n00:33:58.159 --> 00:33:59.461\n<v SPEAKER_01>They crank out an episode
+        a day.\n\n00:34:00.281 --> 00:34:07.272\n<v SPEAKER_01>Their limit is how
+        many hours they have in that day to prep for an interview, do the interview,
+        cut the interview, and post the interview in a day.\n\n00:34:08.074 --> 00:34:10.137\n<v
+        SPEAKER_01>And they turn out good stuff.\n\n00:34:10.798 --> 00:34:23.233\n<v
+        SPEAKER_01>So sometimes just because like an NPR takes 15 hours of prep and
+        15 hours of editing doesn't necessarily mean they end up with something that's
+        15 times better than the guy who has an hour to prepare and an hour to edit
+        afterwards.\n\n00:34:23.273 --> 00:34:24.393\n<v SPEAKER_01>I think it's a
+        false construct.\n\n00:34:24.934 --> 00:34:25.876\n<v SPEAKER_00>Final question
+        for you.\n\n00:34:25.916 --> 00:34:34.925\n<v SPEAKER_00>What would you say
+        is the piece of advice you find yourself giving most often to people that
+        are just getting started or on the front end of their podcasting kind of trajectory?\n\n00:34:35.487
+        --> 00:34:43.246\n<v SPEAKER_01>I often tell people, forget about format and
+        worry more about function.\n\n00:34:44.369 --> 00:34:46.313\n<v SPEAKER_01>Who
+        are you talking to and what's your message?\n\n00:34:46.994 --> 00:35:03.163\n<v
+        SPEAKER_01>If you want to make a podcast about the future and you're really
+        excited about the future, and think the future is full of great things, that's
+        a very different podcast than if you think the future is dire and maybe the
+        end of our species or what have you.\n\n00:35:04.204 --> 00:35:05.666\n<v
+        SPEAKER_01>Those are two very different podcasts.\n\n00:35:06.246 --> 00:35:11.114\n<v
+        SPEAKER_01>So even when you have a podcast or interview with people about
+        the future, what does that mean?\n\n00:35:11.173 --> 00:35:13.416\n<v SPEAKER_01>What
+        is your message, your attitude?\n\n00:35:13.898 --> 00:35:15.420\n<v SPEAKER_01>What
+        are you bringing to it, your perspective?\n\n00:35:16.280 --> 00:35:21.355\n<v
+        SPEAKER_01>And spend as much time thinking, and the questions about like,
+        What format should I have?\n\n00:35:21.434 --> 00:35:22.597\n<v SPEAKER_01>Should
+        I have a co-host?\n\n00:35:22.657 --> 00:35:23.438\n<v SPEAKER_01>Should I
+        have any people?\n\n00:35:23.478 --> 00:35:24.360\n<v SPEAKER_01>Should I
+        be interviewing at once?\n\n00:35:24.460 --> 00:35:26.864\n<v SPEAKER_01>All
+        that stuff is like the last thing you think about.\n\n00:35:26.905 --> 00:35:32.653\n<v
+        SPEAKER_01>And just spend time thinking about who are you, what do you have
+        to say, and who you want to say it to.\n\n00:35:33.335 --> 00:35:37.943\n<v
+        SPEAKER_01>And that most people don't take the time to think that through,
+        and that's why most people struggle.\n"
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      cf-cache-status:
+      - BYPASS
+      cf-ray:
+      - a492e8007b204649-IAD
+      connection:
+      - keep-alive
+      content-length:
+      - '53641'
+      content-type:
+      - text/vtt; charset=utf-8
+      date:
+      - Mon, 12 Oct 2026 03:09:31 GMT
+      etag:
+      - W/"08b61625b23f9c41d895b51a77cb823f"
+      link:
+      - <https://podcast.buzzsprout.com/1/episodes/2562823-the-key-to-making-your-podcast-stand-out-eric-nuzum>;
+        rel="canonical"
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - cloudflare
+      strict-transport-security:
+      - max-age=63072000; includeSubDomains
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin
+      - accept-encoding
+      x-cache:
+      - miss
+      x-content-type-options:
+      - nosniff
+      x-download-options:
+      - noopen
+      x-frame-options:
+      - SAMEORIGIN
+      x-permitted-cross-domain-policies:
+      - none
+      x-request-id:
+      - ebfe4b4c-0f3a-433b-b345-ae4e95abf900
+      x-runtime:
+      - '0.013671'
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - www.buzzsprout.com
+      user-agent:
+      - SignalBot/0.1.0 (+mailto:tests@example.org)
+    method: GET
+    uri: https://www.buzzsprout.com/1/10167133/transcript.vtt
+  response:
+    body:
+      string: 'WEBVTT
+
+
+        00:00:04.950 --> 00:00:13.676
+
+        <v Gilon>Welcome back to How To Start A Podcast, the podcast about how to
+        start a podcast.
+
+
+        00:00:09.000 --> 00:00:16.170
+
+        <v Gilon>This is episode 10. We are now launching a podcast. I''m Gilon.
+
+
+        00:00:16.170 --> 00:00:26.812
+
+        <v Alban>I''m Alban. And yeah, like Gilon said, We''re gonna launch your podcast
+        this episode. If you''ve been following along, you''re about to launch your
+        show. And we''re super excited.
+
+
+        00:00:26.873 --> 00:00:28.769
+
+        <v Alban>So let''s dive in to Episode 10.
+
+
+        00:00:28.859 --> 00:00:52.079
+
+        <v Gilon>Contrary to popular belief, launching is not just hitting, send,
+        submit publish, once you get the whole thing, it''s a whole spiel it should
+        be if it''s done, right, so we''re gonna get into some of the logistics of
+        successfully launching your podcast. Tip number one, don''t trip at the finish
+        line, you''re almost there, right? Like you are there. And so let''s just
+        make sure all the work that you''ve put in, doesn''t go to
+
+
+        00:00:52.079 --> 00:01:34.438
+
+        <v Alban>waste. Yeah, to be clear, our outline actually says don''t tip at
+        the finish line also applicable. Don''t tip now. But also don''t trip, it
+        is easy for people to go through the entire process and get to hear and that''s
+        when stuff starts feeling real. And you start kind of doubting yourself and
+        you''re like, I just need to like launch this thing. And a lot of people will
+        kind of like overhyped this step. So we''re gonna talk about ways to overhype
+        this step and under hype this step to actually get launched, but don''t be
+        the person who gets stuck here, let''s get this podcast out to the world,
+        because we''re going to get so much better as we''re actually going through
+        and we''re doing this stuff,
+
+
+        00:01:34.469 --> 00:01:39.840
+
+        <v Gilon>there are a couple strategies to do this. Well. So let''s just hop
+        into some of the strategies for launching successfully.
+
+
+        00:01:39.900 --> 00:02:40.860
+
+        <v Alban>There''s two strategies that I like the one is the grand opening,
+        this is like roll out the red carpet go and do PR, tell everybody you can
+        you actually submit your show to Apple to say, Hey, can I get into new and
+        noteworthy, you are going out and trying to get press in different magazines
+        and online publications. You''re spending money to get this podcast out to
+        the world. That is definitely one big strategy that a lot of the biggest shows
+        us. The downside of that is is intimidating. There''s a lot of planning, especially
+        when you''re brand new, you''re like, I''ve recorded three episodes. But I
+        was learning a lot along the way. I feel a little silly, sending this out
+        to Apple saying, Hey, can I be a new and noteworthy when I know it''s just
+        two interviews that I did at home with my Samsung cue to you, it''s easy for
+        that to be a little intimidating. There is another strategy. But anything
+        else you wanted to say about the grand opening Jalon
+
+
+        00:02:40.979 --> 00:03:04.530
+
+        <v Gilon>only that it''s not the only way to launch? You know, as we started
+        talking, like when you said a lot of people don''t get past this step because
+        it starts to feel real. And I want to say yeah, it starts to feel real vulnerable,
+        you know, that I''m about to put this idea, this thing that had been living
+        in my mind out in the world, and how will it be received. And so if you''re
+        in that space, you can feel like, Oh, now I gotta go, you know, be out here
+        and telling people about my podcasts to launch, there''s only one way to launch
+        and that''s not true.
+
+
+        00:03:04.530 --> 00:03:07.229
+
+        <v Gilon>And so I''m really excited for you to talk about the second launch
+        strategy.
+
+
+        00:03:07.439 --> 00:03:43.919
+
+        <v Alban>The second one I call the soft open. And this comes from the world
+        of restaurants. A lot of us are new restaurant launches. They will say like
+        the big launch is on April 7, but actually on April 4, and fifth and sixth.
+        They are open. And it''s called the soft open. And this is where you think
+        that you know what everything that goes into launch starting this restaurant,
+        you''ve got all of the menu, Don, you have hired everybody. And then you start
+        just opening the doors. You don''t put out a big sign, you just have the doors
+        unlocked.
+
+
+        00:03:44.340 --> 00:03:59.580
+
+        <v Alban>And a few people walk by and they open the door and they''re like,
+        Hey, are you open? Yeah, yeah, come on in. And they come in and they order
+        and you''re pretty much the restaurant is dead. But there''s few people that
+        came in help you work through a lot of issues.
+
+
+        00:03:57.060 --> 00:04:15.900
+
+        <v Alban>Sometimes you will actually just see family and friends of the people
+        who own the restaurant or working there are the ones you''re inviting. But
+        you get like a pretty small group. And then people are like, hey, I want to
+        order this dish. And they are actually figuring out like, oh, no, the chef''s
+        don''t know how to make that this yet.
+
+
+        00:04:15.930 --> 00:04:43.680
+
+        <v Alban>Oh, we need a crane on that. Oh, can I get more ice? Oh, the ice
+        machine doesn''t actually work the way we thought it did. And it needs to
+        be serviced. Before we have the big opening. You''re working through all the
+        kinks that are in this starting a restaurant business? Well, with podcasting,
+        it can be super intimidating to do the grand open. Because I know there''s
+        a lot of stuff for me to work through. I kind of have the interview stuff
+        down but it''s not perfect. And I want a little more practice before I start
+        really putting myself out there.
+
+
+        00:04:44.069 --> 00:04:48.180
+
+        <v Alban>Well then do the soft open.
+
+
+        00:04:44.069 --> 00:05:19.949
+
+        <v Alban>Don''t put out the sign that says podcast starting today. Just push
+        podcast out to the world and don''t tell anybody and let the two or three
+        or 10 people find the podcast and then try to see like, Okay, how''s this
+        working for me? How does this fit into my lifestyle? Are people enjoying it,
+        and if they are, then you could start putting the promotional efforts behind
+        it. Because you were able to, I think, succeed in a lower pressure environment,
+        before you felt the confidence to make maybe up the pressure,
+
+
+        00:05:19.980 --> 00:05:51.120
+
+        <v Gilon>definitely. And I will say that I took the soft, open approach, when
+        I launched my podcast, I definitely was like, I''m gonna publish this, and
+        my mom knows, and my mom just posted and told the world, but I''m not necessarily
+        posting and telling the world and to be stepping out and starting podcasts
+        was very vulnerable for me. And so that kind of gave me the confidence to
+        not like, tip at the finish line and not freak out at all. I was like, I''m
+        gonna put it out there, it''s gonna be quiet. And I''ll tell my friend and
+        my parents, that''s it. And that gave me the confidence to just go ahead and
+        hit publish, right to show up period.
+
+
+        00:05:51.209 --> 00:07:00.300
+
+        <v Alban>A lot of what''s happening here. I think we used to have something
+        on the blog about this, maybe it might not be there anymore, but it was about
+        imposter syndrome. And it''s very common right before you''re hitting publish
+        to have these feelings of inadequacy. Or if only I could get better, or who
+        am I to do this thing? Yeah, everyone''s gonna think I''m a fraud. People
+        are gonna think it''s a complete joke that I have a podcast about this. I''ve
+        only been doing this thing for a few years. I''m not the expert. And it''s
+        funny that everybody I''ve ever known unless somebody like a complete narcissist
+        feels this to some extent, we feel this sense of inadequacy, we feel this,
+        like, there''s already a podcast about marketing, do we need a second? And
+        oh, there''s already a podcast about this thing. It''s kind of my topic is
+        similar to this one. And what is important to remember is like, your podcast
+        and your voice, and what you''re saying is valuable, even if it''s similar
+        to other people are saying, because you have a different personality, he have
+        different perspective. And you''re bringing something different to the table.
+        So even the two podcasts are similar.
+
+
+        00:07:00.449 --> 00:07:21.420
+
+        <v Alban>They could both be podcasts about science fiction, books, and reviews.
+        But one podcast may actually connect with people who like certain types of
+        sci fi books in the different podcasts, we might be talking about the different
+        sci fi books, and maybe they have different opinions. More than two people
+        can have podcast about this very specific book review niche.
+
+
+        00:07:21.600 --> 00:07:30.959
+
+        <v Alban>Yeah. So if you are feeling that, I hope that what you hear from
+        us is like, I definitely felt that putting on podcasts. I mean, I think, like
+        did you experience this to John?
+
+
+        00:07:30.990 --> 00:08:03.269
+
+        <v Gilon>Absolutely. That''s why I did the soft, open. Yeah. And I would also
+        say like, it''s part of the process to kind of go like, who is not part of
+        the process, but you''re not special, right? Like, we are all going through
+        this moment of like, Oh, I''m about to, I''m on the precipice of something
+        new and different. And I feel something in that. And so it''s not unusual
+        to doubt yourself. It''s not, you know, unusual to feel like, Well, who am
+        I to do this? You know, but I would say it is also a good sign that this is
+        the threshold crossover, right? Like you''re saying, like, we''ve all felt
+        this, but you want to be the person that pushes past it.
+
+
+        00:08:00.600 --> 00:08:05.579
+
+        <v Gilon>And then the other thing I would say is that your voice is as unique
+        as your thumbprint.
+
+
+        00:08:05.819 --> 00:08:38.850
+
+        <v Gilon>Right, no two people have the same thumbprint. I think that''s still
+        affecting the world. But you know, to think, well, there''s a podcast about
+        this, people are talking about this, you know, who am I and I''m not an expert,
+        all that kind of stuff is just noise, you have something to add, because you
+        are unique. And just like Alban was saying, even if you''re both talking about
+        wrestling, you''re going to come with your different histories and perspectives
+        and likes and dislikes. And one person may be real, you know, straight up
+        and down. And that person might be goofy and silly and put background noises,
+        you have something unique to bring, and we need your voice. So definitely
+        go ahead and do the thing
+
+
+        00:08:38.940 --> 00:09:20.879
+
+        <v Alban>I can tell you like I had specific feelings of specific people. And
+        I was like these people who I don''t even know, like, don''t even really talk
+        to but just people on Facebook, if I posted, hey, just started a podcast on
+        this, that like friends from college, or friends from law school would be
+        like, This guy''s doing a podcast now like what is gone wrong in his life
+        that he''s doing it. So I don''t think it''s weird if you''re having similar
+        feelings. And if you''re having those similar doubts, but that is a way for
+        us to kind of protect ourselves from like, I really don''t want to be critiqued.
+        So maybe I''ll just not even say anything, because then I definitely won''t
+        get critiqued, the thing is that you hold yourself back from doing the thing
+        that you want to do, which is share your voice.
+
+
+        00:09:21.360 --> 00:09:29.639
+
+        <v Alban>And so the soft open, like we kind of talked about is really a nice
+        way to ease on out there.
+
+
+        00:09:25.169 --> 00:10:05.850
+
+        <v Alban>Yeah, just put it out. And it''s actually kind of cool that your
+        podcast won''t get tons of views and tons of listens in the beginning. Instead,
+        it''s going to be kind of flying under the radar for a bit. And that''s kind
+        of a cool thing, because you can start getting more comfortable with it. And
+        then people will see your podcast maybe a year from now and be like, dang,
+        you''ve been podcasting for a whole year. While you''ve really been doing
+        something cool. I''m excited to check it out. So if you feel like you don''t
+        like the sound of your voice, or you''re doubting whether or not you have
+        the authority legitimacy to start a podcast. Remember, you have a different
+        perspective.
+
+
+        00:10:02.700 --> 00:10:10.740
+
+        <v Alban>Just share it and do the thing that you want to do. And don''t worry
+        about what other people are gonna think about what you create.
+
+
+        00:10:10.860 --> 00:10:34.379
+
+        <v Gilon>And I think we''ve said this also before, you''ve got to begin to
+        begin. I was smirking when Alban was talking about just put, just put it out
+        there because consistently, my first episode is like, in my top five most
+        listened to and I have no idea why people do that. But I can tell the difference
+        from when I started to where I am now. And growth will happen, you know, and
+        you just got to be okay, being a beginner, you don''t start off as an expert.
+
+
+        00:10:31.259 --> 00:10:41.730
+
+        <v Gilon>No, nobody ever began as an expert. And so give yourself grace, and
+        just do it, you absolutely should just do it. Do it, just do it, press the
+        button, do it.
+
+
+        00:10:43.470 --> 00:10:48.690
+
+        <v Alban>So now that we have published our podcast, and we picked one of the
+        strategies,
+
+
+        00:10:48.750 --> 00:10:50.549
+
+        <v Gilon>then we''re done, right, we have nothing else to do,
+
+
+        00:10:50.940 --> 00:10:55.019
+
+        <v Alban>well, you can be done.
+
+
+        00:10:50.940 --> 00:11:04.080
+
+        <v Alban>The downside is that, once you''ve done that, then you''re gonna
+        start, like maybe wanting four or five, or 500 people to listen to your podcast
+        500, you don''t want to just stay
+
+
+        00:11:04.139 --> 00:11:07.080
+
+        <v Gilon>in the corner of the internet know the people, they need you.
+
+
+        00:11:07.110 --> 00:11:21.990
+
+        <v Alban>So in the beginning, we''re nervous too many people will see it.
+        Now that we''ve actually launched, we''re going okay, now I''m a little nervous,
+        too few people are gonna see this podcast, and I want to get it out to the
+        world. So let''s talk about five marketing tips for the brand new podcaster.
+
+
+        00:11:22.019 --> 00:11:41.489
+
+        <v Gilon>So like the soft open, there''s kind of like a soft marketing strategy.
+        And that''s to share it with people who already like you, your friends and
+        family, right. And what''s really great about this is that one they do already
+        like you so they''re hopefully they''re not going to be as critical maybe
+        as like a stranger on the internet, leaving your review, that also give you
+        really good feedback.
+
+
+        00:11:38.999 --> 00:11:56.698
+
+        <v Gilon>But also, they can be a really great army of promoters for your podcast,
+        right? So you can ask them to share it. You can say, hey, on your platforms,
+        would you be cool? Hey, this new podcasts so great. They''re a really good
+        resource, not just to hear it to get your downloads up, but also to share
+        it with their respective circles.
+
+
+        00:11:57.000 --> 00:12:44.370
+
+        <v Alban>Yeah. And what we''re trying to do here is we''re trying to get to
+        like five people listening to our podcast, maybe 10. And so think of are there
+        specific people that you want to share what you''ve made, that you think they
+        would be a good fit, they really enjoy this, these people that you talk to
+        about these topics, go in specifically one to one and say, Hey, I just made
+        this podcast, I''d love for you to listen to it and tell me what you think.
+        And if they like it, they will subscribe. So number one sharing with friends
+        and family, maybe we''re up to five, maybe 10 downloads per episode. Next
+        is sharing on social media. So one thing that I see a lot of people struggle
+        with and beginning is overwhelm, and this feeling of like, I''ve got to do
+        everything.
+
+
+        00:12:40.200 --> 00:13:11.340
+
+        <v Alban>And definitely one way to feel overwhelmed is to start social media
+        accounts on every single platform for your podcast. Don''t do that. If you
+        have a unique name that that name is available everywhere and you want to
+        go secure them. Okay? But don''t feel like you have to go and start posting
+        on Instagram and Twitter and Facebook and Tik Tok and Snapchat and LinkedIn
+        and bla bla bla bla bla Buzzsprout.
+
+
+        00:13:11.429 --> 00:14:03.840
+
+        <v Alban>For years, I want to say this is like seven years, maybe nine, after
+        Buzzsprout was founded, I realized we not only were not posting on Instagram,
+        we had not even registered the Buzzsprout domain, or sorry, the handle, it
+        was still available like years of us using Buzzsprout and having it out and
+        lots of lots of customers. So don''t feel like you''ve got a rush to get all
+        of this. And then just go and pick one, pick the one you''re most comfortable
+        with. If you live on LinkedIn, let''s do your work on LinkedIn. If you think
+        the audience for your podcast are people who are really active on Reddit,
+        will then focus on Reddit. If it''s a tick tock audience, then focus on tick
+        tock you know, pick, what are you comfortable with? And where do you think
+        the audience is.
+
+
+        00:13:58.950 --> 00:14:14.070
+
+        <v Alban>And then let''s hone in on one place for you to promote your episode.
+        So if you every time you put out an episode, make a couple pieces of content
+        promoting it and share it on whatever platform you picked.
+
+
+        00:14:14.370 --> 00:14:20.669
+
+        <v Gilon>It''s so tempting to get on all of the platforms, and overwhelm and
+        burnout are coming for you quick when you do that.
+
+
+        00:14:20.669 --> 00:14:50.549
+
+        <v Gilon>So I love that we really give people permission to only do one or
+        two if they really want to do that. So the next one is to cross promote with
+        other creators. This is really helpful because not only are you able to establish
+        yourself if you decide to be a guest on the podcast as another expert you
+        get exposure to a group of other different people. And then you get exposure
+        to maybe their social media platform audience people right so as you''re promoting
+        each other''s content, you''re hopefully guesting guest starring guest podcasting.
+
+
+        00:14:50.759 --> 00:15:25.110
+
+        <v Gilon>You''re going to be a guest on the show. You can be a guest on their
+        show you get access exposure to their audience, which you may not have exposure
+        to in your own lane. And then when they promote that a whole nother group
+        of people, potentially that you''re also getting access to that you wouldn''t
+        have normally. So for instance, I''m part of a little podcasting group. And
+        promoting is one of those things that I don''t love doing. But my friends
+        in the group are like, hey, you know, if you ever need a guest, if we ever
+        have a slot segment that you would fit really good on, come on the podcast,
+        oh, he put out a new episode. Let''s push that, hey, guys, we''re gonna push
+        this push this. It''s really, really great to cross promote with other creators.
+
+
+        00:15:25.139 --> 00:15:37.470
+
+        <v Alban>I love chronic cross promote with people who are not podcasting.
+        So find people that are doing similar type content, but are on a different
+        platform.
+
+
+        00:15:32.639 --> 00:15:53.340
+
+        <v Alban>So I''ve started a Dragonball Z podcast, we''ll go to the top YouTube
+        channel about Dragonball Z and one of the top blogs about Dragonball Z and
+        one of the best Instagram channels that are posting this content, and see
+        if you can cross promote with them.
+
+
+        00:15:49.950 --> 00:16:23.460
+
+        <v Alban>I saw this work for a Supreme Court podcast I used to listen to they
+        were the number one Supreme Court podcast, and they partner with the number
+        one Supreme Court blog. And so they would reference case materials that were
+        on the blog and the blog embedded their episode and shared it. And they both
+        grew quite a bit because it had the same audience. But they were presenting
+        the information in different ways. And that allowed them to cross promote,
+        you know, it wasn''t zero sum and they weren''t competing. Instead, they''re
+        both helping each other.
+
+
+        00:16:19.919 --> 00:16:27.690
+
+        <v Alban>So find somebody who you could work alongside of and say, Hey, do
+        you want to have a podcast?
+
+
+        00:16:27.690 --> 00:16:43.200
+
+        <v Alban>Like, I''d love to do a podcast with you? Oh, well, I would love
+        to also contribute to your YouTube channel in a helpful way. So see if there
+        are creators that you could work with because you have the same audience,
+        and they would just be interested in getting more information in a different
+        medium.
+
+
+        00:16:43.440 --> 00:16:52.590
+
+        <v Gilon>Alright, so our next strategy involves Facebook groups, which are
+        actually a really nice place to market and grow podcast related relationships.
+
+
+        00:16:52.620 --> 00:17:11.579
+
+        <v Alban>What I see a lot of people do wrong is they get a podcast, and then
+        they think, well, I''ll just troll through the internet. trolling. Not like
+        not trolling, but like cruise through the internet. It''s like, it''s like
+        a bolt like a boat trolling. Okay, so I''m just cruising through the internet.
+
+
+        00:17:11.880 --> 00:19:08.250
+
+        <v Alban>And I''m finding groups. I''m like, Oh, I have my Dragonball Z podcast.
+        And now I have found the Facebook group for Dragonball Z. And so I asked to
+        be in the group. And then I go, and I go, Hey, check out my podcast, I just
+        made Episode One, everybody''s subscribed. And then I leave. And then I realized,
+        like, episode two have already been kicked out of the group, because you provided
+        nothing of value. What you instead did was you showed up to a community that
+        hadn''t been built around something. And they were all contributing to each
+        other into the sense of connection around a shared hobby. And you came in
+        and said, Why don''t you all do something for me? And everyone said, No, thanks.
+        But it is a great way to connect with people who are already organizing around
+        your topic. So let''s say I''ve got my Supreme Court podcast. Well, there
+        probably is a Reddit page or a Reddit subreddit, there''s Facebook groups,
+        there are other communities built up around that topic. Now, the right way
+        to engage them, is to not just show up and start dropping links is to show
+        up and actually answer questions fully. Because if you are doing a podcast
+        are probably an expert in this area. So when you see people ask questions,
+        like, hey, help me understand what''s going on in this specific Supreme Court
+        case? If you know, hey, I''ve actually thought through it. Here''s what''s
+        happening. full explanation. I actually go into more detail in this podcast
+        episode, if you''re interested in listening. Now, that''s not just self promotion,
+        that''s now helping the person who had a question. And that could work perfectly
+        well, for any number of podcasts. I''ve got a podcast about dog breeds. And
+        someone''s confused about the difference between a cocker spaniel and a cockapoo
+        or something. I don''t know, these are actual dog names.
+
+
+        00:19:08.368 --> 00:19:09.598
+
+        <v Gilon>They are Yeah.
+
+
+        00:19:10.710 --> 00:19:27.089
+
+        <v Alban>If you know what''s the difference between these two dog breeds?
+        Oh, here''s the difference. And here''s like the pros and cons of these two.
+        And here''s the podcast episode about that. So don''t just drop the episode.
+        Instead, give people the exact information they want.
+
+
+        00:19:23.220 --> 00:19:30.599
+
+        <v Alban>And then encourage and invite them to come check out more on the
+        podcast. And I
+
+
+        00:19:30.599 --> 00:19:46.259
+
+        <v Gilon>love that you gave an example because even in answering questions
+        and how you participate, there''s a right and wrong way. Right? Like nobody
+        likes a know it all or that person that''s like, oh my gosh, you don''t know
+        this. Like there''s a way to say I''m providing information and I''m your
+        friendly neighborhood.
+
+
+        00:19:43.710 --> 00:19:50.279
+
+        <v Gilon>podcaster come check this out how you participate is just as important
+        as not just dropping the link and dip in, you know,
+
+
+        00:19:50.430 --> 00:20:03.509
+
+        <v Alban>yeah, one of the things I see a lot in groups, this is every internet
+        group. Somebody asks a question, and let''s say I''m in a lot of Facebook
+        or podcasting groups. Let''s say someone says, I''m confused about how to
+        get listed in Spotify.
+
+
+        00:20:03.539 --> 00:20:16.980
+
+        <v Alban>How do I do that? And then people go, why don''t you Google it, or
+        go to Spotify and submit, or they just dropped the URL to a blog post. That
+        is helpful.
+
+
+        00:20:12.779 --> 00:20:34.440
+
+        <v Alban>And that is correct. But that''s not what the person is actually
+        asking for. What they''re doing is they found this group. And they''re saying
+        that because they actually want the connection, they want to talk to another
+        human about this. And if they knew, they knew they could search this on Google,
+        and they could figure it out. But they wanted the connection with you.
+
+
+        00:20:31.140 --> 00:20:40.349
+
+        <v Alban>And now that they''ve asked for that connection for you, just to
+        say, I talked about my podcasts wanting to go listen to it isn''t what they
+        were hoping for.
+
+
+        00:20:40.380 --> 00:20:59.759
+
+        <v Alban>Instead, for you give them what they''re looking for, oh, here''s
+        the explanation. And you''re kind of asking questions back, and you''re having
+        a dialogue. And then you say, if you want to listen to the podcast, you can,
+        you''re much more likely to convert them to listeners. So just remember, people
+        are looking for different things.
+
+
+        00:20:57.180 --> 00:21:07.079
+
+        <v Alban>And if they''re asking questions, they''re probably looking for a
+        little bit of a connection, rather than just like copy and pasting the answer
+        into the answer box.
+
+
+        00:21:07.200 --> 00:21:12.539
+
+        <v Gilon>And then our last marketing tip is a little bit about ads, which
+        can get sticky.
+
+
+        00:21:09.690 --> 00:21:15.119
+
+        <v Gilon>But can you tell us what type of ads would you suggest kind of for
+        a beginner? Yeah,
+
+
+        00:21:15.148 --> 00:21:44.489
+
+        <v Alban>so the best way to start with podcast ads is the podcast apps themselves.
+        So there''s people who try to do ads in Google or Facebook. And the confusing
+        thing is that you don''t know for sure that the people seeing the ads even
+        care about podcasts, and to say like, Hey, do you know what a podcast is?
+        But you know, I''ve got a podcast about baseball. And I can tell that by your
+        interest, you''re interested in baseball, but now go to your phone, download
+        this app, search for my podcast, find the podcast, click subscribe to this
+        whole process.
+
+
+        00:21:44.638 --> 00:23:01.798
+
+        <v Alban>And then you''re listening to my show. The drop off rate is really
+        high isn''t. But what does work is for people who are already in podcasts,
+        they''re already listening. So one of the top apps that does this is overcast,
+        is when I''m scrolling through overcast, it says, Oh, you''re listening to
+        podcasts about sports. And you''re listening to a sports podcast right now,
+        here''s an ad for another sports podcast. It depends on the podcast, it could
+        be if it''s a business or technology podcast, it could be pretty expensive.
+        But if it''s arts or humor, it might be quite a bit cheaper. So maybe a few$100,
+        you will actually get a lot of subscribers, because a lot of people will see
+        it, click the podcast ad and start trying to listen to your podcast. So if
+        you have money to put behind your podcast growth strategy, especially the
+        beginning, when you''re trying to get that first 100 listeners or so look
+        up overcast ads. We also have a blog post that lists every one of the podcast
+        apps, and which ones allow you to buy ads inside of those apps. Those are
+        often a great way to jumpstart your podcast growth in the beginning, because
+        once you''ve got a few 100 people listening, then word of mouth, and some
+        feedback from your listeners are going to help you really escalate your podcast
+        growth.
+
+
+        00:23:01.919 --> 00:23:23.939
+
+        <v Gilon>Yes, such good tips and as a beginner, right, so none of these things
+        are going to be biting off more than you can chew. As you start off. These
+        are all really great strategies as you are trying to promote a brand new show.
+        So we''ve talked about not tipping at the finish line. The strategies you
+        have for opening softer Grand Opening with all the fanfare and overcoming
+        imposter syndrome.
+
+
+        00:23:21.179 --> 00:23:27.148
+
+        <v Gilon>Javis Are there any resources that they can get into as they''re
+        getting ready to launch their podcast? Yes. So
+
+
+        00:23:27.148 --> 00:24:10.979
+
+        <v Travis>I''ve got a couple of resources on the subject of launching your
+        podcast, two videos and a blog post. The first video is actually ironically
+        enough Jalon wearing a Dragonball Z t shirt talking about how to set up an
+        Instagram account. For your podcast, we''ll answer questions about should
+        you have a personal account or a business account, and what are all the assets
+        that you need to get that setup all that jazz. So if you know that Instagram
+        is a social media platform that you want to start with, as far as social media
+        marketing, that video is going to be super helpful to make sure you have everything
+        you need to get started there. There''s also a video where we identify six
+        ways to promote a new podcast. There is a little bit of overlap from this
+        podcast episode. But there''s also some things in there that we didn''t touch
+        on.
+
+
+        00:24:10.979 --> 00:24:16.558
+
+        <v Travis>And so if you want to get even more ideas for ways to grow your
+        show right out of the gate, that''s a great video to watch.
+
+
+        00:24:16.769 --> 00:24:41.068
+
+        <v Travis>And then the blog that Alban mentioned how to grow your podcast
+        by advertising and podcast apps, that''ll be linked in the next steps section
+        as well in the show notes. So if you want to see what kind of podcasts listening
+        apps could be in your budget, there is a wide spectrum from you know, a couple$100
+        to a couple $1,000 to depending on how much you want to put into your podcast
+        at the beginning. That''ll show you all of your options and you can find the
+        links for all those in the show notes of this episode.
+
+
+        00:24:41.250 --> 00:24:48.779
+
+        <v Alban>Alright and if you are interested in learning more about how to grow
+        a podcast, let us know so this is season one.
+
+
+        00:24:49.109 --> 00:25:04.710
+
+        <v Alban>And we are now starting to think about what would a season two of
+        this show look like? So if you are interested in a how to grow your podcast
+        season, let us know I am Alban Brooke on Twitter and you can reach out to
+        me and Jalon what''s the best way for everybody to reach out to you?
+
+
+        00:25:04.740 --> 00:25:14.730
+
+        <v Gilon>I am not on Twitter. But you can reach out to support at redacted@example.org
+        with any suggestions or ideas for season two, if you''re interested in that.
+        Thank
+
+
+        00:25:14.730 --> 00:25:36.089
+
+        <v Alban>you everybody for listening. We hope that you''ve made it through.
+        If you have launched your show, and this podcast was important to you launching
+        your show, please reach out to Jalon in the sport inbox or me on Twitter.
+        Let us know what your show is. We''re super excited to be part of your journey.
+        We always end the show this way. But until next time, keep podcast
+
+
+        00:25:36.209 --> 00:25:37.288
+
+        <v Gilon>keep broadcasting y''all
+
+        '
+    headers:
+      cache-control:
+      - max-age=0, private, must-revalidate
+      cf-cache-status:
+      - BYPASS
+      cf-ray:
+      - a492e8070c0b4649-IAD
+      connection:
+      - keep-alive
+      content-length:
+      - '30236'
+      content-type:
+      - text/vtt; charset=utf-8
+      date:
+      - Mon, 12 Oct 2026 03:09:32 GMT
+      etag:
+      - W/"bbd7fa0ba7125ccdac2f9872a60b127b"
+      link:
+      - <https://podcast.buzzsprout.com/1/episodes/10167133-podcast-promotion-launching-and-growing-your-show>;
+        rel="canonical"
+      referrer-policy:
+      - strict-origin-when-cross-origin
+      server:
+      - cloudflare
+      strict-transport-security:
+      - max-age=63072000; includeSubDomains
+      transfer-encoding:
+      - chunked
+      vary:
+      - Origin
+      - accept-encoding
+      x-cache:
+      - miss
+      x-content-type-options:
+      - nosniff
+      x-download-options:
+      - noopen
+      x-frame-options:
+      - SAMEORIGIN
+      x-permitted-cross-domain-policies:
+      - none
+      x-request-id:
+      - a2bdc249-df71-405a-a33e-2038a3d9a1be
+      x-runtime:
+      - '0.012397'
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+version: 1

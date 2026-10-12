@@ -476,6 +476,29 @@ sources:
     options:
       industry_job_boards: true      # one query per live board in the industry maps (scripts/find_job_boards.py)
 
+  podcasts:
+    enabled: true
+    status: todo                     # done once shows are found (needs the Podcast Index key)
+    status_date: 2026-10-11
+    route: rss
+    source_type: media
+    cadence: weekly
+    env: []                          # reading feeds needs no key; scripts/find_podcasts.py needs PODCASTINDEX_KEY/SECRET
+    access_check:
+      robots: allowed
+      terms: allowed
+      decision: full
+      terms_url: https://podcastindex.org/terms
+      checked_at: 2026-10-11
+      notes: >-
+        Episodes are read from each show's own RSS feed (robots.txt checked per feed and transcript).
+        Podcast Index finds the shows: "The core, categorized index will always be available for free, for
+        any use"; api.podcastindex.org has no robots.txt rules. Publisher transcripts only (podcast:transcript);
+        no audio is downloaded or transcribed.
+    options:
+      industry_podcasts: true        # one query per live show in the industry maps
+      transcripts_per_feed: 3        # new episodes per run whose transcript is fetched
+
   papers:
     connector: rss
     enabled: true
