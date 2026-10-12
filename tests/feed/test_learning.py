@@ -167,3 +167,16 @@ def test_simulated_builders_produce_trainable_data(world, feed_store, feed_confi
     assert "model_id" in report.v2 and ("model_id" in report.value or "skipped" in report.value)
     with feed_store.session() as s:
         assert s.scalars(select(ModelRow).where(ModelRow.kind == "v2")).first().status == "candidate"
+
+
+def test_rows_logged_before_a_feature_existed_are_not_trained_on(world, feed_store, feed_config):
+    reader, *_ = world
+    uid = onboard(feed_store, feed_config, ["Legal"], [], clock=lambda: NOW)
+    past_calibration(feed_store, uid)
+    page = service(feed_store, reader, feed_config).page(uid, "s1")
+    with feed_store.session() as s, s.begin():                     # an old impression without the newer features
+        old = s.get(ImpressionRow, page.items[0].impression_id)
+        old.score_breakdown = {**old.score_breakdown, "features": {k: v for k, v in old.score_breakdown["features"].items()
+                                                                   if not k.endswith("_fit")}}
+    data = impressions_dataset(feed_store)
+    assert len(data.x) == len(page.items) - 1 and page.items[0].impression_id not in set(data.impression_ids.tolist())

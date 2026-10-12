@@ -27,6 +27,11 @@ def feature_vector(features: dict) -> list[float]:
     return [float(features.get(name, 0.0)) for name in FEATURES]
 
 
+def has_all_features(features: dict | None) -> bool:
+    """Impressions logged before a feature existed can't be trained on: a missing value is unknown, not 0."""
+    return bool(features) and all(name in features for name in FEATURES)
+
+
 @dataclass
 class Dataset:
     x: np.ndarray                      # rows x FEATURES
@@ -55,7 +60,7 @@ def impressions_dataset(store: FeedStore) -> Dataset:
     rows, ys, users, ids, sessions, logged, quality = [], defaultdict(list), [], [], [], [], []
     for imp_id, uid, sid, item, breakdown, score in imps:
         feats = (breakdown or {}).get("features")
-        if not feats:
+        if not has_all_features(feats):
             continue
         done = acted.get(("imp", imp_id)) or acted.get(("item", uid, sid, item), set())
         rows.append(feature_vector(feats))
@@ -76,8 +81,9 @@ def survey_dataset(store: FeedStore) -> tuple[np.ndarray, np.ndarray]:
     with store.session() as s:
         rows = list(s.execute(select(ImpressionRow.score_breakdown, SurveyRow.useful)
                               .join(ImpressionRow, ImpressionRow.id == SurveyRow.impression_id)))
-    x = [feature_vector(b["features"]) for b, _ in rows if b and b.get("features")]
-    y = [int(u) for b, u in rows if b and b.get("features")]
+    keep = [(b, u) for b, u in rows if b and has_all_features(b.get("features"))]
+    x = [feature_vector(b["features"]) for b, _ in keep]
+    y = [int(u) for _, u in keep]
     return np.asarray(x, dtype=np.float32).reshape(-1, len(FEATURES)), np.asarray(y, dtype=np.int8)
 
 
