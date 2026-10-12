@@ -313,7 +313,8 @@ def test_committed_mode_narrows_the_feed_to_the_problem(world, feed_store, feed_
     assert page["items"] and len(outside) <= int(feed_config.user_model.committed_other_cap * 20)
     assert any(i["score_breakdown"]["source"] == "committed_evidence" for i in page["items"])
     assert any(i["post_type"] == "paid_demand" for i in page["items"])          # related demand is in scope
-    assert len(page["items"]) >= 15 and min(i["score"] for i in page["items"][:5]) > 0.5   # focus ranks high
+    assert len(page["items"]) >= 15                                              # focus items lead the page
+    assert all(i["score_breakdown"]["source"].startswith("committed") for i in page["items"][:5])
     assert not any(i["score_breakdown"].get("bubble_guard") for i in page["items"])
     assert client.post("/mode", json={"user_id": uid, "mode": "exploring"}).json()["mode"] == "exploring"
     with feed_store.session() as s:
@@ -348,3 +349,12 @@ def test_exploration_cap_counts_tenders_found_by_exploration(world, feed_store, 
     page, _ = compose(rigged, data, st, floor, NOW)
     explored = sum(p.scored.candidate.source == "exploration" for p in page)
     assert 0 < explored <= int(feed_config.composition.quotas.exploration_max * 20)
+
+
+def test_a_session_never_opens_empty(world, feed_store, feed_config):
+    reader, *_ = world
+    svc = FeedService(feed_store, feed_config, FeedDataCache(feed_store, reader), clock=lambda: NOW, seed=1)
+    uid = onboard(feed_store, feed_config, ["Dental practices"], [], clock=lambda: NOW)    # no posts in this world
+    assert svc.page(uid, "cal").calibration
+    first = svc.page(uid, "s1")
+    assert first.items and first.explore and first.caught_up       # "Explore more" items, flagged as such

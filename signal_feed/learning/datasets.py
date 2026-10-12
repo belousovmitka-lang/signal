@@ -16,7 +16,8 @@ from sqlalchemy import select
 from ..db import EventRow, FeedStore, ImpressionRow, SurveyRow
 
 FEATURES = ("affinity", "skill", "save_sim", "nfm_sim", "type_pref", "source_pref", "problem", "intensity",
-            "money", "buyer", "quality", "fresh", "social")
+            "money", "buyer", "quality", "fresh", "social", "relevance", "problem_fit", "intensity_fit", "money_fit",
+            "buyer_fit")
 # The ranker's actions; each is also an event type. An action counts only when its event carried weight
 # (a 2-second "read" was discounted to 0 when it was logged).
 ACTIONS = ("read", "save", "id_build", "idea", "outreach", "not_for_me", "scroll_past")

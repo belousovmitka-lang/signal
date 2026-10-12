@@ -305,7 +305,8 @@ class QualityFactor(_Strict):
 
 RankAction = Literal["read", "save", "id_build", "idea", "outreach", "not_for_me", "scroll_past"]
 RankFeature = Literal["intercept", "affinity", "skill", "save_sim", "nfm_sim", "type_pref", "source_pref",
-                      "problem", "intensity", "money", "buyer", "quality", "fresh", "social"]
+                      "problem", "intensity", "money", "buyer", "quality", "fresh", "social", "relevance",
+                      "problem_fit", "intensity_fit", "money_fit", "buyer_fit"]
 
 
 class RankerV1(_Strict):

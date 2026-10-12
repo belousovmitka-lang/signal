@@ -223,22 +223,25 @@ ranking:
   value_model_min_surveys: 200    # train the "Was this useful?" model once this many answers exist
   v2_min_labeled_impressions: 50000
   # Thompson sampling over post types (section 10): the type_pref feature is a draw from each user's
-  # Beta per post type instead of the learned average. The prior is Beta(s/2, s/2): s = 10 keeps a new
-  # user's draws within about +-0.3 of neutral.
+  # Beta per post type instead of the learned average. The prior is Beta(s/2, s/2). s = 40: at s = 10 the
+  # draws moved a new user's scores by +-0.33 (measured 2026-10-11), more than the gap between in-map and
+  # off-map posts; s = 40 halves that, so exploration nudges the ranking instead of reshuffling it.
   thompson_post_types: true
-  type_thompson_prior: 10
+  type_thompson_prior: 40
   models_dir: data/models         # v2 model files (git-ignored)
   # v1: hand-set linear estimates of each action's probability (section 8.2), clipped to [0, 1].
   # Features run 0-1 except type_pref (-1..1) and source_pref (-cap..cap). `problem` is the post's
   # problem score as a percentile within its kind (pain or demand), so the two kinds compare fairly.
   # `skill` coefficients were halved on 2026-10-11: listed skills are a small bonus, never a filter.
+  # Deep actions use *_fit = relevance x value (relevance = best of affinity, skill / 2, save_sim): a strong
+  # post outside someone's interests is not something they save or build from (2026-10-11 audit).
   v1:
     coefficients:
       read:        {intercept: 0.15, affinity: 0.30, skill: 0.05, save_sim: 0.20, nfm_sim: -0.15, type_pref: 0.20, source_pref: 0.05, quality: 0.10, fresh: 0.05, social: 0.05}
-      save:        {affinity: 0.10, skill: 0.025, save_sim: 0.12, nfm_sim: -0.08, type_pref: 0.08, problem: 0.06, intensity: 0.03, money: 0.015, buyer: 0.01, social: 0.05}
-      id_build:    {affinity: 0.04, skill: 0.03, save_sim: 0.04, problem: 0.05, intensity: 0.02, money: 0.01, buyer: 0.01}
-      idea:        {affinity: 0.015, skill: 0.01, problem: 0.02, money: 0.005, buyer: 0.005}
-      outreach:    {affinity: 0.005, problem: 0.01, money: 0.005, buyer: 0.0075}
+      save:        {affinity: 0.10, skill: 0.025, save_sim: 0.12, nfm_sim: -0.08, type_pref: 0.08, problem_fit: 0.11, intensity_fit: 0.055, money_fit: 0.03, buyer_fit: 0.02, social: 0.05}
+      id_build:    {affinity: 0.04, skill: 0.03, save_sim: 0.04, problem_fit: 0.09, intensity_fit: 0.04, money_fit: 0.02, buyer_fit: 0.02}
+      idea:        {affinity: 0.015, skill: 0.01, problem_fit: 0.04, money_fit: 0.01, buyer_fit: 0.01}
+      outreach:    {affinity: 0.005, problem_fit: 0.02, money_fit: 0.01, buyer_fit: 0.014}
       not_for_me:  {intercept: 0.10, affinity: -0.10, skill: -0.015, save_sim: -0.05, nfm_sim: 0.25, type_pref: -0.10}
       scroll_past: {intercept: 0.45, affinity: -0.30, save_sim: -0.10, nfm_sim: 0.15, quality: -0.10, fresh: -0.05}
     similarity_low: 0.4           # embedding cosine mapped to 0..1 between these
@@ -261,7 +264,9 @@ composition:
   max_same_type_in_a_row: 2       # spec said 1; relaxed 2026-10-11 so a minority type isn't forced into every other slot
   fresh_share_first_10: 0.40
   fresh_hours: 48
-  caught_up_score_floor: 0.5
+  # "You're caught up" below this score. Calibrated 2026-10-11 on new users: off-map posts score about
+  # -0.06 (p90 -0.03), in-map posts 0.29+ (p10, a narrow Legal user) to 0.7+ (a broad user).
+  caught_up_score_floor: 0.2
   page_size: 20
   pins_per_page: 2                # pinned and dropped-in nodes each get a slot per page, up to this many
 

@@ -110,6 +110,7 @@ def compose(scored: Sequence[Scored], data: FeedData, state: UserState, config: 
         q = q.model_copy(update={"exploration_min": max(q.exploration_min, exploration_floor),
                                  "exploration_max": max(q.exploration_max, exploration_floor)})
     committed = state.mode == "committed" and state.committed_niche is not None
+    focus: set[int] = set()
     if committed:   # section 6.7: everything outside the problem is capped; no forced exploration
         q = q.model_copy(update={"exploration_min": 0.0, "paid_demand_min": 0.0})
         focus = set(data.industry.subtree(state.committed_niche))
@@ -152,6 +153,8 @@ def compose(scored: Sequence[Scored], data: FeedData, state: UserState, config: 
         if level < 2 and len(run) == c.max_same_type_in_a_row and all(data.items[h.index].post_type == it.post_type
                                                                        for h in run):
             return False
+        if committed and it.niche_id in focus:
+            return True          # committed mode narrows to one niche on purpose: no per-leaf limit there
         recent = history[-9:]
         return level >= 1 or sum(data.items[h.index].niche_id == it.niche_id for h in recent) < c.max_same_leaf_per_10
 

@@ -119,7 +119,10 @@ def test_thompson_draws_follow_type_evidence(world, feed_store, feed_config):
     ranker = RankerV1(feed_config)
     rng = np.random.default_rng(0)
     draws = [ranker.type_draws(st, rng) for _ in range(200)]
-    assert np.mean([d["pain"] for d in draws]) > 0.6 > -0.6 > np.mean([d["paid_demand"] for d in draws])
+    half = feed_config.ranking.type_thompson_prior / 2
+    expected = 2 * (half + 40) / (2 * half + 40) - 1                          # mean of 2 * Beta - 1
+    assert np.mean([d["pain"] for d in draws]) == pytest.approx(expected, abs=0.05)
+    assert np.mean([d["paid_demand"] for d in draws]) == pytest.approx(-expected, abs=0.05)
     assert abs(np.mean([d["change"] for d in draws])) < 0.1                 # no evidence: neutral on average
     off = feed_config.model_copy(update={"ranking": feed_config.ranking.model_copy(update={"thompson_post_types": False})})
     assert RankerV1(off).type_draws(st, rng) is None

@@ -54,6 +54,7 @@ class FeedPage(BaseModel):
     cursor: str                # opaque: how many items this session has shown
     caught_up: bool            # strong items ran out: show "You're caught up" and offer "Explore more"
     calibration: bool
+    explore: bool = False      # these are "Explore more" items (asked for, or a session that would start empty)
 
 
 def _session_shown(store: FeedStore, user_id: str, session_id: str) -> list[str]:
@@ -193,9 +194,19 @@ class FeedService:
         scored = ranker.score(data, state, candidates, now, self.rng)
         previous = [SimpleNamespace(index=data.by_id[p].index) for p in shown[-10:] if p in data.by_id]
         placed, caught_up = compose(scored, data, state, cfg, now, previous, explore_more, boost)
+        if not placed and not shown and not explore_more:
+            # A session must never open empty (CLAUDE.md: "rather than leave anyone with a thin feed"): when
+            # nothing on the user's map is strong enough, open with "Explore more" items instead.
+            explore_more = True
+            candidates = generate(data, state, cfg, self.store, now, self.rng, True)
+            scored = ranker.score(data, state, candidates, now, self.rng)
+            placed, caught_up = compose(scored, data, state, cfg, now, previous, True)
+            caught_up = True
         rows = [(p.scored, p.explanation, p.forced) for p in placed]
-        return self._log(data, user_id, session_id, rows, len(shown), caught_up, calibration=False,
+        page = self._log(data, user_id, session_id, rows, len(shown), caught_up, calibration=False,
                          bubble_guard=boost is not None, config=cfg, arms=arms)
+        page.explore = explore_more
+        return page
 
     def _log(self, data: FeedData, user_id: str, session_id: str, rows, offset: int, caught_up: bool,
              calibration: bool, bubble_guard: bool = False, config: FeedConfig | None = None,

@@ -110,6 +110,11 @@ class RankerV1:
                 "fresh": 0.5 ** (hours / v1.fresh_half_life_hours),
                 "social": min(1.0, c.social / 3),
             })
+            f = feats[-1]
+            # Relevance gates value: a strong post outside someone's interests isn't one they save or build from.
+            f["relevance"] = max(f["affinity"], 0.5 * f["skill"], f["save_sim"])
+            for name in ("problem", "intensity", "money", "buyer"):
+                f[f"{name}_fit"] = f["relevance"] * f[name]
             similar = int((sims_saved[k] >= v1.similar_save_cosine).sum()) if sims_saved is not None else 0
             extra.append((affinity, node, similar))
         probs = self.probabilities(feats)
