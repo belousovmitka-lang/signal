@@ -6,6 +6,7 @@ discovery:
   queries: 9
   cost_usd: 0.114
   candidates_checked: 40
+  on_demand: false
   notes: 'Draft by the discovery agent (9 searches, $0.114), reviewed by Claude 2026-10-11. Terms: UAMCC
     allowed; LawnSite, Cleaning Talk, The Lawn Forum (VerticalScope) and three ProBoards forums forbidden;
     The Cleaning Standard, IAHSP and LTK unchecked; a Czech casino site and a broken classifieds board
@@ -272,6 +273,12 @@ associations:
   status: live
   checked_at: '2026-10-11'
   locked: false
-job_boards: []
+job_boards:
+- name: Jobber
+  url: https://jobs.ashbyhq.com/jobber
+  status: live
+  checked_at: '2026-10-11'
+  notes: ashby board, 41 open jobs (find_job_boards.py)
+  locked: true
 podcasts: []
 youtube_channels: []

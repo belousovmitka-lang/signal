@@ -72,6 +72,7 @@ forums:
   url: https://community.shopify.com/
   status: live
   checked_at: '2026-10-10'
+  locked: false
   software: discourse
   rss: https://community.shopify.com/latest.rss
   robots: allowed
@@ -82,6 +83,7 @@ forums:
   url: https://community.ebay.com/
   status: live
   checked_at: '2026-10-10'
+  locked: false
   software: khoros
   robots: allowed
   terms: unchecked
@@ -89,6 +91,7 @@ forums:
   url: https://sellercentral.amazon.com/seller-forums
   status: live
   checked_at: '2026-10-10'
+  locked: false
   software: unknown
   robots: allowed
   terms: unchecked
@@ -97,12 +100,14 @@ rss_feeds:
   url: https://www.modernretail.co/feed/
   status: live
   checked_at: '2026-10-10'
+  locked: false
   entries: 10
   full_text: true
 - name: retaildive
   url: https://www.retaildive.com/feeds/news/
   status: live
   checked_at: '2026-10-10'
+  locked: false
   entries: 10
   full_text: false
 - name: practicalecommerce
@@ -110,10 +115,12 @@ rss_feeds:
   status: blocked
   checked_at: '2026-10-10'
   notes: robots.txt disallows
+  locked: false
 - name: digitalcommerce360
   url: https://www.digitalcommerce360.com/feed/
   status: live
   checked_at: '2026-10-10'
+  locked: false
   entries: 10
   full_text: true
 - name: ecommercebytes
@@ -121,12 +128,14 @@ rss_feeds:
   status: dead
   checked_at: '2026-10-10'
   notes: not a feed
+  locked: false
   entries: 0
   full_text: false
 - name: marketplacepulse
   url: https://www.marketplacepulse.com/articles/recent.atom
   status: live
   checked_at: '2026-10-10'
+  locked: false
   entries: 20
   full_text: true
 associations:
@@ -134,21 +143,46 @@ associations:
   url: https://nrf.com/
   status: live
   checked_at: '2026-10-10'
+  locked: false
 job_boards:
 - name: Retail Dive jobs
   url: https://jobs.retaildive.com/
   status: dead
   checked_at: '2026-10-10'
   notes: site unreachable (ConnectError)
+  locked: false
+- name: Helium 10
+  url: https://boards.greenhouse.io/helium10
+  status: live
+  checked_at: '2026-10-11'
+  notes: greenhouse board, 3 open jobs (find_job_boards.py)
+  locked: true
+- name: Klaviyo
+  url: https://boards.greenhouse.io/klaviyo
+  status: live
+  checked_at: '2026-10-11'
+  notes: greenhouse board, 145 open jobs (find_job_boards.py)
+  locked: true
+- name: Gorgias
+  url: https://jobs.ashbyhq.com/gorgias
+  status: live
+  checked_at: '2026-10-11'
+  notes: ashby board, 17 open jobs (find_job_boards.py)
+  locked: true
 podcasts:
 - name: eCommerce Fuel
   status: unverified
+  locked: false
 - name: 2X eCommerce
   status: unverified
+  locked: false
 - name: The Jungle Scout Podcast
   status: unverified
+  locked: false
 youtube_channels:
 - name: Shopify
   status: unverified
+  locked: false
 - name: Jungle Scout
   status: unverified
+  locked: false

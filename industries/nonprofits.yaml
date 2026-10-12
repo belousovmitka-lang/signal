@@ -6,6 +6,7 @@ discovery:
   queries: 9
   cost_usd: 0.057
   candidates_checked: 40
+  on_demand: false
   notes: 'Draft by the discovery agent (9 searches, $0.057), reviewed by Claude 2026-10-11. Forums: Grant
     Writing Network (ProBoards) forbidden; Spark the Fire and Grab Your Grant communities are on Circle
     (private) and The Nonprofit Ledger board has no threads, so removed; Wall Street Oasis and City-Data
@@ -169,6 +170,30 @@ associations:
   status: live
   checked_at: '2026-10-11'
   locked: false
-job_boards: []
+job_boards:
+- name: Bloomerang
+  url: https://boards.greenhouse.io/bloomerang
+  status: live
+  checked_at: '2026-10-11'
+  notes: greenhouse board, 11 open jobs (find_job_boards.py)
+  locked: true
+- name: Givebutter
+  url: https://jobs.ashbyhq.com/givebutter
+  status: live
+  checked_at: '2026-10-11'
+  notes: ashby board, 9 open jobs (find_job_boards.py)
+  locked: true
+- name: Virtuous
+  url: https://jobs.ashbyhq.com/virtuous
+  status: live
+  checked_at: '2026-10-11'
+  notes: ashby board, 15 open jobs (find_job_boards.py)
+  locked: true
+- name: Submittable
+  url: https://boards.greenhouse.io/submittable
+  status: live
+  checked_at: '2026-10-11'
+  notes: greenhouse board, 3 open jobs (find_job_boards.py)
+  locked: true
 podcasts: []
 youtube_channels: []

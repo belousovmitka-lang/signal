@@ -454,6 +454,28 @@ sources:
       - {params: {kind: spaces}, limit: 100}
       - {params: {kind: models}, limit: 100}
 
+  job_boards:
+    enabled: true
+    status: done
+    status_date: 2026-10-11
+    route: own_api
+    source_type: paid_demand
+    cadence: weekly
+    access_check:
+      robots: allowed
+      terms: allowed
+      decision: full
+      terms_url: https://github.com/lever/postings-api
+      checked_at: 2026-10-11
+      notes: >-
+        Public posting APIs, no key: Greenhouse Job Board API (robots.txt allows /v1), Lever Postings API
+        (robots.txt allows, Crawl-delay 1; docs: published postings "may be scraped by third parties"), Ashby
+        Posting API (robots.txt answers 401 = allow). None publishes terms binding third-party readers.
+        Blocked: SmartRecruiters (robots.txt allows only LinkedInBot), USAJOBS (data.usajobs.gov robots.txt
+        Disallow: /). Recruiter emails and phones redacted from descriptions.
+    options:
+      industry_job_boards: true      # one query per live board in the industry maps (scripts/find_job_boards.py)
+
   papers:
     connector: rss
     enabled: true

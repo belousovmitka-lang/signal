@@ -10,10 +10,12 @@
 3. Check feeds automatically (assess_feed): recent, enough items, not a page farm, no spam,
    headlines that match the industry's vocabulary. Passing feeds are enabled; the rest are held
    (status unverified, locked, with the reason) for a human.
-4. Forums are never enabled automatically (rule 2): their terms must be read by a person. They wait
+4. Job boards: each incumbent tool is tried as a public Greenhouse, Lever or Ashby board
+   (connectors/job_boards.py find_boards); boards that clearly belong to that company are added.
+5. Forums are never enabled automatically (rule 2): their terms must be read by a person. They wait
    in the review queue (scripts/review_queue.py) with terms: unchecked, unless a platform's or an
    earlier review's terms already decided them.
-5. Write industries/<key>.yaml (discovery.on_demand: true) and run a first fill of its feeds over the
+6. Write industries/<key>.yaml (discovery.on_demand: true) and run a first fill of its feeds over the
    last `on_demand_first_fill_days`, recorded as "rss:<key>" so the regular schedule is untouched.
 """
 
@@ -34,8 +36,9 @@ from typing import Any
 import feedparser
 
 from .config import load_sources
+from .connectors.job_boards import find_boards
 from .discovery_agent import Seeds, discover
-from .industries import INDUSTRIES_DIR, Feed, Industry, load_industries, save_industry
+from .industries import INDUSTRIES_DIR, Feed, Industry, Link, load_industries, save_industry
 from .parsing import parse_date
 from .runner import run_source
 from .services import Services
@@ -50,7 +53,7 @@ SPAM = re.compile(r"\b(casino|porn|torrent|viagra|escort|betting|xxx|3gp|crack(e
 _GENERIC = set("""business businesses owner owners manager managers management service services software tool tools
 company companies professional professionals industry small team staff work worker workers client clients customer
 customers system systems online digital best guide tips with from your their about that this have more help""".split())
-FIRST_FILL_SOURCES = ("rss", "classic_forum")
+FIRST_FILL_SOURCES = ("rss", "classic_forum", "job_boards")
 # Verdicts that need no human: the feed is simply asleep, empty or unreachable.
 _DEAD = re.compile(r"^(no new items|only \d+ items|HTTP \d+|fetch failed|robots\.txt)")
 LOCK_DIR = Path(__file__).resolve().parent.parent / "data"
@@ -88,6 +91,7 @@ class OnDemandResult:
     feeds_held: dict[str, str] = field(default_factory=dict)       # feed url -> reason; a human decides
     feeds_skipped: dict[str, str] = field(default_factory=dict)    # asleep or unreachable; no review needed
     forums_queued: list[str] = field(default_factory=list)          # waiting for a terms review
+    job_boards: list[str] = field(default_factory=list)             # incumbent tools' public ATS boards
     first_fill: dict[str, Any] = field(default_factory=dict)        # source -> {status, new}
     cost_usd: float = 0.0
 
@@ -292,6 +296,12 @@ async def ensure_industry(services: Services, request: IndustryRequest, *, colle
             else:
                 result.feeds_enabled.append(feed.url)
         result.forums_queued = [f.url for f in industry.forums if f.status == "live" and f.terms == "unchecked"]
+        boards = await asyncio.gather(*(find_boards(services.http, services.robots, t) for t in plan.tools))
+        for tool, found in zip(plan.tools, boards):
+            for b in found:
+                industry.job_boards.append(Link(name=tool, url=b.url, status="live", checked_at=today, locked=True,
+                                                notes=f"{b.ats} board, {b.jobs} open jobs (on demand)"))
+                result.job_boards.append(b.url)
 
         info = industry.discovery
         info.needs_review, info.on_demand, info.request = False, True, request.name

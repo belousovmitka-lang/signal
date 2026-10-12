@@ -6,6 +6,7 @@ discovery:
   queries: 9
   cost_usd: 0.057
   candidates_checked: 40
+  on_demand: false
   notes: 'Draft by the discovery agent (9 searches), reviewed by Claude 2026-10-10: forum terms read and
     recorded (Foro Dentista and Dentistry Forums allowed; eDental Portal and Student Doctor Network forbidden;
     DOMA is a paid members'' community; WebDental, Hygiene Hackers and Dental Club publish no terms);
@@ -265,6 +266,18 @@ associations:
   status: live
   checked_at: '2026-10-10'
   locked: false
-job_boards: []
+job_boards:
+- name: Weave
+  url: https://boards.greenhouse.io/weave
+  status: live
+  checked_at: '2026-10-11'
+  notes: greenhouse board, 6 open jobs (find_job_boards.py)
+  locked: true
+- name: Weave
+  url: https://jobs.ashbyhq.com/weave
+  status: live
+  checked_at: '2026-10-11'
+  notes: ashby board, 26 open jobs (find_job_boards.py)
+  locked: true
 podcasts: []
 youtube_channels: []

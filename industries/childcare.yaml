@@ -6,6 +6,7 @@ discovery:
   queries: 9
   cost_usd: 0.114
   candidates_checked: 40
+  on_demand: false
   notes: 'Draft by the discovery agent (9 searches, $0.114), reviewed by Claude 2026-10-11. Terms: The
     Daycare Room (Forumotion: no copying without written permission, inactive since 2015) and Aussie Childcare
     Network (no feed; terms forbid access by means the site doesn''t provide) forbidden; Daycare.com returns
@@ -189,6 +190,18 @@ associations:
   status: live
   checked_at: '2026-10-11'
   locked: false
-job_boards: []
+job_boards:
+- name: Brightwheel
+  url: https://jobs.ashbyhq.com/brightwheel
+  status: live
+  checked_at: '2026-10-11'
+  notes: ashby board, 13 open jobs (find_job_boards.py)
+  locked: true
+- name: Playground
+  url: https://jobs.ashbyhq.com/playground
+  status: live
+  checked_at: '2026-10-11'
+  notes: ashby board, 6 open jobs (find_job_boards.py)
+  locked: true
 podcasts: []
 youtube_channels: []

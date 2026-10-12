@@ -163,6 +163,18 @@ job_boards:
   checked_at: '2026-10-10'
   notes: HTTP 403 to our bot
   locked: false
+- name: Greenhouse
+  url: https://boards.greenhouse.io/greenhouse
+  status: live
+  checked_at: '2026-10-11'
+  notes: greenhouse board, 18 open jobs (find_job_boards.py)
+  locked: true
+- name: Gusto
+  url: https://boards.greenhouse.io/gusto
+  status: live
+  checked_at: '2026-10-11'
+  notes: greenhouse board, 97 open jobs (find_job_boards.py)
+  locked: true
 podcasts:
 - name: HR Happy Hour
   status: unverified

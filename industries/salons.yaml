@@ -6,6 +6,7 @@ discovery:
   queries: 9
   cost_usd: 0.114
   candidates_checked: 40
+  on_demand: false
   notes: 'Draft by the discovery agent (9 searches, $0.114), reviewed by Claude 2026-10-11. Terms: Cosmetology
     Forum allowed (standard XenForo terms, no automation clause; quiet since Feb 2026); Salon Geek forbidden
     (no data mining, robots or commercial use); John Amico ProBoards forbidden. Removed: City-Data (general
@@ -199,6 +200,30 @@ associations:
   status: live
   checked_at: '2026-10-11'
   locked: false
-job_boards: []
+job_boards:
+- name: Boulevard
+  url: https://boards.greenhouse.io/boulevard
+  status: live
+  checked_at: '2026-10-11'
+  notes: greenhouse board, 14 open jobs (find_job_boards.py)
+  locked: true
+- name: Fresha
+  url: https://jobs.lever.co/fresha
+  status: live
+  checked_at: '2026-10-11'
+  notes: lever board, 153 open jobs (find_job_boards.py)
+  locked: true
+- name: Mangomint
+  url: https://jobs.ashbyhq.com/mangomint
+  status: live
+  checked_at: '2026-10-11'
+  notes: ashby board, 2 open jobs (find_job_boards.py)
+  locked: true
+- name: Zenoti
+  url: https://boards.greenhouse.io/zenoti
+  status: live
+  checked_at: '2026-10-11'
+  notes: greenhouse board, 55 open jobs (find_job_boards.py)
+  locked: true
 podcasts: []
 youtube_channels: []

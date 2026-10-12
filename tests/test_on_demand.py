@@ -67,6 +67,8 @@ def web(request: httpx.Request) -> httpx.Response:
     if request.url.host == "good.example":
         return httpx.Response(200, text=rss(["Dog groomer pricing", "MoeGo update", "Hand stripping", "Groomer pay"],
                                             age_days=30))         # older than a regular run's lookback
+    if request.url.host == "api.ashbyhq.com" and request.url.path.endswith("/moego"):
+        return httpx.Response(200, json={"jobs": [{"id": "1", "descriptionPlain": "Join MoeGo's support team"}]})
     if request.url.host == "old.example":
         return httpx.Response(200, text=rss(["Dog groomer pricing"] * 4, age_days=400))
     if request.url.host == "news.example":
@@ -104,6 +106,7 @@ async def test_ensure_industry_builds_a_map_and_fills_it(make_services, settings
         "https://news.example/feed"]
     assert list(result.feeds_skipped) == ["https://old.example/feed"]     # asleep: no human needed
     assert result.forums_queued == ["https://board.example/"]          # forums wait for a human
+    assert result.job_boards == ["https://jobs.ashbyhq.com/moego"]      # the incumbent tool's public board
     assert result.first_fill["rss"]["new"] == 4
 
     ind = load_industry(maps / "dog_grooming.yaml")

@@ -149,6 +149,18 @@ job_boards:
   status: live
   checked_at: '2026-10-10'
   locked: false
+- name: NetDocuments
+  url: https://boards.greenhouse.io/netdocuments
+  status: live
+  checked_at: '2026-10-11'
+  notes: greenhouse board, 18 open jobs (find_job_boards.py)
+  locked: true
+- name: iManage
+  url: https://boards.greenhouse.io/imanage
+  status: live
+  checked_at: '2026-10-11'
+  notes: greenhouse board, 1 open jobs (find_job_boards.py)
+  locked: true
 podcasts:
 - name: Legal Talk Network
   status: unverified

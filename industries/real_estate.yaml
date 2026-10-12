@@ -183,6 +183,12 @@ job_boards:
   checked_at: '2026-10-10'
   notes: site unreachable (ConnectError)
   locked: false
+- name: SkySlope
+  url: https://jobs.lever.co/skyslope
+  status: live
+  checked_at: '2026-10-11'
+  notes: lever board, 1 open jobs (find_job_boards.py)
+  locked: true
 podcasts:
 - name: BiggerPockets Real Estate Podcast
   status: unverified

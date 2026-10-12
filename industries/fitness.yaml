@@ -6,6 +6,7 @@ discovery:
   queries: 9
   cost_usd: 0.114
   candidates_checked: 40
+  on_demand: false
   notes: 'Draft by the discovery agent (9 searches, $0.114), reviewed by Claude 2026-10-11. All four forums
     found are consumer lifting communities: StrongFirst, T-Nation and RealMuscle forbid automated or commercial
     use; fitness.com''s terms were not found. A video-game sports forum and a duplicate association were
@@ -203,6 +204,18 @@ associations:
   status: live
   checked_at: '2026-10-11'
   locked: false
-job_boards: []
+job_boards:
+- name: Mindbody
+  url: https://boards.greenhouse.io/mindbody
+  status: live
+  checked_at: '2026-10-11'
+  notes: greenhouse board, 23 open jobs (find_job_boards.py)
+  locked: true
+- name: PushPress
+  url: https://jobs.lever.co/pushpress
+  status: live
+  checked_at: '2026-10-11'
+  notes: lever board, 4 open jobs (find_job_boards.py)
+  locked: true
 podcasts: []
 youtube_channels: []

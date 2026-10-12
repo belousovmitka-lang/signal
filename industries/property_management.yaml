@@ -6,6 +6,7 @@ discovery:
   queries: 9
   cost_usd: 0.057
   candidates_checked: 40
+  on_demand: false
   notes: 'Draft by the discovery agent (9 searches, $0.057), reviewed by Claude 2026-10-11. Terms: BiggerPockets
     forbidden (no copying in any form without written permission; also recorded in the real estate map)
     and OpenRent Community forbidden (no harvesting software, no copying). Removed off-topic forums (Leasehackr
@@ -181,6 +182,12 @@ associations:
   status: live
   checked_at: '2026-10-11'
   locked: false
-job_boards: []
+job_boards:
+- name: Entrata
+  url: https://jobs.lever.co/entrata
+  status: live
+  checked_at: '2026-10-11'
+  notes: lever board, 24 open jobs (find_job_boards.py)
+  locked: true
 podcasts: []
 youtube_channels: []

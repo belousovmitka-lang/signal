@@ -6,6 +6,7 @@ discovery:
   queries: 9
   cost_usd: 0.057
   candidates_checked: 40
+  on_demand: false
   notes: 'Draft by the discovery agent (9 searches, $0.057), reviewed by Claude 2026-10-11. Terms: ClinPsy
     allowed (standard XenForo terms; UK clinical psychology, mostly training and careers); Making Therapy
     Better forbidden (Discourse ToS: no automated access); Student Doctor Network and two Forumotion boards
@@ -220,6 +221,24 @@ associations:
   status: live
   checked_at: '2026-10-11'
   locked: false
-job_boards: []
+job_boards:
+- name: Headway
+  url: https://jobs.ashbyhq.com/headway
+  status: live
+  checked_at: '2026-10-11'
+  notes: ashby board, 86 open jobs (find_job_boards.py)
+  locked: true
+- name: Grow Therapy
+  url: https://jobs.ashbyhq.com/grow-therapy
+  status: live
+  checked_at: '2026-10-11'
+  notes: ashby board, 29 open jobs (find_job_boards.py)
+  locked: true
+- name: Rula
+  url: https://jobs.ashbyhq.com/rula
+  status: live
+  checked_at: '2026-10-11'
+  notes: ashby board, 37 open jobs (find_job_boards.py)
+  locked: true
 podcasts: []
 youtube_channels: []

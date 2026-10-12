@@ -77,6 +77,7 @@ forums:
   url: https://www.contractortalk.com/
   status: live
   checked_at: '2026-10-10'
+  locked: false
   software: xenforo
   rss: https://www.contractortalk.com/forums/-/index.rss
   robots: allowed
@@ -88,6 +89,7 @@ forums:
   status: live
   checked_at: '2026-10-10'
   notes: redirects to https://www.hvac-talk.com/
+  locked: false
   software: xenforo
   rss: https://www.hvac-talk.com/forums/-/index.rss
   robots: allowed
@@ -99,6 +101,7 @@ forums:
   status: search_only
   checked_at: '2026-10-10'
   notes: HTTP 403 to our bot; use the search route
+  locked: false
   software: unknown
   robots: allowed
   terms: unchecked
@@ -106,6 +109,7 @@ forums:
   url: https://www.electriciantalk.com/
   status: live
   checked_at: '2026-10-10'
+  locked: false
   software: xenforo
   rss: https://www.electriciantalk.com/forums/-/index.rss
   robots: allowed
@@ -116,6 +120,7 @@ forums:
   url: https://www.plumbingzone.com/
   status: live
   checked_at: '2026-10-10'
+  locked: false
   software: xenforo
   rss: https://www.plumbingzone.com/forums/-/index.rss
   robots: allowed
@@ -127,18 +132,21 @@ rss_feeds:
   url: https://www.constructiondive.com/feeds/news/
   status: live
   checked_at: '2026-10-10'
+  locked: false
   entries: 10
   full_text: false
 - name: enr
   url: https://www.enr.com/rss/articles
   status: live
   checked_at: '2026-10-10'
+  locked: false
   entries: 30
   full_text: true
 - name: jlc
   url: https://www.jlconline.com/feed/
   status: live
   checked_at: '2026-10-10'
+  locked: false
   entries: 10
   full_text: true
 - name: achrnews
@@ -146,18 +154,21 @@ rss_feeds:
   status: dead
   checked_at: '2026-10-10'
   notes: not a feed
+  locked: false
   entries: 0
   full_text: false
 - name: forconstructionpros
   url: https://www.forconstructionpros.com/rss
   status: live
   checked_at: '2026-10-10'
+  locked: false
   entries: 10
   full_text: true
 - name: ecmweb
   url: https://www.ecmweb.com/__rss/website-scheduled-content.xml?input=%7B%22sectionAlias%22%3A%22home%22%7D
   status: live
   checked_at: '2026-10-10'
+  locked: false
   entries: 25
   full_text: false
 associations:
@@ -165,34 +176,51 @@ associations:
   url: https://www.agc.org/
   status: live
   checked_at: '2026-10-10'
+  locked: false
 - name: NAHB
   url: https://www.nahb.org/
   status: live
   checked_at: '2026-10-10'
+  locked: false
 - name: ABC
   url: https://www.abc.org/
   status: live
   checked_at: '2026-10-10'
+  locked: false
 job_boards:
 - name: ConstructionJobs.com
   url: https://www.constructionjobs.com/
   status: live
   checked_at: '2026-10-10'
+  locked: false
 - name: iHireConstruction
   url: https://www.ihireconstruction.com/
   status: live
   checked_at: '2026-10-10'
+  locked: false
+- name: Jobber
+  url: https://jobs.ashbyhq.com/jobber
+  status: live
+  checked_at: '2026-10-11'
+  notes: ashby board, 41 open jobs (find_job_boards.py)
+  locked: true
 podcasts:
 - name: The Construction Brothers
   status: unverified
+  locked: false
 - name: ConTechCrew
   status: unverified
+  locked: false
 - name: Contractor Success Map
   status: unverified
+  locked: false
 youtube_channels:
 - name: Essential Craftsman
   status: unverified
+  locked: false
 - name: Matt Risinger
   status: unverified
+  locked: false
 - name: Procore
   status: unverified
+  locked: false

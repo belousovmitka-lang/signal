@@ -79,6 +79,7 @@ forums:
   url: https://community.spiceworks.com/
   status: live
   checked_at: '2026-10-10'
+  locked: false
   software: discourse
   rss: https://community.spiceworks.com/posts.rss
   robots: allowed
@@ -91,6 +92,7 @@ forums:
   status: search_only
   checked_at: '2026-10-10'
   notes: robots.txt disallows; use the search route
+  locked: false
   software: unknown
   robots: disallowed
   terms: unchecked
@@ -98,6 +100,7 @@ forums:
   url: https://dev.to/
   status: live
   checked_at: '2026-10-10'
+  locked: false
   software: unknown
   rss: https://dev.to/feed
   robots: allowed
@@ -109,6 +112,7 @@ forums:
   status: search_only
   checked_at: '2026-10-10'
   notes: HTTP 403 to our bot; use the search route
+  locked: false
   software: unknown
   robots: allowed
   terms: unchecked
@@ -116,6 +120,7 @@ forums:
   url: https://discuss.hashicorp.com/
   status: live
   checked_at: '2026-10-10'
+  locked: false
   software: discourse
   rss: https://discuss.hashicorp.com/latest.rss
   robots: allowed
@@ -128,6 +133,7 @@ forums:
   status: live
   checked_at: '2026-10-10'
   notes: redirects to https://forums.servethehome.com/index.php
+  locked: false
   software: xenforo
   rss: https://forums.servethehome.com/index.php?forums/-/index.rss
   robots: allowed
@@ -140,12 +146,14 @@ rss_feeds:
   url: https://feed.infoq.com/
   status: live
   checked_at: '2026-10-10'
+  locked: false
   entries: 15
   full_text: false
 - name: thenewstack
   url: https://thenewstack.io/feed/
   status: live
   checked_at: '2026-10-10'
+  locked: false
   entries: 26
   full_text: true
 - name: theregister
@@ -153,22 +161,26 @@ rss_feeds:
   status: blocked
   checked_at: '2026-10-10'
   notes: robots.txt disallows
+  locked: false
 - name: bleepingcomputer
   url: https://www.bleepingcomputer.com/feed/
   status: live
   checked_at: '2026-10-10'
+  locked: false
   entries: 15
   full_text: false
 - name: devops-com
   url: https://devops.com/feed/
   status: live
   checked_at: '2026-10-10'
+  locked: false
   entries: 10
   full_text: true
 - name: arstechnica
   url: https://feeds.arstechnica.com/arstechnica/index
   status: live
   checked_at: '2026-10-10'
+  locked: false
   entries: 20
   full_text: true
 associations:
@@ -176,24 +188,50 @@ associations:
   url: https://www.comptia.org/
   status: live
   checked_at: '2026-10-10'
+  locked: false
 - name: LISA / USENIX
   url: https://www.usenix.org/
   status: live
   checked_at: '2026-10-10'
+  locked: false
 job_boards:
 - name: Dice
   url: https://www.dice.com/
   status: live
   checked_at: '2026-10-10'
+  locked: false
+- name: ConnectWise
+  url: https://boards.greenhouse.io/connectwise
+  status: live
+  checked_at: '2026-10-11'
+  notes: greenhouse board, 45 open jobs (find_job_boards.py)
+  locked: true
+- name: PagerDuty
+  url: https://boards.greenhouse.io/pagerduty
+  status: live
+  checked_at: '2026-10-11'
+  notes: greenhouse board, 51 open jobs (find_job_boards.py)
+  locked: true
+- name: Datadog
+  url: https://boards.greenhouse.io/datadog
+  status: live
+  checked_at: '2026-10-11'
+  notes: greenhouse board, 435 open jobs (find_job_boards.py)
+  locked: true
 podcasts:
 - name: MSP Radio
   status: unverified
+  locked: false
 - name: Ship It!
   status: unverified
+  locked: false
 - name: The Changelog
   status: unverified
+  locked: false
 youtube_channels:
 - name: NetworkChuck
   status: unverified
+  locked: false
 - name: TechWorld with Nana
   status: unverified
+  locked: false

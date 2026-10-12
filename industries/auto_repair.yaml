@@ -6,6 +6,7 @@ discovery:
   queries: 9
   cost_usd: 0.057
   candidates_checked: 40
+  on_demand: false
   notes: 'Draft by the discovery agent (9 searches, $0.057), reviewed by Claude 2026-10-11. Five forum
     feeds the agent had filed as publications were moved to forums for terms review. Terms: The Truck
     Stop and The Chicago Garage allowed; Chrysler 300 forum (VerticalScope) and F150gen14 forbidden; automotivediagsolutions
@@ -298,6 +299,18 @@ associations:
   status: live
   checked_at: '2026-10-11'
   locked: false
-job_boards: []
+job_boards:
+- name: Tekmetric
+  url: https://boards.greenhouse.io/tekmetric
+  status: live
+  checked_at: '2026-10-11'
+  notes: greenhouse board, 30 open jobs (find_job_boards.py)
+  locked: true
+- name: Shopmonkey
+  url: https://boards.greenhouse.io/shopmonkey
+  status: live
+  checked_at: '2026-10-11'
+  notes: greenhouse board, 7 open jobs (find_job_boards.py)
+  locked: true
 podcasts: []
 youtube_channels: []

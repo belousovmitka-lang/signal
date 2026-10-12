@@ -6,6 +6,7 @@ discovery:
   queries: 9
   cost_usd: 0.057
   candidates_checked: 40
+  on_demand: false
   notes: 'Draft by the discovery agent (9 searches, $0.057), reviewed by Claude 2026-10-11. Terms: Event
     Expert Forum allowed (standard XenForo terms; new forum, low volume); Legacy Events forbidden (Discourse
     ToS: no automated access); International Wedding Institute forbidden (no robots or spiders). Removed:
@@ -187,6 +188,30 @@ associations:
   status: live
   checked_at: '2026-10-11'
   locked: false
-job_boards: []
+job_boards:
+- name: HoneyBook
+  url: https://jobs.ashbyhq.com/honeybook
+  status: live
+  checked_at: '2026-10-11'
+  notes: ashby board, 7 open jobs (find_job_boards.py)
+  locked: true
+- name: Perfect Venue
+  url: https://jobs.ashbyhq.com/perfect-venue
+  status: live
+  checked_at: '2026-10-11'
+  notes: ashby board, 4 open jobs (find_job_boards.py)
+  locked: true
+- name: Goodshuffle Pro
+  url: https://boards.greenhouse.io/goodshufflepro
+  status: live
+  checked_at: '2026-10-11'
+  notes: greenhouse board, 9 open jobs (find_job_boards.py)
+  locked: true
+- name: Zola
+  url: https://boards.greenhouse.io/zola
+  status: live
+  checked_at: '2026-10-11'
+  notes: greenhouse board, 5 open jobs (find_job_boards.py)
+  locked: true
 podcasts: []
 youtube_channels: []

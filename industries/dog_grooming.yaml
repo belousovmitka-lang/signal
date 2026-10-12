@@ -219,6 +219,12 @@ associations:
   status: live
   checked_at: '2026-10-11'
   locked: false
-job_boards: []
+job_boards:
+- name: MoeGo
+  url: https://jobs.ashbyhq.com/moego
+  status: live
+  checked_at: '2026-10-11'
+  notes: ashby board, 2 open jobs (find_job_boards.py)
+  locked: true
 podcasts: []
 youtube_channels: []

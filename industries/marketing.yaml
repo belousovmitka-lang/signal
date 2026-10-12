@@ -71,6 +71,7 @@ forums:
   url: https://community.hubspot.com/
   status: live
   checked_at: '2026-10-10'
+  locked: false
   software: discourse
   rss: https://community.hubspot.com/posts.rss
   robots: allowed
@@ -81,6 +82,7 @@ forums:
   url: https://www.warriorforum.com/
   status: live
   checked_at: '2026-10-10'
+  locked: false
   software: unknown
   robots: allowed
   terms: unchecked
@@ -89,6 +91,7 @@ forums:
   status: search_only
   checked_at: '2026-10-10'
   notes: HTTP 403 to our bot; use the search route
+  locked: false
   software: unknown
   robots: allowed
   terms: unchecked
@@ -97,12 +100,14 @@ rss_feeds:
   url: https://www.searchenginejournal.com/feed/
   status: live
   checked_at: '2026-10-10'
+  locked: false
   entries: 20
   full_text: false
 - name: adweek
   url: https://www.adweek.com/feed/
   status: live
   checked_at: '2026-10-10'
+  locked: false
   entries: 10
   full_text: false
 - name: searchengineland
@@ -110,24 +115,28 @@ rss_feeds:
   status: blocked
   checked_at: '2026-10-10'
   notes: HTTP 403 to our bot
+  locked: false
   entries: 10
   full_text: true
 - name: marketingdive
   url: https://www.marketingdive.com/feeds/news/
   status: live
   checked_at: '2026-10-10'
+  locked: false
   entries: 10
   full_text: false
 - name: martech
   url: https://martech.org/feed/
   status: live
   checked_at: '2026-10-10'
+  locked: false
   entries: 10
   full_text: true
 - name: ppcland
   url: https://ppc.land/rss/
   status: live
   checked_at: '2026-10-10'
+  locked: false
   entries: 100
   full_text: true
 associations:
@@ -135,25 +144,39 @@ associations:
   url: https://www.ama.org/
   status: live
   checked_at: '2026-10-10'
+  locked: false
 - name: MarketingProfs
   url: https://www.marketingprofs.com/
   status: live
   checked_at: '2026-10-10'
+  locked: false
 job_boards:
 - name: AMA career center
   url: https://careers.ama.org/
   status: dead
   checked_at: '2026-10-10'
   notes: site unreachable (ConnectError)
+  locked: false
+- name: Hootsuite
+  url: https://boards.greenhouse.io/hootsuite
+  status: live
+  checked_at: '2026-10-11'
+  notes: greenhouse board, 4 open jobs (find_job_boards.py)
+  locked: true
 podcasts:
 - name: Marketing School
   status: unverified
+  locked: false
 - name: Everyone Hates Marketers
   status: unverified
+  locked: false
 - name: Search Engine Journal Show
   status: unverified
+  locked: false
 youtube_channels:
 - name: Ahrefs
   status: unverified
+  locked: false
 - name: Neil Patel
   status: unverified
+  locked: false

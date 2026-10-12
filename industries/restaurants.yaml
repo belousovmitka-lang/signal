@@ -72,30 +72,35 @@ rss_feeds:
   url: https://www.restaurantdive.com/feeds/news/
   status: live
   checked_at: '2026-10-10'
+  locked: false
   entries: 10
   full_text: false
 - name: nrn
   url: https://www.nrn.com/rss.xml
   status: live
   checked_at: '2026-10-10'
+  locked: false
   entries: 50
   full_text: false
 - name: skift
   url: https://skift.com/feed/
   status: live
   checked_at: '2026-10-10'
+  locked: false
   entries: 10
   full_text: true
 - name: qsrmagazine
   url: https://www.qsrmagazine.com/feed/
   status: live
   checked_at: '2026-10-10'
+  locked: false
   entries: 25
   full_text: true
 - name: fsrmagazine
   url: https://www.fsrmagazine.com/feed/
   status: live
   checked_at: '2026-10-10'
+  locked: false
   entries: 25
   full_text: true
 - name: hospitalitynet
@@ -103,6 +108,7 @@ rss_feeds:
   status: live
   checked_at: '2026-10-10'
   notes: redirects to https://www.hospitalitynet.org/rss/news.xml
+  locked: false
   entries: 20
   full_text: false
 associations:
@@ -110,30 +116,63 @@ associations:
   url: https://restaurant.org/
   status: live
   checked_at: '2026-10-10'
+  locked: false
 - name: AHLA
   url: https://www.ahla.com/
   status: live
   checked_at: '2026-10-10'
+  locked: false
 job_boards:
 - name: Culinary Agents
   url: https://culinaryagents.com/
   status: search_only
   checked_at: '2026-10-10'
   notes: HTTP 403 to our bot
+  locked: false
 - name: Poached
   url: https://poachedjobs.com/
   status: search_only
   checked_at: '2026-10-10'
   notes: HTTP 403 to our bot
+  locked: false
+- name: Toast
+  url: https://boards.greenhouse.io/toast
+  status: live
+  checked_at: '2026-10-11'
+  notes: greenhouse board, 318 open jobs (find_job_boards.py)
+  locked: true
+- name: 7shifts
+  url: https://jobs.ashbyhq.com/7shifts
+  status: live
+  checked_at: '2026-10-11'
+  notes: ashby board, 12 open jobs (find_job_boards.py)
+  locked: true
+- name: OpenTable
+  url: https://boards.greenhouse.io/opentable
+  status: live
+  checked_at: '2026-10-11'
+  notes: greenhouse board, 107 open jobs (find_job_boards.py)
+  locked: true
+- name: Restaurant365
+  url: https://jobs.lever.co/restaurant365
+  status: live
+  checked_at: '2026-10-11'
+  notes: lever board, 28 open jobs (find_job_boards.py)
+  locked: true
 podcasts:
 - name: Restaurant Unstoppable
   status: unverified
+  locked: false
 - name: The Restaurant Prosperity Formula
   status: unverified
+  locked: false
 - name: Skift Podcast
   status: unverified
+  locked: false
 youtube_channels:
 - name: Toast
   status: unverified
+  locked: false
 - name: Chef Jean-Pierre
   status: unverified
+  locked: false

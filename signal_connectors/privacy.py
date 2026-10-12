@@ -45,3 +45,12 @@ def extract_author_role(text: str | None, roles: Iterable[str]) -> str | None:
         if re.search(rf"\b{_ROLE_LEADS}{r}s?\b", lowered) or re.search(rf"\b{r}\s+here\b", lowered):
             return role
     return None
+
+
+_EMAIL = re.compile(r"[\w.+-]+@[\w-]+(\.[\w-]+)+")
+_PHONE = re.compile(r"(?<![\w$])(\+?\d{1,3}[\s.-]?)?(\(\d{2,4}\)|\d{2,4})[\s.-]\d{3,4}[\s.-]\d{3,4}(?![\w%])")
+
+
+def redact_contacts(text: str) -> str:
+    """Rule 4: strip email addresses and phone numbers (recruiters' contacts in job posts)."""
+    return _PHONE.sub("[phone]", _EMAIL.sub("[email]", text))

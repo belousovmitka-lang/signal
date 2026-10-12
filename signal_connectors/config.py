@@ -18,6 +18,9 @@ from .settings import env_flag
 Status = Literal["todo", "done", "awaiting_approval", "paid_flag_off", "blocked"]
 
 
+ATS_HOSTS = {"boards.greenhouse.io", "job-boards.greenhouse.io", "jobs.lever.co", "jobs.ashbyhq.com"}
+
+
 class _Strict(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
@@ -238,6 +241,22 @@ class SourcesFile(_Strict):
                             "feed": forum.rss, "name": urlsplit(forum.url).netloc.removeprefix("www."),
                             "community": forum.name, "software": forum.software}))
 
+    def add_industry_job_boards(self, industries: dict[str, Industry]) -> None:
+        """One query per live company board in the maps' job_boards, for options.industry_job_boards.
+
+        Only ATS boards (Greenhouse, Lever, Ashby) are read; other job sites in the maps are just listed."""
+        for source in self.sources.values():
+            if not source.options.get("industry_job_boards"):
+                continue
+            have = {q.params.get("board") for q in source.queries}
+            for key, industry in industries.items():
+                for board in industry.job_boards:
+                    if (board.status == "live" and board.url and board.url not in have
+                            and urlsplit(board.url).hostname in ATS_HOSTS):
+                        have.add(board.url)
+                        source.queries.append(QueryConfig(industry_hint=key,
+                                                          params={"board": board.url, "company": board.name}))
+
     def add_industry_subreddits(self, industries: dict[str, Industry]) -> None:
         """One query per industry map (its subreddits) for sources with options.industry_subreddits."""
         for source in self.sources.values():
@@ -274,6 +293,7 @@ def load_sources(path: Path | str, industries_dir: Path | None = INDUSTRIES_DIR)
                       if not (v.discovery and v.discovery.needs_review)}
         sources.add_industry_feeds(industries)
         sources.add_industry_forums(industries)
+        sources.add_industry_job_boards(industries)
         sources.add_industry_subreddits(industries)
         sources.add_industry_templates(industries)
     return sources
