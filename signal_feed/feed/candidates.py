@@ -11,7 +11,7 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta
 
 import numpy as np
-from sqlalchemy import select
+from sqlalchemy import func, select
 
 from ..config import FeedConfig
 from ..db import EventRow, FeedStore, ImpressionRow, UserQuizRow
@@ -38,6 +38,14 @@ def seen_post_ids(store: FeedStore, user_id: str, since: datetime) -> set[str]:
     with store.session() as s:
         return set(s.scalars(select(ImpressionRow.item_id).where(
             ImpressionRow.user_id == user_id, ImpressionRow.item_type == "post", ImpressionRow.shown_at >= since)))
+
+
+def reported_post_ids(store: FeedStore, min_users: int) -> set[str]:
+    """Posts reported by at least `min_users` different users (section 6.3: "Report also flags for
+    moderation"). The reports stay in the event log for review."""
+    with store.session() as s:
+        return set(s.scalars(select(EventRow.item_id).where(EventRow.event_type == "report", EventRow.item_type == "post")
+                             .group_by(EventRow.item_id).having(func.count(func.distinct(EventRow.user_id)) >= min_users)))
 
 
 def similar_builder_saves(store: FeedStore, config: FeedConfig, state: UserState, since: datetime) -> dict[str, int]:
@@ -76,6 +84,7 @@ def generate(data: FeedData, state: UserState, config: FeedConfig, store: FeedSt
     cfg = config.candidates
     target = cfg.per_session
     seen = seen_post_ids(store, state.user_id, now - timedelta(days=cfg.exclude_seen_days))
+    seen |= reported_post_ids(store, cfg.hide_after_reports)
 
     def allowed(i: int) -> bool:
         it = data.items[i]
@@ -188,6 +197,7 @@ def generate(data: FeedData, state: UserState, config: FeedConfig, store: FeedSt
                         break
     # Top up with the best remaining posts from anywhere so a thin map never yields a thin feed.
     if len(out) < target:
-        rest = sorted(range(len(data.items)), key=lambda i: -data.items[i].problem_score)
+        # By the within-kind rank, as the ranker does: raw demand scores run higher than pain scores.
+        rest = sorted(range(len(data.items)), key=lambda i: -data.items[i].problem_rank)
         take(rest, FILL, target - len(out))
     return list(out.values())

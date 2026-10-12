@@ -29,7 +29,9 @@ from ..db import (
     UserRow,
 )
 from .usermap import ON_MAP, map_view
-from .usermodel import POSITIVE_ACTIONS
+
+# Real actions only: a calibration "interested" answer is a first impression, not evidence for a profile.
+PROFILE_EVIDENCE = ("save", "share", "id_build", "idea", "outreach")
 
 Audience = Literal["public", "connection", "self"]
 
@@ -52,7 +54,7 @@ def _positive_events(s, user_id: str, node_id: int) -> int:
                                                PostNicheRow.tree == "industry")
     return s.scalar(select(func.count()).select_from(EventRow).where(
         EventRow.user_id == user_id, EventRow.item_type == "post", EventRow.item_id.in_(posts),
-        EventRow.event_type.in_(POSITIVE_ACTIONS), EventRow.weight > 0)) or 0
+        EventRow.event_type.in_(PROFILE_EVIDENCE), EventRow.weight > 0)) or 0
 
 
 def _path(s, node_id: int) -> list[str]:

@@ -187,6 +187,14 @@ def run_user(store: FeedStore, config: FeedConfig, user_id: str, now: datetime, 
                            f"{labels[r.node_id]} fading after {neg_recent[r.node_id]} skips", now)
                 stats.fading.append(f"{user_id}: {labels[r.node_id]}")
 
+        # A committed problem that a rebuild dropped: back to exploring (the feed already falls back).
+        user = s.get(UserRow, user_id)
+        if user.mode == "committed":
+            from ..db import ProblemRow
+            problem = s.get(ProblemRow, user.committed_problem_id) if user.committed_problem_id else None
+            if problem is None or problem.status != "active":
+                user.mode, user.committed_problem_id = "exploring", None
+
         # Removed niches the user allowed to be re-tested come back into exploration after N days.
         cutoff = now - timedelta(days=um.removed_retest_after_days)
         stats.reopened += s.execute(delete(UserRemovedRow).where(

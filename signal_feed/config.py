@@ -294,6 +294,7 @@ class CandidatesConfig(_Strict):
     per_session: int = Field(gt=0)
     shares: CandidateShares
     exclude_seen_days: int = Field(ge=0)
+    hide_after_reports: int = Field(gt=0)
 
 
 class QualityFactor(_Strict):

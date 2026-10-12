@@ -191,3 +191,17 @@ def test_map_endpoints(world, feed_store, feed_config):
     assert client.post("/map/pin", json={"user_id": uid, "node_id": farm, "radius": 2}).status_code == 422
     with feed_store.session() as s:
         assert s.get(UserDropInRow, (uid, farm)) is None                    # reset cleared it
+
+
+def test_weekly_resets_a_commitment_to_a_problem_that_is_gone(world, feed_store, feed_config):
+    from signal_feed.db import ProblemRow, UserRow
+    _, _, _, _, prob_id = world
+    uid = onboard(feed_store, feed_config, ["Legal"], [], clock=clock())
+    with feed_store.session() as s, s.begin():
+        user = s.get(UserRow, uid)
+        user.mode, user.committed_problem_id = "committed", prob_id
+        s.get(ProblemRow, prob_id).status = "gone"
+    run_user(feed_store, feed_config, uid, NOW, WeeklyStats())
+    with feed_store.session() as s:
+        user = s.get(UserRow, uid)
+        assert (user.mode, user.committed_problem_id) == ("exploring", None)

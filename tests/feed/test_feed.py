@@ -219,6 +219,8 @@ def test_composition_collapses_paces_quotas_and_keeps_diversity(world, feed_stor
     assert all(a != b for a, b in zip(sources, sources[1:]))                 # no source twice in a row
     assert not any(a == b == c for a, b, c in zip(types, types[1:], types[2:]))   # at most 2 of a type in a row
     assert all(p.explanation for p in page)
+    # Exploration is capped by where an item came from, even when it is also a tender or a change.
+    assert sum(p.scored.candidate.source == "exploration" for p in page) <= int(feed_config.composition.quotas.exploration_max * 20)
     high = feed_config.model_copy(update={"composition": feed_config.composition.model_copy(
         update={"caught_up_score_floor": 99})})
     assert compose(scored, data, st, high, NOW) == ([], True)              # nothing strong enough
@@ -316,3 +318,33 @@ def test_committed_mode_narrows_the_feed_to_the_problem(world, feed_store, feed_
     assert client.post("/mode", json={"user_id": uid, "mode": "exploring"}).json()["mode"] == "exploring"
     with feed_store.session() as s:
         assert s.get(UserRow, uid).committed_problem_id is None
+
+
+def test_posts_reported_by_several_users_are_hidden_from_everyone(world, feed_store, feed_config):
+    reader, _, _, raw, _ = world
+    target = raw[20].id                                        # a Contract work tool gap
+    reporters = [onboard(feed_store, feed_config, ["Legal"], [], clock=lambda: NOW) for _ in range(3)]
+    for k, uid in enumerate(reporters):
+        feed_store.add_events([event(uid, target, "report", -20.0)])
+        data, viewer = load(feed_store, reader), onboard(feed_store, feed_config, ["Legal"], [], clock=lambda: NOW)
+        st = load_state(feed_store, feed_config, viewer, NOW)
+        shown = {data.items[c.index].post_id for c in generate(data, st, feed_config, feed_store, NOW,
+                                                                  np.random.default_rng(0))}
+        assert (target in shown) == (k + 1 < feed_config.candidates.hide_after_reports)
+
+
+def test_exploration_cap_counts_tenders_found_by_exploration(world, feed_store, feed_config):
+    import dataclasses
+    reader, *_ = world
+    uid = onboard(feed_store, feed_config, ["Legal", "Healthcare"], [], clock=lambda: NOW)
+    data, st = load(feed_store, reader), load_state(feed_store, feed_config, uid, NOW)
+    scored = RankerV1(feed_config).score(data, st, generate(data, st, feed_config, feed_store, NOW,
+                                                            np.random.default_rng(0)), NOW)
+    # Every tender becomes an exploration find and outscores everything else.
+    rigged = [dataclasses.replace(s, candidate=dataclasses.replace(s.candidate, source="exploration"), score=s.score + 10)
+              if data.items[s.index].post_type == "paid_demand" else s for s in scored]
+    floor = feed_config.model_copy(update={"composition": feed_config.composition.model_copy(
+        update={"caught_up_score_floor": -99})})
+    page, _ = compose(rigged, data, st, floor, NOW)
+    explored = sum(p.scored.candidate.source == "exploration" for p in page)
+    assert 0 < explored <= int(feed_config.composition.quotas.exploration_max * 20)

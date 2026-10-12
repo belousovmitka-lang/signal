@@ -121,6 +121,12 @@ def compose(scored: Sequence[Scored], data: FeedData, state: UserState, config: 
     size, window = c.page_size, c.window
     pool = collapse(scored, data, state.committed_problem if state.mode == "committed" else None)
     cats = {id(s): category(s, data) for s in pool}
+    # Quotas count flags, not the single display category: a tender found by exploration is both demand and
+    # exploration. Exploration means items that came from exploration (not every low-affinity item, or a
+    # thin map could never fill a page).
+    flags = {id(s): {DEMAND: data.items[s.index].post_type == "paid_demand",
+                     CHANGE: data.items[s.index].post_type == "change",
+                     EXPLORATION: s.candidate.source == EXPLORE} for s in pool}
     fresh_cut = now - timedelta(hours=c.fresh_hours)
     is_fresh = {id(s): data.items[s.index].published_at >= fresh_cut for s in pool}
     guaranteed = [s for s in pool if s.candidate.source in (PIN, DROP_IN)]
@@ -134,17 +140,20 @@ def compose(scored: Sequence[Scored], data: FeedData, state: UserState, config: 
     fresh_in_first = 0
     caught_up = False
 
-    def ok_diversity(s: Scored) -> bool:
-        if not history:
+    def ok_diversity(s: Scored, level: int = 0) -> bool:
+        """Level 0 checks every rule; when nothing passes, rules are dropped one at a time: the leaf limit
+        (level 1), then the post-type run (2), then the source and problem rule (3)."""
+        if not history or level >= 3:
             return True
         it, last = data.items[s.index], data.items[history[-1].index]
         if (it.problem_id is not None and it.problem_id == last.problem_id) or it.source == last.source:
             return False
         run = history[-c.max_same_type_in_a_row:]
-        if len(run) == c.max_same_type_in_a_row and all(data.items[h.index].post_type == it.post_type for h in run):
+        if level < 2 and len(run) == c.max_same_type_in_a_row and all(data.items[h.index].post_type == it.post_type
+                                                                       for h in run):
             return False
         recent = history[-9:]
-        return sum(data.items[h.index].niche_id == it.niche_id for h in recent) < c.max_same_leaf_per_10
+        return level >= 1 or sum(data.items[h.index].niche_id == it.niche_id for h in recent) < c.max_same_leaf_per_10
 
     for slot in range(size):
         if not pool:
@@ -158,12 +167,12 @@ def compose(scored: Sequence[Scored], data: FeedData, state: UserState, config: 
         if committed and others >= cap:
             allowed = [s for s in allowed if not outside(s)]
         if committed and counts[DEMAND] >= math.floor(config.user_model.committed_demand_max * c.window):
-            allowed = [s for s in allowed if cats[id(s)] != DEMAND]
+            allowed = [s for s in allowed if not flags[id(s)][DEMAND]]
         if not explore_more:
             if counts[CHANGE] >= math.floor(q.change_max * window):
-                allowed = [s for s in allowed if cats[id(s)] != CHANGE]
+                allowed = [s for s in allowed if not flags[id(s)][CHANGE]]
             if counts[EXPLORATION] >= math.floor(q.exploration_max * window):
-                allowed = [s for s in allowed if cats[id(s)] != EXPLORATION]
+                allowed = [s for s in allowed if not flags[id(s)][EXPLORATION]]
         forced, rule = None, None
         # Guaranteed nodes (pins, drop-ins), spread through the page.
         while served < len(nodes_to_serve) and slot >= due[served] and forced is None:
@@ -177,7 +186,7 @@ def compose(scored: Sequence[Scored], data: FeedData, state: UserState, config: 
         if forced is None and not explore_more:
             for name, cat, share in ((DEMAND, DEMAND, q.paid_demand_min), (EXPLORATION, EXPLORATION, q.exploration_min)):
                 if counts[cat] < math.floor(share * n):
-                    options = [s for s in allowed if cats[id(s)] == cat]
+                    options = [s for s in allowed if flags[id(s)][cat]]
                     if options:
                         forced, rule = options, f"{name}_min"
                         break
@@ -191,18 +200,24 @@ def compose(scored: Sequence[Scored], data: FeedData, state: UserState, config: 
             break
         if not options:
             options = list(pool)
-        # Diversity first: a forced quota that can't be met without breaking it waits one slot.
-        pick = next((s for s in options if ok_diversity(s)), None)
-        if pick is None and forced is not None:
-            pick = next((s for s in allowed if ok_diversity(s)), None)
-            rule = None if pick is not None else rule
+        # Diversity first: a forced quota that can't be met without breaking it waits one slot; when nothing
+        # passes every rule, the rules are relaxed one at a time rather than all at once.
+        pick = None
+        for level in range(4):
+            pick = next((s for s in options if ok_diversity(s, level)), None)
+            if pick is None and forced is not None:
+                pick = next((s for s in allowed if ok_diversity(s, level)), None)
+                if pick is not None:
+                    rule = None
+            if pick is not None:
+                break
         pick = pick or options[0]
         pool.remove(pick)
         if committed and outside(pick):
             others += 1
         cat = cats[id(pick)]
-        if cat in counts:
-            counts[cat] += 1
+        for name, on in flags[id(pick)].items():
+            counts[name] += on
         if slot < 10 and is_fresh[id(pick)]:
             fresh_in_first += 1
         if rule == "guaranteed":

@@ -121,3 +121,10 @@ def test_profile_endpoints(world, feed_store, feed_config):
     assert client.get("/profile/niches/pending", params={"user_id": "ghost"}).status_code == 404
     with feed_store.session() as s:
         assert s.scalar(select(UserProfileNicheRow).where(UserProfileNicheRow.user_id == uid)) is None
+
+
+def test_calibration_answers_are_not_profile_evidence(world, feed_store, feed_config):
+    reader, nodes, _, raw, _ = world
+    uid = onboard(feed_store, feed_config, ["Legal"], [], clock=clock(-1))
+    events(feed_store, reader, feed_config, uid, post_ids(raw, "Legal", "Litigation support")[:6], "interested", 2.0)
+    assert pending(feed_store, feed_config, uid) == []          # first impressions, not evidence

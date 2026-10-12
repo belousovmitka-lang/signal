@@ -210,6 +210,7 @@ candidates:
     trending_nearby: 0.10
     exploration: 0.12
   exclude_seen_days: 30
+  hide_after_reports: 3           # a post reported by this many different users is hidden from everyone (moderation)
 
 # Stage F — ranking (section 8)
 ranking:
