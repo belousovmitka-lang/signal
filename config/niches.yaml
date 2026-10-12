@@ -182,7 +182,6 @@ industries:
 
   Real estate:
     - {name: Residential sales, covers: "agents, listings, buyers, showings, transactions"}
-    - {name: Property management, covers: "tenants, rent, maintenance, landlords"}
     - {name: Commercial real estate, covers: "offices, retail space, leases, CRE deals"}
     - {name: Mortgages and lending, covers: "mortgages, loan origination, rates"}
     - {name: Housing development, covers: "building homes, land, construction costs, zoning"}
@@ -214,3 +213,103 @@ industries:
     - {name: Events and venues, covers: "event venues, bookings, entertainment"}
     - {name: Travel, covers: "travel bookings, tourism, airlines and travel tech"}
     - {name: Food safety and compliance, covers: "inspections, licensing, health codes"}
+
+  Auto repair shops:
+    - {name: Service scheduling, covers: "bookings, bay scheduling, wait times, reminders"}
+    - {name: Estimates and invoicing, covers: "repair quotes, approvals, invoices, payments"}
+    - {name: Parts sourcing, covers: "ordering parts, suppliers, availability, pricing"}
+    - {name: Diagnostics and repair data, covers: "scan tools, repair information, technical service bulletins"}
+    - {name: Technician staffing, covers: "hiring mechanics, training, productivity"}
+    - {name: Shop management software, covers: "shop systems, integrations, workflow"}
+    - {name: Customer communication, covers: "status updates, approvals by text, reviews"}
+    - {name: Fleet and commercial accounts, covers: "fleet servicing, business customers"}
+    - {name: Collision and body work, covers: "body shops, insurance claims, paint"}
+
+  Childcare centers:
+    - {name: Enrollment and waitlists, covers: "inquiries, tours, waitlists, enrollment paperwork"}
+    - {name: Tuition billing, covers: "tuition, subsidies, payments, collections"}
+    - {name: Parent communication, covers: "daily reports, photos, messaging"}
+    - {name: Staffing and ratios, covers: "teacher hiring, ratios, scheduling, turnover"}
+    - {name: Licensing and compliance, covers: "state licensing, inspections, records"}
+    - {name: Attendance and check-in, covers: "sign-in, attendance records"}
+    - {name: Curriculum and development, covers: "lesson plans, assessments, milestones"}
+    - {name: Center management software, covers: "childcare software, integrations"}
+
+  Dog grooming businesses:
+    - {name: Appointment booking, covers: "bookings, reminders, no-shows"}
+    - {name: Client and pet records, covers: "pet profiles, vaccination records, notes"}
+    - {name: Mobile grooming, covers: "van routes, travel time, scheduling"}
+    - {name: Pricing and payments, covers: "pricing by size and breed, deposits, tips"}
+    - {name: Groomer staffing, covers: "hiring, commissions, training"}
+    - {name: Supplies and equipment, covers: "tools, products, equipment upkeep"}
+    - {name: Marketing and reviews, covers: "new clients, reviews, rebooking"}
+
+  Events and weddings:
+    - {name: Event planning, covers: "timelines, checklists, run-of-show"}
+    - {name: Vendor coordination, covers: "caterers, florists, photographers, contracts"}
+    - {name: Venue management, covers: "bookings, availability, venue operations"}
+    - {name: Guest management, covers: "invitations, RSVPs, seating"}
+    - {name: Event budgets and payments, covers: "budgets, deposits, vendor payments"}
+    - {name: Event marketing and leads, covers: "inquiries, proposals, lead follow-up"}
+    - {name: Corporate events, covers: "conferences, offsites, corporate clients"}
+    - {name: Event rentals, covers: "equipment, decor, rental inventory"}
+
+  Fitness studios and gyms:
+    - {name: Class scheduling and booking, covers: "class schedules, bookings, waitlists"}
+    - {name: Memberships and billing, covers: "memberships, recurring billing, cancellations"}
+    - {name: Member retention, covers: "churn, engagement, re-activation"}
+    - {name: Trainer staffing and pay, covers: "instructors, payroll, commissions"}
+    - {name: Gym management software, covers: "studio software, integrations, access control"}
+    - {name: Personal training, covers: "client programs, tracking, sessions"}
+    - {name: Equipment and facilities, covers: "equipment upkeep, space, cleaning"}
+    - {name: Fitness marketing, covers: "trials, promotions, local marketing"}
+
+  Home services:
+    - {name: Cleaning services, covers: "house cleaning, maid services, recurring cleans"}
+    - {name: Landscaping and lawn care, covers: "lawn care, landscaping crews, seasonal work"}
+    - {name: Pest control, covers: "treatments, routes, recurring service"}
+    - {name: Handyman services, covers: "small repairs, odd jobs, scheduling"}
+    - {name: Moving and junk removal, covers: "moves, hauling, estimates"}
+    - {name: Home inspection, covers: "inspections, reports, scheduling"}
+    - {name: Booking and dispatch, covers: "job booking, crew dispatch, routes"}
+    - {name: Quotes and invoicing, covers: "estimates, invoices, payments"}
+    - {name: Leads and reviews, covers: "lead services, reviews, repeat customers"}
+
+  Nonprofits:
+    - {name: Fundraising and donors, covers: "donations, donor management, campaigns"}
+    - {name: Grant writing and reporting, covers: "grant applications, reporting, funders"}
+    - {name: Volunteer management, covers: "recruiting, scheduling, tracking volunteers"}
+    - {name: Program and impact tracking, covers: "outcomes, impact measurement, case management"}
+    - {name: Nonprofit finance and compliance, covers: "accounting, audits, filings"}
+    - {name: Events and campaigns, covers: "galas, campaigns, peer-to-peer fundraising"}
+    - {name: Board and governance, covers: "board meetings, governance, policies"}
+    - {name: Nonprofit software and data, covers: "CRMs, databases, tech for nonprofits"}
+
+  Property management:
+    - {name: Tenant screening and leasing, covers: "applications, screening, leases"}
+    - {name: Rent collection, covers: "rent payments, late fees, arrears"}
+    - {name: Maintenance requests, covers: "work orders, vendors, repairs"}
+    - {name: Owner reporting, covers: "statements, owner communication"}
+    - {name: Short-term rentals, covers: "vacation rentals, turnovers, listings"}
+    - {name: HOA and community management, covers: "associations, dues, board communication"}
+    - {name: Compliance and inspections, covers: "inspections, safety rules, licensing"}
+    - {name: Property management software, covers: "systems, integrations, accounting"}
+
+  Salons and spas:
+    - {name: Appointment booking, covers: "bookings, reminders, no-shows, deposits"}
+    - {name: Stylist staffing and pay, covers: "commissions, booth rental, scheduling"}
+    - {name: Client records and retention, covers: "client history, rebooking, loyalty"}
+    - {name: Retail and inventory, covers: "product sales, stock, ordering"}
+    - {name: Payments and pricing, covers: "checkout, tips, pricing"}
+    - {name: Salon management software, covers: "salon systems, integrations"}
+    - {name: Marketing and reviews, covers: "promotions, reviews, social media"}
+
+  Therapy and counseling practices:
+    - {name: Client intake and scheduling, covers: "intake forms, scheduling, waitlists"}
+    - {name: Insurance billing and claims, covers: "insurance billing, claims, superbills"}
+    - {name: Clinical notes and documentation, covers: "session notes, treatment plans"}
+    - {name: Telehealth sessions, covers: "video sessions, remote therapy"}
+    - {name: Practice management software, covers: "EHRs for therapists, integrations"}
+    - {name: Group practice operations, covers: "multiple clinicians, payroll, supervision"}
+    - {name: Compliance and privacy, covers: "HIPAA, licensing, record keeping"}
+    - {name: Client acquisition, covers: "referrals, directories, marketing"}

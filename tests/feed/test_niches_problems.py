@@ -410,7 +410,7 @@ def test_editing_a_branch_description_re_embeds_it(feed_store, config, monkeypat
     assert embedder.calls[-1][0] == ["Legal > Litigation support: now also covers e-discovery"]
 
 
-def test_a_branch_removed_from_the_config_is_retired_or_unseeded(feed_store, monkeypatch):
+def test_a_branch_removed_from_the_config_is_retired(feed_store, monkeypatch):
     from signal_feed.niches import tree as tree_mod
     seed_tree(feed_store)
     with feed_store.session() as s, s.begin():
@@ -423,7 +423,8 @@ def test_a_branch_removed_from_the_config_is_retired_or_unseeded(feed_store, mon
         empty = s.query(NicheRow).filter_by(label="Immigration law").one()
         busy = s.query(NicheRow).filter_by(label="Contract work").one()
         assert (empty.status, empty.seeded) == ("retired", False)
-        assert (busy.status, busy.seeded) == ("active", False)       # now a grown niche
+        # Posts reached it only by name, so it could never fill again: retired too (state moves to the parent).
+        assert (busy.status, busy.seeded) == ("retired", False)
 
 
 def test_growth_can_include_the_skill_tree(tmp_path, feed_store, config):

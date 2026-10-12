@@ -85,6 +85,8 @@ def test_tags_posts_prefilters_and_drops_non_actionable_types(feed_store, feed_c
     assert got[pain.id].industry_path == ["Accounting and finance", "Bookkeeping"]
     assert got[pain.id].prompt_version == feed_config.enrichment.prompt_version
     assert (got[chat.id].status, got[chat.id].status_reason) == ("dropped", "off_topic")
+    from signal_feed.enrichment.prompt import prompt_fingerprint
+    assert got[chat.id].prompt_hash == prompt_fingerprint() and len(prompt_fingerprint()) == 12
     assert (got[cfpb.id].status, got[cfpb.id].status_reason) == ("skipped", "aggregate_source")
     assert len(tagger.calls) == 2   # the cfpb record never reached the model
 

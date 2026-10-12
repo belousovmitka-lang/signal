@@ -24,7 +24,7 @@ from .costs import BudgetExceededError, CostLedger, Usage, claude_usd, claude_wo
 from .embeddings import Embedder
 from .llm import TagAttempt, Tagger, TransientError
 from .pii import scrub
-from .prompt import system_prompt, user_prompt
+from .prompt import prompt_fingerprint, system_prompt, user_prompt
 
 log = logging.getLogger(__name__)
 
@@ -180,7 +180,7 @@ class Enricher:
             tools_mentioned=[t.strip() for t in out.tools_mentioned if t.strip()],
             intensity=out.intensity, money_signal=money, buyer_likelihood=out.buyer_likelihood,
             quality=out.quality, spam_score=out.spam_score, toxicity=out.toxicity, language=out.language,
-            confidence=out.confidence)
+            confidence=out.confidence, prompt_hash=prompt_fingerprint())
 
     def _row(self, post: RawPost, *, status: str, reason: str | None, cost: float = 0.0,
              model: str | None = None, escalated: bool = False, **fields) -> EnrichedPostRow:

@@ -3,6 +3,7 @@ the user turn, wrapped in tags and marked as untrusted data."""
 
 from __future__ import annotations
 
+import hashlib
 import json
 from functools import cache
 
@@ -119,6 +120,14 @@ def system_prompt() -> str:
         for name in industry_names())
     skills = "\n".join(f"{name}: {covers}" for name, covers in skill_vocabulary())
     return SYSTEM_TEMPLATE.format(industries=industries, skills=skills)
+
+
+@cache
+def prompt_fingerprint() -> str:
+    """Short hash of the exact system prompt. The prompt is built from the industry seed maps,
+    config/niches.yaml and config/skills.yaml, so it can change without prompt_version being bumped
+    (e.g. when a new industry is approved); each tagged post records the fingerprint it was tagged with."""
+    return hashlib.sha256(system_prompt().encode("utf-8")).hexdigest()[:12]
 
 
 def user_prompt(post: RawPost, max_chars: int) -> str:

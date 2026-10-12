@@ -33,8 +33,9 @@ def seed_labels() -> dict[str, list[str]]:
 
 def seed_tree(store: FeedStore, clock: Callable[[], datetime] = utcnow) -> int:
     """Create missing roots and seeded industry branches. Idempotent; returns how many were created.
-    A branch removed from config/niches.yaml is retired when empty; otherwise it becomes an ordinary
-    grown niche (its posts and affinities stay, and the usual retire rules apply)."""
+    A branch removed from config/niches.yaml is retired: posts reached it only by its name, so it could
+    never receive posts again. Its posts fall back to the parent on the next placement, and the weekly
+    map job moves user state on retired niches to the parent."""
     created = 0
 
     def add(s, tree: str, label: str, parent: NicheRow | None) -> NicheRow:
@@ -69,12 +70,9 @@ def seed_tree(store: FeedStore, clock: Callable[[], datetime] = utcnow) -> int:
             wanted = {name.lower() for name, _ in branches}
             for (parent_id, label), node in children.items():
                 if parent_id == root.id and node.seeded and label not in wanted:
-                    node.seeded = False
-                    change = "retired" if not node.support else "unseeded"
-                    if not node.support:
-                        node.status = "retired"
+                    node.seeded, node.status = False, "retired"
                     node.version += 1
-                    s.add(NicheVersionRow(niche_id=node.id, version=node.version, change=change,
+                    s.add(NicheVersionRow(niche_id=node.id, version=node.version, change="retired",
                                           detail={"reason": "removed from config/niches.yaml"}, at=clock()))
     return created
 

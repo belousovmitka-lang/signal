@@ -46,6 +46,16 @@ def status(store: FeedStore, enricher: Enricher, config: FeedConfig) -> None:
     ledger = CostLedger(store)
     print(f"prompt {config.enrichment.prompt_version}: {counts or 'nothing enriched yet'}")
     print(f"pending: {len(enricher.pending_post_ids())}, embedded: {embedded}, open batches: {open_batches or 'none'}")
+    from .prompt import prompt_fingerprint
+    with store.session() as s:
+        stale = s.scalar(select(func.count()).select_from(EnrichedPostRow).where(
+            EnrichedPostRow.prompt_version == config.enrichment.prompt_version,
+            EnrichedPostRow.status.in_(("ok", "dropped", "needs_review")),
+            (EnrichedPostRow.prompt_hash.is_(None)) | (EnrichedPostRow.prompt_hash != prompt_fingerprint()))) or 0
+    if stale:
+        print(f"note: {stale} posts at {config.enrichment.prompt_version} were tagged with a different or unknown prompt "
+              f"(the industry list, config/niches.yaml or config/skills.yaml changed since); bump prompt_version to "
+              f"re-tag them")
     print(f"this month: Claude ${ledger.month_spend('anthropic'):.4f} of ${config.enrichment.monthly_budget_usd:.2f}"
           f" (incl. batch reservations), Voyage ${ledger.month_spend('voyage'):.4f}"
           f" of ${config.embeddings.monthly_budget_usd:.2f}")

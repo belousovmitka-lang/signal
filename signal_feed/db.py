@@ -74,6 +74,7 @@ class EnrichedPostRow(FeedBase):
     confidence: Mapped[float | None] = mapped_column(Float)
     escalated: Mapped[bool] = mapped_column(Boolean, default=False)
     prompt_version: Mapped[str] = mapped_column(String(32), index=True)
+    prompt_hash: Mapped[str | None] = mapped_column(String(16))     # fingerprint of the exact prompt (tagged rows)
     model: Mapped[str | None] = mapped_column(String(64))           # the model whose tags were kept
     embedding_model: Mapped[str | None] = mapped_column(String(64))
     cost_usd: Mapped[float] = mapped_column(Float, default=0.0)
