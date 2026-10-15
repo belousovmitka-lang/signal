@@ -1,0 +1,152 @@
+# Signal — inferred problems (addendum to FEED_ALGORITHM.md)
+
+Add this to `FEED_ALGORITHM.md` as **section 17**, or keep it as a separate file next to it. Build it after the phase currently in progress. Same conventions apply: every threshold marked *(tune)* lives in `config/feed.yaml`.
+
+---
+
+## 17. Inferred problems
+
+### 17.1 Why
+
+Most posts in the feed are **reported problems**: someone states a pain directly. The best startup problems are often never stated publicly, because insiders don't post about them. Inferred problems close that gap by combining several public signals that are each explicit about something else, so the problem appears where they intersect.
+
+Rule: **the AI connects evidence, it never invents it.** Every inferred problem must carry a chain of real, linked evidence. No evidence chain, no inferred problem.
+
+### 17.2 Output: InferredProblem
+
+| Field | Notes |
+|---|---|
+| `id` | |
+| `kind` | `inferred` (reported problems keep `kind = reported`) |
+| `detector` | which detector produced it (17.3) |
+| `hypothesis` | one plain sentence: "Small trucking fleets re-enter driver logs by hand to meet the new FMCSA rule" |
+| `who` | role and business type |
+| `niche_id` | leaf niche in the niche tree |
+| `evidence` | list of `{post_id or record_id, source, url, what_it_shows}`; at least 3 items from at least 2 source types *(tune)* |
+| `counter_evidence` | anything found that weakens it (existing tools, contradicting posts) |
+| `confidence` | `high` / `medium` / `low` (17.6) |
+| `critic_notes` | the critic pass's verdict and reasons |
+| `validation` | insider votes and builder field notes (17.7) |
+| `status` | `candidate`, `published`, `rejected`, `expired` |
+| `created_at`, `refreshed_at` | |
+
+Inferred problems are scored with the same problem score as reported ones (section 5.2), then shown with a distinct label.
+
+### 17.3 Detectors
+
+Build in this order. Detectors 1 and 2 are the MVP; 3–6 come after they prove useful.
+
+**Detector 1 — Paid workarounds** (MVP)
+- Inputs: job posts, freelance gigs, template marketplaces and automation template listings already collected by the connectors.
+- Signal: people paying a human, or buying a spreadsheet/template, to do a repetitive task.
+- Logic:
+  1. Enrichment tags each item with `task` (normalized verb phrase, e.g. "reconcile vendor invoices against POs"), `role`, `industry_path`, `money_signal`.
+  2. Cluster items by task embedding within a niche.
+  3. A cluster becomes a candidate when it has ≥ 5 paid items from ≥ 3 different buyers in 60 days *(tune)*.
+  4. Search the existing problem catalog and software-review data for tools that already do this task; record them as counter-evidence.
+- Hypothesis template: "[Who] pay people to [task] by hand because no tool does it well."
+- **As built (2026-10-15):** `signal_feed/inferred/paid_workarounds.py`, `scripts/inferred.py run`. Inputs: `paid_demand` posts in the last 60 days (tenders from SAM.gov, TED and UK; job posts from `job_boards`; GitHub bounties). Template marketplaces and automation-template listings aren't collected by any connector yet. Tasks come from the v9 `task` field, or, until posts are re-tagged, from the pain statement with the buyer and lead-in stripped ("The council needs a contractor to service its fleet" → "service its fleet"; such candidates are marked `derived`). Tasks rated `task_automatable` < 0.5 are skipped (repairs, construction). Clusters: average linkage at cosine ≥ 0.80 within each leaf niche, stored in `task_clusters`. Buyers: the author hash, or for tenders and job posts the buying organization (SAM.gov: its agency path, since the department is too coarse). Every evidence line is built from the post itself ("Council 2 pays for: redline vendor contracts (£40k)"). Counter-evidence: catalog posts within cosine 0.6 that are positive reviews, tool listings, launches or complaints about a named tool (reviews and listings are now embedded for this), and the tools the buyers name themselves. First run on the real corpus (1,823 paid posts, derived tasks): 1,248 task clusters, 0 candidates. The clusters big enough came from one portal only (Defense Logistics Agency parts on SAM.gov), which fails the 2-source-type minimum, and buying parts isn't a software workaround anyway. Job posts and gigs, the detector's main inputs, are not tagged or collected yet.
+
+**Detector 2 — Rule change × affected role** (MVP)
+- Inputs: Federal Register, Regulations.gov, state legislature trackers, bar/medical/licensing board notices; job posts.
+- Signal: a new or proposed rule that creates work for a specific role.
+- Logic:
+  1. For each new rule document, extract with the LLM: who must comply, what they must now do, the deadline, and the industries affected. Store each as a structured `obligation`.
+  2. Match obligations to roles via job-post duties in the same industry (embedding match on duties vs. obligation).
+  3. Candidate when an obligation maps to ≥ 1 role with ≥ 10 recent job posts *(tune)* and the deadline is in the future.
+  4. Look for public comments on the rule (Regulations.gov) from affected businesses as supporting evidence.
+- Hypothesis template: "[Rule] requires [who] to [obligation] by [date]; today this is done by [role] manually."
+
+**Detector 3 — Gaps between tools**
+- Inputs: reviews, feature boards, community posts.
+- Signal: "export to CSV", "integration with X", "copy from A into B" complaints.
+- Logic: extract `(tool_a, tool_b, data_moved)` triples; cluster; candidate when ≥ 8 mentions from ≥ 2 source types *(tune)*.
+- Hypothesis template: "Users of [A] and [B] move [data] between them by hand."
+
+**Detector 4 — Labor pressure**
+- Inputs: job posts over time (volume and stated pay).
+- Signal: rising volume or pay for a role whose duties are mostly routine.
+- Logic: per role × industry, compare last 90 days to the prior 90; LLM rates the routine share of listed duties. Candidate when volume or pay rises ≥ 20% *(tune)* and routine share is high.
+- Hypothesis template: "Demand for [role] is rising; [routine duties] are candidates for automation."
+
+**Detector 5 — Ignored requests**
+- Inputs: public feature boards, GitHub issues.
+- Signal: requests with many votes, open for a long time, no vendor response.
+- Logic: candidate when votes ≥ 50 *(tune)* and age ≥ 12 months with no status change.
+- Hypothesis template: "[Tool] users have asked for [feature] for [time]; nobody serves them."
+
+**Detector 6 — Cross-industry transfer**
+- Inputs: the problem catalog and software review categories.
+- Signal: a workflow well served by software in one industry, unserved in a similar one.
+- Logic: find task clusters present in two industries; compare tool coverage (review counts, vendor count). Candidate when one side has many tools and the other has workaround evidence (Detector 1).
+- Hypothesis template: "[Task] has good tools in [industry A] but [industry B] still does it by hand."
+
+### 17.4 Pipeline
+
+```
+connectors → enrichment (adds task, obligation, tool-gap fields)
+          → detectors (weekly batch; Detector 1 also daily)
+          → candidate InferredProblem with evidence
+          → critic pass
+          → confidence scoring
+          → publish to feed (or reject)
+          → insider and builder validation
+          → detector weights updated
+```
+
+### 17.5 Critic pass
+
+A second, separate LLM call receives only the hypothesis and the linked evidence (not the detector's reasoning) and must:
+1. Check that each evidence item actually supports the claim it is attached to; drop items that don't.
+2. Propose the strongest alternative explanation.
+3. Search the catalog and reviews for an existing solution (counter-evidence).
+4. Return `keep` / `revise` / `reject` with reasons.
+
+Reject automatically if, after dropping unsupported items, fewer than 3 evidence items from 2 source types remain *(tune)*.
+
+**As built (2026-10-15):** `signal_feed/inferred/critic.py`. One Claude call (the tagger model) gets the claim, the numbered evidence lines with a short excerpt of each post, and the possible existing tools found in the catalog. It never sees the detector's cluster, buyer counts or reasoning. Its answer: per-item supports / doesn't, an alternative explanation, an existing solution or null, and keep / revise / reject. An item the critic didn't vouch for counts as unsupported. Unsupported items stay stored (`supported = false`) but are never shown. **Nothing is published without a critic run** (`inferred.publish_without_critic: false`): without Anthropic credit, candidates are found and stored as `candidate`. A published problem keeps its status when a later run can't reach the critic.
+
+### 17.6 Confidence
+
+| Level | Rule *(tune)* |
+|---|---|
+| High | ≥ 8 evidence items, ≥ 3 source types, critic `keep`, no strong existing solution, or confirmed by ≥ 2 insiders |
+| Medium | meets minimum evidence, critic `keep` or `revise` |
+| Low | minimum evidence only; shown only in exploration slots and labeled "early signal" |
+
+**As built:** `signal_feed/inferred/common.confidence`. "No strong existing solution" means no catalog post was found as counter-evidence and the critic named none.
+
+### 17.7 Validation loop
+
+- **Insiders:** users who say they work in an industry get one short prompt per week about inferred problems in their niche: "Is this real where you work? Yes / No / Partly + one line." Confirmations raise confidence; rejections lower it and are fed back to the detector.
+- **Builder field notes:** when builders log customer conversations in the outreach flow, notes that mention an inferred problem attach to it as evidence (with the builder's permission).
+- **Learning:** track, per detector and per signal combination, the share of published inferred problems that insiders confirm and that lead to saves, ideas and outreach. Lower the weight of combinations that keep failing; raise those that hold up.
+
+### 17.8 How it appears in the app
+
+- Label: **Inferred** (vs. Reported), with the confidence level.
+- The card shows the hypothesis and a short "Why we think this" list of 3 evidence items with links; "+N more" opens the full chain.
+- Ranking uses the same model as other items, with a feature for `kind` and `confidence`. Low-confidence items only appear in exploration slots.
+- "Not for me" reasons gain one option for inferred items: "Not true in my experience" (routes to validation, not just ranking).
+
+**As built (2026-10-15):** published inferred problems are feed items (`item_type: inferred`). Their vector is the mean of the evidence posts' embeddings, their features are the evidence posts' averages, and their problem rank is computed among inferred problems. Feed items carry `kind` (reported | inferred), `confidence`, `evidence` (the first 3 supported items with links) and `evidence_more`. The summary is the hypothesis, and `post_id` is null (use `item_type` and `item_id` for events). Ranker features `inferred` and `confidence_level` carry small coefficients. Low-confidence items enter only as exploration candidates, including in the user's own niches, which is their only way in. Events with `item_type: inferred` update the problem's niche. The "Not true in my experience" option comes with insider validation (build step 4). The evidence list is content ("why we think this problem exists"), not an explanation of personalization, so it doesn't conflict with the feed's "no visible reasons" rule.
+
+### 17.9 Data model additions
+
+- `inferred_problems`, `inferred_evidence`, `obligations` (from rule documents), `task_clusters`, `insider_votes`, `detector_stats`
+- Enrichment fields added to `enriched_posts`: `task`, `tool_mentions`, `data_moved`, `obligation_ids`
+
+### 17.10 Measuring it
+
+- Insider confirmation rate per detector (target ≥ 50% for published items *(tune)*)
+- Save and idea-conversion rate of inferred vs. reported items
+- Share of inferred problems with no existing solution found
+- Critic rejection rate per detector (too high means the detector is noisy)
+
+### 17.11 Build order
+
+1. Enrichment fields (`task`, `obligation`, `tool_mentions`).
+2. Detector 1 + critic pass + confidence + "Inferred" label in the feed API.
+3. Detector 2 (rule obligations extraction and role matching).
+4. Insider prompts and validation storage.
+5. Detectors 3–6, one at a time, each shipped only if its insider confirmation rate holds up.

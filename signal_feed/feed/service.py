@@ -18,7 +18,7 @@ from ..config import FeedConfig
 from ..db import FeedStore, ImpressionRow, PostNicheRow, UserDropInRow
 from .candidates import DROP_IN, Candidate, generate
 from .compose import compose
-from .data import FeedData, FeedDataCache
+from .data import FeedData, FeedDataCache, item_key
 from .ranker import RankerV1, RankerV2
 from .usermodel import UserState, load_state
 
@@ -28,13 +28,19 @@ CALIBRATION = "calibration"
 class FeedItem(BaseModel):
     impression_id: int
     position: int
-    post_id: str
+    post_id: str | None        # the post, for posts; None for an inferred problem
+    item_type: str = "post"    # post | inferred: send it back with events, with item_id
+    item_id: str = ""
+    kind: str = "reported"     # 17.8 label: reported (someone stated it) | inferred (built from evidence)
+    confidence: str | None = None          # inferred: high | medium | low
+    evidence: list[dict] = []              # inferred: "Why we think this", the first 3 items with links
+    evidence_more: int = 0                 # inferred: how many more items the full chain has
     problem_id: int | None
     similar_posts: int
     post_type: str
     title: str | None
     summary: str | None
-    url: str
+    url: str                   # empty for an inferred problem (its evidence carries the links)
     source: str
     published_at: datetime
     niche_path: list[str]
@@ -59,8 +65,8 @@ class FeedPage(BaseModel):
 
 def _session_shown(store: FeedStore, user_id: str, session_id: str) -> list[str]:
     with store.session() as s:
-        return list(s.scalars(select(ImpressionRow.item_id).where(
-            ImpressionRow.user_id == user_id, ImpressionRow.session_id == session_id).order_by(ImpressionRow.position)))
+        return [item_key(t, i) for t, i in s.execute(select(ImpressionRow.item_type, ImpressionRow.item_id).where(
+            ImpressionRow.user_id == user_id, ImpressionRow.session_id == session_id).order_by(ImpressionRow.position))]
 
 
 def _has_impressions(store: FeedStore, user_id: str) -> bool:
@@ -76,7 +82,8 @@ def calibration_deck(data: FeedData, state: UserState, config: FeedConfig, rng: 
     wild = max(0, min(um.calibration_wildcards, um.calibration_cards))
     # Per chosen node, alternate a demand card and a non-demand card so the deck spans post types.
     def alternating(node: int) -> list[int]:
-        ranked = sorted(data.subtree_items(node), key=lambda i: -data.items[i].problem_rank)
+        ranked = sorted((i for i in data.subtree_items(node) if data.items[i].item_type == "post"),
+                        key=lambda i: -data.items[i].problem_rank)
         demand = [i for i in ranked if data.items[i].post_type == "paid_demand"]
         other = [i for i in ranked if data.items[i].post_type != "paid_demand"]
         mixed = [x for pair in zip(other, demand) for x in pair]
@@ -220,7 +227,7 @@ class FeedService:
                 it = data.items[scored.index]
                 breakdown = scored.breakdown | {"reason": explanation} | ({"rule": rule} if rule else {}) \
                     | ({"bubble_guard": True} if bubble_guard else {}) | ({"experiments": arms} if arms else {})
-                imp = ImpressionRow(user_id=user_id, session_id=session_id, item_type="post", item_id=it.post_id,
+                imp = ImpressionRow(user_id=user_id, session_id=session_id, item_type=it.item_type, item_id=it.item_id,
                                     position=offset + k, candidate_source=scored.candidate.source,
                                     explanation=explanation, score=scored.score, score_breakdown=breakdown,
                                     shown_at=now, config_version=self.config.version)
@@ -232,8 +239,12 @@ class FeedService:
                 if row is not None and row.exposures_left > 0:
                     row.exposures_left -= 1
             for imp, scored, it, explanation, breakdown in impressions:
+                inferred = it.item_type == "inferred"
                 items.append(FeedItem(
-                    impression_id=imp.id, position=imp.position, post_id=it.post_id, problem_id=it.problem_id,
+                    impression_id=imp.id, position=imp.position, post_id=None if inferred else it.post_id,
+                    item_type=it.item_type, item_id=it.item_id, kind="inferred" if inferred else "reported",
+                    confidence=it.confidence, evidence=list(it.evidence[:3]),
+                    evidence_more=max(0, len(it.evidence) - 3), problem_id=it.problem_id,
                     similar_posts=it.similar_posts, post_type=it.post_type, title=it.title, summary=it.summary,
                     url=it.url, source=it.source, published_at=it.published_at, niche_path=data.path(it.niche_id),
                     money=it.money, calibration=calibration, score=scored.score,

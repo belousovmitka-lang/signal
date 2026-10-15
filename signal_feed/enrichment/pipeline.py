@@ -236,7 +236,10 @@ class Enricher:
         if self.embedder is None:
             raise RuntimeError("no embedder configured")
         ok = EnrichedPostRow.status == "ok"
-        done = self._embed(select(EnrichedPostRow).where(ok, EnrichedPostRow.embedding.is_(None)), limit,
+        # Reviews and tool listings stay out of the feed but are searched for existing tools (section 17).
+        searchable = ok | ((EnrichedPostRow.status == "dropped")
+                           & EnrichedPostRow.post_type.in_(self.config.inferred.embed_dropped_types))
+        done = self._embed(select(EnrichedPostRow).where(searchable, EnrichedPostRow.embedding.is_(None)), limit,
                            lambda row, post: embedding_text(row, post, self.config.embeddings.max_input_chars),
                            "embedding")
         self._embed(select(EnrichedPostRow).where(ok, EnrichedPostRow.pain_embedding.is_(None),

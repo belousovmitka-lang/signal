@@ -15,7 +15,7 @@ from sqlalchemy import func, select
 
 from ..config import FeedConfig
 from ..db import EventRow, FeedStore, ImpressionRow, UserQuizRow
-from .data import FeedData
+from .data import FeedData, item_key
 from .usermodel import POSITIVE_ACTIONS, UserState
 
 PIN, DROP_IN, NICHE, SKILL_MATCH, SIMILAR, TRENDING, EXPLORE, FILL = (
@@ -35,9 +35,10 @@ class Candidate:
 
 
 def seen_post_ids(store: FeedStore, user_id: str, since: datetime) -> set[str]:
+    """Item keys (posts and inferred problems) the user was shown since `since`."""
     with store.session() as s:
-        return set(s.scalars(select(ImpressionRow.item_id).where(
-            ImpressionRow.user_id == user_id, ImpressionRow.item_type == "post", ImpressionRow.shown_at >= since)))
+        return {item_key(t, i) for t, i in s.execute(select(ImpressionRow.item_type, ImpressionRow.item_id).where(
+            ImpressionRow.user_id == user_id, ImpressionRow.shown_at >= since))}
 
 
 def reported_post_ids(store: FeedStore, min_users: int) -> set[str]:
@@ -105,6 +106,8 @@ def generate(data: FeedData, state: UserState, config: FeedConfig, store: FeedSt
                 return
             if i in out or not allowed(i):
                 continue
+            if data.items[i].confidence == "low" and source != EXPLORE:
+                continue        # 17.8: low-confidence inferred problems only appear in exploration slots
             out[i] = Candidate(i, source, node, (social or {}).get(data.items[i].post_id, 0))
             added += 1
 
@@ -180,6 +183,11 @@ def generate(data: FeedData, state: UserState, config: FeedConfig, store: FeedSt
             ids.sort(key=lambda i: -(data.items[i].trend + data.items[i].problem_score))
             take(ids, TRENDING, quota)
         elif source == EXPLORE:
+            # Section 17.8: low-confidence inferred problems ("early signal") take exploration slots, also in
+            # the user's own niches: that is their only way in, so they get tried without crowding the feed.
+            early = [i for node, _ in top_niches for i in data.subtree_items(node)
+                     if data.items[i].item_type == "inferred" and data.items[i].confidence == "low"]
+            take(sorted(set(early), key=lambda i: -data.items[i].problem_rank), EXPLORE, max(1, quota // 4))
             # Thompson sampling over niches off the map: draw from each niche's Beta and explore the
             # best draws, so unknown niches get tried and ones the user disliked fade out.
             um = config.user_model

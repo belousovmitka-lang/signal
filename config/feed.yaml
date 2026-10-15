@@ -149,6 +149,26 @@ map:
   discover_min_positive_events: 5 # an off-map niche with this many positive events in the lookback and
                                   # affinity >= rings.regular_min joins the map ("discovered")
 
+# Inferred problems (section 17, INFERRED_PROBLEMS.md)
+inferred:
+  min_evidence: 3                 # an inferred problem needs at least this many evidence items...
+  min_source_types: 2             # ...from at least this many source types (17.2, 17.5)
+  high_evidence: 8                # 17.6 "high": this many items, this many source types, critic keep, no existing tool
+  high_source_types: 3
+  high_insider_confirmations: 2   # ...or confirmed by this many insiders
+  publish_without_critic: false   # the critic is the check that the AI didn't invent evidence: keep this off
+  match_min_jaccard: 0.3          # a re-run keeps an inferred problem's id at this evidence overlap
+  counter_evidence_cosine: 0.6    # catalog posts (reviews, tool listings, tool gaps) this close to a cluster count
+  counter_evidence_max: 5
+  embed_dropped_types: [praise, listing]   # reviews and tool listings are searched for existing tools, so embed them
+  paid_workarounds:               # Detector 1 (17.3)
+    window_days: 60
+    cluster_cosine: 0.80
+    min_items: 5
+    min_buyers: 3
+    min_automatable: 0.5          # v9 tags: skip tasks software can't do (repairs, construction)
+    allow_derived_tasks: true     # until posts carry v9 tasks, use the pain statement (never published uncritiqued)
+
 # Evaluation (section 13, Phase 7)
 evaluation:
   ndcg_k: 20
@@ -235,10 +255,11 @@ ranking:
   # `skill` coefficients were halved on 2026-10-11: listed skills are a small bonus, never a filter.
   # Deep actions use *_fit = relevance x value (relevance = best of affinity, skill / 2, save_sim): a strong
   # post outside someone's interests is not something they save or build from (2026-10-11 audit).
+  # `inferred` and `confidence_level` (section 17.8): small nudges for inferred problems, more for confident ones.
   v1:
     coefficients:
-      read:        {intercept: 0.15, affinity: 0.30, skill: 0.05, save_sim: 0.20, nfm_sim: -0.15, type_pref: 0.20, source_pref: 0.05, quality: 0.10, fresh: 0.05, social: 0.05}
-      save:        {affinity: 0.10, skill: 0.025, save_sim: 0.12, nfm_sim: -0.08, type_pref: 0.08, problem_fit: 0.11, intensity_fit: 0.055, money_fit: 0.03, buyer_fit: 0.02, social: 0.05}
+      read:        {intercept: 0.15, inferred: 0.03, affinity: 0.30, skill: 0.05, save_sim: 0.20, nfm_sim: -0.15, type_pref: 0.20, source_pref: 0.05, quality: 0.10, fresh: 0.05, social: 0.05}
+      save:        {confidence_level: 0.03, affinity: 0.10, skill: 0.025, save_sim: 0.12, nfm_sim: -0.08, type_pref: 0.08, problem_fit: 0.11, intensity_fit: 0.055, money_fit: 0.03, buyer_fit: 0.02, social: 0.05}
       id_build:    {affinity: 0.04, skill: 0.03, save_sim: 0.04, problem_fit: 0.09, intensity_fit: 0.04, money_fit: 0.02, buyer_fit: 0.02}
       idea:        {affinity: 0.015, skill: 0.01, problem_fit: 0.04, money_fit: 0.01, buyer_fit: 0.01}
       outreach:    {affinity: 0.005, problem_fit: 0.02, money_fit: 0.01, buyer_fit: 0.014}

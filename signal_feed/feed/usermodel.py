@@ -20,6 +20,7 @@ from ..db import (
     EnrichedPostRow,
     EventRow,
     FeedStore,
+    InferredProblemRow,
     NicheRow,
     PostNicheRow,
     ProblemPostRow,
@@ -243,6 +244,10 @@ def apply_events(store: FeedStore, posts: PostsReader, config: FeedConfig, event
                 niche, skill_nodes = leaf.get(e.item_id), skills.get(e.item_id, [])
                 post_type = rows[e.item_id].post_type if e.item_id in rows else None
                 source, problem_id = sources.get(e.item_id), post_problem.get(e.item_id)
+            elif e.item_type == "inferred":
+                inf = s.get(InferredProblemRow, int(e.item_id)) if e.item_id.isdigit() else None
+                niche, skill_nodes, post_type, source = (inf.niche_id if inf else None), [], "inferred", None
+                problem_id = None
             else:
                 prob = problems.get(int(e.item_id)) if e.item_id.isdigit() else None
                 niche, skill_nodes, post_type, source = (prob.niche_id if prob else None), [], None, None

@@ -225,6 +225,29 @@ class MapConfig(_Strict):
     discover_min_positive_events: int = Field(gt=0)
 
 
+class PaidWorkaroundsConfig(_Strict):
+    window_days: int = Field(gt=0)
+    cluster_cosine: Fraction = Field(ge=0, le=1)
+    min_items: int = Field(gt=0)
+    min_buyers: int = Field(gt=0)
+    min_automatable: Fraction = Field(ge=0, le=1)
+    allow_derived_tasks: bool
+
+
+class InferredConfig(_Strict):
+    min_evidence: int = Field(gt=0)
+    min_source_types: int = Field(gt=0)
+    high_evidence: int = Field(gt=0)
+    high_source_types: int = Field(gt=0)
+    high_insider_confirmations: int = Field(gt=0)
+    publish_without_critic: bool
+    match_min_jaccard: Fraction = Field(ge=0, le=1)
+    counter_evidence_cosine: Fraction = Field(ge=0, le=1)
+    counter_evidence_max: int = Field(ge=0)
+    embed_dropped_types: list[TaggedPostType] = Field(default_factory=list)
+    paid_workarounds: PaidWorkaroundsConfig
+
+
 class ExperimentArm(_Strict):
     share: Fraction = Field(gt=0, le=1)
     overrides: dict[str, Any] = Field(default_factory=dict)   # dotted config path -> value
@@ -306,7 +329,7 @@ class QualityFactor(_Strict):
 RankAction = Literal["read", "save", "id_build", "idea", "outreach", "not_for_me", "scroll_past"]
 RankFeature = Literal["intercept", "affinity", "skill", "save_sim", "nfm_sim", "type_pref", "source_pref",
                       "problem", "intensity", "money", "buyer", "quality", "fresh", "social", "relevance",
-                      "problem_fit", "intensity_fit", "money_fit", "buyer_fit"]
+                      "problem_fit", "intensity_fit", "money_fit", "buyer_fit", "inferred", "confidence_level"]
 
 
 class RankerV1(_Strict):
@@ -382,6 +405,7 @@ class FeedConfig(_Strict):
     map: MapConfig
     profile: ProfileConfig
     evaluation: EvaluationConfig
+    inferred: InferredConfig
     events: EventsConfig
     candidates: CandidatesConfig
     ranking: RankingConfig

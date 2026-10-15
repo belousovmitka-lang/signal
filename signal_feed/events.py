@@ -20,7 +20,7 @@ from .config import EventType, FeedConfig
 from .db import EventRow, FeedStore
 from .posts import PostsReader
 
-ItemType = Literal["post", "problem"]
+ItemType = Literal["post", "problem", "inferred"]
 NotForMeReason = Literal["not_my_skills", "industry_not_interesting", "too_crowded", "too_small", "already_exists"]
 
 
@@ -127,6 +127,8 @@ def log_events(batch: EventBatch, store: FeedStore, posts: PostsReader, config: 
     impression_ids = {e.impression_id for e in batch.events if e.impression_id is not None}
     known_posts = posts.existing_ids(post_ids)
     known_problems = store.existing_problem_ids(problem_ids)
+    inferred_ids = {pid for e in batch.events if e.item_type == "inferred" and (pid := _problem_id(e.item_id))}
+    known_inferred = store.existing_inferred_ids(inferred_ids)
     owned_impressions = store.owned_impression_ids(batch.user_id, impression_ids)
     words = posts.word_counts({e.item_id for e in batch.events if e.type == "read" and e.item_type == "post"})
 
@@ -139,7 +141,7 @@ def log_events(batch: EventBatch, store: FeedStore, posts: PostsReader, config: 
             if e.client_event_id in stored or e.client_event_id in in_batch:
                 result.duplicates += 1
                 continue
-            error = _check(e, known_posts, known_problems, owned_impressions, now, config)
+            error = _check(e, known_posts, known_problems, owned_impressions, now, config, known_inferred)
             if error:
                 result.rejected.append(Rejected(index=i, client_event_id=e.client_event_id, error=error))
                 continue
@@ -166,9 +168,11 @@ def log_events(batch: EventBatch, store: FeedStore, posts: PostsReader, config: 
 
 
 def _check(e: EventIn, known_posts: set[str], known_problems: set[int], owned_impressions: set[int],
-           now: datetime, config: FeedConfig) -> str | None:
+           now: datetime, config: FeedConfig, known_inferred: set[int] = frozenset()) -> str | None:
     if e.item_type == "post" and e.item_id not in known_posts:
         return "unknown post"
+    if e.item_type == "inferred" and _problem_id(e.item_id) not in known_inferred:
+        return "unknown inferred problem"
     if e.item_type == "problem" and _problem_id(e.item_id) not in known_problems:
         return "unknown problem"
     if e.impression_id is not None and e.impression_id not in owned_impressions:

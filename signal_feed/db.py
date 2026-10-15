@@ -421,6 +421,79 @@ class SurveyRow(FeedBase):
     answered_at: Mapped[datetime] = mapped_column(UTCDateTime)
 
 
+# --- Section 17: inferred problems -----------------------------------------------
+
+class InferredProblemRow(FeedBase):
+    """A problem nobody stated, built from real linked evidence (section 17.2). Never published without
+    a critic pass unless `inferred.publish_without_critic` is set."""
+
+    __tablename__ = "inferred_problems"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    detector: Mapped[str] = mapped_column(String(32), index=True)          # paid_workarounds | rule_change | ...
+    hypothesis: Mapped[str] = mapped_column(Text)                          # filled from the detector's template
+    who: Mapped[str | None] = mapped_column(String(200))
+    task: Mapped[str | None] = mapped_column(Text)
+    niche_id: Mapped[int | None] = mapped_column(ForeignKey("niches.id"), index=True)
+    counter_evidence: Mapped[list[dict[str, Any]]] = mapped_column(JSON, default=list)
+    confidence: Mapped[str | None] = mapped_column(String(8))               # high | medium | low
+    critic_notes: Mapped[dict[str, Any]] = mapped_column(JSON, default=dict)
+    validation: Mapped[dict[str, Any]] = mapped_column(JSON, default=dict)  # insider votes, field notes (17.7)
+    status: Mapped[str] = mapped_column(String(16), index=True)             # candidate | published | rejected | expired
+    derived: Mapped[bool] = mapped_column(Boolean, default=False)           # built from pain statements, not v9 tasks
+    score: Mapped[float | None] = mapped_column(Float)
+    score_breakdown: Mapped[dict[str, float]] = mapped_column(JSON, default=dict)
+    created_at: Mapped[datetime] = mapped_column(UTCDateTime)
+    refreshed_at: Mapped[datetime] = mapped_column(UTCDateTime)
+
+
+class InferredEvidenceRow(FeedBase):
+    """One link in an inferred problem's evidence chain: a real post or record and what it shows."""
+
+    __tablename__ = "inferred_evidence"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    inferred_id: Mapped[int] = mapped_column(ForeignKey("inferred_problems.id"), index=True)
+    post_id: Mapped[str | None] = mapped_column(String(64), index=True)
+    record_id: Mapped[str | None] = mapped_column(String(64))
+    source: Mapped[str] = mapped_column(String(64))
+    source_type: Mapped[str] = mapped_column(String(16))
+    url: Mapped[str] = mapped_column(Text)
+    what_it_shows: Mapped[str] = mapped_column(Text)
+    supported: Mapped[bool | None] = mapped_column(Boolean)    # the critic's check; None until it runs
+
+
+class TaskClusterRow(FeedBase):
+    """Paid work grouped by task within a niche (Detector 1, step 2); kept for inspection and stats."""
+
+    __tablename__ = "task_clusters"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    niche_id: Mapped[int | None] = mapped_column(ForeignKey("niches.id"), index=True)
+    task: Mapped[str] = mapped_column(Text)
+    post_ids: Mapped[list[str]] = mapped_column(JSON)
+    buyers: Mapped[int] = mapped_column(Integer)
+    qualifies: Mapped[bool] = mapped_column(Boolean)
+    computed_at: Mapped[datetime] = mapped_column(UTCDateTime)
+
+
+class DetectorStatsRow(FeedBase):
+    """Per detector run (section 17.10): how many candidates, how the critic judged them."""
+
+    __tablename__ = "detector_stats"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    detector: Mapped[str] = mapped_column(String(32), index=True)
+    run_at: Mapped[datetime] = mapped_column(UTCDateTime)
+    clusters: Mapped[int] = mapped_column(Integer, default=0)
+    candidates: Mapped[int] = mapped_column(Integer, default=0)
+    published: Mapped[int] = mapped_column(Integer, default=0)
+    rejected: Mapped[int] = mapped_column(Integer, default=0)
+    expired: Mapped[int] = mapped_column(Integer, default=0)
+    critic_runs: Mapped[int] = mapped_column(Integer, default=0)
+    with_counter_evidence: Mapped[int] = mapped_column(Integer, default=0)
+
+
 class ExperimentAssignmentRow(FeedBase):
     """Sticky A/B arms (section 13): a user keeps their arm even if the shares are edited later."""
 
@@ -505,6 +578,12 @@ class FeedStore:
     def user_exists(self, user_id: str) -> bool:
         with self.session() as s:
             return s.get(UserRow, user_id) is not None
+
+    def existing_inferred_ids(self, ids: Collection[int]) -> set[int]:
+        if not ids:
+            return set()
+        with self.session() as s:
+            return set(s.scalars(select(InferredProblemRow.id).where(InferredProblemRow.id.in_(set(ids)))))
 
     def existing_problem_ids(self, ids: Collection[int]) -> set[int]:
         if not ids:

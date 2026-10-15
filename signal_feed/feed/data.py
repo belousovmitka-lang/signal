@@ -12,16 +12,30 @@ from threading import Lock
 import numpy as np
 from sqlalchemy import func, select
 
-from ..db import EnrichedPostRow, FeedStore, NicheRow, PostNicheRow, ProblemPostRow, ProblemRow
+from ..db import (
+    EnrichedPostRow,
+    FeedStore,
+    InferredEvidenceRow,
+    InferredProblemRow,
+    NicheRow,
+    PostNicheRow,
+    ProblemPostRow,
+    ProblemRow,
+)
 from ..niches.tree import INDUSTRY, SKILL, Tree
 from ..posts import PostsReader
 
 
+def item_key(item_type: str, item_id: str) -> str:
+    """The feed's key for an item: a post id, or "inferred:<id>" for an inferred problem."""
+    return item_id if item_type == "post" else f"{item_type}:{item_id}"
+
+
 @dataclass
 class Item:
-    """One rankable post."""
+    """One rankable item: a post, or an inferred problem (section 17) built from posts."""
 
-    post_id: str
+    post_id: str                    # the item key (see item_key)
     index: int                      # row in FeedData.vectors
     post_type: str
     source: str
@@ -46,6 +60,14 @@ class Item:
     toxicity: float
     author_role: str | None
     tools: tuple[str, ...] = ()     # products the post names (lower-cased), for committed-mode competitors
+    item_type: str = "post"         # post | inferred
+    item_id: str = ""               # the post id, or the inferred problem's id
+    confidence: str | None = None   # inferred only: high | medium | low (17.6)
+    evidence: tuple[dict, ...] = () # inferred only: the evidence chain (url, source, what_it_shows)
+
+    def __post_init__(self) -> None:
+        if not self.item_id:
+            self.item_id = self.post_id
 
 
 @dataclass
@@ -80,7 +102,10 @@ def fingerprint(store: FeedStore) -> tuple:
                 s.scalar(select(func.max(EnrichedPostRow.enriched_at))),
                 s.scalar(select(func.count()).select_from(PostNicheRow)),
                 s.scalar(select(func.max(ProblemRow.updated_at))),
-                s.scalar(select(func.max(NicheRow.version))))
+                s.scalar(select(func.max(NicheRow.version))),
+                s.scalar(select(func.max(InferredProblemRow.refreshed_at))),
+                s.scalar(select(func.count()).select_from(InferredProblemRow)
+                         .where(InferredProblemRow.status == "published")))
 
 
 def load(store: FeedStore, posts: PostsReader) -> FeedData:
@@ -96,6 +121,12 @@ def load(store: FeedStore, posts: PostsReader) -> FeedData:
                 skills[pid].append(nid)
         problems = {p.id: p for p in s.scalars(select(ProblemRow).where(ProblemRow.status == "active"))}
         post_problem = dict(s.execute(select(ProblemPostRow.post_id, ProblemPostRow.problem_id)).all())
+        inferred = list(s.scalars(select(InferredProblemRow).where(InferredProblemRow.status == "published")))
+        inferred_ev: dict[int, list[InferredEvidenceRow]] = defaultdict(list)
+        for e in s.scalars(select(InferredEvidenceRow).where(
+                InferredEvidenceRow.inferred_id.in_([p.id for p in inferred]))):
+            if e.supported is not False:            # the critic dropped it: not shown, not counted
+                inferred_ev[e.inferred_id].append(e)
     raw = {p.id: p for p in posts.get_posts(list(rows))}
     items, vecs = [], []
     for pid, row in rows.items():
@@ -116,11 +147,14 @@ def load(store: FeedStore, posts: PostsReader) -> FeedData:
             quality=row.quality or 0.0, toxicity=row.toxicity or 0.0, author_role=post.author_role,
             tools=tuple(t.lower() for t in (row.tools_mentioned or []))))
         vecs.append(row.embedding)
+    _add_inferred(items, vecs, inferred, inferred_ev, rows, skills)
     # Pain and demand scores come from different formulas: rank each within its kind so the ranker can
-    # compare a pain post with a tender.
+    # compare a pain post with a tender. Inferred problems are ranked among themselves.
     by_kind: dict[str, list[float]] = defaultdict(list)
     for p in problems.values():
         by_kind[p.kind].append(p.score or 0.0)
+    for p in inferred:
+        by_kind["inferred"].append(p.score or 0.0)
     for kind in by_kind:
         by_kind[kind].sort()
     for it in items:
@@ -139,6 +173,33 @@ def load(store: FeedStore, posts: PostsReader) -> FeedData:
             by_skill[sid].append(it.index)
     data.by_niche, data.by_skill = dict(by_niche), dict(by_skill)
     return data
+
+
+def _add_inferred(items: list[Item], vecs: list, inferred, evidence: dict, rows: dict, skills: dict) -> None:
+    """Section 17.8: each published inferred problem is a feed item. Its vector is the mean of its evidence
+    posts' embeddings, its features the evidence posts' averages."""
+    for p in inferred:
+        ev = evidence.get(p.id, [])
+        ev_rows = [rows[e.post_id] for e in ev if e.post_id in rows]
+        if not ev_rows or p.niche_id is None:
+            continue
+        m = np.asarray([r.embedding for r in ev_rows], dtype=np.float32)
+        money = next((r.money_signal for r in ev_rows if r.money_signal), None)
+        items.append(Item(
+            post_id=item_key("inferred", str(p.id)), index=len(items), post_type="inferred", source="signal:inferred",
+            source_type="inferred", url="", title=p.hypothesis, summary=p.hypothesis, published_at=p.refreshed_at,
+            niche_id=p.niche_id, skill_ids=sorted({sid for r in ev_rows for sid in skills.get(r.post_id, [])}),
+            problem_id=None, problem_kind="inferred", problem_score=p.score or 0.0, problem_rank=0.0,
+            problem_confidence={"high": 1.0, "medium": 0.67, "low": 0.33}.get(p.confidence or "", 0.0),
+            similar_posts=len(ev) - 1, trend=(p.score_breakdown or {}).get("trend", 0.5),
+            intensity=float(np.mean([r.intensity or 0 for r in ev_rows])), money=money,
+            buyer=float(np.mean([r.buyer_likelihood or 0 for r in ev_rows])),
+            quality=float(np.mean([r.quality or 0 for r in ev_rows])),
+            toxicity=float(max(r.toxicity or 0 for r in ev_rows)), author_role=None,
+            tools=tuple(sorted({t.lower() for r in ev_rows for t in (r.tools_mentioned or [])})),
+            item_type="inferred", item_id=str(p.id), confidence=p.confidence,
+            evidence=tuple({"url": e.url, "source": e.source, "what_it_shows": e.what_it_shows} for e in ev)))
+        vecs.append(m.mean(axis=0).tolist())
 
 
 class FeedDataCache:

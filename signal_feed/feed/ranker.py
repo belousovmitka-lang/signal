@@ -111,6 +111,8 @@ class RankerV1:
                 "social": min(1.0, c.social / 3),
             })
             f = feats[-1]
+            f["inferred"] = 1.0 if it.item_type == "inferred" else 0.0                     # 17.8: kind...
+            f["confidence_level"] = it.problem_confidence if it.item_type == "inferred" else 0.0   # ...and confidence
             # Relevance gates value: a strong post outside someone's interests isn't one they save or build from.
             f["relevance"] = max(f["affinity"], 0.5 * f["skill"], f["save_sim"])
             for name in ("problem", "intensity", "money", "buyer"):

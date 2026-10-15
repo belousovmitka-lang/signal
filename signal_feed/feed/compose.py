@@ -53,7 +53,9 @@ def explain(s: Scored, data: FeedData, state: UserState) -> str:
     src = s.candidate.source
     node = s.candidate.node if s.candidate.node in data.industry.nodes else it.niche_id
     leaf = data.industry.nodes[node].label
-    if src == EVIDENCE:
+    if it.item_type == "inferred":
+        text = f"Inferred ({it.confidence}) · {data.industry.nodes[it.niche_id].label}"
+    elif src == EVIDENCE:
         text = f"Committed: evidence for problem {it.problem_id}"
     elif src == COMPETITOR:
         text = f"Committed: mentions a competitor ({', '.join(sorted(set(it.tools) & set(state.committed_competitors)))})"

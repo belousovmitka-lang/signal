@@ -412,6 +412,12 @@ Finish each phase with tests and a short demo script before starting the next.
 
 ---
 
+## 17. Inferred problems
+
+Specified and tracked in `INFERRED_PROBLEMS.md` (kept as a separate file, as it allows), including what has been built.
+
+---
+
 ## 16. Working conventions for Claude Code
 
 - Keep every weight, threshold and quota in `config/feed.yaml`.
