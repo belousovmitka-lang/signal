@@ -821,6 +821,28 @@ sources:
     queries:
       - {params: {months: 2}, limit: 100}
 
+  osha:
+    enabled: false                   # built; off until a live run passes (DOL answered 429 all day on 2026-10-15)
+    status: todo
+    status_date: 2026-10-15
+    route: own_api
+    source_type: government
+    cadence: monthly
+    env: [DOL_API_KEY]
+    rate_limit: {requests_per_second: 0.25, domains: [apiprod.dol.gov]}    # answered 429 to bursts (2026-10-15)
+    access_check:
+      robots: allowed
+      terms: allowed
+      decision: full
+      terms_url: https://dataportal.dol.gov/
+      checked_at: 2026-10-15
+      notes: >-
+        DOL data API v4 (free key). apiprod.dol.gov robots.txt answers 403 (allow); dataportal.dol.gov allows all
+        but /static/. Public enforcement data; only per-industry aggregates are stored (no establishment names,
+        addresses or inspection numbers). Data lag about a month behind issuance.
+    queries:
+      - {params: {days: 30}, limit: 50}
+
   github:
     enabled: true
     status: done
