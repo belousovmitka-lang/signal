@@ -70,6 +70,12 @@ class EnrichedPostRow(FeedBase):
     embedding: Mapped[list[float] | None] = mapped_column(NullableJSON)   # JSON on SQLite; a vector column on Postgres
     pain_embedding: Mapped[list[float] | None] = mapped_column(NullableJSON)  # pain_statement alone (problem clustering)
     tools_mentioned: Mapped[list[str] | None] = mapped_column(NullableJSON)  # existing products named in the post
+    # Section 17 (inferred problems), prompt v9+:
+    task: Mapped[str | None] = mapped_column(Text)                        # normalized verb phrase
+    task_automatable: Mapped[float | None] = mapped_column(Float)         # 0 physical/judgment .. 1 routine info work
+    task_embedding: Mapped[list[float] | None] = mapped_column(NullableJSON)
+    data_moved: Mapped[list[dict[str, Any]] | None] = mapped_column(NullableJSON)   # [{from_tool, to_tool, data}]
+    obligation_ids: Mapped[list[int] | None] = mapped_column(NullableJSON)
     language: Mapped[str | None] = mapped_column(String(16))
     confidence: Mapped[float | None] = mapped_column(Float)
     escalated: Mapped[bool] = mapped_column(Boolean, default=False)
@@ -79,6 +85,20 @@ class EnrichedPostRow(FeedBase):
     embedding_model: Mapped[str | None] = mapped_column(String(64))
     cost_usd: Mapped[float] = mapped_column(Float, default=0.0)
     enriched_at: Mapped[datetime] = mapped_column(UTCDateTime)
+
+
+class ObligationRow(FeedBase):
+    """What a rule document makes someone do (section 17, Detector 2), extracted at tagging."""
+
+    __tablename__ = "obligations"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    post_id: Mapped[str] = mapped_column(String(64), index=True)
+    who: Mapped[str] = mapped_column(Text)
+    what: Mapped[str] = mapped_column(Text)
+    deadline: Mapped[date | None] = mapped_column(Date)
+    industries: Mapped[list[str]] = mapped_column(JSON, default=list)
+    created_at: Mapped[datetime] = mapped_column(UTCDateTime)
 
 
 class EnrichmentBatchRow(FeedBase):

@@ -41,6 +41,25 @@ class MoneySignal(BaseModel):
     quote: str = Field(description="The few words of the post that state it, without names or contact details")
 
 
+class DataMoved(BaseModel):
+    """Data someone moves between two tools by hand (section 17, Detector 3)."""
+    model_config = ConfigDict(extra="forbid")
+
+    from_tool: str = Field(description="Product the data comes out of, e.g. 'QuickBooks'")
+    to_tool: str = Field(description="Product it goes into, e.g. 'Excel'")
+    data: str = Field(description="What is moved, in 2-5 words, e.g. 'vendor invoice totals'")
+
+
+class Obligation(BaseModel):
+    """What a rule document makes someone do (section 17, Detector 2). Only from rules and proposed rules."""
+    model_config = ConfigDict(extra="forbid")
+
+    who: str = Field(description="Who must comply, as a role or business type, e.g. 'small trucking fleets'")
+    what: str = Field(description="What they must now do, as a verb phrase, e.g. 'keep electronic driver logs'")
+    deadline: str | None = Field(description="Compliance or effective date as YYYY-MM-DD if stated, else null")
+    industries: list[str] = Field(max_length=3, description="Industries affected, from the industry list")
+
+
 @cache
 def industry_names() -> tuple[str, ...]:
     return tuple(sorted(ind.name for ind in load_industries().values()))
@@ -87,6 +106,15 @@ def tag_output_model() -> type[BaseModel]:
         current_workaround=(str | None, Field(description="How they cope today, if stated or clearly implied")),
         tools_mentioned=(list[str], Field(max_length=5, description="Existing products, apps or services the post "
                                                                     "names, e.g. 'QuickBooks'; empty if none")),
+        task=(str | None, Field(description="The repetitive task the post is about, as a short normalized verb "
+                                            "phrase, e.g. 'reconcile vendor invoices against POs'; null if none")),
+        task_automatable=(Score | None, Field(ge=0, le=1,
+                                              description="How much of that task software could do: 0 = physical or "
+                                                          "judgment work, 1 = routine information work; null if no task")),
+        data_moved=(list[DataMoved], Field(max_length=3, description="Data the author moves between two named tools "
+                                                                     "by hand; empty if none")),
+        obligations=(list[Obligation], Field(max_length=3, description="Only for a rule or proposed rule: what it "
+                                                                       "makes someone do; empty otherwise")),
         intensity=(Score, _score("Frustration, urgency, repetition")),
         money_signal=(MoneySignal | None, Field(description="Only money the post states; null otherwise")),
         buyer_likelihood=(Score, _score("Is the person with the problem likely the buyer or decision maker")),

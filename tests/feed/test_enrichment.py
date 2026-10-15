@@ -25,7 +25,9 @@ def tags(**overrides):
     base = dict(post_type="pain", industry="Accounting and finance", industry_subpath=["Bookkeeping"],
                 skills_needed=["Document parsing"], who_has_pain="bookkeeper",
                 pain_statement="Copying invoices from email into QuickBooks takes hours every week.",
-                current_workaround="manual entry", tools_mentioned=["QuickBooks"], intensity=0.8, money_signal=None, buyer_likelihood=0.7,
+                current_workaround="manual entry", tools_mentioned=["QuickBooks"], intensity=0.8,
+                task="enter invoices into QuickBooks", task_automatable=0.9,
+                data_moved=[{"from_tool": "Gmail", "to_tool": "QuickBooks", "data": "invoice totals"}], obligations=[], money_signal=None, buyer_likelihood=0.7,
                 quality=0.8, spam_score=0.0, toxicity=0.0, language="en", confidence=0.9)
     return tag_output_model()(**(base | overrides))
 
@@ -331,7 +333,8 @@ def test_embeddings_through_voyage(feed_store, feed_config, three_posts):
     assert row.tools_mentioned == ["QuickBooks"]
     with feed_store.session() as s:
         costs = s.query(FeedCostRow).filter(FeedCostRow.provider == "voyage").all()
-    assert len(costs) == 2 and costs[0].usd == pytest.approx(1000 * 0.06 / 1_000_000)
+    assert len(costs) == 3 and costs[0].usd == pytest.approx(1000 * 0.06 / 1_000_000)   # post, pain, task
+    assert seen[2]["input"] == ["enter invoices into QuickBooks"] and row.task_embedding == [0.1, 0.2]
     assert enricher.embed_pending() == 0
 
 
@@ -388,3 +391,30 @@ def test_no_credit_stops_the_run_instead_of_marking_posts(feed_config):
     client = type("Client", (), {"messages": Messages()})()
     with pytest.raises(BillingError):
         AnthropicTagger(client).tag(feed_config.enrichment.tagger, "s", "u")
+
+
+
+def test_rule_obligations_are_stored_and_replaced_on_retag(feed_store, feed_config, three_posts):
+    from signal_feed.db import ObligationRow
+    reader, (pain, _, _) = three_posts
+    rule = {"who": "small trucking fleets", "what": "keep electronic driver logs", "deadline": "2027-03-01",
+            "industries": ["Logistics and trucking"]}
+    bad_date = {"who": "carriers", "what": "file a report", "deadline": "next spring", "industries": []}
+    enricher = make(feed_store, feed_config, reader, FakeTagger(claude_haiku_5_5=[
+        ok(post_type="change", obligations=[rule, bad_date]), ok(post_type="change", obligations=[rule])]))
+    enricher.enrich([pain.id])
+    with feed_store.session() as s:
+        obs = s.query(ObligationRow).order_by(ObligationRow.id).all()
+        row = s.get(EnrichedPostRow, pain.id)
+    assert [(o.who, str(o.deadline)) for o in obs] == [("small trucking fleets", "2027-03-01"), ("carriers", "None")]
+    assert row.obligation_ids == [o.id for o in obs] and row.task == "enter invoices into QuickBooks"
+    enricher.enrich([pain.id])                                              # re-tag: obligations replaced
+    with feed_store.session() as s:
+        assert s.query(ObligationRow).count() == 1
+
+
+def test_output_schema_has_the_section_17_fields():
+    from signal_feed.enrichment.llm import output_schema
+    props = output_schema()["properties"]
+    assert {"task", "task_automatable", "data_moved", "obligations", "tools_mentioned"} <= set(props)
+    assert {"task", "task_automatable", "data_moved", "obligations"} <= set(output_schema()["required"])

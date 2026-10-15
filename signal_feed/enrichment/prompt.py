@@ -100,6 +100,17 @@ of view of the person who has it: "Checking citations in briefs before filing is
 Translate when the post is not in English. Null when no one has a problem or demand.
 - who_has_pain is a role, never a name: "practice manager", "small trucking company owner". Use \
 the author's self-described role when given.
+- task: when the post is about work someone does, pays for, or wants done (a job post, a gig, a \
+tender, a complaint about a chore), name that work as a short normalized verb phrase: "reconcile \
+vendor invoices against POs", "re-enter driver logs", "service fleet vehicles". Null if there is no \
+task. task_automatable: how much of it software could do (0 = physical or judgment work such as \
+repairing trucks or building a ramp; 1 = routine information work such as data entry, matching \
+records, filling forms).
+- data_moved: only when the author says they move data between two named tools by hand ("copy \
+orders from Shopify into QuickBooks", "export to CSV and import into"). Empty otherwise.
+- obligations: only for a rule, proposed rule or regulatory notice: who must comply, what they must \
+now do, the deadline if stated (YYYY-MM-DD), and the industries affected (from the industry list). \
+Never infer a deadline the document doesn't state. Empty for every other post.
 - tools_mentioned lists existing products, apps or services the post names (the tools people use or \
 complain about, a competitor of what a builder might make). Product names only, not companies \
 merely in the news. Empty when none are named.

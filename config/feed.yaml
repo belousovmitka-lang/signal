@@ -5,7 +5,7 @@ version: 1
 
 # Stage A — enrichment (section 3)
 enrichment:
-  prompt_version: v8                    # bump to re-enrich every post with the new prompt
+  prompt_version: v9                    # bump to re-enrich every post with the new prompt
   spam_drop_threshold: 0.7        # posts above this are kept but never ranked
   # Not shown in the feed (stored, counted, can be turned on later without re-tagging):
   drop_post_types: [research, listing, company_news, general_news, notice, opinion, guide, praise, spam, off_topic]

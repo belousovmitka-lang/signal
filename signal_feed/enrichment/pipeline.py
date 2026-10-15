@@ -18,7 +18,7 @@ from sqlalchemy import delete, select
 from signal_connectors.models import RawPost, utcnow
 
 from ..config import FeedConfig, ModelCall
-from ..db import EnrichedPostRow, EnrichmentBatchRow, FeedStore
+from ..db import EnrichedPostRow, EnrichmentBatchRow, FeedStore, ObligationRow
 from ..posts import PostsReader
 from .costs import BudgetExceededError, CostLedger, Usage, claude_usd, claude_worst_case_usd
 from .embeddings import Embedder
@@ -180,17 +180,36 @@ class Enricher:
             tools_mentioned=[t.strip() for t in out.tools_mentioned if t.strip()],
             intensity=out.intensity, money_signal=money, buyer_likelihood=out.buyer_likelihood,
             quality=out.quality, spam_score=out.spam_score, toxicity=out.toxicity, language=out.language,
-            confidence=out.confidence, prompt_hash=prompt_fingerprint())
+            confidence=out.confidence, prompt_hash=prompt_fingerprint(),
+            task=scrub(out.task) if out.task else None,
+            task_automatable=out.task_automatable if out.task else None,
+            data_moved=[d.model_dump() for d in out.data_moved] or None,
+            obligations_out=[o.model_dump() for o in out.obligations])
 
     def _row(self, post: RawPost, *, status: str, reason: str | None, cost: float = 0.0,
-             model: str | None = None, escalated: bool = False, **fields) -> EnrichedPostRow:
-        return EnrichedPostRow(post_id=post.id, status=status, status_reason=reason, cost_usd=cost, model=model,
-                               escalated=escalated, prompt_version=self.cfg.prompt_version,
-                               enriched_at=self.clock(), embedding=None, pain_embedding=None, embedding_model=None,
-                               **({"language": post.language} | fields))
+             model: str | None = None, escalated: bool = False, obligations_out: list[dict] | None = None,
+             **fields) -> EnrichedPostRow:
+        row = EnrichedPostRow(post_id=post.id, status=status, status_reason=reason, cost_usd=cost, model=model,
+                              escalated=escalated, prompt_version=self.cfg.prompt_version,
+                              enriched_at=self.clock(), embedding=None, pain_embedding=None, task_embedding=None,
+                              embedding_model=None, **({"language": post.language} | fields))
+        row._obligations = obligations_out or []      # written by _save (section 17, Detector 2)
+        return row
 
     def _save(self, row: EnrichedPostRow) -> None:
+        obligations = getattr(row, "_obligations", [])
         with self.store.session() as s, s.begin():
+            # Re-tagging replaces the post's obligations.
+            s.execute(delete(ObligationRow).where(ObligationRow.post_id == row.post_id))
+            ids = []
+            for o in obligations:
+                ob = ObligationRow(post_id=row.post_id, who=scrub(o["who"]), what=scrub(o["what"]),
+                                   deadline=_parse_date(o.get("deadline")), industries=list(o.get("industries") or []),
+                                   created_at=self.clock())
+                s.add(ob)
+                s.flush()
+                ids.append(ob.id)
+            row.obligation_ids = ids or None
             s.merge(row)
 
     def _load(self, post_ids: Sequence[str]) -> list[RawPost]:
@@ -223,6 +242,10 @@ class Enricher:
         self._embed(select(EnrichedPostRow).where(ok, EnrichedPostRow.pain_embedding.is_(None),
                                                   EnrichedPostRow.pain_statement.is_not(None)), limit,
                     lambda row, post: row.pain_statement, "pain_embedding")
+        # The task alone, for clustering paid work by what is being done (section 17, Detector 1).
+        self._embed(select(EnrichedPostRow).where(ok, EnrichedPostRow.task_embedding.is_(None),
+                                                  EnrichedPostRow.task.is_not(None)), limit,
+                    lambda row, post: row.task, "task_embedding")
         return done
 
     def _embed(self, stmt, limit: int | None, text_of, attr: str) -> int:
@@ -257,3 +280,14 @@ class Enricher:
 def embedding_text(row: EnrichedPostRow, post: RawPost, max_chars: int) -> str:
     parts = [row.pain_statement, post.title, post.text]
     return "\n".join(p for p in parts if p)[:max_chars]
+
+
+def _parse_date(value: str | None):
+    """YYYY-MM-DD from the model, or None when it is missing or malformed (never guessed)."""
+    from datetime import date
+    if not value:
+        return None
+    try:
+        return date.fromisoformat(value[:10])
+    except ValueError:
+        return None
