@@ -347,3 +347,109 @@ def test_both_detectors_run_through_the_same_pipeline(rule_world, feed_store, fe
     with feed_store.session() as s:
         row = s.scalars(select(InferredProblemRow)).one()
     assert row.detector == "rule_change" and row.confidence == "medium" and row.task == "report hours worked each week"
+
+
+# --- step 4: insiders and validation (17.7) --------------------------------------------------
+
+def insider(feed_store, feed_config, works_in=("Legal",)):
+    return onboard(feed_store, feed_config, ["Healthcare"], [], clock=lambda: NOW, works_in=list(works_in))
+
+
+def test_insiders_get_one_prompt_a_week_about_their_industry(market, feed_store, feed_config):
+    from signal_feed.feed.usermodel import UnknownNodeError
+    from signal_feed.inferred.validation import next_prompt
+    reader, *_ = market
+    row = publish(feed_store, feed_config, reader, verdict(6))
+    with pytest.raises(UnknownNodeError):
+        insider(feed_store, feed_config, works_in=("Not an industry",))
+    uid = insider(feed_store, feed_config)
+    prompt = next_prompt(feed_store, feed_config, uid, clock=lambda: NOW)
+    assert prompt["inferred_id"] == row.id and prompt["question"] == "Is this real where you work?"
+    assert prompt["answers"] == ["yes", "no", "partly"] and len(prompt["evidence"]) == 3
+    assert next_prompt(feed_store, feed_config, uid, clock=lambda: NOW + timedelta(days=3)) is None   # once a week
+    assert next_prompt(feed_store, feed_config, uid, clock=lambda: NOW + timedelta(days=8)) is None   # nothing new
+    outsider = onboard(feed_store, feed_config, ["Legal"], [], clock=lambda: NOW)           # interested, not working there
+    assert next_prompt(feed_store, feed_config, outsider, clock=lambda: NOW) is None
+
+
+def test_insider_votes_raise_and_lower_confidence(market, feed_store, feed_config):
+    from signal_feed.inferred.validation import record_vote
+    reader, *_ = market
+    row = publish(feed_store, feed_config, reader, verdict(6))
+    assert row.confidence == "medium"
+
+    def state():
+        with feed_store.session() as s:
+            r = s.get(InferredProblemRow, row.id)
+            return r.status, r.confidence, r.validation
+
+    a, b = insider(feed_store, feed_config), insider(feed_store, feed_config, works_in=("Legal > Contract work",))
+    outsider = onboard(feed_store, feed_config, ["Legal"], [], clock=lambda: NOW)
+    assert record_vote(feed_store, feed_config, outsider, row.id, "yes") is False          # not counted as insider
+    assert record_vote(feed_store, feed_config, a, row.id, "yes") and record_vote(feed_store, feed_config, b, row.id, "yes")
+    assert state()[:2] == ("published", "high")                                             # 2 insider confirmations
+    record_vote(feed_store, feed_config, a, row.id, "no", note="Our ERP does this")         # a later vote replaces
+    record_vote(feed_store, feed_config, b, row.id, "no")
+    assert state()[:2] == ("published", "low") and state()[2]["no"] == 2                    # net -2: medium -> low
+    c = insider(feed_store, feed_config)
+    record_vote(feed_store, feed_config, c, row.id, "no")
+    status, conf, _ = state()
+    assert (status, conf) == ("rejected", None)                                             # net -3 at low
+
+
+def test_not_true_routes_to_validation_not_to_the_niche(market, feed_store, feed_config):
+    from signal_feed.db import InsiderVoteRow
+    reader, contract, _, _ = market
+    row = publish(feed_store, feed_config, reader, verdict(6))
+    uid = insider(feed_store, feed_config)
+    before = load_state(feed_store, feed_config, uid, NOW).niche.get(contract)
+    ev = EventRow(user_id=uid, client_event_id="c1", session_id="s", item_type="inferred", item_id=str(row.id),
+                  event_type="not_for_me", reason="not_true", weight=-6.0, at=NOW, received_at=NOW, config_version=1)
+    feed_store.add_events([ev])
+    apply_events(feed_store, reader, feed_config, [ev], clock=lambda: NOW)
+    with feed_store.session() as s:
+        vote = s.scalars(select(InsiderVoteRow)).one()
+    assert (vote.vote, vote.source, vote.insider) == ("no", "not_for_me", True)
+    assert load_state(feed_store, feed_config, uid, NOW).niche.get(contract) == before     # niche untouched
+
+
+def test_field_notes_need_permission_and_become_evidence(market, feed_store, feed_config):
+    from fastapi.testclient import TestClient
+
+    from signal_feed.api import create_app
+    reader, *_ = market
+    row = publish(feed_store, feed_config, reader, verdict(6))
+    client = TestClient(create_app(feed_store, reader, feed_config))
+    uid = client.post("/onboarding", json={"industries": ["Legal"], "works_in": ["Legal"]}).json()["user_id"]
+    no = client.post(f"/inferred/{row.id}/field-notes", json={"user_id": uid, "note": "They redline by hand", "share": False})
+    assert no.status_code == 422
+    ok = client.post(f"/inferred/{row.id}/field-notes",
+                     json={"user_id": uid, "note": "Ops lead jane@firm.com said they redline by hand", "share": True})
+    assert ok.json() == {"ok": True}
+    chain = client.get(f"/inferred/{row.id}", params={"user_id": uid}).json()
+    note = chain["evidence"][-1]["what_it_shows"]
+    assert len(chain["evidence"]) == 7 and note.startswith("From a builder's customer conversation") and "jane@" not in note
+    assert chain["counter_evidence"] and client.get("/inferred/99999", params={"user_id": uid}).status_code == 404
+    vote = client.post(f"/inferred/{row.id}/vote", json={"user_id": uid, "vote": "partly", "note": "Mostly true"})
+    assert vote.json() == {"ok": True, "insider": True}
+    assert client.post("/inferred/99999/vote", json={"user_id": uid, "vote": "yes"}).status_code == 404
+    assert client.get("/inferred/prompt", params={"user_id": uid}).json() == {"prompt": None}   # already voted
+
+
+def test_detector_weights_learn_from_what_holds_up(market, feed_store, feed_config):
+    from signal_feed.evaluation.metrics import inferred_metrics
+    from signal_feed.inferred.validation import record_vote, update_weights
+    reader, *_ = market
+    row = publish(feed_store, feed_config, reader, verdict(6))
+    [w] = update_weights(feed_store, feed_config, clock=lambda: NOW)
+    assert (w.detector, w.combo, w.weight) == ("paid_workarounds", "government+paid_demand", 1.0)   # no data yet
+    for k in range(2):
+        record_vote(feed_store, feed_config, insider(feed_store, feed_config), row.id, "yes")
+    [w] = update_weights(feed_store, feed_config, clock=lambda: NOW)
+    assert w.weight > 1.0 and w.confirmed == 1
+    data = load(feed_store, reader)
+    item = next(it for it in data.items if it.item_type == "inferred")
+    assert item.detector_weight == w.weight
+    m = inferred_metrics(feed_store, NOW)
+    assert m["detectors"]["paid_workarounds"]["published"] == 1
+    assert m["detectors"]["paid_workarounds"]["insider_confirmation_rate"] == 1.0

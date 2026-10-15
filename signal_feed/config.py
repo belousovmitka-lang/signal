@@ -234,6 +234,15 @@ class PaidWorkaroundsConfig(_Strict):
     allow_derived_tasks: bool
 
 
+class ValidationConfig(_Strict):
+    prompt_every_days: int = Field(gt=0)
+    downgrade_after_net_no: float = Field(gt=0)
+    reject_after_net_no: float = Field(gt=0)
+    weight_prior: float = Field(gt=0)
+    weight_min: float = Field(gt=0)
+    weight_max: float = Field(gt=0)
+
+
 class RuleChangeConfig(_Strict):
     job_window_days: int = Field(gt=0)
     min_role_posts: int = Field(gt=0)
@@ -257,6 +266,7 @@ class InferredConfig(_Strict):
     embed_dropped_types: list[TaggedPostType] = Field(default_factory=list)
     paid_workarounds: PaidWorkaroundsConfig
     rule_change: RuleChangeConfig
+    validation: ValidationConfig
 
 
 class ExperimentArm(_Strict):

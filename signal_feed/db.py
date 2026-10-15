@@ -258,6 +258,7 @@ class UserQuizRow(FeedBase):
     industries: Mapped[list[str]] = mapped_column(JSON, default=list)
     skills: Mapped[list[str]] = mapped_column(JSON, default=list)
     resume_skills: Mapped[list[str]] = mapped_column(JSON, default=list)
+    works_in: Mapped[list[str] | None] = mapped_column(NullableJSON)   # industries the user works in (insiders, 17.7)
     answered_at: Mapped[datetime] = mapped_column(UTCDateTime)
 
 
@@ -493,6 +494,46 @@ class DetectorStatsRow(FeedBase):
     expired: Mapped[int] = mapped_column(Integer, default=0)
     critic_runs: Mapped[int] = mapped_column(Integer, default=0)
     with_counter_evidence: Mapped[int] = mapped_column(Integer, default=0)
+
+
+class InsiderVoteRow(FeedBase):
+    """"Is this real where you work?" (section 17.7), or "Not true in my experience" (17.8)."""
+
+    __tablename__ = "insider_votes"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    inferred_id: Mapped[int] = mapped_column(ForeignKey("inferred_problems.id"), index=True)
+    user_id: Mapped[str] = mapped_column(ForeignKey("users.id"), index=True)
+    vote: Mapped[str] = mapped_column(String(8))            # yes | no | partly
+    note: Mapped[str | None] = mapped_column(Text)          # one line, personal data scrubbed
+    insider: Mapped[bool] = mapped_column(Boolean)          # the user works in this niche's industry
+    source: Mapped[str] = mapped_column(String(16))         # prompt | not_for_me
+    at: Mapped[datetime] = mapped_column(UTCDateTime)
+
+
+class InsiderPromptRow(FeedBase):
+    """When an insider was asked about an inferred problem (one prompt per week, 17.7)."""
+
+    __tablename__ = "insider_prompts"
+
+    user_id: Mapped[str] = mapped_column(ForeignKey("users.id"), primary_key=True)
+    inferred_id: Mapped[int] = mapped_column(ForeignKey("inferred_problems.id"), primary_key=True)
+    prompted_at: Mapped[datetime] = mapped_column(UTCDateTime)
+
+
+class DetectorWeightRow(FeedBase):
+    """17.7 learning: per detector and evidence-source combination, how inferred problems hold up."""
+
+    __tablename__ = "detector_weights"
+
+    detector: Mapped[str] = mapped_column(String(32), primary_key=True)
+    combo: Mapped[str] = mapped_column(String(128), primary_key=True)    # sorted evidence source types, "+"-joined
+    weight: Mapped[float] = mapped_column(Float, default=1.0)
+    published: Mapped[int] = mapped_column(Integer, default=0)
+    confirmed: Mapped[int] = mapped_column(Integer, default=0)
+    rejected: Mapped[int] = mapped_column(Integer, default=0)
+    acted: Mapped[int] = mapped_column(Integer, default=0)               # problems with a save, idea or outreach
+    updated_at: Mapped[datetime] = mapped_column(UTCDateTime)
 
 
 class ExperimentAssignmentRow(FeedBase):

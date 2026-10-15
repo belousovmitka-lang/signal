@@ -2,6 +2,7 @@
 
     python scripts/inferred.py run [--detector paid_workarounds] [--no-llm]   # weekly; Detector 1 also daily
     python scripts/inferred.py list [--status published|candidate|rejected|expired]
+    python scripts/inferred.py weights      # weekly: detector weights from insider votes and actions (17.7)
 
 Without the LLM (or with --no-llm) candidates are found and stored but held as `candidate`: nothing is
 published before the critic has checked its evidence.
@@ -30,6 +31,7 @@ def main() -> int:
     run = sub.add_parser("run")
     run.add_argument("--detector", choices=sorted(DETECTORS), action="append")
     run.add_argument("--no-llm", action="store_true")
+    sub.add_parser("weights", help="weekly: update detector weights from validation (17.7)")
     ls = sub.add_parser("list")
     ls.add_argument("--status")
     args = ap.parse_args()
@@ -51,6 +53,12 @@ def main() -> int:
                   f"{r.critic_runs} critic calls, LLM cost ${llm.spent if llm else 0:.4f}")
             for line in r.items:
                 print(f"  {line}")
+        return 0
+    if args.command == "weights":
+        from signal_feed.inferred.validation import update_weights
+        for w in update_weights(store, config):
+            print(f"{w.detector} [{w.combo}]: weight {w.weight} ({w.published} published, {w.confirmed} confirmed, "
+                  f"{w.acted} acted on, {w.rejected} rejected by insiders)")
         return 0
     with store.session() as s:
         q = select(InferredProblemRow).order_by(InferredProblemRow.score.desc())

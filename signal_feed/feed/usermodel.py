@@ -62,7 +62,7 @@ def _resolve(s, tree: str, label: str) -> int:
 
 def onboard(store: FeedStore, config: FeedConfig, industries: Sequence[str], skills: Sequence[str],
             resume_skills: Sequence[str] = (), user_id: str | None = None,
-            clock: Callable[[], datetime] = utcnow) -> str:
+            clock: Callable[[], datetime] = utcnow, works_in: Sequence[str] = ()) -> str:
     """Create a user from the quiz and seed priors (section 6.2 step 1). Raises UnknownNodeError for a
     label that isn't in the tree."""
     um = config.user_model
@@ -70,6 +70,8 @@ def onboard(store: FeedStore, config: FeedConfig, industries: Sequence[str], ski
         niche_ids = [_resolve(s, INDUSTRY, label) for label in industries]
         skill_ids = [_resolve(s, SKILL, label) for label in skills]
         resume_ids = [_resolve(s, SKILL, label) for label in resume_skills]
+        for label in works_in:                    # checked like the rest; stored as labels (17.7 insiders)
+            _resolve(s, INDUSTRY, label)
     uid = store.create_user(user_id)
     now = clock()
     priors = {f"n{n}": um.quiz_prior_affinity for n in niche_ids}
@@ -77,7 +79,7 @@ def onboard(store: FeedStore, config: FeedConfig, industries: Sequence[str], ski
     priors |= {f"s{n}": um.quiz_prior_affinity for n in skill_ids}
     with store.session() as s, s.begin():
         s.add(UserQuizRow(user_id=uid, industries=list(industries), skills=list(skills),
-                          resume_skills=list(resume_skills), answered_at=now))
+                          resume_skills=list(resume_skills), answered_at=now, works_in=list(works_in) or None))
         user = s.get(UserRow, uid)
         user.feed_prefs = {"priors": priors}
         for key, mean in priors.items():
@@ -257,6 +259,11 @@ def apply_events(store: FeedStore, posts: PostsReader, config: FeedConfig, event
                 to_niche = to_skills = False
                 if source:
                     prefs["hidden_sources"] = sorted(set(prefs.get("hidden_sources", [])) | {source})
+            elif e.event_type == "not_for_me" and e.reason == "not_true":
+                to_niche = to_skills = False      # 17.8: routes to validation, not a dislike of the niche
+                if e.item_type == "inferred" and e.item_id.isdigit():
+                    from ..inferred.validation import vote_in_session
+                    vote_in_session(s, config, e.user_id, int(e.item_id), "no", None, "not_for_me", now)
             elif e.event_type == "not_for_me" and e.reason:
                 to_niche = e.reason == "industry_not_interesting"
                 to_skills = e.reason == "not_my_skills"

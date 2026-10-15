@@ -33,7 +33,9 @@ def main() -> int:
     if args.experiment:
         out = ab_report(store, posts, load_feed_config(settings.config_file), args.experiment, now, args.days)
     else:
+        from signal_feed.evaluation.metrics import inferred_metrics
         out = weekly_metrics(store, posts, now, args.days)
+        out["inferred_problems"] = inferred_metrics(store, now, max(args.days, 30))
     if args.json:
         print(json.dumps(out, indent=2, default=str))
         return 0

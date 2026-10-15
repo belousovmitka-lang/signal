@@ -21,7 +21,8 @@ from .db import EventRow, FeedStore
 from .posts import PostsReader
 
 ItemType = Literal["post", "problem", "inferred"]
-NotForMeReason = Literal["not_my_skills", "industry_not_interesting", "too_crowded", "too_small", "already_exists"]
+NotForMeReason = Literal["not_my_skills", "industry_not_interesting", "too_crowded", "too_small", "already_exists",
+                         "not_true"]   # not_true: "Not true in my experience", for inferred problems (17.8)
 
 
 class UnknownUserError(LookupError):

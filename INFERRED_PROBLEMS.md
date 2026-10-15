@@ -123,6 +123,15 @@ Reject automatically if, after dropping unsupported items, fewer than 3 evidence
 - **Builder field notes:** when builders log customer conversations in the outreach flow, notes that mention an inferred problem attach to it as evidence (with the builder's permission).
 - **Learning:** track, per detector and per signal combination, the share of published inferred problems that insiders confirm and that lead to saves, ideas and outreach. Lower the weight of combinations that keep failing; raise those that hold up.
 
+**As built (2026-10-15):** `signal_feed/inferred/validation.py`.
+- *Insiders* are users who name the industries they work in at onboarding (`works_in`, separate from their interests). Someone interested in Legal but not working in it is not an insider.
+- *The prompt:* `GET /inferred/prompt` returns at most one question per 7 days: the best published inferred problem in their industry they haven't been asked about or voted on, with its first 3 evidence items. Answers go to `POST /inferred/{id}/vote` (yes / no / partly + a note of up to 300 characters, personal data scrubbed; a later vote replaces the earlier one).
+- *Effect:* only insider votes count. 2 insider "yes" make it **high** (17.6). Net insider "no" (no − yes − ½ partly) ≥ 2 lowers it one level, and ≥ 3 rejects it once it is low (recorded as `rejected_by_insiders`). "Not for me" with reason `not_true` ("Not true in my experience", 17.8) on an inferred item records a "no" vote and leaves the user's niche affinity alone.
+- *Field notes:* `POST /inferred/{id}/field-notes` attaches a builder's customer-conversation note as evidence (source type `field_note`) only when `share` is true. Personal data is scrubbed, and the note can raise the evidence count and confidence.
+- *Full chain:* `GET /inferred/{id}` returns the evidence and counter-evidence ("+N more").
+- *Learning:* `scripts/inferred.py weights` (weekly). Per detector × evidence source-type mix, `weight = 2 × (held up + 1) / (judged + 2)`, clamped to 0.3–1.5. A problem holds up when insiders confirmed it or someone saved it, turned it into an idea or reached out; it fails when insiders rejected it; critic rejections don't count. No data gives 1. Inferred items' ranking scores are multiplied by their weight, which is logged in `score_breakdown.detector_weight`.
+- *17.10 metrics* are in `scripts/feed_metrics.py` under `inferred_problems`: insider confirmation rate per detector, critic rejection rate, share with no existing solution found, and save and idea rates of inferred vs reported items.
+
 ### 17.8 How it appears in the app
 
 - Label: **Inferred** (vs. Reported), with the confidence level.

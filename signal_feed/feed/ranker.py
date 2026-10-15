@@ -133,12 +133,14 @@ class RankerV1:
             terms = {action: weights[action] * p for action, p in probs[k].items()}
             quality = (qf.base + qf.problem_score * it.problem_rank) * (1 - qf.toxicity_penalty * it.toxicity)
             raw = sum(terms.values())
-            score = raw * quality
+            score = raw * quality * it.detector_weight      # 1 for posts; 17.7 learning for inferred problems
             breakdown = {"ranker": self.name, "source": c.source,
                          "features": {n: round(v, 3) for n, v in feats[k].items()},
                          "probabilities": {a: round(p, 4) for a, p in probs[k].items()},
                          "terms": {a: round(t, 4) for a, t in terms.items()},
                          "raw": round(raw, 4), "quality_factor": round(quality, 4)}
+            if it.item_type == "inferred":
+                breakdown["detector_weight"] = it.detector_weight
             if useful is not None:     # section 8.4: blend the value model into the score
                 p_useful, points = useful[k]
                 score = (1 - rk.value_model_blend) * score + rk.value_model_blend * points

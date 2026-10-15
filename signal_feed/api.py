@@ -33,6 +33,7 @@ class Quiz(BaseModel):
     industries: list[str] = Field(min_length=1, max_length=20)
     skills: list[str] = Field(default_factory=list, max_length=20)
     resume_skills: list[str] = Field(default_factory=list, max_length=50)
+    works_in: list[str] = Field(default_factory=list, max_length=10)   # industries they work in (insiders, 17.7)
 
 
 class Onboarded(BaseModel):
@@ -67,6 +68,18 @@ class ModeChange(BaseModel):
     problem_id: int | None = None          # required for committed
 
 
+class Vote(BaseModel):
+    user_id: str
+    vote: Literal["yes", "no", "partly"]
+    note: str | None = Field(default=None, max_length=300)
+
+
+class FieldNote(BaseModel):
+    user_id: str
+    note: str = Field(min_length=1, max_length=400)
+    share: bool                        # the builder's permission to attach it as evidence
+
+
 class Decision(BaseModel):
     update_id: int
     approve: bool
@@ -96,7 +109,8 @@ def create_app(store: FeedStore, posts: PostsReader, config: FeedConfig, service
     @app.post("/onboarding")
     def post_onboarding(quiz: Quiz) -> Onboarded:
         try:
-            return Onboarded(user_id=onboard(store, config, quiz.industries, quiz.skills, quiz.resume_skills))
+            return Onboarded(user_id=onboard(store, config, quiz.industries, quiz.skills, quiz.resume_skills,
+                                             works_in=quiz.works_in))
         except UnknownNodeError as exc:
             raise HTTPException(status_code=422, detail=str(exc)) from None
 
@@ -173,6 +187,49 @@ def create_app(store: FeedStore, posts: PostsReader, config: FeedConfig, service
     def post_reset(a: UserAction) -> dict:
         _user(a.user_id)
         return _act(usermap.reset, a.user_id)
+
+    @app.get("/inferred/prompt")
+    def get_insider_prompt(user_id: str) -> dict:
+        """17.7: at most one question a week for insiders: "Is this real where you work?"."""
+        _user(user_id)
+        from .inferred.validation import next_prompt
+        return {"prompt": next_prompt(store, config, user_id)}
+
+    @app.get("/inferred/{inferred_id}")
+    def get_inferred(inferred_id: int, user_id: str) -> dict:
+        """The full evidence chain ("+N more", 17.8) and what was found against it."""
+        _user(user_id)
+        from .db import InferredEvidenceRow, InferredProblemRow
+        with store.session() as s:
+            p = s.get(InferredProblemRow, inferred_id)
+            if p is None or p.status != "published":
+                raise HTTPException(status_code=404, detail="unknown inferred problem")
+            ev = [e for e in s.scalars(select(InferredEvidenceRow).where(InferredEvidenceRow.inferred_id == p.id))
+                  if e.supported is not False]
+            return {"inferred_id": p.id, "kind": "inferred", "confidence": p.confidence, "hypothesis": p.hypothesis,
+                    "who": p.who, "evidence": [{"url": e.url, "source": e.source, "what_it_shows": e.what_it_shows}
+                                               for e in ev],
+                    "counter_evidence": [{"url": c.get("url"), "source": c.get("source"),
+                                          "what_it_shows": c.get("what_it_shows")} for c in p.counter_evidence or []]}
+
+    @app.post("/inferred/{inferred_id}/vote")
+    def post_vote(inferred_id: int, v: Vote) -> dict:
+        _user(v.user_id)
+        from .inferred.validation import ValidationError, record_vote
+        try:
+            return {"ok": True, "insider": record_vote(store, config, v.user_id, inferred_id, v.vote, v.note)}
+        except ValidationError as exc:
+            raise HTTPException(status_code=404, detail=str(exc)) from None
+
+    @app.post("/inferred/{inferred_id}/field-notes")
+    def post_field_note(inferred_id: int, n: FieldNote) -> dict:
+        _user(n.user_id)
+        from .inferred.validation import ValidationError, add_field_note
+        try:
+            add_field_note(store, config, n.user_id, inferred_id, n.note, n.share)
+        except ValidationError as exc:
+            raise HTTPException(status_code=422 if "permission" in str(exc) else 404, detail=str(exc)) from None
+        return {"ok": True}
 
     @app.post("/mode")
     def post_mode(m: ModeChange) -> dict:

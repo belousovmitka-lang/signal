@@ -103,3 +103,41 @@ def weekly_metrics(store: FeedStore, posts: PostsReader, now: datetime, days: in
             "scroll_depth_items": _ratio(sum(depth.values()), len(depth)),
         },
     }
+
+
+def inferred_metrics(store: FeedStore, now: datetime, days: int = 30) -> dict:
+    """Section 17.10, per detector: insider confirmation rate of published items, critic rejection rate,
+    share with no existing solution found; and save / idea rates of inferred vs reported items shown."""
+    from ..db import DetectorStatsRow, InferredProblemRow, InsiderVoteRow
+    since = now - timedelta(days=days)
+    with store.session() as s:
+        problems = list(s.scalars(select(InferredProblemRow)))
+        votes = list(s.scalars(select(InsiderVoteRow).where(InsiderVoteRow.insider.is_(True))))
+        runs = list(s.scalars(select(DetectorStatsRow).where(DetectorStatsRow.run_at >= since)))
+        shown = list(s.execute(select(ImpressionRow.item_type, ImpressionRow.id).where(
+            ImpressionRow.shown_at >= since, ImpressionRow.candidate_source != "calibration")))
+        acts = list(s.execute(select(EventRow.impression_id, EventRow.event_type).where(
+            EventRow.at >= since, EventRow.event_type.in_(("save", "idea")), EventRow.weight > 0)))
+    by_imp = dict((i, t) for t, i in shown)
+    out: dict = {"detectors": {}}
+    for det in sorted({p.detector for p in problems} | {r.detector for r in runs}):
+        mine = [p for p in problems if p.detector == det]
+        published = [p for p in mine if p.status == "published"]
+        voted = {v.inferred_id for v in votes}
+        rated = [p for p in published if p.id in voted]
+        confirmed = [p for p in rated if (p.validation or {}).get("yes", 0) > (p.validation or {}).get("no", 0)]
+        critic = sum(r.critic_runs for r in runs if r.detector == det)
+        out["detectors"][det] = {
+            "published": len(published),
+            "insider_confirmation_rate": _ratio(len(confirmed), len(rated)),        # target >= 0.5 (17.10)
+            "critic_rejection_rate": _ratio(sum(r.rejected for r in runs if r.detector == det), critic),
+            "no_existing_solution_share": _ratio(sum(1 for p in published if not any(
+                c.get("post_id") for c in p.counter_evidence or []) and not (p.critic_notes or {}).get(
+                "existing_solution")), len(published)),
+        }
+    for kind, item_type in (("inferred", "inferred"), ("reported", "post")):
+        n = sum(1 for t, _ in shown if t == item_type)
+        out[kind] = {"shown": n,
+                     "save_rate": _ratio(sum(1 for i, e in acts if e == "save" and by_imp.get(i) == item_type), n),
+                     "idea_rate": _ratio(sum(1 for i, e in acts if e == "idea" and by_imp.get(i) == item_type), n)}
+    return out

@@ -15,6 +15,7 @@ from sqlalchemy import func, select
 from ..db import (
     EnrichedPostRow,
     FeedStore,
+    DetectorWeightRow,
     InferredEvidenceRow,
     InferredProblemRow,
     NicheRow,
@@ -64,6 +65,7 @@ class Item:
     item_id: str = ""               # the post id, or the inferred problem's id
     confidence: str | None = None   # inferred only: high | medium | low (17.6)
     evidence: tuple[dict, ...] = () # inferred only: the evidence chain (url, source, what_it_shows)
+    detector_weight: float = 1.0    # inferred only: how its detector and evidence mix hold up (17.7)
 
     def __post_init__(self) -> None:
         if not self.item_id:
@@ -122,6 +124,7 @@ def load(store: FeedStore, posts: PostsReader) -> FeedData:
         problems = {p.id: p for p in s.scalars(select(ProblemRow).where(ProblemRow.status == "active"))}
         post_problem = dict(s.execute(select(ProblemPostRow.post_id, ProblemPostRow.problem_id)).all())
         inferred = list(s.scalars(select(InferredProblemRow).where(InferredProblemRow.status == "published")))
+        weights = {(w.detector, w.combo): w.weight for w in s.scalars(select(DetectorWeightRow))}
         inferred_ev: dict[int, list[InferredEvidenceRow]] = defaultdict(list)
         for e in s.scalars(select(InferredEvidenceRow).where(
                 InferredEvidenceRow.inferred_id.in_([p.id for p in inferred]))):
@@ -147,7 +150,7 @@ def load(store: FeedStore, posts: PostsReader) -> FeedData:
             quality=row.quality or 0.0, toxicity=row.toxicity or 0.0, author_role=post.author_role,
             tools=tuple(t.lower() for t in (row.tools_mentioned or []))))
         vecs.append(row.embedding)
-    _add_inferred(items, vecs, inferred, inferred_ev, rows, skills)
+    _add_inferred(items, vecs, inferred, inferred_ev, rows, skills, weights)
     # Pain and demand scores come from different formulas: rank each within its kind so the ranker can
     # compare a pain post with a tender. Inferred problems are ranked among themselves.
     by_kind: dict[str, list[float]] = defaultdict(list)
@@ -175,7 +178,8 @@ def load(store: FeedStore, posts: PostsReader) -> FeedData:
     return data
 
 
-def _add_inferred(items: list[Item], vecs: list, inferred, evidence: dict, rows: dict, skills: dict) -> None:
+def _add_inferred(items: list[Item], vecs: list, inferred, evidence: dict, rows: dict, skills: dict,
+                  weights: dict | None = None) -> None:
     """Section 17.8: each published inferred problem is a feed item. Its vector is the mean of its evidence
     posts' embeddings, its features the evidence posts' averages."""
     for p in inferred:
@@ -198,6 +202,7 @@ def _add_inferred(items: list[Item], vecs: list, inferred, evidence: dict, rows:
             toxicity=float(max(r.toxicity or 0 for r in ev_rows)), author_role=None,
             tools=tuple(sorted({t.lower() for r in ev_rows for t in (r.tools_mentioned or [])})),
             item_type="inferred", item_id=str(p.id), confidence=p.confidence,
+            detector_weight=(weights or {}).get((p.detector, "+".join(sorted({e.source_type for e in ev}))), 1.0),
             evidence=tuple({"url": e.url, "source": e.source, "what_it_shows": e.what_it_shows} for e in ev)))
         vecs.append(m.mean(axis=0).tolist())
 
