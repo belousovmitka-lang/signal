@@ -453,3 +453,144 @@ def test_detector_weights_learn_from_what_holds_up(market, feed_store, feed_conf
     m = inferred_metrics(feed_store, NOW)
     assert m["detectors"]["paid_workarounds"]["published"] == 1
     assert m["detectors"]["paid_workarounds"]["insider_confirmation_rate"] == 1.0
+
+
+# --- step 5: detectors 3-6, trial until insiders confirm them ------------------------------------
+
+def _world(tmp_path, feed_store, specs):
+    """specs: [(source, source_type, branch path, row fields, post fields)] -> PostsReader."""
+    seed_tree(feed_store)
+    with feed_store.session() as s:
+        nodes = {(n.label if n.parent_id is None else f"{s.get(NicheRow, n.parent_id).label} > {n.label}"): n.id
+                 for n in s.scalars(select(NicheRow).where(NicheRow.tree == "industry"))}
+    raw, rows, placed = [], [], []
+    for k, (source, stype, path, row, post) in enumerate(specs):
+        p = RawPost(source=source, source_type=stype, route="own_api", url=f"https://w.example/{k}",
+                    title=post.pop("title", f"post {k}"), text="t", is_snippet=False,
+                    published_at=post.pop("published_at", NOW - timedelta(days=k % 30)), **post)
+        raw.append(p)
+        rows.append(EnrichedPostRow(**({"post_id": p.id, "status": "ok", "post_type": "pain", "industry_path": [path.split(" > ")[0]],
+                                        "intensity": 0.5, "buyer_likelihood": 0.5, "quality": 0.6, "prompt_version": "v9",
+                                        "enriched_at": NOW} | row)))
+        placed.append(PostNicheRow(post_id=p.id, niche_id=nodes[path], tree="industry", similarity=0.9))
+    url = f"sqlite:///{tmp_path / 'signal.db'}"
+    Store(url).save_posts(raw, text_dedupe=False)
+    with feed_store.session() as s, s.begin():
+        s.add_all(rows)
+        s.add_all(placed)
+    from signal_feed.posts import PostsReader
+    return PostsReader(url), nodes, raw
+
+
+def test_tool_gaps_finds_hand_carried_data(tmp_path, feed_store, feed_config):
+    from signal_feed.inferred import tool_gaps
+    moved = {"data_moved": [{"from_tool": "Shopify", "to_tool": "QuickBooks", "data": "order totals"}],
+             "post_type": "tool_gap", "who_has_pain": "store owner"}
+    specs = [("hackernews" if k % 2 else "wordpress:x", "community" if k % 2 else "review", "E-commerce and retail", moved, {})
+             for k in range(8)]
+    specs.append(("rss:apps", "news", "E-commerce and retail", {"post_type": "listing", "status": "dropped",
+                                                               "tools_mentioned": ["Shopify", "QuickBooks"],
+                                                               "embedding": unit(np.ones(DIM))}, {"title": "Sync app"}))
+    reader, *_ = _world(tmp_path, feed_store, specs)
+    [c], pairs = tool_gaps.find_candidates(feed_store, reader, feed_config, NOW)
+    assert pairs == 1 and c.hypothesis == "Users of Shopify and QuickBooks move order totals between them by hand."
+    assert all(e.what_it_shows == "A store owner moves order totals from Shopify to QuickBooks by hand" for e in c.evidence)
+    assert c.counter_evidence[0]["what_it_shows"] == "Names both Shopify and QuickBooks (possible integration)"
+    cfg = feed_config.model_copy(update={"inferred": feed_config.inferred.model_copy(update={
+        "tool_gaps": feed_config.inferred.tool_gaps.model_copy(update={"min_mentions": 9})})})
+    assert tool_gaps.find_candidates(feed_store, reader, cfg, NOW)[0] == []
+
+
+def test_labor_pressure_needs_a_rise_and_routine_duties(tmp_path, feed_store, feed_config):
+    from signal_feed.inferred import labor_pressure
+    job = {"post_type": "paid_demand", "task": "enter payroll data", "task_automatable": 0.8}
+    specs = [("job_boards", "paid_demand", "HR and recruiting > Payroll and benefits", dict(job),
+              {"title": "Payroll Clerk", "community": f"Co {k}", "published_at": NOW - timedelta(days=k)}) for k in range(12)]
+    specs += [("job_boards", "paid_demand", "HR and recruiting > Payroll and benefits", dict(job),
+               {"title": "Payroll Clerk", "community": f"Old {k}", "published_at": NOW - timedelta(days=100 + k)})
+              for k in range(6)]
+    specs += [("hackernews", "community", "HR and recruiting", {"who_has_pain": "payroll clerk",
+                                                                "pain_statement": "Keying timesheets takes all Monday"}, {})
+              for _ in range(2)]
+    reader, *_ = _world(tmp_path, feed_store, specs)
+    [c], groups = labor_pressure.find_candidates(feed_store, reader, feed_config, NOW)
+    assert c.hypothesis == "Demand for payroll clerks is rising; enter payroll data are candidates for automation."
+    summary = c.evidence[0]
+    assert (summary.counts, summary.url) == (False, "") and summary.what_it_shows.startswith("12 job posts")
+    assert {e.source_type for e in c.evidence if e.counts} == {"paid_demand", "community"}
+    with feed_store.session() as s, s.begin():                       # routine share too low -> nothing
+        for r in s.scalars(select(EnrichedPostRow).where(EnrichedPostRow.task == "enter payroll data")):
+            r.task_automatable = 0.2
+    assert labor_pressure.find_candidates(feed_store, reader, feed_config, NOW)[0] == []
+
+
+def test_ignored_requests_need_votes_age_and_still_open(tmp_path, feed_store, feed_config):
+    from signal_feed.inferred import ignored_requests
+    old = NOW - timedelta(days=500)
+    issue = ("github", "startup", "IT and developer tools", {"post_type": "tool_gap", "tools_mentioned": ["Grafana"],
+                                                            "task": "export dashboards as PDF"},
+             {"title": "Export dashboards as PDF", "published_at": old, "engagement": {"reactions": 120},
+              "raw": {"state": "open"}, "community": "grafana/grafana"})
+    complaint = ("hackernews", "community", "IT and developer tools",
+                 {"post_type": "tool_gap", "tools_mentioned": ["Grafana"], "pain_statement": "No PDF export in Grafana"}, {})
+    reader, *_ = _world(tmp_path, feed_store, [issue, complaint, complaint])
+    [c], n = ignored_requests.find_candidates(feed_store, reader, feed_config, NOW)
+    assert n == 1 and c.hypothesis == "Grafana users have asked for export dashboards as PDF for over 1 year; nobody serves them."
+    assert c.evidence[0].what_it_shows.startswith("Open 500 days with 120 votes")
+    closed = (issue[0], issue[1], issue[2], issue[3], {**issue[4], "raw": {"state": "closed"}})
+    for f in tmp_path.glob("signal.db*"):
+        f.unlink()
+    feed_store2 = type(feed_store)(f"sqlite:///{tmp_path / 'feed2.db'}")
+    reader2, *_ = _world(tmp_path, feed_store2, [closed, complaint, complaint])
+    assert ignored_requests.find_candidates(feed_store2, reader2, feed_config, NOW)[0] == []
+
+
+def _transfer_world(tmp_path, feed_store, tools_at_home: bool):
+    """Legal > Contract work pays people to redline contracts (6 items, 6 buyers, tenders + job posts); Real estate
+    has 3 tool posts for the same task; optionally Legal has one too."""
+    rng = np.random.default_rng(11)
+    task = rng.normal(size=DIM)
+    near = lambda: unit(task + rng.normal(scale=0.05, size=DIM))  # noqa: E731
+    paid = {"post_type": "paid_demand", "task": "redline vendor contracts", "task_automatable": 0.9}
+    specs = [("uk_tenders" if k < 3 else "job_boards", "government" if k < 3 else "paid_demand", "Legal > Contract work",
+              {**paid, "task_embedding": near(), "pain_embedding": near(), "embedding": near()},
+              {"community": f"Buyer {k}"}) for k in range(6)]
+    specs += [("wordpress:contracts", "review", "Real estate > Brokerage operations",
+               {"post_type": "praise", "status": "dropped", "tools_mentioned": ["DealDocs"], "embedding": near()}, {})
+              for _ in range(3)]
+    if tools_at_home:
+        specs.append(("wordpress:contracts", "review", "Legal > Law firm operations",
+                      {"post_type": "praise", "status": "dropped", "tools_mentioned": ["LexRedline"], "embedding": near()}, {}))
+    return _world(tmp_path, feed_store, specs)[0]
+
+
+@pytest.mark.parametrize("tools_at_home", [False, True])
+def test_cross_industry_needs_tools_elsewhere_and_none_at_home(tmp_path, feed_store, feed_config, tools_at_home):
+    from signal_feed.inferred import cross_industry
+    from signal_feed.inferred.paid_workarounds import find_candidates as d1
+    reader = _transfer_world(tmp_path, feed_store, tools_at_home)
+    assert len(d1(feed_store, reader, feed_config, NOW)[0]) == 1        # Detector 1 writes the task clusters
+    cands, _ = cross_industry.find_candidates(feed_store, reader, feed_config, NOW)
+    if tools_at_home:
+        assert cands == []                                               # Legal already has a tool: no transfer
+        return
+    [c] = cands
+    assert c.hypothesis == "Redline vendor contracts has good tools in Real estate but Legal still does it by hand."
+    tools = [e for e in c.evidence if e.source_type == "review"]
+    assert len(tools) == 3 and all(e.what_it_shows == "In Real estate, a tool for this: DealDocs" for e in tools)
+
+
+def test_trial_detectors_stay_out_of_the_feed_until_insiders_confirm(market, feed_store, feed_config):
+    from signal_feed.inferred.validation import live_detectors, next_prompt
+    reader, *_ = market
+    trial = feed_config.model_copy(update={"inferred": feed_config.inferred.model_copy(update={
+        "stages": {**feed_config.inferred.stages, "paid_workarounds": "trial"}, "promote_min_rated": 1})})
+    row = publish(feed_store, trial, reader, verdict(6))
+    assert not any(it.item_type == "inferred" for it in load(feed_store, reader, trial).items)    # trial: not in feed
+    uid = insider(feed_store, trial)
+    assert next_prompt(feed_store, trial, uid, clock=lambda: NOW)["inferred_id"] == row.id       # but insiders see it
+    from signal_feed.inferred.validation import record_vote
+    record_vote(feed_store, trial, uid, row.id, "yes")
+    with feed_store.session() as s:
+        assert "paid_workarounds" in live_detectors(s, trial)                                    # 1 rated, 100%
+    assert any(it.item_type == "inferred" for it in load(feed_store, reader, trial).items)

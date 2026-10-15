@@ -137,6 +137,8 @@ class FeedService:
     def __init__(self, store: FeedStore, config: FeedConfig, cache: FeedDataCache,
                  clock: Callable[[], datetime] = utcnow, seed: int | None = None) -> None:
         self.store, self.config, self.cache, self.clock = store, config, cache, clock
+        if cache.config is None:
+            cache.config = config            # the feed always gates inferred problems by detector stage
         self.rng = np.random.default_rng(seed)
         self._models: tuple = ()
         self._value = None

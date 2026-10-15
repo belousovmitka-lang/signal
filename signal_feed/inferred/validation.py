@@ -95,7 +95,8 @@ def recompute(s, row: InferredProblemRow, config: FeedConfig) -> None:
                           InsiderVoteRow.vote == "no")) or 0}
     if row.status not in ("published", "candidate"):
         return
-    ev = [Evidence(e.post_id, e.source, e.source_type, e.url, e.what_it_shows) for e in _evidence(s, row.id)]
+    ev = [Evidence(e.post_id, e.source, e.source_type, e.url, e.what_it_shows, counts=e.counts is not False)
+          for e in _evidence(s, row.id)]
     critic = row.critic_notes or {}
     existing = any(c.get("post_id") for c in row.counter_evidence or []) or bool(critic.get("existing_solution"))
     level = confidence(ev, icfg, critic.get("verdict"), existing, insider_confirmations=counts["yes"])
@@ -214,3 +215,21 @@ def update_weights(store: FeedStore, config: FeedConfig, clock: Callable[[], dat
             s.merge(row)
             out.append(row)
     return out
+
+
+def live_detectors(s, config: FeedConfig) -> set[str]:
+    """Detectors whose problems may enter the feed: `live` in config, or a `trial` detector whose published
+    problems insiders have rated enough and confirmed often enough (17.11 step 5)."""
+    icfg = config.inferred
+    live = {d for d, stage in icfg.stages.items() if stage == "live"}
+    for detector in (d for d, stage in icfg.stages.items() if stage == "trial"):
+        rated = confirmed = 0
+        for p in s.scalars(select(InferredProblemRow).where(InferredProblemRow.detector == detector,
+                                                            InferredProblemRow.status.in_(("published", "rejected")))):
+            v = p.validation or {}
+            if v.get("yes", 0) + v.get("no", 0) + v.get("partly", 0):
+                rated += 1
+                confirmed += v.get("yes", 0) > v.get("no", 0)
+        if rated >= icfg.promote_min_rated and confirmed / rated >= icfg.promote_min_confirmation:
+            live.add(detector)
+    return live

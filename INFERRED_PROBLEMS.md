@@ -160,3 +160,15 @@ Reject automatically if, after dropping unsupported items, fewer than 3 evidence
 3. Detector 2 (rule obligations extraction and role matching).
 4. Insider prompts and validation storage.
 5. Detectors 3–6, one at a time, each shipped only if its insider confirmation rate holds up.
+
+**Status (2026-10-15):** steps 1–5 are built, tests pass, everything is committed.
+- **Stages:** detectors 1–2 are `live`. Detectors 3–6 are `trial` (`inferred.stages`): their published problems go only to insider prompts, never the feed, and a trial detector goes live by itself once ≥ 10 of its problems are insider-rated with ≥ 50% confirmed (17.10's target).
+- **Detector 3** (`tool_gaps.py`): v9 `data_moved` triples grouped by tool pair, ≥ 8 posts from ≥ 2 source types. A catalog listing or review naming both tools is the first counter-evidence (a possible integration).
+- **Detector 4** (`labor_pressure.py`): job posts per role × industry, last 90 days vs the 90 before. Volume or median stated pay must be up ≥ 20% with ≥ 10 current posts, and the routine share (mean v9 `task_automatable`) must be ≥ 0.6. People in that role describing the work add a second source type. The counted change ("12 job posts vs 6 before") is shown as a summary line that never counts as evidence.
+- **Detector 5** (`ignored_requests.py`): GitHub issues and discussions with ≥ 50 reactions or upvotes, ≥ 12 months old, still open (discussions: no accepted answer), plus complaints naming the same tool. Whether the vendor replied isn't in the collected data, so it is left to the critic. Public feature boards aren't collected.
+- **Detector 6** (`cross_industry.py`): Detector 1's qualifying task clusters, with ≥ 3 tool posts within cosine 0.75 of the task in another industry and none in the cluster's own.
+- `scripts/inferred.py run` runs all six in order (Detector 6 reads Detector 1's clusters).
+
+**What is blocking real output:**
+1. Anthropic credit, for the v9 re-tag (task, task_automatable, data_moved, obligations) and for the critic. Without the critic nothing is published.
+2. Inputs: job posts (73 so far, untagged), freelance gigs and template marketplaces (not collected), year-old popular GitHub issues (the connector collects new ones), and public feature boards (deferred). First run on the real corpus: 0 candidates from every detector.

@@ -463,6 +463,7 @@ class InferredEvidenceRow(FeedBase):
     url: Mapped[str] = mapped_column(Text)
     what_it_shows: Mapped[str] = mapped_column(Text)
     supported: Mapped[bool | None] = mapped_column(Boolean)    # the critic's check; None until it runs
+    counts: Mapped[bool] = mapped_column(Boolean, default=True)  # False: a computed summary, not evidence
 
 
 class TaskClusterRow(FeedBase):

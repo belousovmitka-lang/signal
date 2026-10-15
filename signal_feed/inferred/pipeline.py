@@ -19,11 +19,13 @@ from ..llm_task import LLMTask
 from ..posts import PostsReader
 from ..problems.score import PAIN, components, score
 from ..problems.score import Evidence as ScoreEvidence
-from . import paid_workarounds, rule_change
+from . import cross_industry, ignored_requests, labor_pressure, paid_workarounds, rule_change, tool_gaps
 from .common import Candidate, confidence, meets_minimum
 from .critic import run_critic
 
-DETECTORS = {paid_workarounds.NAME: paid_workarounds.find_candidates, rule_change.NAME: rule_change.find_candidates}
+# Order matters: cross_industry reads the task clusters paid_workarounds writes.
+DETECTORS = {m.NAME: m.find_candidates for m in (paid_workarounds, rule_change, tool_gaps, labor_pressure,
+                                                 ignored_requests, cross_industry)}
 
 
 @dataclass
@@ -84,7 +86,7 @@ def run_detector(store: FeedStore, posts: PostsReader, config: FeedConfig, name:
             s.execute(delete(InferredEvidenceRow).where(InferredEvidenceRow.inferred_id == row.id))
             s.add_all(InferredEvidenceRow(inferred_id=row.id, post_id=e.post_id, record_id=e.record_id, source=e.source,
                                           source_type=e.source_type, url=e.url, what_it_shows=e.what_it_shows,
-                                          supported=e.supported) for e in evidence_rows)
+                                          supported=e.supported, counts=e.counts) for e in evidence_rows)
         report.items.append(f"[{status}{'/' + conf if conf else ''}] {cand.hypothesis} ({len(cand.evidence)} items)")
     with store.session() as s, s.begin():
         for pid in set(old) - matched:

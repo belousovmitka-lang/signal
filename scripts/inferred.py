@@ -43,7 +43,7 @@ def main() -> int:
             from signal_feed.enrichment.llm import AnthropicTagger
             from signal_feed.llm_task import LLMTask
             llm = LLMTask(store, config.enrichment, AnthropicTagger())
-        for name in args.detector or sorted(DETECTORS):
+        for name in args.detector or list(DETECTORS):          # in pipeline order
             try:
                 r = run_detector(store, PostsReader(settings.posts_database_url), config, name, llm)
             except BudgetExceededError as exc:   # incl. a billing refusal: a message, not a traceback

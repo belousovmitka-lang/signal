@@ -253,6 +253,28 @@ class RuleChangeConfig(_Strict):
     max_comment_evidence: int = Field(ge=0)
 
 
+class ToolGapsConfig(_Strict):
+    min_mentions: int = Field(gt=0)
+    min_source_types: int = Field(gt=0)
+
+
+class LaborPressureConfig(_Strict):
+    window_days: int = Field(gt=0)
+    min_rise: float = Field(gt=0)
+    min_current_posts: int = Field(gt=0)
+    min_routine: Fraction = Field(ge=0, le=1)
+
+
+class IgnoredRequestsConfig(_Strict):
+    min_votes: int = Field(gt=0)
+    min_age_days: int = Field(gt=0)
+
+
+class CrossIndustryConfig(_Strict):
+    task_cosine: Fraction = Field(ge=0, le=1)
+    min_tool_posts: int = Field(gt=0)
+
+
 class InferredConfig(_Strict):
     min_evidence: int = Field(gt=0)
     min_source_types: int = Field(gt=0)
@@ -264,8 +286,15 @@ class InferredConfig(_Strict):
     counter_evidence_cosine: Fraction = Field(ge=0, le=1)
     counter_evidence_max: int = Field(ge=0)
     embed_dropped_types: list[TaggedPostType] = Field(default_factory=list)
+    stages: dict[str, Literal["live", "trial"]]
+    promote_min_rated: int = Field(gt=0)
+    promote_min_confirmation: Fraction = Field(ge=0, le=1)
     paid_workarounds: PaidWorkaroundsConfig
     rule_change: RuleChangeConfig
+    tool_gaps: ToolGapsConfig
+    labor_pressure: LaborPressureConfig
+    ignored_requests: IgnoredRequestsConfig
+    cross_industry: CrossIndustryConfig
     validation: ValidationConfig
 
 

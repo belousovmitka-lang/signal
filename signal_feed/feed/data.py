@@ -18,6 +18,7 @@ from ..db import (
     DetectorWeightRow,
     InferredEvidenceRow,
     InferredProblemRow,
+    InsiderVoteRow,
     NicheRow,
     PostNicheRow,
     ProblemPostRow,
@@ -107,10 +108,13 @@ def fingerprint(store: FeedStore) -> tuple:
                 s.scalar(select(func.max(NicheRow.version))),
                 s.scalar(select(func.max(InferredProblemRow.refreshed_at))),
                 s.scalar(select(func.count()).select_from(InferredProblemRow)
-                         .where(InferredProblemRow.status == "published")))
+                         .where(InferredProblemRow.status == "published")),
+                s.scalar(select(func.count()).select_from(InsiderVoteRow)))   # votes move confidence and stages
 
 
-def load(store: FeedStore, posts: PostsReader) -> FeedData:
+def load(store: FeedStore, posts: PostsReader, config=None) -> FeedData:
+    """`config` gates inferred problems by detector stage (trial detectors stay out); without it, every
+    published inferred problem is included."""
     with store.session() as s:
         rows = {r.post_id: r for r in s.scalars(select(EnrichedPostRow).where(
             EnrichedPostRow.status == "ok", EnrichedPostRow.embedding.is_not(None)))}
@@ -123,7 +127,10 @@ def load(store: FeedStore, posts: PostsReader) -> FeedData:
                 skills[pid].append(nid)
         problems = {p.id: p for p in s.scalars(select(ProblemRow).where(ProblemRow.status == "active"))}
         post_problem = dict(s.execute(select(ProblemPostRow.post_id, ProblemPostRow.problem_id)).all())
-        inferred = list(s.scalars(select(InferredProblemRow).where(InferredProblemRow.status == "published")))
+        from ..inferred.validation import live_detectors
+        live = live_detectors(s, config) if config is not None else None
+        inferred = [p for p in s.scalars(select(InferredProblemRow).where(InferredProblemRow.status == "published"))
+                    if live is None or p.detector in live]       # trial detectors: insider prompts only
         weights = {(w.detector, w.combo): w.weight for w in s.scalars(select(DetectorWeightRow))}
         inferred_ev: dict[int, list[InferredEvidenceRow]] = defaultdict(list)
         for e in s.scalars(select(InferredEvidenceRow).where(
@@ -210,7 +217,8 @@ def _add_inferred(items: list[Item], vecs: list, inferred, evidence: dict, rows:
 class FeedDataCache:
     """One snapshot per process, rebuilt when the fingerprint changes."""
 
-    def __init__(self, store: FeedStore, posts: PostsReader) -> None:
+    def __init__(self, store: FeedStore, posts: PostsReader, config=None) -> None:
+        self.config = config
         self.store, self.posts = store, posts
         self._data: FeedData | None = None
         self._lock = Lock()
@@ -219,6 +227,6 @@ class FeedDataCache:
         fp = fingerprint(self.store)
         with self._lock:
             if self._data is None or self._data.fingerprint != fp:
-                self._data = load(self.store, self.posts)
+                self._data = load(self.store, self.posts, self.config)
                 self._data.fingerprint = fp
             return self._data

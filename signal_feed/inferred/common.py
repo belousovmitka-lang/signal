@@ -21,6 +21,7 @@ class Evidence:
     what_it_shows: str
     record_id: str | None = None
     supported: bool | None = None
+    counts: bool = True              # False for a computed summary line: shown, never counted as evidence
 
 
 @dataclass
@@ -58,12 +59,16 @@ def buyer_label(post: RawPost, row: EnrichedPostRow) -> str:
     return f"a {row.who_has_pain}" if row.who_has_pain else "a poster"
 
 
+def counted(evidence: list[Evidence]) -> list[Evidence]:
+    return [e for e in evidence if e.counts]
+
+
 def source_types(evidence: list[Evidence]) -> int:
-    return len({e.source_type for e in evidence})
+    return len({e.source_type for e in counted(evidence)})
 
 
 def meets_minimum(evidence: list[Evidence], cfg: InferredConfig) -> bool:
-    return len(evidence) >= cfg.min_evidence and source_types(evidence) >= cfg.min_source_types
+    return len(counted(evidence)) >= cfg.min_evidence and source_types(evidence) >= cfg.min_source_types
 
 
 def confidence(evidence: list[Evidence], cfg: InferredConfig, verdict: str | None, existing_solution: bool,
@@ -73,7 +78,7 @@ def confidence(evidence: list[Evidence], cfg: InferredConfig, verdict: str | Non
         return None
     if insider_confirmations >= cfg.high_insider_confirmations:
         return "high"
-    if (verdict == "keep" and len(evidence) >= cfg.high_evidence and source_types(evidence) >= cfg.high_source_types
+    if (verdict == "keep" and len(counted(evidence)) >= cfg.high_evidence and source_types(evidence) >= cfg.high_source_types
             and not existing_solution):
         return "high"
     if verdict in ("keep", "revise"):

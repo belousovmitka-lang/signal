@@ -168,6 +168,31 @@ inferred:
     min_buyers: 3
     min_automatable: 0.5          # v9 tags: skip tasks software can't do (repairs, construction)
     allow_derived_tasks: true     # until posts carry v9 tasks, use the pain statement (never published uncritiqued)
+  # 17.11 step 5: detectors 3-6 ship only if insiders confirm them. A `trial` detector's problems go to
+  # insider prompts only, never the feed; it goes live by itself once enough of them are rated and confirmed.
+  stages:
+    paid_workarounds: live
+    rule_change: live
+    tool_gaps: trial
+    labor_pressure: trial
+    ignored_requests: trial
+    cross_industry: trial
+  promote_min_rated: 10           # trial -> live after this many insider-rated problems...
+  promote_min_confirmation: 0.5   # ...with at least this share confirmed (17.10 target)
+  tool_gaps:                      # Detector 3 (17.3)
+    min_mentions: 8               # posts saying they move the same data between the same two tools...
+    min_source_types: 2           # ...from at least this many source types
+  labor_pressure:                 # Detector 4
+    window_days: 90               # this window vs the one before it
+    min_rise: 0.20                # volume or stated pay up at least this much
+    min_current_posts: 10         # don't read trends into a handful of posts
+    min_routine: 0.6              # mean task_automatable of the role's posts (the LLM's routine-share rating)
+  ignored_requests:               # Detector 5
+    min_votes: 50
+    min_age_days: 365
+  cross_industry:                 # Detector 6
+    task_cosine: 0.75             # tool posts this close to a workaround task count as serving it
+    min_tool_posts: 3             # the served industry needs this many tool posts (reviews, listings, launches)
   validation:                     # 17.7
     prompt_every_days: 7          # an insider is asked about at most one inferred problem per this many days
     downgrade_after_net_no: 2     # insider no's minus yes's (partly = half a yes) that lower confidence one level
