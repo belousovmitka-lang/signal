@@ -799,6 +799,28 @@ sources:
       - {industry_hint: events_weddings, keywords: ['"special event permit"'], limit: 10}
       - {industry_hint: dog_grooming, keywords: ['"pet grooming"'], limit: 10}
 
+  census_bfs:
+    connector: stats
+    enabled: true
+    status: done
+    status_date: 2026-10-15
+    route: own_api
+    source_type: research
+    cadence: monthly
+    env: [CENSUS_API_KEY]
+    access_check:
+      robots: allowed
+      terms: allowed
+      decision: full
+      terms_url: https://www.census.gov/data/developers/about/terms-of-service.html
+      checked_at: 2026-10-15
+      notes: >-
+        Census Data API terms allow commercial use; the app must display "This product uses the Census Bureau
+        Data API but is not endorsed or certified by the Census Bureau." (raw.notice). National aggregates only.
+        robots.txt answers our bot with a firewall page that has no rules.
+    queries:
+      - {params: {months: 2}, limit: 100}
+
   github:
     enabled: true
     status: done
