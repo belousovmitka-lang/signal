@@ -25,7 +25,7 @@ PERSONAL_KEYS = {
     "login", "gravatar_id",
 }
 # Dropped whole: these hold nothing connectors need.
-DROPPED_CONTAINERS = {"pointofcontact", "relatedpersonslist", "patient"}
+DROPPED_CONTAINERS = {"pointofcontact", "relatedpersonslist", "patient", "sponsors"}   # LegiScan sponsors
 PERSONAL_PREFIXES = ("contact_", "manufacturer_contact_", "distributor_")
 # Inside these objects, also redact their name/link-style fields.
 PERSON_CONTAINERS = {"account", "author", "creator", "owner", "user", "person", "mentions", "submitter",

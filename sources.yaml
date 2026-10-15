@@ -746,6 +746,59 @@ sources:
       - {industry_hint: agriculture, keywords: ["agriculture"], limit: 40}
       - {industry_hint: it_devtools, keywords: ["artificial intelligence"], limit: 40}
 
+  legiscan:
+    enabled: true
+    status: done
+    status_date: 2026-10-15
+    route: own_api
+    source_type: government
+    cadence: daily
+    env: [LEGISCAN_API_KEY]
+    rate_limit: {requests_per_second: 1.0, domains: [api.legiscan.com]}
+    quota: {units: 300, window_days: 1}           # free tier: 10,000/month; 27 queries x (1 search + 10 bills) fits
+    access_check:
+      robots: allowed
+      terms: allowed
+      decision: full
+      terms_url: https://legiscan.com/legiscan
+      checked_at: 2026-10-15
+      notes: >-
+        API key granted 2026-10-15 for this use case (public tier, 10,000 queries/month). Data licensed CC BY 4.0:
+        credit LegiScan and link to each bill. api.legiscan.com/robots.txt redirects to a Cloudflare challenge
+        (403 = allow under RFC 9309); the website and API manual answer bots with that challenge, so the API was
+        cross-checked from Microsoft's LegiScan connector reference. Sponsors' names not stored.
+    options:
+      min_relevance: 60                # getSearchRaw relevance (0-100) a new bill needs
+      baseline: 10                     # bills read on a query's first run; the rest are marked seen
+    queries:
+      - {industry_hint: legal, keywords: ['"legal services"'], limit: 10}
+      - {industry_hint: healthcare, keywords: ['"prior authorization"'], limit: 10}
+      - {industry_hint: construction, keywords: ['"residential contractor"'], limit: 10}
+      - {industry_hint: real_estate, keywords: ['"real estate broker"'], limit: 10}
+      - {industry_hint: logistics, keywords: ['"commercial motor vehicle"'], limit: 10}
+      - {industry_hint: ecommerce, keywords: ['"online marketplace"'], limit: 10}
+      - {industry_hint: restaurants, keywords: ['"food service establishment"'], limit: 10}
+      - {industry_hint: accounting, keywords: ['"certified public accountant"'], limit: 10}
+      - {industry_hint: education, keywords: ['"teacher certification"'], limit: 10}
+      - {industry_hint: marketing, keywords: ['"targeted advertising"'], limit: 10}
+      - {industry_hint: hr, keywords: ['"paid sick leave"'], limit: 10}
+      - {industry_hint: insurance, keywords: ['"insurance producer"'], limit: 10}
+      - {industry_hint: manufacturing, keywords: ['"manufacturing facility"'], limit: 10}
+      - {industry_hint: agriculture, keywords: ['"agricultural producer"'], limit: 10}
+      - {industry_hint: it_devtools, keywords: ['"artificial intelligence"'], limit: 10}
+      - {industry_hint: veterinary, keywords: ['"veterinary medicine"'], limit: 10}
+      - {industry_hint: dental, keywords: ['"dental hygienist"'], limit: 10}
+      - {industry_hint: auto_repair, keywords: ['"motor vehicle repair"'], limit: 10}
+      - {industry_hint: home_services, keywords: ['"home improvement contractor"'], limit: 10}
+      - {industry_hint: fitness, keywords: ['"health club"'], limit: 10}
+      - {industry_hint: childcare, keywords: ['"child care"'], limit: 10}
+      - {industry_hint: salons, keywords: ['"cosmetology"'], limit: 10}
+      - {industry_hint: nonprofits, keywords: ['"charitable organization"'], limit: 10}
+      - {industry_hint: property_management, keywords: ['"residential landlord"'], limit: 10}
+      - {industry_hint: therapy_practices, keywords: ['"licensed professional counselor"'], limit: 10}
+      - {industry_hint: events_weddings, keywords: ['"special event permit"'], limit: 10}
+      - {industry_hint: dog_grooming, keywords: ['"pet grooming"'], limit: 10}
+
   github:
     enabled: true
     status: done

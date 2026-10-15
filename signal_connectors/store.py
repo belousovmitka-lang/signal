@@ -113,6 +113,17 @@ class CursorRow(Base):
     last_success: Mapped[datetime] = mapped_column(UTCDateTime)
 
 
+class SeenRow(Base):
+    """Items a connector has already seen, with their last change hash (e.g. LegiScan bill ids)."""
+
+    __tablename__ = "seen_items"
+
+    source: Mapped[str] = mapped_column(String(200), primary_key=True)
+    item: Mapped[str] = mapped_column(String(200), primary_key=True)
+    change_hash: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    seen_at: Mapped[datetime] = mapped_column(UTCDateTime)
+
+
 @dataclass
 class SaveResult:
     new: int = 0
@@ -243,6 +254,26 @@ class Store:
                 s.add(CursorRow(source=source, query_key=query_key, last_success=when))
             else:
                 row.last_success = when
+
+    # --- seen items ----------------------------------------------------------
+
+    def seen_hashes(self, source: str, items: list[str]) -> dict[str, str | None]:
+        """{item: change_hash} for the given items this source has seen before."""
+        out: dict[str, str | None] = {}
+        with self.session() as s:
+            for i in range(0, len(items), 500):
+                rows = s.scalars(select(SeenRow).where(SeenRow.source == source, SeenRow.item.in_(items[i:i + 500])))
+                out.update({r.item: r.change_hash for r in rows})
+        return out
+
+    def mark_seen(self, source: str, hashes: dict[str, str | None], when: datetime) -> None:
+        with self.session() as s, s.begin():
+            for item, change_hash in hashes.items():
+                row = s.get(SeenRow, (source, item))
+                if row is None:
+                    s.add(SeenRow(source=source, item=item, change_hash=change_hash, seen_at=when))
+                else:
+                    row.change_hash, row.seen_at = change_hash, when
 
     # --- costs ---------------------------------------------------------------
 
