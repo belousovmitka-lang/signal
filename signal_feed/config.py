@@ -252,6 +252,11 @@ class RuleChangeConfig(_Strict):
     job_communities: list[str] = Field(default_factory=list)
     max_job_evidence: int = Field(gt=0)
     max_comment_evidence: int = Field(ge=0)
+    max_rule_age_days: int = Field(gt=0)     # an obligation with no stated deadline counts while its rule is this new
+    voice_cosine: Fraction = Field(ge=0, le=1)   # the role's own posts this close to the obligation count...
+    min_voice_posts: int = Field(gt=0)           # ...when at least this many, from different authors
+    max_voice_evidence: int = Field(ge=0)
+    duplicate_cosine: Fraction = Field(ge=0, le=1)   # obligations this close are the same rule (one candidate)
 
 
 class ToolGapsConfig(_Strict):

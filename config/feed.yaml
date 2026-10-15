@@ -209,6 +209,13 @@ inferred:
     job_communities: ["HN Jobs"]  # ...and posts in these communities
     max_job_evidence: 5
     max_comment_evidence: 5
+    max_rule_age_days: 180        # 94% of extracted obligations state no deadline: those count while the rule is new
+    # Without enough job posts for a role, the affected people's own posts (pain, tool gaps) close to the
+    # obligation stand in as the role evidence (2026-10-15: 65 job posts in the store, too few for any role).
+    voice_cosine: 0.60            # on pain statements; 0.55 let in topical neighbours (checked 2026-10-15)
+    min_voice_posts: 3
+    max_voice_evidence: 6
+    duplicate_cosine: 0.88        # the same rule extracted from its comments and coverage
 
 # Evaluation (section 13, Phase 7)
 evaluation:

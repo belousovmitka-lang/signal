@@ -9,6 +9,7 @@ import pytest
 from sqlalchemy import select
 
 from signal_connectors.models import RawPost
+from signal_connectors.privacy import hash_author
 from signal_connectors.store import Store
 from signal_feed.db import (
     DetectorStatsRow,
@@ -347,6 +348,75 @@ def test_both_detectors_run_through_the_same_pipeline(rule_world, feed_store, fe
     with feed_store.session() as s:
         row = s.scalars(select(InferredProblemRow)).one()
     assert row.detector == "rule_change" and row.confidence == "medium" and row.task == "report hours worked each week"
+
+
+def _add_voices(tmp_path, feed_store, authors):
+    """Pain posts from people affected by the rule, close to its obligation."""
+    from signal_feed.db import ObligationRow
+    with feed_store.session() as s:
+        duty = np.asarray(s.scalars(select(ObligationRow)).one().embedding)
+    raw, rows = [], []
+    for k, author in enumerate(authors):
+        p = RawPost(source="forum:payroll", source_type="community", route="rss", url=f"https://forum.example/{k}",
+                    title=f"Weekly hours {k}", text=f"pain {k}", is_snippet=False, published_at=NOW - timedelta(days=2),
+                    author_hash=hash_author(author, "forum", salt="test"))
+        raw.append(p)
+        rows.append(EnrichedPostRow(post_id=p.id, status="ok", post_type="pain", industry_path=["HR and recruiting"],
+                                    who_has_pain="payroll manager", pain_statement=f"Tracking weekly hours by hand {k}",
+                                    embedding=unit(np.ones(DIM)), pain_embedding=unit(duty + 0.01 * k),
+                                    prompt_version="v9", enriched_at=NOW))
+    Store(f"sqlite:///{tmp_path / 'signal.db'}").save_posts(raw, text_dedupe=False)
+    with feed_store.session() as s, s.begin():
+        s.add_all(rows)
+
+
+def _rule_cfg(feed_config, **update):
+    return feed_config.model_copy(update={"inferred": feed_config.inferred.model_copy(update={
+        "rule_change": feed_config.inferred.rule_change.model_copy(update=update)})})
+
+
+def test_rule_change_without_a_role_uses_the_affected_peoples_posts(rule_world, tmp_path, feed_store, feed_config):
+    from signal_feed.db import ObligationRow
+    from signal_feed.inferred.rule_change import find_candidates as rule_candidates
+    reader, *_ = rule_world
+    with feed_store.session() as s, s.begin():
+        s.scalars(select(ObligationRow)).one().deadline = None      # most rules state none: recent rule counts
+    _add_voices(tmp_path, feed_store, ["a1", "a2", "a2", "a3"])      # a2 twice: counted once
+    cfg = _rule_cfg(feed_config, min_role_posts=13)                  # no role has enough job posts
+    cands, _ = rule_candidates(feed_store, reader, cfg, NOW)
+    assert len(cands) == 1
+    c = cands[0]
+    assert c.hypothesis == ("Wage reporting for hourly workers requires employers with hourly staff to report hours "
+                            "worked each week; the people affected already struggle with related work.")
+    voices = [e for e in c.evidence if e.source == "forum:payroll"]
+    assert len(voices) == 3 and all("describes a related problem: Tracking weekly hours" in e.what_it_shows
+                                    for e in voices)
+    assert not any(e.source == "job_boards" for e in c.evidence)
+    # Too few distinct authors, or an old rule with no deadline: no candidate.
+    assert rule_candidates(feed_store, reader, _rule_cfg(cfg, min_voice_posts=4), NOW)[0] == []
+    later = NOW + timedelta(days=feed_config.inferred.rule_change.max_rule_age_days)
+    assert rule_candidates(feed_store, reader, cfg, later)[0] == []
+
+
+def test_rule_change_keeps_one_candidate_per_rule_named_by_its_docket(rule_world, tmp_path, feed_store, feed_config):
+    from signal_feed.db import ObligationRow
+    from signal_feed.inferred.rule_change import find_candidates as rule_candidates
+    reader, _, rule = rule_world
+    comment = RawPost(source="regulations_gov", source_type="government", route="own_api",
+                      url="https://regs.example/c9", title="Public comment to DOL on DOL-2026-7 from Firm 9",
+                      text="another comment", is_snippet=False, published_at=NOW - timedelta(days=1),
+                      raw={"comment_id": "DOL-2026-7-0009", "agency": "DOL", "docket": "DOL-2026-7"})
+    Store(f"sqlite:///{tmp_path / 'signal.db'}").save_posts([comment], text_dedupe=False)
+    with feed_store.session() as s, s.begin():
+        o = s.scalars(select(ObligationRow)).one()
+        s.add(ObligationRow(post_id=comment.id, who="employers with hourly staff", what="report weekly hours",
+                            deadline=o.deadline, industries=o.industries, created_at=NOW, embedding=o.embedding))
+    cands, _ = rule_candidates(feed_store, reader, feed_config, NOW)
+    assert len(cands) == 1 and cands[0].evidence[0].url == rule.url     # the rule's own document wins
+    with feed_store.session() as s, s.begin():                           # only the comment left: named by docket
+        s.delete(s.scalars(select(ObligationRow).where(ObligationRow.post_id == rule.id)).one())
+    cands, _ = rule_candidates(feed_store, reader, feed_config, NOW)
+    assert len(cands) == 1 and cands[0].hypothesis.startswith("DOL's rule on docket DOL-2026-7 requires")
 
 
 # --- step 4: insiders and validation (17.7) --------------------------------------------------
