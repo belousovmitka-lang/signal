@@ -58,21 +58,23 @@ def request_params(call: ModelCall, system: str, user: str,
     }
 
 
-def _usage_rows(message: Any) -> list[Usage]:
+def _usage_rows(message: Any, requested_model: str | None = None) -> list[Usage]:
     usage = message.usage
     iterations = getattr(usage, "iterations", None)
     if iterations:
-        return [Usage(it.model, it.input_tokens, it.output_tokens, it.cache_read_input_tokens or 0,
-                      it.cache_creation_input_tokens or 0)
-                for it in iterations if getattr(it, "model", None)]
+        # Every iteration is billed. The requested model's own iteration may carry no model name
+        # (only a fallback hop names its model): it is the requested model's.
+        return [Usage(getattr(it, "model", None) or requested_model or message.model, it.input_tokens, it.output_tokens,
+                      it.cache_read_input_tokens or 0, it.cache_creation_input_tokens or 0)
+                for it in iterations]
     return [Usage(message.model, usage.input_tokens, usage.output_tokens, usage.cache_read_input_tokens or 0,
                   usage.cache_creation_input_tokens or 0)]
 
 
 def read_message(message: Any, request_id: str | None = None,
-                 output_model: type[BaseModel] | None = None) -> TagAttempt:
+                 output_model: type[BaseModel] | None = None, requested_model: str | None = None) -> TagAttempt:
     """Turn a Messages API response (sync or from a batch) into a validated TagAttempt."""
-    attempt = TagAttempt(output=None, model=message.model, usages=_usage_rows(message), request_id=request_id)
+    attempt = TagAttempt(output=None, model=message.model, usages=_usage_rows(message, requested_model), request_id=request_id)
     if message.stop_reason == "refusal":
         attempt.error = "refusal"
         return attempt
@@ -111,4 +113,4 @@ class AnthropicTagger:
             if exc.status_code >= 500 or exc.status_code == 429:
                 raise TransientError(str(exc)) from exc
             raise
-        return read_message(message, message._request_id, output_model)
+        return read_message(message, message._request_id, output_model, requested_model=call.model)

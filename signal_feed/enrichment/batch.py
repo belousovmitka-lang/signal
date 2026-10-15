@@ -84,16 +84,15 @@ class BatchRunner:
                 attempt = read_message(result.result.message)
                 cost = e.record(attempt.usages, "tag", result.custom_id, batch=True, batch_id=batch_row.id)
                 firsts.append((result.custom_id, attempt, cost))
-            with e.store.session() as s, s.begin():
-                row = s.get(EnrichmentBatchRow, batch_row.id)
-                row.status, row.collected_at = "collected", e.clock()
             posts = {p.id: p for p in e.posts.get_posts([pid for pid, _, _ in firsts])}
             for post_id, attempt, cost in firsts:
                 post = posts.get(post_id)
                 if post is None:
                     continue   # purged at the origin while the batch ran
                 try:
-                    row = e.enrich_post(post, first=attempt, first_cost=cost)
+                    # No paid calls here: retries and escalations are marked for `enrich.py escalate`,
+                    # which runs them under a cap, so collecting never spends beyond the batch itself.
+                    row = e.enrich_post(post, first=attempt, first_cost=cost, defer_followups=True)
                 except TransientError as exc:
                     log.warning("transient error finishing %s: %s", post_id, exc)
                     stats.transient += 1
@@ -106,4 +105,8 @@ class BatchRunner:
                         row = e._tagged_row(post, attempt.output, attempt.model, False, cost, reason="budget")
                 e._save(row)
                 stats.add(row)
+            # Marked collected only once every result is saved (results stay downloadable for 29 days).
+            with e.store.session() as s, s.begin():
+                row = s.get(EnrichmentBatchRow, batch_row.id)
+                row.status, row.collected_at = "collected", e.clock()
         return stats

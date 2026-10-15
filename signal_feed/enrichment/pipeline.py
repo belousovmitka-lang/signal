@@ -13,7 +13,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 
 from pydantic import BaseModel
-from sqlalchemy import delete, select
+from sqlalchemy import delete, func, select
 
 from signal_connectors.models import RawPost, utcnow
 
@@ -103,13 +103,26 @@ class Enricher:
         return stats
 
     def enrich_post(self, post: RawPost, first: TagAttempt | None = None, first_cost: float = 0.0,
-                    ) -> EnrichedPostRow:
-        """Tag one post. `first` is a tagger result already in hand (from a batch), if any."""
+                    defer_followups: bool = False) -> EnrichedPostRow:
+        """Tag one post. `first` is a tagger result already in hand (from a batch), if any. With
+        `defer_followups` no paid call is made: a needed retry or escalation is marked on the row
+        (`followup`) for `escalate_followups`, which runs them under a per-run cap."""
         if reason := self.prefilter(post):
             return self._row(post, status="skipped", reason=reason)
         system, user = system_prompt(), user_prompt(post, self.cfg.max_input_chars)
         cost = first_cost
         tries = 1 + self.cfg.max_retries_invalid_json
+        if defer_followups and first is not None:
+            esc = self.cfg.escalation
+            if first.output is None:
+                followup = "retry" if first.error in RETRY_SAME_MODEL else "escalate"
+                row = self._row(post, status="needs_review", reason=first.error, cost=cost, model=first.model)
+            else:
+                unsure = first.output.confidence < esc.below_confidence
+                followup = "escalate" if unsure else None
+                row = self._tagged_row(post, first.output, first.model, False, cost, reason=None)
+            row.followup = followup
+            return row
         if first is None:
             attempt, spent = self._call(self.cfg.tagger, "tag", post, system, user, tries=tries)
             cost += spent
@@ -136,6 +149,59 @@ class Enricher:
                              model=attempt.model, escalated=escalated)
         return self._tagged_row(post, attempt.output, attempt.model, escalated, cost,
                                 reason=f"escalation_{esc_error}" if esc_error else None)
+
+    def followup_count(self) -> int:
+        with self.store.session() as s:
+            return s.scalar(select(func.count()).select_from(EnrichedPostRow).where(
+                EnrichedPostRow.followup.is_not(None),
+                EnrichedPostRow.prompt_version == self.cfg.prompt_version)) or 0
+
+    def escalate_followups(self, limit: int | None = None) -> RunStats:
+        """Run the retries and escalations batch collection deferred, at most `escalation.max_per_run`
+        (or `limit`, if lower) per run. A failed escalation keeps the tagger's answer."""
+        cap = self.cfg.escalation.max_per_run if limit is None else min(limit, self.cfg.escalation.max_per_run)
+        with self.store.session() as s:
+            rows = list(s.scalars(select(EnrichedPostRow).where(
+                EnrichedPostRow.followup.is_not(None), EnrichedPostRow.prompt_version == self.cfg.prompt_version)
+                .order_by(EnrichedPostRow.enriched_at).limit(cap)))
+            for r in rows:
+                s.expunge(r)
+        stats = RunStats()
+        posts = {p.id: p for p in self.posts.get_posts([r.post_id for r in rows])}
+        esc = self.cfg.escalation
+        for old in rows:
+            post = posts.get(old.post_id)
+            if post is None:
+                continue
+            try:
+                if old.followup == "retry":
+                    row = self.enrich_post(post, first_cost=old.cost_usd or 0.0)
+                else:
+                    system, user = system_prompt(), user_prompt(post, self.cfg.max_input_chars)
+                    attempt, spent = self._call(esc, "escalate", post, system, user,
+                                                tries=1 + self.cfg.max_retries_invalid_json,
+                                                fallbacks=esc.server_fallbacks)
+                    cost = (old.cost_usd or 0.0) + spent
+                    if attempt.output is not None:
+                        row = self._tagged_row(post, attempt.output, attempt.model, True, cost, reason=None)
+                    else:          # keep what the tagger said (or needs_review), now settled
+                        old.followup, old.cost_usd = None, cost
+                        old.status_reason = old.status_reason or f"escalation_{attempt.error}"
+                        with self.store.session() as s, s.begin():
+                            s.merge(old)
+                        stats.add(old)
+                        continue
+            except TransientError as exc:
+                log.warning("transient error on %s, will retry next run: %s", post.id, exc)
+                stats.transient += 1
+                continue
+            except BudgetExceededError as exc:
+                stats.stopped = str(exc)
+                break
+            row.followup = None
+            self._save(row)
+            stats.add(row)
+        return stats
 
     def _call(self, call: ModelCall, purpose: str, post: RawPost, system: str, user: str, *, tries: int,
               fallbacks: bool = False) -> tuple[TagAttempt, float]:

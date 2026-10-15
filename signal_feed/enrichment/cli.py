@@ -2,7 +2,8 @@
 
     python scripts/enrich.py status
     python scripts/enrich.py run [--limit N] [--sync | --batch]
-    python scripts/enrich.py collect          # finish submitted batches
+    python scripts/enrich.py collect          # finish submitted batches (no paid calls)
+    python scripts/enrich.py escalate [--limit N]   # deferred retries/escalations, capped per run
     python scripts/enrich.py embed [--limit N]
 """
 
@@ -45,12 +46,13 @@ def status(store: FeedStore, enricher: Enricher, config: FeedConfig) -> None:
         open_batches = list(s.scalars(select(EnrichmentBatchRow.id).where(EnrichmentBatchRow.status == "open")))
     ledger = CostLedger(store)
     print(f"prompt {config.enrichment.prompt_version}: {counts or 'nothing enriched yet'}")
-    print(f"pending: {len(enricher.pending_post_ids())}, embedded: {embedded}, open batches: {open_batches or 'none'}")
+    print(f"pending: {len(enricher.pending_post_ids())}, embedded: {embedded}, open batches: {open_batches or 'none'}, "
+          f"follow-ups waiting: {enricher.followup_count()}")
     from .prompt import prompt_fingerprint
     with store.session() as s:
         stale = s.scalar(select(func.count()).select_from(EnrichedPostRow).where(
             EnrichedPostRow.prompt_version == config.enrichment.prompt_version,
-            EnrichedPostRow.status.in_(("ok", "dropped", "needs_review")),
+            EnrichedPostRow.status.in_(("ok", "dropped")),          # needs_review rows carry no tags
             (EnrichedPostRow.prompt_hash.is_(None)) | (EnrichedPostRow.prompt_hash != prompt_fingerprint()))) or 0
     if stale:
         print(f"note: {stale} posts at {config.enrichment.prompt_version} were tagged with a different or unknown prompt "
@@ -70,7 +72,9 @@ def main(argv: list[str] | None = None) -> int:
     mode = run.add_mutually_exclusive_group()
     mode.add_argument("--sync", action="store_true", help="call the API per post now")
     mode.add_argument("--batch", action="store_true", help="submit to the Batch API (50%% off, up to 24h)")
-    sub.add_parser("collect", help="finish batches that have ended")
+    sub.add_parser("collect", help="finish batches that have ended (no paid calls)")
+    esc = sub.add_parser("escalate", help="run deferred retries and escalations (capped per run)")
+    esc.add_argument("--limit", type=int)
     embed = sub.add_parser("embed", help="embed tagged posts")
     embed.add_argument("--limit", type=int)
     args = parser.parse_args(argv)
@@ -97,6 +101,11 @@ def main(argv: list[str] | None = None) -> int:
     enricher = Enricher(store, posts, config, AnthropicTagger())
     if args.command == "collect":
         _print_stats("collected", BatchRunner(enricher).collect())
+        print(f"follow-ups waiting: {enricher.followup_count()} (run `escalate`)")
+        return 0
+    if args.command == "escalate":
+        _print_stats("escalated", enricher.escalate_followups(args.limit))
+        print(f"follow-ups left: {enricher.followup_count()}")
         return 0
 
     purged = enricher.purge_deleted()

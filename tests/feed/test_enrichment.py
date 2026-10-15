@@ -116,18 +116,18 @@ def test_retry_can_succeed(feed_store, feed_config, three_posts):
 def test_low_confidence_escalates_to_large_model_with_fallbacks(feed_store, feed_config, three_posts):
     reader, (pain, *_) = three_posts
     tagger = FakeTagger(claude_haiku_5_5=[ok(confidence=0.3)],
-                        claude_opus_5_5=[ok(model="claude-opus-5-5", industry="Legal", confidence=0.8)])
+                        claude_sonnet_5_5=[ok(model="claude-sonnet-5-5", industry="Legal", confidence=0.8)])
     stats = make(feed_store, feed_config, reader, tagger).enrich([pain.id])
     row = rows(feed_store)[pain.id]
-    assert stats.escalated == 1 and row.escalated and row.model == "claude-opus-5-5"
+    assert stats.escalated == 1 and row.escalated and row.model == "claude-sonnet-5-5"
     assert row.industry_path[0] == "Legal"
-    assert tagger.calls == [("claude-haiku-5-5", False), ("claude-opus-5-5", True)]
+    assert tagger.calls == [("claude-haiku-5-5", False), ("claude-sonnet-5-5", True)]
 
 
 def test_refusal_escalates_and_failed_escalation_keeps_needs_review(feed_store, feed_config, three_posts):
     reader, (pain, *_) = three_posts
     tagger = FakeTagger(claude_haiku_5_5=[failed("refusal")],
-                        claude_opus_5_5=[failed("refusal", model="claude-opus-5-5")])
+                        claude_sonnet_5_5=[failed("refusal", model="claude-sonnet-5-5")])
     make(feed_store, feed_config, reader, tagger).enrich([pain.id])
     row = rows(feed_store)[pain.id]
     assert (row.status, row.status_reason) == ("needs_review", "refusal")
@@ -136,7 +136,7 @@ def test_refusal_escalates_and_failed_escalation_keeps_needs_review(feed_store, 
 def test_failed_escalation_keeps_the_small_models_tags(feed_store, feed_config, three_posts):
     reader, (pain, *_) = three_posts
     tagger = FakeTagger(claude_haiku_5_5=[ok(confidence=0.2)],
-                        claude_opus_5_5=[failed("bad_request", model="claude-opus-5-5")])
+                        claude_sonnet_5_5=[failed("bad_request", model="claude-sonnet-5-5")])
     make(feed_store, feed_config, reader, tagger).enrich([pain.id])
     row = rows(feed_store)[pain.id]
     assert (row.status, row.status_reason, row.model) == ("ok", "escalation_bad_request", "claude-haiku-5-5")
@@ -144,13 +144,13 @@ def test_failed_escalation_keeps_the_small_models_tags(feed_store, feed_config, 
 
 def test_costs_are_metered_per_call(feed_store, feed_config, three_posts):
     reader, (pain, *_) = three_posts
-    tagger = FakeTagger(claude_haiku_5_5=[ok(confidence=0.3)], claude_opus_5_5=[ok(model="claude-opus-5-5")])
+    tagger = FakeTagger(claude_haiku_5_5=[ok(confidence=0.3)], claude_sonnet_5_5=[ok(model="claude-sonnet-5-5")])
     make(feed_store, feed_config, reader, tagger).enrich([pain.id])
     with feed_store.session() as s:
         costs = [(c.purpose, c.model, round(c.usd, 6)) for c in s.query(FeedCostRow).order_by(FeedCostRow.id)]
-    # haiku: 2000 * 0.10 + 300 * 0.50 per M; opus: 2000 * 4 + 300 * 20 per M
-    assert costs == [("tag", "claude-haiku-5-5", 0.00035), ("escalate", "claude-opus-5-5", 0.014)]
-    assert rows(feed_store)[pain.id].cost_usd == pytest.approx(0.01435)
+    # haiku: 2000 * 0.10 + 300 * 0.50 per M; sonnet: 2000 * 2 + 300 * 10 per M
+    assert costs == [("tag", "claude-haiku-5-5", 0.00035), ("escalate", "claude-sonnet-5-5", 0.007)]
+    assert rows(feed_store)[pain.id].cost_usd == pytest.approx(0.00735)
 
 
 def test_budget_guard_stops_the_run_before_calling(feed_store, feed_config, three_posts):
@@ -260,7 +260,7 @@ class FakeBatches:
 def test_batch_submit_reserves_budget_and_collect_finishes(feed_store, feed_config, three_posts):
     reader, (pain, chat, cfpb) = three_posts
     fake = FakeBatches()
-    tagger = FakeTagger(claude_opus_5_5=[ok(model="claude-opus-5-5")])
+    tagger = FakeTagger(claude_sonnet_5_5=[ok(model="claude-sonnet-5-5")])
     enricher = make(feed_store, feed_config, reader, tagger)
     runner = BatchRunner(enricher, client=SimpleNamespace(messages=SimpleNamespace(batches=fake)))
 
@@ -276,8 +276,9 @@ def test_batch_submit_reserves_budget_and_collect_finishes(feed_store, feed_conf
     fake.status = "ended"
     fake.outputs = {pain.id: tags(confidence=0.2), chat.id: None}
     stats = runner.collect()
-    assert (stats.ok, stats.escalated) == (1, 1)
-    assert tagger.calls == [("claude-opus-5-5", True)]   # escalation runs sync
+    assert (stats.ok, stats.escalated) == (1, 0)
+    assert tagger.calls == []                  # collecting makes no paid calls
+    assert rows(feed_store)[pain.id].followup == "escalate" and enricher.followup_count() == 1
     with feed_store.session() as s:
         assert s.get(EnrichmentBatchRow, "msgbatch_1").status == "collected"
         batch_costs = s.query(FeedCostRow).filter(FeedCostRow.batch.is_(True)).all()
@@ -285,6 +286,14 @@ def test_batch_submit_reserves_budget_and_collect_finishes(feed_store, feed_conf
     assert [round(c.usd, 6) for c in batch_costs] == [0.000175]   # half price
     assert CostLedger(feed_store).month_spend("anthropic", NOW) == pytest.approx(actual)   # reservation released
     assert enricher.pending_post_ids() == [chat.id]   # the expired request is retried later
+
+    stats = enricher.escalate_followups()      # the deferred escalation, run sync
+    assert (stats.ok, stats.escalated) == (1, 1)
+    assert tagger.calls == [("claude-sonnet-5-5", True)]
+    row = rows(feed_store)[pain.id]
+    assert row.followup is None and row.escalated and row.model == "claude-sonnet-5-5"
+    assert row.cost_usd == pytest.approx(0.000175 + 0.007)
+    assert enricher.followup_count() == 0
 
 
 def test_batch_submit_respects_budget(feed_store, feed_config, three_posts):
@@ -418,3 +427,30 @@ def test_output_schema_has_the_section_17_fields():
     props = output_schema()["properties"]
     assert {"task", "task_automatable", "data_moved", "obligations", "tools_mentioned"} <= set(props)
     assert {"task", "task_automatable", "data_moved", "obligations"} <= set(output_schema()["required"])
+
+
+def test_escalations_are_capped_per_run_and_failures_keep_the_tag(feed_store, feed_config, three_posts):
+    reader, (pain, chat, _) = three_posts
+    fake = FakeBatches()
+    tagger = FakeTagger(claude_sonnet_5_5=[failed("bad_request", model="claude-sonnet-5-5")])
+    enricher = make(feed_store, feed_config, reader, tagger)
+    runner = BatchRunner(enricher, client=SimpleNamespace(messages=SimpleNamespace(batches=fake)))
+    runner.submit([pain.id, chat.id])
+    fake.status, fake.outputs = "ended", {pain.id: tags(confidence=0.2), chat.id: tags(confidence=0.3)}
+    runner.collect()
+    assert enricher.followup_count() == 2
+    stats = enricher.escalate_followups(limit=1)
+    assert len(tagger.calls) == 1 and enricher.followup_count() == 1      # capped at one call
+    settled = [r for r in rows(feed_store).values() if r.followup is None and r.post_id in (pain.id, chat.id)]
+    assert len(settled) == 1 and settled[0].model == "claude-haiku-5-5"     # the tagger's answer kept
+    assert settled[0].status_reason == "escalation_bad_request" and stats.ok == 1
+
+
+def test_usage_of_unnamed_iterations_is_billed_to_the_requested_model():
+    from signal_feed.enrichment.llm import _usage_rows
+    it = lambda model, kind: SimpleNamespace(type=kind, model=model, input_tokens=100, output_tokens=10,
+                                            cache_read_input_tokens=0, cache_creation_input_tokens=0)
+    msg = SimpleNamespace(model="claude-opus-4-8", usage=SimpleNamespace(
+        iterations=[it(None, "message"), it("claude-opus-4-8", "fallback_message")]))
+    usages = _usage_rows(msg, "claude-sonnet-5-5")
+    assert [u.model for u in usages] == ["claude-sonnet-5-5", "claude-opus-4-8"]

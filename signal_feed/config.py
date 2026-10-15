@@ -44,6 +44,7 @@ class ModelCall(_Strict):
 class EscalationCall(ModelCall):
     below_confidence: Fraction = Field(ge=0, le=1)
     server_fallbacks: bool
+    max_per_run: int = Field(ge=0)          # follow-ups one `enrich.py escalate` run may make
 
 
 class Prefilter(_Strict):

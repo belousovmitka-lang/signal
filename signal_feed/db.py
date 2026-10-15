@@ -76,6 +76,9 @@ class EnrichedPostRow(FeedBase):
     task_embedding: Mapped[list[float] | None] = mapped_column(NullableJSON)
     data_moved: Mapped[list[dict[str, Any]] | None] = mapped_column(NullableJSON)   # [{from_tool, to_tool, data}]
     obligation_ids: Mapped[list[int] | None] = mapped_column(NullableJSON)
+    # A paid follow-up left for `enrich.py escalate` (batch collection makes no paid calls):
+    # "retry" (invalid or cut-off output) | "escalate" (unsure or declined) | None.
+    followup: Mapped[str | None] = mapped_column(String(16), nullable=True, index=True)
     language: Mapped[str | None] = mapped_column(String(16))
     confidence: Mapped[float | None] = mapped_column(Float)
     escalated: Mapped[bool] = mapped_column(Boolean, default=False)

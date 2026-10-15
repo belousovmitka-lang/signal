@@ -17,11 +17,12 @@ enrichment:
     effort: medium
     max_tokens: 4000
   escalation:                     # re-tags posts the tagger was unsure about or declined
-    model: claude-opus-5-5
+    model: claude-sonnet-5-5      # was Opus 5.5: ~2x cheaper; ~3.5% of posts escalate
     effort: medium
     max_tokens: 8000
     below_confidence: 0.5
     server_fallbacks: true        # fallbacks: "default" on sync calls (not allowed on batches)
+    max_per_run: 100              # batch collection defers escalations; `enrich.py escalate` runs this many
   batch_min_posts: 50             # use the Batch API (50% off) when at least this many posts are queued
   prefilter:                      # cheap checks before any model call
     min_chars: 30
