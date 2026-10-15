@@ -99,6 +99,7 @@ class ObligationRow(FeedBase):
     deadline: Mapped[date | None] = mapped_column(Date)
     industries: Mapped[list[str]] = mapped_column(JSON, default=list)
     created_at: Mapped[datetime] = mapped_column(UTCDateTime)
+    embedding: Mapped[list[float] | None] = mapped_column(NullableJSON)   # of "who: what", for role matching
 
 
 class EnrichmentBatchRow(FeedBase):

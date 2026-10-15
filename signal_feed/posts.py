@@ -59,6 +59,12 @@ class PostsReader:
         with self.session() as s:
             return [_to_raw_post(r) for r in s.scalars(select(PostRow).where(PostRow.id.in_(set(ids))))]
 
+    def posts_from_source(self, prefix: str) -> list[RawPost]:
+        """Posts whose source is `prefix` or starts with `prefix:` (e.g. "regulations_gov")."""
+        with self.session() as s:
+            return [_to_raw_post(r) for r in s.scalars(select(PostRow).where(
+                (PostRow.source == prefix) | PostRow.source.startswith(f"{prefix}:")))]
+
     def iter_posts(self, since: datetime | None = None, limit: int | None = None) -> Iterator[RawPost]:
         """Posts by fetch time, oldest first (Stage A enriches in this order)."""
         stmt = select(PostRow).order_by(PostRow.fetched_at, PostRow.id)

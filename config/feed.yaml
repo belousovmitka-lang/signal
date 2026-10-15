@@ -168,6 +168,14 @@ inferred:
     min_buyers: 3
     min_automatable: 0.5          # v9 tags: skip tasks software can't do (repairs, construction)
     allow_derived_tasks: true     # until posts carry v9 tasks, use the pain statement (never published uncritiqued)
+  rule_change:                    # Detector 2 (17.3)
+    job_window_days: 90
+    min_role_posts: 10            # a role needs this many recent job posts whose duties match the obligation
+    role_cosine: 0.45             # obligation vs. job post similarity that counts as "duties match" (starting guess)
+    job_sources: [job_boards]     # posts from these sources are job posts
+    job_communities: ["HN Jobs"]  # ...and posts in these communities
+    max_job_evidence: 5
+    max_comment_evidence: 5
 
 # Evaluation (section 13, Phase 7)
 evaluation:

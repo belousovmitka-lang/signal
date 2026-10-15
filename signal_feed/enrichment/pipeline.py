@@ -249,7 +249,26 @@ class Enricher:
         self._embed(select(EnrichedPostRow).where(ok, EnrichedPostRow.task_embedding.is_(None),
                                                   EnrichedPostRow.task.is_not(None)), limit,
                     lambda row, post: row.task, "task_embedding")
+        self._embed_obligations()
         return done
+
+    def _embed_obligations(self) -> int:
+        """Obligations from rule documents, as "who: what", for matching them to job duties (Detector 2)."""
+        ecfg = self.config.embeddings
+        with self.store.session() as s:
+            todo = list(s.scalars(select(ObligationRow).where(ObligationRow.embedding.is_(None))))
+        for i in range(0, len(todo), ecfg.batch_size):
+            chunk = todo[i:i + ecfg.batch_size]
+            texts = [f"{o.who}: {o.what}" for o in chunk]
+            self.ledger.check("voyage", sum(map(len, texts)) / 2 * ecfg.price_per_mtok / 1_000_000,
+                              ecfg.monthly_budget_usd, self.clock())
+            result = self.embedder.embed(texts)
+            self.ledger.record(provider="voyage", purpose="embed", usage=Usage(result.model, result.total_tokens),
+                               usd=result.total_tokens * ecfg.price_per_mtok / 1_000_000, at=self.clock())
+            with self.store.session() as s, s.begin():
+                for o, vector in zip(chunk, result.vectors, strict=True):
+                    s.get(ObligationRow, o.id).embedding = vector
+        return len(todo)
 
     def _embed(self, stmt, limit: int | None, text_of, attr: str) -> int:
         ecfg = self.config.embeddings

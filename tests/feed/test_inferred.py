@@ -256,3 +256,94 @@ def test_low_confidence_inferred_problems_only_enter_through_exploration(market,
                if data.items[c.index].post_id == key]
     # The user's own niche holds it, but it may only come in through exploration (never via niche match).
     assert sources and set(sources) == {EXPLORE}
+
+
+# --- Detector 2: rule change x affected role --------------------------------------------
+
+@pytest.fixture
+def rule_world(tmp_path, feed_store):
+    """An HR rule with a future deadline, 12 payroll-specialist job posts whose duties match it, 3 posts for
+    another role, and 2 public comments on the rule's docket."""
+    from signal_feed.db import ObligationRow
+    rng = np.random.default_rng(9)
+    seed_tree(feed_store)
+    with feed_store.session() as s:
+        hr = s.scalars(select(NicheRow).where(NicheRow.label == "HR and recruiting", NicheRow.parent_id.is_(None))).one()
+        payroll = s.scalars(select(NicheRow).where(NicheRow.label == "Payroll and benefits",
+                                                   NicheRow.parent_id == hr.id)).one()
+    duty, other = rng.normal(size=DIM), rng.normal(size=DIM)
+    rule = RawPost(source="federal_register", source_type="government", route="own_api", url="https://fr.example/rule",
+                   title="Wage reporting for hourly workers", text="rule text", is_snippet=False,
+                   published_at=NOW - timedelta(days=3), raw={"document_number": "2026-123", "docket_ids": ["DOL-2026-7"]})
+    raw, rows = [rule], [EnrichedPostRow(post_id=rule.id, status="ok", post_type="change", industry_path=["HR and recruiting"],
+                                         embedding=unit(duty), prompt_version="v9", enriched_at=NOW)]
+    placed = []
+    for k in range(15):
+        title = "Senior Payroll Specialist - Remote" if k < 12 else "Office Manager"
+        p = RawPost(source="job_boards", source_type="paid_demand", route="own_api", url=f"https://jobs.example/{k}",
+                    title=title, text="duties", is_snippet=False, published_at=NOW - timedelta(days=k), community=f"Co {k}")
+        raw.append(p)
+        vec = duty if k < 12 else other
+        rows.append(EnrichedPostRow(post_id=p.id, status="ok", post_type="paid_demand", industry_path=["HR and recruiting"],
+                                    embedding=unit(vec + rng.normal(scale=0.2, size=DIM)), intensity=0.3,
+                                    buyer_likelihood=0.8, quality=0.6, prompt_version="v9", enriched_at=NOW))
+        placed.append(PostNicheRow(post_id=p.id, niche_id=payroll.id, tree="industry", similarity=0.9))
+    for k in range(2):
+        raw.append(RawPost(source="regulations_gov", source_type="government", route="own_api",
+                           url=f"https://regs.example/{k}", title=f"Public comment on DOL-2026-7 from Firm {k}",
+                           text="comment", is_snippet=False, published_at=NOW - timedelta(days=1), raw={"docket": "DOL-2026-7"}))
+    url = f"sqlite:///{tmp_path / 'signal.db'}"
+    Store(url).save_posts(raw, text_dedupe=False)
+    with feed_store.session() as s, s.begin():
+        s.add_all(rows)
+        s.add_all(placed)
+        s.add(ObligationRow(post_id=rule.id, who="employers with hourly staff", what="report hours worked each week",
+                            deadline=(NOW + timedelta(days=120)).date(), industries=["HR and recruiting"],
+                            created_at=NOW, embedding=unit(duty)))
+    from signal_feed.posts import PostsReader
+    return PostsReader(url), payroll.id, rule
+
+
+def test_rule_change_maps_an_obligation_to_the_role_doing_it(rule_world, feed_store, feed_config):
+    from signal_feed.inferred.rule_change import find_candidates as rule_candidates
+    reader, payroll, rule = rule_world
+    cands, examined = rule_candidates(feed_store, reader, feed_config, NOW)
+    assert examined == 1 and len(cands) == 1
+    c = cands[0]
+    deadline = (NOW + timedelta(days=120)).date()
+    assert c.hypothesis == (f"Wage reporting for hourly workers requires employers with hourly staff to report hours "
+                            f"worked each week by {deadline.day} {deadline.strftime('%B %Y')}; today this is done by "
+                            f"payroll specialists manually.")
+    assert c.niche_id == payroll and c.evidence[0].url == rule.url and c.evidence[0].record_id == "2026-123"
+    jobs = [e for e in c.evidence if e.source == "job_boards"]
+    comments = [e for e in c.evidence if e.source == "regulations_gov"]
+    assert len(jobs) == feed_config.inferred.rule_change.max_job_evidence and all("is hiring:" in e.what_it_shows for e in jobs)
+    assert len(comments) == 2 and all(e.what_it_shows.startswith("A public comment on this rule") for e in comments)
+
+
+@pytest.mark.parametrize("change", ["past_deadline", "few_posts", "other_industry"])
+def test_rule_change_needs_a_future_deadline_enough_posts_and_the_industry(rule_world, feed_store, feed_config, change):
+    from signal_feed.db import ObligationRow
+    from signal_feed.inferred.rule_change import find_candidates as rule_candidates
+    reader, *_ = rule_world
+    cfg = feed_config
+    with feed_store.session() as s, s.begin():
+        o = s.scalars(select(ObligationRow)).one()
+        if change == "past_deadline":
+            o.deadline = (NOW - timedelta(days=1)).date()
+        elif change == "other_industry":
+            o.industries = ["Agriculture"]
+    if change == "few_posts":
+        cfg = feed_config.model_copy(update={"inferred": feed_config.inferred.model_copy(update={
+            "rule_change": feed_config.inferred.rule_change.model_copy(update={"min_role_posts": 13})})})
+    assert rule_candidates(feed_store, reader, cfg, NOW)[0] == []
+
+
+def test_both_detectors_run_through_the_same_pipeline(rule_world, feed_store, feed_config):
+    reader, *_ = rule_world
+    report = run_detector(feed_store, reader, feed_config, "rule_change", llm_with(feed_store, feed_config, verdict(8)),
+                          clock=lambda: NOW)
+    assert (report.candidates, report.published) == (1, 1)
+    with feed_store.session() as s:
+        row = s.scalars(select(InferredProblemRow)).one()
+    assert row.detector == "rule_change" and row.confidence == "medium" and row.task == "report hours worked each week"

@@ -46,7 +46,7 @@ def main() -> int:
                 r = run_detector(store, PostsReader(settings.posts_database_url), config, name, llm)
             except BudgetExceededError as exc:   # incl. a billing refusal: a message, not a traceback
                 raise SystemExit(f"stopped: {exc}\n(run again with --no-llm to find candidates without the critic)") from None
-            print(f"{name}: {r.clusters} task clusters, {r.candidates} candidates -> {r.published} published, "
+            print(f"{name}: {r.clusters} groups examined, {r.candidates} candidates -> {r.published} published, "
                   f"{r.rejected} rejected, {r.held} held for the critic, {r.expired} expired; "
                   f"{r.critic_runs} critic calls, LLM cost ${llm.spent if llm else 0:.4f}")
             for line in r.items:

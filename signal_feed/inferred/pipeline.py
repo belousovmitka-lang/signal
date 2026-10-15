@@ -19,11 +19,11 @@ from ..llm_task import LLMTask
 from ..posts import PostsReader
 from ..problems.score import PAIN, components, score
 from ..problems.score import Evidence as ScoreEvidence
-from . import paid_workarounds
+from . import paid_workarounds, rule_change
 from .common import Candidate, confidence, meets_minimum
 from .critic import run_critic
 
-DETECTORS = {paid_workarounds.NAME: paid_workarounds.find_candidates}
+DETECTORS = {paid_workarounds.NAME: paid_workarounds.find_candidates, rule_change.NAME: rule_change.find_candidates}
 
 
 @dataclass

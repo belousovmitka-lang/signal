@@ -234,6 +234,16 @@ class PaidWorkaroundsConfig(_Strict):
     allow_derived_tasks: bool
 
 
+class RuleChangeConfig(_Strict):
+    job_window_days: int = Field(gt=0)
+    min_role_posts: int = Field(gt=0)
+    role_cosine: Fraction = Field(ge=0, le=1)
+    job_sources: list[str] = Field(min_length=1)
+    job_communities: list[str] = Field(default_factory=list)
+    max_job_evidence: int = Field(gt=0)
+    max_comment_evidence: int = Field(ge=0)
+
+
 class InferredConfig(_Strict):
     min_evidence: int = Field(gt=0)
     min_source_types: int = Field(gt=0)
@@ -246,6 +256,7 @@ class InferredConfig(_Strict):
     counter_evidence_max: int = Field(ge=0)
     embed_dropped_types: list[TaggedPostType] = Field(default_factory=list)
     paid_workarounds: PaidWorkaroundsConfig
+    rule_change: RuleChangeConfig
 
 
 class ExperimentArm(_Strict):
