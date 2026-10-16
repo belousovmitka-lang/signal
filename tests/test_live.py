@@ -29,7 +29,7 @@ def test_only_threads_and_posts_pass():
     assert not re.search(live.PLATFORMS["reddit"][2], "https://www.reddit.com/r/Dentistry/")
     assert not re.search(live.PLATFORMS["linkedin"][2], "https://www.linkedin.com/in/someone/")
     assert re.search(live.PLATFORMS["linkedin"][2], "https://www.linkedin.com/posts/acme_dental-activity-1")
-    assert not re.search(live.PLATFORMS["tiktok"][2], "https://www.tiktok.com/discover/dental-trend")
+    assert "tiktok" not in live.PLATFORMS
 
 
 class Web:
@@ -40,7 +40,7 @@ class Web:
         self.calls.append(request)
         if request.url.host == "api.search.brave.com":
             q = request.url.params["q"]
-            if "tiktok" in q:
+            if "x.com" in q:
                 return httpx.Response(429)
             return httpx.Response(200, json={"web": {"results": [
                 {"title": "Is there a tool for <strong>insurance denials</strong>?", "url": "https://www.reddit.com/r/Dentistry/comments/1t/x/",
@@ -55,7 +55,7 @@ class Web:
 async def test_sections_unmodified_and_nothing_stored(make_services):
     web = Web()
     async with make_services(CFG, web) as svc:
-        res = await live_search(svc, DENTAL, platforms=["reddit", "tiktok", "youtube"])
+        res = await live_search(svc, DENTAL, platforms=["reddit", "x", "youtube"])
         again = await live_search(svc, DENTAL, platforms=["reddit", "youtube"])
         assert svc.store.count_posts() == 0                                   # display only
         spent = svc.costs.spent_this_month("live")
@@ -63,7 +63,7 @@ async def test_sections_unmodified_and_nothing_stored(make_services):
     reddit = by["reddit"].items[0]
     assert reddit.title == "Is there a tool for <strong>insurance denials</strong>?"    # passed through unmodified
     assert reddit.url == "https://www.reddit.com/r/Dentistry/comments/1t/x/" and reddit.age == "3 days ago"
-    assert by["tiktok"].error == "Brave HTTP 429" and by["tiktok"].items == []           # one failure, others fine
+    assert by["x"].error == "Brave HTTP 429" and by["x"].items == []                     # one failure, others fine
     yt = by["youtube"].items[0]
     assert (yt.url, yt.channel, by["youtube"].provider) == ("https://www.youtube.com/watch?v=abc", "Dental Biz", "youtube")
     assert "YouTube logo" in by["youtube"].attribution and res.stored is False

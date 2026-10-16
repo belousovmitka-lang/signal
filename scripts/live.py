@@ -1,4 +1,4 @@
-"""Live lane: search Reddit, LinkedIn, TikTok, Quora, YouTube... now for an industry; print, store nothing.
+"""Live lane: search Reddit, X, Facebook groups, YouTube... now for an industry; print, store nothing.
 
     python scripts/live.py dental [--platforms reddit,youtube] [--extra "insurance verification"] [--json]
 
@@ -39,7 +39,7 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.WARNING, format="%(levelname)s %(name)s: %(message)s")
     p = argparse.ArgumentParser()
     p.add_argument("industry")
-    p.add_argument("--platforms", help="comma list: reddit,linkedin,tiktok,quora,x,facebook,youtube")
+    p.add_argument("--platforms", help="comma list: reddit,x,facebook,youtube,linkedin,quora")
     p.add_argument("--extra", help="extra words for the query")
     p.add_argument("--limit", type=int, default=8)
     p.add_argument("--freshness", default="py", help="Brave window: pd, pw, pm, py (a month is too short for most niches)")

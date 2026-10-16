@@ -1,6 +1,6 @@
 """Live lane: search results shown to a user at view time, never stored.
 
-For platforms we can't collect (Reddit, X, Facebook groups, YouTube; LinkedIn, TikTok, Quora on request),
+For platforms we can't collect (Reddit, X, Facebook groups, YouTube; LinkedIn, Quora on request),
 the app asks this module when a user opens their feed: one site-limited Brave search per platform, built
 from the industry's main role, plus a YouTube search through the YouTube Data API. Results are filtered
 to threads and posts (never profile pages). Results go
@@ -46,11 +46,10 @@ PLATFORMS: dict[str, tuple[str, list[str], str]] = {
     "x": ("X", ["x.com"], r"/status/\d+"),
     "facebook": ("Facebook groups", ["facebook.com/groups"], r"/groups/[^/]+/(posts|permalink)/"),
     "linkedin": ("LinkedIn", ["linkedin.com"], r"linkedin\.com/(posts|pulse|feed/update)/"),   # never /in/ profiles (rule 4)
-    "tiktok": ("TikTok", ["tiktok.com"], r"/@[^/]+/video/\d+"),
     "quora": ("Quora", ["quora.com"], r"quora\.com/(?!profile/)[^/?]+/?$"),
 }
-# Measured 2026-10-15 (dental, salons): Reddit, X, Facebook groups and YouTube return real posts; LinkedIn
-# returned only profiles, TikTok only tag pages, Quora nothing. Those three stay available but off by default.
+# Measured 2026-10-15 (dental, salons): Reddit and YouTube return real posts, X and Facebook groups a few;
+# LinkedIn returned only profiles and Quora nothing, so they stay available but off. TikTok dropped (not wanted).
 DEFAULT_PLATFORMS = ["reddit", "x", "facebook", "youtube"]
 INTENT = 'software "how do you"'       # practitioners asking how others handle something; tested best
 
