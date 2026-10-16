@@ -99,9 +99,10 @@ forums:
     site (read 2026-10-11).
 - name: Fitness.com
   url: https://www.fitness.com/en/forum/
-  status: live
-  checked_at: '2026-10-11'
-  locked: false
+  status: dead
+  checked_at: '2026-10-15'
+  notes: Recent threads are supplement and gadget 'reviews' (spam), checked 2026-10-15.
+  locked: true
   software: xenforo
   rss: https://www.fitness.com/en/forum/forums/-/index.rss
   robots: allowed

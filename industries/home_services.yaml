@@ -114,13 +114,15 @@ forums:
 - name: The Cleaning Standard
   url: https://thecleaningstandard.com/forum/
   status: live
-  checked_at: '2026-10-11'
-  locked: false
+  checked_at: '2026-10-15'
+  locked: true
   software: xenforo
   rss: https://thecleaningstandard.com/forum/forums/-/index.rss
   robots: allowed
-  terms: unchecked
-  terms_notes: Terms page not found (read 2026-10-11).
+  terms: forbidden
+  terms_url: https://thecleaningstandard.com/terms/
+  terms_notes: 'Terms: ''You may not copy, modify, reproduce, distribute, or create derivative works of
+    our content except as expressly permitted'' (read 2026-10-15).'
 - name: Home | Canada Cleaning Association
   url: https://ijcsacanada.proboards.com/
   status: live
@@ -173,14 +175,14 @@ forums:
 - name: IAHSP | The business of Home Staging, Real Estate and Design
   url: https://www.iahsp.com/
   status: live
-  checked_at: '2026-10-11'
-  locked: false
+  checked_at: '2026-10-15'
+  locked: true
   software: invision
   rss: https://www.iahsp.com/blog-feed.xml
   robots: allowed
   terms: unchecked
   terms_url: https://www.iahsp.com/policies
-  terms_notes: Policies page renders only with JavaScript; likely a members' community (read 2026-10-11).
+  terms_notes: Association site, not a forum; its policies page returned no terms (2026-10-15).
 rss_feeds:
 - name: qualifiedremodeler
   url: https://www.qualifiedremodeler.com/feed/

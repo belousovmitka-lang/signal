@@ -71,22 +71,24 @@ forums:
   url: https://community.dieselschrauber.org/
   status: live
   checked_at: '2026-10-15'
-  locked: false
+  locked: true
   software: phpbb
   rss: https://community.dieselschrauber.org/rdf.php
   robots: allowed
   terms: unchecked
-  terms_notes: No terms page found; German-language forum (read 2026-10-11).
+  terms_notes: No terms page found at the usual paths or linked from the home page (2026-10-15); stays
+    unchecked.
 - name: VWDiesel.net The IDI, TDI, and mTDI source.
   url: https://vwdiesel.net/forum/
   status: live
   checked_at: '2026-10-15'
-  locked: false
+  locked: true
   software: unknown
   rss: https://vwdiesel.net/forum/index.php?PHPSESSID=r3u62pdnc19cud321djr0gl6m7&type=rss;action=.xml
   robots: allowed
   terms: unchecked
-  terms_notes: No terms page found (read 2026-10-11).
+  terms_notes: No terms page found at the usual paths or linked from the home page (2026-10-15); stays
+    unchecked.
 - name: Chrysler 300 forum
   url: https://www.300cforumz.com/forums/
   status: live
@@ -115,13 +117,15 @@ forums:
   url: https://honda-tech.com/forums/
   status: live
   checked_at: '2026-10-15'
-  locked: false
+  locked: true
   software: vbulletin
   rss: https://honda-tech.com/forums/external.php?type=RSS2
   robots: allowed
-  terms: unchecked
-  terms_notes: 'Internet Brands forum; its terms page was not found (read 2026-10-11): decide or ask the
-    owner.'
+  terms: forbidden
+  terms_url: https://www.internetbrands.com/ibterms
+  terms_notes: 'Internet Brands terms (internetbrands.com/ibterms): copying or aggregation ''by means
+    of spiders, robots, crawlers, scrapers ... or RSS feeds'' is prohibited; the only exception is general-purpose
+    search engines and noncommercial archives (read 2026-10-15).'
 - name: Welcome to TCG | The Chicago Garage
   url: https://www.thechicagogarage.com/
   status: live
@@ -162,22 +166,24 @@ forums:
   url: https://www.autoprofessionals.org/
   status: live
   checked_at: '2026-10-15'
-  locked: false
+  locked: true
   software: mybb
   rss: https://www.autoprofessionals.org/syndication.php
   robots: allowed
   terms: unchecked
-  terms_notes: No terms page found (MyBB) (read 2026-10-11).
+  terms_notes: No terms page found at the usual paths or linked from the home page (2026-10-15); stays
+    unchecked.
 - name: fitechforum
   url: https://fitechforum.com/
   status: live
   checked_at: '2026-10-15'
-  locked: false
+  locked: true
   software: unknown
   rss: https://fitechforum.com/feed/
   robots: allowed
   terms: unchecked
-  terms_notes: No terms page found (read 2026-10-11).
+  terms_notes: No terms page found at the usual paths or linked from the home page (2026-10-15); stays
+    unchecked.
 - name: automotivediagsolutions
   url: https://www.automotivediagsolutions.com/
   status: live

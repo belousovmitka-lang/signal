@@ -88,9 +88,10 @@ forums:
   terms_notes: Standard XenForo terms; nothing on automated access, commercial use or AI (read 2026-10-10).
 - name: Forums - Dental Club Community
   url: https://club.dentaapp.com/forums/
-  status: live
+  status: dead
   checked_at: '2026-10-15'
-  locked: false
+  notes: Terms page has no terms; the feed is a blog last updated 2024-12-01 (checked 2026-10-15).
+  locked: true
   software: unknown
   rss: https://club.dentaapp.com/feed/
   robots: allowed
@@ -143,12 +144,12 @@ forums:
   url: https://webdental.com/groups/businessoffice/forum/
   status: live
   checked_at: '2026-10-15'
-  locked: false
+  locked: true
   software: unknown
   rss: https://webdental.com/groups/businessoffice/forum/feed/all
   robots: allowed
   terms: unchecked
-  terms_notes: 'No terms page found (2026-10-10): needs a human decision or contact with the owner.'
+  terms_notes: No terms page found (2026-10-15); stays unchecked.
 rss_feeds:
 - name: discussdentistry
   url: https://discussdentistry.com/feed/

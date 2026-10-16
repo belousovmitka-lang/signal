@@ -73,12 +73,13 @@ forums:
 - name: Pet Grooming Courses and Dog & Cat Grooming Resources | Groomer Nation
   url: https://www.groomernation.com.au/
   status: live
-  checked_at: '2026-10-11'
-  locked: false
+  checked_at: '2026-10-15'
+  locked: true
   software: invision
   rss: https://www.groomernation.com.au/blog-feed.xml
   robots: allowed
   terms: unchecked
+  terms_notes: Wix business site with a blog feed, not a forum; no terms page found (2026-10-15).
 - name: UK Pet Forums Forum
   url: https://www.petforums.co.uk/forums/
   status: live
@@ -118,13 +119,16 @@ forums:
 - name: Home | PPGAI
   url: https://www.ppgai.com/
   status: live
-  checked_at: '2026-10-11'
-  locked: false
+  checked_at: '2026-10-15'
+  locked: true
   software: invision
   rss: https://www.ppgai.com/blog-feed.xml
   robots: allowed
-  terms: unchecked
+  terms: forbidden
   terms_url: https://www.ppgai.com/terms-conditions
+  terms_notes: 'Terms of Use: no access ''through automated or non-human means, whether through a bot,
+    script''; no ''data mining, robots, or similar data gathering and extraction tools''; content for
+    ''personal, non-commercial use'' (read 2026-10-15).'
 rss_feeds:
 - name: digital
   url: https://digital.groomertogroomer.com/feed/

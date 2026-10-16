@@ -55,11 +55,16 @@ PLATFORM_TERMS = {
     "verticalscope": (None,
                       "VerticalScope network: content licensed 'for non-commercial, personal, or educational purposes "
                       "only' (read 2026-10-11 on LawnSite, Cleaning Talk, PetForums, DogForum)."),
+    "internetbrands": ("https://www.internetbrands.com/ibterms",
+                       "Internet Brands terms: copying or aggregation by spiders, robots, crawlers, scrapers or RSS "
+                       "feeds is prohibited except for general-purpose search engines and noncommercial archives "
+                       "(read 2026-10-15 for honda-tech.com)."),
     "forumotion": ("https://www.forumotion.com/terms-of-service",
                    "Forumotion: users may not 'use, distribute, copy, reproduce' site content without prior written "
                    "authorization (read 2026-10-11)."),
 }
 _VERTICALSCOPE = re.compile(r"VerticalScope", re.I)
+_INTERNET_BRANDS = re.compile(r"internetbrands\.com/ibterms|Internet Brands", re.I)
 _FORUMOTION = re.compile(r'href="https?://(www\.)?forumotion\.com', re.I)
 _PRIVATE_HOST = re.compile(r"circle\.so|skool\.com", re.I)    # communities behind a login (CLAUDE.md 7.4)
 VISIT_CONCURRENCY = 8
@@ -191,7 +196,8 @@ async def visit(services: Services, origin: str, forum_path: str | None) -> Visi
             break
     software = detect_software(r.text)
     platform = ("proboards" if software == "proboards" else "forumotion" if _FORUMOTION.search(r.text)
-                else "verticalscope" if _VERTICALSCOPE.search(r.text) else None)
+                else "verticalscope" if _VERTICALSCOPE.search(r.text)
+                else "internetbrands" if _INTERNET_BRANDS.search(r.text) else None)
     return Visit(str(r.url), title, software, advertised_feeds(r.text, str(r.url)), terms,
                  platform=platform, private=bool(_PRIVATE_HOST.search(r.text)))
 
