@@ -43,6 +43,7 @@ class RunReport:
     plans: int = 0                # corroboration planning calls
     searches: int = 0             # X searches
     search_stopped: str | None = None
+    x_waiting: int = 0            # X posts found but not tagged yet (they count after the next enrich pass)
     items: list[str] = field(default_factory=list)
 
 
@@ -62,7 +63,8 @@ def run_detector(store: FeedStore, posts: PostsReader, config: FeedConfig, name:
                 continue
         found.append(cand)
     report = RunReport(name, clusters=clusters, candidates=len(found), near_misses=near, plans=corr.plans,
-                       searches=corr.searches, search_stopped=corr.stopped)
+                       searches=corr.searches, search_stopped=corr.stopped,
+                       x_waiting=corr.waiting)
     with store.session() as s, s.begin():
         old = {p.id: p for p in s.scalars(select(InferredProblemRow).where(
             InferredProblemRow.detector == name, InferredProblemRow.status.in_(("candidate", "published"))))}

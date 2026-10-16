@@ -57,6 +57,8 @@ def main() -> int:
                   f"{r.rejected} rejected, {r.held} held for the critic, {r.expired} expired; "
                   f"{r.critic_runs} critic calls, LLM cost ${llm.spent if llm else 0:.4f}; "
                   f"{r.near_misses} near misses, {r.plans} plans, {r.searches} X searches")
+            if r.x_waiting:
+                print(f"  {r.x_waiting} X posts wait for tagging (scripts/enrich.py run), then count on the next run")
             if r.search_stopped:
                 print(f"  X search stopped: {r.search_stopped}")
             for line in r.items:

@@ -697,8 +697,9 @@ class PlanAndCritic:
 class FakeX:
     """Stands in for signal_connectors.x_search.search_x: stores the posts it 'finds' in signal.db."""
 
-    def __init__(self, url, n=3, fail=None):
-        self.url, self.n, self.fail, self.queries = url, n, fail, []
+    def __init__(self, url, n=3, fail=None, extra=(), tag_into=None):
+        self.url, self.n, self.fail, self.queries, self.extra = url, n, fail, [], list(extra)
+        self.tag_into, self.found = tag_into, []     # tag_into: a FeedStore to tag the posts in, as enrich would
 
     def __call__(self, query, *, max_results=10, industry_hint=None, tag=None):
         if self.fail:
@@ -708,8 +709,23 @@ class FakeX:
                          title=None, text=f"Spent all morning re-keying hose assembly orders by hand again {k}",
                          is_snippet=False, published_at=NOW - timedelta(days=1), query=query)
                  for k in range(self.n)]
+        posts += [RawPost(source="x", source_type="social", route="own_api", url=f"https://x.com/i/status/ad{k}",
+                          title=None, text=t, is_snippet=False, published_at=NOW - timedelta(days=1), query=query)
+                  for k, t in enumerate(self.extra)]
         Store(self.url).save_posts(posts, text_dedupe=False)
+        self.found += posts
+        if self.tag_into is not None:
+            tag_x_posts(self.tag_into, posts)
         return posts
+
+
+def tag_x_posts(feed_store, posts):
+    """What the enrich pass would make of them: first-person pain, except the vendor ads."""
+    with feed_store.session() as s, s.begin():
+        for p in posts:
+            ad = "/ad" in p.url
+            s.merge(EnrichedPostRow(post_id=p.id, status="ok", post_type="spam" if ad else "pain",
+                                    spam_score=0.9 if ad else 0.05, prompt_version="v9", enriched_at=NOW))
 
 
 def _plan(kind="labor", **kw):
@@ -719,17 +735,21 @@ def _plan(kind="labor", **kw):
 
 def test_a_near_miss_is_corroborated_on_x_once_and_then_judged(market, tmp_path, feed_store, feed_config):
     reader, *_ = market
-    x = FakeX(f"sqlite:///{tmp_path / 'signal.db'}")
+    ad = "Tired of re-keying hose orders by hand? We built HoseFlow to fix it. Free trial today!"
+    x = FakeX(f"sqlite:///{tmp_path / 'signal.db'}", extra=[ad], tag_into=feed_store)
     tagger = PlanAndCritic([_plan()], [verdict(12), verdict(12)])
     llm = LLMTask(feed_store, feed_config.enrichment, tagger, clock=lambda: NOW)
     report = run_detector(feed_store, reader, feed_config, "paid_workarounds", llm, clock=lambda: NOW, searcher=x)
     assert (report.candidates, report.published, report.plans, report.searches) == (2, 2, 1, 1)
-    assert x.queries == ["hose assembly orders by hand"]
+    from signal_feed.inferred.corroborate import X_EXCLUDE, looks_promotional
+    assert x.queries == [f"hose assembly orders by hand {X_EXCLUDE}"]
     with feed_store.session() as s:
         hose = s.scalars(select(InferredProblemRow).where(InferredProblemRow.task == "supply hose assemblies")).one()
         ev = list(s.scalars(select(InferredEvidenceRow).where(InferredEvidenceRow.inferred_id == hose.id)))
     xs = [e for e in ev if e.source == "x"]
     assert len(xs) == 3 and all(e.what_it_shows == "A post on X by someone affected" for e in xs)   # no X text stored
+    assert "/ad0" not in " ".join(e.url for e in xs) and looks_promotional(ad)     # the vendor ad is left out
+    assert not looks_promotional("Spent all morning re-keying orders by hand. Our office still uses fax.")
     assert "Spent all morning" in tagger.prompts[-1]             # the critic still reads the post
     from signal_feed.inferred.common import shown_evidence
     assert shown_evidence(xs[0].url, "x", xs[0].what_it_shows) == {"url": xs[0].url, "source": "x",
@@ -765,6 +785,19 @@ def test_a_near_miss_is_corroborated_on_x_once_and_then_judged(market, tmp_path,
     with feed_store.session() as s:
         urls = set(s.scalars(select(InferredEvidenceRow.url).where(InferredEvidenceRow.inferred_id == hose.id)))
     assert xs[1].url not in urls
+
+
+def test_x_posts_count_only_after_tagging(market, tmp_path, feed_store, feed_config):
+    reader, *_ = market
+    x = FakeX(f"sqlite:///{tmp_path / 'signal.db'}")              # found, not tagged yet
+    tagger = PlanAndCritic([_plan()], [verdict(12), verdict(12)])
+    llm = LLMTask(feed_store, feed_config.enrichment, tagger, clock=lambda: NOW)
+    first = run_detector(feed_store, reader, feed_config, "paid_workarounds", llm, clock=lambda: NOW, searcher=x)
+    assert (first.searches, first.x_waiting, first.near_misses) == (1, 3, 1)
+    tag_x_posts(feed_store, x.found)                              # the enrich pass runs
+    tagger.verdicts = [verdict(12), verdict(12)]
+    again = run_detector(feed_store, reader, feed_config, "paid_workarounds", llm, clock=lambda: NOW, searcher=x)
+    assert (again.plans, again.searches, again.x_waiting, again.near_misses, again.published) == (0, 0, 0, 0, 2)
 
 
 @pytest.mark.parametrize("case", ["software", "search_fails", "no_searcher"])
@@ -810,7 +843,7 @@ def test_an_anchor_becomes_a_claim_backed_by_the_affected_peoples_posts(tmp_path
     tagger = PlanAndCritic([plan], [verdict(8)])
     llm = LLMTask(feed_store, feed_config.enrichment, tagger, clock=lambda: NOW)
     report = run_detector(feed_store, PostsReader(url), feed_config, "anchored", llm, clock=lambda: NOW,
-                          searcher=FakeX(url, n=2))
+                          searcher=FakeX(url, n=2, tag_into=feed_store))
     assert (report.candidates, report.published) == (1, 1)
     with feed_store.session() as s:
         row = s.scalars(select(InferredProblemRow)).one()
