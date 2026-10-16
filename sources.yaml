@@ -925,8 +925,8 @@ sources:
       - {limit: 300}
 
   x:
-    enabled: false                   # flip to true once X approves the updated use case (stored posts)
-    status: awaiting_approval
+    enabled: true
+    status: done
     status_date: 2026-10-16
     route: own_api
     source_type: social
@@ -948,8 +948,9 @@ sources:
         traits, surveillance and ad targeting. Policy: stored content must be kept up to date with
         deletes and edits (within 24 h of a request) -> daily Batch Compliance job over all stored IDs
         (not billed). The use case description is binding and "substantive modification" needs X's
-        approval first: the approved one (2026-10-15) said display-only with a short cache, so this
-        source stays off until X approves storing posts for analysis. Self-serve pay-per-use covers
+        approval first: the approved one (2026-10-15) said display-only. On 2026-10-16 the app description
+        was updated to cover storing posts for analysis; X's policy-support form (help.x.com/forms/platform)
+        redirects to the Help Center home, so no formal reply exists. The account owner chose to enable. Self-serve pay-per-use covers
         early-stage apps with limited end users; beyond that X requires an Enterprise plan.
     options:
       on_demand: true                # only signal_connectors.x_search.search_x calls it; never scheduled
