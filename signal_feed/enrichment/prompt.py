@@ -151,7 +151,7 @@ def user_prompt(post: RawPost, max_chars: int) -> str:
         "source_type": post.source_type,
         "community": post.community,
         "published": post.published_at.date().isoformat(),
-        "author_role": post.author_role,
+        "author_role_guess": post.author_role,      # keyword match in the connector; can be wrong
         "query_industry_guess": post.industry_hint,  # from the search that found it; often wrong
         "money_from_source": post.money,
         "engagement": post.engagement or None,
