@@ -6,6 +6,7 @@ discovery:
   queries: 9
   cost_usd: 0.057
   candidates_checked: 40
+  on_demand: false
   notes: 'Draft by the discovery agent (9 searches, $0.057), reviewed by Claude 2026-10-10: forum terms
     read and recorded (3 allowed, 2 forbidden, 1 without published terms), vocabulary curated, jargon
     trimmed, subreddits added by name (unverified). Set needs_review: false to start collecting. Approved
@@ -62,7 +63,7 @@ forums:
 - name: Veterinary Medicine Electronic Library
   url: https://www.vetelib.com/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
   software: xenforo
   rss: https://www.vetelib.com/forums/-/index.rss
@@ -73,7 +74,7 @@ forums:
 - name: Forum | Veterinary33
   url: https://veterinary33.com/forum/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
   software: unknown
   robots: allowed
@@ -83,7 +84,7 @@ forums:
 - name: Student Doctor Network Forums | Student Doctor Network Forums
   url: https://forums.studentdoctor.net/forums/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
   software: xenforo
   rss: https://forums.studentdoctor.net/forums/-/index.rss
@@ -95,7 +96,7 @@ forums:
 - name: KVETFORUM | KVET FORUM
   url: https://kvetforum.co.ke/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
   software: xenforo
   rss: https://kvetforum.co.ke/forums/-/index.rss
@@ -106,7 +107,7 @@ forums:
 - name: Forums - VETVINE
   url: https://www.vetvine.com/forums/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
   software: unknown
   robots: allowed
@@ -117,7 +118,7 @@ forums:
 - name: Practice Leader Communities & Practice Management Groups | VetValue
   url: https://www.vetvalue.pet/communities/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
   software: unknown
   rss: https://www.vetvalue.pet/feed/
@@ -130,7 +131,7 @@ rss_feeds:
 - name: theherd
   url: https://theherd.news/feed.xml
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
   entries: 50
   full_text: false
@@ -146,7 +147,7 @@ rss_feeds:
 - name: evet
   url: https://evet.group/feed/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
   entries: 1
   full_text: false
@@ -162,7 +163,7 @@ rss_feeds:
 - name: letstalkveterinarytechnology
   url: https://letstalkveterinarytechnology.wordpress.com/feed/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
   entries: 10
   full_text: true
@@ -178,48 +179,48 @@ rss_feeds:
 - name: myvmg
   url: https://www.myvmg.com/feed/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
   entries: 12
   full_text: true
 - name: vpmu
   url: https://vpmu.live/feed/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
   entries: 2
   full_text: true
 - name: veterinarypracticenews
   url: https://www.veterinarypracticenews.com/feed/
   status: blocked
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   notes: robots.txt disallows
   locked: false
 - name: vetwatch
   url: https://www.vetwatch.com/feed/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
   entries: 1
   full_text: true
 - name: veterinaryanalytics
   url: https://veterinaryanalytics.com/feed/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
   entries: 10
   full_text: true
 - name: veterinaryha
   url: https://veterinaryha.org/feed/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
   entries: 10
   full_text: true
 - name: iveterinarians
   url: https://www.iveterinarians.org/feed/
   status: dead
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   notes: no entries
   locked: false
   entries: 0
@@ -227,14 +228,15 @@ rss_feeds:
 - name: spvs
   url: https://spvs.org.uk/feed/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
   entries: 10
   full_text: true
 - name: ava
   url: https://www.ava.com.au/feed
-  status: live
-  checked_at: '2026-10-10'
+  status: blocked
+  checked_at: '2026-10-15'
+  notes: HTTP 403 to our bot
   locked: false
   entries: 10
   full_text: true
@@ -242,7 +244,7 @@ associations:
 - name: AACVT — American Association of Credentialed Veterinary Technicians
   url: https://aacvt.org/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
 job_boards: []
 podcasts: []

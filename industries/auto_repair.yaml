@@ -70,7 +70,7 @@ forums:
 - name: Übersicht | Dieselschrauber
   url: https://community.dieselschrauber.org/
   status: live
-  checked_at: '2026-10-11'
+  checked_at: '2026-10-15'
   locked: false
   software: phpbb
   rss: https://community.dieselschrauber.org/rdf.php
@@ -80,17 +80,17 @@ forums:
 - name: VWDiesel.net The IDI, TDI, and mTDI source.
   url: https://vwdiesel.net/forum/
   status: live
-  checked_at: '2026-10-11'
+  checked_at: '2026-10-15'
   locked: false
   software: unknown
-  rss: https://vwdiesel.net/forum/index.php?type=rss;action=.xml
+  rss: https://vwdiesel.net/forum/index.php?PHPSESSID=r3u62pdnc19cud321djr0gl6m7&type=rss;action=.xml
   robots: allowed
   terms: unchecked
   terms_notes: No terms page found (read 2026-10-11).
 - name: Chrysler 300 forum
   url: https://www.300cforumz.com/forums/
   status: live
-  checked_at: '2026-10-11'
+  checked_at: '2026-10-15'
   locked: false
   software: xenforo
   rss: https://www.300cforumz.com/forums/-/index.rss
@@ -101,8 +101,9 @@ forums:
     (read 2026-10-11).'
 - name: The Truck Stop
   url: https://thetruckstop.us/forum/
-  status: live
-  checked_at: '2026-10-11'
+  status: blocked
+  checked_at: '2026-10-15'
+  notes: feed answers 403 to our bot since 2026-10-14; not bypassed
   locked: false
   software: xenforo
   rss: https://thetruckstop.us/forum/forums/-/index.rss
@@ -113,7 +114,7 @@ forums:
 - name: Honda-Tech - Honda Forum Discussion
   url: https://honda-tech.com/forums/
   status: live
-  checked_at: '2026-10-11'
+  checked_at: '2026-10-15'
   locked: false
   software: vbulletin
   rss: https://honda-tech.com/forums/external.php?type=RSS2
@@ -124,7 +125,7 @@ forums:
 - name: Welcome to TCG | The Chicago Garage
   url: https://www.thechicagogarage.com/
   status: live
-  checked_at: '2026-10-11'
+  checked_at: '2026-10-15'
   locked: false
   software: xenforo
   rss: https://www.thechicagogarage.com/forums/-/index.rss
@@ -135,7 +136,7 @@ forums:
 - name: F150gen14 -- 2021+ Ford F-150, Tremor, Raptor Forum (14th Gen) | News, Owners, Community, Discussions
   url: https://www.f150gen14.com/forum/
   status: live
-  checked_at: '2026-10-11'
+  checked_at: '2026-10-15'
   locked: false
   software: xenforo
   rss: https://www.f150gen14.com/forum/forums/-/index.rss
@@ -147,7 +148,7 @@ forums:
 - name: autotechsonline
   url: https://autotechsonline.proboards.com/
   status: live
-  checked_at: '2026-10-11'
+  checked_at: '2026-10-15'
   locked: false
   software: proboards
   rss: http://autotechsonline.proboards.com/rss/public
@@ -160,7 +161,7 @@ forums:
 - name: autoprofessionals
   url: https://www.autoprofessionals.org/
   status: live
-  checked_at: '2026-10-11'
+  checked_at: '2026-10-15'
   locked: false
   software: mybb
   rss: https://www.autoprofessionals.org/syndication.php
@@ -170,7 +171,7 @@ forums:
 - name: fitechforum
   url: https://fitechforum.com/
   status: live
-  checked_at: '2026-10-11'
+  checked_at: '2026-10-15'
   locked: false
   software: unknown
   rss: https://fitechforum.com/feed/
@@ -180,7 +181,7 @@ forums:
 - name: automotivediagsolutions
   url: https://www.automotivediagsolutions.com/
   status: live
-  checked_at: '2026-10-11'
+  checked_at: '2026-10-15'
   locked: false
   software: mybb
   rss: https://www.automotivediagsolutions.com/syndication.php
@@ -192,7 +193,7 @@ forums:
 - name: paintlessdentremoval
   url: https://paintlessdentremoval.proboards.com/
   status: live
-  checked_at: '2026-10-11'
+  checked_at: '2026-10-15'
   locked: false
   software: proboards
   rss: http://paintlessdentremoval.proboards.com/rss/public
@@ -206,90 +207,90 @@ rss_feeds:
 - name: ratchetandwrench
   url: https://www.ratchetandwrench.com/__rss/website-scheduled-content.xml?input=%7B%22sectionAlias%22%3A%22home%22%7D
   status: live
-  checked_at: '2026-10-11'
+  checked_at: '2026-10-15'
   locked: false
   entries: 25
   full_text: false
 - name: autoserviceworld
   url: https://www.autoserviceworld.com/feed/
   status: live
-  checked_at: '2026-10-11'
+  checked_at: '2026-10-15'
   locked: false
   entries: 100
   full_text: true
 - name: motor
   url: https://www.motor.com/feed/
   status: live
-  checked_at: '2026-10-11'
+  checked_at: '2026-10-15'
   locked: false
   entries: 25
   full_text: false
 - name: aftermarketnews
   url: https://www.aftermarketnews.com/feed/
   status: live
-  checked_at: '2026-10-11'
+  checked_at: '2026-10-15'
   locked: false
   entries: 10
   full_text: true
 - name: vehicleservicepros
   url: https://www.vehicleservicepros.com/__rss/website-scheduled-content.xml?input=%7B%22sectionAlias%22%3A%22home%22%7D
   status: live
-  checked_at: '2026-10-11'
+  checked_at: '2026-10-15'
   locked: false
   entries: 25
   full_text: true
 - name: garagewire
   url: https://garagewire.co.uk/feed/
   status: blocked
-  checked_at: '2026-10-11'
+  checked_at: '2026-10-15'
   notes: HTTP 403 to our bot
   locked: false
 - name: fenderbender
   url: https://www.fenderbender.com/__rss/website-scheduled-content.xml?input=%7B%22sectionAlias%22%3A%22home%22%7D
   status: live
-  checked_at: '2026-10-11'
+  checked_at: '2026-10-15'
   locked: false
   entries: 25
   full_text: true
 - name: asashop
   url: https://www.asashop.org/feed/
   status: live
-  checked_at: '2026-10-11'
+  checked_at: '2026-10-15'
   locked: false
   entries: 10
   full_text: true
 - name: aaspnj
   url: https://aaspnj.org/feed/
   status: live
-  checked_at: '2026-10-11'
+  checked_at: '2026-10-15'
   locked: false
   entries: 12
   full_text: true
 - name: nwautocare
   url: https://www.nwautocare.org/feed/
   status: live
-  checked_at: '2026-10-11'
+  checked_at: '2026-10-15'
   locked: false
   entries: 10
   full_text: true
 - name: aaspmn
   url: https://www.aaspmn.org/feed/rss2
   status: live
-  checked_at: '2026-10-11'
+  checked_at: '2026-10-15'
   locked: false
-  entries: 60
+  entries: 61
   full_text: true
 - name: aaspi
   url: https://www.aaspi.org/feed/
   status: live
-  checked_at: '2026-10-11'
+  checked_at: '2026-10-15'
   locked: false
   entries: 2
   full_text: true
 - name: aaro
   url: https://aaro.ca/feed/
   status: live
-  checked_at: '2026-10-11'
+  checked_at: '2026-10-15'
   locked: false
   entries: 10
   full_text: true
@@ -297,7 +298,7 @@ associations:
 - name: Automotive Service & Tire Alliance - Home
   url: https://astausa.org/
   status: live
-  checked_at: '2026-10-11'
+  checked_at: '2026-10-15'
   locked: false
 job_boards:
 - name: Tekmetric

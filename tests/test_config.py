@@ -65,3 +65,12 @@ def test_build_queries_uses_defaults():
         "queries": [{"keywords": ["a"]}, {"keywords": ["b"], "limit": 5}]}}})
     qs = f.get("x").build_queries(f.defaults)
     assert [(q.keywords, q.limit) for q in qs] == [(["a"], 25), (["b"], 5)]
+
+
+def test_industry_fed_source_without_entries_has_no_queries():
+    from signal_connectors.config import Defaults, SourcesFile
+    s = SourcesFile.model_validate({"sources": {
+        "podcasts": {"route": "rss", "source_type": "media", "options": {"industry_podcasts": True}},
+        "hn": {"route": "own_api", "source_type": "community"}}})
+    assert s.get("podcasts").build_queries(Defaults()) == []
+    assert len(s.get("hn").build_queries(Defaults())) == 1

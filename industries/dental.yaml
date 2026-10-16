@@ -78,7 +78,7 @@ forums:
 - name: Dentistry Forums
   url: https://www.dentistry-forums.com/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
   software: xenforo
   rss: https://www.dentistry-forums.com/forums/-/index.rss
@@ -89,7 +89,7 @@ forums:
 - name: Forums - Dental Club Community
   url: https://club.dentaapp.com/forums/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
   software: unknown
   rss: https://club.dentaapp.com/feed/
@@ -99,7 +99,7 @@ forums:
 - name: Student Doctor Network Forums | Student Doctor Network Forums
   url: https://forums.studentdoctor.net/forums/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
   software: xenforo
   rss: https://forums.studentdoctor.net/forums/-/index.rss
@@ -111,10 +111,10 @@ forums:
 - name: Foro Dentista
   url: https://www.forodentista.com/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
   software: phpbb
-  rss: https://www.forodentista.com/app.php/feed
+  rss: https://www.forodentista.com/app.php/feed?sid=03693b84aa9bcd6539905c1899b02c81
   robots: allowed
   terms: allowed
   terms_url: https://www.forodentista.com/ucp.php?mode=terms
@@ -123,7 +123,7 @@ forums:
 - name: eDental Portal- Forum and Group Discussion
   url: https://www.edentalportal.com/forum/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
   software: unknown
   robots: allowed
@@ -134,7 +134,7 @@ forums:
 - name: Hygiene Hackers Study Club
   url: https://www.powhygiene.com/community
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
   software: unknown
   robots: allowed
@@ -142,7 +142,7 @@ forums:
 - name: All Discussions - Practice Management - WebDental, LLC
   url: https://webdental.com/groups/businessoffice/forum/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
   software: unknown
   rss: https://webdental.com/groups/businessoffice/forum/feed/all
@@ -153,36 +153,36 @@ rss_feeds:
 - name: discussdentistry
   url: https://discussdentistry.com/feed/
   status: dead
-  checked_at: '2026-10-10'
-  notes: no entries
+  checked_at: '2026-10-15'
+  notes: site unreachable (ConnectError)
   locked: false
   entries: 0
   full_text: false
 - name: rdhmag
   url: https://www.rdhmag.com/__rss/website-scheduled-content.xml?input=%7B%22sectionAlias%22%3A%22home%22%7D
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
   entries: 25
   full_text: true
 - name: dentalofficemanagergroup
   url: https://dentalofficemanagergroup.com/feed/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
   entries: 10
   full_text: true
 - name: dentalmanagers
   url: https://www.dentalmanagers.com/feed/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
   entries: 10
   full_text: true
 - name: americandentalnews
   url: https://americandentalnews.com/feed/
   status: dead
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   notes: no entries
   locked: false
   entries: 0
@@ -190,48 +190,49 @@ rss_feeds:
 - name: dentistrytoday
   url: https://www.dentistrytoday.com/feed/
   status: blocked
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   notes: HTTP 403 to our bot
   locked: false
 - name: dentaleconomics
   url: https://www.dentaleconomics.com/__rss/website-scheduled-content.xml?input=%7B%22sectionAlias%22%3A%22home%22%7D
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
   entries: 25
   full_text: true
 - name: dentistryiq
   url: https://www.dentistryiq.com/__rss/website-scheduled-content.xml?input=%7B%22sectionAlias%22%3A%22home%22%7D
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
   entries: 25
   full_text: true
 - name: theprofitabledentist
   url: https://theprofitabledentist.com/feed/
-  status: live
-  checked_at: '2026-10-10'
+  status: dead
+  checked_at: '2026-10-15'
+  notes: site unreachable (ConnectError)
   locked: false
   entries: 10
   full_text: true
 - name: the-probe
   url: https://the-probe.co.uk/feed/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
   entries: 12
   full_text: true
 - name: theadg
   url: https://www.theadg.co.uk/feed/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
   entries: 10
   full_text: true
 - name: aadgp
   url: https://www.aadgp.org/feed/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
   entries: 10
   full_text: true
@@ -239,32 +240,32 @@ associations:
 - name: ADA News | American Dental Association
   url: https://adanews.ada.org/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
 - name: Home | American Dental Association
   url: https://www.ada.org/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
 - name: British Dental Association
   url: https://www.bda.org/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
 - name: Academy of General Dentistry | Dental CE & Member Resources
   url: https://www.agd.org/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
 - name: Home | National Dental Association
   url: https://www.ndaonline.org/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
 - name: American Mobile & Teledentistry Alliance - Home
   url: https://www.americanmobiledentistryalliance.org/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
 job_boards:
 - name: Weave

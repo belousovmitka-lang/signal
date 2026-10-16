@@ -78,7 +78,7 @@ forums:
 - name: Spiceworks Community
   url: https://community.spiceworks.com/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
   software: discourse
   rss: https://community.spiceworks.com/posts.rss
@@ -90,7 +90,7 @@ forums:
 - name: Lobsters
   url: https://lobste.rs/
   status: search_only
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   notes: robots.txt disallows; use the search route
   locked: false
   software: unknown
@@ -99,7 +99,7 @@ forums:
 - name: DEV Community
   url: https://dev.to/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
   software: unknown
   rss: https://dev.to/feed
@@ -110,7 +110,7 @@ forums:
 - name: Cloudflare Community
   url: https://community.cloudflare.com/
   status: search_only
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   notes: HTTP 403 to our bot; use the search route
   locked: false
   software: unknown
@@ -119,7 +119,7 @@ forums:
 - name: HashiCorp Discuss
   url: https://discuss.hashicorp.com/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
   software: discourse
   rss: https://discuss.hashicorp.com/latest.rss
@@ -131,7 +131,7 @@ forums:
 - name: ServeTheHome forums
   url: https://forums.servethehome.com/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   notes: redirects to https://forums.servethehome.com/index.php
   locked: false
   software: xenforo
@@ -145,41 +145,42 @@ rss_feeds:
 - name: infoq
   url: https://feed.infoq.com/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
   entries: 15
   full_text: false
 - name: thenewstack
   url: https://thenewstack.io/feed/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
   entries: 26
   full_text: true
 - name: theregister
   url: https://www.theregister.com/headlines.atom
   status: blocked
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   notes: robots.txt disallows
   locked: false
 - name: bleepingcomputer
   url: https://www.bleepingcomputer.com/feed/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
   entries: 15
   full_text: false
 - name: devops-com
   url: https://devops.com/feed/
-  status: live
-  checked_at: '2026-10-10'
+  status: blocked
+  checked_at: '2026-10-15'
+  notes: HTTP 403 to our bot
   locked: false
   entries: 10
   full_text: true
 - name: arstechnica
   url: https://feeds.arstechnica.com/arstechnica/index
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
   entries: 20
   full_text: true
@@ -187,18 +188,18 @@ associations:
 - name: CompTIA
   url: https://www.comptia.org/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
 - name: LISA / USENIX
   url: https://www.usenix.org/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
 job_boards:
 - name: Dice
   url: https://www.dice.com/
   status: live
-  checked_at: '2026-10-10'
+  checked_at: '2026-10-15'
   locked: false
 - name: ConnectWise
   url: https://boards.greenhouse.io/connectwise

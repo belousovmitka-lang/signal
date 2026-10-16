@@ -18,6 +18,8 @@ from .settings import env_flag
 Status = Literal["todo", "done", "awaiting_approval", "paid_flag_off", "blocked"]
 
 
+INDUSTRY_OPTIONS = ("industry_feeds", "industry_forums", "industry_job_boards", "industry_podcasts",
+                    "industry_subreddits", "industry_templates")
 ATS_HOSTS = {"boards.greenhouse.io", "job-boards.greenhouse.io", "jobs.lever.co", "jobs.ashbyhq.com"}
 
 
@@ -183,7 +185,9 @@ class SourceConfig(_Strict):
         return None
 
     def build_queries(self, defaults: Defaults) -> list[SourceQuery]:
-        configs = self.queries or [QueryConfig()]
+        # A source fed only by the industry maps has nothing to do when the maps list nothing
+        # (e.g. podcasts before any show is found); others get one default query.
+        configs = self.queries or ([] if any(k in self.options for k in INDUSTRY_OPTIONS) else [QueryConfig()])
         return [
             SourceQuery(
                 keywords=q.keywords, communities=q.communities, domains=q.domains,
