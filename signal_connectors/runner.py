@@ -161,7 +161,8 @@ async def recheck_deletions(services: Services, source: SourceConfig) -> int:
     post_source = source.options.get("post_source", source.name)
     # Deletions mostly happen soon after posting: check the newest posts of the recent window first,
     # capped per run so a slow API (Lemmy's 60s crawl delay) can't stall the scheduler.
-    rows = services.store.ids_for_recheck(post_source, utcnow() - timedelta(days=RECHECK_WINDOW_DAYS),
+    window = int(source.options.get("recheck_window_days", RECHECK_WINDOW_DAYS))
+    rows = services.store.ids_for_recheck(post_source, utcnow() - timedelta(days=window),
                                           limit=source.deletion_recheck_limit)
     by_url = {url: post_id for post_id, url in rows}
     gone = await deleted_fn(list(by_url))

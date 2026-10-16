@@ -924,6 +924,38 @@ sources:
     queries:
       - {limit: 300}
 
+  x:
+    enabled: false                   # flip to true once X approves the updated use case (stored posts)
+    status: awaiting_approval
+    status_date: 2026-10-16
+    route: own_api
+    source_type: social
+    cadence: hourly
+    monthly_budget_usd: 20.00        # $0.005 per post returned; ~100 searches/week x 10 posts = ~$20
+    env: [X_BEARER_TOKEN, AUTHOR_HASH_SALT]
+    deletion_recheck_days: 1         # Developer Policy: stored content follows deletes/edits within 24 h
+    deletion_recheck_limit: 1000000  # Batch Compliance takes millions of IDs per job: check every stored post
+    access_check:
+      robots: not_applicable
+      terms: allowed
+      decision: full
+      terms_url: https://docs.x.com/developer-terms/agreement-and-policy
+      checked_at: 2026-10-16
+      notes: >-
+        Developer Agreement license: integrate X Content into the Services "or conduct analysis of the X
+        Content, as explicitly approved by X"; forbids using X Content to fine-tune or train a foundation
+        or frontier model (LLM tagging is inference, not training), off-X matching, inferring sensitive
+        traits, surveillance and ad targeting. Policy: stored content must be kept up to date with
+        deletes and edits (within 24 h of a request) -> daily Batch Compliance job over all stored IDs
+        (not billed). The use case description is binding and "substantive modification" needs X's
+        approval first: the approved one (2026-10-15) said display-only with a short cache, so this
+        source stays off until X approves storing posts for analysis. Self-serve pay-per-use covers
+        early-stage apps with limited end users; beyond that X requires an Enterprise plan.
+    options:
+      on_demand: true                # only signal_connectors.x_search.search_x calls it; never scheduled
+      max_results: 10                # per call cap (the endpoint's minimum page is also 10)
+      recheck_window_days: 3650      # every stored post, not just the last 30 days
+
   bluesky:
     connector: search_api
     enabled: true

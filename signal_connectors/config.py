@@ -187,6 +187,8 @@ class SourceConfig(_Strict):
     def build_queries(self, defaults: Defaults) -> list[SourceQuery]:
         # A source fed only by the industry maps has nothing to do when the maps list nothing
         # (e.g. podcasts before any show is found); others get one default query.
+        if self.options.get("on_demand"):
+            return []                    # called by code with its own query (x_search), never scheduled
         configs = self.queries or ([] if any(k in self.options for k in INDUSTRY_OPTIONS) else [QueryConfig()])
         return [
             SourceQuery(

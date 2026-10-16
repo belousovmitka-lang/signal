@@ -41,11 +41,13 @@ def plan(services: Services, now: datetime | None = None, only: set[str] | None 
         reason = source.blocked_reason()
         if reason:
             skipped[name] = reason
-            continue
         last = services.store.last_run(name)
-        if last is None or now - last >= INTERVALS[source.cadence] - SLACK:
+        if reason or source.options.get("on_demand"):
+            pass                         # on_demand: run by its caller (x_search); only re-checks are scheduled
+        elif last is None or now - last >= INTERVALS[source.cadence] - SLACK:
             runs.append(source)
-        if source.deletion_recheck_days:
+        # Posts already stored keep being re-checked after a source is switched off (rule 5).
+        if source.deletion_recheck_days and not source.blocked_reason(ignore_enabled=True):
             key = f"{name}:recheck"
             last_check = services.store.last_run(key)
             # A failed re-check is retried after a day: deletions shouldn't wait a full cycle.

@@ -153,7 +153,7 @@ class HttpClient:
                         after = retry_after_seconds(response)
                         if after:
                             self.limiter.defer(domain, min(after, self.backoff_max))
-                        log.warning("%s %s -> %s (attempt %d)", method, url, response.status_code,
+                        log.warning("%s %s -> %s (attempt %d)", method, url.split("?")[0], response.status_code,
                                     attempt.retry_state.attempt_number)
                         raise RetryableResponse(response)
                     return response
