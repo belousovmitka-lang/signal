@@ -38,9 +38,9 @@ from .services import Services
 YOUTUBE_SEARCH = "https://www.googleapis.com/youtube/v3/search"
 X_SEARCH = "https://api.x.com/2/tweets/search/recent"
 X_SOURCE = "live_x"
-X_POST_USD = 0.005                     # per post returned (docs.x.com pricing, 2026-10-15)
-X_USER_USD = 0.010                     # per user returned (author expansion, needed for display)
-CACHE_SECONDS = 15 * 60
+X_POST_USD = 0.005                     # per post returned (docs.x.com pricing, 2026-10-15); no user lookups
+CACHE_SECONDS = 15 * 60                # Brave: transient storage only
+X_CACHE_SECONDS = 6 * 3600             # X allows keeping posts if deletions are honored within 24 h
 BRAVE_SOURCE = "live"
 YOUTUBE_SOURCE = "live_youtube"
 YOUTUBE_DAILY_SEARCHES = 90            # under the ~100/day search.list bucket
@@ -54,8 +54,8 @@ PLATFORMS: dict[str, tuple[str, list[str], str]] = {
 }
 # Measured 2026-10-15 (dental, salons): Reddit and YouTube return real posts, X and Facebook groups a few;
 # LinkedIn returned only profiles and Quora nothing, so they stay available but off. TikTok dropped (not wanted).
-# X is opt-in (platforms=[..., "x"]): with the API it costs ~$0.13 a search and was a third useful for salons,
-# mostly vendor marketing for dental (2026-10-15).
+# X is opt-in (platforms=[..., "x"]): $0.05 a search (10 posts, embeds instead of author lookups), a third
+# useful for salons, mostly vendor marketing for dental (2026-10-15).
 DEFAULT_PLATFORMS = ["reddit", "facebook", "youtube"]
 INTENT = 'software "how do you"'       # practitioners asking how others handle something; tested best
 
@@ -68,10 +68,7 @@ class LiveItem:
     age: str | None = None
     channel: str | None = None       # YouTube only
     thumbnail: str | None = None     # YouTube only
-    author_name: str | None = None   # X only: display name, @username and avatar must be shown, linked
-    author_handle: str | None = None
-    author_url: str | None = None
-    avatar: str | None = None
+    embed: str | None = None         # X only: render with X's embed widget (it draws author, avatar, logo)
 
 
 @dataclass
@@ -107,9 +104,13 @@ def build_query(industry: Industry, extra: str | None = None) -> str:
 _cache: dict[tuple[str, ...], tuple[float, LiveSection]] = {}
 
 
+def _ttl(key: tuple[str, ...]) -> int:
+    return X_CACHE_SECONDS if key[1] == "x" else CACHE_SECONDS
+
+
 def _cached(key: tuple[str, ...]) -> LiveSection | None:
     hit = _cache.get(key)
-    if hit and time.monotonic() - hit[0] < CACHE_SECONDS:
+    if hit and time.monotonic() - hit[0] < _ttl(key):
         return hit[1]
     _cache.pop(key, None)
     return None
@@ -118,7 +119,7 @@ def _cached(key: tuple[str, ...]) -> LiveSection | None:
 def _remember(key: tuple[str, ...], section: LiveSection) -> LiveSection:
     if section.error is None:
         now = time.monotonic()
-        for k in [k for k, (t, _) in _cache.items() if now - t >= CACHE_SECONDS]:   # transient only
+        for k in [k for k, (t, _) in _cache.items() if now - t >= _ttl(k)]:   # transient only
             del _cache[k]
         _cache[key] = (now, section)
     return section
@@ -147,8 +148,8 @@ async def _brave(services: Services, platform: str, query: str, limit: int, fres
     return section
 
 
-X_DISPLAY = ("X display requirements: show avatar, display name and @username (linked to the profile), the timestamp "
-             "linked to the post, the X logo, and reply/repost/like actions or 'View on X'; post text unaltered")
+X_DISPLAY = ("Render each item with X's embedded-post widget (X for Websites) using item.embed: it shows the author, "
+             "avatar, timestamp, X logo and actions as X's display requirements demand. Don't show the text without it.")
 
 
 def _ors(terms: list[str]) -> str:
@@ -167,30 +168,27 @@ def x_query(industry: Industry, extra: str | None = None) -> str:
 
 
 async def _x(services: Services, query: str, limit: int) -> LiveSection:
-    """X API v2 recent search (last 7 days), app-only bearer token. Display only; nothing stored, so the
-    24-hour deletion rule for stored content doesn't apply. Billed per post and per author returned."""
+    """X API v2 recent search (last 7 days), app-only bearer token, billed per post returned.
+
+    No author expansion ($0.010 per user): the app renders each post with X's embed widget, which
+    draws the author itself. Results are kept in memory up to X_CACHE_SECONDS per industry (X bills a
+    post once per 24 h and requires deleted posts gone within 24 h; nothing is written to disk)."""
     section = LiveSection("x", "X", "x", attribution=X_DISPLAY)
     token = os.environ.get("X_BEARER_TOKEN")
     n = max(10, min(limit, 100))                       # the endpoint's minimum page is 10
-    with services.costs.metered(X_SOURCE, usd=n * (X_POST_USD + X_USER_USD), note="search/recent") as charge:
+    with services.costs.metered(X_SOURCE, usd=n * X_POST_USD, note="search/recent") as charge:
         response = await services.http.get(X_SEARCH, attempts=1, headers={"Authorization": f"Bearer {token}"}, params={
             "query": f"{query} lang:en -is:retweet -from:grok", "max_results": n, "sort_order": "relevancy",
-            "tweet.fields": "created_at,author_id,public_metrics,lang", "expansions": "author_id",
-            "user.fields": "name,username,profile_image_url"})
+            "tweet.fields": "created_at,lang"})
         data = response.json() if response.status_code < 400 else {}
-        users = {u["id"]: u for u in (data.get("includes") or {}).get("users", [])}
-        charge.usd = len(data.get("data") or []) * X_POST_USD + len(users) * X_USER_USD
+        charge.usd = len(data.get("data") or []) * X_POST_USD
     if response.status_code >= 400:
         section.error = f"X HTTP {response.status_code}"
         return section
     for post in (data.get("data") or [])[:limit]:
-        user = users.get(post.get("author_id"), {})
-        handle = user.get("username")
-        url = f"https://x.com/{handle}/status/{post['id']}" if handle else f"https://x.com/i/web/status/{post['id']}"
-        section.items.append(LiveItem(
-            title="", url=url, snippet=post.get("text", ""), age=post.get("created_at"),
-            author_name=user.get("name"), author_handle=f"@{handle}" if handle else None,
-            author_url=f"https://x.com/{handle}" if handle else None, avatar=user.get("profile_image_url")))
+        url = f"https://x.com/i/web/status/{post['id']}"
+        section.items.append(LiveItem(title="", url=url, snippet=post.get("text", ""), age=post.get("created_at"),
+                                      embed=f"https://twitter.com/x/status/{post['id']}"))
     return section
 
 
