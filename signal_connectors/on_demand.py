@@ -307,7 +307,7 @@ async def ensure_industry(services: Services, request: IndustryRequest, *, colle
         v = industry.vocabulary
         v.roles, v.tools = plan.roles, plan.tools
         v.tasks, v.pain_phrases = plan.tasks, plan.pain_phrases
-        v.jargon = plan.jargon or v.jargon
+        v.jargon = plan.jargon            # headline n-grams were noise in every review; empty if the planner is down
         industry.subreddits = plan.subreddits
 
         result = OnDemandResult(key=plan.key, action="created", name=plan.name)

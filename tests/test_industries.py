@@ -18,7 +18,9 @@ def test_repo_industry_maps_are_valid_and_verified():
     assert len([i for i in industries.values() if not i.discovery]) == 15     # the original seed maps
     for key, ind in industries.items():
         assert ind.industry == key
-        assert ind.vocabulary.roles and ind.vocabulary.pain_phrases and ind.subreddits
+        assert ind.vocabulary.roles
+        if not (ind.discovery and ind.discovery.on_demand):          # planner-made vocabulary may be thin
+            assert ind.vocabulary.pain_phrases and ind.subreddits
         assert ind.live_feeds(), f"{key} has no live feed"
         assert all(f.checked_at for f in ind.rss_feeds)
 

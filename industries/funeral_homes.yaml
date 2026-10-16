@@ -1,0 +1,222 @@
+industry: funeral_homes
+name: Funeral homes
+discovery:
+  generated_at: '2026-10-16'
+  needs_review: false
+  queries: 9
+  cost_usd: 0.057
+  candidates_checked: 40
+  on_demand: true
+  request: Funeral homes
+  notes: Built on demand 2026-10-16 for the request 'Funeral homes'. 9 feeds passed the automatic checks
+    and are collected; 0 are held for review and 5 skipped (asleep or unreachable). 2 forums wait for
+    a terms review (scripts/review_queue.py). Vocabulary drafted by the planner; review when convenient.
+    Planner unavailable (no Anthropic credit); tasks, pains, jargon and subreddits written by Claude Code
+    2026-10-15.
+vocabulary:
+  roles:
+  - funeral director
+  - funeral home owner
+  - embalmer
+  - mortician
+  tasks:
+  - arrangement conferences
+  - death certificate filing
+  - obituary writing
+  - pre-need contracts
+  - cremation authorizations
+  - case management
+  - family follow-up
+  - merchandise selection
+  - removal scheduling
+  - invoice and payment plans
+  pain_phrases:
+  - death certificate delays
+  - price shopping families
+  - on-call burnout
+  - staffing shortages
+  - online price lists
+  - low pre-need sales
+  - rising cremation rate
+  - embalmer shortage
+  - families comparing prices online
+  jargon:
+  - at-need
+  - pre-need
+  - FTC Funeral Rule
+  - general price list
+  - first call
+  - direct cremation
+  - celebration of life
+  - aftercare
+  - EDRS
+  - crematory
+  - visitation
+  - case volume
+  tools:
+  - Passare
+  - Gather
+  - Osiris
+  - FrontRunner
+  - SRS Computing
+subreddits:
+- funeraldirectors
+- askfuneraldirectors
+- deathcare
+stackexchange_sites: []
+forums:
+- name: The FORUM
+  url: https://web.njsfda.org/public/forum
+  status: live
+  checked_at: '2026-10-16'
+  locked: false
+  software: unknown
+  robots: allowed
+  terms: unchecked
+- name: Forum - NHAA
+  url: https://nationalhearse.net/forum
+  status: live
+  checked_at: '2026-10-16'
+  locked: false
+  software: vbulletin
+  rss: https://nationalhearse.net/external?type=rss2
+  robots: allowed
+  terms: unchecked
+rss_feeds:
+- name: nfda
+  url: https://www.nfda.org/feed/
+  status: live
+  checked_at: '2026-10-16'
+  locked: false
+  entries: 10
+  full_text: true
+- name: connectingdirectors
+  url: https://connectingdirectors.com/feed
+  status: live
+  checked_at: '2026-10-16'
+  locked: false
+  entries: 10
+  full_text: true
+- name: calebwilde
+  url: https://www.calebwilde.com/feed/
+  status: dead
+  checked_at: '2026-10-16'
+  notes: 'automatic check: no new items since 2020-04-01'
+  locked: true
+  entries: 7
+  full_text: true
+- name: funeralvision
+  url: https://www.funeralvision.com/feed/
+  status: live
+  checked_at: '2026-10-16'
+  locked: false
+  entries: 10
+  full_text: true
+- name: funerals
+  url: https://funerals.smfforfree2.com/index.php?type=rss;action=.xml
+  status: dead
+  checked_at: '2026-10-16'
+  notes: 'automatic check: no new items since 2022-11-27'
+  locked: true
+  entries: 5
+  full_text: false
+- name: funeraldirectordaily
+  url: https://funeraldirectordaily.com/feed/
+  status: dead
+  checked_at: '2026-10-16'
+  notes: 'automatic check: only 1 items'
+  locked: true
+  entries: 1
+  full_text: false
+- name: iccfa
+  url: https://iccfa.com/feed/
+  status: live
+  checked_at: '2026-10-16'
+  locked: false
+  entries: 10
+  full_text: false
+- name: gather
+  url: https://gather.app/feed/
+  status: live
+  checked_at: '2026-10-16'
+  locked: false
+  entries: 10
+  full_text: true
+- name: fcsmagazine
+  url: https://www.fcsmagazine.com/blog/rss/
+  status: live
+  checked_at: '2026-10-16'
+  locked: false
+  entries: 7
+  full_text: true
+- name: kates-boylston
+  url: http://www.kates-boylston.com/search/?f=rss&t=article&l=50&s=start_time&sd=desc&k%5B%5D=%23topstory
+  status: dead
+  checked_at: '2026-10-16'
+  notes: HTTP 429
+  locked: false
+- name: funeralservicetimes
+  url: https://www.funeralservicetimes.co.uk/feed/
+  status: live
+  checked_at: '2026-10-16'
+  locked: false
+  entries: 10
+  full_text: false
+- name: nafd
+  url: https://nafd.org.uk/feed/
+  status: dead
+  checked_at: '2026-10-16'
+  notes: 'automatic check: no new items since 2026-06-10'
+  locked: true
+  entries: 10
+  full_text: true
+- name: lemastersconsulting
+  url: https://www.lemastersconsulting.com/welcome?format=rss
+  status: dead
+  checked_at: '2026-10-16'
+  notes: no entries
+  locked: false
+  entries: 0
+  full_text: false
+- name: tifg
+  url: https://www.tifg.net/blog-feed.xml
+  status: live
+  checked_at: '2026-10-16'
+  locked: false
+  entries: 20
+  full_text: false
+- name: blog
+  url: https://blog.funeralbusinessbuilder.com/feed/
+  status: dead
+  checked_at: '2026-10-16'
+  notes: 'automatic check: no new items since 2025-09-19'
+  locked: true
+  entries: 10
+  full_text: true
+- name: ringringmarketing
+  url: https://www.ringringmarketing.com/feed/
+  status: live
+  checked_at: '2026-10-16'
+  locked: false
+  entries: 10
+  full_text: true
+associations:
+- name: Cremation Association of North America (CANA) - Cremation Association of North America (CANA)
+  url: https://www.cremationassociation.org/
+  status: live
+  checked_at: '2026-10-16'
+  locked: false
+- name: Home | Representing Funeral Establishments in NY | The Metropolitan Funeral Directors Association
+  url: https://metfda.org/
+  status: live
+  checked_at: '2026-10-16'
+  locked: false
+- name: Home | New York State's premier Funeral Directors Association | The New York State Funeral Directors
+    Association
+  url: https://nysfda.org/
+  status: live
+  checked_at: '2026-10-16'
+  locked: false
+job_boards: []
+podcasts: []
+youtube_channels: []
