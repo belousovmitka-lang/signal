@@ -6,8 +6,9 @@ one planning call and, if worth it, one targeted search on X for the affected pe
   software could take on (not a purchase of software or goods)? If the candidate came from an anchor, the
   plan also writes the claim. And a short X query in practitioners' words.
 - Search: `signal_connectors.x_search.search_x` (the connectors session builds it). Found posts are stored
-  in signal.db by the connector and tagged later like any post; here each becomes an evidence line quoting
-  the post. Only their ids are cached (per candidate, refreshed after `refresh_days`, so re-runs cost
+  in signal.db by the connector and tagged later like any post; here each becomes an evidence line. Its
+  text goes to the critic only (in memory); stored evidence keeps the link, and the app shows it with X's
+  embed widget (`common.shown_evidence`), as X's terms require. Only their ids are cached (per candidate, refreshed after `refresh_days`, so re-runs cost
   nothing); the text is read from signal.db each run, so a post deleted at X disappears from evidence.
 - The critic then checks every item, X posts included; nothing about the evidence minimum is relaxed.
 Without an LLM or without the X connector, near misses are counted and dropped, as before.
@@ -143,7 +144,7 @@ class Corroborator:
                 break
             excerpt = _excerpt(post)
             cand.evidence.append(Evidence(post_id=post.id, source=post.source, source_type=post.source_type,
-                                          url=post.url, what_it_shows=f"A post on X: {excerpt}"))
+                                          url=post.url, what_it_shows="A post on X by someone affected"))
             cand.texts[post.id] = excerpt
             added += 1
         return True

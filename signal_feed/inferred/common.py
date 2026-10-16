@@ -24,6 +24,14 @@ class Evidence:
     counts: bool = True              # False for a computed summary line: shown, never counted as evidence
 
 
+def shown_evidence(url: str, source: str, what_it_shows: str | None) -> dict:
+    """An evidence item as the app receives it. X's Developer Agreement allows changing X content only to
+    format it for display: an X post goes out as an embed (X's widget draws it), never as a quote of its text."""
+    if source.split(":")[0] == "x":
+        return {"url": url, "source": source, "what_it_shows": None, "embed": url}
+    return {"url": url, "source": source, "what_it_shows": what_it_shows}
+
+
 @dataclass
 class Candidate:
     detector: str

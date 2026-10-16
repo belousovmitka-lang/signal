@@ -24,6 +24,7 @@ from ..db import (
     ProblemPostRow,
     ProblemRow,
 )
+from ..inferred.common import shown_evidence
 from ..niches.tree import INDUSTRY, SKILL, Tree
 from ..posts import PostsReader
 
@@ -65,7 +66,7 @@ class Item:
     item_type: str = "post"         # post | inferred
     item_id: str = ""               # the post id, or the inferred problem's id
     confidence: str | None = None   # inferred only: high | medium | low (17.6)
-    evidence: tuple[dict, ...] = () # inferred only: the evidence chain (url, source, what_it_shows)
+    evidence: tuple[dict, ...] = () # inferred only: the evidence chain (url, source, what_it_shows; embed for X)
     detector_weight: float = 1.0    # inferred only: how its detector and evidence mix hold up (17.7)
 
     def __post_init__(self) -> None:
@@ -210,7 +211,7 @@ def _add_inferred(items: list[Item], vecs: list, inferred, evidence: dict, rows:
             tools=tuple(sorted({t.lower() for r in ev_rows for t in (r.tools_mentioned or [])})),
             item_type="inferred", item_id=str(p.id), confidence=p.confidence,
             detector_weight=(weights or {}).get((p.detector, "+".join(sorted({e.source_type for e in ev}))), 1.0),
-            evidence=tuple({"url": e.url, "source": e.source, "what_it_shows": e.what_it_shows} for e in ev)))
+            evidence=tuple(shown_evidence(e.url, e.source, e.what_it_shows) for e in ev)))
         vecs.append(m.mean(axis=0).tolist())
 
 

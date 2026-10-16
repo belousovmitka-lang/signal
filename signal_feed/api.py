@@ -200,6 +200,7 @@ def create_app(store: FeedStore, posts: PostsReader, config: FeedConfig, service
         """The full evidence chain ("+N more", 17.8) and what was found against it."""
         _user(user_id)
         from .db import InferredEvidenceRow, InferredProblemRow
+        from .inferred.common import shown_evidence
         with store.session() as s:
             p = s.get(InferredProblemRow, inferred_id)
             if p is None or p.status != "published":
@@ -207,10 +208,9 @@ def create_app(store: FeedStore, posts: PostsReader, config: FeedConfig, service
             ev = [e for e in s.scalars(select(InferredEvidenceRow).where(InferredEvidenceRow.inferred_id == p.id))
                   if e.supported is not False]
             return {"inferred_id": p.id, "kind": "inferred", "confidence": p.confidence, "hypothesis": p.hypothesis,
-                    "who": p.who, "evidence": [{"url": e.url, "source": e.source, "what_it_shows": e.what_it_shows}
-                                               for e in ev],
-                    "counter_evidence": [{"url": c.get("url"), "source": c.get("source"),
-                                          "what_it_shows": c.get("what_it_shows")} for c in p.counter_evidence or []]}
+                    "who": p.who, "evidence": [shown_evidence(e.url, e.source, e.what_it_shows) for e in ev],
+                    "counter_evidence": [shown_evidence(c.get("url"), c.get("source") or "", c.get("what_it_shows"))
+                                         for c in p.counter_evidence or []]}
 
     @app.post("/inferred/{inferred_id}/vote")
     def post_vote(inferred_id: int, v: Vote) -> dict:

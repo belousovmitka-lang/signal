@@ -18,7 +18,7 @@ from sqlalchemy import delete, func, select
 from signal_connectors.models import RawPost, utcnow
 
 from ..config import FeedConfig, ModelCall
-from ..db import EnrichedPostRow, EnrichmentBatchRow, FeedStore, ObligationRow
+from ..db import EnrichedPostRow, EnrichmentBatchRow, FeedStore, InferredEvidenceRow, ObligationRow
 from ..posts import PostsReader
 from .costs import BudgetExceededError, CostLedger, Usage, claude_usd, claude_worst_case_usd
 from .embeddings import Embedder
@@ -289,10 +289,14 @@ class Enricher:
         with self.store.session() as s:
             enriched = set(s.scalars(select(EnrichedPostRow.post_id)))
         gone = enriched - self.posts.existing_ids(enriched)
-        if gone:
+        with self.store.session() as s:          # evidence links to deleted posts go too (X: within 24h)
+            cited = set(s.scalars(select(InferredEvidenceRow.post_id).where(InferredEvidenceRow.post_id.is_not(None))))
+        gone_cited = cited - self.posts.existing_ids(cited)
+        if gone or gone_cited:
             with self.store.session() as s, s.begin():
                 s.execute(delete(EnrichedPostRow).where(EnrichedPostRow.post_id.in_(gone)))
-        return len(gone)
+                s.execute(delete(InferredEvidenceRow).where(InferredEvidenceRow.post_id.in_(gone_cited)))
+        return len(gone | gone_cited)
 
     # --- embeddings ----------------------------------------------------------
 

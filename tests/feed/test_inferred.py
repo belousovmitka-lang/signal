@@ -2,6 +2,7 @@
 problems in the feed."""
 
 import uuid
+from types import SimpleNamespace
 from datetime import datetime, timedelta, timezone
 
 import numpy as np
@@ -682,10 +683,11 @@ class PlanAndCritic:
     """Answers planning calls with `plans` in turn and critic calls with `verdicts` in turn."""
 
     def __init__(self, plans, verdicts):
-        self.plans, self.verdicts, self.calls = list(plans), list(verdicts), []
+        self.plans, self.verdicts, self.calls, self.prompts = list(plans), list(verdicts), [], []
 
     def tag(self, call, system, user, *, fallbacks=False, output_model=None):
         self.calls.append(output_model.__name__)
+        self.prompts.append(user)
         queue = self.plans if output_model.__name__ == "Plan" else self.verdicts
         v = queue.pop(0) if queue else None
         return TagAttempt(output=v, model=call.model, usages=[Usage(call.model, 500, 80)],
@@ -727,7 +729,11 @@ def test_a_near_miss_is_corroborated_on_x_once_and_then_judged(market, tmp_path,
         hose = s.scalars(select(InferredProblemRow).where(InferredProblemRow.task == "supply hose assemblies")).one()
         ev = list(s.scalars(select(InferredEvidenceRow).where(InferredEvidenceRow.inferred_id == hose.id)))
     xs = [e for e in ev if e.source == "x"]
-    assert len(xs) == 3 and all(e.what_it_shows.startswith("A post on X: Spent all morning") for e in xs)
+    assert len(xs) == 3 and all(e.what_it_shows == "A post on X by someone affected" for e in xs)   # no X text stored
+    assert "Spent all morning" in tagger.prompts[-1]             # the critic still reads the post
+    from signal_feed.inferred.common import shown_evidence
+    assert shown_evidence(xs[0].url, "x", xs[0].what_it_shows) == {"url": xs[0].url, "source": "x",
+                                                                    "what_it_shows": None, "embed": xs[0].url}
     assert {e.source_type for e in ev} == {"government", "social"}
 
     # A re-run reuses the cached plan and search: no new paid calls, same problem.
@@ -748,6 +754,17 @@ def test_a_near_miss_is_corroborated_on_x_once_and_then_judged(market, tmp_path,
     with feed_store.session() as s:
         urls = set(s.scalars(select(InferredEvidenceRow.url).where(InferredEvidenceRow.inferred_id == hose.id)))
     assert xs[0].url not in urls and xs[1].url in urls
+
+    # The enrich pass purges evidence rows citing posts deleted at the source, without waiting for a run.
+    con = sqlite3.connect(tmp_path / "signal.db")
+    con.execute("DELETE FROM posts WHERE url = ?", (xs[1].url,))
+    con.commit()
+    con.close()
+    from signal_feed.enrichment.pipeline import Enricher
+    Enricher.purge_deleted(SimpleNamespace(store=feed_store, posts=reader))
+    with feed_store.session() as s:
+        urls = set(s.scalars(select(InferredEvidenceRow.url).where(InferredEvidenceRow.inferred_id == hose.id)))
+    assert xs[1].url not in urls
 
 
 @pytest.mark.parametrize("case", ["software", "search_fails", "no_searcher"])
