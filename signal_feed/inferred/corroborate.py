@@ -5,7 +5,7 @@ one planning call and, if worth it, one targeted search on X for the affected pe
 - Plan (one Claude call, cached per candidate): is this really people doing or paying for routine work
   software could take on (not a purchase of software or goods)? If the candidate came from an anchor, the
   plan also writes the claim. And a short X query in practitioners' words.
-- Search: `signal_connectors.ondemand.search_x` (the connectors session builds it). Found posts are stored
+- Search: `signal_connectors.x_search.search_x` (the connectors session builds it). Found posts are stored
   in signal.db by the connector and tagged later like any post; here each becomes an evidence line quoting
   the post. Only their ids are cached (per candidate, refreshed after `refresh_days`, so re-runs cost
   nothing); the text is read from signal.db each run, so a post deleted at X disappears from evidence.
@@ -65,7 +65,7 @@ class Plan(BaseModel):
 def x_searcher() -> Searcher | None:
     """The connectors session's on-demand X search, if it exists yet."""
     try:
-        from signal_connectors.ondemand import search_x   # type: ignore[import-not-found]
+        from signal_connectors.x_search import search_x   # type: ignore[import-not-found]
     except ImportError:
         return None
     return search_x

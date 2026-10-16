@@ -693,7 +693,7 @@ class PlanAndCritic:
 
 
 class FakeX:
-    """Stands in for signal_connectors.ondemand.search_x: stores the posts it 'finds' in signal.db."""
+    """Stands in for signal_connectors.x_search.search_x: stores the posts it 'finds' in signal.db."""
 
     def __init__(self, url, n=3, fail=None):
         self.url, self.n, self.fail, self.queries = url, n, fail, []
