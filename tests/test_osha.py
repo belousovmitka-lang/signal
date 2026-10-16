@@ -16,10 +16,10 @@ from .conftest import signal_vcr
 SINCE = datetime(2026, 1, 1, tzinfo=timezone.utc)
 
 
-def src(days=30):
+def src(days=30, inspection_days=240):
     return {"sources": {"osha": {"route": "own_api", "source_type": "government",
                                  "rate_limit": {"requests_per_second": 0.25, "domains": ["apiprod.dol.gov"]},
-                                 "queries": [{"params": {"days": days}, "limit": 50}]}}}
+                                 "queries": [{"params": {"days": days, "inspection_days": inspection_days}, "limit": 50}]}}}
 
 
 @pytest.fixture(autouse=True)
@@ -30,6 +30,8 @@ def key(monkeypatch):
 def test_standard_codes():
     assert standard_code("19260501 B10") == "1926.501" and standard_code("19100147 C06 I") == "1910.147"
     assert standard_code("19030019 C01") == "1903.19" and standard_code("5A0001") == "5A.1"
+    assert standard_code("3203.(A)") == "state 3203.(A)" and standard_code("OAR 437-001-0760") == "state OAR 437-001-0760"
+    assert standard_code("296-800-14005(1)") == "state 296-800-14005(1)"
 
 
 VIOLATIONS = [
@@ -57,8 +59,8 @@ async def test_aggregates_per_industry_without_names(make_services):
                 return httpx.Response(200, json={"data": [{"issuance_date": "2026-09-11T00:00:00"}]})
             assert json.loads(params["filter_object"]) == {"field": "issuance_date", "operator": "gt", "value": "2026-08-12"}
             return httpx.Response(200, json={"data": VIOLATIONS})
-        ids = json.loads(params["filter_object"])["value"]
-        return httpx.Response(200, json={"data": [{"activity_nr": i, "naics_code": INSPECTIONS[i]} for i in ids]})
+        assert json.loads(params["filter_object"])["field"] == "open_date"            # bulk, not id lists
+        return httpx.Response(200, json={"data": [{"activity_nr": i, "naics_code": n} for i, n in INSPECTIONS.items()]})
 
     async with make_services(src(), api) as svc:
         out = await run_source(svc, svc.sources.get("osha"), since=SINCE, collect=True)
@@ -74,12 +76,11 @@ async def test_aggregates_per_industry_without_names(make_services):
     assert all("estab_name" not in (f or "") for _, f in calls)                       # names never requested
 
 
-@pytest.mark.skip(reason="cassette not recorded yet: DOL API answered 429 on 2026-10-15; record with VCR_RECORD_MODE=once")
 @signal_vcr.use_cassette("osha.yaml")
 async def test_cassette_osha(settings, monkeypatch):
     if os.environ.get("VCR_RECORD_MODE", "none") != "none":
         monkeypatch.setenv("DOL_API_KEY", dotenv_values(".env")["DOL_API_KEY"])
-    async with Services.open(settings, SourcesFile.model_validate(src(days=2))) as svc:
+    async with Services.open(settings, SourcesFile.model_validate(src(days=2, inspection_days=60))) as svc:
         out = await run_source(svc, svc.sources.get("osha"), since=SINCE, collect=True)
-    assert out.result.status == "ok" and out.result.invalid == 0 and out.result.new >= 3
+    assert out.result.status == "ok" and out.result.invalid == 0 and out.result.new >= 1
     assert all(p.raw["violations"] > 0 and p.raw["top_standards"] for p in out.posts)

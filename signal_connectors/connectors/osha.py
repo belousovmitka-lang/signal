@@ -1,7 +1,8 @@
 """OSHA enforcement data (DOL data API v4, key DOL_API_KEY): what inspectors cite, per industry.
 
 Monthly: violations issued in the 30 days ending at the newest issuance date in the data (the data
-lag about a month) are joined to their inspections for the NAICS code, then summed per industry
+lag about a month) are joined to inspections opened in the last INSPECTION_DAYS (fetched in bulk, a
+few calls) for the NAICS code, then summed per industry
 map (NAICS prefixes in `INDUSTRY_NAICS`): inspections, violations by type, penalties, and the most
 cited standards. Repeated citations of the same standard are a compliance burden somebody pays for.
 
@@ -29,7 +30,7 @@ from . import register
 
 API = "https://apiprod.dol.gov/v4/get/OSHA/{table}/json"
 PAGE = 10_000
-JOIN_CHUNK = 80          # the API gateway rejects URLs much past ~2,000 characters (403)
+INSPECTION_DAYS = 240   # violations are issued within 6 months of an inspection; their inspections are fetched in bulk
 INDUSTRY_NAICS = {
     "construction": ["23"], "manufacturing": ["31", "32", "33"], "restaurants": ["722"],
     "healthcare": ["621", "622", "623"], "dental": ["6212"], "veterinary": ["54194"], "auto_repair": ["8111"],
@@ -57,13 +58,15 @@ STANDARDS = {
 
 
 def standard_code(raw: str) -> str:
-    """'19260501 B10' -> '1926.501'; '5A0001' -> '5A.1'."""
-    code = (raw or "").split()[0]
-    if len(code) >= 5 and code[:4].isdigit():
-        return f"{code[:4]}.{int(code[4:]) if code[4:].isdigit() else code[4:]}"
-    if code.startswith("5A"):
+    """'19260501 B10' -> '1926.501'; '5A0001' -> '5A.1'; state-plan codes kept whole and labelled:
+    '3203.(A)' -> 'state 3203.(A)', 'OAR 437-001-0760' -> 'state OAR 437-001-0760'."""
+    raw = (raw or "").strip()
+    code = raw.split()[0] if raw else ""
+    if len(code) == 8 and code.isdigit() and code[:2] == "19":
+        return f"{code[:4]}.{int(code[4:])}"
+    if code.startswith("5A") and code[2:].isdigit():
         return f"5A.{int(code[2:] or 0)}"
-    return code
+    return f"state {' '.join(raw.split()[:2]) if code.isalpha() else code}"
 
 
 @register
@@ -108,12 +111,18 @@ class OshaConnector(BaseConnector):
             if len(page) < PAGE:
                 break
             offset += PAGE
-        ids = sorted({v["activity_nr"] for v in violations})
+        # Join to inspections for NAICS by fetching recent inspections in bulk (~3 calls), not by id lists
+        # (~40 calls): the API stopped answering for the day after ~20 calls (2026-10-15).
         naics: dict[int, str] = {}
-        for i in range(0, len(ids), JOIN_CHUNK):
-            for row in await self._get("inspection", fields="activity_nr,naics_code",
-                                       filter_object={"field": "activity_nr", "operator": "in", "value": ids[i:i + JOIN_CHUNK]}):
-                naics[row["activity_nr"]] = str(row.get("naics_code") or "")
+        since = end - timedelta(days=int(query.params.get("inspection_days", INSPECTION_DAYS)))
+        offset = 0
+        while True:
+            page = await self._get("inspection", limit=PAGE, offset=offset, fields="activity_nr,naics_code",
+                                   filter_object={"field": "open_date", "operator": "gt", "value": f"{since:%Y-%m-%d}"})
+            naics.update({row["activity_nr"]: str(row.get("naics_code") or "") for row in page})
+            if len(page) < PAGE:
+                break
+            offset += PAGE
         for key, prefixes in INDUSTRY_NAICS.items():
             mine = [v for v in violations if naics.get(v["activity_nr"], "").startswith(tuple(prefixes))]
             if mine:

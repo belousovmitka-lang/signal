@@ -822,8 +822,8 @@ sources:
       - {params: {months: 2}, limit: 100}
 
   osha:
-    enabled: false                   # built; off until a live run passes (DOL answered 429 all day on 2026-10-15)
-    status: todo
+    enabled: true
+    status: done
     status_date: 2026-10-15
     route: own_api
     source_type: government
