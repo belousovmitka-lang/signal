@@ -65,10 +65,9 @@ def find_candidates(store: FeedStore, posts: PostsReader, config: FeedConfig, no
                                      what_it_shows=f"A complaint about {tool}: {r.pain_statement}"))
             if len(evidence) >= 8:
                 break
-        if not meets_minimum(evidence, icfg):
-            continue
+        near_miss = not meets_minimum(evidence, icfg)   # corroboration may complete it
         feature = (row.task or (req.title or "this feature")).strip().rstrip(".")
-        out.append(Candidate(detector=NAME, task=feature, who=f"{tool} users", niche_id=leaf.get(req.id),
+        out.append(Candidate(near_miss=near_miss, detector=NAME, task=feature, who=f"{tool} users", niche_id=leaf.get(req.id),
                              evidence=evidence, hypothesis=TEMPLATE.format(tool=tool, feature=feature,
                                                                             time=_age_words(age)),
                              rows=[rows[e.post_id] for e in evidence if e.post_id in rows],

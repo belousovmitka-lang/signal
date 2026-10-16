@@ -194,8 +194,7 @@ def find_candidates(store: FeedStore, posts: PostsReader, config: FeedConfig, no
         for c in [c for d in dockets for c in comments.get(d, [])][:cfg.max_comment_evidence]:
             evidence.append(Evidence(post_id=c.id, source=c.source, source_type=c.source_type, url=c.url,
                                      what_it_shows=f"A public comment on this rule: {(c.title or '').strip()[:120]}"))
-        if not meets_minimum(evidence, icfg):
-            continue
+        near_miss = not meets_minimum(evidence, icfg)   # corroboration may complete it
         placed = [leaf[r.post_id] for r in matching if r.post_id in leaf] or \
             ([leaf[o.post_id]] if o.post_id in leaf else [])
         niche = Counter(placed).most_common(1)[0][0] if placed else None
@@ -208,7 +207,7 @@ def find_candidates(store: FeedStore, posts: PostsReader, config: FeedConfig, no
                           TEMPLATE_NO_DATE.format(rule=rule_short, who=o.who, what=o.what, role=roles))
         else:
             hypothesis = TEMPLATE_VOICES.format(rule=rule_short, who=o.who, what=o.what, by_date=by_date)
-        out.append(Candidate(
+        out.append(Candidate(near_miss=near_miss, 
             detector=NAME, task=o.what, who=o.who, niche_id=niche, evidence=evidence, counter_evidence=counters,
             hypothesis=hypothesis, rows=matching, posts=[raw[r.post_id] for r in matching]))
     return out, len(obligations)

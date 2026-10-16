@@ -65,8 +65,7 @@ def find_candidates(store: FeedStore, posts: PostsReader, config: FeedConfig, no
                              url=raw[r.post_id].url,
                              what_it_shows=f"{('A ' + r.who_has_pain) if r.who_has_pain else 'A user'} moves {dt} "
                                            f"from {a} to {b} by hand") for r, dt in uniq]
-        if not meets_minimum(evidence, icfg):
-            continue
+        near_miss = not meets_minimum(evidence, icfg)   # corroboration may complete it
         vecs = [r.embedding for r, _ in uniq if r.embedding]
         counters = counter_evidence(centroid(unit_matrix(vecs)), cat_vectors, catalog, raw, icfg,
                                     exclude=seen) if vecs else []
@@ -77,7 +76,7 @@ def find_candidates(store: FeedStore, posts: PostsReader, config: FeedConfig, no
                 counters.insert(0, {"post_id": r.post_id, "source": raw[r.post_id].source, "url": raw[r.post_id].url,
                                     "what_it_shows": f"Names both {a} and {b} (possible integration)"})
         niches = Counter(leaf[r.post_id] for r, _ in uniq if r.post_id in leaf)
-        out.append(Candidate(detector=NAME, hypothesis=TEMPLATE.format(a=a, b=b, data=data), who=None,
+        out.append(Candidate(near_miss=near_miss, detector=NAME, hypothesis=TEMPLATE.format(a=a, b=b, data=data), who=None,
                              task=f"move {data} from {a} to {b}",
                              niche_id=niches.most_common(1)[0][0] if niches else None, evidence=evidence,
                              counter_evidence=counters, rows=[r for r, _ in uniq],

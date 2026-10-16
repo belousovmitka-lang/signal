@@ -43,14 +43,22 @@ def main() -> int:
             from signal_feed.enrichment.llm import AnthropicTagger
             from signal_feed.llm_task import LLMTask
             llm = LLMTask(store, config.enrichment, AnthropicTagger())
+        from signal_feed.inferred.corroborate import x_searcher
+        searcher = x_searcher() if llm is not None else None    # X corroboration (connectors' search_x, once built)
+        if llm is not None and searcher is None:
+            print("note: signal_connectors.ondemand.search_x not built yet: near misses get a plan, no X search")
         for name in args.detector or list(DETECTORS):          # in pipeline order
             try:
-                r = run_detector(store, PostsReader(settings.posts_database_url), config, name, llm)
+                r = run_detector(store, PostsReader(settings.posts_database_url), config, name, llm,
+                                 searcher=searcher)
             except BudgetExceededError as exc:   # incl. a billing refusal: a message, not a traceback
                 raise SystemExit(f"stopped: {exc}\n(run again with --no-llm to find candidates without the critic)") from None
             print(f"{name}: {r.clusters} groups examined, {r.candidates} candidates -> {r.published} published, "
                   f"{r.rejected} rejected, {r.held} held for the critic, {r.expired} expired; "
-                  f"{r.critic_runs} critic calls, LLM cost ${llm.spent if llm else 0:.4f}")
+                  f"{r.critic_runs} critic calls, LLM cost ${llm.spent if llm else 0:.4f}; "
+                  f"{r.near_misses} near misses, {r.plans} plans, {r.searches} X searches")
+            if r.search_stopped:
+                print(f"  X search stopped: {r.search_stopped}")
             for line in r.items:
                 print(f"  {line}")
         return 0

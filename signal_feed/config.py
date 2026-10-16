@@ -281,6 +281,26 @@ class CrossIndustryConfig(_Strict):
     min_tool_posts: int = Field(gt=0)
 
 
+class CorroborationConfig(_Strict):
+    enabled: bool
+    max_searches_per_run: int = Field(ge=0)   # X searches (each ~max_posts reads, metered by the connector)
+    max_posts: int = Field(gt=0, le=100)
+    refresh_days: int = Field(gt=0)           # a candidate's search is reused this long
+    min_text_chars: int = Field(ge=0)
+    max_evidence: int = Field(gt=0)           # X posts added to one candidate
+    max_plans_per_run: int = Field(ge=0)      # planning calls (Claude) per detector run
+
+
+class AnchoredConfig(_Strict):
+    window_days: int = Field(gt=0)
+    max_anchors_per_run: int = Field(ge=0)
+    skip_sources: list[str] = Field(default_factory=list)   # rule sources: Detector 2 reads their obligations
+    labor_tender_sources: list[str] = Field(default_factory=list)
+    min_automatable: Fraction = Field(ge=0, le=1)
+    voice_cosine: Fraction = Field(ge=0, le=1)
+    max_voice_evidence: int = Field(ge=0)
+
+
 class InferredConfig(_Strict):
     min_evidence: int = Field(gt=0)
     min_source_types: int = Field(gt=0)
@@ -301,6 +321,8 @@ class InferredConfig(_Strict):
     labor_pressure: LaborPressureConfig
     ignored_requests: IgnoredRequestsConfig
     cross_industry: CrossIndustryConfig
+    corroboration: CorroborationConfig
+    anchored: AnchoredConfig
     validation: ValidationConfig
 
 

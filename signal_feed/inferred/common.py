@@ -36,6 +36,9 @@ class Candidate:
     derived: bool = False                      # built from pain statements, not v9 tasks
     rows: list[EnrichedPostRow] = field(default_factory=list)
     posts: list[RawPost] = field(default_factory=list)
+    near_miss: bool = False                    # misses the evidence minimum: needs corroboration first
+    anchor: bool = False                       # one fact; its claim is written by the planning call
+    texts: dict[str, str] = field(default_factory=dict)   # excerpts for the critic (posts without tags)
 
 
 def buyer_key(post: RawPost) -> str:
@@ -57,6 +60,36 @@ def buyer_label(post: RawPost, row: EnrichedPostRow) -> str:
     if not post.author_hash and post.community:
         return post.community.strip()
     return f"a {row.who_has_pain}" if row.who_has_pain else "a poster"
+
+
+# What a tender buys, from its own classification codes (more reliable than reading the task text).
+# CPV (EU and UK notices): data entry/processing, business and admin services are human labor.
+_CPV_LABOR = ("72310", "72312", "72313", "72314", "72316", "79", "75", "92512")
+_CPV_SOFTWARE = ("48", "72", "30")
+# NAICS (SAM.gov): legal, accounting, consulting, office admin, business support (call centers, document
+# preparation), claims adjusting.
+_NAICS_LABOR = ("5411", "5412", "5416", "5611", "5614", "5619", "5242")
+_NAICS_SOFTWARE = ("5112", "5132", "5182", "5415", "3341")
+
+
+def tender_kind(post: RawPost) -> str | None:
+    """"labor" | "software" | "goods" | None (no usable code)."""
+    raw = post.raw or {}
+    codes = raw.get("cpv")
+    labor, software = _CPV_LABOR, _CPV_SOFTWARE
+    if not codes:
+        codes, labor, software = raw.get("naics"), _NAICS_LABOR, _NAICS_SOFTWARE
+    if isinstance(codes, str):
+        codes = [c.strip(" '\"") for c in codes.strip("[]").split(",")]
+    codes = [str(c) for c in (codes or []) if c and str(c)[:1].isdigit()]
+    if not codes:
+        return None
+    main = codes[0]                  # notices list their main category first; extra codes are side items
+    if main.startswith(labor):
+        return "labor"
+    if main.startswith(software):
+        return "software"
+    return "goods"
 
 
 def counted(evidence: list[Evidence]) -> list[Evidence]:

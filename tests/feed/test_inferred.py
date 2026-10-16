@@ -38,6 +38,12 @@ NOW = datetime(2026, 10, 15, 12, 0, tzinfo=timezone.utc)
 DIM = 12
 
 
+def ready(result):
+    """A detector's candidates that meet the evidence minimum (near misses go to corroboration)."""
+    found, n = result
+    return [c for c in found if not c.near_miss], n
+
+
 def unit(v):
     return (np.asarray(v) / np.linalg.norm(v)).tolist()
 
@@ -49,6 +55,8 @@ class FakeCritic:
         self.verdicts, self.prompts = list(verdicts), []
 
     def tag(self, call, system, user, *, fallbacks=False, output_model=None):
+        if output_model is not None and output_model.__name__ == "Plan":   # corroboration planning: declined
+            return TagAttempt(output=None, model=call.model, usages=[], error="invalid_json")
         self.prompts.append(user)
         v = self.verdicts.pop(0) if self.verdicts else None
         return TagAttempt(output=v, model=call.model, usages=[Usage(call.model, 800, 120)],
@@ -126,8 +134,10 @@ def test_derived_tasks_strip_the_buyer_and_lead_in():
 
 def test_detector_finds_paid_workarounds_with_factual_evidence(market, feed_store, feed_config):
     reader, contract, review, _ = market
-    cands, clusters = find_candidates(feed_store, reader, feed_config, NOW)
-    assert clusters >= 2 and len(cands) == 1                 # the single-portal cluster doesn't qualify
+    found, _ = find_candidates(feed_store, reader, feed_config, NOW)
+    cands, clusters = ready(find_candidates(feed_store, reader, feed_config, NOW))
+    assert clusters >= 2 and len(cands) == 1                 # the single-portal cluster doesn't qualify...
+    assert len([c for c in found if c.near_miss]) == 1       # ...it's a near miss, left to corroboration
     c = cands[0]
     assert c.niche_id == contract and c.task == "redline vendor contracts" and not c.derived
     assert c.hypothesis == "Legal operations teams pay people to redline vendor contracts by hand because no tool does it well."
@@ -142,7 +152,7 @@ def test_tasks_software_cant_do_are_skipped(market, feed_store, feed_config):
     with feed_store.session() as s, s.begin():
         for r in s.scalars(select(EnrichedPostRow).where(EnrichedPostRow.task == "redline vendor contracts")):
             r.task_automatable = 0.1
-    assert find_candidates(feed_store, reader, feed_config, NOW)[0] == []
+    assert ready(find_candidates(feed_store, reader, feed_config, NOW))[0] == []
 
 
 def test_confidence_levels_follow_17_6(feed_config):
@@ -308,7 +318,7 @@ def rule_world(tmp_path, feed_store):
 def test_rule_change_maps_an_obligation_to_the_role_doing_it(rule_world, feed_store, feed_config):
     from signal_feed.inferred.rule_change import find_candidates as rule_candidates
     reader, payroll, rule = rule_world
-    cands, examined = rule_candidates(feed_store, reader, feed_config, NOW)
+    cands, examined = ready(rule_candidates(feed_store, reader, feed_config, NOW))
     assert examined == 1 and len(cands) == 1
     c = cands[0]
     deadline = (NOW + timedelta(days=120)).date()
@@ -337,7 +347,7 @@ def test_rule_change_needs_a_future_deadline_enough_posts_and_the_industry(rule_
     if change == "few_posts":
         cfg = feed_config.model_copy(update={"inferred": feed_config.inferred.model_copy(update={
             "rule_change": feed_config.inferred.rule_change.model_copy(update={"min_role_posts": 13})})})
-    assert rule_candidates(feed_store, reader, cfg, NOW)[0] == []
+    assert ready(rule_candidates(feed_store, reader, cfg, NOW))[0] == []
 
 
 def test_both_detectors_run_through_the_same_pipeline(rule_world, feed_store, feed_config):
@@ -383,7 +393,7 @@ def test_rule_change_without_a_role_uses_the_affected_peoples_posts(rule_world, 
         s.scalars(select(ObligationRow)).one().deadline = None      # most rules state none: recent rule counts
     _add_voices(tmp_path, feed_store, ["a1", "a2", "a2", "a3"])      # a2 twice: counted once
     cfg = _rule_cfg(feed_config, min_role_posts=13)                  # no role has enough job posts
-    cands, _ = rule_candidates(feed_store, reader, cfg, NOW)
+    cands, _ = ready(rule_candidates(feed_store, reader, cfg, NOW))
     assert len(cands) == 1
     c = cands[0]
     assert c.hypothesis == ("Wage reporting for hourly workers requires employers with hourly staff to report hours "
@@ -393,9 +403,9 @@ def test_rule_change_without_a_role_uses_the_affected_peoples_posts(rule_world, 
                                     for e in voices)
     assert not any(e.source == "job_boards" for e in c.evidence)
     # Too few distinct authors, or an old rule with no deadline: no candidate.
-    assert rule_candidates(feed_store, reader, _rule_cfg(cfg, min_voice_posts=4), NOW)[0] == []
+    assert ready(rule_candidates(feed_store, reader, _rule_cfg(cfg, min_voice_posts=4), NOW))[0] == []
     later = NOW + timedelta(days=feed_config.inferred.rule_change.max_rule_age_days)
-    assert rule_candidates(feed_store, reader, cfg, later)[0] == []
+    assert ready(rule_candidates(feed_store, reader, cfg, later))[0] == []
 
 
 def test_rule_change_keeps_one_candidate_per_rule_named_by_its_docket(rule_world, tmp_path, feed_store, feed_config):
@@ -411,11 +421,11 @@ def test_rule_change_keeps_one_candidate_per_rule_named_by_its_docket(rule_world
         o = s.scalars(select(ObligationRow)).one()
         s.add(ObligationRow(post_id=comment.id, who="employers with hourly staff", what="report weekly hours",
                             deadline=o.deadline, industries=o.industries, created_at=NOW, embedding=o.embedding))
-    cands, _ = rule_candidates(feed_store, reader, feed_config, NOW)
+    cands, _ = ready(rule_candidates(feed_store, reader, feed_config, NOW))
     assert len(cands) == 1 and cands[0].evidence[0].url == rule.url     # the rule's own document wins
     with feed_store.session() as s, s.begin():                           # only the comment left: named by docket
         s.delete(s.scalars(select(ObligationRow).where(ObligationRow.post_id == rule.id)).one())
-    cands, _ = rule_candidates(feed_store, reader, feed_config, NOW)
+    cands, _ = ready(rule_candidates(feed_store, reader, feed_config, NOW))
     assert len(cands) == 1 and cands[0].hypothesis.startswith("DOL's rule on docket DOL-2026-7 requires")
 
 
@@ -562,13 +572,13 @@ def test_tool_gaps_finds_hand_carried_data(tmp_path, feed_store, feed_config):
                                                                "tools_mentioned": ["Shopify", "QuickBooks"],
                                                                "embedding": unit(np.ones(DIM))}, {"title": "Sync app"}))
     reader, *_ = _world(tmp_path, feed_store, specs)
-    [c], pairs = tool_gaps.find_candidates(feed_store, reader, feed_config, NOW)
+    [c], pairs = ready(tool_gaps.find_candidates(feed_store, reader, feed_config, NOW))
     assert pairs == 1 and c.hypothesis == "Users of Shopify and QuickBooks move order totals between them by hand."
     assert all(e.what_it_shows == "A store owner moves order totals from Shopify to QuickBooks by hand" for e in c.evidence)
     assert c.counter_evidence[0]["what_it_shows"] == "Names both Shopify and QuickBooks (possible integration)"
     cfg = feed_config.model_copy(update={"inferred": feed_config.inferred.model_copy(update={
         "tool_gaps": feed_config.inferred.tool_gaps.model_copy(update={"min_mentions": 9})})})
-    assert tool_gaps.find_candidates(feed_store, reader, cfg, NOW)[0] == []
+    assert ready(tool_gaps.find_candidates(feed_store, reader, cfg, NOW))[0] == []
 
 
 def test_labor_pressure_needs_a_rise_and_routine_duties(tmp_path, feed_store, feed_config):
@@ -583,7 +593,7 @@ def test_labor_pressure_needs_a_rise_and_routine_duties(tmp_path, feed_store, fe
                                                                 "pain_statement": "Keying timesheets takes all Monday"}, {})
               for _ in range(2)]
     reader, *_ = _world(tmp_path, feed_store, specs)
-    [c], groups = labor_pressure.find_candidates(feed_store, reader, feed_config, NOW)
+    [c], groups = ready(labor_pressure.find_candidates(feed_store, reader, feed_config, NOW))
     assert c.hypothesis == "Demand for payroll clerks is rising; enter payroll data are candidates for automation."
     summary = c.evidence[0]
     assert (summary.counts, summary.url) == (False, "") and summary.what_it_shows.startswith("12 job posts")
@@ -591,7 +601,7 @@ def test_labor_pressure_needs_a_rise_and_routine_duties(tmp_path, feed_store, fe
     with feed_store.session() as s, s.begin():                       # routine share too low -> nothing
         for r in s.scalars(select(EnrichedPostRow).where(EnrichedPostRow.task == "enter payroll data")):
             r.task_automatable = 0.2
-    assert labor_pressure.find_candidates(feed_store, reader, feed_config, NOW)[0] == []
+    assert ready(labor_pressure.find_candidates(feed_store, reader, feed_config, NOW))[0] == []
 
 
 def test_ignored_requests_need_votes_age_and_still_open(tmp_path, feed_store, feed_config):
@@ -604,7 +614,7 @@ def test_ignored_requests_need_votes_age_and_still_open(tmp_path, feed_store, fe
     complaint = ("hackernews", "community", "IT and developer tools",
                  {"post_type": "tool_gap", "tools_mentioned": ["Grafana"], "pain_statement": "No PDF export in Grafana"}, {})
     reader, *_ = _world(tmp_path, feed_store, [issue, complaint, complaint])
-    [c], n = ignored_requests.find_candidates(feed_store, reader, feed_config, NOW)
+    [c], n = ready(ignored_requests.find_candidates(feed_store, reader, feed_config, NOW))
     assert n == 1 and c.hypothesis == "Grafana users have asked for export dashboards as PDF for over 1 year; nobody serves them."
     assert c.evidence[0].what_it_shows.startswith("Open 500 days with 120 votes")
     closed = (issue[0], issue[1], issue[2], issue[3], {**issue[4], "raw": {"state": "closed"}})
@@ -612,7 +622,7 @@ def test_ignored_requests_need_votes_age_and_still_open(tmp_path, feed_store, fe
         f.unlink()
     feed_store2 = type(feed_store)(f"sqlite:///{tmp_path / 'feed2.db'}")
     reader2, *_ = _world(tmp_path, feed_store2, [closed, complaint, complaint])
-    assert ignored_requests.find_candidates(feed_store2, reader2, feed_config, NOW)[0] == []
+    assert ready(ignored_requests.find_candidates(feed_store2, reader2, feed_config, NOW))[0] == []
 
 
 def _transfer_world(tmp_path, feed_store, tools_at_home: bool):
@@ -640,7 +650,7 @@ def test_cross_industry_needs_tools_elsewhere_and_none_at_home(tmp_path, feed_st
     from signal_feed.inferred.paid_workarounds import find_candidates as d1
     reader = _transfer_world(tmp_path, feed_store, tools_at_home)
     assert len(d1(feed_store, reader, feed_config, NOW)[0]) == 1        # Detector 1 writes the task clusters
-    cands, _ = cross_industry.find_candidates(feed_store, reader, feed_config, NOW)
+    cands, _ = ready(cross_industry.find_candidates(feed_store, reader, feed_config, NOW))
     if tools_at_home:
         assert cands == []                                               # Legal already has a tool: no transfer
         return
@@ -664,3 +674,154 @@ def test_trial_detectors_stay_out_of_the_feed_until_insiders_confirm(market, fee
     with feed_store.session() as s:
         assert "paid_workarounds" in live_detectors(s, trial)                                    # 1 rated, 100%
     assert any(it.item_type == "inferred" for it in load(feed_store, reader, trial).items)
+
+
+# --- corroboration and anchors (2026-10-15) ------------------------------------------------------
+
+class PlanAndCritic:
+    """Answers planning calls with `plans` in turn and critic calls with `verdicts` in turn."""
+
+    def __init__(self, plans, verdicts):
+        self.plans, self.verdicts, self.calls = list(plans), list(verdicts), []
+
+    def tag(self, call, system, user, *, fallbacks=False, output_model=None):
+        self.calls.append(output_model.__name__)
+        queue = self.plans if output_model.__name__ == "Plan" else self.verdicts
+        v = queue.pop(0) if queue else None
+        return TagAttempt(output=v, model=call.model, usages=[Usage(call.model, 500, 80)],
+                          error=None if v is not None else "invalid_json")
+
+
+class FakeX:
+    """Stands in for signal_connectors.ondemand.search_x: stores the posts it 'finds' in signal.db."""
+
+    def __init__(self, url, n=3, fail=None):
+        self.url, self.n, self.fail, self.queries = url, n, fail, []
+
+    def __call__(self, query, *, max_results=10, industry_hint=None, tag=None):
+        if self.fail:
+            raise RuntimeError(self.fail)
+        self.queries.append(query)
+        posts = [RawPost(source="x", source_type="social", route="own_api", url=f"https://x.com/i/status/{len(self.queries)}{k}",
+                         title=None, text=f"Spent all morning re-keying hose assembly orders by hand again {k}",
+                         is_snippet=False, published_at=NOW - timedelta(days=1), query=query)
+                 for k in range(self.n)]
+        Store(self.url).save_posts(posts, text_dedupe=False)
+        return posts
+
+
+def _plan(kind="labor", **kw):
+    from signal_feed.inferred.corroborate import Plan
+    return Plan(kind=kind, x_query="hose assembly orders by hand", **kw)
+
+
+def test_a_near_miss_is_corroborated_on_x_once_and_then_judged(market, tmp_path, feed_store, feed_config):
+    reader, *_ = market
+    x = FakeX(f"sqlite:///{tmp_path / 'signal.db'}")
+    tagger = PlanAndCritic([_plan()], [verdict(12), verdict(12)])
+    llm = LLMTask(feed_store, feed_config.enrichment, tagger, clock=lambda: NOW)
+    report = run_detector(feed_store, reader, feed_config, "paid_workarounds", llm, clock=lambda: NOW, searcher=x)
+    assert (report.candidates, report.published, report.plans, report.searches) == (2, 2, 1, 1)
+    assert x.queries == ["hose assembly orders by hand"]
+    with feed_store.session() as s:
+        hose = s.scalars(select(InferredProblemRow).where(InferredProblemRow.task == "supply hose assemblies")).one()
+        ev = list(s.scalars(select(InferredEvidenceRow).where(InferredEvidenceRow.inferred_id == hose.id)))
+    xs = [e for e in ev if e.source == "x"]
+    assert len(xs) == 3 and all(e.what_it_shows.startswith("A post on X: Spent all morning") for e in xs)
+    assert {e.source_type for e in ev} == {"government", "social"}
+
+    # A re-run reuses the cached plan and search: no new paid calls, same problem.
+    tagger.verdicts = [verdict(12), verdict(12)]
+    again = run_detector(feed_store, reader, feed_config, "paid_workarounds", llm, clock=lambda: NOW, searcher=x)
+    assert (again.plans, again.searches, again.published) == (0, 0, 2) and len(x.queries) == 1
+    with feed_store.session() as s:
+        assert s.get(InferredProblemRow, hose.id).status == "published"
+
+    # A post deleted at X (purged from signal.db) drops out of the evidence on the next run.
+    import sqlite3
+    con = sqlite3.connect(tmp_path / "signal.db")
+    con.execute("DELETE FROM posts WHERE url = ?", (xs[0].url,))
+    con.commit()
+    con.close()
+    tagger.verdicts = [verdict(12), verdict(12)]
+    run_detector(feed_store, reader, feed_config, "paid_workarounds", llm, clock=lambda: NOW, searcher=x)
+    with feed_store.session() as s:
+        urls = set(s.scalars(select(InferredEvidenceRow.url).where(InferredEvidenceRow.inferred_id == hose.id)))
+    assert xs[0].url not in urls and xs[1].url in urls
+
+
+@pytest.mark.parametrize("case", ["software", "search_fails", "no_searcher"])
+def test_near_misses_without_corroboration_are_dropped(market, tmp_path, feed_store, feed_config, case):
+    reader, *_ = market
+    x = FakeX(f"sqlite:///{tmp_path / 'signal.db'}", fail="X budget reached" if case == "search_fails" else None)
+    tagger = PlanAndCritic([_plan("software" if case == "software" else "labor")], [verdict(12)])
+    llm = LLMTask(feed_store, feed_config.enrichment, tagger, clock=lambda: NOW)
+    report = run_detector(feed_store, reader, feed_config, "paid_workarounds", llm, clock=lambda: NOW,
+                          searcher=None if case == "no_searcher" else x)
+    assert (report.candidates, report.near_misses) == (1, 1)      # only the two-source-type cluster
+    assert x.queries == []
+    assert report.search_stopped == ("X budget reached" if case == "search_fails" else None)
+
+
+def test_an_anchor_becomes_a_claim_backed_by_the_affected_peoples_posts(tmp_path, feed_store, feed_config):
+    from signal_feed.posts import PostsReader
+    rng = np.random.default_rng(3)
+    vec = rng.normal(size=DIM)
+    anchor = RawPost(source="rss:theregister", source_type="news", route="rss", url="https://news.example/certs",
+                     title="Certificate lifetimes cut to 64 days", text="CA cuts lifetimes; renew more often.",
+                     is_snippet=False, published_at=NOW - timedelta(days=2))
+    raw = [anchor]
+    rows = [EnrichedPostRow(post_id=anchor.id, status="ok", post_type="change", industry_path=["IT and developer tools"],
+                            pain_statement="Certificates will expire every 64 days", embedding=unit(vec),
+                            quality=0.7, prompt_version="v9", enriched_at=NOW)]
+    for k in range(2):
+        p = RawPost(source="stackexchange", source_type="community", route="own_api", url=f"https://se.example/{k}",
+                    title=f"renewal {k}", text=f"cert renewal pain {k}", is_snippet=False,
+                    published_at=NOW - timedelta(days=3), author_hash=hash_author(f"u{k}", "se", salt="test"))
+        raw.append(p)
+        rows.append(EnrichedPostRow(post_id=p.id, status="ok", post_type="pain", industry_path=["IT and developer tools"],
+                                    who_has_pain="sysadmin", pain_statement=f"Renewing certificates by hand {k}",
+                                    embedding=unit(vec), pain_embedding=unit(vec + 0.01 * k), prompt_version="v9",
+                                    enriched_at=NOW))
+    url = f"sqlite:///{tmp_path / 'signal.db'}"
+    Store(url).save_posts(raw, text_dedupe=False)
+    with feed_store.session() as s, s.begin():
+        s.add_all(rows)
+    plan = _plan(who="sysadmins", task="renew TLS certificates every 64 days",
+                 claim="Sysadmins now have to renew TLS certificates every 64 days because lifetimes were cut; "
+                       "today they do it by hand.")
+    tagger = PlanAndCritic([plan], [verdict(8)])
+    llm = LLMTask(feed_store, feed_config.enrichment, tagger, clock=lambda: NOW)
+    report = run_detector(feed_store, PostsReader(url), feed_config, "anchored", llm, clock=lambda: NOW,
+                          searcher=FakeX(url, n=2))
+    assert (report.candidates, report.published) == (1, 1)
+    with feed_store.session() as s:
+        row = s.scalars(select(InferredProblemRow)).one()
+        ev = list(s.scalars(select(InferredEvidenceRow).where(InferredEvidenceRow.inferred_id == row.id)))
+    assert row.detector == "anchored" and row.hypothesis == plan.claim and row.task == plan.task
+    assert [e.source_type for e in ev] == ["news", "community", "community", "social", "social"]
+    assert "Renewing certificates by hand" in ev[1].what_it_shows
+
+    # Without an LLM an anchor has no claim: nothing is stored.
+    feed_store2 = feed_store
+    with feed_store2.session() as s, s.begin():
+        s.query(InferredEvidenceRow).delete()
+        s.query(InferredProblemRow).delete()
+        from signal_feed.db import CorroborationRow
+        s.query(CorroborationRow).delete()
+    none = run_detector(feed_store, PostsReader(url), feed_config, "anchored", None, clock=lambda: NOW)
+    assert (none.candidates, none.near_misses) == (0, 1)
+
+
+def test_tenders_are_classified_by_their_main_code():
+    from signal_feed.inferred.common import tender_kind
+    t = lambda **raw: RawPost(source="ted", source_type="government", route="own_api", url="https://t.example/1",  # noqa: E731
+                              title="t", text="t", is_snippet=False, published_at=NOW, raw=raw)
+    assert tender_kind(t(cpv="['72312000', '48000000']")) == "labor"        # data entry, with a side software code
+    assert tender_kind(t(cpv="['48000000', '79000000']")) == "software"     # main code decides
+    assert tender_kind(t(cpv=["79530000"])) == "labor"                      # translation
+    assert tender_kind(t(cpv=["45000000"])) == "goods"                      # construction
+    assert tender_kind(t(naics="561422")) == "labor"                        # telemarketing / call centers
+    assert tender_kind(t(naics="541511")) == "software"
+    assert tender_kind(t(naics="336411")) == "goods"
+    assert tender_kind(t()) is None and tender_kind(t(cpv="No")) is None

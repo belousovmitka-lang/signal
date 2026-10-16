@@ -70,10 +70,9 @@ def find_candidates(store: FeedStore, posts: PostsReader, config: FeedConfig, no
                                      source_type=raw[t.post_id].source_type, url=raw[t.post_id].url,
                                      what_it_shows=f"In {nodes[served[0]].label}, a tool for this: "
                                                    f"{', '.join(t.tools_mentioned or []) or raw[t.post_id].title}"))
-        if not meets_minimum(evidence, icfg):
-            continue
+        near_miss = not meets_minimum(evidence, icfg)   # corroboration may complete it
         task = c.task[:1].upper() + c.task[1:]
-        out.append(Candidate(detector=NAME, task=c.task, who=None, niche_id=c.niche_id, evidence=evidence,
+        out.append(Candidate(near_miss=near_miss, detector=NAME, task=c.task, who=None, niche_id=c.niche_id, evidence=evidence,
                              hypothesis=TEMPLATE.format(task=task, served=nodes[served[0]].label,
                                                         unserved=nodes[home].label if home in nodes else "another industry"),
                              rows=rows, posts=[raw[r.post_id] for r in rows]))

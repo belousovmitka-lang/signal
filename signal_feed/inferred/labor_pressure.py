@@ -84,8 +84,7 @@ def find_candidates(store: FeedStore, posts: PostsReader, config: FeedConfig, no
                                          what_it_shows=f"A {v.who_has_pain} describes the work: {v.pain_statement}"))
                 if len(evidence) >= 12:
                     break
-        if not meets_minimum(evidence, icfg):
-            continue
+        near_miss = not meets_minimum(evidence, icfg)   # corroboration may complete it
         change = []
         if volume_rise is not None and volume_rise >= cfg.min_rise:
             change.append(f"{len(cur)} job posts in the last {cfg.window_days} days vs {len(prev)} before")
@@ -95,7 +94,7 @@ def find_candidates(store: FeedStore, posts: PostsReader, config: FeedConfig, no
         evidence.insert(0, Evidence(post_id=None, record_id=f"jobs:{industry}:{role}", source="job posts (counted)",
                                     source_type="paid_demand", url="", what_it_shows="; ".join(change), counts=False))
         roles = role if role.endswith("s") else role + "s"
-        out.append(Candidate(detector=NAME, task=duties[0] if duties else None, who=role,
+        out.append(Candidate(near_miss=near_miss, detector=NAME, task=duties[0] if duties else None, who=role,
                              niche_id=Counter(leaf[r.post_id] for r in cur).most_common(1)[0][0], evidence=evidence,
                              hypothesis=TEMPLATE.format(role=roles, duties=" and ".join(duties) or "their routine duties"),
                              rows=cur, posts=[raw[r.post_id] for r in cur]))

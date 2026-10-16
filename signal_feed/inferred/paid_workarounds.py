@@ -20,7 +20,7 @@ from ..db import EnrichedPostRow, FeedStore, PostNicheRow, TaskClusterRow
 from ..posts import PostsReader
 from ..problems.cluster import cluster_niche
 from ..vectors import centroid, unit_matrix
-from .common import Candidate, Evidence, buyer_key, buyer_label, counter_evidence, meets_minimum, plural
+from .common import Candidate, Evidence, buyer_key, buyer_label, counter_evidence, meets_minimum, plural, tender_kind
 
 NAME = "paid_workarounds"
 TEMPLATE = "{who} pay people to {task} by hand because no tool does it well."
@@ -85,8 +85,10 @@ def find_candidates(store: FeedStore, posts: PostsReader, config: FeedConfig, no
                 money = f" ({row.money_signal['quote']})" if row.money_signal and row.money_signal.get("quote") else ""
                 evidence.append(Evidence(post_id=row.post_id, source=post.source, source_type=post.source_type,
                                          url=post.url, what_it_shows=f"{buyer_label(post, row)} pays for: {task}{money}"))
-            if not meets_minimum(evidence, icfg):
-                continue                      # e.g. every item from one tender portal: one source type
+            near_miss = not meets_minimum(evidence, icfg)   # corroboration may complete it
+            kinds = [k for k in map(tender_kind, member_posts) if k]
+            if near_miss and kinds and sum(k == "labor" for k in kinds) * 2 < len(kinds):
+                continue                      # mostly buying software or goods: not worth a planning call
             roles = Counter(r.who_has_pain for r, *_ in members if r.who_has_pain)
             who = roles.most_common(1)[0][0] if roles else "buyers"
             post_centre = centroid(unit_matrix([r.embedding for r, *_ in members if r.embedding])) \
@@ -97,7 +99,7 @@ def find_candidates(store: FeedStore, posts: PostsReader, config: FeedConfig, no
             if tools:
                 counters.append({"post_id": None, "source": "buyers' own posts", "url": None,
                                  "what_it_shows": "Tools the buyers name: " + ", ".join(t for t, _ in tools.most_common(5))})
-            out.append(Candidate(detector=NAME, hypothesis=TEMPLATE.format(who=plural(who), task=medoid[1]), who=who,
+            out.append(Candidate(near_miss=near_miss, detector=NAME, hypothesis=TEMPLATE.format(who=plural(who), task=medoid[1]), who=who,
                                  task=medoid[1], niche_id=niche_id, evidence=evidence, counter_evidence=counters,
                                  derived=any(d for *_, d in members), rows=[r for r, *_ in members],
                                  posts=member_posts))

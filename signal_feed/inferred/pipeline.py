@@ -19,13 +19,14 @@ from ..llm_task import LLMTask
 from ..posts import PostsReader
 from ..problems.score import PAIN, components, score
 from ..problems.score import Evidence as ScoreEvidence
-from . import cross_industry, ignored_requests, labor_pressure, paid_workarounds, rule_change, tool_gaps
+from . import anchored, cross_industry, ignored_requests, labor_pressure, paid_workarounds, rule_change, tool_gaps
 from .common import Candidate, confidence, meets_minimum
+from .corroborate import Corroborator, Searcher
 from .critic import run_critic
 
 # Order matters: cross_industry reads the task clusters paid_workarounds writes.
 DETECTORS = {m.NAME: m.find_candidates for m in (paid_workarounds, rule_change, tool_gaps, labor_pressure,
-                                                 ignored_requests, cross_industry)}
+                                                 ignored_requests, cross_industry, anchored)}
 
 
 @dataclass
@@ -38,15 +39,30 @@ class RunReport:
     expired: int = 0
     held: int = 0                 # candidates waiting for a critic (no LLM)
     critic_runs: int = 0
+    near_misses: int = 0          # short of the evidence minimum even after corroboration (not stored)
+    plans: int = 0                # corroboration planning calls
+    searches: int = 0             # X searches
+    search_stopped: str | None = None
     items: list[str] = field(default_factory=list)
 
 
 def run_detector(store: FeedStore, posts: PostsReader, config: FeedConfig, name: str, llm: LLMTask | None = None,
-                 clock: Callable[[], datetime] = utcnow) -> RunReport:
+                 clock: Callable[[], datetime] = utcnow, searcher: Searcher | None = None) -> RunReport:
+    """`searcher`: the X search used for corroboration (scripts/inferred.py passes the connector's, if built)."""
     now = clock()
     icfg = config.inferred
-    found, clusters = DETECTORS[name](store, posts, config, now)
-    report = RunReport(name, clusters=clusters, candidates=len(found))
+    raw_found, clusters = DETECTORS[name](store, posts, config, now)
+    corr = Corroborator(store, posts, icfg.corroboration, llm, searcher, now)
+    found = []
+    near = 0
+    for cand in raw_found:
+        if cand.near_miss or cand.anchor:
+            if not corr.corroborate(cand) or not meets_minimum(cand.evidence, icfg):
+                near += 1
+                continue
+        found.append(cand)
+    report = RunReport(name, clusters=clusters, candidates=len(found), near_misses=near, plans=corr.plans,
+                       searches=corr.searches, search_stopped=corr.stopped)
     with store.session() as s, s.begin():
         old = {p.id: p for p in s.scalars(select(InferredProblemRow).where(
             InferredProblemRow.detector == name, InferredProblemRow.status.in_(("candidate", "published"))))}
@@ -108,7 +124,7 @@ def _judge(cand: Candidate, llm: LLMTask | None, icfg, report: RunReport) -> tup
             return "published", confidence(cand.evidence, icfg, None, existing), {"critic": "not run"}
         report.held += 1
         return "candidate", confidence(cand.evidence, icfg, None, existing), {"critic": "not run"}
-    texts = {r.post_id: (r.pain_statement or "") for r in cand.rows}
+    texts = {r.post_id: (r.pain_statement or "") for r in cand.rows} | cand.texts
     verdict = run_critic(llm, cand.hypothesis, cand.evidence, texts, cand.counter_evidence)
     report.critic_runs += 1
     if verdict is None:

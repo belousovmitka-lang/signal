@@ -469,6 +469,20 @@ class InferredEvidenceRow(FeedBase):
     counts: Mapped[bool] = mapped_column(Boolean, default=True)  # False: a computed summary, not evidence
 
 
+class CorroborationRow(FeedBase):
+    """A candidate's planning answer and X search (inferred/corroborate.py), cached so re-runs don't pay
+    again. Only post ids are kept: the posts live in signal.db, where deletions are purged."""
+
+    __tablename__ = "inferred_corroboration"
+
+    key: Mapped[str] = mapped_column(String(32), primary_key=True)
+    detector: Mapped[str] = mapped_column(String(32), index=True)
+    plan: Mapped[dict[str, Any]] = mapped_column(JSON)
+    created_at: Mapped[datetime] = mapped_column(UTCDateTime)
+    searched_at: Mapped[datetime | None] = mapped_column(UTCDateTime, nullable=True)
+    post_ids: Mapped[list[str] | None] = mapped_column(NullableJSON)
+
+
 class TaskClusterRow(FeedBase):
     """Paid work grouped by task within a niche (Detector 1, step 2); kept for inspection and stats."""
 
