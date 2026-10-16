@@ -89,3 +89,29 @@ async def test_budget_exhausted_is_a_section_error(make_services):
     async with make_services(cfg, Web()) as svc:
         res = await live_search(svc, DENTAL, platforms=["reddit"])
     assert res.sections[0].error.startswith("BudgetExceeded")
+
+
+async def test_x_api_section_with_display_fields(make_services, monkeypatch):
+    monkeypatch.setenv("X_BEARER_TOKEN", "x-test")
+    seen = {}
+
+    def x(request):
+        seen.update(request.url.params)
+        seen["auth"] = request.headers["Authorization"]
+        return httpx.Response(200, json={
+            "data": [{"id": "111", "text": "Is there an app that handles insurance denials? #dentist", "author_id": "9",
+                      "created_at": "2026-10-14T10:00:00.000Z"}],
+            "includes": {"users": [{"id": "9", "name": "Dr. Ana", "username": "ana_dds",
+                                    "profile_image_url": "https://pbs.twimg.com/a.jpg"}]}})
+
+    async with make_services(CFG, x) as svc:
+        res = await live_search(svc, DENTAL, platforms=["x"])
+        spent = svc.costs.spent_this_month("live_x")
+    item = res.sections[0].items[0]
+    assert res.sections[0].provider == "x" and "X logo" in res.sections[0].attribution
+    assert item.url == "https://x.com/ana_dds/status/111" and item.author_handle == "@ana_dds"
+    assert item.snippet == "Is there an app that handles insurance denials? #dentist"        # unaltered
+    assert (item.author_name, item.avatar, item.author_url) == ("Dr. Ana", "https://pbs.twimg.com/a.jpg", "https://x.com/ana_dds")
+    assert seen["query"] == '"dentist" (software OR app OR tool OR "how do you") lang:en -is:retweet'
+    assert seen["max_results"] == "10" and seen["auth"] == "Bearer x-test"
+    assert round(spent, 3) == 0.015                                    # 1 post + 1 author, actual not estimate

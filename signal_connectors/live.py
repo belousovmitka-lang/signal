@@ -36,6 +36,10 @@ from .industries import Industry
 from .services import Services
 
 YOUTUBE_SEARCH = "https://www.googleapis.com/youtube/v3/search"
+X_SEARCH = "https://api.x.com/2/tweets/search/recent"
+X_SOURCE = "live_x"
+X_POST_USD = 0.005                     # per post returned (docs.x.com pricing, 2026-10-15)
+X_USER_USD = 0.010                     # per user returned (author expansion, needed for display)
 CACHE_SECONDS = 15 * 60
 BRAVE_SOURCE = "live"
 YOUTUBE_SOURCE = "live_youtube"
@@ -62,6 +66,10 @@ class LiveItem:
     age: str | None = None
     channel: str | None = None       # YouTube only
     thumbnail: str | None = None     # YouTube only
+    author_name: str | None = None   # X only: display name, @username and avatar must be shown, linked
+    author_handle: str | None = None
+    author_url: str | None = None
+    avatar: str | None = None
 
 
 @dataclass
@@ -137,6 +145,44 @@ async def _brave(services: Services, platform: str, query: str, limit: int, fres
     return section
 
 
+X_DISPLAY = ("X display requirements: show avatar, display name and @username (linked to the profile), the timestamp "
+             "linked to the post, the X logo, and reply/repost/like actions or 'View on X'; post text unaltered")
+
+
+def x_query(industry: Industry, extra: str | None = None) -> str:
+    role = (industry.vocabulary.roles[:1] or [industry.name])[0]
+    what = f"({extra})" if extra else '(software OR app OR tool OR "how do you")'
+    return f'"{role}" {what}'
+
+
+async def _x(services: Services, query: str, limit: int) -> LiveSection:
+    """X API v2 recent search (last 7 days), app-only bearer token. Display only; nothing stored, so the
+    24-hour deletion rule for stored content doesn't apply. Billed per post and per author returned."""
+    section = LiveSection("x", "X", "x", attribution=X_DISPLAY)
+    token = os.environ.get("X_BEARER_TOKEN")
+    n = max(10, min(limit, 100))                       # the endpoint's minimum page is 10
+    with services.costs.metered(X_SOURCE, usd=n * (X_POST_USD + X_USER_USD), note="search/recent") as charge:
+        response = await services.http.get(X_SEARCH, attempts=1, headers={"Authorization": f"Bearer {token}"}, params={
+            "query": f"{query} lang:en -is:retweet", "max_results": n, "sort_order": "relevancy",
+            "tweet.fields": "created_at,author_id,public_metrics,lang", "expansions": "author_id",
+            "user.fields": "name,username,profile_image_url"})
+        data = response.json() if response.status_code < 400 else {}
+        users = {u["id"]: u for u in (data.get("includes") or {}).get("users", [])}
+        charge.usd = len(data.get("data") or []) * X_POST_USD + len(users) * X_USER_USD
+    if response.status_code >= 400:
+        section.error = f"X HTTP {response.status_code}"
+        return section
+    for post in (data.get("data") or [])[:limit]:
+        user = users.get(post.get("author_id"), {})
+        handle = user.get("username")
+        url = f"https://x.com/{handle}/status/{post['id']}" if handle else f"https://x.com/i/web/status/{post['id']}"
+        section.items.append(LiveItem(
+            title="", url=url, snippet=post.get("text", ""), age=post.get("created_at"),
+            author_name=user.get("name"), author_handle=f"@{handle}" if handle else None,
+            author_url=f"https://x.com/{handle}" if handle else None, avatar=user.get("profile_image_url")))
+    return section
+
+
 async def _youtube(services: Services, query: str, limit: int, days: int) -> LiveSection:
     section = LiveSection("youtube", "YouTube", "youtube",
                           attribution="Show the YouTube logo with this section (YouTube API policy III.F.2.a); "
@@ -175,15 +221,18 @@ async def live_search(services: Services, industry: Industry, *, platforms: list
     # YouTube search takes plain keywords: the main role plus its top pain phrase
     v = industry.vocabulary
     yt_query = " ".join(p for p in ((v.roles[:1] or [industry.name])[0], (v.pain_phrases[:1] or [""])[0], extra) if p)
+    xq = x_query(industry, extra)
     sections: list[LiveSection] = []
     for platform in platforms or DEFAULT_PLATFORMS:
-        key = (industry.industry, platform, query if platform != "youtube" else yt_query, freshness, str(limit))
+        key = (industry.industry, platform, {"youtube": yt_query, "x": xq}.get(platform, query), freshness, str(limit))
         if cached := _cached(key):
             sections.append(cached)
             continue
         try:
             if platform == "youtube":
                 section = await _youtube(services, yt_query, limit, youtube_days)
+            elif platform == "x" and os.environ.get("X_BEARER_TOKEN"):
+                section = await _x(services, xq, limit)
             elif platform in PLATFORMS:
                 section = await _brave(services, platform, query, limit, freshness)
             else:

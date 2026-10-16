@@ -127,6 +127,7 @@ class Defaults(_Strict):
     on_demand_monthly_budget_usd: float = Field(default=1.0, ge=0)
     # Live lane (live.py): Brave searches shown at view time; also bound by provider_budgets["brave"].
     live_monthly_budget_usd: float = Field(default=3.0, ge=0)
+    live_x_monthly_budget_usd: float = Field(default=5.0, ge=0)      # X API pay-per-use, live lane only
     on_demand_model: str = "claude-sonnet-5"
     on_demand_first_fill_days: int = Field(default=60, ge=1)        # history read for a brand-new map
     on_demand_prices_per_mtok: dict[str, float] = Field(default_factory=lambda: {"input": 3.0, "output": 15.0})
@@ -215,6 +216,7 @@ class SourcesFile(_Strict):
         budgets.setdefault("discovery", self.defaults.discovery_monthly_budget_usd)
         budgets.setdefault("on_demand", self.defaults.on_demand_monthly_budget_usd)
         budgets.setdefault("live", self.defaults.live_monthly_budget_usd)
+        budgets.setdefault("live_x", self.defaults.live_x_monthly_budget_usd)
         return budgets
 
     def add_industry_feeds(self, industries: dict[str, Industry]) -> None:
