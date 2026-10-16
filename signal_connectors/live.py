@@ -54,7 +54,9 @@ PLATFORMS: dict[str, tuple[str, list[str], str]] = {
 }
 # Measured 2026-10-15 (dental, salons): Reddit and YouTube return real posts, X and Facebook groups a few;
 # LinkedIn returned only profiles and Quora nothing, so they stay available but off. TikTok dropped (not wanted).
-DEFAULT_PLATFORMS = ["reddit", "x", "facebook", "youtube"]
+# X is opt-in (platforms=[..., "x"]): with the API it costs ~$0.13 a search and was a third useful for salons,
+# mostly vendor marketing for dental (2026-10-15).
+DEFAULT_PLATFORMS = ["reddit", "facebook", "youtube"]
 INTENT = 'software "how do you"'       # practitioners asking how others handle something; tested best
 
 
@@ -149,10 +151,19 @@ X_DISPLAY = ("X display requirements: show avatar, display name and @username (l
              "linked to the post, the X logo, and reply/repost/like actions or 'View on X'; post text unaltered")
 
 
+def _ors(terms: list[str]) -> str:
+    return "(" + " OR ".join(f'"{t}"' if " " in t else t for t in terms if t) + ")"
+
+
 def x_query(industry: Industry, extra: str | None = None) -> str:
-    role = (industry.vocabulary.roles[:1] or [industry.name])[0]
-    what = f"({extra})" if extra else '(software OR app OR tool OR "how do you")'
-    return f'"{role}" {what}'
+    """'("salon owner" OR hairstylist) (no-shows OR "late cancellations" OR booking ...)'.
+
+    X's 7-day window is thin: one exact role phrase returned 2 posts for salons, roles OR'd with the
+    industry's pain phrases and tasks returned 10, a third to a half of them from practitioners (2026-10-15)."""
+    v = industry.vocabulary
+    who = _ors(v.roles[:3] or [industry.name])
+    what = f"({extra})" if extra else _ors([*v.pain_phrases[:4], *v.tasks[:3]] or ["software", "app", '"how do you"'])
+    return f"{who} {what}"
 
 
 async def _x(services: Services, query: str, limit: int) -> LiveSection:
@@ -163,7 +174,7 @@ async def _x(services: Services, query: str, limit: int) -> LiveSection:
     n = max(10, min(limit, 100))                       # the endpoint's minimum page is 10
     with services.costs.metered(X_SOURCE, usd=n * (X_POST_USD + X_USER_USD), note="search/recent") as charge:
         response = await services.http.get(X_SEARCH, attempts=1, headers={"Authorization": f"Bearer {token}"}, params={
-            "query": f"{query} lang:en -is:retweet", "max_results": n, "sort_order": "relevancy",
+            "query": f"{query} lang:en -is:retweet -from:grok", "max_results": n, "sort_order": "relevancy",
             "tweet.fields": "created_at,author_id,public_metrics,lang", "expansions": "author_id",
             "user.fields": "name,username,profile_image_url"})
         data = response.json() if response.status_code < 400 else {}

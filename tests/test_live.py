@@ -112,6 +112,6 @@ async def test_x_api_section_with_display_fields(make_services, monkeypatch):
     assert item.url == "https://x.com/ana_dds/status/111" and item.author_handle == "@ana_dds"
     assert item.snippet == "Is there an app that handles insurance denials? #dentist"        # unaltered
     assert (item.author_name, item.avatar, item.author_url) == ("Dr. Ana", "https://pbs.twimg.com/a.jpg", "https://x.com/ana_dds")
-    assert seen["query"] == '"dentist" (software OR app OR tool OR "how do you") lang:en -is:retweet'
+    assert seen["query"] == '(dentist OR "office manager") ("insurance denials") lang:en -is:retweet -from:grok'
     assert seen["max_results"] == "10" and seen["auth"] == "Bearer x-test"
     assert round(spent, 3) == 0.015                                    # 1 post + 1 author, actual not estimate
