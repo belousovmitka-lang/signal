@@ -33,6 +33,16 @@ def test_lexical_match():
                                                      vocabulary=Vocabulary(roles=["veterinarian"]))}
     assert lexical_match(IndustryRequest("Hair salon"), maps) == "salons"
     assert lexical_match(IndustryRequest("Dog grooming"), maps) is None
+    maps["childcare"] = Industry(industry="childcare", name="Childcare centers",
+                                 vocabulary=Vocabulary(roles=["home daycare provider"]))
+    maps["home_services"] = Industry(industry="home_services", name="Home services",
+                                     vocabulary=Vocabulary(roles=["pest control technician"]))
+    assert lexical_match(IndustryRequest("Funeral homes"), maps) is None       # "home" alone is too common
+    assert lexical_match(IndustryRequest("Pest control"), maps) == "home_services"
+    assert lexical_match(IndustryRequest("Hair salons"), maps) == "salons"            # word forms match
+    maps["logistics"] = Industry(industry="logistics", name="Logistics and trucking",
+                                 vocabulary=Vocabulary(roles=["truck driver"]))
+    assert lexical_match(IndustryRequest("Food truck"), maps) is None               # half a match isn't one
 
 
 @pytest.mark.parametrize("body, reason", [

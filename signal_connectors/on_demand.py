@@ -123,15 +123,40 @@ def vocabulary_terms(industry: Industry) -> set[str]:
 
 # ---- 1. plan --------------------------------------------------------------------------------------
 
-def lexical_match(request: IndustryRequest, industries: dict[str, Industry], threshold: float = 0.34) -> str | None:
-    """Fallback matcher: share of the request's name words found in a map's name, key and roles."""
-    want = _words(request.name)
+_KIND = set("""firm firms office offices shop shops company companies agency agencies practice practices store stores
+center centers centre clinic clinics studio studios business businesses service services owner owners and the for
+small local independent""".split())
+
+
+def _match_words(text: str) -> set[str]:
+    """Words for matching: 3+ letters (so "law" counts), business-type words dropped, plural -s off."""
+    out = set()
+    for w in re.findall(r"[a-z][a-z0-9'-]+", text.lower()):
+        w = w.strip("'-").removesuffix("'s")
+        if len(w) >= 3 and w not in _KIND:
+            out.add(w[:-1] if w.endswith("s") and len(w) > 4 else w)
+    return out
+
+
+def lexical_match(request: IndustryRequest, industries: dict[str, Industry], threshold: float = 0.51) -> str | None:
+    """Fallback matcher: weighted share of the request's name words found in a map's key, name and roles.
+
+    A word is weighted by rarity across maps (1 / number of maps using it; 1 if no map does), so a
+    common word can't carry a match: "Funeral homes" must not land on childcare via "home daycare provider"."""
+    want = _match_words(request.name)
     if not want:
         return None
+    vocab = {key: _match_words(" ".join([key.replace("_", " "), ind.name, *ind.vocabulary.roles]))
+             for key, ind in industries.items()}
+
+    def hit(w: str, have: set[str]) -> bool:          # word forms: plumbing ~ plumber, hair ~ hairstylist
+        return any(m.startswith(w[:5]) or w.startswith(m[:5]) for m in have if min(len(m), len(w)) >= 4) or w in have
+
+    weight = {w: 1 / max(1, sum(hit(w, have) for have in vocab.values())) for w in want}
+    total = sum(weight.values())
     best, score = None, 0.0
-    for key, ind in industries.items():
-        have = _words(" ".join([key.replace("_", " "), ind.name, *ind.vocabulary.roles]))
-        s = len(want & have) / len(want)
+    for key, have in vocab.items():
+        s = sum(weight[w] for w in want if hit(w, have)) / total
         if s > score:
             best, score = key, s
     return best if score >= threshold else None
