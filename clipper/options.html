@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Clip to Signal settings</title>
+<style>
+  :root { --bg: #fff; --fg: #1d1d1f; --muted: #6e6e73; --line: #d2d2d7; --accent: #3a5bd9; --ok: #2e7d32; --bad: #c62828; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #1c1c1e; --fg: #f5f5f7; --muted: #a1a1a6; --line: #3a3a3c; --accent: #7d97ff; --ok: #81c784; --bad: #ef9a9a; }
+  }
+  body { max-width: 480px; margin: 32px auto; padding: 0 16px; font: 14px/1.5 system-ui, sans-serif; background: var(--bg); color: var(--fg); }
+  label { display: block; font-weight: 600; margin: 14px 0 4px; }
+  input { box-sizing: border-box; width: 100%; padding: 7px; font: inherit; color: inherit; background: transparent;
+          border: 1px solid var(--line); border-radius: 6px; }
+  .hint { color: var(--muted); font-size: 13px; }
+  button { margin-top: 16px; padding: 8px 18px; border: 0; border-radius: 6px; background: var(--accent); color: #fff; font: inherit; font-weight: 600; cursor: pointer; }
+  #status { margin-top: 10px; } .ok { color: var(--ok); } .bad { color: var(--bad); }
+</style>
+</head>
+<body>
+  <h1>Clip to Signal</h1>
+  <label for="userId">Your Signal user id</label>
+  <input id="userId" placeholder="from the Signal app">
+  <label for="server">Signal server</label>
+  <input id="server">
+  <div class="hint">Locally: run <code>python scripts/clip_server.py</code> and keep http://127.0.0.1:8765.</div>
+  <button id="save">Save</button>
+  <div id="status"></div>
+  <script type="module" src="options.js"></script>
+</body>
+</html>

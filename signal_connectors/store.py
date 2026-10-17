@@ -124,6 +124,25 @@ class SeenRow(Base):
     seen_at: Mapped[datetime] = mapped_column(UTCDateTime)
 
 
+class ClipRow(Base):
+    """A post a user saved by hand with the "Clip to Signal" button (signal_connectors/clips.py).
+
+    The user's own workspace: what they selected on the page, their note and the link. Kept apart
+    from `posts`, which is the shared collected feed."""
+
+    __tablename__ = "clips"
+
+    id: Mapped[str] = mapped_column(String(64), primary_key=True)
+    user_id: Mapped[str] = mapped_column(String(64), index=True)
+    url: Mapped[str] = mapped_column(Text)
+    site: Mapped[str] = mapped_column(String(200))
+    title: Mapped[str | None] = mapped_column(Text)
+    text: Mapped[str] = mapped_column(Text)
+    note: Mapped[str | None] = mapped_column(Text)
+    created_at: Mapped[datetime] = mapped_column(UTCDateTime, index=True)
+    updated_at: Mapped[datetime] = mapped_column(UTCDateTime)
+
+
 @dataclass
 class SaveResult:
     new: int = 0
@@ -212,10 +231,16 @@ class Store:
 
     def delete_posts(self, ids: Sequence[str]) -> int:
         """Purge posts deleted at the origin (rule 5)."""
-        if not ids:
-            return 0
+        ids = list(ids)
+        purged = 0
         with self.session() as s, s.begin():
-            return s.execute(delete(PostRow).where(PostRow.id.in_(ids))).rowcount or 0
+            for i in range(0, len(ids), 500):          # SQLite caps the variables in one statement
+                purged += s.execute(delete(PostRow).where(PostRow.id.in_(ids[i:i + 500]))).rowcount or 0
+        return purged
+
+    def post_ids(self, source: str) -> set[str]:
+        with self.session() as s:
+            return set(s.scalars(select(PostRow.id).where(PostRow.source == source)))
 
     # --- runs ----------------------------------------------------------------
 
@@ -274,6 +299,33 @@ class Store:
                     s.add(SeenRow(source=source, item=item, change_hash=change_hash, seen_at=when))
                 else:
                     row.change_hash, row.seen_at = change_hash, when
+
+    # --- clips (saved by users) -----------------------------------------------
+
+    def upsert_clip(self, row: ClipRow) -> bool:
+        """Insert, or update the note and text of the same user's clip of the same thing. True if new."""
+        with self.session() as s, s.begin():
+            existing = s.get(ClipRow, row.id)
+            if existing is None:
+                s.add(row)
+                return True
+            existing.text, existing.note, existing.title, existing.updated_at = (
+                row.text, row.note, row.title, row.updated_at)
+            return False
+
+    def list_clips(self, user_id: str, limit: int = 200) -> list[ClipRow]:
+        with self.session() as s:
+            return list(s.scalars(select(ClipRow).where(ClipRow.user_id == user_id)
+                                  .order_by(ClipRow.created_at.desc()).limit(limit)))
+
+    def delete_clip(self, user_id: str, clip_id: str) -> bool:
+        with self.session() as s, s.begin():
+            done = s.execute(delete(ClipRow).where(ClipRow.user_id == user_id, ClipRow.id == clip_id))
+            return bool(done.rowcount)
+
+    def delete_user_clips(self, user_id: str) -> int:
+        with self.session() as s, s.begin():
+            return s.execute(delete(ClipRow).where(ClipRow.user_id == user_id)).rowcount or 0
 
     # --- costs ---------------------------------------------------------------
 

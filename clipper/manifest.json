@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "Clip to Signal",
+  "version": "0.1.0",
+  "description": "Save a post you're reading to your Signal workspace: the link, the text you select and your note.",
+  "action": {"default_title": "Clip to Signal", "default_popup": "popup.html"},
+  "background": {"service_worker": "background.js", "type": "module"},
+  "options_page": "options.html",
+  "permissions": ["activeTab", "scripting", "contextMenus", "storage"],
+  "host_permissions": ["http://127.0.0.1/*", "http://localhost/*"],
+  "optional_host_permissions": ["https://*/*"]
+}
