@@ -958,36 +958,30 @@ sources:
       recheck_window_days: 3650      # every stored post, not just the last 30 days
 
   bluesky:
-    connector: search_api
+    connector: jetstream
     enabled: true
     status: done
-    status_date: 2026-10-09
+    status_date: 2026-10-17
     route: own_api
     source_type: social
-    cadence: weekly                  # Exa's Bluesky coverage is thin (mostly popular posts); ~$0.45/month
-    monthly_budget_usd: 2.00         # Exa discovery: 15 searches/run at $0.007
-    env: [EXA_API_KEY]
+    cadence: daily                   # the stream keeps 36 hours; one run a day reads ~24h (~4 GB) in a few minutes
     deletion_recheck_days: 7         # Bluesky developer guideline 3: honor deletions
     access_check:
       robots: allowed
       terms: allowed
       decision: full
-      terms_url: https://docs.bsky.app/docs/support/developer-guidelines
-      checked_at: 2026-10-09
+      terms_url: https://github.com/bluesky-social/bsky-docs/blob/main/docs/support/developer-guidelines.md
+      checked_at: 2026-10-17
       notes: >-
-        Exa finds post URLs (held in memory only; Exa ToS 4.2(a)); posts are read from the AT Protocol
-        public AppView (getPosts), which needs no login. searchPosts itself returns 403 to logged-out
-        callers. Authors labelled !no-unauthenticated are skipped. Guidelines: honor deletions
-        (scripts/recheck_deletions.py bluesky) and publish a monitored contact email (SIGNAL_CONTACT_EMAIL).
-    options:
-      industry_templates:
-        - profile: bluesky
-          provider: exa
-          domains: [bsky.app]
-          # first-person phrasing matched real posts slightly better than a description (tested 2026-10-09)
-          query: "I'm a {roles} and I'm so tired of doing {tasks} by hand. Is there a tool for this?"
-          top: 1
-          limit: 10
+        Jetstream's public live tail (bsky.network/docs/jetstream): no key, not metered, replays from a cursor
+        within 36 hours. Only English first-person workflow-pain posts that name an industry are kept;
+        everything else is dropped in memory. Delete events in the stream purge stored posts at once, and
+        stored posts are re-checked with getPosts. Authors labelled !no-unauthenticated are skipped (getProfiles,
+        public AppView; its robots.txt allows the public API). Guidelines: honor deletions and publish a
+        monitored contact email (SIGNAL_CONTACT_EMAIL). Replaced the Exa route (2026-10-09), which only
+        found popular posts.
+    queries:
+      - {limit: 10000}
 
   search_api:
     enabled: true
