@@ -95,8 +95,13 @@ class AutoPublish(BaseModel):
     on: bool
 
 
-def create_app(store: FeedStore, posts: PostsReader, config: FeedConfig, service: FeedService | None = None) -> FastAPI:
+def create_app(store: FeedStore, posts: PostsReader, config: FeedConfig, service: FeedService | None = None,
+               clips_db_url: str | None = None) -> FastAPI:
     app = FastAPI(title="Signal feed")
+    if clips_db_url:      # "Clip to Signal" button: the connectors' per-user clips (POST/GET/DELETE /clips)
+        from signal_connectors.clips import router as clips_router
+        from signal_connectors.store import Store
+        app.include_router(clips_router(Store(clips_db_url)))
     service = service or FeedService(store, config, FeedDataCache(store, posts))
 
     @app.get("/onboarding/options")
@@ -295,4 +300,4 @@ def app_from_env() -> FastAPI:
     """Factory for uvicorn: `uvicorn signal_feed.api:app_from_env --factory`."""
     settings = FeedSettings.from_env()
     return create_app(FeedStore(settings.feed_database_url), PostsReader(settings.posts_database_url),
-                      load_feed_config(settings.config_file))
+                      load_feed_config(settings.config_file), clips_db_url=settings.posts_database_url)
