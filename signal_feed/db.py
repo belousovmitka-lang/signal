@@ -333,6 +333,22 @@ class UserPinRow(FeedBase):
     pinned_at: Mapped[datetime] = mapped_column(UTCDateTime)
 
 
+class UserClipRow(FeedBase):
+    """What the feed learned from one "Clip to Signal" clip (the clip itself lives in signal.db `clips`, owned
+    by the user). Only the vector and what it moved are kept here, so a deleted or edited clip can be undone."""
+
+    __tablename__ = "user_clips"
+
+    clip_id: Mapped[str] = mapped_column(String(64), primary_key=True)
+    user_id: Mapped[str] = mapped_column(String(64), index=True)
+    embedding: Mapped[list[float] | None] = mapped_column(NullableJSON)
+    niche_deltas: Mapped[dict | None] = mapped_column(NullableJSON)    # node id -> evidence added
+    skill_deltas: Mapped[dict | None] = mapped_column(NullableJSON)
+    clip_updated_at: Mapped[datetime] = mapped_column(UTCDateTime)    # re-learn when the user edits the clip
+    applied_at: Mapped[datetime] = mapped_column(UTCDateTime)
+    clip_created_at: Mapped[datetime] = mapped_column(UTCDateTime, index=True)
+
+
 class UserDropInRow(FeedBase):
     __tablename__ = "user_drop_ins"
 

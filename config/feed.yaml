@@ -104,6 +104,14 @@ problems:
 
 # Stage D — user model (section 6)
 user_model:
+  clips:                          # "Clip to Signal": each clip moves interests like a strong save
+    weight: 6                     # a save is 4: a clip is chosen by hand, often with a note
+    neighbors: 10
+    min_cosine: 0.5               # median 10th-nearest post is ~0.63 (2026-10-21)
+    min_neighbors: 3              # fewer close posts: the clip still ranks similar posts, interests untouched
+    niche_min_share: 0.35         # else the vote moves up to the parent niche
+    skill_min_share: 0.3
+    recent: 20
   quiz_prior_affinity: 0.6
   resume_prior_affinity: 0.5
   calibration_cards: 10

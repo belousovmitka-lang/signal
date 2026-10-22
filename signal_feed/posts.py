@@ -11,10 +11,11 @@ from datetime import datetime
 
 from sqlalchemy import create_engine, select
 from sqlalchemy.engine import Engine
+from sqlalchemy.exc import OperationalError
 from sqlalchemy.orm import Session
 
 from signal_connectors.models import RawPost
-from signal_connectors.store import PostRow
+from signal_connectors.store import ClipRow, PostRow
 
 
 def _read_only_url(url: str) -> str:
@@ -52,6 +53,19 @@ class PostsReader:
         stmt = select(PostRow.id, PostRow.title, PostRow.text).where(PostRow.id.in_(set(ids)))
         with self.session() as s:
             return {pid: len(f"{title or ''} {text}".split()) for pid, title, text in s.execute(stmt)}
+
+    def clips(self, user_id: str | None = None) -> list[ClipRow]:
+        """"Clip to Signal" clips (signal.db `clips`, written by signal_connectors.clips), read-only. Empty when
+        the table doesn't exist yet."""
+        stmt = select(ClipRow) if user_id is None else select(ClipRow).where(ClipRow.user_id == user_id)
+        try:
+            with self.session() as s:
+                rows = list(s.scalars(stmt))
+                for r in rows:
+                    s.expunge(r)
+                return rows
+        except OperationalError:
+            return []
 
     def get_posts(self, ids: Collection[str]) -> list[RawPost]:
         if not ids:

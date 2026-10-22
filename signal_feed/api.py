@@ -5,6 +5,7 @@ No authentication yet: the user comes from the request until the app's auth exis
 
 from __future__ import annotations
 
+import os
 from typing import Literal
 
 from fastapi import FastAPI, HTTPException, Query
@@ -102,7 +103,12 @@ def create_app(store: FeedStore, posts: PostsReader, config: FeedConfig, service
         from signal_connectors.clips import router as clips_router
         from signal_connectors.store import Store
         app.include_router(clips_router(Store(clips_db_url)))
-    service = service or FeedService(store, config, FeedDataCache(store, posts))
+    if service is None:
+        embedder = None
+        if clips_db_url and os.environ.get("VOYAGE_API_KEY"):      # clips move interests (feed/clips.py)
+            from .enrichment.embeddings import VoyageEmbedder
+            embedder = VoyageEmbedder(config.embeddings)
+        service = FeedService(store, config, FeedDataCache(store, posts), clip_embedder=embedder)
 
     @app.get("/onboarding/options")
     def onboarding_options() -> dict:

@@ -79,7 +79,10 @@ class RankerV1:
         saved = [data.by_id[p].index for p in state.saved if p in data.by_id]
         nfm = [data.by_id[p].index for p in state.not_for_me if p in data.by_id]
         idx = [c.index for c in candidates]
-        sims_saved = data.vectors[idx] @ data.vectors[saved].T if saved and idx else None
+        clips = [c for c in state.clips if len(c) == data.vectors.shape[1]]   # a clip counts like a saved post
+        liked = np.vstack([data.vectors[saved], np.asarray(clips, dtype=data.vectors.dtype)]) if clips \
+            else data.vectors[saved]
+        sims_saved = data.vectors[idx] @ liked.T if len(liked) and idx else None
         sims_nfm = data.vectors[idx] @ data.vectors[nfm].T if nfm and idx else None
         draws = self.type_draws(state, rng)
         # Committing to a problem is an explicit signal (section 6.7): its niche ranks as if well liked, without

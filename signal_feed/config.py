@@ -190,6 +190,17 @@ class Rings(_Strict):
         return self
 
 
+class ClipsConfig(_Strict):
+    """"Clip to Signal": a clip is an explicit interest signal, placed by its nearest posts."""
+    weight: float = Field(default=6, gt=0)              # event weight (a save is 4: a clip is chosen and annotated)
+    neighbors: int = Field(default=10, ge=1)
+    min_cosine: Fraction = Field(default=0.5, ge=0, le=1)   # median 10th-nearest post is ~0.63 (2026-10-21)
+    min_neighbors: int = Field(default=3, ge=1)         # fewer close posts: kept for ranking, interests untouched
+    niche_min_share: Fraction = Field(default=0.35, ge=0, le=1)   # else the vote climbs to the parent niche
+    skill_min_share: Fraction = Field(default=0.3, ge=0, le=1)
+    recent: int = Field(default=20, ge=0)               # clips used as "saved" vectors in ranking
+
+
 class UserModelConfig(_Strict):
     prior_strength: float = Field(gt=0)
     default_affinity: Fraction = Field(ge=0, le=1)
@@ -213,6 +224,7 @@ class UserModelConfig(_Strict):
     removed_retest_after_days: int = Field(ge=0)
     committed_other_cap: Fraction = Field(ge=0, le=1)
     committed_affinity: Fraction = Field(ge=0, le=1)
+    clips: ClipsConfig = ClipsConfig()
     committed_demand_max: Fraction = Field(ge=0, le=1)
     narrowing: Narrowing
     rings: Rings

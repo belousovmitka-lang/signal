@@ -93,6 +93,9 @@ def main(argv: list[str] | None = None) -> int:
         from .embeddings import VoyageEmbedder
         enricher = Enricher(store, posts, config, tagger=None, embedder=VoyageEmbedder(config.embeddings))  # type: ignore[arg-type]
         print(f"embedded {enricher.embed_pending(args.limit)} posts")
+        from ..feed.clips import sync_clips
+        from ..feed.data import load as load_feed_data
+        print(f"learned {sync_clips(store, posts, config, load_feed_data(store, posts, config), enricher.embedder)} clips")
         return 0
 
     _require("ANTHROPIC_API_KEY")

@@ -194,6 +194,7 @@ Confidence is reported separately (low evidence = "early signal"), never hidden 
 - **Decay:** evidence halves every 21 days *(tune)*, so interests can move.
 - **Pins override:** a pinned node's affinity is fixed at the value implied by where the user placed it on the map; events still accumulate underneath so unpinning restores learned behavior.
 - **Drop-ins:** start at affinity 0.35 with a budget of 8 exposures over the next sessions; after the budget, the node keeps whatever affinity the user's reactions earned.
+- **Clips (built 2026-10-21, `feed/clips.py`):** a page the user saves with the "Clip to Signal" button counts like a strong save, with weight 6 *(tune)* against 4 for a save. It isn't one of our posts, so it is placed by its nearest posts. Title, selection and note are embedded once, and the 10 closest posts with cosine ≥ 0.5 vote on its niche. If no leaf gets 35% of the vote, the vote moves up to the parent niche. Skills held by 30% of those posts get evidence too. With fewer than 3 close posts, interests are left alone. The clip's vector also joins the saved posts in `save_sim`. Clips stay the user's own: feed.db keeps only the vector and the evidence it added, so deleting or editing a clip undoes or redoes exactly that. A clip is learned when that user's next feed page loads; `enrich.py embed` also syncs all users.
 
 ### 6.5 Narrowing (how "Legal" becomes "Citation verification")
 For each node the user engages with, check weekly:

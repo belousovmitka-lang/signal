@@ -5,6 +5,7 @@ breakdown (section 16), and drop-ins spend one exposure per page they appear on.
 from __future__ import annotations
 
 from collections.abc import Callable
+import logging
 from datetime import datetime
 from types import SimpleNamespace
 
@@ -21,6 +22,8 @@ from .compose import compose
 from .data import FeedData, FeedDataCache, item_key
 from .ranker import RankerV1, RankerV2
 from .usermodel import UserState, load_state
+
+log = logging.getLogger(__name__)
 
 CALIBRATION = "calibration"
 
@@ -135,8 +138,9 @@ def bubble_share(store: FeedStore, user_id: str, window: int) -> float:
 
 class FeedService:
     def __init__(self, store: FeedStore, config: FeedConfig, cache: FeedDataCache,
-                 clock: Callable[[], datetime] = utcnow, seed: int | None = None) -> None:
+                 clock: Callable[[], datetime] = utcnow, seed: int | None = None, clip_embedder=None) -> None:
         self.store, self.config, self.cache, self.clock = store, config, cache, clock
+        self.clip_embedder = clip_embedder   # set: a new clip is learned on the user's next page (feed/clips.py)
         if cache.config is None:
             cache.config = config            # the feed always gates inferred problems by detector stage
         self.rng = np.random.default_rng(seed)
@@ -177,10 +181,19 @@ class FeedService:
                 return RankerV2(config, model, self._value)
         return RankerV1(config, self._value)
 
+    def _learn_clips(self, user_id: str, data: FeedData) -> None:
+        """Never in the way of the page: a failed embedding call is retried on the next one."""
+        from .clips import sync_clips
+        try:
+            sync_clips(self.store, self.cache.posts, self.config, data, self.clip_embedder, user_id, self.clock)
+        except Exception as exc:          # budget, network, a clip the embedder refuses
+            log.warning("clips not learned for %s: %s", user_id, exc)
+
     def page(self, user_id: str, session_id: str, explore_more: bool = False) -> FeedPage:
         from ..evaluation.experiments import arm_settings, assign
         now = self.clock()
         data = self.cache.get()
+        self._learn_clips(user_id, data)
         arms = assign(self.store, self.config, user_id, self.clock)
         key = tuple(sorted(arms.items()))
         if key not in self._arm_configs:

@@ -115,6 +115,7 @@ class UserState:
     events: int = 0                                               # weighted events so far
     saved: list[str] = field(default_factory=list)                # most recent first
     not_for_me: list[str] = field(default_factory=list)
+    clips: list[list[float]] = field(default_factory=list)       # "Clip to Signal" vectors, most recent first
     default: float = 0.1
     mode: str = "exploring"                                       # exploring | committed (section 6.7)
     committed_problem: int | None = None
@@ -188,6 +189,8 @@ def load_state(store: FeedStore, config: FeedConfig, user_id: str, now: datetime
             bucket = st.not_for_me if etype == "not_for_me" else st.saved
             if len(bucket) < recent and item_id not in bucket:
                 bucket.append(item_id)
+    from .clips import clip_vectors
+    st.clips = clip_vectors(store, user_id, um.clips.recent)
     return st
 
 
