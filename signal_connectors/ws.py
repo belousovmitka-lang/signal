@@ -44,6 +44,15 @@ class WebSocket:
     @classmethod
     async def connect(cls, url: str, *, headers: dict[str, str] | None = None, subprotocols: list[str] | None = None,
                       deflate: bool = True, timeout: float = 30.0) -> WebSocket:
+        """Open the connection; network failures (reset, DNS, timeout) raise WebSocketError without a status."""
+        try:
+            return await cls._connect(url, headers, subprotocols, deflate, timeout)
+        except (OSError, TimeoutError, asyncio.IncompleteReadError) as exc:
+            raise WebSocketError(f"connect failed: {exc!r}") from None
+
+    @classmethod
+    async def _connect(cls, url: str, headers: dict[str, str] | None, subprotocols: list[str] | None,
+                       deflate: bool, timeout: float) -> WebSocket:
         parts = urlsplit(url)
         secure = parts.scheme == "wss"
         host = parts.hostname or ""

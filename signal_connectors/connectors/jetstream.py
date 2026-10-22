@@ -24,6 +24,7 @@ whose robots.txt allows crawling the public API. No engagement counts: Jetstream
 
 from __future__ import annotations
 
+import asyncio
 import json
 import logging
 import re
@@ -49,6 +50,7 @@ ENDPOINT = "wss://jetstream.us-east.bsky.network/xrpc/network.bsky.jetstream.sub
 POST = "app.bsky.feed.post"
 LOOKBACK = timedelta(hours=35)            # Bluesky-hosted instances keep 36 hours
 RECONNECTS = 3
+RETRY_SECONDS = 10
 
 # A workflow pain in the author's own words. Emotional words alone ("nightmare", "sick of", "paperwork")
 # matched mostly politics and fandom in 12 hours of the stream (2026-10-17), so they don't count here.
@@ -154,7 +156,12 @@ class JetstreamConnector(BaseConnector):
                     log.warning("%s: cursor refused (%s); reading from the oldest available", self.name, exc.body[:200])
                     cursor, failures = time_us(utcnow() - LOOKBACK + timedelta(minutes=5)), 1
                     continue
-                raise
+                failures += 1                                 # connection reset or DNS: retry with backoff
+                if exc.status is not None or failures > RECONNECTS:
+                    raise
+                log.warning("%s: %s; retrying in %ds", self.name, exc, RETRY_SECONDS * failures)
+                await asyncio.sleep(RETRY_SECONDS * failures)
+                continue
             try:
                 async for message in ws.messages(idle_timeout=60):
                     event = json.loads(message).get("payload") or {}

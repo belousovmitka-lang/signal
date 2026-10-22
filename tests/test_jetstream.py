@@ -240,3 +240,22 @@ def test_sources_yaml_entry():
     from signal_connectors.config import load_sources
     s = load_sources("sources.yaml").get("bluesky")
     assert s.connector == "jetstream" and s.deletion_recheck_days and s.blocked_reason() is None
+
+
+async def test_connection_reset_on_connect_is_retried(make_services, monkeypatch):
+    monkeypatch.setattr(js, "RETRY_SECONDS", 0)
+    urls = fake_stream(monkeypatch, [WebSocketError("connect failed: ConnectionResetError()"),
+                                     [event(1, 30, text=PAIN), event(2, -1)]])
+    async with make_services(src(), appview()) as svc:
+        out = await run_source(svc, svc.sources.get("bluesky"))
+    assert out.result.status == "ok" and out.result.new == 1 and len(urls) == 2
+
+
+async def test_ws_network_failure_on_connect_is_a_websocket_error():
+    server = await asyncio.start_server(lambda r, w: None, "127.0.0.1", 0)
+    port = server.sockets[0].getsockname()[1]
+    server.close()
+    await server.wait_closed()
+    with pytest.raises(WebSocketError, match="connect failed") as exc:
+        await WebSocket.connect(f"ws://127.0.0.1:{port}/sub")
+    assert exc.value.status is None

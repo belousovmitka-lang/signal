@@ -15,7 +15,7 @@ from datetime import datetime, timedelta
 
 from .config import SourceConfig
 from .models import FetchResult, utcnow
-from .runner import recheck_deletions, run_source
+from .runner import RecheckPending, recheck_deletions, run_source
 from .services import Services
 
 log = logging.getLogger(__name__)
@@ -23,6 +23,7 @@ log = logging.getLogger(__name__)
 INTERVALS = {"hourly": timedelta(hours=1), "daily": timedelta(days=1), "weekly": timedelta(days=7),
              "monthly": timedelta(days=30)}
 SLACK = timedelta(minutes=5)       # a daily cron at 06:00 shouldn't miss a run that started at 06:02
+PENDING_RETRY = timedelta(minutes=15)  # a re-check still running at the platform (status "partial")
 
 
 @dataclass
@@ -50,9 +51,11 @@ def plan(services: Services, now: datetime | None = None, only: set[str] | None 
         if source.deletion_recheck_days and not source.blocked_reason(ignore_enabled=True):
             key = f"{name}:recheck"
             last_check = services.store.last_run(key)
-            # A failed re-check is retried after a day: deletions shouldn't wait a full cycle.
-            every = timedelta(days=1 if services.store.last_run_status(key) == "failed"
-                              else source.deletion_recheck_days)
+            # A failed re-check is retried after a day: deletions shouldn't wait a full cycle; one still
+            # running at the platform (partial) is picked up on the next 15-minute run.
+            status = services.store.last_run_status(key)
+            every = (PENDING_RETRY if status == "partial" else
+                     timedelta(days=1 if status == "failed" else source.deletion_recheck_days))
             if last_check is None or now - last_check >= every - SLACK:
                 rechecks.append(source)
     return Plan(runs, rechecks, skipped)
@@ -62,6 +65,9 @@ async def _recheck(services: Services, source: SourceConfig) -> FetchResult:
     result = FetchResult(source=f"{source.name}:recheck", started_at=utcnow())
     try:
         result.duplicates = await recheck_deletions(services, source)   # purged count
+    except RecheckPending as pending:
+        log.info("%s: deletion re-check pending: %s", source.name, pending)
+        result.duplicates, result.status, result.errors = pending.purged, "partial", [f"pending: {pending}"]
     except Exception as exc:
         log.exception("%s: deletion re-check failed", source.name)
         result.status, result.errors = "failed", [f"{type(exc).__name__}: {exc}"]

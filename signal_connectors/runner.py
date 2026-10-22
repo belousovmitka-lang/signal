@@ -149,6 +149,17 @@ async def run_source(
     return out
 
 
+class RecheckPending(Exception):
+    """A connector's deletion check is still running at the platform (X Batch Compliance).
+
+    Carries the URLs found so far; they're purged now and the scheduler retries in RECHECK_PENDING_RETRY."""
+
+    def __init__(self, gone: list[str], message: str) -> None:
+        super().__init__(message)
+        self.gone = gone
+        self.purged = 0
+
+
 async def recheck_deletions(services: Services, source: SourceConfig) -> int:
     """Purge stored posts their platform no longer serves (Bluesky guideline 3; Reddit/X terms).
 
@@ -165,7 +176,11 @@ async def recheck_deletions(services: Services, source: SourceConfig) -> int:
     rows = services.store.ids_for_recheck(post_source, utcnow() - timedelta(days=window),
                                           limit=source.deletion_recheck_limit)
     by_url = {url: post_id for post_id, url in rows}
-    gone = await deleted_fn(list(by_url))
+    try:
+        gone = await deleted_fn(list(by_url))
+    except RecheckPending as pending:
+        pending.purged = services.store.delete_posts([by_url[u] for u in pending.gone if u in by_url])
+        raise
     purged = services.store.delete_posts([by_url[u] for u in gone if u in by_url])
     log.info("%s: re-checked %d posts, purged %d", source.name, len(rows), purged)
     return purged

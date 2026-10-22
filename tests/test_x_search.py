@@ -130,6 +130,49 @@ async def test_compliance_purges_deleted_and_edited_posts(make_services, monkeyp
         assert all("/7/" not in d for d in seen["downloads"])
 
 
+async def test_slow_compliance_job_is_applied_by_a_15_minute_retry_without_a_new_job(make_services, monkeypatch):
+    from datetime import timedelta
+
+    from signal_connectors.models import utcnow
+    from signal_connectors.scheduler import _recheck
+    monkeypatch.setattr(xmod, "POLL_SECONDS", 0)
+    state = {"job": None, "posts": 0}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        path = request.url.path
+        if path.startswith("/2/tweets/search"):
+            return httpx.Response(200, json=DRY_RUN_RESPONSE)
+        if request.method == "GET" and path == "/2/compliance/jobs":
+            return httpx.Response(200, json={"data": [state["job"]] if state["job"] else []})
+        if request.method == "POST":
+            state["posts"] += 1
+            state["job"] = {"id": "9", "name": "signal-x-recheck-2", "status": "in_progress",
+                            "created_at": utcnow().isoformat().replace("+00:00", "Z"),
+                            "upload_url": "https://api.x.com/2/compliance/jobs/9/upload?token=u",
+                            "download_url": "https://api.x.com/2/compliance/jobs/9/download?token=d"}
+            return httpx.Response(200, json={"data": state["job"]})
+        if request.method == "PUT":
+            return httpx.Response(200)
+        if path == "/2/compliance/jobs/9":
+            return httpx.Response(200, json={"data": state["job"]})
+        if path.endswith("/download"):
+            return httpx.Response(200, text=json.dumps({"id": "1900000000000000001", "action": "delete"}))
+        raise AssertionError(f"unexpected {request.method} {path}")
+
+    async with make_services(src(), handler) as svc:
+        await asearch_x("anything", services=svc)
+        first = await _recheck(svc, svc.sources.get("x"))              # job still running at X
+        assert first.status == "partial" and "pending" in first.errors[0] and svc.store.count_posts("x") == 2
+        now = utcnow()
+        assert plan(svc, now + timedelta(minutes=9)).rechecks == []
+        assert [s.name for s in plan(svc, now + timedelta(minutes=15)).rechecks] == ["x"]
+        state["job"]["status"] = "complete"
+        second = await _recheck(svc, svc.sources.get("x"))
+        assert second.status == "ok" and second.duplicates == 1 and svc.store.count_posts("x") == 1
+        assert state["posts"] == 1                                        # the finished job counts for today
+        assert plan(svc, now + timedelta(minutes=30)).rechecks == []      # back to once a day
+
+
 async def test_on_demand_source_is_never_scheduled_but_is_rechecked_even_when_off(make_services):
     async with make_services(src(enabled=False)) as svc:
         p = plan(svc)
