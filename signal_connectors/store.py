@@ -128,7 +128,8 @@ class ClipRow(Base):
     """A post a user saved by hand with the "Clip to Signal" button (signal_connectors/clips.py).
 
     The user's own workspace: what they selected on the page, their note and the link. Kept apart
-    from `posts`, which is the shared collected feed."""
+    from `posts`, which is the shared collected feed. signal_feed/feed/clips.py reads these columns and
+    detects edits by updated_at: keep them stable, and bump updated_at whenever a clip changes."""
 
     __tablename__ = "clips"
 

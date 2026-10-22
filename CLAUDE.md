@@ -6,6 +6,8 @@ This repo does one job: **collect raw posts from every source below and store th
 
 The guiding principle from the founder: **build more connectors than users will need, rather than leave anyone with a thin feed.** Every platform in the catalog below gets a connector or a search profile, unless it is marked blocked.
 
+**Industries are built on demand (founder decision, 2026-10-11).** Users may name any industry, so industry maps are not pre-built for every case: when a user names one, `signal_connectors/on_demand.py` matches an existing map or builds a new one live (sources found, access-checked, then collected). The 15 seed maps in section 8 are a starting set, not a target.
+
 ---
 
 ## 1. Rules (non-negotiable)
@@ -55,6 +57,11 @@ signal-connectors/
     verify.py               # live checks for seed maps (liveness, robots, login walls, moved feeds)
     discovery.py            # search APIs as pointers only: URLs in memory, never stored
     discovery_agent.py      # Phase 6: draft industries/<key>.yaml from seeds, for human review
+    on_demand.py            # match or build an industry map when a user names an industry
+    live.py                 # live lane: Brave/YouTube results shown at view time, never stored (7.5)
+    x_search.py             # on-demand stored X search for the feed (search_x / asearch_x)
+    clips.py                # Clip to Signal: per-user saved clips, FastAPI router (7.5)
+    ws.py                   # minimal RFC 6455 WebSocket client (Jetstream)
     parsing.py              # HTML to text, lenient dates
     smoke.py                # smoke CLI logic (scripts/smoke.py is the entry point)
     connectors/
@@ -68,6 +75,7 @@ signal-connectors/
       podcasts.py
       open_data.py          # Socrata, CKAN
       app_reviews.py
+      jetstream.py          # Bluesky firehose, filtered to first-person work pain
       ... one module per platform-specific connector in section 7
   scripts/
     run.py                  # run due connectors on schedule: --once (cron), --loop, --dry-run, --only a,b
@@ -76,6 +84,8 @@ signal-connectors/
     discover_industry.py    # python scripts/discover_industry.py <key> --name ... --roles ... --keywords ...
     recheck_deletions.py    # purge posts deleted at the source (Bluesky, Mastodon, Lemmy, Reddit)
     status.py               # health table: last run, failure streak, new posts 7d, spend, stored totals
+    clip_server.py          # local server (127.0.0.1) for the Clip to Signal button
+  clipper/                  # Chrome MV3 extension: the Clip to Signal button
   tests/
     cassettes/
 ```
@@ -187,7 +197,7 @@ SEMANTIC_SCHOLAR_KEY=
 DOL_API_KEY=                 # OSHA enforcement data (dataportal.dol.gov)
 CENSUS_API_KEY=              # api.census.gov now requires a key
 STACKEXCHANGE_KEY=           # optional; raises quota 300 -> 10,000/day
-BLUESKY_HANDLE=              # pending rule-1 decision
+BLUESKY_HANDLE=              # unused: Jetstream and the public AppView need no login
 BLUESKY_APP_PASSWORD=
 # Paid, optional (feature-flagged off by default):
 YELP_API_KEY=
@@ -222,9 +232,9 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 | G3 | `reddit` | All subreddits in the industry maps and section 7.2 | search_api now, own_api after approval | Until commercial approval, run through G1 with `site:reddit.com/r/<sub>`. After approval: OAuth API, `/r/<sub>/new`, `/r/<sub>/search`, comments. Honor deletions per Reddit terms. |
 | G4 | `discourse` — **todo: no forum with permissive terms yet (2026-10-09)** | Any Discourse forum (many community and vendor forums) | public_pages | robots.txt on Discourse sites disallows `/search.json` by default, so no keyword search. The default Discourse ToS forbids copying content without written permission; Shopify, HubSpot, Spiceworks and HashiCorp were read and all forbid it. Build when a forum's terms or its admin allow it. |
 | G5 | `classic_forum` — **done (2026-10-09)** | XenForo, vBulletin, phpBB and generic HTML forums | rss / public_pages | Reads board RSS only for industry-map forums with `terms: allowed` (read by hand). Live: TruckersReport, PLCtalk, ServeTheHome, A to Z Teacher Stuff. Forbidden (clause recorded in the industry maps): VerticalScope forums (Contractor Talk, HVAC-Talk, Electrician Talk, PlumbingZone), InsuranceForums, Practical Machinist (AI datasets), Student Doctor Network (CC BY-NC-SA), AccountingWEB. |
-| G6 | `job_boards` | Company job posts across all industries | own_api | Greenhouse `boards-api.greenhouse.io/v1/boards/<token>/jobs`, Lever `api.lever.co/v0/postings/<company>`, Ashby `api.ashbyhq.com/posting-api/job-board/<name>`, SmartRecruiters public postings API, USAJOBS `data.usajobs.gov/api/search`. Build a company list per industry. |
+| G6 | `job_boards` — **done (2026-10-11)** | Company job posts across all industries | own_api | Greenhouse `boards-api.greenhouse.io/v1/boards/<token>/jobs`, Lever `api.lever.co/v0/postings/<company>`, Ashby `api.ashbyhq.com/posting-api/job-board/<name>`, no key. Boards come from each industry map's `job_boards` (`scripts/find_job_boards.py` finds boards of an industry's incumbent tools). Blocked by robots.txt (2026-10-11): SmartRecruiters (allows only LinkedInBot), USAJOBS (`Disallow: /`). Recruiter emails and phones redacted; stated pay kept in `money`. |
 | G7 | `youtube` — **blocked (2026-10-09)** | YouTube videos, comments, conference talks, webinars posted to YouTube | own_api → G1 | YouTube API Developer Policies III.E forbid aggregating API Data across channels not owned by one content owner, using API Data "to create new or derived data or metrics", and storing non-statistics data over 30 days. Signal's cross-channel feed, ranking and idea generation do all three. Until then: G1 search profile `youtube.com/watch` (titles + snippets). Unblocks with: YouTube API compliance audit and the derived-metrics permission (policy section L, via the quota extension form, since June 2026). |
-| G8 | `podcasts` | Industry podcasts | rss + own_api | Podcast Index API to discover shows; RSS for episodes; transcribe audio with a speech-to-text service (cost-metered) or use publisher transcripts when provided. |
+| G8 | `podcasts` — **built (2026-10-11), needs key** | Industry podcasts | rss + own_api | Podcast Index API discovers shows (`scripts/find_podcasts.py`, needs PODCASTINDEX_KEY/SECRET, not yet received); episodes come from each show's own RSS feed, no key. Podcasting 2.0 `<podcast:transcript>` links are appended to show notes; no speech-to-text, audio never downloaded. |
 | G9 | `open_data` — **done (2026-10-09)** | City/state open data portals, data.gov, FCC data | own_api | Socrata SODA API per dataset with an explicit field map (only named fields stored, so no applicant names or addresses): NYC restaurant inspections, Chicago building permits, NYC 311. CKAN new-dataset listings (open.canada.ca; catalog.data.gov's CKAN API returns 404 as of 2026-10-09). |
 | G10 | `app_reviews` — **done (2026-10-09): WordPress.org** | App Store, app marketplaces | rss | WordPress.org plugin review + support feeds (`/support/plugin/<slug>/reviews/feed/`); rating and reply counts parsed. Blocked 2026-10-09: Apple reviews feed (itunes.apple.com robots.txt `Disallow: /*/rss/*`), Chrome Web Store and Atlassian Marketplace REST API (robots.txt), Shopify App Store (ToS forbids robots). api.wordpress.org plugin info API is robots-disallowed. Google Play allows robots-compliant access but serves reviews via internal APIs: not used. |
 
@@ -234,7 +244,7 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 
 | Platform | Connector | Route | Endpoint / method | Cadence | Status |
 |---|---|---|---|---|---|
-| Reddit | G3 `reddit` | own_api only | reddit.com robots.txt disallows our bot, and search results can't be stored, so the search route is closed (2026-10-09) | hourly | blocked until commercial API access |
+| Reddit | G3 `reddit` | own_api only | reddit.com robots.txt disallows our bot, and search results can't be stored, so the search route is closed (2026-10-09). Commercial Data API request refused by Reddit (2026-10-11). Shown at view time through the live lane (7.5); an official Reddit data partner (e.g. Brandwatch) once there's revenue | hourly | blocked (refused 2026-10-11) |
 | Hacker News | `hackernews` | own_api | Algolia HN Search API `hn.algolia.com/api/v1/search_by_date` (keyword phrases, tags) + Firebase API `hacker-news.firebaseio.com/v0` (ask/show/job lists; MIT, no rate limit) | hourly | done (2026-10-09) |
 | Stack Exchange network (incl. Stack Overflow, Law, Workplace, Money, Academia, DIY) | `stackexchange` | own_api | `api.stackexchange.com/2.3/search/advanced?site=<site>`; 300 req/day per IP without a key, 10,000 with a free stackapps.com key; obey the `backoff` field. Content is CC BY-SA 4.0: the app must credit Stack Exchange and link to each question | daily | done (2026-10-09) |
 | Telegram public channels | `telegram` | — | Telegram ToS (checked 2026-10-09): "Telegram additionally prohibits data scraping as part of its Content Licensing and AI Scraping Terms, which apply to all users, businesses, and third-party services accessing the platform". Covers t.me/s previews too | daily | blocked (2026-10-09) |
@@ -248,9 +258,9 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 
 | Platform | Connector | Route | Endpoint / method | Cadence | Status |
 |---|---|---|---|---|---|
-| X (Twitter) | `x` | own_api | API v2 recent search `/2/tweets/search/recent`; pay-per-use, cost-metered | hourly | todo (needs credits) |
+| X (Twitter) | `x` (`signal_connectors/x_search.py`) | own_api | API v2 recent search `/2/tweets/search/recent`, called on demand by the feed (evidence for inferred problems), never on a schedule; $0.005 per post returned, $20/month budget. No user lookups; author_id hashed; shown with X's embed. Deletions: Batch Compliance job over every stored post daily (Developer Policy: within 24 h); jobs outlast a run, so the run records `partial` and the scheduler applies the job on 15-minute retries (2026-10-21). Enabled by the owner; X Enterprise needed beyond early stage | on demand | done (2026-10-16) |
 | Threads | `threads` | own_api + search_api | `GET graph.threads.net/v1.0/keyword_search` (needs `threads_basic` + `threads_keyword_search` app review; 2,200 queries/24h); overflow through G1 `site:threads.net` | daily | awaiting approval |
-| Bluesky | `bluesky` (G1 source) | own_api | `searchPosts` returns 403 to logged-out callers (2026-10-09), so Exa finds post URLs and posts are read with `app.bsky.feed.getPosts` on the public AppView (no login, 25 per call). Skip authors labelled `!no-unauthenticated`; honor deletions (`scripts/recheck_deletions.py bluesky`); guidelines require a monitored contact email. Exa's Bluesky coverage is thin (mostly popular posts) | weekly | done (2026-10-09) |
+| Bluesky | `jetstream` | own_api | Jetstream firehose `wss://jetstream.us-east.bsky.network/xrpc/network.bsky.jetstream.subscribeEvents` (no key, not metered, 36 h lookback): each run replays every new post since the last run (~4 GB/day) and keeps English posts with a first-person workflow pain that name an industry (role or vocabulary term); everything else dropped unstored. Yield ~30-50 posts/day, mostly noise; the feed's tagging filters. Delete events purge stored posts at once; older posts re-checked with `getPosts`. Skip authors labelled `!no-unauthenticated`; guidelines require a monitored contact email. Replaced the Exa route (2026-10-17) | daily | done (2026-10-17) |
 | Instagram | `instagram` | own_api + search_api | Graph API via a business account: `ig_hashtag_search` → `/<hashtag-id>/recent_media` (limited unique hashtags per 7 days); plus G1 profile | daily | todo |
 | Facebook Pages | `facebook_pages` | own_api + search_api | Graph API with Page Public Content Access (needs Meta app review); plus G1 profile | daily | awaiting approval |
 | YouTube | G7 → G1 | search_api | own API blocked by YouTube developer policies (see G7); G1 `youtube.com/watch` | daily | blocked (2026-10-09) |
@@ -267,10 +277,10 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 | Contra | G5 / G1 | public_pages | public project listings | daily | todo |
 | PeoplePerHour, Guru, Malt | G2 / G5, else G1 | public_pages / rss | public job listings and feeds where offered | daily | todo |
 | Wellfound, YC Work at a Startup | G6 + public pages, else G1 | public_pages | many startups post through Greenhouse/Lever/Ashby | weekly | todo |
-| USAJOBS | G6 | own_api | `data.usajobs.gov/api/search` | weekly | todo |
+| USAJOBS | G6 | — | data.usajobs.gov robots.txt `Disallow: /` (2026-10-11) | weekly | blocked (2026-10-11) |
 | State government job boards | G2 / G5, else G1 | rss / public_pages | per state | weekly | todo |
 | Industry job boards (legal, healthcare, construction, logistics) | G2 / G5, else G1 | rss / public_pages | per board | weekly | todo |
-| Company career pages (all industries) | G6 | own_api | Greenhouse, Lever, Ashby, SmartRecruiters | weekly | todo |
+| Company career pages (all industries) | G6 | own_api | Greenhouse, Lever, Ashby (SmartRecruiters blocked by robots.txt) | weekly | done (2026-10-11) |
 | GitHub bounties, Algora, Gitcoin | `github` | own_api | GitHub search issues `label:bounty` and Algora's `label:"💎 Bounty"` (paid_demand); Algora/Gitcoin public pages not checked | daily | done (2026-10-09, GitHub part) |
 | IssueHunt and other bounty boards | G5, else G1 | public_pages | public listings | daily | todo |
 | Kaggle | `kaggle` | own_api | Kaggle API competitions list | weekly | todo |
@@ -313,11 +323,11 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 | NHTSA complaints | `nhtsa` | own_api / downloads | The complaints API only looks up by make + model + year (no "recent" endpoint); recent complaints need the large daily bulk flat file. Deferred until an automotive industry map exists (2026-10-10) | weekly | todo (deferred) |
 | FCC consumer complaints | G9 | own_api | FCC open data (Socrata) | weekly | todo |
 | FTC published complaint datasets | G9 / downloads | public_pages | published datasets only | monthly | todo |
-| OSHA enforcement data | `osha` | own_api | DOL data API (apiprod.dol.gov v4) requires a free API key from dataportal.dol.gov (`DOL_API_KEY`) | monthly | todo (needs key) |
+| OSHA enforcement data | `osha` | own_api | DOL data API v4 (`DOL_API_KEY`): violations of the last 30 days joined to inspections in bulk (~6 calls a run), summed per industry map by NAICS prefix: inspections, violation types, penalties, most-cited standards. Aggregates only, no establishment names | monthly | done (2026-10-15) |
 | Federal Register | `federal_register` | own_api | `federalregister.gov/api/v1/documents.json`: every new rule and proposed rule, plus keyword notices; comment deadlines and agencies kept; no key, public domain | daily | done (2026-10-09) |
 | Regulations.gov | `regulations_gov` | own_api | API v4 public comments per agency (SBA, FMCSA, CMS, OSHA, FDA, IRS, FTC, HHS), detail call per comment; 1,000 req/hour. Titles rebuilt (they name the commenter); no submitter names, addresses, emails, phones; organization and category kept | daily | done (2026-10-09) |
 | EU and national official journals | `eurlex` | own_api | eur-lex.europa.eu answers bots with a 202 challenge (never bypassed), so the Publications Office CELLAR SPARQL endpoint is used: new regulations, directives, decisions with CELEX id and English title; sanctions acts excluded. Reuse under Decision 2011/833/EU | daily | done (2026-10-10) |
-| State legislature trackers | `legiscan` / `openstates` | own_api | Open States v3 `/bills` (public domain data; limits unpublished, paced 9/min, 400/day): done (2026-10-09). LegiScan: no key yet | daily | partly done |
+| State legislature trackers | `legiscan` / `openstates` | own_api | Open States v3 `/bills` (public domain data; limits unpublished, paced 9/min, 400/day): done (2026-10-09). LegiScan Pull API (CC BY 4.0, credit + link required): getSearchRaw per industry's keywords, new bills read with getBill; free tier 10,000 queries/month, capped 300/day; sponsors not stored: done (2026-10-15) | daily | done (2026-10-15) |
 | CourtListener (incl. RECAP copies of PACER filings) | `courtlistener` | own_api | REST API v4 search (opinions), token. Free tier 5/min, 50/hour, 125/day: paced 13s, capped 100/day. Attorney/judge fields not stored. Commercial agreements exist: confirm with Free Law Project | daily | done (2026-10-09) |
 | PACER (direct) | `pacer` | own_api (paid) | $0.10/page, $3 cap/document; only for specific documents | on demand | paid (flag off) |
 | Bar associations, medical boards, licensing bodies | G2 / G5, else G1 | rss / public_pages | per body | weekly | todo |
@@ -329,7 +339,7 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 
 | Platform | Connector | Route | Endpoint / method | Cadence | Status |
 |---|---|---|---|---|---|
-| Podcasts (Apple, Spotify, Podcast Index) | G8 | rss + own_api | Podcast Index API + RSS | weekly | todo |
+| Podcasts (Apple, Spotify, Podcast Index) | G8 | rss + own_api | Podcast Index API + RSS (see G8) | weekly | built (2026-10-11), waiting on the Podcast Index key |
 | YouTube, recorded conference talks, webinars on YouTube | G7 → G1 | search_api | own API blocked (see G7); G1 `youtube.com/watch` | daily | blocked (2026-10-09) |
 | Twitch | `twitch` | own_api | Keys work (app token + Helix verified 2026-10-10), but the Developer Services Agreement section VI forbids storing copies of Twitch content beyond a 24-hour cache without written authorization, and selling or commercially using Twitch data "or insights derived from that data" without permission. Needs Twitch's written permission | weekly | blocked (2026-10-10) |
 | Webinars hosted elsewhere | G5, else G1 | public_pages | public pages and descriptions | weekly | todo |
@@ -356,7 +366,7 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 | Google Keyword Planner | `keyword_planner` | own_api | Google Ads API KeywordPlanIdeaService | monthly | todo |
 | Google autocomplete / "People also ask" | G1 | search_api | via search API results | weekly | todo |
 | Industry association surveys, vendor benchmark reports, analyst firms' free reports | G2 / G5 | rss / public_pages | per publisher | monthly | todo |
-| Government statistics (BLS, Census, Eurostat) | `stats` | own_api | Checked 2026-10-09: api.bls.gov robots.txt `Disallow: /` (blocked); Census API now requires a key (`CENSUS_API_KEY`; Business Formation Statistics = new business applications by industry); Eurostat API allowed by robots but returns statistics, not posts, and its news pages advertise no RSS (2026-10-10): not built. Build `stats` when the Census key arrives | monthly | todo |
+| Government statistics (BLS, Census, Eurostat) | `stats` (source `census_bfs`) | own_api | Census Business Formation Statistics (`CENSUS_API_KEY`): new business applications per month by NAICS sector, with month-over-month and year-over-year change; app must show the Census API notice (raw.notice): done (2026-10-15). api.bls.gov robots.txt `Disallow: /` (blocked, 2026-10-09); Eurostat returns statistics, not posts, no RSS (2026-10-10): not built | monthly | done (2026-10-15, Census) |
 | Academic papers | `papers` | rss (arXiv) / own_api | arXiv via RSS category feeds (rss.arxiv.org, 1 request/3s; metadata CC0): done (2026-10-09). export.arxiv.org (query API) is robots-disallowed for all agents: not used. PubMed E-utilities: eutils.ncbi.nlm.nih.gov robots.txt disallows our path (2026-10-09): blocked. Semantic Scholar: key optional, todo | daily | partly done |
 | Wikipedia | `wikipedia` | own_api | Wikimedia pageviews top articles (wikimedia.org, UA with contact email). Built but **disabled**: daily trending is mostly people in the news, low signal for builders | weekly | done (2026-10-09, disabled) |
 
@@ -394,7 +404,6 @@ Each row is a search profile in `sources.yaml`: domain/path filters + query temp
 | TikTok | `tiktok.com/@` (titles and captions) |
 | Threads (overflow) | `threads.net` |
 | YouTube (own API blocked, see G7) | `youtube.com/watch` (titles and descriptions) |
-| Bluesky (until the auth decision) | `bsky.app/profile/*/post` |
 | Fiverr | `fiverr.com` |
 | Upwork (until approval) | `upwork.com/freelance-jobs` |
 | Craigslist gigs and services | `craigslist.org` gig and service sections |
@@ -424,6 +433,13 @@ Track these so they are not forgotten; revisit when partnerships exist.
 | TaskRabbit, Thumbtack, Angi | requests are private | partnership |
 | Sermo, Doximity | private clinician networks | partnership |
 | X Spaces, Clubhouse-style audio | no access to audio | none currently |
+
+### 7.5 Live lane and Clip to Signal (platforms we can't store)
+
+For the most useful closed platforms (Reddit, X, Facebook groups, YouTube; LinkedIn, Quora on request) two routes stay within their terms:
+
+- **Live lane** — `signal_connectors/live.py`, done (2026-10-15), **paused by the founder (2026-10-17)**. At view time, one site-limited Brave search per platform plus a YouTube Data API search; results go straight to the app with links and are never written to the database (Brave 3(b)(i) transient storage only, 3(b)(ii) no derivative works, 3(b)(xiii) no AI training; YouTube III.E.4.h no derived data). Summarizing results into stored "value" is a derivative work and not allowed. TikTok dropped. Before launch: the app's terms must bind users per Brave 4(c)(iii), and a paid Brave plan (storage rights are sold separately: api-sales@brave.com).
+- **Clip to Signal** — `signal_connectors/clips.py` + `clipper/` (Chrome extension), done (2026-10-17). A user selects text on any post and clicks the button; only the link, page title, the selection and the user's note are sent (contacts redacted), and only on click. Stored per user in the `clips` table, apart from `posts`; the feed (`signal_feed/feed/clips.py`) reads it read-only and detects edits by `updated_at`, so keep `ClipRow`'s columns stable. Routes: `POST /clips`, `GET /clips?user_id=`, `DELETE /clips/{id}`; local server `scripts/clip_server.py` (127.0.0.1 only). No auth yet: needed before launch.
 
 ---
 
@@ -463,13 +479,13 @@ Work top to bottom. Finish each connector to its definition of done before start
 3. G2 `rss`
 4. ~~G3 `reddit` (search route)~~ blocked (2026-10-09): robots.txt disallows us and search results can't be stored; needs the commercial API
 5. `hackernews`, `stackexchange`
-6. `x` (once credits are bought), `bluesky`, `threads`
+6. `x` — done (2026-10-16, on-demand stored search); `bluesky` — done (2026-10-17, Jetstream); `threads` awaiting approval
 7. ~~G7 `youtube`~~ blocked by YouTube developer policies (2026-10-09); covered by a G1 search profile
 8. Industry seed maps for all 15 industries (section 8) — done (2026-10-09): 15 files, 68 live feeds, 19 live forums (9 XenForo, 4 Discourse with feeds); subreddits unverified until G1 checks them
 
 **Phase 2 — forums and paid demand**
 9. G4 `discourse` (waiting for a forum whose terms allow it), G5 `classic_forum` — done (2026-10-09)
-10. G6 `job_boards`, `freelancer`, `upwork` (after approval)
+10. G6 `job_boards` — done (2026-10-11); `freelancer`, `upwork` (after approval)
 11. `github`, `kaggle`, bounty and challenge boards
 12. `instagram`, `facebook_pages` (after Meta review), `pinterest`, `telegram`, `lemmy`, `mastodon`
 
@@ -480,9 +496,9 @@ Work top to bottom. Finish each connector to its definition of done before start
 16. G9 `open_data` — done (2026-10-09)
 
 **Phase 4 — media, startup ecosystem, research**
-17. G8 `podcasts`, `twitch`, `events`
+17. G8 `podcasts` — built (2026-10-11), waiting on the key; `twitch` blocked (2026-10-10); `events`
 18. `producthunt` (awaiting approval), `huggingface` — done (2026-10-09); startup public pages all blocked by terms or bot walls (see 7.2)
-19. `trends`, `keyword_planner`, `stats`, `papers`, `wikipedia`
+19. `trends`, `keyword_planner`, `stats` (Census BFS done 2026-10-15), `papers`, `wikipedia`
 
 **Phase 5 — paid connectors (flag off until budgeted)** — done (2026-10-09)
 20. Done (2026-10-09): `newsapi`, `reddit` (own API), `crunchbase`, `keywords_paid` built behind feature flags (off). Blocked by public terms: `yelp`, `google_places`. Deferred: `pacer`, `listening`
