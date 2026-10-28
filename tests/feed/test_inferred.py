@@ -208,7 +208,7 @@ def test_revise_publishes_the_critics_narrower_wording_or_goes_low(market, feed_
     reader, *_ = market
     v = verdict(6, verdict="revise")
     if reworded:
-        v = v.model_copy(update={"revised_claim": "Some legal teams pay outside vendors to redline contracts."})
+        v = v.model_copy(update={"revised_claim": "Some legal teams pay outside vendors to redline contracts}"})
     run_detector(feed_store, reader, feed_config, "paid_workarounds", llm_with(feed_store, feed_config, v),
                  clock=lambda: NOW)
     with feed_store.session() as s:
@@ -904,3 +904,42 @@ def test_tenders_are_classified_by_their_main_code():
     assert tender_kind(t(naics="541511")) == "software"
     assert tender_kind(t(naics="336411")) == "goods"
     assert tender_kind(t()) is None and tender_kind(t(cpv="No")) is None
+
+
+def test_one_event_reported_twice_publishes_once(tmp_path, feed_store, feed_config):
+    """Two articles on one breach become two anchors backed by the same people's posts: one problem."""
+    from signal_feed.posts import PostsReader
+    vec = np.random.default_rng(4).normal(size=DIM)
+    raw, rows = [], []
+    for k, src in enumerate(["rss:sej", "rss:insurancejournal"]):
+        a = RawPost(source=src, source_type="news", route="rss", url=f"https://news.example/breach{k}",
+                    title=f"Backup plugin breach lets attackers install backdoors {k}", text="breach",
+                    is_snippet=False, published_at=NOW - timedelta(days=2 + k))
+        raw.append(a)
+        rows.append(EnrichedPostRow(post_id=a.id, status="ok", post_type="change", industry_path=["IT and developer tools"],
+                                    pain_statement="Sites were backdoored", embedding=unit(vec + 0.01 * k),
+                                    quality=0.7, prompt_version="v9", enriched_at=NOW))
+    for k in range(3):
+        p = RawPost(source="wordpress", source_type="review", route="rss", url=f"https://wp.example/{k}",
+                    title=f"hacked {k}", text=f"site hacked via plugin {k}", is_snippet=False,
+                    published_at=NOW - timedelta(days=3), author_hash=hash_author(f"w{k}", "wp", salt="test"))
+        raw.append(p)
+        rows.append(EnrichedPostRow(post_id=p.id, status="ok", post_type="pain", industry_path=["IT and developer tools"],
+                                    who_has_pain="site owner", pain_statement=f"Cleaning a backdoored site by hand {k}",
+                                    embedding=unit(vec), pain_embedding=unit(vec + 0.01 * k), prompt_version="v9",
+                                    enriched_at=NOW))
+    url = f"sqlite:///{tmp_path / 'signal.db'}"
+    Store(url).save_posts(raw, text_dedupe=False)
+    with feed_store.session() as s, s.begin():
+        s.add_all(rows)
+    plans = [_plan(who="site owners", task="clean backdoored sites",
+                   claim=f"Site owners now have to clean backdoored sites by hand ({k}).") for k in range(2)]
+    tagger = PlanAndCritic(plans, [verdict(4), verdict(4)])
+    report = run_detector(feed_store, PostsReader(url), feed_config, "anchored",
+                          LLMTask(feed_store, feed_config.enrichment, tagger, clock=lambda: NOW), clock=lambda: NOW)
+    assert (report.candidates, report.published, report.rejected) == (2, 1, 1)
+    with feed_store.session() as s:
+        statuses = sorted((r.status, bool((r.critic_notes or {}).get("duplicate_of")))
+                          for r in s.scalars(select(InferredProblemRow)))
+    assert statuses == [("published", False), ("rejected", True)]
+    assert any(line.startswith("[duplicate of #") for line in report.items)

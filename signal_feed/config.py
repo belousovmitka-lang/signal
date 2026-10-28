@@ -321,6 +321,7 @@ class InferredConfig(_Strict):
     high_insider_confirmations: int = Field(gt=0)
     publish_without_critic: bool
     match_min_jaccard: Fraction = Field(ge=0, le=1)
+    duplicate_min_shared: int = Field(default=2, ge=1)   # published in one run, sharing this many supported posts
     counter_evidence_cosine: Fraction = Field(ge=0, le=1)
     counter_evidence_max: int = Field(ge=0)
     embed_dropped_types: list[TaggedPostType] = Field(default_factory=list)

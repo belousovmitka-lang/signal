@@ -48,6 +48,7 @@ def main() -> int:
         if llm is not None and searcher is None:
             print("note: signal_connectors.ondemand.search_x not built yet: near misses get a plan, no X search")
         for name in args.detector or list(DETECTORS):          # in pipeline order
+            before = llm.spent if llm else 0.0
             try:
                 r = run_detector(store, PostsReader(settings.posts_database_url), config, name, llm,
                                  searcher=searcher)
@@ -55,7 +56,7 @@ def main() -> int:
                 raise SystemExit(f"stopped: {exc}\n(run again with --no-llm to find candidates without the critic)") from None
             print(f"{name}: {r.clusters} groups examined, {r.candidates} candidates -> {r.published} published, "
                   f"{r.rejected} rejected, {r.held} held for the critic, {r.expired} expired; "
-                  f"{r.critic_runs} critic calls, LLM cost ${llm.spent if llm else 0:.4f}; "
+                  f"{r.critic_runs} critic calls, LLM cost ${(llm.spent - before) if llm else 0:.4f}; "
                   f"{r.near_misses} near misses, {r.plans} plans, {r.searches} X searches")
             if r.x_waiting:
                 print(f"  {r.x_waiting} X posts wait for tagging (scripts/enrich.py run), then count on the next run")

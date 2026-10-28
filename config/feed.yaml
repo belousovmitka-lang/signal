@@ -167,6 +167,8 @@ inferred:
   high_insider_confirmations: 2   # ...or confirmed by this many insiders
   publish_without_critic: false   # the critic is the check that the AI didn't invent evidence: keep this off
   match_min_jaccard: 0.3          # a re-run keeps an inferred problem's id at this evidence overlap
+  duplicate_min_shared: 2         # two problems published in one run citing this many of the same supported posts:
+                                  # one problem told twice (two articles on the UpdraftPlus breach, 2026-10-28)
   counter_evidence_cosine: 0.6    # catalog posts (reviews, tool listings, tool gaps) this close to a cluster count
   counter_evidence_max: 5
   embed_dropped_types: [praise, listing]   # reviews and tool listings are searched for existing tools, so embed them

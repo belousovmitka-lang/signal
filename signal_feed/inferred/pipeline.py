@@ -71,6 +71,7 @@ def run_detector(store: FeedStore, posts: PostsReader, config: FeedConfig, name:
         old_ev = {pid: set(s.scalars(select(InferredEvidenceRow.post_id).where(InferredEvidenceRow.inferred_id == pid)))
                   for pid in old}
     matched: set[int] = set()
+    published_now: list[tuple[int, set[str], float, int]] = []     # (id, supported post ids, score, report line)
     for cand in found:
         ids = {e.post_id for e in cand.evidence}
         best, best_j = None, 0.0
@@ -105,8 +106,23 @@ def run_detector(store: FeedStore, posts: PostsReader, config: FeedConfig, name:
             s.add_all(InferredEvidenceRow(inferred_id=row.id, post_id=e.post_id, record_id=e.record_id, source=e.source,
                                           source_type=e.source_type, url=e.url, what_it_shows=e.what_it_shows,
                                           supported=e.supported, counts=e.counts) for e in evidence_rows)
+            if status == "published":
+                backing = {e.post_id for e in evidence_rows if e.supported and e.counts and e.post_id}
+                published_now.append((row.id, backing, row.score or 0.0, len(report.items)))
         report.items.append(f"[{status}{'/' + conf if conf else ''}] {cand.hypothesis} ({len(cand.evidence)} items)")
     with store.session() as s, s.begin():
+        # The same problem reached twice in one run (two articles on one event): keep the better-backed one.
+        kept: list[tuple[int, set[str]]] = []
+        for pid, backing, _, item in sorted(published_now, key=lambda t: (-len(t[1]), -t[2])):
+            twin = next((k for k, kb in kept if len(backing & kb) >= icfg.duplicate_min_shared), None)
+            if twin is None:
+                kept.append((pid, backing))
+                continue
+            row = s.get(InferredProblemRow, pid)
+            row.status, row.confidence = "rejected", None
+            row.critic_notes = {**(row.critic_notes or {}), "duplicate_of": twin}
+            report.published, report.rejected = report.published - 1, report.rejected + 1
+            report.items[item] = report.items[item].replace("[published", f"[duplicate of #{twin}", 1)
         for pid in set(old) - matched:
             s.get(InferredProblemRow, pid).status = "expired"
             report.expired += 1
@@ -149,9 +165,10 @@ def _judge(cand: Candidate, llm: LLMTask | None, icfg, report: RunReport) -> tup
     if verdict.verdict == "revise":
         # Supported, but the wording overreaches: publish the critic's narrower wording, never the original.
         # Without one the claim still overreaches, so it only goes to exploration slots.
-        if verdict.revised_claim and verdict.revised_claim.strip():
+        revised = (verdict.revised_claim or "").strip().strip("{}[]\"'` ").strip()
+        if revised:
             notes["original_claim"] = cand.hypothesis
-            cand.hypothesis = verdict.revised_claim.strip()
+            cand.hypothesis = revised if revised.endswith((".", "!", "?")) else revised + "."
         else:
             conf = "low"
     report.published += 1
