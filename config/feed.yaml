@@ -205,11 +205,13 @@ inferred:
     min_tool_posts: 3             # the served industry needs this many tool posts (reviews, listings, launches)
   # 2026-10-15: a near miss (enough items and buyers, but one source type: tenders only, say) or an anchor
   # fact gets one Claude planning call (is it routine labor software could do? an X query) and one targeted
-  # X search for the affected people's posts (signal_connectors.ondemand.search_x). The evidence minimum is
+  # X search for the affected people's posts (signal_connectors.x_search.search_x). The evidence minimum is
   # unchanged: X posts are a second source type, and the critic checks each one.
   corroboration:
     enabled: true
-    max_searches_per_run: 15      # ~$0.05 each (10 posts at $0.005); ~$20/month at weekly runs of all detectors
+    # 0 since 2026-10-28: 7 live searches returned 14 posts, all ads, news or opinions once tagged (none a
+    # first-person problem). Plans still run (cached, ~$0.001 each). Was 15 (~$0.05 a search).
+    max_searches_per_run: 0
     max_posts: 10
     refresh_days: 14
     min_text_chars: 40

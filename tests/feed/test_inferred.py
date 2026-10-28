@@ -746,12 +746,20 @@ def tag_x_posts(feed_store, posts):
                                     spam_score=0.9 if ad else 0.05, prompt_version="v9", enriched_at=NOW))
 
 
+def with_x_searches(cfg, n=15):
+    """X searches are off in config/feed.yaml (2026-10-28); these tests exercise the search path."""
+    inf = cfg.inferred
+    corr = inf.corroboration.model_copy(update={"max_searches_per_run": n})
+    return cfg.model_copy(update={"inferred": inf.model_copy(update={"corroboration": corr})})
+
+
 def _plan(kind="labor", **kw):
     from signal_feed.inferred.corroborate import Plan
     return Plan(kind=kind, x_query="hose assembly orders by hand", **kw)
 
 
 def test_a_near_miss_is_corroborated_on_x_once_and_then_judged(market, tmp_path, feed_store, feed_config):
+    feed_config = with_x_searches(feed_config)
     reader, *_ = market
     ad = "Tired of re-keying hose orders by hand? We built HoseFlow to fix it. Free trial today!"
     x = FakeX(f"sqlite:///{tmp_path / 'signal.db'}", extra=[ad], tag_into=feed_store)
@@ -806,6 +814,7 @@ def test_a_near_miss_is_corroborated_on_x_once_and_then_judged(market, tmp_path,
 
 
 def test_x_posts_count_only_after_tagging(market, tmp_path, feed_store, feed_config):
+    feed_config = with_x_searches(feed_config)
     reader, *_ = market
     x = FakeX(f"sqlite:///{tmp_path / 'signal.db'}")              # found, not tagged yet
     tagger = PlanAndCritic([_plan()], [verdict(12), verdict(12)])
@@ -820,6 +829,7 @@ def test_x_posts_count_only_after_tagging(market, tmp_path, feed_store, feed_con
 
 @pytest.mark.parametrize("case", ["software", "search_fails", "no_searcher"])
 def test_near_misses_without_corroboration_are_dropped(market, tmp_path, feed_store, feed_config, case):
+    feed_config = with_x_searches(feed_config)
     reader, *_ = market
     x = FakeX(f"sqlite:///{tmp_path / 'signal.db'}", fail="X budget reached" if case == "search_fails" else None)
     tagger = PlanAndCritic([_plan("software" if case == "software" else "labor")], [verdict(12)])
@@ -832,6 +842,7 @@ def test_near_misses_without_corroboration_are_dropped(market, tmp_path, feed_st
 
 
 def test_an_anchor_becomes_a_claim_backed_by_the_affected_peoples_posts(tmp_path, feed_store, feed_config):
+    feed_config = with_x_searches(feed_config)
     from signal_feed.posts import PostsReader
     rng = np.random.default_rng(3)
     vec = rng.normal(size=DIM)
