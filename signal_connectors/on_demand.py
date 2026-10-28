@@ -190,6 +190,8 @@ PLAN_TOOL = {
     },
 }
 
+PLAN_SCHEMA = {**PLAN_TOOL["input_schema"], "additionalProperties": False}
+
 
 async def claude_plan(services: Services, request: IndustryRequest, industries: dict[str, Industry]) -> Plan:
     from anthropic import AsyncAnthropic
@@ -206,12 +208,12 @@ async def claude_plan(services: Services, request: IndustryRequest, industries: 
     estimate = (3000 * prices["input"] + 1500 * prices["output"]) / 1e6
     with services.costs.metered("on_demand", usd=estimate, note=f"plan {request.name}") as charge:
         client = AsyncAnthropic()
+        # Structured output (Claude 5.5 models don't accept a forced tool_choice).
         message = await client.messages.create(
-            model=d.on_demand_model, max_tokens=1500, tools=[PLAN_TOOL],
-            tool_choice={"type": "tool", "name": "plan_industry"},
-            messages=[{"role": "user", "content": prompt}])
+            model=d.on_demand_model, max_tokens=4000, messages=[{"role": "user", "content": prompt}],
+            output_config={"effort": "low", "format": {"type": "json_schema", "schema": PLAN_SCHEMA}})
         charge.usd = (message.usage.input_tokens * prices["input"] + message.usage.output_tokens * prices["output"]) / 1e6
-    args = next(b.input for b in message.content if getattr(b, "type", "") == "tool_use")
+    args = json.loads(next(b.text for b in message.content if getattr(b, "type", "") == "text"))
     match = args.get("match_key")
     return Plan(match=match if match in industries else None, key=slug(args.get("key") or request.name),
                 name=args.get("name") or request.name,
@@ -296,7 +298,9 @@ async def ensure_industry(services: Services, request: IndustryRequest, *, colle
         log.warning("on_demand: planner failed (%s); using the request's own fields", exc)
         plan = fallback_plan(request, industries)
     if plan.match:
-        return OnDemandResult(key=plan.match, action="matched", name=industries[plan.match].name)
+        spent = services.costs.spent_this_month("on_demand") + services.costs.spent_this_month("discovery")
+        return OnDemandResult(key=plan.match, action="matched", name=industries[plan.match].name,
+                              cost_usd=round(spent - spent_before, 4))
 
     with _KeyLock(plan.key, LOCK_DIR):
         path = industries_dir / f"{plan.key}.yaml"

@@ -155,3 +155,30 @@ async def test_planner_failure_falls_back_to_the_request(make_services, maps):
         result = await ensure_industry(svc, IndustryRequest("Salons"), industries_dir=maps,
                                        planner=broken, discoverer=fake_discover)
     assert (result.action, result.key) == ("matched", "salons")         # lexical match still works
+
+
+async def test_claude_plan_uses_structured_output_and_meters_the_call(make_services, maps, monkeypatch):
+    import json
+    from types import SimpleNamespace
+
+    import anthropic
+
+    from signal_connectors.industries import load_industries
+    sent = {}
+
+    class FakeMessages:
+        async def create(self, **params):
+            sent.update(params)
+            text = json.dumps({"match_key": "salons", "key": "hair_salons", "name": "Hair salons", "roles": ["stylist"],
+                               "keywords": ["salon"], "tools": [], "tasks": [], "pain_phrases": [], "jargon": []})
+            return SimpleNamespace(content=[SimpleNamespace(type="text", text=text)],
+                                   usage=SimpleNamespace(input_tokens=1000, output_tokens=500))
+
+    monkeypatch.setattr(anthropic, "AsyncAnthropic", lambda: SimpleNamespace(messages=FakeMessages()))
+    async with make_services(SOURCES) as svc:
+        plan = await on_demand.claude_plan(svc, IndustryRequest("Hair salon"), load_industries(maps))
+        assert svc.costs.spent_this_month("on_demand") == pytest.approx((1000 * 2.0 + 500 * 10.0) / 1e6)
+    assert plan.match == "salons"
+    # Claude 5.5 models refuse a forced tool_choice: the plan comes back as JSON against a schema.
+    assert "tool_choice" not in sent and sent["model"] == "claude-sonnet-5-5"
+    assert sent["output_config"]["format"]["schema"]["additionalProperties"] is False

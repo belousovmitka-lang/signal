@@ -130,9 +130,9 @@ class Defaults(_Strict):
     # Live lane (live.py): Brave searches shown at view time; also bound by provider_budgets["brave"].
     live_monthly_budget_usd: float = Field(default=3.0, ge=0)
     live_x_monthly_budget_usd: float = Field(default=5.0, ge=0)      # X API pay-per-use, live lane only
-    on_demand_model: str = "claude-sonnet-5"
+    on_demand_model: str = "claude-sonnet-5-5"
     on_demand_first_fill_days: int = Field(default=60, ge=1)        # history read for a brand-new map
-    on_demand_prices_per_mtok: dict[str, float] = Field(default_factory=lambda: {"input": 3.0, "output": 15.0})
+    on_demand_prices_per_mtok: dict[str, float] = Field(default_factory=lambda: {"input": 2.0, "output": 10.0})
 
 
 class SourceConfig(_Strict):
