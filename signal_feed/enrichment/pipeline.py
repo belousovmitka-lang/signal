@@ -19,7 +19,7 @@ from signal_connectors.models import RawPost, utcnow
 
 from ..config import FeedConfig, ModelCall
 from ..db import EnrichedPostRow, EnrichmentBatchRow, FeedStore, InferredEvidenceRow, ObligationRow
-from ..posts import PostsReader
+from ..posts import PostsReader, _chunks
 from .costs import BudgetExceededError, CostLedger, Usage, claude_usd, claude_worst_case_usd
 from .embeddings import Embedder
 from .llm import TagAttempt, Tagger, TransientError
@@ -298,8 +298,10 @@ class Enricher:
         gone_cited = cited - self.posts.existing_ids(cited)
         if gone or gone_cited:
             with self.store.session() as s, s.begin():
-                s.execute(delete(EnrichedPostRow).where(EnrichedPostRow.post_id.in_(gone)))
-                s.execute(delete(InferredEvidenceRow).where(InferredEvidenceRow.post_id.in_(gone_cited)))
+                for part in _chunks(gone):
+                    s.execute(delete(EnrichedPostRow).where(EnrichedPostRow.post_id.in_(part)))
+                for part in _chunks(gone_cited):
+                    s.execute(delete(InferredEvidenceRow).where(InferredEvidenceRow.post_id.in_(part)))
         return len(gone | gone_cited)
 
     # --- embeddings ----------------------------------------------------------

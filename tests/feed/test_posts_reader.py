@@ -34,3 +34,10 @@ def test_ids_from_one_source_or_a_family(tmp_path):
     r = PostsReader(url)
     assert r.ids_from_source("x") == {posts[1].id}
     assert r.ids_from_source("rss:") == {posts[2].id} and r.ids_from_source("rss") == set()
+
+
+def test_lookups_of_more_ids_than_sqlite_variables(posts, post_ids):
+    many = [f"missing{k}" for k in range(40_000)] + list(post_ids)
+    assert posts.existing_ids(many) == set(post_ids)
+    assert {p.id for p in posts.get_posts(many)} == set(post_ids)
+    assert set(posts.word_counts(many)) == set(post_ids)

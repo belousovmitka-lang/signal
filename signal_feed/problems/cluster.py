@@ -23,7 +23,7 @@ from ..config import FeedConfig
 from ..db import EnrichedPostRow, FeedStore, PostNicheRow, ProblemPostRow, ProblemRow
 from ..llm_task import LLMTask
 from ..niches.tree import INDUSTRY
-from ..posts import PostsReader
+from ..posts import PostsReader, _chunks
 from ..vectors import centroid, unit_matrix
 from .score import DEMAND, PAIN, Evidence, components, confidence, score, summary_fields, voices
 
@@ -171,7 +171,8 @@ class ProblemBuilder:
                                           .where(ProblemRow.status == "active")):
                 members[pid].append(post_id)
             ids = {p for ps in members.values() for p in ps}
-            rows = {r.post_id: r for r in s.scalars(select(EnrichedPostRow).where(EnrichedPostRow.post_id.in_(ids)))}
+            rows = {r.post_id: r for part in _chunks(ids)
+                    for r in s.scalars(select(EnrichedPostRow).where(EnrichedPostRow.post_id.in_(part)))}
             raw = {p.id: p for p in self.posts.get_posts(list(ids))}
             done = 0
             for pid, post_ids in members.items():

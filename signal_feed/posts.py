@@ -24,6 +24,15 @@ def _read_only_url(url: str) -> str:
     return url
 
 
+CHUNK = 500    # ids per IN (...): SQLite allows at most 32,766 variables in one statement
+
+
+def _chunks(ids: Collection[str]) -> Iterator[list[str]]:
+    ids = list(set(ids))
+    for i in range(0, len(ids), CHUNK):
+        yield ids[i:i + CHUNK]
+
+
 def _to_raw_post(row: PostRow) -> RawPost:
     return RawPost.model_validate({c: getattr(row, c) for c in RawPost.model_fields})
 
@@ -39,7 +48,7 @@ class PostsReader:
         if not ids:
             return set()
         with self.session() as s:
-            return set(s.scalars(select(PostRow.id).where(PostRow.id.in_(set(ids)))))
+            return {pid for part in _chunks(ids) for pid in s.scalars(select(PostRow.id).where(PostRow.id.in_(part)))}
 
     def all_ids(self) -> list[str]:
         """Every post id, oldest fetch first."""
@@ -56,9 +65,9 @@ class PostsReader:
         """Words in title + text per post, for expected reading time."""
         if not ids:
             return {}
-        stmt = select(PostRow.id, PostRow.title, PostRow.text).where(PostRow.id.in_(set(ids)))
         with self.session() as s:
-            return {pid: len(f"{title or ''} {text}".split()) for pid, title, text in s.execute(stmt)}
+            return {pid: len(f"{title or ''} {text}".split()) for part in _chunks(ids) for pid, title, text
+                    in s.execute(select(PostRow.id, PostRow.title, PostRow.text).where(PostRow.id.in_(part)))}
 
     def clips(self, user_id: str | None = None) -> list[ClipRow]:
         """"Clip to Signal" clips (signal.db `clips`, written by signal_connectors.clips), read-only. Empty when
@@ -77,7 +86,7 @@ class PostsReader:
         if not ids:
             return []
         with self.session() as s:
-            return [_to_raw_post(r) for r in s.scalars(select(PostRow).where(PostRow.id.in_(set(ids))))]
+            return [_to_raw_post(r) for part in _chunks(ids) for r in s.scalars(select(PostRow).where(PostRow.id.in_(part)))]
 
     def posts_from_source(self, prefix: str) -> list[RawPost]:
         """Posts whose source is `prefix` or starts with `prefix:` (e.g. "regulations_gov")."""
