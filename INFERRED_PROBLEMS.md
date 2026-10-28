@@ -118,7 +118,7 @@ Reject automatically if, after dropping unsupported items, fewer than 3 evidence
 | Level | Rule *(tune)* |
 |---|---|
 | High | ≥ 8 evidence items, ≥ 3 source types, critic `keep`, no strong existing solution, or confirmed by ≥ 2 insiders |
-| Medium | meets minimum evidence, critic `keep` or `revise` |
+| Medium | meets minimum evidence, critic `keep` or `revise`. A `revise` publishes the critic's narrower `revised_claim`, never the original wording (original kept in `critic_notes.original_claim`); a `revise` without one is Low (2026-10-28) |
 | Low | minimum evidence only; shown only in exploration slots and labeled "early signal" |
 
 **As built:** `signal_feed/inferred/common.confidence`. "No strong existing solution" means no catalog post was found as counter-evidence and the critic named none.

@@ -145,5 +145,14 @@ def _judge(cand: Candidate, llm: LLMTask | None, icfg, report: RunReport) -> tup
             notes["reasons"] = [*verdict.reasons, "too few supported evidence items after the critic's check"]
         report.rejected += 1
         return "rejected", None, notes
+    conf = confidence(kept, icfg, verdict.verdict, existing or bool(verdict.existing_solution))
+    if verdict.verdict == "revise":
+        # Supported, but the wording overreaches: publish the critic's narrower wording, never the original.
+        # Without one the claim still overreaches, so it only goes to exploration slots.
+        if verdict.revised_claim and verdict.revised_claim.strip():
+            notes["original_claim"] = cand.hypothesis
+            cand.hypothesis = verdict.revised_claim.strip()
+        else:
+            conf = "low"
     report.published += 1
-    return "published", confidence(kept, icfg, verdict.verdict, existing or bool(verdict.existing_solution)), notes
+    return "published", conf, notes

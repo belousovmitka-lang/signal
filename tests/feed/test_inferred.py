@@ -203,6 +203,24 @@ def test_critic_keeps_rejects_and_drops_evidence(market, feed_store, feed_config
     assert "too few supported evidence items" in again.critic_notes["reasons"][-1]
 
 
+@pytest.mark.parametrize("reworded", [True, False])
+def test_revise_publishes_the_critics_narrower_wording_or_goes_low(market, feed_store, feed_config, reworded):
+    reader, *_ = market
+    v = verdict(6, verdict="revise")
+    if reworded:
+        v = v.model_copy(update={"revised_claim": "Some legal teams pay outside vendors to redline contracts."})
+    run_detector(feed_store, reader, feed_config, "paid_workarounds", llm_with(feed_store, feed_config, v),
+                 clock=lambda: NOW)
+    with feed_store.session() as s:
+        row = s.scalars(select(InferredProblemRow)).one()
+    assert row.status == "published"
+    if reworded:
+        assert row.hypothesis == "Some legal teams pay outside vendors to redline contracts." and row.confidence == "medium"
+        assert "redline" in row.critic_notes["original_claim"]
+    else:
+        assert row.confidence == "low" and "original_claim" not in row.critic_notes
+
+
 def test_published_problems_survive_a_run_without_critic_and_expire_when_gone(market, feed_store, feed_config):
     reader, *_ = market
     run_detector(feed_store, reader, feed_config, "paid_workarounds", llm_with(feed_store, feed_config, verdict(6)),
