@@ -69,6 +69,7 @@ def main(argv: list[str] | None = None) -> int:
     sub.add_parser("status")
     run = sub.add_parser("run", help="tag pending posts")
     run.add_argument("--limit", type=int)
+    run.add_argument("--source", help='only posts from this source ("x"), or a family ending in ":" ("rss:")')
     mode = run.add_mutually_exclusive_group()
     mode.add_argument("--sync", action="store_true", help="call the API per post now")
     mode.add_argument("--batch", action="store_true", help="submit to the Batch API (50%% off, up to 24h)")
@@ -114,7 +115,7 @@ def main(argv: list[str] | None = None) -> int:
     purged = enricher.purge_deleted()
     if purged:
         print(f"purged enrichment of {purged} posts deleted at the origin")
-    pending = enricher.pending_post_ids(args.limit)
+    pending = enricher.pending_post_ids(args.limit, args.source)
     use_batch = args.batch or (not args.sync and len(pending) >= config.enrichment.batch_min_posts)
     started = utcnow()
     if use_batch:

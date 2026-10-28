@@ -46,6 +46,12 @@ class PostsReader:
         with self.session() as s:
             return list(s.scalars(select(PostRow.id).order_by(PostRow.fetched_at, PostRow.id)))
 
+    def ids_from_source(self, source: str) -> set[str]:
+        """Post ids from one source ("x") or source family ("rss:" matches every rss feed)."""
+        cond = PostRow.source.startswith(source) if source.endswith(":") else PostRow.source == source
+        with self.session() as s:
+            return set(s.scalars(select(PostRow.id).where(cond)))
+
     def word_counts(self, ids: Collection[str]) -> dict[str, int]:
         """Words in title + text per post, for expected reading time."""
         if not ids:
