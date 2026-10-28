@@ -437,3 +437,16 @@ def test_growth_can_include_the_skill_tree(tmp_path, feed_store, config):
     config = tweak(config, "niches", grow_trees=["industry"])
     stats = NicheGrower(feed_store, reader, config, NicheNamer(None), clock=lambda: NOW).run()
     assert stats.retired and all(r.startswith("AI agents > ") for r in stats.retired)
+
+
+def test_a_branch_tagged_under_the_wrong_industry_lands_under_its_own(feed_store):
+    seed_tree(feed_store)
+    industry, skill = Tree.load(feed_store, INDUSTRY), Tree.load(feed_store, SKILL)
+    rows = [EnrichedPostRow(post_id=f"p{k}", status="ok", industry_path=path, skills_needed=[])
+            for k, path in enumerate([["Other", "Civil works and infrastructure"],
+                                      ["Accounting and finance", "AI and LLM engineering"],
+                                      ["Legal", "Litigation support"], ["Legal", "No such branch"]])]
+    got = [industry.path(p.niche_id) for p in placements(rows, industry, skill) if p.tree == INDUSTRY]
+    assert got == [["Construction and trades", "Civil works and infrastructure"],
+                   ["IT and developer tools", "AI and LLM engineering"],
+                   ["Legal", "Litigation support"], ["Legal"]]

@@ -175,6 +175,13 @@ def placements(rows: Iterable[EnrichedPostRow], industry: Tree, skill: Tree,
                min_cosine: float = 0.0, seed_margin: float | None = None) -> list[PostNicheRow]:
     """Where each post sits: one industry node, plus one node per tagged skill."""
     out: list[PostNicheRow] = []
+    # A tag's branch can sit under the wrong industry ("Other > Civil works and infrastructure", 0.3% of v9
+    # tags): a branch that exists under exactly one industry decides it.
+    branch_owner: dict[str, list[int]] = {}
+    for r in industry.roots.values():
+        for c in industry.children.get(r, []):
+            if industry.nodes[c].seeded:
+                branch_owner.setdefault(industry.nodes[c].label.lower(), []).append(c)
     for row in rows:
         vec = _unit(row.embedding)
         top = (row.industry_path or [OTHER_INDUSTRY])[0].lower()
@@ -182,6 +189,9 @@ def placements(rows: Iterable[EnrichedPostRow], industry: Tree, skill: Tree,
         start = None
         if len(row.industry_path or []) > 1:
             start = industry.child_by_label(root, row.industry_path[1])      # the tag names a branch
+            owners = branch_owner.get(row.industry_path[1].strip().lower(), [])
+            if start is None and len(owners) == 1:
+                start = owners[0]
         if start is None and seed_margin is not None:
             start = industry.nearest_seed(root, vec, seed_margin)            # else: nearest by meaning
         start = start or root
