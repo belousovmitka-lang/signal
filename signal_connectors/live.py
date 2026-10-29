@@ -51,12 +51,35 @@ PLATFORMS: dict[str, tuple[str, list[str], str]] = {
     "facebook": ("Facebook groups", ["facebook.com/groups"], r"/groups/[^/]+/(posts|permalink)/"),
     "linkedin": ("LinkedIn", ["linkedin.com"], r"linkedin\.com/(posts|pulse|feed/update)/"),   # never /in/ profiles (rule 4)
     "quora": ("Quora", ["quora.com"], r"quora\.com/(?!profile/)[^/?]+/?$"),
+    # Amazon's and Meetup's terms forbid our bot reading them (2026-10-29), so they're shown here only:
+    # Brave finds the thread or group, the user opens it on the site.
+    "amazon_sellers": ("Amazon Seller Forums", ["sellercentral.amazon.com/seller-forums"],
+                       r"sellercentral\.amazon\.com/seller-forums/discussions/t/[0-9a-f-]+"),
+    "meetup": ("Meetup", ["meetup.com"],                     # groups and events, never members, /find/ or /topics/
+               r"meetup\.com/(?!find/|topics/|lp/|cities/|members?/|apps/)[\w-]+/(?:events/\d+/?)?$"),
 }
 # Measured 2026-10-15 (dental, salons): Reddit and YouTube return real posts, X and Facebook groups a few;
 # LinkedIn returned only profiles and Quora nothing, so they stay available but off. TikTok dropped (not wanted).
 # X is opt-in (platforms=[..., "x"]): $0.05 a search (10 posts, embeds instead of author lookups), a third
 # useful for salons, mostly vendor marketing for dental (2026-10-15).
-DEFAULT_PLATFORMS = ["reddit", "facebook", "youtube"]
+DEFAULT_PLATFORMS = ["reddit", "facebook", "youtube", "meetup"]
+INDUSTRY_PLATFORMS = {"ecommerce": ["amazon_sellers"]}      # added to the defaults for these industries
+# Measured 2026-10-29: "<role> software how do you" found nothing on either. Every Amazon forum poster is a
+# seller, so the industry's top pain phrase finds threads ("inventory reconciliation": 3, "account suspended");
+# Meetup groups are named after their members, so quoted roles find them ("Amazon seller": 18 groups; the
+# first three roles OR'd, since the first is often not the one groups use),
+# and groups are long-lived, so no freshness window.
+FRESHNESS = {"meetup": None}
+
+
+def platform_query(platform: str, industry: Industry, extra: str | None, default: str) -> str:
+    v = industry.vocabulary
+    role = (v.roles[:1] or [industry.name])[0]
+    if platform == "amazon_sellers":
+        return " ".join(p for p in (f'"{(v.pain_phrases[:1] or v.tasks[:1] or [role])[0]}"', extra) if p)
+    if platform == "meetup":                 # any of the first three roles: groups use one of them
+        return " ".join(p for p in (" OR ".join(f'"{r}"' for r in v.roles[:3] or [role]), extra) if p)
+    return default
 INTENT = 'software "how do you"'       # practitioners asking how others handle something; tested best
 
 
@@ -125,7 +148,7 @@ def _remember(key: tuple[str, ...], section: LiveSection) -> LiveSection:
     return section
 
 
-async def _brave(services: Services, platform: str, query: str, limit: int, freshness: str) -> LiveSection:
+async def _brave(services: Services, platform: str, query: str, limit: int, freshness: str | None) -> LiveSection:
     label, domains, pattern = PLATFORMS[platform]
     section = LiveSection(platform, label, "brave", attribution="Search results: POWERED BY BRAVE (optional); "
                           f"links open on {label}")
@@ -137,7 +160,8 @@ async def _brave(services: Services, platform: str, query: str, limit: int, fres
         response = await services.http.get(BRAVE_WEB, attempts=1,          # a user is waiting: no retries
                                            headers={"X-Subscription-Token": key, "Accept": "application/json"},
                                            params={"q": f"{site_filter(domains)} {query}"[:400], "count": 20,
-                                                   "freshness": freshness, "result_filter": "web", "search_lang": "en"})
+                                                   "result_filter": "web", "search_lang": "en",
+                                                   **({"freshness": freshness} if freshness else {})})
     if response.status_code >= 400:
         section.error = f"Brave HTTP {response.status_code}"
         return section
@@ -232,8 +256,10 @@ async def live_search(services: Services, industry: Industry, *, platforms: list
     yt_query = " ".join(p for p in ((v.roles[:1] or [industry.name])[0], (v.pain_phrases[:1] or [""])[0], extra) if p)
     xq = x_query(industry, extra)
     sections: list[LiveSection] = []
-    for platform in platforms or DEFAULT_PLATFORMS:
-        key = (industry.industry, platform, {"youtube": yt_query, "x": xq}.get(platform, query), freshness, str(limit))
+    for platform in platforms or DEFAULT_PLATFORMS + INDUSTRY_PLATFORMS.get(industry.industry, []):
+        pq = platform_query(platform, industry, extra, query)
+        fresh = FRESHNESS.get(platform, freshness)
+        key = (industry.industry, platform, {"youtube": yt_query, "x": xq}.get(platform, pq), str(fresh), str(limit))
         if cached := _cached(key):
             sections.append(cached)
             continue
@@ -243,7 +269,7 @@ async def live_search(services: Services, industry: Industry, *, platforms: list
             elif platform == "x" and os.environ.get("X_BEARER_TOKEN"):
                 section = await _x(services, xq, limit)
             elif platform in PLATFORMS:
-                section = await _brave(services, platform, query, limit, freshness)
+                section = await _brave(services, platform, pq, limit, fresh)
             else:
                 section = LiveSection(platform, platform, "none", "", error="unknown platform")
         except Exception as exc:          # budget, quota, network: this platform is skipped, the rest return

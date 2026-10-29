@@ -30,6 +30,15 @@ def test_only_threads_and_posts_pass():
     assert not re.search(live.PLATFORMS["linkedin"][2], "https://www.linkedin.com/in/someone/")
     assert re.search(live.PLATFORMS["linkedin"][2], "https://www.linkedin.com/posts/acme_dental-activity-1")
     assert "tiktok" not in live.PLATFORMS
+    amazon, meetup = live.PLATFORMS["amazon_sellers"][2], live.PLATFORMS["meetup"][2]
+    assert re.search(amazon, "https://sellercentral.amazon.com/seller-forums/discussions/t/e993145b-164d-4477-8325-7ec7e09a5977")
+    assert not re.search(amazon, "https://sellercentral.amazon.com/seller-forums/discussions")
+    assert re.search(meetup, "https://www.meetup.com/san-diego-small-business/")
+    assert re.search(meetup, "https://www.meetup.com/smallbiz-483/events/311234567/")
+    for page in ("https://www.meetup.com/find/us--ca--san-francisco/small-business-owners/",
+                 "https://www.meetup.com/topics/smallbiz/", "https://www.meetup.com/members/12345/",
+                 "https://www.meetup.com/smallbiz-483/events/"):
+        assert not re.search(meetup, page), page
 
 
 class Web:
@@ -114,3 +123,11 @@ async def test_x_api_section_with_display_fields(make_services, monkeypatch):
     assert seen["max_results"] == "10" and seen["auth"] == "Bearer x-test"
     assert round(spent, 3) == 0.005                                    # 1 post, actual not estimate
     assert live._ttl(("dental", "x")) == 6 * 3600 and live._ttl(("dental", "reddit")) == 15 * 60
+
+
+def test_amazon_and_meetup_queries():
+    shop = Industry(industry="ecommerce", name="E-commerce",
+                    vocabulary=Vocabulary(roles=["Amazon seller", "FBA seller"], pain_phrases=["account suspended"]))
+    assert live.platform_query("amazon_sellers", shop, None, "x") == '"account suspended"'
+    assert live.platform_query("meetup", shop, "Boston", "x") == '"Amazon seller" OR "FBA seller" Boston'
+    assert live.platform_query("reddit", shop, None, "default") == "default"

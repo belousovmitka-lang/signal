@@ -48,3 +48,15 @@ def test_page_lists_clips_escaped(store):
     save_clip(store, ClipIn(user_id="me", url=POST_URL, text="<script>alert(1)</script> by hand", title="T"))
     page = client(store).get("/", params={"user_id": "me"}).text
     assert "&lt;script&gt;" in page and "<script>" not in page
+
+
+def test_clips_from_sites_we_cannot_collect(store):
+    # Amazon Seller Forums and Meetup forbid our bot (2026-10-29); a user's own clip is how they get in.
+    c = client(store)
+    for url, site in [("https://sellercentral.amazon.com/seller-forums/discussions/t/df36ea80-3dbd-4358-852f-c5f108fdea5a",
+                       "sellercentral.amazon.com"),
+                      ("https://www.meetup.com/amazon-sellers-indianapolis-network/events/311234567/?recId=abc",
+                       "meetup.com")]:
+        r = c.post("/clips", json={"user_id": "u1", "url": url, "text": "Account suspended with zero sales, support loops"})
+        assert r.status_code == 200 and r.json()["site"] == site
+    assert len(list_clips(store, "u1")) == 2 and store.count_posts() == 0
