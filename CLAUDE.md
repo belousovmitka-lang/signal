@@ -251,7 +251,7 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 | Lemmy instances | `lemmy` | own_api | `/api/v3/search` (Posts, New) and `/api/v3/post/list?community_name=` on lemmy.world, no login. lemmy.world robots.txt sets Crawl-delay 60 (applied); its ToS bot rules cover posting/voting bots only. Skip bot accounts and deleted/removed posts; re-check deletions on the origin instance | daily | done (2026-10-09) |
 | Mastodon instances | `mastodon` | own_api | `/api/v1/timelines/tag/<tag>` on mastodon.social, no login (`/api/v2/search` returns no statuses without login). Its terms bind registered users only. Consent: keep only authors with `indexable: true`, not `noindex`, not bots, no `#nobot`/`#noindex` in bio (~30% of posts). Deletions re-checked on each post's home server | daily | done (2026-10-09) |
 | Niche industry forums (Contractor Talk, Spiceworks, BiggerPockets, AllNurses, Fishbowl, TruckersReport, HVAC-Talk, Mike Holt, Practical Machinist, Eng-Tips, New Ag Talk, DentalTown, Student Doctor Network, ActiveRain and every forum in section 8) | G4 / G5, else G1 | public_pages / rss | detect forum software per site | daily | partly done (2026-10-09): most large forums forbid automated or commercial use; ask admins for permission (many small forums will say yes) |
-| Vendor community forums (Shopify Community, Salesforce, QuickBooks Community, HubSpot, Amazon Seller Forums, eBay Community, SHRM community) | G4 / G5, else G1 | public_pages / rss | detect per site | daily | todo |
+| Vendor community forums (Shopify Community, Salesforce, QuickBooks Community, HubSpot, Amazon Seller Forums, eBay Community, SHRM community) | — | — | Checked 2026-10-29: Shopify and HubSpot (Discourse ToS, see G4) forbid copying; Salesforce Trailblazer robots.txt disallows us; Intuit (QuickBooks) terms: "internal, lawful and non-commercial purposes only" and no scraping; eBay User Agreement forbids "any robot, spider, scraper, data mining tools"; SHRM terms allow copying "for your personal use" only; Amazon Seller Forums' terms page renders only with JavaScript (unverifiable) and posts load via internal APIs | daily | blocked (2026-10-29) |
 | Mumsnet and parenting forums | — | — | Mumsnet terms: "No part of the Website may be distributed, scraped or copied for any purpose without express approval and a licence" (2026-10-29) | daily | blocked (Mumsnet, 2026-10-29) |
 
 **Social platforms**
@@ -264,7 +264,7 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 | Instagram | `instagram` | own_api + search_api | Graph API via a business account: `ig_hashtag_search` → `/<hashtag-id>/recent_media` (limited unique hashtags per 7 days); plus G1 profile | daily | todo |
 | Facebook Pages | `facebook_pages` | own_api + search_api | Graph API with Page Public Content Access (needs Meta app review); plus G1 profile | daily | awaiting approval |
 | YouTube | G7 → G1 | search_api | own API blocked by YouTube developer policies (see G7); G1 `youtube.com/watch` | daily | blocked (2026-10-09) |
-| Pinterest | `pinterest` | own_api | API v5; confirm which search endpoints your app can use | weekly | todo |
+| Pinterest | `pinterest` | — | Developer Guidelines (2026-10-29): "you may not store any information accessed through any Pinterest Materials including the API" (except your own analytics), and no scraping | weekly | blocked (2026-10-29) |
 | Substack Notes and posts | G2 | rss | per-publication feeds | daily | done (2026-10-09); add publications per industry map |
 | Medium | G2 | rss | tag feeds | daily | done (2026-10-09); add tags per industry map |
 
@@ -282,11 +282,11 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 | State government job boards | G2 / G5, else G1 | rss / public_pages | per state | weekly | todo |
 | Industry job boards (legal, healthcare, construction, logistics) | G2 / G5, else G1 | rss / public_pages | per board | weekly | todo |
 | Company career pages (all industries) | G6 | own_api | Greenhouse, Lever, Ashby (SmartRecruiters blocked by robots.txt) | weekly | done (2026-10-11) |
-| GitHub bounties, Algora, Gitcoin | `github` | own_api | GitHub search issues `label:bounty` and Algora's `label:"💎 Bounty"` (paid_demand); Algora/Gitcoin public pages not checked | daily | done (2026-10-09, GitHub part) |
-| IssueHunt and other bounty boards | G5, else G1 | public_pages | public listings | daily | todo |
+| GitHub bounties, Algora, Gitcoin | `github` | own_api | GitHub search issues `label:bounty` and Algora's `label:"💎 Bounty"` (paid_demand). Algora's own site terms forbid robots and commercial reuse; Gitcoin terms forbid "data mining, robots, scraping" (2026-10-29): GitHub labels only | daily | done (2026-10-09, GitHub part); sites blocked |
+| IssueHunt and other bounty boards | — | — | IssueHunt's terms render only with JavaScript (unverifiable) and its GitHub label ("Funded on IssueHunt") has had no new issue since 2019 (2026-10-29) | daily | skipped (inactive) |
 | Kaggle | `kaggle` | — | Terms (2026-10-28) forbid crawling or scraping "by manual or automated means" and copying or storing "any significant portion of the Content"; the API key is a personal account's (rule 1) | weekly | blocked (2026-10-28) |
 | HeroX, Wazoku (InnoCentive) | — | — | HeroX terms forbid spiders, robots and scrapers that "scrape" or download data from the Platform (2026-10-29); Wazoku: see below | weekly | blocked (HeroX, 2026-10-29) |
-| Devpost and sponsored hackathons | G5, else G1 | public_pages | public hackathon listings | weekly | todo |
+| Devpost and sponsored hackathons | — | — | Devpost terms forbid automated means to "scrape," "crawl" or "spider" the Site (2026-10-29) | weekly | blocked (2026-10-29) |
 | Amazon Mechanical Turk | — | — | Participation Agreement: "you may not use any data mining, robots, or similar data gathering or extraction tools on the Site" (2026-10-29) | weekly | blocked (2026-10-29) |
 
 **Reviews, app stores, feature requests**
@@ -344,7 +344,7 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 | YouTube, recorded conference talks, webinars on YouTube | G7 → G1 | search_api | own API blocked (see G7); G1 `youtube.com/watch` | daily | blocked (2026-10-09) |
 | Twitch | `twitch` | own_api | Keys work (app token + Helix verified 2026-10-10), but the Developer Services Agreement section VI forbids storing copies of Twitch content beyond a 24-hour cache without written authorization, and selling or commercially using Twitch data "or insights derived from that data" without permission. Needs Twitch's written permission | weekly | blocked (2026-10-10) |
 | Webinars hosted elsewhere | G5, else G1 | public_pages | public pages and descriptions | weekly | todo |
-| Event agendas (Eventbrite, Meetup, Luma, conference sites) | `events` + G1 | public_pages / own_api | Eventbrite has no public event search API: use G1; Meetup GraphQL API (check access); Luma and conference sites public pages | weekly | todo |
+| Event agendas (Eventbrite, Meetup, Luma, conference sites) | — | — | Eventbrite has no public event search API; Luma terms forbid reproducing Site Content without written permission and access except through "publicly supported interfaces"; Meetup's terms and API terms answer our bot with 403/404 (unverifiable; read by hand before building) (2026-10-29). Conference sites: per industry map through G2 | weekly | blocked / unverified (2026-10-29) |
 
 **Startup and builder ecosystem**
 
@@ -363,9 +363,9 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 
 | Platform | Connector | Route | Endpoint / method | Cadence | Status |
 |---|---|---|---|---|---|
-| Google Trends | `trends` | public_pages | apply for the official Trends API (limited testing); unofficial libraries break often, use only as a stopgap | weekly | todo |
-| Google Keyword Planner | `keyword_planner` | own_api | Google Ads API KeywordPlanIdeaService | monthly | todo |
-| Google autocomplete / "People also ask" | G1 | search_api | via search API results | weekly | todo |
+| Google Trends | `trends` | own_api | Official Trends API is a gated alpha (applications at developers.google.com/search/apis/trends; commercial use declared on the form). trends.google.com is not scraped | weekly | awaiting approval: owner applies |
+| Google Keyword Planner | `keyword_planner` | own_api | Google Ads API KeywordPlanIdeaService: needs a Google Ads manager account, a developer token with Basic access (Google review) and OAuth; exact volumes only for accounts with ad spend | monthly | awaiting approval: owner applies |
+| Google autocomplete / "People also ask" | — | — | only reachable through search API results, which can't be stored (G1) | weekly | blocked (2026-10-29) |
 | Industry association surveys, vendor benchmark reports, analyst firms' free reports | G2 / G5 | rss / public_pages | per publisher | monthly | todo |
 | Government statistics (BLS, Census, Eurostat) | `stats` (source `census_bfs`) | own_api | Census Business Formation Statistics (`CENSUS_API_KEY`): new business applications per month by NAICS sector, with month-over-month and year-over-year change; app must show the Census API notice (raw.notice): done (2026-10-15). api.bls.gov robots.txt `Disallow: /` (blocked, 2026-10-09); Eurostat returns statistics, not posts, no RSS (2026-10-10): not built | monthly | done (2026-10-15, Census) |
 | Academic papers | `papers` | rss (arXiv) / own_api | arXiv via RSS category feeds (rss.arxiv.org, 1 request/3s; metadata CC0): done (2026-10-09). export.arxiv.org (query API) is robots-disallowed for all agents: not used. PubMed E-utilities: eutils.ncbi.nlm.nih.gov robots.txt disallows our path (2026-10-09): blocked. Semantic Scholar: blocked (2026-10-28): the API license covers use only "in operation with compatible third-party platforms", other uses by request to AI2, and abstracts carry per-publisher licenses (CC BY-NC among them) | daily | partly done |
@@ -486,20 +486,20 @@ Work top to bottom. Finish each connector to its definition of done before start
 
 **Phase 2 — forums and paid demand**
 9. G4 `discourse` (waiting for a forum whose terms allow it), G5 `classic_forum` — done (2026-10-09)
-10. G6 `job_boards` — done (2026-10-11); `freelancer`, `upwork` (after approval)
-11. `github`, `kaggle`, bounty and challenge boards
-12. `instagram`, `facebook_pages` (after Meta review), `pinterest`, `telegram`, `lemmy`, `mastodon`
+10. G6 `job_boards` — done (2026-10-11); `peopleperhour` — done (2026-10-29); `upwork` (after approval); `freelancer` blocked by terms (2026-10-28)
+11. `github` — done; `kaggle`, bounty and challenge boards blocked by terms (2026-10-28/29, see 7.2)
+12. `instagram`, `facebook_pages` (after Meta review); `lemmy`, `mastodon` — done; `pinterest`, `telegram` blocked
 
 **Phase 3 — tool gaps and change signals**
 13. G10 `app_reviews` — done (2026-10-09, WordPress.org); `feature_boards` deferred (no stable public interface)
 14. `gdelt`, `edgar`, procurement (`sam_gov`, `ted`, `uk_tenders`)
-15. Regulatory and legal: `federal_register`, `regulations_gov`, `legiscan`/`openstates`, `courtlistener`, `cfpb`, `openfda`, `nhtsa`, `osha`, `eurlex`
+15. Regulatory and legal: `federal_register`, `regulations_gov`, `legiscan`/`openstates`, `courtlistener`, `cfpb`, `openfda`, `nhtsa` (done 2026-10-28), `osha`, `eurlex`; FCC complaints as weekly counts in G9 (2026-10-28)
 16. G9 `open_data` — done (2026-10-09)
 
 **Phase 4 — media, startup ecosystem, research**
-17. G8 `podcasts` — built (2026-10-11), waiting on the key; `twitch` blocked (2026-10-10); `events`
+17. G8 `podcasts` — built (2026-10-11), waiting on the key; `twitch` blocked (2026-10-10); `events` blocked or unverified (2026-10-29)
 18. `producthunt` (awaiting approval), `huggingface` — done (2026-10-09); startup public pages all blocked by terms or bot walls (see 7.2)
-19. `trends`, `keyword_planner`, `stats` (Census BFS done 2026-10-15), `papers`, `wikipedia`
+19. `trends`, `keyword_planner` (owner applies to Google), `stats` (Census BFS done 2026-10-15), `papers`, `wikipedia`, `patents` (built 2026-10-29, needs USPTO key)
 
 **Phase 5 — paid connectors (flag off until budgeted)** — done (2026-10-09)
 20. Done (2026-10-09): `newsapi`, `reddit` (own API), `crunchbase`, `keywords_paid` built behind feature flags (off). Blocked by public terms: `yelp`, `google_places`. Deferred: `pacer`, `listening`
