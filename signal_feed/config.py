@@ -497,6 +497,15 @@ class JobsConfig(_Strict):
     job_timeout_minutes: int = Field(default=120, gt=0)
 
 
+class ExplainConfig(_Strict):
+    """Headlines and explanations Claude writes for items (signal_feed/feed/explain.py)."""
+
+    headline_max_chars: int = Field(default=140, gt=20)    # until a headline is written, a summary this short stands in
+    headlines_per_call: int = Field(default=20, gt=0)
+    max_input_chars: int = Field(default=4000, gt=200)      # of the post's text, for explanations
+    per_user_per_day: int = Field(default=100, ge=0)        # explanations a user's views may write per day
+
+
 class AuthConfig(_Strict):
     """Magic-link sign-in (signal_feed/auth.py)."""
 
@@ -523,6 +532,7 @@ class FeedConfig(_Strict):
     learning: LearningConfig
     jobs: JobsConfig = JobsConfig()
     auth: AuthConfig = AuthConfig()
+    explain: ExplainConfig = ExplainConfig()
 
 
 def load_feed_config(path: Path) -> FeedConfig:

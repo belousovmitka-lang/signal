@@ -178,3 +178,66 @@ def test_the_web_app_is_served_from_the_same_origin(world, feed_store, feed_conf
     assert index.status_code == 200 and '<div id="app">' in index.text
     assert c.get("/static/app.js").status_code == 200 and c.get("/static/vendor/preact-htm.js").status_code == 200
     assert TestClient(create_app(feed_store, world[0], feed_config)).get("/").status_code == 404
+
+
+class FakeLLM:
+    """Stands in for LLMTask: answers explanations and headlines without a model call."""
+
+    def __init__(self):
+        self.calls = []
+
+    def ask(self, purpose, system, user, output_model):
+        self.calls.append((purpose, user))
+        if output_model.__name__ == "Headlines":
+            n = user.count("<item id=")
+            return output_model(items=[{"id": k, "headline": f"Headline {k}."} for k in range(n)])
+        return output_model(paragraphs=[f"{purpose} explanation.", "Second paragraph."])
+
+
+def test_the_item_page_explains_once_per_style_and_keeps_the_source_secondary(world, feed_store, feed_config):  # noqa: F811
+    reader = world[0]
+    mail, llm = Mailbox(), FakeLLM()
+    app = create_app(feed_store, reader, feed_config,
+                     FeedService(feed_store, feed_config, FeedDataCache(feed_store, reader), clock=lambda: NOW, seed=1),
+                     auth=Auth(feed_store, feed_config, mail, "https://signal.example", clock=Clock()), llm=llm)
+    c, _ = sign_in(app, mail, "fay@example.com")
+    uid = c.post("/onboarding", json={"industries": ["Legal"]}).json()["user_id"]
+    it = next(i for i in c.get("/feed", params={"user_id": uid, "session_id": "s1"}).json()["items"]
+              if i["item_type"] == "post")
+    assert it["headline"]
+    page = c.get(f"/item/post/{it['item_id']}", params={"user_id": uid}).json()
+    assert page["headline"] == it["headline"] and page["url"] and page["explanations"] == {} and page["can_explain"]
+    assert "text" not in page                                  # the post's own text never reaches the browser
+    for _ in range(2):
+        r = c.post(f"/item/post/{it['item_id']}/explain", json={"user_id": uid, "style": "plain"})
+        assert r.status_code == 200 and r.json()["text"].startswith("explain_plain")
+    assert [p for p, _ in llm.calls] == ["explain_plain"]          # written once, then kept
+    assert c.get(f"/item/post/{it['item_id']}", params={"user_id": uid}).json()["explanations"] == \
+        {"plain": "explain_plain explanation.\n\nSecond paragraph."}
+    assert c.post(f"/item/post/{it['item_id']}/explain", json={"user_id": uid, "style": "poetic"}).status_code == 422
+    assert c.get("/item/post/nope", params={"user_id": uid}).status_code == 404
+    assert c.get(f"/item/post/{it['item_id']}", params={"user_id": "other"}).status_code == 403
+
+
+def test_every_item_gets_a_written_headline_and_falls_back_until_then(world, feed_store, feed_config):  # noqa: F811
+    from signal_feed.db import EnrichedPostRow
+    from signal_feed.feed.data import load
+    from signal_feed.feed.explain import headline, headlines_for, needs_headline, write_headlines
+    reader = world[0]
+    with feed_store.session() as s, s.begin():          # one post with no summary, one with a long one
+        rows = list(s.query(EnrichedPostRow).filter_by(status="ok").limit(2))
+        rows[0].pain_statement, rows[1].pain_statement = None, "x " * 120
+    data = load(feed_store, reader, feed_config)
+    by_id = {it.post_id: it for it in data.items}
+    no_summary, long_summary = by_id[rows[0].post_id], by_id[rows[1].post_id]
+    short = next(it for it in data.items if it.summary and len(it.summary) <= feed_config.explain.headline_max_chars)
+    # Before any is written: a short summary stands in, else the original title.
+    assert headline(short, {}, feed_config) == short.summary.strip().rstrip(".")
+    assert headline(no_summary, {}, feed_config) == (no_summary.title or "")
+    assert all(needs_headline(it, feed_config) for it in data.items)
+    llm = FakeLLM()
+    assert write_headlines(feed_store, reader, feed_config, data, llm, workers=1) == len(data.items)
+    written = headlines_for(feed_store, [it.post_id for it in data.items])
+    assert set(written) == set(by_id) and all(not h.endswith(".") for h in written.values())
+    assert headline(long_summary, written, feed_config) == written[long_summary.post_id]
+    assert write_headlines(feed_store, reader, feed_config, data, llm, workers=1) == 0      # nothing left to write

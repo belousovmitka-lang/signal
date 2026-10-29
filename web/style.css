@@ -165,3 +165,22 @@ blockquote.clip { margin: 6px 0; padding-left: 10px; border-left: 3px solid var(
   .brand span { display: none; }
   .tab { padding: 6px 8px; }
 }
+
+/* Item page: opens over the feed, which keeps its scroll position underneath */
+html.pane-open, html.pane-open body { overflow: hidden; }
+.item-page { position: fixed; inset: 0; z-index: 8; overflow-y: auto; background: var(--bg); }
+.item-top { position: sticky; top: 0; padding: 10px 0; margin: 0 -8px; background: var(--bg); z-index: 1; }
+.item-title { font-size: 26px; letter-spacing: -.015em; margin: 12px 0 8px; line-height: 1.25; }
+.item-page .meta { margin: 0 0 4px; }
+.explain { margin: 22px 0 8px; }
+.explain p { margin: 12px 0; font-size: 17px; line-height: 1.6; }
+.seg { display: inline-flex; background: var(--chip); border-radius: 10px; padding: 3px; gap: 2px; flex-wrap: wrap; }
+.seg-btn { border: 0; background: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 14px; color: var(--muted); }
+.seg-btn[aria-selected="true"] { background: var(--surface); color: var(--text); box-shadow: var(--shadow); font-weight: 600; }
+.item-actions { margin: 20px 0 0; padding-top: 14px; border-top: 1px solid var(--line); }
+.source-box { margin: 28px 0 0; padding: 14px 16px; border: 1px solid var(--line); border-radius: var(--radius);
+              font-size: 14px; color: var(--muted); }
+.source-box .sub { margin-bottom: 6px; }
+.source-box a { color: var(--muted); }
+.card.clickable h3 a:hover { text-decoration: underline; }
+@media (max-width: 520px) { .item-title { font-size: 22px; } .explain p { font-size: 16px; } }

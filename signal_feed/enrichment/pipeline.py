@@ -18,7 +18,7 @@ from sqlalchemy import delete, func, select
 from signal_connectors.models import RawPost, utcnow
 
 from ..config import FeedConfig, ModelCall
-from ..db import EnrichedPostRow, EnrichmentBatchRow, FeedStore, InferredEvidenceRow, ObligationRow
+from ..db import EnrichedPostRow, EnrichmentBatchRow, FeedStore, InferredEvidenceRow, ItemTextRow, ObligationRow
 from ..posts import PostsReader, _chunks
 from .costs import BudgetExceededError, CostLedger, Usage, claude_usd, claude_worst_case_usd
 from .embeddings import Embedder
@@ -307,6 +307,8 @@ class Enricher:
                     s.execute(delete(EnrichedPostRow).where(EnrichedPostRow.post_id.in_(part)))
                 for part in _chunks(gone_cited):
                     s.execute(delete(InferredEvidenceRow).where(InferredEvidenceRow.post_id.in_(part)))
+                for part in _chunks(gone):                  # headlines and explanations written about them
+                    s.execute(delete(ItemTextRow).where(ItemTextRow.item_key.in_(part)))
         return len(gone | gone_cited)
 
     # --- embeddings ----------------------------------------------------------

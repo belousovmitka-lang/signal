@@ -43,7 +43,7 @@ def test_free_jobs_run_when_due_and_paid_ones_need_the_flag(feed_store, feed_con
     clock.t = T0 + timedelta(minutes=60)
     run.ran.clear()
     tick(feed_store, feed_config, paid=True, runner=run, clock=clock)
-    assert run.ran == ["tag", "embed", "build", "inferred"]       # in pipeline order, after the free ones ran
+    assert run.ran == ["tag", "embed", "headlines", "build", "inferred"]   # in pipeline order, after the free ones
 
 
 def test_a_failure_waits_for_its_next_slot_and_keeps_its_output(feed_store, feed_config):

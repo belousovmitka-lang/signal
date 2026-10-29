@@ -142,7 +142,8 @@ def load(store: FeedStore, posts: PostsReader, config=None) -> FeedData:
     items, vecs = [], []
     for pid, row in rows.items():
         post = raw.get(pid)
-        if post is None or pid not in placed:
+        # X posts are evidence for inferred problems only (our X use case), shown as X's own embed there.
+        if post is None or pid not in placed or post.source.split(":")[0] == "x":
             continue
         prob = problems.get(post_problem.get(pid))
         items.append(Item(

@@ -260,40 +260,54 @@ function useDwell(item, ref) {
   }, [item.impression_id]);
 }
 
-function Card({ item, onOpenInferred }) {
+// Items opened from a card: the item page acts on the same card (save, hide) and sends the same event fields.
+const opened = new Map();
+const keyOf = (it) => `${it.item_type || "post"}/${it.item_id}`;
+const openItem = (it) => { location.hash = `item/${keyOf(it)}`; };
+
+function NotForMeMenu({ item, onHide }) {
+  const nfm = (reason) => { track("not_for_me", item, reason ? { reason } : {}); onHide(); };
+  return html`<div class="menu">
+    ${NOT_FOR_ME.map(([r, label]) => html`<button class="chip small" onClick=${() => nfm(r)}>${label}</button>`)}
+    ${item.kind === "inferred" && html`<button class="chip small" onClick=${() => nfm("not_true")}>Not true in my experience</button>`}
+    <button class="chip small" onClick=${() => nfm(null)}>Just not for me</button>
+    ${item.kind !== "inferred" && html`<button class="chip small" onClick=${() => { track("hide_source", item); onHide(); }}>
+      Hide ${sourceName(item.source)}</button>`}
+  </div>`;
+}
+
+function Labels({ item }) {
+  const m = money(item.money);
+  return html`<div class="meta">
+    ${item.kind === "inferred" ? html`<span class="label inferred">Inferred${item.confidence ? ` · ${item.confidence} confidence` : ""}</span>`
+      : html`<span class="label">${TYPE_LABEL[item.post_type] || "Post"}</span>`}
+    ${m && html`<span class="label money">${m}</span>`}
+    <span class="path">${item.niche_path.join(" › ")}</span>
+  </div>`;
+}
+
+function Card({ item }) {
   const ref = useRef();
   useDwell(item, ref);
   const [saved, setSaved] = useState(false);
   const [menu, setMenu] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [answered, setAnswered] = useState(null);      // calibration answer
-  const [engaged, setEngaged] = useState(false);       // opened: time to ask "Was this useful?"
+  const [engaged, setEngaged] = useState(false);       // opened or saved: time to ask "Was this useful?"
   const [useful, setUseful] = useState(null);
   const inferred = item.kind === "inferred";
-  const url = safeUrl(item.url);
+  opened.set(keyOf(item), { item, setSaved, setHidden, setEngaged });
 
   if (hidden) return html`<div class="card hidden-card">Hidden.</div>`;
+  const open = () => { if (item.calibration) return; track("expand", item); setEngaged(true); openItem(item); };
 
-  const open = () => { track("open_source", item); setEngaged(true); };
-  const notForMe = (reason) => { track("not_for_me", item, reason ? { reason } : {}); setHidden(true); };
-  const m = money(item.money);
-
-  return html`<article class="card" ref=${ref}>
-    <div class="meta">
-      ${inferred ? html`<span class="label inferred">Inferred${item.confidence ? ` · ${item.confidence} confidence` : ""}</span>`
-        : html`<span class="label">${TYPE_LABEL[item.post_type] || "Post"}</span>`}
-      ${m && html`<span class="label money">${m}</span>`}
-      <span class="path">${item.niche_path.join(" › ")}</span>
-    </div>
-    <h3>${url ? html`<a href=${url} target="_blank" rel="noopener noreferrer" onClick=${open}>${item.title || item.summary}</a>`
-      : item.title || item.summary}</h3>
-    ${item.summary && item.title && item.summary.trim() !== item.title.trim() && html`<p class="summary">${item.summary}</p>`}
-    ${!inferred && html`<div class="meta">${sourceName(item.source)} · ${ago(item.published_at)}
-      ${item.similar_posts > 0 && html` · ${item.similar_posts} similar posts`}</div>`}
-    ${inferred && item.evidence.length > 0 && html`
-      <${Evidence} items=${item.evidence} />
-      <button class="more-link" onClick=${() => { track("expand", item); setEngaged(true); onOpenInferred(item); }}>
-        ${item.evidence_more > 0 ? `See all evidence (+${item.evidence_more} more)` : "See the evidence"}</button>`}
+  return html`<article class=${"card" + (item.calibration ? "" : " clickable")} ref=${ref}>
+    <${Labels} item=${item} />
+    <h3>${item.calibration ? item.headline : html`<a href=${"#item/" + keyOf(item)}
+      onClick=${(e) => { e.preventDefault(); open(); }}>${item.headline}</a>`}</h3>
+    <div class="meta">${inferred ? `${item.evidence.length + item.evidence_more} pieces of evidence`
+      : `${sourceName(item.source)} · ${ago(item.published_at)}`}
+      ${!inferred && item.similar_posts > 0 && html` · ${item.similar_posts} similar posts`}</div>
 
     ${item.calibration ? html`<div class="actions">
         ${answered ? html`<span class="note" style="padding:7px 8px">Thanks.</span>` : html`
@@ -301,19 +315,13 @@ function Card({ item, onOpenInferred }) {
           <button class="btn quiet" onClick=${() => { track("not_for_me", item); setAnswered("no"); }}>Not for me</button>`}
       </div>`
     : html`<div class="actions">
-        ${url && html`<a class="btn quiet" href=${url} target="_blank" rel="noopener noreferrer" onClick=${open}>Open</a>`}
+        <button class="btn quiet" onClick=${open}>Open</button>
         <button class=${"btn quiet" + (saved ? " on" : "")} disabled=${saved}
                 onClick=${() => { track("save", item); setSaved(true); setEngaged(true); }}>${saved ? "Saved" : "Save"}</button>
         <span class="spacer"></span>
         <button class="btn quiet" onClick=${() => setMenu(!menu)} aria-expanded=${menu}>Not for me</button>
       </div>
-      ${menu && html`<div class="menu">
-        ${NOT_FOR_ME.map(([r, label]) => html`<button class="chip small" onClick=${() => notForMe(r)}>${label}</button>`)}
-        ${inferred && html`<button class="chip small" onClick=${() => notForMe("not_true")}>Not true in my experience</button>`}
-        <button class="chip small" onClick=${() => notForMe(null)}>Just not for me</button>
-        <button class="chip small" onClick=${() => { track("hide_source", item); setHidden(true); }}>
-          Hide ${sourceName(item.source)}</button>
-      </div>`}`}
+      ${menu && html`<${NotForMeMenu} item=${item} onHide=${() => setHidden(true)} />`}`}
 
     ${item.ask_useful && engaged && html`<div class="ask">
       ${useful ? html`<span>Thanks, that helps.</span>` : html`
@@ -324,26 +332,104 @@ function Card({ item, onOpenInferred }) {
   </article>`;
 }
 
-function InferredDetail({ item, userId, onClose }) {
-  const [data, setData] = useState(null);
+const STYLE_TABS = [["overview", "Overview"], ["plain", "In plain words"], ["technical", "Technical"]];
+
+function Explanations({ data, userId }) {
+  const [style, setStyle] = useState("overview");
+  const [texts, setTexts] = useState(data.explanations || {});
+  const [state, setState] = useState({});         // style -> "loading" | error message
+  const want = async (s) => {
+    setStyle(s);
+    if (texts[s] || state[s] === "loading" || !data.can_explain) return;
+    setState((x) => ({ ...x, [s]: "loading" }));
+    try {
+      const r = await api(`/item/${data.item_type}/${encodeURIComponent(data.item_id)}/explain`,
+                          { method: "POST", body: { user_id: userId, style: s } });
+      setTexts((x) => ({ ...x, [s]: r.text }));
+      setState((x) => ({ ...x, [s]: null }));
+    } catch (e) {
+      setState((x) => ({ ...x, [s]: e.status === 429 ? "You've read a lot today; more explanations tomorrow."
+        : "Couldn't write this one right now." }));
+    }
+  };
+  useEffect(() => { want("overview"); }, [data.item_id]);
+  const text = texts[style];
+  return html`<section class="explain">
+    <div class="seg" role="tablist">${STYLE_TABS.map(([s, label]) => html`<button role="tab" class="seg-btn"
+      aria-selected=${style === s} onClick=${() => want(s)}>${label}</button>`)}</div>
+    ${text ? text.split(/\n\s*\n/).map((para) => html`<p>${para}</p>`)
+      : state[style] === "loading" ? html`<p class="note">Writing an explanation…</p>`
+      : state[style] ? html`<p class="note">${state[style]}</p>`
+      : !data.can_explain ? html`<p class="note">Explanations aren't available on this server.</p>` : null}
+  </section>`;
+}
+
+function postedBy(d) {
+  const who = d.author_role ? `a ${d.author_role.replace(/^(an?|the)\s+/i, "")}` : null;
+  const where = d.community ? `in ${d.community}` : null;
+  return [who && `Posted by ${who}`, where && (who ? where : `Posted ${where}`)].filter(Boolean).join(" ")
+    || `Posted on ${sourceName(d.source)}`;
+}
+
+function ItemPage({ type, id, userId }) {
+  const key = `${type}/${id}`;
+  const from = opened.get(key);
+  const base = from?.item || { item_type: type, item_id: id };
+  const [d, setD] = useState(null);
+  const [saved, setSaved] = useState(false);
+  const [menu, setMenu] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const pane = useRef();
   useEffect(() => {
-    api(`/inferred/${item.item_id}?${qs({ user_id: userId })}`).then(setData).catch(() => setData({ error: true }));
-    const esc = (e) => e.key === "Escape" && onClose();
-    addEventListener("keydown", esc);
-    return () => removeEventListener("keydown", esc);
-  }, [item.item_id]);
-  return html`<div class="modal-back" onClick=${(e) => e.target === e.currentTarget && onClose()}>
-    <div class="modal" role="dialog" aria-modal="true">
-      <div class="meta"><span class="label inferred">Inferred${data?.confidence ? ` · ${data.confidence} confidence` : ""}</span>
-        <span class="spacer" style="flex:1"></span><button class="btn quiet" onClick=${onClose}>Close</button></div>
-      <h2>${item.title || item.summary}</h2>
-      ${!data ? html`<div class="center">Loading…</div>` : data.error ? html`<p class="note">This problem is no longer available.</p>`
-        : html`
-          ${data.who && html`<p class="note">Who: ${Array.isArray(data.who) ? data.who.join(", ") : data.who}</p>`}
-          <div class="section-title">Evidence</div><${Evidence} items=${data.evidence} />
-          ${data.counter_evidence?.length > 0 && html`<div class="section-title">What could argue against it</div>
-            <${Evidence} items=${data.counter_evidence} />`}`}
-    </div></div>`;
+    if (pane.current) pane.current.scrollTop = 0;
+    document.documentElement.classList.add("pane-open");
+    return () => document.documentElement.classList.remove("pane-open");
+  }, [key]);
+  useEffect(() => {
+    api(`/item/${type}/${encodeURIComponent(id)}?${qs({ user_id: userId })}`).then(setD).catch(() => setD({ error: true }));
+  }, [key]);
+  const back = () => (from ? history.back() : (location.hash = "feed"));
+  const url = d && safeUrl(d.url);
+  const eng = d?.engagement || {};
+  const plural = (n, w) => `${n.toLocaleString()} ${w}${n === 1 ? "" : "s"}`;
+  const votes = eng.upvotes || eng.score || eng.likes || eng.reactions;
+  const stats = [eng.comments && plural(eng.comments, "comment"), votes && plural(votes, "upvote")].filter(Boolean);
+
+  return html`<div class="item-page" ref=${pane} role="dialog" aria-modal="true"><main class="wrap">
+    <div class="item-top"><button class="btn quiet" onClick=${back}>← Back</button></div>
+    ${!d ? html`<div class="center">Loading…</div>` : d.error ? html`<div class="center">This item is no longer available.</div>`
+      : html`<article>
+        <${Labels} item=${d} />
+        <h1 class="item-title">${d.headline}</h1>
+        ${d.kind === "inferred" ? html`
+          <p class="meta">Inferred by Signal from ${d.evidence.length} pieces of evidence${d.who ? ` · Who: ${[].concat(d.who).join(", ")}` : ""}</p>`
+        : html`<p class="meta">${postedBy(d)} · ${new Date(d.published_at).toLocaleDateString(undefined,
+            { month: "long", day: "numeric", year: "numeric" })} (${ago(d.published_at)})${stats.length ? " · " + stats.join(" · ") : ""}
+            ${d.similar_posts > 0 ? ` · ${d.similar_posts} similar posts` : ""}</p>`}
+
+        <${Explanations} data=${d} userId=${userId} />
+
+        ${d.kind === "inferred" && html`
+          <div class="section-title">Evidence</div><${Evidence} items=${d.evidence} />
+          ${d.counter_evidence?.length > 0 && html`<div class="section-title">What could argue against it</div>
+            <${Evidence} items=${d.counter_evidence} />`}`}
+
+        ${hidden ? html`<p class="note">Hidden from your feed.</p>` : html`<div class="actions item-actions">
+          <button class=${"btn" + (saved ? " on" : "")} disabled=${saved}
+            onClick=${() => { track("save", base); setSaved(true); from?.setSaved(true); from?.setEngaged(true); }}>
+            ${saved ? "Saved" : "Save"}</button>
+          <span class="spacer"></span>
+          <button class="btn quiet" onClick=${() => setMenu(!menu)}>Not for me</button>
+        </div>
+        ${menu && html`<${NotForMeMenu} item=${{ ...base, kind: d.kind, source: d.source }}
+          onHide=${() => { setHidden(true); from?.setHidden(true); }} />`}`}
+
+        ${url && html`<div class="source-box">
+          ${d.title && d.title !== d.headline && html`<div class="sub">Original title: ${d.title}</div>`}
+          <a href=${url} target="_blank" rel="noopener noreferrer" onClick=${() => track("open_source", base)}>
+            View the original on ${sourceName(d.source)} ↗</a></div>`}
+      </article>`}
+  </main></div>`;
 }
 
 function InsiderPrompt({ userId }) {
@@ -374,7 +460,6 @@ function Feed({ userId }) {
   const [page, setPage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [detail, setDetail] = useState(null);
   const sentinel = useRef();
 
   const load = useCallback(async (explore = false) => {
@@ -399,7 +484,7 @@ function Feed({ userId }) {
   return html`<main class="wrap">
     <${InsiderPrompt} userId=${userId} />
     ${page?.calibration && html`<p class="note" style="margin-top:20px">To start, tell us which of these interest you.</p>`}
-    ${items.map((it) => html`<${Card} key=${it.impression_id} item=${it} onOpenInferred=${setDetail} />`)}
+    ${items.map((it) => html`<${Card} key=${it.impression_id} item=${it} />`)}
     ${error && html`<div class="center"><p class="error">${error}</p><button class="btn" onClick=${() => load()}>Retry</button></div>`}
     ${loading && html`<div class="center">Loading…</div>`}
     ${!loading && page && (page.calibration ? html`<div class="end">
@@ -408,7 +493,6 @@ function Feed({ userId }) {
         <h2>You're caught up</h2><p>That's the strongest for you right now.</p>
         <button class="btn" onClick=${() => load(true)}>Explore more</button></div>` : null)}
     <div ref=${sentinel}></div>
-    ${detail && html`<${InferredDetail} item=${detail} userId=${userId} onClose=${() => setDetail(null)} />`}
   </main>`;
 }
 
@@ -421,8 +505,7 @@ function Saved({ userId }) {
   if (!items.length) return html`<main class="wrap"><div class="center">Nothing saved yet. Save posts from your feed to keep them here.</div></main>`;
   return html`<main class="wrap"><div class="section-title">Saved</div><div class="list">
     ${items.map((it) => html`<div class="row"><div class="grow">
-      ${safeUrl(it.url) ? html`<a href=${safeUrl(it.url)} target="_blank" rel="noopener noreferrer">${it.title || it.summary}</a>`
-        : html`<span>${it.title || it.summary}</span>`}
+      <a href=${"#item/" + keyOf(it)}>${it.headline || it.title || it.summary}</a>
       <div class="sub">${it.kind === "inferred" ? "Inferred · " : ""}${it.niche_path.join(" › ")} · saved ${ago(it.saved_at)}</div>
     </div></div>`)}</div></main>`;
 }
@@ -483,13 +566,19 @@ const TABS = [["feed", "Feed"], ["saved", "Saved"], ["clips", "Clips"], ["areas"
 
 function App() {
   const [me, setMe] = useState(undefined);       // undefined: loading; null: signed out
-  const [tab, setTab] = useState(() => location.hash.slice(1) || "feed");
+  const [hash, setHash] = useState(() => location.hash.slice(1));
+  const [tab, setTab] = useState(() => (location.hash.slice(1).startsWith("item/") ? "feed" : location.hash.slice(1) || "feed"));
   useEffect(() => { api("/auth/me").then(setMe).catch(() => setMe(null)); }, []);
   useEffect(() => {
-    const on = () => setTab(location.hash.slice(1) || "feed");
+    const on = () => {
+      const h = location.hash.slice(1);
+      setHash(h);
+      if (!h.startsWith("item/")) setTab(h || "feed");     // the item page opens over the tab, which keeps its place
+    };
     addEventListener("hashchange", on);
     return () => removeEventListener("hashchange", on);
   }, []);
+  const itemRoute = hash.startsWith("item/") ? hash.split("/") : null;   // ["item", type, id]
   events.userId = me?.user_id || null;
 
   if (me === undefined) return html`<div class="center">Loading…</div>`;
@@ -505,7 +594,9 @@ function App() {
         onClick=${() => { location.hash = k; }}>${label}</button>`)}
         <button class="tab" onClick=${signOut} title=${me.email}>Sign out</button></nav>
     </div></header>
-    <${view} key=${tab} userId=${me.user_id} />`;
+    <${view} key=${tab} userId=${me.user_id} />
+    ${itemRoute && itemRoute.length >= 3 && html`<${ItemPage} key=${hash} type=${itemRoute[1]}
+      id=${decodeURIComponent(itemRoute.slice(2).join("/"))} userId=${me.user_id} />`}`;
 }
 
 render(html`<${App} />`, document.getElementById("app"));

@@ -104,6 +104,11 @@ class AutoPublish(BaseModel):
     on: bool
 
 
+class ExplainRequest(BaseModel):
+    user_id: str
+    style: Literal["overview", "plain", "technical"] = "overview"
+
+
 class SignInStart(BaseModel):
     email: str = Field(min_length=3, max_length=254)
 
@@ -159,7 +164,8 @@ document.getElementById("go").onclick = async (e) => {
 
 def create_app(store: FeedStore, posts: PostsReader, config: FeedConfig, service: FeedService | None = None,
                clips_db_url: str | None = None, auth: Auth | None = None, web_dir: Path | None = None,
-               warm: bool = False) -> FastAPI:
+               warm: bool = False, llm=None) -> FastAPI:
+    """`llm` (an LLMTask) writes explanations on the item page; without it only already-written ones show."""
     app = FastAPI(title="Signal feed")
     app.state.auth = auth
 
@@ -214,6 +220,50 @@ def create_app(store: FeedStore, posts: PostsReader, config: FeedConfig, service
                 it.score, it.score_breakdown = None, {}
         return page
 
+    def _item(item_type: str, item_id: str):
+        from .feed.data import item_key
+        it = service.cache.get().by_id.get(item_key(item_type, item_id))
+        if it is None:
+            raise HTTPException(status_code=404, detail="unknown item")
+        return it
+
+    @app.get("/item/{item_type}/{item_id}")
+    def get_item(item_type: Literal["post", "inferred"], item_id: str, user_id: str, me: Me) -> dict:
+        """The item page: the headline, who posted and when, explanations already written, the original link."""
+        _user(user_id, me)
+        from .feed.explain import headline, headlines_for, inferred_detail, written_styles
+        it, data = _item(item_type, item_id), service.cache.get()
+        out = {"item_type": it.item_type, "item_id": it.item_id, "kind": "inferred" if it.item_type == "inferred"
+               else "reported", "headline": headline(it, headlines_for(store, [it.post_id]), config),
+               "post_type": it.post_type, "niche_path": data.path(it.niche_id), "money": it.money,
+               "source": it.source, "published_at": it.published_at.isoformat(), "similar_posts": it.similar_posts,
+               "confidence": it.confidence, "explanations": written_styles(store, it.post_id),
+               "can_explain": llm is not None}
+        if it.item_type == "inferred":
+            out |= inferred_detail(store, int(it.item_id)) or {"who": None, "evidence": [], "counter_evidence": []}
+        else:
+            post = next(iter(posts.get_posts([it.post_id])), None)
+            out |= {"title": it.title, "url": it.url, "community": post.community if post else None,
+                    "author_role": post.author_role if post else None,
+                    "engagement": post.engagement if post else {}}
+        return out
+
+    @app.post("/item/{item_type}/{item_id}/explain")
+    def post_explain(item_type: Literal["post", "inferred"], item_id: str, body: ExplainRequest, me: Me) -> dict:
+        _user(body.user_id, me)
+        from .enrichment.costs import BudgetExceededError
+        from .feed.explain import ExplainLimitError, explanation
+        it = _item(item_type, item_id)
+        try:
+            text = explanation(store, posts, config, service.cache.get(), it, body.style, llm, body.user_id)
+        except ExplainLimitError as exc:
+            raise HTTPException(status_code=429, detail=str(exc)) from None
+        except BudgetExceededError:
+            raise HTTPException(status_code=503, detail="explanations are paused") from None
+        if text is None:
+            raise HTTPException(status_code=503, detail="couldn't write an explanation")
+        return {"style": body.style, "text": text}
+
     @app.get("/saved")
     def get_saved(user_id: str, me: Me, limit: int = Query(100, ge=1, le=500)) -> dict:
         """What the user saved, most recent first (items no longer in the feed's data are left out)."""
@@ -225,12 +275,15 @@ def create_app(store: FeedStore, posts: PostsReader, config: FeedConfig, service
             rows = s.execute(select(EventRow.item_type, EventRow.item_id, func.max(EventRow.at)).where(
                 EventRow.user_id == user_id, EventRow.event_type == "save")
                 .group_by(EventRow.item_type, EventRow.item_id).order_by(func.max(EventRow.at).desc()).limit(limit))
+            rows = list(rows)
+            from .feed.explain import headline, headlines_for
+            written = headlines_for(store, [item_key(t, i) for t, i, _ in rows])
             out = []
             for item_type, item_id, at in rows:
                 it = data.by_id.get(item_key(item_type, item_id))
                 if it is not None:
                     out.append({"item_type": item_type, "item_id": item_id, "kind": "inferred" if item_type == "inferred"
-                                else "reported", "title": it.title, "summary": it.summary, "url": it.url,
+                                else "reported", "headline": headline(it, written, config), "title": it.title, "summary": it.summary, "url": it.url,
                                 "source": it.source, "post_type": it.post_type, "niche_path": data.path(it.niche_id),
                                 "confidence": it.confidence, "saved_at": at.isoformat()})
         return {"items": out}
@@ -481,6 +534,11 @@ def app_from_env() -> FastAPI:
     """Factory for uvicorn: `uvicorn signal_feed.api:app_from_env --factory`."""
     settings = FeedSettings.from_env()
     store, config = FeedStore(settings.feed_database_url), load_feed_config(settings.config_file)
+    llm = None
+    if os.environ.get("ANTHROPIC_API_KEY"):        # explanations on the item page, metered like tagging
+        from .enrichment.llm import AnthropicTagger
+        from .llm_task import LLMTask
+        llm = LLMTask(store, config.enrichment, AnthropicTagger())
     return create_app(store, PostsReader(settings.posts_database_url), config,
                       clips_db_url=settings.posts_database_url, auth=auth_from_env(store, config),
-                      web_dir=REPO_ROOT / "web", warm=True)
+                      web_dir=REPO_ROOT / "web", warm=True, llm=llm)

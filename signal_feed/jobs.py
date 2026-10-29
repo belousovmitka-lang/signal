@@ -50,6 +50,7 @@ def jobs(config: FeedConfig) -> list[Job]:
         Job("tag", DAY, ("enrich.py", "run", "--max-age-days", str(j.tag_max_age_days),
                          "--limit", str(j.tag_max_posts)), paid=True),
         Job("embed", HOUR, ("enrich.py", "embed"), paid=True),                      # also learns new clips
+        Job("headlines", DAY, ("feed_text.py", "headlines", "--limit", "2000"), paid=True),
         Job("rescore", HOUR, ("problems.py", "rescore")),
         Job("nightly", DAY, ("feed_nightly.py",)),
         Job("build", WEEK, ("problems.py", "build"), paid=True),

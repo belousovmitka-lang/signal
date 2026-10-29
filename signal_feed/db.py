@@ -598,6 +598,22 @@ class ModelRow(FeedBase):
     metrics: Mapped[dict[str, Any]] = mapped_column(JSON, default=dict)
 
 
+# --- headlines and explanations (signal_feed/feed/explain.py) ---------------------
+
+class ItemTextRow(FeedBase):
+    """Text Signal wrote about an item, once, for everyone: a one-sentence headline, or an explanation in one
+    style (overview | plain | technical). Deleted with the post when the source deletes it."""
+
+    __tablename__ = "item_texts"
+
+    item_key: Mapped[str] = mapped_column(String(80), primary_key=True)     # feed.data.item_key
+    kind: Mapped[str] = mapped_column(String(16), primary_key=True)
+    text: Mapped[str] = mapped_column(Text)
+    model: Mapped[str | None] = mapped_column(String(64))
+    created_at: Mapped[datetime] = mapped_column(UTCDateTime, index=True)
+    requested_by: Mapped[str | None] = mapped_column(String(64), index=True)  # the user whose view wrote it
+
+
 # --- accounts and sign-in (signal_feed/auth.py) -----------------------------------
 
 class AccountRow(FeedBase):
