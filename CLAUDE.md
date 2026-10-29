@@ -273,7 +273,7 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 | Platform | Connector | Route | Endpoint / method | Cadence | Status |
 |---|---|---|---|---|---|
 | Upwork | `upwork` | own_api (after approval), G1 until then | GraphQL `marketplaceJobPostingsSearch` | hourly | awaiting approval; apply now |
-| Freelancer.com | `freelancer` | own_api | Projects API (active projects search) | hourly | todo |
+| Freelancer.com | `freelancer` | — | Terms (read 2026-10-28) cover the API too ("Website" includes "API or other access mechanism"): s.33 "you will not use any robot, spider, scraper or other automated means to access the Website" without express written permission; s.4(11) forbids aggregating listings for display with other websites' listings | hourly | blocked (2026-10-28): needs Freelancer's written permission |
 | Contra | G5 / G1 | public_pages | public project listings | daily | todo |
 | PeoplePerHour, Guru, Malt | G2 / G5, else G1 | public_pages / rss | public job listings and feeds where offered | daily | todo |
 | Wellfound, YC Work at a Startup | G6 + public pages, else G1 | public_pages | many startups post through Greenhouse/Lever/Ashby | weekly | todo |
@@ -283,7 +283,7 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 | Company career pages (all industries) | G6 | own_api | Greenhouse, Lever, Ashby (SmartRecruiters blocked by robots.txt) | weekly | done (2026-10-11) |
 | GitHub bounties, Algora, Gitcoin | `github` | own_api | GitHub search issues `label:bounty` and Algora's `label:"💎 Bounty"` (paid_demand); Algora/Gitcoin public pages not checked | daily | done (2026-10-09, GitHub part) |
 | IssueHunt and other bounty boards | G5, else G1 | public_pages | public listings | daily | todo |
-| Kaggle | `kaggle` | own_api | Kaggle API competitions list | weekly | todo |
+| Kaggle | `kaggle` | — | Terms (2026-10-28) forbid crawling or scraping "by manual or automated means" and copying or storing "any significant portion of the Content"; the API key is a personal account's (rule 1) | weekly | blocked (2026-10-28) |
 | HeroX, Wazoku (InnoCentive) | G5, else G1 | public_pages | public challenge listings | weekly | todo |
 | Devpost and sponsored hackathons | G5, else G1 | public_pages | public hackathon listings | weekly | todo |
 | Amazon Mechanical Turk | G5, else G1 | public_pages | only if task listings are visible logged-out; otherwise blocked | weekly | todo |
@@ -333,7 +333,7 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 | Bar associations, medical boards, licensing bodies | G2 / G5, else G1 | rss / public_pages | per body | weekly | todo |
 | City council and school board agendas and minutes | G5 / G9, else G1 | public_pages | many cities use the same agenda platforms; detect per site | weekly | todo |
 | Open data portals (data.gov and city portals) | G9 | own_api | Socrata / CKAN; add datasets per industry in sources.yaml | weekly | done (2026-10-09) |
-| Patents (USPTO, Google Patents) | `patents` | own_api | USPTO open data / PatentsView APIs | monthly | todo |
+| Patents (USPTO, Google Patents) | `patents` | own_api | USPTO Open Data Portal (PatentsView retired into it in 2026): `POST api.uspto.gov/api/v1/patent/applications/search`, `X-API-KEY`; new utility grants whose title matches an industry's keywords; no inventors, examiners or addresses. Key needs a USPTO.gov account with MFA (`USPTO_API_KEY`); disabled until then | weekly | built (2026-10-29), needs key |
 
 **Podcasts, video, events**
 
@@ -367,7 +367,7 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 | Google autocomplete / "People also ask" | G1 | search_api | via search API results | weekly | todo |
 | Industry association surveys, vendor benchmark reports, analyst firms' free reports | G2 / G5 | rss / public_pages | per publisher | monthly | todo |
 | Government statistics (BLS, Census, Eurostat) | `stats` (source `census_bfs`) | own_api | Census Business Formation Statistics (`CENSUS_API_KEY`): new business applications per month by NAICS sector, with month-over-month and year-over-year change; app must show the Census API notice (raw.notice): done (2026-10-15). api.bls.gov robots.txt `Disallow: /` (blocked, 2026-10-09); Eurostat returns statistics, not posts, no RSS (2026-10-10): not built | monthly | done (2026-10-15, Census) |
-| Academic papers | `papers` | rss (arXiv) / own_api | arXiv via RSS category feeds (rss.arxiv.org, 1 request/3s; metadata CC0): done (2026-10-09). export.arxiv.org (query API) is robots-disallowed for all agents: not used. PubMed E-utilities: eutils.ncbi.nlm.nih.gov robots.txt disallows our path (2026-10-09): blocked. Semantic Scholar: key optional, todo | daily | partly done |
+| Academic papers | `papers` | rss (arXiv) / own_api | arXiv via RSS category feeds (rss.arxiv.org, 1 request/3s; metadata CC0): done (2026-10-09). export.arxiv.org (query API) is robots-disallowed for all agents: not used. PubMed E-utilities: eutils.ncbi.nlm.nih.gov robots.txt disallows our path (2026-10-09): blocked. Semantic Scholar: blocked (2026-10-28): the API license covers use only "in operation with compatible third-party platforms", other uses by request to AI2, and abstracts carry per-publisher licenses (CC BY-NC among them) | daily | partly done |
 | Wikipedia | `wikipedia` | own_api | Wikimedia pageviews top articles (wikimedia.org, UA with contact email). Built but **disabled**: daily trending is mostly people in the news, low signal for builders | weekly | done (2026-10-09, disabled) |
 
 **Paid connectors (build, keep behind a feature flag, off by default)**

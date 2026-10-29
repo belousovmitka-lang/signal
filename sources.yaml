@@ -876,6 +876,32 @@ sources:
     queries:
       - {industry_hint: auto_repair, limit: 3000}
 
+  patents:
+    enabled: false                   # enable once USPTO_API_KEY is in .env
+    status: todo
+    status_date: 2026-10-29
+    route: own_api
+    source_type: research
+    cadence: weekly
+    env: [USPTO_API_KEY]
+    access_check:
+      robots: allowed
+      terms: allowed
+      decision: full
+      terms_url: https://data.uspto.gov/apis/getting-started
+      checked_at: 2026-10-29
+      notes: >-
+        USPTO Open Data Portal (replaced PatentsView in 2026); api.uspto.gov serves no robots.txt. Free key tied to
+        a USPTO.gov account with MFA. US patent data is public domain; inventors, examiners and addresses not stored.
+    queries:
+      - {industry_hint: dental, keywords: [dental, orthodontic, "tooth aligner"], limit: 50}
+      - {industry_hint: logistics, keywords: [freight, shipment, "truck dispatch", "load board"], limit: 50}
+      - {industry_hint: construction, keywords: [construction, scaffold, "building permit", concrete], limit: 50}
+      - {industry_hint: restaurants, keywords: [restaurant, "food ordering", kitchen], limit: 50}
+      - {industry_hint: agriculture, keywords: [crop, livestock, irrigation, harvester], limit: 50}
+      - {industry_hint: healthcare, keywords: ["patient scheduling", "medical billing", "electronic health record"], limit: 50}
+      - {industry_hint: legal, keywords: ["legal document", contract, litigation], limit: 50}
+
   github:
     enabled: true
     status: done
