@@ -252,7 +252,7 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 | Mastodon instances | `mastodon` | own_api | `/api/v1/timelines/tag/<tag>` on mastodon.social, no login (`/api/v2/search` returns no statuses without login). Its terms bind registered users only. Consent: keep only authors with `indexable: true`, not `noindex`, not bots, no `#nobot`/`#noindex` in bio (~30% of posts). Deletions re-checked on each post's home server | daily | done (2026-10-09) |
 | Niche industry forums (Contractor Talk, Spiceworks, BiggerPockets, AllNurses, Fishbowl, TruckersReport, HVAC-Talk, Mike Holt, Practical Machinist, Eng-Tips, New Ag Talk, DentalTown, Student Doctor Network, ActiveRain and every forum in section 8) | G4 / G5, else G1 | public_pages / rss | detect forum software per site | daily | partly done (2026-10-09): most large forums forbid automated or commercial use; ask admins for permission (many small forums will say yes) |
 | Vendor community forums (Shopify Community, Salesforce, QuickBooks Community, HubSpot, Amazon Seller Forums, eBay Community, SHRM community) | G4 / G5, else G1 | public_pages / rss | detect per site | daily | todo |
-| Mumsnet and parenting forums | G5, else G1 | public_pages | Mumsnet has objected to AI scraping: check terms carefully; default to G1 | daily | todo |
+| Mumsnet and parenting forums | — | — | Mumsnet terms: "No part of the Website may be distributed, scraped or copied for any purpose without express approval and a licence" (2026-10-29) | daily | blocked (Mumsnet, 2026-10-29) |
 
 **Social platforms**
 
@@ -274,9 +274,10 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 |---|---|---|---|---|---|
 | Upwork | `upwork` | own_api (after approval), G1 until then | GraphQL `marketplaceJobPostingsSearch` | hourly | awaiting approval; apply now |
 | Freelancer.com | `freelancer` | — | Terms (read 2026-10-28) cover the API too ("Website" includes "API or other access mechanism"): s.33 "you will not use any robot, spider, scraper or other automated means to access the Website" without express written permission; s.4(11) forbids aggregating listings for display with other websites' listings | hourly | blocked (2026-10-28): needs Freelancer's written permission |
-| Contra | G5 / G1 | public_pages | public project listings | daily | todo |
-| PeoplePerHour, Guru, Malt | G2 / G5, else G1 | public_pages / rss | public job listings and feeds where offered | daily | todo |
-| Wellfound, YC Work at a Startup | G6 + public pages, else G1 | public_pages | many startups post through Greenhouse/Lever/Ashby | weekly | todo |
+| Contra | — | — | Terms (2026-10-29) forbid accessing or downloading content with "spiders, robots, crawlers, data mining tools" and any commercial use of Platform content | daily | blocked (2026-10-29) |
+| PeoplePerHour | `peopleperhour` | public_pages | `/freelance-jobs?sort=latest&page=N`: 20 jobs per page with full description, budget, age and proposal count (no job page fetched); robots.txt allows it and the Terms have no automated-access clause (2026-10-29); no API or feed. Buyer hashed. ~30 jobs/day | hourly | done (2026-10-29) |
+| Guru, Malt | — | — | both answer our bot with 403 on robots.txt and terms (2026-10-29) | daily | blocked (2026-10-29) |
+| Wellfound, YC Work at a Startup | G6 | own_api | Wellfound terms forbid copying content "through the use of automated or non-automated harvesting, collection or 'scraping'"; YC terms forbid data mining (covers Work at a Startup). Many of their startups post through Greenhouse/Lever/Ashby, which G6 reads | weekly | blocked (2026-10-29); covered via G6 |
 | USAJOBS | G6 | — | data.usajobs.gov robots.txt `Disallow: /` (2026-10-11) | weekly | blocked (2026-10-11) |
 | State government job boards | G2 / G5, else G1 | rss / public_pages | per state | weekly | todo |
 | Industry job boards (legal, healthcare, construction, logistics) | G2 / G5, else G1 | rss / public_pages | per board | weekly | todo |
@@ -284,9 +285,9 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 | GitHub bounties, Algora, Gitcoin | `github` | own_api | GitHub search issues `label:bounty` and Algora's `label:"💎 Bounty"` (paid_demand); Algora/Gitcoin public pages not checked | daily | done (2026-10-09, GitHub part) |
 | IssueHunt and other bounty boards | G5, else G1 | public_pages | public listings | daily | todo |
 | Kaggle | `kaggle` | — | Terms (2026-10-28) forbid crawling or scraping "by manual or automated means" and copying or storing "any significant portion of the Content"; the API key is a personal account's (rule 1) | weekly | blocked (2026-10-28) |
-| HeroX, Wazoku (InnoCentive) | G5, else G1 | public_pages | public challenge listings | weekly | todo |
+| HeroX, Wazoku (InnoCentive) | — | — | HeroX terms forbid spiders, robots and scrapers that "scrape" or download data from the Platform (2026-10-29); Wazoku: see below | weekly | blocked (HeroX, 2026-10-29) |
 | Devpost and sponsored hackathons | G5, else G1 | public_pages | public hackathon listings | weekly | todo |
-| Amazon Mechanical Turk | G5, else G1 | public_pages | only if task listings are visible logged-out; otherwise blocked | weekly | todo |
+| Amazon Mechanical Turk | — | — | Participation Agreement: "you may not use any data mining, robots, or similar data gathering or extraction tools on the Site" (2026-10-29) | weekly | blocked (2026-10-29) |
 
 **Reviews, app stores, feature requests**
 
@@ -297,7 +298,7 @@ Status values: **todo**, **done (date)**, **awaiting approval**, **paid (flag of
 | Shopify App Store, Salesforce AppExchange, Atlassian Marketplace, WordPress plugins | G10 | rss | WordPress plugins: done (2026-10-09). Shopify: ToS forbids robots. Atlassian: REST API disallowed by robots.txt. AppExchange: reviews load via internal APIs, no clean route | weekly | partly done |
 | Public feature boards (Canny, UserVoice, Productboard portals) | `feature_boards` | public_pages | robots.txt and terms allow reading; but Canny boards ship data only as an embedded JS object (not JSON, not a published interface) and UserVoice needs JavaScript. Revisit if a vendor offers a public feed or API | weekly | todo (deferred 2026-10-09) |
 | GitHub issues and discussions | `github` | own_api | REST search for feature-request issues; GraphQL `search(type: DISCUSSION)` for "feature request" and "is there a way" discussions (category qualifiers are ignored there; keywords + created:> work). Usernames hashed | daily | done (2026-10-10) |
-| Better Business Bureau | G5, else G1 | public_pages | check terms; default G1 | weekly | todo |
+| Better Business Bureau | — | — | Terms license the Sites "solely for your direct use and not for sale, republication, or aggregation" (2026-10-29) | weekly | blocked (2026-10-29) |
 
 **News, trade press, funding**
 

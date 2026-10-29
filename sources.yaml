@@ -876,6 +876,28 @@ sources:
     queries:
       - {industry_hint: auto_repair, limit: 3000}
 
+  peopleperhour:
+    enabled: true
+    status: done
+    status_date: 2026-10-29
+    route: public_pages
+    source_type: paid_demand
+    cadence: hourly
+    access_check:
+      robots: allowed
+      terms: allowed
+      decision: full
+      terms_url: https://www.peopleperhour.com/static/terms
+      checked_at: 2026-10-29
+      notes: >-
+        robots.txt allows /freelance-jobs; the Terms have no clause on robots, scraping or automated access (read
+        2026-10-29). No API or feed. Reads the public latest-jobs listing only (20 jobs per page with full text and
+        budget), 1 request/s; buyer stored as a hash of the profile slug.
+    options:
+      max_pages: 5
+    queries:
+      - {limit: 100}
+
   patents:
     enabled: false                   # enable once USPTO_API_KEY is in .env
     status: todo
