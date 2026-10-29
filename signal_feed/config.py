@@ -486,6 +486,25 @@ class LearningConfig(_Strict):
     bubble_exploration: Fraction = Field(ge=0, le=1)
 
 
+class JobsConfig(_Strict):
+    """Scheduled feed jobs (scripts/feed_jobs.py). Paid jobs run only with --paid, and none starts once
+    today's spend (UTC, all providers, incl. open batch reservations) reaches `max_daily_usd`."""
+
+    max_daily_usd: float = Field(default=0.75, ge=0)
+    tag_max_age_days: int = Field(default=90, gt=0)      # older untagged posts are left alone (2026-10-28)
+    tag_max_posts: int = Field(default=2000, gt=0)       # per daily tagging run
+    escalate_per_day: int = Field(default=0, ge=0)       # 0: follow-ups wait for a manual `enrich.py escalate`
+    job_timeout_minutes: int = Field(default=120, gt=0)
+
+
+class AuthConfig(_Strict):
+    """Magic-link sign-in (signal_feed/auth.py)."""
+
+    link_minutes: int = Field(default=15, gt=0)           # a link works once, for this long
+    session_days: int = Field(default=30, gt=0)           # sliding: each use extends it
+    links_per_email_per_hour: int = Field(default=5, gt=0)
+
+
 class FeedConfig(_Strict):
     version: int = Field(ge=1)
     enrichment: EnrichmentConfig
@@ -502,6 +521,8 @@ class FeedConfig(_Strict):
     ranking: RankingConfig
     composition: CompositionConfig
     learning: LearningConfig
+    jobs: JobsConfig = JobsConfig()
+    auth: AuthConfig = AuthConfig()
 
 
 def load_feed_config(path: Path) -> FeedConfig:

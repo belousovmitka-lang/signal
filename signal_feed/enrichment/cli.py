@@ -1,7 +1,7 @@
 """Enrichment CLI (scripts/enrich.py is the entry point).
 
     python scripts/enrich.py status
-    python scripts/enrich.py run [--limit N] [--sync | --batch]
+    python scripts/enrich.py run [--limit N] [--max-age-days N] [--sync | --batch]
     python scripts/enrich.py collect          # finish submitted batches (no paid calls)
     python scripts/enrich.py escalate [--limit N]   # deferred retries/escalations, capped per run
     python scripts/enrich.py embed [--limit N]
@@ -12,6 +12,7 @@ from __future__ import annotations
 import argparse
 import logging
 import os
+from datetime import timedelta
 
 from sqlalchemy import func, select
 
@@ -70,6 +71,7 @@ def main(argv: list[str] | None = None) -> int:
     run = sub.add_parser("run", help="tag pending posts")
     run.add_argument("--limit", type=int)
     run.add_argument("--source", help='only posts from this source ("x"), or a family ending in ":" ("rss:")')
+    run.add_argument("--max-age-days", type=int, help="only posts published in the last N days")
     mode = run.add_mutually_exclusive_group()
     mode.add_argument("--sync", action="store_true", help="call the API per post now")
     mode.add_argument("--batch", action="store_true", help="submit to the Batch API (50%% off, up to 24h)")
@@ -115,7 +117,8 @@ def main(argv: list[str] | None = None) -> int:
     purged = enricher.purge_deleted()
     if purged:
         print(f"purged enrichment of {purged} posts deleted at the origin")
-    pending = enricher.pending_post_ids(args.limit, args.source)
+    since = utcnow() - timedelta(days=args.max_age_days) if args.max_age_days else None
+    pending = enricher.pending_post_ids(args.limit, args.source, since)
     use_batch = args.batch or (not args.sync and len(pending) >= config.enrichment.batch_min_posts)
     started = utcnow()
     if use_batch:

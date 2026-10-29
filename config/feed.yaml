@@ -377,3 +377,17 @@ learning:
   bubble_leaf_share: 0.50
   bubble_window_impressions: 100
   bubble_exploration: 0.20
+
+# Scheduled jobs (scripts/feed_jobs.py; cron every 15 minutes). Paid jobs run only with --paid.
+jobs:
+  max_daily_usd: 0.75             # no paid job starts once today's spend (all providers) reaches this
+  tag_max_age_days: 90            # untagged posts older than this are left alone (founder choice 2026-10-28)
+  tag_max_posts: 2000             # per daily tagging run
+  escalate_per_day: 0             # 0: follow-ups wait for a manual `enrich.py escalate` (founder choice 2026-10-28)
+  job_timeout_minutes: 120
+
+# Magic-link sign-in (signal_feed/auth.py)
+auth:
+  link_minutes: 15
+  session_days: 30                # sliding: each use extends it
+  links_per_email_per_hour: 5

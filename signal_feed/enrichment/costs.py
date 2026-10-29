@@ -79,6 +79,14 @@ class CostLedger:
                     EnrichmentBatchRow.status == "open")) or 0.0
         return float(spent) + float(reserved)
 
+    def spend_since(self, start: datetime) -> float:
+        """Every provider's spend since `start`, plus every open batch's reservation (scheduled jobs' daily cap)."""
+        with self.store.session() as s:
+            spent = s.scalar(select(func.sum(FeedCostRow.usd)).where(FeedCostRow.at >= start)) or 0.0
+            reserved = s.scalar(select(func.sum(EnrichmentBatchRow.reserved_usd)).where(
+                EnrichmentBatchRow.status == "open")) or 0.0
+        return float(spent) + float(reserved)
+
     def check(self, provider: str, usd: float, budget: float, now: datetime | None = None) -> None:
         spent = self.month_spend(provider, now)
         if spent + usd > budget:

@@ -61,15 +61,20 @@ class Enricher:
 
     # --- what needs doing ----------------------------------------------------
 
-    def pending_post_ids(self, limit: int | None = None, source: str | None = None) -> list[str]:
+    def pending_post_ids(self, limit: int | None = None, source: str | None = None,
+                         published_after: datetime | None = None) -> list[str]:
         """Posts never enriched, or enriched by an older prompt, and not waiting in an open batch; only from
-        `source` when given (e.g. the X posts an inferred run is waiting on)."""
+        `source` when given (e.g. the X posts an inferred run is waiting on), and only those published since
+        `published_after` when given (scheduled runs leave the old backlog alone)."""
         with self.store.session() as s:
             current = set(s.scalars(select(EnrichedPostRow.post_id).where(
                 EnrichedPostRow.prompt_version == self.cfg.prompt_version)))
             in_batches = {pid for ids in s.scalars(select(EnrichmentBatchRow.post_ids).where(
                 EnrichmentBatchRow.status == "open")) for pid in ids}
         only = self.posts.ids_from_source(source) if source else None
+        if published_after is not None:
+            recent = self.posts.ids_published_since(published_after)
+            only = recent if only is None else only & recent
         pending = []
         for post_id in self.posts.all_ids():
             if only is not None and post_id not in only:

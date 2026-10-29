@@ -598,6 +598,57 @@ class ModelRow(FeedBase):
     metrics: Mapped[dict[str, Any]] = mapped_column(JSON, default=dict)
 
 
+# --- accounts and sign-in (signal_feed/auth.py) -----------------------------------
+
+class AccountRow(FeedBase):
+    """A person who signed in by email. `user_id` is set once they finish onboarding (one feed user each)."""
+
+    __tablename__ = "accounts"
+
+    id: Mapped[str] = mapped_column(String(32), primary_key=True)
+    email: Mapped[str] = mapped_column(String(254), unique=True)       # lowercased; used only to send links
+    user_id: Mapped[str | None] = mapped_column(ForeignKey("users.id"), unique=True)
+    created_at: Mapped[datetime] = mapped_column(UTCDateTime)
+    last_login_at: Mapped[datetime | None] = mapped_column(UTCDateTime)
+
+
+class LoginLinkRow(FeedBase):
+    """A sent magic link. Only the token's SHA-256 is stored; it works once, until `expires_at`."""
+
+    __tablename__ = "login_links"
+
+    token_hash: Mapped[str] = mapped_column(String(64), primary_key=True)
+    email: Mapped[str] = mapped_column(String(254), index=True)
+    created_at: Mapped[datetime] = mapped_column(UTCDateTime, index=True)
+    expires_at: Mapped[datetime] = mapped_column(UTCDateTime)
+    used_at: Mapped[datetime | None] = mapped_column(UTCDateTime)
+
+
+class SessionRow(FeedBase):
+    """A signed-in session. Only the token's SHA-256 is stored."""
+
+    __tablename__ = "sessions"
+
+    token_hash: Mapped[str] = mapped_column(String(64), primary_key=True)
+    account_id: Mapped[str] = mapped_column(ForeignKey("accounts.id"), index=True)
+    created_at: Mapped[datetime] = mapped_column(UTCDateTime)
+    expires_at: Mapped[datetime] = mapped_column(UTCDateTime)
+    revoked_at: Mapped[datetime | None] = mapped_column(UTCDateTime)
+
+
+# --- scheduled jobs (signal_feed/jobs.py) ---------------------------------------
+
+class JobRunRow(FeedBase):
+    __tablename__ = "job_runs"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    job: Mapped[str] = mapped_column(String(32), index=True)
+    started_at: Mapped[datetime] = mapped_column(UTCDateTime, index=True)
+    finished_at: Mapped[datetime | None] = mapped_column(UTCDateTime)
+    status: Mapped[str] = mapped_column(String(16))          # running | ok | failed
+    output: Mapped[str | None] = mapped_column(Text)          # the job's last lines
+
+
 # --- store ---------------------------------------------------------------------
 
 def _sqlite_pragmas(dbapi_conn: Any, _record: Any) -> None:
