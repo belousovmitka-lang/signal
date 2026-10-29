@@ -9,13 +9,14 @@ from __future__ import annotations
 
 import os
 import json
+from pathlib import Path
 from typing import Annotated, Literal
 
 from fastapi import Depends, FastAPI, HTTPException, Query, Request, Response
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, Field
 
-from sqlalchemy import select
+from sqlalchemy import func, select
 
 from signal_connectors.clips import Clip, ClipIn
 
@@ -32,7 +33,7 @@ from .feed import usermap
 from .feed.usermodel import UnknownNodeError, apply_events, onboard
 from .niches.tree import seed_labels
 from .posts import PostsReader
-from .settings import FeedSettings
+from .settings import REPO_ROOT, FeedSettings
 
 
 class Quiz(BaseModel):
@@ -139,7 +140,7 @@ Me = Annotated[Account | None, Depends(signed_in)]
 
 
 CALLBACK_PAGE = """<!doctype html><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
-<title>Sign in to Signal</title>
+<title>Sign in to Signal</title><link rel=icon href="data:,">
 <style>body{font:16px system-ui;max-width:420px;margin:15vh auto;padding:0 16px;text-align:center}
 button{font:inherit;padding:10px 28px;border-radius:8px;border:0;background:#222;color:#fff;cursor:pointer}</style>
 <h1>Sign in to Signal</h1><p id=msg></p><button id=go>Sign in</button>
@@ -149,15 +150,16 @@ document.getElementById("go").onclick = async (e) => {
   e.target.disabled = true;
   const r = await fetch("/auth/verify", {method: "POST", credentials: "same-origin",
     headers: {"Content-Type": "application/json"}, body: JSON.stringify({token})});
-  document.getElementById("msg").textContent = r.ok ? "You're signed in. You can close this tab."
-    : "This link has expired or was already used. Ask for a new one.";
+  if (r.ok) { location.replace("/"); return; }
+  document.getElementById("msg").textContent = "This link has expired or was already used. Ask for a new one.";
   e.target.hidden = true;
 };
 </script>"""
 
 
 def create_app(store: FeedStore, posts: PostsReader, config: FeedConfig, service: FeedService | None = None,
-               clips_db_url: str | None = None, auth: Auth | None = None) -> FastAPI:
+               clips_db_url: str | None = None, auth: Auth | None = None, web_dir: Path | None = None,
+               warm: bool = False) -> FastAPI:
     app = FastAPI(title="Signal feed")
     app.state.auth = auth
 
@@ -178,6 +180,9 @@ def create_app(store: FeedStore, posts: PostsReader, config: FeedConfig, service
             from .enrichment.embeddings import VoyageEmbedder
             embedder = VoyageEmbedder(config.embeddings)
         service = FeedService(store, config, FeedDataCache(store, posts), clip_embedder=embedder)
+    if warm:     # loading every post takes ~20 s: do it at start, not on the first person's request
+        import threading
+        threading.Thread(target=service.cache.get, name="warm-feed-data", daemon=True).start()
 
     @app.get("/onboarding/options")
     def onboarding_options() -> dict:
@@ -203,7 +208,32 @@ def create_app(store: FeedStore, posts: PostsReader, config: FeedConfig, service
                  cursor: str | None = None, explore: bool = False) -> FeedPage:
         # `cursor` is accepted for API compatibility: the session's own impressions say what was shown.
         _user(user_id, me)
-        return service.page(user_id, session_id, explore_more=explore)
+        page = service.page(user_id, session_id, explore_more=explore)
+        if auth is not None:       # signed-in clients are people: no scores, no internal reasons (never shown)
+            for it in page.items:
+                it.score, it.score_breakdown = None, {}
+        return page
+
+    @app.get("/saved")
+    def get_saved(user_id: str, me: Me, limit: int = Query(100, ge=1, le=500)) -> dict:
+        """What the user saved, most recent first (items no longer in the feed's data are left out)."""
+        _user(user_id, me)
+        from .db import EventRow
+        from .feed.data import item_key
+        data = service.cache.get()
+        with store.session() as s:
+            rows = s.execute(select(EventRow.item_type, EventRow.item_id, func.max(EventRow.at)).where(
+                EventRow.user_id == user_id, EventRow.event_type == "save")
+                .group_by(EventRow.item_type, EventRow.item_id).order_by(func.max(EventRow.at).desc()).limit(limit))
+            out = []
+            for item_type, item_id, at in rows:
+                it = data.by_id.get(item_key(item_type, item_id))
+                if it is not None:
+                    out.append({"item_type": item_type, "item_id": item_id, "kind": "inferred" if item_type == "inferred"
+                                else "reported", "title": it.title, "summary": it.summary, "url": it.url,
+                                "source": it.source, "post_type": it.post_type, "niche_path": data.path(it.niche_id),
+                                "confidence": it.confidence, "saved_at": at.isoformat()})
+        return {"items": out}
 
     def _act(fn, *args, **kw) -> dict:
         try:
@@ -409,6 +439,15 @@ def create_app(store: FeedStore, posts: PostsReader, config: FeedConfig, service
             response.delete_cookie(COOKIE)
             return {"ok": True}
 
+    if web_dir is not None and (web_dir / "index.html").is_file():     # the web app (web/), same origin as the API
+        from fastapi.responses import FileResponse
+        from fastapi.staticfiles import StaticFiles
+        app.mount("/static", StaticFiles(directory=web_dir), name="static")
+
+        @app.get("/", include_in_schema=False)
+        def index() -> FileResponse:
+            return FileResponse(web_dir / "index.html", headers={"Cache-Control": "no-cache"})
+
     return app
 
 
@@ -443,4 +482,5 @@ def app_from_env() -> FastAPI:
     settings = FeedSettings.from_env()
     store, config = FeedStore(settings.feed_database_url), load_feed_config(settings.config_file)
     return create_app(store, PostsReader(settings.posts_database_url), config,
-                      clips_db_url=settings.posts_database_url, auth=auth_from_env(store, config))
+                      clips_db_url=settings.posts_database_url, auth=auth_from_env(store, config),
+                      web_dir=REPO_ROOT / "web", warm=True)

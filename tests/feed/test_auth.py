@@ -154,3 +154,27 @@ def test_without_auth_routes_trust_the_given_user(world, feed_store, feed_config
     uid = c.post("/onboarding", json={"industries": ["Legal"]}).json()["user_id"]
     assert c.get("/map", params={"user_id": uid}).status_code == 200
     assert c.post("/auth/start", json={"email": "a@b.co"}).status_code == 404       # no sign-in routes
+
+
+def test_signed_in_app_serves_the_web_app_saved_items_and_no_scores(env, tmp_path):
+    app, mail, _ = env
+    c, _ = sign_in(app, mail, "eve@example.com")
+    uid = c.post("/onboarding", json={"industries": ["Legal"]}).json()["user_id"]
+    page = c.get("/feed", params={"user_id": uid, "session_id": "s1"}).json()
+    assert page["items"] and all(it["score"] is None and it["score_breakdown"] == {} for it in page["items"])
+    first = page["items"][0]
+    c.post("/events", json={"user_id": uid, "events": [{"client_event_id": "e1", "session_id": "s1", "type": "save",
+                                                        "item_type": first["item_type"], "item_id": first["item_id"],
+                                                        "at": NOW.isoformat()}]})
+    saved = c.get("/saved", params={"user_id": uid}).json()["items"]
+    assert [s["item_id"] for s in saved] == [first["item_id"]] and saved[0]["title"] == first["title"]
+    assert TestClient(app).get("/saved", params={"user_id": uid}).status_code == 401
+
+
+def test_the_web_app_is_served_from_the_same_origin(world, feed_store, feed_config):  # noqa: F811
+    from signal_feed.settings import REPO_ROOT
+    c = TestClient(create_app(feed_store, world[0], feed_config, web_dir=REPO_ROOT / "web"))
+    index = c.get("/")
+    assert index.status_code == 200 and '<div id="app">' in index.text
+    assert c.get("/static/app.js").status_code == 200 and c.get("/static/vendor/preact-htm.js").status_code == 200
+    assert TestClient(create_app(feed_store, world[0], feed_config)).get("/").status_code == 404

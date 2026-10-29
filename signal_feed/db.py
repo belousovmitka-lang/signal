@@ -87,7 +87,7 @@ class EnrichedPostRow(FeedBase):
     model: Mapped[str | None] = mapped_column(String(64))           # the model whose tags were kept
     embedding_model: Mapped[str | None] = mapped_column(String(64))
     cost_usd: Mapped[float] = mapped_column(Float, default=0.0)
-    enriched_at: Mapped[datetime] = mapped_column(UTCDateTime)
+    enriched_at: Mapped[datetime] = mapped_column(UTCDateTime, index=True)   # max() checks the feed cache
 
 
 class ObligationRow(FeedBase):
@@ -679,6 +679,12 @@ def _add_missing_columns(engine: Engine) -> None:
                 clause = f" DEFAULT '{default}'" if isinstance(default, str) else (
                     f" DEFAULT {int(default) if isinstance(default, bool) else default}" if default is not None else "")
                 conn.execute(text(f'ALTER TABLE {table.name} ADD COLUMN "{col.name}" {ddl}{clause}'))
+    for table in FeedBase.metadata.sorted_tables:      # ...nor adds indexes declared since
+        if insp.has_table(table.name):
+            have = {ix["name"] for ix in insp.get_indexes(table.name)}
+            for index in table.indexes:
+                if index.name not in have:
+                    index.create(engine, checkfirst=True)
 
 
 class FeedStore:

@@ -32,7 +32,7 @@ from ..db import (
     UserQuizRow,
 )
 from ..enrichment.pii import scrub
-from .common import Evidence, confidence
+from .common import Evidence, confidence, shown_evidence
 
 VOTES = ("yes", "no", "partly")
 LEVELS = ("low", "medium", "high")
@@ -173,7 +173,7 @@ def next_prompt(store: FeedStore, config: FeedConfig, user_id: str, clock: Calla
         s.add(InsiderPromptRow(user_id=user_id, inferred_id=p.id, prompted_at=now))
         ev = _evidence(s, p.id)
         return {"inferred_id": p.id, "question": QUESTION, "hypothesis": p.hypothesis, "answers": list(VOTES),
-                "evidence": [{"url": e.url, "source": e.source, "what_it_shows": e.what_it_shows} for e in ev[:3]],
+                "evidence": [shown_evidence(e.url, e.source, e.what_it_shows) for e in ev[:3]],     # X: embeds
                 "evidence_more": max(0, len(ev) - 3)}
 
 
