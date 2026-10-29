@@ -394,7 +394,9 @@ sources:
       checked_at: 2026-10-09
       notes: >-
         Socrata SODA API (NYC, Chicago open data) and CKAN (open.canada.ca), no key. Only the fields
-        named per query are stored: no applicant names, phone numbers or street addresses.
+        named per query are stored: no applicant names, phone numbers or street addresses. FCC consumer
+        complaints (opendata.fcc.gov, public domain, robots allows /resource): weekly counts per issue only,
+        since rows have no narrative and carry caller numbers and ZIPs (2026-10-28).
     queries:
       - industry_hint: restaurants
         limit: 300
@@ -435,6 +437,18 @@ sources:
           community: "NYC 311 / {borough}"
           keep: [complaint_type, descriptor, agency, borough, status]
       - {limit: 100, params: {kind: ckan, base: "https://open.canada.ca/data"}}
+      - limit: 40
+        params:
+          kind: socrata_counts
+          name: FCC consumer complaints
+          domain: opendata.fcc.gov
+          dataset: 3xyp-aqkj
+          date_field: date_created
+          group: [issue_type, issue]
+          window_days: 7
+          min_count: 20
+          unit: complaints
+          title: "FCC complaints: {issue_type} / {issue}"
 
   huggingface:
     enabled: true
@@ -842,6 +856,25 @@ sources:
         addresses or inspection numbers). Data lag about a month behind issuance.
     queries:
       - {params: {days: 30}, limit: 50}
+
+  nhtsa:
+    enabled: true
+    status: done
+    status_date: 2026-10-28
+    route: own_api
+    source_type: government
+    cadence: weekly
+    access_check:
+      robots: allowed
+      terms: allowed
+      decision: full
+      terms_url: https://www.nhtsa.gov/nhtsa-datasets-and-apis
+      checked_at: 2026-10-28
+      notes: >-
+        ODI complaints flat file (static.nhtsa.gov, no robots.txt: allowed), US government work, no key. Owner
+        narratives kept (contacts redacted); VIN, city, dealer and operator name not stored. ~10,000 complaints/month.
+    queries:
+      - {industry_hint: auto_repair, limit: 3000}
 
   github:
     enabled: true

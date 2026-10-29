@@ -66,3 +66,35 @@ async def test_cassette_socrata_and_ckan(settings):
     assert len(permits) == 15 and len(datasets) == 10
     assert all(set(p.raw) <= {"dataset", "domain", "permit_type", "reported_cost"} for p in permits)
     assert all(p.url.startswith("https://open.canada.ca/data/dataset/") and p.title for p in datasets)
+
+
+async def test_socrata_counts_posts_one_count_per_group_with_change(make_services):
+    seen = []
+
+    def handler(request):
+        if request.url.path == "/robots.txt":
+            return httpx.Response(200, text="User-agent: *\nDisallow: /browse?*&q=\n")
+        params = dict(request.url.params)
+        seen.append(params)
+        previous = len(seen) == 2
+        return httpx.Response(200, json=[
+            {"issue_type": "Internet", "issue": "Billing", "n": "300" if previous else "450"},
+            {"issue_type": "Phone", "issue": "Junk Faxes", "n": "5"},
+        ] + ([] if previous else [{"issue_type": "Internet", "issue": "Speed", "n": "60"}]))
+
+    sources = {"sources": {"open_data": {"route": "own_api", "source_type": "government", "queries": [
+        {"limit": 10, "params": {"kind": "socrata_counts", "domain": "opendata.fcc.gov", "dataset": "3xyp-aqkj",
+                                 "date_field": "date_created", "group": ["issue_type", "issue"], "window_days": 7,
+                                 "min_count": 20, "unit": "complaints", "title": "FCC complaints: {issue_type} / {issue}"}}]}}}
+    async with make_services(sources, handler) as svc:
+        out = await run_source(svc, svc.sources.get("open_data"), collect=True)
+    assert seen[0]["$group"] == "issue_type, issue" and "count(*) AS n" in seen[0]["$select"]
+    assert out.result.new == 2                                       # Junk Faxes is under min_count
+    billing, speed = out.posts
+    assert billing.title == "FCC complaints: Internet / Billing" and "450 complaints" in billing.text
+    assert "+50% vs the 7 days before (300)" in billing.text and billing.raw["previous_count"] == 300
+    assert "new this window" in speed.text
+    async with make_services(sources, handler) as svc:                 # same window again: no duplicates
+        seen.clear()
+        again = await run_source(svc, svc.sources.get("open_data"), collect=True)
+    assert again.result.new == 0

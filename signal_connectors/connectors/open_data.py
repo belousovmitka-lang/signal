@@ -15,6 +15,19 @@ columns such as applicant names or street addresses never reach the database):
       keep: [cuisine_description, critical_flag, grade]
       where: "critical_flag = 'Critical'"                  # optional SoQL
 
+Socrata counts (datasets whose rows carry no text, like FCC consumer complaints): one post per group
+per window with its count and the change from the window before, never the rows themselves:
+
+    params:
+      kind: socrata_counts
+      domain: opendata.fcc.gov
+      dataset: 3xyp-aqkj
+      date_field: date_created
+      group: [issue_type, issue]
+      window_days: 7
+      min_count: 20
+      title: "FCC complaints: {issue_type} / {issue}"
+
 CKAN query: {params: {kind: ckan, base: https://open.canada.ca/data}, keywords: [permits]}
 (catalog.data.gov's CKAN API returns 404 since its 2026 move; checked 2026-10-09).
 """
@@ -23,6 +36,7 @@ from __future__ import annotations
 
 from collections import defaultdict
 from collections.abc import AsyncIterator
+from datetime import datetime, time, timedelta, timezone
 from typing import Any
 from urllib.parse import urlencode
 
@@ -51,10 +65,10 @@ class OpenDataConnector(BaseConnector):
 
     async def fetch(self, query: SourceQuery) -> AsyncIterator[RawPost]:
         kind = query.params.get("kind", "socrata")
-        gen = self._socrata(query) if kind == "socrata" else self._ckan(query) if kind == "ckan" else None
+        gen = {"socrata": self._socrata, "socrata_counts": self._socrata_counts, "ckan": self._ckan}.get(kind)
         if gen is None:
             raise ValueError(f"unknown open_data kind {kind!r}")
-        async for post in gen:
+        async for post in gen(query):
             yield post
 
     # --- Socrata -------------------------------------------------------------------
@@ -103,6 +117,49 @@ class OpenDataConnector(BaseConnector):
             raw={"dataset": p["dataset"], "domain": p["domain"],
                  **{k: row.get(k) for k in p.get("keep", []) if row.get(k) is not None}},
         )
+
+    async def _counts(self, url: str, p: dict[str, Any], start: datetime, end: datetime) -> dict[tuple, int]:
+        group = p["group"]
+        await self.services.robots.require(url)
+        rows = await self.http.get_json(url, params={
+            "$select": ", ".join(group + ["count(*) AS n"]), "$group": ", ".join(group), "$limit": 5000,
+            "$where": f"{p['date_field']} >= '{start:%Y-%m-%dT%H:%M:%S}' AND {p['date_field']} < '{end:%Y-%m-%dT%H:%M:%S}'"})
+        return {tuple(r.get(g) or "" for g in group): int(r.get("n") or 0) for r in rows}
+
+    async def _socrata_counts(self, query: SourceQuery) -> AsyncIterator[RawPost]:
+        p = query.params
+        for key in ("domain", "dataset", "date_field", "group", "title"):
+            if not p.get(key):
+                raise ValueError(f"socrata_counts query needs params.{key}")
+        url = f"https://{p['domain']}/resource/{p['dataset']}.json"
+        days = int(p.get("window_days", 7))
+        # Whole days only, ending yesterday: today's rows are still arriving.
+        end = datetime.combine(datetime.now(timezone.utc).date(), time(), tzinfo=timezone.utc)
+        start = end - timedelta(days=days)
+        current = await self._counts(url, p, start, end)
+        previous = await self._counts(url, p, start - timedelta(days=days), start)
+        ranked = sorted(current.items(), key=lambda kv: kv[1], reverse=True)
+        for values, n in ranked[:query.limit]:
+            if n < int(p.get("min_count", 1)):
+                continue
+            row = dict(zip(p["group"], values))
+            before = previous.get(values, 0)
+            change = f"{(n - before) / before:+.0%} vs the {days} days before ({before})" if before else "new this window"
+            label = " / ".join(v for v in values if v) or "unspecified"
+            yield self.make_post(
+                source=f"open_data:{p['domain']}:{p['dataset']}",
+                url=f"{url}?{urlencode({**row, 'window': f'{start:%Y-%m-%d}/{end:%Y-%m-%d}'})}",
+                title=render(p["title"], row) or label,
+                text=f"{n} {p.get('unit', 'records')} in the {days} days to {end - timedelta(days=1):%Y-%m-%d}: "
+                     f"{label}. {change}.",
+                is_snippet=False,
+                community=p.get("name"),
+                published_at=end - timedelta(seconds=1),
+                language="en",
+                industry_hint=query.industry_hint,
+                raw={"dataset": p["dataset"], "domain": p["domain"], "group": row, "count": n,
+                     "previous_count": before, "window_start": f"{start:%Y-%m-%d}", "window_days": days},
+            )
 
     # --- CKAN ----------------------------------------------------------------------
 
