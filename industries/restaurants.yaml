@@ -91,11 +91,12 @@ rss_feeds:
   full_text: true
 - name: qsrmagazine
   url: https://www.qsrmagazine.com/feed/
-  status: live
-  checked_at: '2026-10-10'
-  locked: false
+  status: blocked
+  checked_at: '2026-10-28'
+  locked: true
   entries: 25
   full_text: true
+  notes: 403 Forbidden to SignalBot since 2026-10-21 (bot wall, not bypassed)
 - name: fsrmagazine
   url: https://www.fsrmagazine.com/feed/
   status: live

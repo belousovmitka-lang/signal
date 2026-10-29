@@ -209,9 +209,9 @@ job_boards:
   locked: true
 - name: Fresha
   url: https://jobs.lever.co/fresha
-  status: live
-  checked_at: '2026-10-11'
-  notes: lever board, 153 open jobs (find_job_boards.py)
+  status: dead
+  checked_at: '2026-10-28'
+  notes: Lever board removed (404 Document not found, 2026-10-28)
   locked: true
 - name: Mangomint
   url: https://jobs.ashbyhq.com/mangomint

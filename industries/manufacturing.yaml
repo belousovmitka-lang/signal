@@ -97,14 +97,16 @@ forums:
   terms: unchecked
 - name: PLCtalk
   url: https://www.plctalk.net/forums/
-  status: live
-  checked_at: '2026-10-10'
+  status: blocked
+  checked_at: '2026-10-28'
   software: xenforo
   rss: https://www.plctalk.net/forums/forums/-/index.rss
   robots: allowed
   terms: allowed
   terms_url: https://www.plctalk.net/user-agreement/
   terms_notes: User agreement has no clause on automated access, commercial use or AI. (read 2026-10-09)
+  locked: true
+  notes: board RSS answers SignalBot with 403 since 2026-10-21 (bot wall, not bypassed)
 rss_feeds:
 - name: manufacturingdive
   url: https://www.manufacturingdive.com/feeds/news/

@@ -144,11 +144,12 @@ rss_feeds:
   full_text: true
 - name: jlc
   url: https://www.jlconline.com/feed/
-  status: live
-  checked_at: '2026-10-10'
-  locked: false
+  status: blocked
+  checked_at: '2026-10-28'
+  locked: true
   entries: 10
   full_text: true
+  notes: 403 Forbidden to SignalBot since 2026-10-21 (bot wall, not bypassed)
 - name: achrnews
   url: https://www.achrnews.com/rss
   status: dead
