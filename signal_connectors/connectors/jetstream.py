@@ -113,6 +113,13 @@ class PainMatcher:
         return (best[1], best[2]) if best else None
 
 
+def is_english(record: Any) -> bool:
+    """The record's own `langs` include English. Records are whatever the author's client wrote, so any field
+    can have the wrong type (a number in `langs` stopped a run, 2026-10-30): those records are skipped."""
+    langs = record.get("langs") if isinstance(record, dict) else None
+    return isinstance(langs, list) and any(isinstance(x, str) and x.split("-")[0].lower() == "en" for x in langs)
+
+
 def web_url(did: str, rkey: str) -> str:
     return f"https://bsky.app/profile/{did}/post/{rkey}"
 
@@ -177,12 +184,11 @@ class JetstreamConnector(BaseConnector):
                     if event.get("collection") == POST:
                         if event.get("operation") == "delete":
                             deletes.append(web_url(event["did"], event["rkey"]))
-                        elif event.get("operation") == "create":
-                            record = event.get("record") or {}
-                            if "en" in [lang.split("-")[0].lower() for lang in record.get("langs") or []]:
-                                english += 1
-                                if hit := self.matcher.match(record.get("text") or ""):
-                                    kept.append({"event": event, "industry": hit[0], "role": hit[1]})
+                        elif event.get("operation") == "create" and is_english(record := event.get("record")):
+                            english += 1
+                            text = record.get("text")
+                            if isinstance(text, str) and (hit := self.matcher.match(text)):
+                                kept.append({"event": event, "industry": hit[0], "role": hit[1]})
                 else:
                     raise WebSocketError("stream closed by the server")
             except WebSocketError as exc:

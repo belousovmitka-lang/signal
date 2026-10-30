@@ -189,6 +189,8 @@ async def test_run_keeps_matches_skips_hidden_authors_and_stops_at_run_start(mak
         event(2, 40, text="Ohio State offense is a nightmare"),
         event(3, 30, text=PAIN.replace("rate", "load"), did="did:plc:hidden"),
         event(4, 20, text=PAIN.replace("every", "each"), langs=("pt",)),
+        event(6, 15, text=PAIN.replace("every", "any"), langs=(7,)),      # malformed langs (2026-10-30): skipped
+        event(7, 12, text=None),                                         # no text: skipped
         event(5, -1, text=PAIN.replace("every", "all")),             # after the run started: not read
     ]])
     async with make_services(src(), appview(hidden={"did:plc:hidden"})) as svc:
@@ -259,3 +261,10 @@ async def test_ws_network_failure_on_connect_is_a_websocket_error():
     with pytest.raises(WebSocketError, match="connect failed") as exc:
         await WebSocket.connect(f"ws://127.0.0.1:{port}/sub")
     assert exc.value.status is None
+
+
+def test_malformed_records_are_skipped_not_fatal():
+    from signal_connectors.connectors.jetstream import is_english
+    assert is_english({"langs": ["en-US"]}) and is_english({"langs": [7, "en"]})
+    for bad in ({"langs": [7]}, {"langs": "en"}, {"langs": None}, {}, None, "x", {"langs": [{"en": 1}]}):
+        assert not is_english(bad)
