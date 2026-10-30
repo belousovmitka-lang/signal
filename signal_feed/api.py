@@ -146,9 +146,19 @@ Me = Annotated[Account | None, Depends(signed_in)]
 
 CALLBACK_PAGE = """<!doctype html><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
 <title>Sign in to Signal</title><link rel=icon href="data:,">
-<style>body{font:16px system-ui;max-width:420px;margin:15vh auto;padding:0 16px;text-align:center}
-button{font:inherit;padding:10px 28px;border-radius:8px;border:0;background:#222;color:#fff;cursor:pointer}</style>
-<h1>Sign in to Signal</h1><p id=msg></p><button id=go>Sign in</button>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;600;700&display=swap" rel=stylesheet>
+<style>body{margin:0;background:#f5f5f3;color:#141414;font:15px/22px "Schibsted Grotesk",system-ui,sans-serif}
+main{max-width:440px;margin:15vh auto 0;padding:0 16px}.logo{display:flex;align-items:center;gap:10px;font-size:21px;
+font-weight:700;letter-spacing:-.02em;margin:0 4px 20px}.card{background:#fff;border:1px solid #e6e6e2;border-radius:16px;
+padding:28px 24px}h1{margin:0 0 8px;font-size:22px;line-height:29px;letter-spacing:-.02em}p{margin:0 0 24px;color:#3d3e42}
+button{font:inherit;font-weight:600;height:48px;padding:0 26px;border-radius:999px;border:0;background:#141414;color:#fff;
+cursor:pointer}button:hover{background:#2e2e2e}button:focus-visible{outline:2px solid #141414;outline-offset:2px}
+button:disabled{opacity:.55}</style>
+<main><div class=logo><svg width=24 height=24 viewBox="0 0 24 24" aria-hidden=true><rect x=1 y=16 width=3.4 height=6 rx=1.2
+fill="#141414"/><rect x=6 y=12.5 width=3.4 height=9.5 rx=1.2 fill="#141414"/><rect x=11 y=9 width=3.4 height=13 rx=1.2
+fill="#141414"/><rect x=16 y=5.5 width=3.4 height=16.5 rx=1.2 fill="#141414"/><rect x=20.6 y=2 width=3.4 height=20 rx=1.2
+fill="#e8590c"/></svg>Signal</div><div class=card><h1>Sign in to Signal</h1>
+<p id=msg>One tap and you're in. This link works once.</p><button id=go>Sign in</button></div></main>
 <script>
 const token = %s;
 document.getElementById("go").onclick = async (e) => {

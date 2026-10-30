@@ -25,6 +25,7 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from email.message import EmailMessage
+from html import escape
 from typing import Protocol
 
 from sqlalchemy import delete, func, select
@@ -46,7 +47,38 @@ class AuthError(ValueError):
 
 
 class Mailer(Protocol):
-    def send(self, to: str, subject: str, body: str) -> None: ...
+    def send(self, to: str, subject: str, body: str, html: str | None = None) -> None: ...
+
+
+def link_email(link: str, minutes: int) -> tuple[str, str]:
+    """The sign-in email as plain text and HTML (the app's design: ground, white card, near-black button;
+    orange only in the logo). Inline styles and tables, because mail clients drop stylesheets."""
+    text = (f"Sign in to Signal:\n\n{link}\n\nThe link works once and expires in {minutes} minutes. "
+            "If you didn't ask for it, ignore this email.\n")
+    bars = "".join(f'<td valign="bottom" style="padding:0 1px"><div style="width:4px;height:{h}px;border-radius:1px;'
+                   f'background:{c}"></div></td>' for h, c in
+                   ((6, "#141414"), (9, "#141414"), (13, "#141414"), (16, "#141414"), (20, "#e8590c")))
+    href = escape(link, quote=True)
+    font = "'Schibsted Grotesk',system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif"
+    html = f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
+<title>Sign in to Signal</title></head>
+<body style="margin:0;padding:0;background:#f5f5f3">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f5f5f3"><tr><td align="center" style="padding:32px 16px">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:480px;font-family:{font};color:#141414">
+<tr><td style="padding:0 4px 20px"><table role="presentation" cellpadding="0" cellspacing="0"><tr>{bars}
+<td style="padding-left:10px;font-size:21px;font-weight:700;letter-spacing:-0.02em">Signal</td></tr></table></td></tr>
+<tr><td style="background:#ffffff;border:1px solid #e6e6e2;border-radius:16px;padding:28px 24px">
+<h1 style="margin:0 0 8px;font-size:22px;line-height:29px;font-weight:700;letter-spacing:-0.02em">Sign in to Signal</h1>
+<p style="margin:0 0 24px;font-size:15px;line-height:23px;color:#3d3e42">Tap the button to sign in. It works once and expires in {minutes} minutes.</p>
+<table role="presentation" cellpadding="0" cellspacing="0"><tr><td style="border-radius:999px;background:#141414">
+<a href="{href}" style="display:inline-block;padding:14px 26px;font-size:15px;font-weight:600;color:#ffffff;text-decoration:none;border-radius:999px">Sign in</a>
+</td></tr></table>
+<p style="margin:24px 0 0;font-size:13px;line-height:19px;color:#5f6064">If the button doesn't work, paste this link into your browser:<br>
+<a href="{href}" style="color:#5f6064;word-break:break-all">{href}</a></p>
+</td></tr>
+<tr><td style="padding:16px 4px 0;font-size:13px;line-height:19px;color:#5f6064">If you didn't ask for this, ignore this email. No one can sign in without the link.</td></tr>
+</table></td></tr></table></body></html>"""
+    return text, html
 
 
 class SmtpMailer:
@@ -55,10 +87,12 @@ class SmtpMailer:
     def __init__(self, host: str, port: int, user: str | None, password: str | None, sender: str) -> None:
         self.host, self.port, self.user, self.password, self.sender = host, port, user, password, sender
 
-    def send(self, to: str, subject: str, body: str) -> None:
+    def send(self, to: str, subject: str, body: str, html: str | None = None) -> None:
         msg = EmailMessage()
         msg["From"], msg["To"], msg["Subject"] = self.sender, to, subject
         msg.set_content(body)
+        if html:
+            msg.add_alternative(html, subtype="html")
         smtp = smtplib.SMTP_SSL(self.host, self.port, timeout=20) if self.port == 465 \
             else smtplib.SMTP(self.host, self.port, timeout=20)
         with smtp:
@@ -72,7 +106,7 @@ class SmtpMailer:
 class LogMailer:
     """Development only: writes the email to the server log instead of sending it."""
 
-    def send(self, to: str, subject: str, body: str) -> None:
+    def send(self, to: str, subject: str, body: str, html: str | None = None) -> None:
         log.warning("SMTP not configured; email to %s not sent:\n%s", to, body)
 
 
@@ -137,10 +171,8 @@ class Auth:
             token = secrets.token_urlsafe(32)
             s.add(LoginLinkRow(token_hash=_hash(token), email=email, created_at=now,
                                expires_at=now + timedelta(minutes=self.cfg.link_minutes)))
-        self.mailer.send(email, "Your Signal sign-in link",
-                         f"Sign in to Signal:\n\n{self.app_url}/auth/callback?token={token}\n\n"
-                         f"The link works once and expires in {self.cfg.link_minutes} minutes. "
-                         "If you didn't ask for it, ignore this email.\n")
+        text, html = link_email(f"{self.app_url}/auth/callback?token={token}", self.cfg.link_minutes)
+        self.mailer.send(email, "Your Signal sign-in link", text, html=html)
 
     def verify(self, token: str) -> SignedIn:
         """Use a sign-in link: one time, before it expires. Creates the account on first sign-in."""

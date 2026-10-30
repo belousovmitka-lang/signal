@@ -20,8 +20,9 @@ class Mailbox:
     def __init__(self):
         self.sent = []
 
-    def send(self, to, subject, body):
+    def send(self, to, subject, body, html=None):
         self.sent.append((to, subject, body))
+        self.html = html
 
     def token(self, to=None):
         body = next(b for t, _, b in reversed(self.sent) if to is None or t == to)
@@ -279,3 +280,36 @@ def test_every_item_gets_a_written_headline_and_falls_back_until_then(world, fee
     assert set(written) == set(by_id) and all(not h.endswith(".") for h in written.values())
     assert headline(long_summary, written, feed_config) == written[long_summary.post_id]
     assert write_headlines(feed_store, reader, feed_config, data, llm, workers=1) == 0      # nothing left to write
+
+
+def test_the_sign_in_email_has_text_and_html_with_the_same_link(monkeypatch):
+    import smtplib
+
+    from signal_feed.auth import SmtpMailer, link_email
+    link = "https://signal.example/auth/callback?token=abc_DEF-123&x=1"
+    text, html = link_email(link, 15)
+    assert link in text and "15 minutes" in text
+    assert 'href="https://signal.example/auth/callback?token=abc_DEF-123&amp;x=1"' in html and "<script" not in html
+    sent = []
+
+    class FakeSMTP:
+        def __init__(self, host, port, timeout):
+            self.calls = []
+        def __enter__(self):
+            return self
+        def __exit__(self, *a):
+            return False
+        def starttls(self):
+            self.calls.append("starttls")
+        def login(self, user, password):
+            self.calls.append("login")
+        def send_message(self, msg):
+            sent.append((msg, self.calls))
+
+    monkeypatch.setattr(smtplib, "SMTP", FakeSMTP)
+    SmtpMailer("smtp.example", 587, "me@example.com", "pw", "Signal <me@example.com>").send(
+        "you@example.com", "Your Signal sign-in link", text, html=html)
+    msg, calls = sent[0]
+    assert calls == ["starttls", "login"] and msg["To"] == "you@example.com"
+    parts = {p.get_content_type(): p.get_content() for p in msg.iter_parts()}
+    assert link in parts["text/plain"] and "Sign in to Signal" in parts["text/html"]
