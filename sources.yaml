@@ -97,6 +97,12 @@ sources:
       - keywords: ["is there a tool", "is there an app", "is there software", "I would pay for",
                    "so tired of", "takes forever", "wish there was", "looking for a tool"]
         limit: 100
+      # first-hand complaints, comments included (added 2026-10-30: pain posts were ~10% of the feed's
+      # data against ~50% paid demand); about 100 hits a week together, measured on Algolia
+      - keywords: ["there's no way to", "nightmare to", "frustrating that", "huge pain", "biggest pain",
+                   "drives me crazy", "no good way to", "I spend hours", "I'd pay for", "at my job",
+                   "at work we", "my clients"]
+        limit: 100
       - {params: {tags: ask_hn}, limit: 100}          # every new Ask HN
       - {params: {list: jobstories}, limit: 60}        # YC company job posts (paid demand)
 
@@ -123,6 +129,12 @@ sources:
       # (one call per site; keyword searches here cost 5x the quota for a fraction of the posts)
       - communities: [softwarerecs, webapps, law, workplace, money, academia, diy, pm, freelancing]
         limit: 100
+      # practitioners' tool problems (added 2026-10-30): 2-10 new questions a week each
+      - {industry_hint: marketing, communities: [webmasters], limit: 100}
+      - {industry_hint: ecommerce, communities: [magento], limit: 100}
+      - {industry_hint: it_devtools, communities: [salesforce, sharepoint, wordpress, dba, softwareengineering, ux], limit: 100}
+      - {industry_hint: manufacturing, communities: [engineering], limit: 100}
+      - {industry_hint: agriculture, communities: [gis], limit: 100}
       - communities: [stackoverflow]
         keywords: ["is there a library", "is there a tool"]
         limit: 50
@@ -202,6 +214,9 @@ sources:
         Bot accounts and deleted/removed posts skipped; deletions re-checked on the origin instance.
     queries:
       - keywords: ["is there a tool", "is there an app", "is there software", "so tired of", "takes forever"]
+        limit: 50
+      # added 2026-10-30; Crawl-delay 60 makes each phrase a minute
+      - keywords: ["wish there was", "nightmare to", "drives me crazy", "at my job"]
         limit: 50
 
   app_reviews:
@@ -949,6 +964,19 @@ sources:
       - {params: {kind: repos, min_stars: 50}, limit: 100}
       - {params: {kind: discussions}, keywords: ['"feature request"'], limit: 100}
       - {params: {kind: discussions}, keywords: ['"is there a way"'], limit: 100}
+      # Issues and discussions on open-source software that clinics, shops, accountants, schools and
+      # fleets run themselves (added 2026-10-30): what its users can't do or what breaks for them.
+      # Several repo: qualifiers are OR'd; volumes are new issues a week, measured 2026-10-30.
+      - {industry_hint: healthcare, params: {kind: issues}, keywords: ["repo:openemr/openemr"], limit: 50}             # ~18
+      - {industry_hint: accounting, params: {kind: issues}, keywords: ["repo:invoiceninja/invoiceninja repo:akaunting/akaunting repo:dolibarr/dolibarr"], limit: 80}   # ~55
+      - {industry_hint: manufacturing, params: {kind: issues}, keywords: ["repo:frappe/erpnext"], limit: 60}          # ~45
+      - {industry_hint: hr, params: {kind: issues}, keywords: ["repo:frappe/hrms"], limit: 30}                        # ~8
+      - {industry_hint: ecommerce, params: {kind: issues}, keywords: ["repo:woocommerce/woocommerce repo:PrestaShop/PrestaShop repo:bagisto/bagisto"], limit: 100}   # ~90
+      - {industry_hint: marketing, params: {kind: issues}, keywords: ["repo:mautic/mautic repo:knadh/listmonk"], limit: 60}   # ~48
+      - {industry_hint: education, params: {kind: issues}, keywords: ["repo:chamilo/chamilo-lms repo:frappe/lms"], limit: 30}   # ~9
+      - {industry_hint: logistics, params: {kind: issues}, keywords: ["repo:traccar/traccar repo:fleetbase/fleetbase"], limit: 30}   # ~4
+      - {params: {kind: issues}, keywords: ["repo:paperless-ngx/paperless-ngx repo:twentyhq/twenty repo:chatwoot/chatwoot"], limit: 100}   # ~66
+      - {params: {kind: discussions}, keywords: ["repo:paperless-ngx/paperless-ngx repo:invoiceninja/invoiceninja repo:chamilo/chamilo-lms repo:twentyhq/twenty repo:medusajs/medusa"], limit: 60}   # ~43
 
   wikipedia:
     enabled: false                   # daily trending is mostly people in the news (true crime, celebrities): low signal

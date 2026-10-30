@@ -89,9 +89,9 @@ forums:
     Services. (read 2026-10-09)
 - name: Lobsters
   url: https://lobste.rs/
-  status: search_only
-  checked_at: '2026-10-15'
-  notes: robots.txt disallows; use the search route
+  status: blocked
+  checked_at: '2026-10-30'
+  notes: 'robots.txt Disallow / for all but listed search engines, Content-Signal ai-input=no (2026-10-30)'
   locked: false
   software: unknown
   robots: disallowed

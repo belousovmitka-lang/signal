@@ -70,16 +70,17 @@ forums:
   terms: unchecked
 - name: The Farming Forum
   url: https://thefarmingforum.co.uk/
-  status: live
-  checked_at: '2026-10-10'
+  status: blocked
+  checked_at: '2026-10-30'
   software: unknown
   robots: allowed
   terms: unchecked
+  notes: 'Cloudflare challenge on the terms page; robots.txt Content-Signal ai-train=no (2026-10-30)'
 - name: Yesterday's Tractors forums
   url: https://www.yesterdaystractors.com/forums/
-  status: search_only
-  checked_at: '2026-10-10'
-  notes: HTTP 403 to our bot; use the search route
+  status: blocked
+  checked_at: '2026-10-30'
+  notes: 'HTTP 403 to our bot (2026-10-30)'
   software: unknown
   robots: allowed
   terms: unchecked

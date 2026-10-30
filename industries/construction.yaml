@@ -98,9 +98,9 @@ forums:
   terms_notes: VerticalScope terms forbid collecting data by any automated means. (read 2026-10-09)
 - name: Mike Holt forums
   url: https://forums.mikeholt.com/
-  status: search_only
-  checked_at: '2026-10-10'
-  notes: HTTP 403 to our bot; use the search route
+  status: blocked
+  checked_at: '2026-10-30'
+  notes: 'HTTP 403 to our bot, robots.txt included (2026-10-30)'
   locked: false
   software: unknown
   robots: allowed

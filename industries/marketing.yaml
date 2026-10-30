@@ -85,16 +85,21 @@ forums:
   locked: false
   software: unknown
   robots: allowed
-  terms: unchecked
+  terms: forbidden
+  terms_url: https://www.warriorforum.com/tos.html
+  terms_notes: '"engaging in any automated use of the system ... or using any data mining, robots or similar data gathering and extraction tools" (read 2026-10-30)'
 - name: Digital Point forums
   url: https://forums.digitalpoint.com/
-  status: search_only
-  checked_at: '2026-10-10'
-  notes: HTTP 403 to our bot; use the search route
+  status: live
+  checked_at: '2026-10-30'
+  notes: answers our bot with 200 again (403 on 2026-10-10)
   locked: false
-  software: unknown
+  software: xenforo
+  rss: https://forums.digitalpoint.com/forums/-/index.rss
   robots: allowed
-  terms: unchecked
+  terms: allowed
+  terms_url: https://www.digitalpoint.com/help/terms
+  terms_notes: No clause on automated access, commercial use or AI found. (read 2026-10-30)
 rss_feeds:
 - name: searchenginejournal
   url: https://www.searchenginejournal.com/feed/

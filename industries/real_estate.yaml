@@ -81,7 +81,9 @@ forums:
   locked: false
   software: unknown
   robots: allowed
-  terms: unchecked
+  terms: forbidden
+  terms_url: https://activerain.com/proxy/terms
+  terms_notes: '"Automated queries (including screen and database scraping, spiders, robots, crawlers ...) are strictly prohibited" without written permission (read 2026-10-30)'
 rss_feeds:
 - name: inman
   url: https://www.inman.com/feed/
