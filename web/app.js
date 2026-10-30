@@ -490,18 +490,6 @@ function InsiderPrompt({ userId }) {
   </section>`;
 }
 
-function AreasSide({ userId }) {
-  const [nodes, setNodes] = useState(null);
-  useEffect(() => { api(`/map?${qs({ user_id: userId })}`).then((m) => setNodes(m.nodes)).catch(() => setNodes([])); }, []);
-  const top = (nodes || []).filter((n) => n.status !== "context").sort((a, b) => b.affinity - a.affinity).slice(0, 6);
-  if (!top.length) return null;
-  const ringLabel = { core: "Closest to you", regular: "Also yours", exploring: "Exploring" };
-  return html`<section style="display:flex;flex-direction:column"><h2>Your areas</h2>
-    ${top.map((n) => html`<div class="side-row"><span class="t">${n.label}</span><span class="s" style="text-align:right">
-      ${ringLabel[n.ring] || ""}</span><span class="s" style="grid-column:1/-1">${n.path.slice(0, -1).join(", ")}</span></div>`)}
-    <a class="side-link" href="#areas">Change your areas</a></section>`;
-}
-
 function Feed({ userId }) {
   const [items, setItems] = useState([]);
   const [page, setPage] = useState(null);
@@ -540,7 +528,7 @@ function Feed({ userId }) {
         <span>You're caught up. That's the strongest for you right now.</span>
         <button class="pill small outline" onClick=${() => load(true)}>Explore more</button></div>` : null)}
     <div ref=${sentinel}></div>`;
-  return { main, side: html`<${AreasSide} userId=${userId} />` };
+  return { main };
 }
 
 // --- Item (problem) page ------------------------------------------------------------------------
@@ -638,13 +626,15 @@ function PostsCard({ p }) {
   if (!p.posts.length) return null;
   return html`<section class="card" aria-labelledby="ev">
     <div class="card-h"><h2 id="ev">Other posts about it</h2>
-      <span class="sub num">${p.total - 1 > p.posts.length ? `Latest ${p.posts.length} of ${p.total - 1}` : ""}</span></div>
+      <span class="sub">${p.posts_more > 0 ? `Latest ${p.posts.length} of ${p.posts.length + p.posts_more}` : ""}</span></div>
     ${p.posts.map((e) => html`<div class="post-row">
       <div class="top"><span><span class="platform">${sourceName(e.source)}</span>
         <span class="status">${TYPE_LABEL[e.post_type] || "Post"}</span>${money(e.money) && html`<span class="status num">${money(e.money)}</span>`}</span>
         <span class="sub num">${shortAgo(e.published_at)}</span></div>
       <a class="h" href=${"#item/" + keyOf(e)}>${e.headline}</a>
     </div>`)}
+    ${p.posts_alike > 0 && html`<p class="sub" style="margin-top:12px">${plural(p.posts_alike, "more post")} saying nearly the same
+      thing (often one tender republished by several buyers)</p>`}
   </section>`;
 }
 
@@ -680,9 +670,8 @@ function ItemPage({ type, id, userId, me }) {
   const p = d?.problem;
   const signals = p?.signals || null;
   const inferred = d?.kind === "inferred";
-  const paid = (p?.posts || []).filter((e) => money(e.money));
 
-  let main, side = null;
+  let main;
   if (!d) main = html`<div class="center">Loading…</div>`;
   else if (d.error) main = html`<div class="center">This item is no longer available.</div>`;
   else {
@@ -698,6 +687,7 @@ function ItemPage({ type, id, userId, me }) {
         <h1 class="page-title">${d.headline}</h1>
         ${!inferred && html`<p class="sub">${postedBy(d)}, ${new Date(d.published_at).toLocaleDateString(undefined,
             { month: "long", day: "numeric", year: "numeric" })} (${ago(d.published_at)})${stats.length ? ". " + stats.join(", ") : ""}</p>`}
+        ${!inferred && d.title && d.title !== d.headline && html`<p class="sub" style="margin-top:4px">Original title: ${d.title}</p>`}
         ${hidden ? html`<p class="note" style="margin-top:16px">Hidden from your feed.</p>` : html`<div class="head-actions">
           <button class="pill" type="button" aria-pressed=${saved} onClick=${() => { markSaved(base); from?.setEngaged(true); }}>
             <${Bookmark} on=${saved} />${saved ? "Saved" : "Save"}</button>
@@ -714,24 +704,12 @@ function ItemPage({ type, id, userId, me }) {
         ${d.counter_evidence?.length > 0 && html`<section class="card" aria-labelledby="cev"><div class="card-h">
           <h2 id="cev">What could argue against it</h2></div><${Evidence} items=${d.counter_evidence} /></section>`}`}
       ${p && html`<${SignalCard} p=${p} /><${MentionsCard} p=${p} /><${PostsCard} p=${p} />`}`;
-    side = html`
-      ${url && html`<section class="source-box"><h2>The original</h2>
-        <span class="t">${d.title && d.title !== d.headline ? d.title : `A post on ${sourceName(d.source)}`}</span>
-        <span class="sub">${sourceName(d.source)}${d.community ? `, ${d.community}` : ""}</span>
-        <a class="side-link" style="margin-top:4px" href=${url} target="_blank" rel="noopener noreferrer"
-          onClick=${() => track("open_source", base)}>Open original</a></section>`}
-      ${paid.length > 0 && html`<section style="display:flex;flex-direction:column"><h2>Paid to do it by hand</h2>
-        ${paid.map((e) => html`<a class="side-row" href=${"#item/" + keyOf(e)} style="text-decoration:none">
-          <span class="t">${e.headline}</span><span class="v num">${money(e.money)}</span>
-          <span class="s" style="grid-column:1/-1">${sourceName(e.source)}, ${shortAgo(e.published_at)}</span></a>`)}</section>`}
-      ${p?.roles?.length > 0 && html`<section style="display:flex;flex-direction:column"><h2>Who says they have it</h2>
-        ${[...new Set(p.roles.map(roleText))].map((r) => html`<div class="side-row"><span class="t" style="grid-column:1/-1">${r}</span></div>`)}</section>`}`;
   }
 
   return html`<div class="item-page" ref=${pane} role="dialog" aria-modal="true" aria-label="Problem">
     <div class="wrap"><${Rail} me=${me} tab="feed" />
       <main class="main"><button class="act back" type="button" onClick=${back}><${BackIcon} />Back</button>${main}</main>
-      <aside class="side" aria-label="The original and more">${side}</aside></div></div>`;
+    </div></div>`;
 }
 
 // --- Saved, clips, areas ------------------------------------------------------------------------
@@ -748,8 +726,7 @@ function Saved({ userId }) {
         <div class="grow"><a href=${"#item/" + keyOf(it)}>${it.headline || it.title || it.summary}</a>
           <span class="sub">${it.niche_path[0] || ""}${it.kind === "inferred" ? ", inferred" : `, ${sourceName(it.source)}`}. Saved ${ago(it.saved_at)}</span>
         </div></div>`)}</div>`}`;
-  return { main, side: items?.length ? html`<section style="display:flex;flex-direction:column"><h2>Saved so far</h2>
-    <div class="side-row"><span class="t">Problems</span><span class="v num">${items.length}</span></div></section>` : null };
+  return { main };
 }
 
 function Clips({ userId }) {
@@ -772,7 +749,7 @@ function Clips({ userId }) {
         ${c.note && html`<span class="sub" style="color:var(--ink-2)">Your note: ${c.note}</span>`}
         <span class="sub">${c.site}, ${ago(c.created_at)}</span></div>
         <button class="act" type="button" onClick=${() => remove(c.id)}>Delete</button></div>`)}</div>`}`;
-  return { main, side: null };
+  return { main };
 }
 
 function Areas({ userId }) {
@@ -804,17 +781,16 @@ function Areas({ userId }) {
         <button class="pill small dark" onClick=${() => { setConfirmReset(false); act("/map/reset", {}); }}>Yes, start over</button>
         <button class="pill small" onClick=${() => setConfirmReset(false)}>Cancel</button>`
       : html`<button class="act" style="margin-left:-14px" onClick=${() => setConfirmReset(true)}>Start over from my quiz answers</button>`}</div>`}`;
-  return { main, side: null };
+  return { main };
 }
 
 // --- App ----------------------------------------------------------------------------------------
 
-// Views return { main, side } so the shell can lay out its columns; they're called as hooks-using functions
+// Views return { main } for the shell to place next to the rail; they're called as hooks-using functions
 // inside a component keyed by tab, so each tab keeps its own state while it's open.
 function View({ view, userId, me, tab }) {
-  const { main, side } = view({ userId });
-  return html`<div class="wrap"><${Rail} me=${me} tab=${tab} />
-    <main class="main">${main}</main><aside class="side" aria-label="More for you">${side}</aside></div>`;
+  const { main } = view({ userId });
+  return html`<div class="wrap"><${Rail} me=${me} tab=${tab} /><main class="main">${main}</main></div>`;
 }
 
 function App() {

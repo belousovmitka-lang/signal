@@ -456,6 +456,8 @@ class RankingConfig(_Strict):
 class Quotas(_Strict):
     core_regular: Fraction = Field(ge=0, le=1)
     paid_demand_min: Fraction = Field(ge=0, le=1)
+    paid_demand_max: Fraction = Field(default=0.30, ge=0, le=1)
+    type_max: Fraction = Field(default=0.40, ge=0, le=1)     # any one post type, of the window
     change_max: Fraction = Field(ge=0, le=1)
     exploration_min: Fraction = Field(ge=0, le=1)
     exploration_max: Fraction = Field(ge=0, le=1)
@@ -465,6 +467,8 @@ class Quotas(_Strict):
     def _exploration_range(self) -> Quotas:
         if self.exploration_min > self.exploration_max:
             raise ValueError("quotas.exploration_min must not exceed exploration_max")
+        if self.paid_demand_min > self.paid_demand_max:
+            raise ValueError("quotas.paid_demand_min must not exceed paid_demand_max")
         return self
 
 
@@ -506,6 +510,23 @@ class ExplainConfig(_Strict):
     per_user_per_day: int = Field(default=100, ge=0)        # explanations a user's views may write per day
 
 
+class SignalsConfig(_Strict):
+    """Signal types per problem (signal_feed/feed/signals.py), how they rank, and repeats (founder, 2026-10-30)."""
+
+    # Problems of different post types this alike (centroid cosine), in the same industry, are one problem's
+    # signals: a forum complaint and a tender about the same thing. Sampled 2026-10-30: 0.80+ were real matches,
+    # 0.76-0.80 mixed ("no debug flag" in unrelated tools).
+    link_cosine: float = Field(default=0.80, ge=0, le=1)
+    # The score is multiplied by 1 + types_boost per signal type beyond the first.
+    types_boost: float = Field(default=1.0, ge=0)
+    # Within a session, an item this alike to one already shown is the same problem: never shown again. The
+    # three "Irish schoolbooks" problems were 0.877+ apart; pairs at 0.87-0.90 read as the same thing.
+    duplicate_cosine: float = Field(default=0.87, ge=0, le=1)
+    # Pages lead with the problems backed by the most signal types; score orders items within a tier. Only
+    # items above the caught-up floor take part, so relevance still gates what is shown at all.
+    lead_by_types: bool = True
+
+
 class AuthConfig(_Strict):
     """Magic-link sign-in (signal_feed/auth.py)."""
 
@@ -533,6 +554,7 @@ class FeedConfig(_Strict):
     jobs: JobsConfig = JobsConfig()
     auth: AuthConfig = AuthConfig()
     explain: ExplainConfig = ExplainConfig()
+    signals: SignalsConfig = SignalsConfig()
 
 
 def load_feed_config(path: Path) -> FeedConfig:

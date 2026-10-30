@@ -96,16 +96,48 @@ def collapse(scored: Sequence[Scored], data: FeedData, keep_all: int | None = No
         it = data.items[s.index]
         key = ("problem", it.problem_id) if it.problem_id is not None and it.problem_id != keep_all \
             else ("post", it.post_id)
+        g = data.group_of.get(s.index)
+        if key[0] == "problem" and g is not None and data.links.get(g):
+            key = ("signal", min(g, *data.links[g]))     # problems linked across signal types are one problem
         if key not in best or s.score > best[key].score:
             best[key] = s
     return sorted(best.values(), key=lambda s: -s.score)
 
 
+def drop_repeats(pool: list[Scored], data: FeedData, shown: Sequence[int], cosine: float) -> list[Scored]:
+    """Leave out items that repeat one already shown (founder, 2026-10-30: "the problem should not be
+    appearing more than once in one feed"): the same problem, a problem linked to it across signal types,
+    or near-identical text."""
+    if not shown or not pool:
+        return pool
+    problems = {data.items[i].problem_id for i in shown} - {None}
+    groups = {g for i in shown if (g := data.group_of.get(i)) is not None}
+    groups |= {h for g in list(groups) for h in data.links.get(g, ())}
+    # An inferred problem is a synthesis of posts, so it reads like them: it's compared with other inferred
+    # problems only.
+    inferred = {i for i in shown if data.items[i].item_type == "inferred"}
+    posts = [i for i in shown if i not in inferred]
+
+    def near(s: Scored, among: list[int]) -> bool:
+        return bool(among) and float((data.vectors[among] @ data.vectors[s.index]).max()) >= cosine
+    out = []
+    for s in pool:
+        it = data.items[s.index]
+        if it.item_type == "inferred":
+            if s.index not in inferred and not near(s, sorted(inferred)):
+                out.append(s)
+        elif it.problem_id not in problems and data.group_of.get(s.index) not in groups and not near(s, posts):
+            out.append(s)
+    return out
+
+
 def compose(scored: Sequence[Scored], data: FeedData, state: UserState, config: FeedConfig, now: datetime,
             previous: Sequence[Scored] = (), explore_more: bool = False,
-            exploration_floor: float | None = None) -> tuple[list[Placed], bool]:
+            exploration_floor: float | None = None, shown: Sequence[int] = ()) -> tuple[list[Placed], bool]:
     """Fill one page. Returns the items and whether the user is caught up (strong items ran out).
-    `exploration_floor` raises the exploration quota (the filter-bubble guard, section 10)."""
+    `exploration_floor` raises the exploration quota (the filter-bubble guard, section 10). `shown` are the
+    indexes of every item the session has shown: nothing that repeats one of them is placed again, and
+    nothing on the page repeats another."""
     c = config.composition
     q = c.quotas
     if exploration_floor:
@@ -123,6 +155,16 @@ def compose(scored: Sequence[Scored], data: FeedData, state: UserState, config: 
     others = 0
     size, window = c.page_size, c.window
     pool = collapse(scored, data, state.committed_problem if state.mode == "committed" else None)
+    dup = config.signals.duplicate_cosine
+    # Committed mode: the committed problem's posts are its evidence, shown together on purpose.
+    evidence = [s for s in pool if committed and data.items[s.index].problem_id == state.committed_problem]
+    pool = drop_repeats([s for s in pool if s not in evidence], data, shown, dup) + evidence
+    floor = c.caught_up_score_floor
+
+    def order(s: Scored) -> tuple:
+        tier = data.items[s.index].signal_types if config.signals.lead_by_types and s.score >= floor else 0
+        return (-tier, -s.score)
+    pool.sort(key=order)
     cats = {id(s): category(s, data) for s in pool}
     # Quotas count flags, not the single display category: a tender found by exploration is both demand and
     # exploration. Exploration means items that came from exploration (not every low-affinity item, or a
@@ -140,6 +182,7 @@ def compose(scored: Sequence[Scored], data: FeedData, state: UserState, config: 
     page: list[Placed] = []
     history = list(previous)
     counts = {DEMAND: 0, CHANGE: 0, EXPLORATION: 0}
+    type_counts: dict[str, int] = {}
     fresh_in_first = 0
     caught_up = False
 
@@ -164,7 +207,7 @@ def compose(scored: Sequence[Scored], data: FeedData, state: UserState, config: 
         if not pool:
             caught_up = True
             break
-        if pool[0].score < c.caught_up_score_floor and not explore_more:
+        if max(s.score for s in pool) < c.caught_up_score_floor and not explore_more:
             caught_up = True
             break
         n = slot + 1
@@ -174,6 +217,11 @@ def compose(scored: Sequence[Scored], data: FeedData, state: UserState, config: 
         if committed and counts[DEMAND] >= math.floor(config.user_model.committed_demand_max * c.window):
             allowed = [s for s in allowed if not flags[id(s)][DEMAND]]
         if not explore_more:
+            if counts[DEMAND] >= math.floor(q.paid_demand_max * window):
+                allowed = [s for s in allowed if not flags[id(s)][DEMAND]]
+            full = {t for t, n in type_counts.items() if n >= math.floor(q.type_max * window)}
+            if full:
+                allowed = [s for s in allowed if data.items[s.index].post_type not in full]
             if counts[CHANGE] >= math.floor(q.change_max * window):
                 allowed = [s for s in allowed if not flags[id(s)][CHANGE]]
             if counts[EXPLORATION] >= math.floor(q.exploration_max * window):
@@ -203,6 +251,8 @@ def compose(scored: Sequence[Scored], data: FeedData, state: UserState, config: 
         if not options and committed and others >= cap:
             caught_up = True     # the problem's own items ran out; never fill past the cap
             break
+        if not options and page:
+            break                # every candidate breaks a cap: end the page here, the next one continues
         if not options:
             options = list(pool)
         # Diversity first: a forced quota that can't be met without breaking it waits one slot; when nothing
@@ -218,6 +268,11 @@ def compose(scored: Sequence[Scored], data: FeedData, state: UserState, config: 
                 break
         pick = pick or options[0]
         pool.remove(pick)
+        if pick not in evidence:                                  # and whatever repeats it
+            pool = drop_repeats([s for s in pool if s not in evidence], data, [pick.index], dup) + \
+                [s for s in pool if s in evidence]
+            pool.sort(key=order)
+        type_counts[data.items[pick.index].post_type] = type_counts.get(data.items[pick.index].post_type, 0) + 1
         if committed and outside(pick):
             others += 1
         cat = cats[id(pick)]

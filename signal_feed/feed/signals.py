@@ -13,24 +13,77 @@ from __future__ import annotations
 from collections import Counter
 from datetime import datetime, timedelta
 
+import numpy as np
+
 from .data import FeedData, Item
 
 TYPES = ("pain", "paid_demand", "tool_gap", "change")
 WEEKS = 8
-
-
-def members(it: Item, data: FeedData) -> list[Item]:
-    """The posts in the item's problem (the item itself included), or just the item."""
-    if it.item_type != "post" or it.problem_id is None:
-        return [it] if it.item_type == "post" else []
-    return [data.items[i] for i in data.by_problem.get(it.problem_id, [])] or [it]
-
-
+NEAR_IDENTICAL = 0.95      # posts this alike say the same thing (a tender republished per school)
 AS_SIGNAL = {"idea": "pain"}
 
 
+def signal_type(it: Item) -> str:
+    return AS_SIGNAL.get(it.post_type, it.post_type)
+
+
+def link(data: FeedData, cfg=None) -> None:
+    """Group posts by problem (a post outside any problem is its own group) and link groups of different
+    signal types that describe the same thing: centroid cosine >= `link_cosine` and the same industry. A
+    group's signals are its own posts plus its linked groups' posts. Links are direct, not transitive, so
+    a chain of loose matches can't grow into one blob. Sets data.groups, data.group_of, data.links and each
+    post's `signal_types`."""
+    from ..config import SignalsConfig
+    cfg = cfg or SignalsConfig()
+    keyed: dict[object, int] = {}
+    groups: list[list[int]] = []
+    group_of: dict[int, int] = {}
+    for it in data.items:
+        if it.item_type != "post":
+            continue
+        key = ("problem", it.problem_id) if it.problem_id is not None else ("post", it.post_id)
+        if key not in keyed:
+            keyed[key] = len(groups)
+            groups.append([])
+        groups[keyed[key]].append(it.index)
+        group_of[it.index] = keyed[key]
+    data.groups, data.group_of, data.links = groups, group_of, {}
+    if not groups:
+        return
+    centroids = np.stack([data.vectors[g].mean(axis=0) for g in groups]).astype(np.float32)
+    centroids /= np.where((n := np.linalg.norm(centroids, axis=1, keepdims=True)) == 0, 1, n)
+    kind = np.array([Counter(signal_type(data.items[i]) for i in g).most_common(1)[0][0] for g in groups])
+    root = np.array([data.ancestors(data.items[g[0]].niche_id)[-1] if data.items[g[0]].niche_id in
+                     data.industry.nodes else -1 for g in groups])
+    links: dict[int, set[int]] = {}
+    for b in range(0, len(groups), 2048):
+        sims = centroids[b:b + 2048] @ centroids.T
+        for j, row in enumerate(sims):
+            g = b + j
+            hits = np.nonzero((row >= cfg.link_cosine) & (kind != kind[g]) & (root == root[g]))[0]
+            for h in hits.tolist():
+                links.setdefault(g, set()).add(h)
+                links.setdefault(h, set()).add(g)
+    data.links = {g: tuple(sorted(v)) for g, v in links.items()}
+    for g, idx in enumerate(groups):
+        n_types = len({signal_type(data.items[i]) for k in (g, *data.links.get(g, ())) for i in groups[k]} & set(TYPES))
+        for i in idx:
+            data.items[i].signal_types = max(1, n_types)
+
+
+def members(it: Item, data: FeedData) -> list[Item]:
+    """The posts behind the item's signals: its problem's posts and those of problems linked to it
+    (the item itself included)."""
+    if it.item_type != "post":
+        return []
+    g = data.group_of.get(it.index)
+    if g is None:
+        return [it]
+    return [data.items[i] for k in (g, *data.links.get(g, ())) for i in data.groups[k]]
+
+
 def counts(posts: list[Item]) -> dict[str, int]:
-    c = Counter(AS_SIGNAL.get(p.post_type, p.post_type) for p in posts)
+    c = Counter(signal_type(p) for p in posts)
     return {t: c.get(t, 0) for t in TYPES}
 
 
@@ -58,7 +111,14 @@ def problem_detail(it: Item, data: FeedData, written: dict[str, str], headline, 
     if not posts:
         return None
     by_source = Counter(p.source for p in posts)
-    others = sorted((p for p in posts if p.post_id != it.post_id), key=lambda p: p.published_at, reverse=True)
+    # The same tender is often republished school by school: list each near-identical post once.
+    others, alike, kept = [], 0, [data.vectors[it.index]]
+    for p in sorted((p for p in posts if p.post_id != it.post_id), key=lambda p: p.published_at, reverse=True):
+        if max(float(data.vectors[p.index] @ v) for v in kept) >= NEAR_IDENTICAL:
+            alike += 1
+            continue
+        kept.append(data.vectors[p.index])
+        others.append(p)
     return {"signals": counts(posts), "total": len(posts), "weekly": weekly(posts, now),
             "first_seen": min(p.published_at for p in posts).isoformat(),
             "sources": [{"source": s, "count": n} for s, n in by_source.most_common(8)],
@@ -66,4 +126,5 @@ def problem_detail(it: Item, data: FeedData, written: dict[str, str], headline, 
             "posts": [{"item_type": "post", "item_id": p.item_id, "headline": headline(p, written),
                        "post_type": p.post_type, "source": p.source, "published_at": p.published_at.isoformat(),
                        "money": p.money} for p in others[:limit]],
+            "posts_more": max(0, len(others) - limit), "posts_alike": alike,
             "roles": sorted({p.author_role for p in posts if p.author_role})[:3]}

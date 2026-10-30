@@ -70,7 +70,8 @@ def world(tmp_path, feed_store):
                         url=f"https://x.example/{g}/{k}", title=f"{key} {ptype} {k}", text=f"{key} {ptype} {k}",
                         is_snippet=False, published_at=NOW - timedelta(hours=6 + 20 * k))
             raw.append(p)
-            vec = unit(topics[key] + rng.normal(scale=0.1, size=DIM))
+            # Related but distinct posts (cosine ~0.7): near-identical ones are one item (compose.drop_repeats).
+            vec = unit(topics[key] + rng.normal(scale=0.65, size=DIM))
             rows.append(EnrichedPostRow(
                 post_id=p.id, status="ok", post_type=ptype, industry_path=[industry, branch],
                 skills_needed=["Document parsing"] if industry == "Legal" else ["AI agents"],
@@ -198,7 +199,7 @@ def test_ranker_prefers_the_map_and_explains_its_score(world, feed_store, feed_c
     assert np.mean(legal) > np.mean(health)
     b = scored[0].breakdown
     assert {"features", "probabilities", "terms", "raw", "quality_factor", "ring", "source"} <= set(b)
-    assert scored[0].score == pytest.approx(b["raw"] * b["quality_factor"], abs=1e-3)
+    assert scored[0].score == pytest.approx(b["raw"] * b["quality_factor"] * b["signal_boost"], abs=1e-3)
 
 
 def test_composition_collapses_paces_quotas_and_keeps_diversity(world, feed_store, feed_config):
@@ -358,3 +359,48 @@ def test_a_session_never_opens_empty(world, feed_store, feed_config):
     assert svc.page(uid, "cal").calibration
     first = svc.page(uid, "s1")
     assert first.items and first.explore and first.caught_up       # "Explore more" items, flagged as such
+
+
+def test_a_session_never_repeats_a_problem_and_caps_paid_demand(world, feed_store, feed_config):
+    """Founder, 2026-10-30: the same problem three times in one feed is dumb, and paid demand mustn't crowd
+    out the rest."""
+    reader, *_ = world
+    uid = onboard(feed_store, feed_config, ["Legal", "Healthcare"], [], clock=lambda: NOW)
+    service = FeedService(feed_store, feed_config, FeedDataCache(feed_store, reader), clock=lambda: NOW, seed=1)
+    service.page(uid, "warm-up")                                   # the calibration page
+    data, shown = service.cache.get(), []
+    q = feed_config.composition.quotas
+    for _ in range(3):
+        page = service.page(uid, "s1")
+        types = [i.post_type for i in page.items]
+        if types and not page.explore:
+            assert types.count("paid_demand") <= int(q.paid_demand_max * 20)
+            assert max(types.count(t) for t in set(types)) <= int(q.type_max * 20)
+        shown += [data.by_id[i.post_id].index for i in page.items if i.post_id]
+    assert shown
+    problems = [data.items[i].problem_id for i in shown if data.items[i].problem_id is not None]
+    assert len(problems) == len(set(problems))                      # one item per problem in a session
+    sims = data.vectors[shown] @ data.vectors[shown].T
+    np.fill_diagonal(sims, 0)
+    assert sims.max() < feed_config.signals.duplicate_cosine         # and nothing near-identical
+
+
+def test_problems_of_different_types_about_the_same_thing_share_their_signals(world, feed_store, feed_config):
+    from signal_feed.feed.signals import item_signals, link, members
+    reader, *_ = world
+    data = load(feed_store, reader)
+    pain = next(it for it in data.items if it.post_type == "pain" and it.problem_id is not None)
+    before, already = item_signals(pain, data), members(pain, data)
+    other = next(it for it in data.items if it.post_type != "pain" and it.item_type == "post" and it not in already
+                 and data.ancestors(it.niche_id)[-1] == data.ancestors(pain.niche_id)[-1])
+    # Make the other post's group sit on the pain problem's centroid: same thing, another signal type.
+    g = data.group_of[pain.index]
+    centroid = data.vectors[data.groups[g]].mean(axis=0)
+    for i in data.groups[data.group_of[other.index]]:
+        data.vectors[i] = centroid / np.linalg.norm(centroid)
+    link(data)
+    after = item_signals(pain, data)
+    assert other in members(pain, data) and pain in members(other, data)
+    assert after[other.post_type] > before.get(other.post_type, 0) and pain.signal_types == other.signal_types >= 2
+    # Unrelated industries never link, however alike.
+    assert all(data.ancestors(m.niche_id)[-1] == data.ancestors(pain.niche_id)[-1] for m in members(pain, data))

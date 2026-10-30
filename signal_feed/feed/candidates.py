@@ -20,6 +20,7 @@ from .usermodel import POSITIVE_ACTIONS, UserState
 
 PIN, DROP_IN, NICHE, SKILL_MATCH, SIMILAR, TRENDING, EXPLORE, FILL = (
     "pin", "drop_in", "niche_match", "skill_match", "similar_builders", "trending_nearby", "exploration", "fill")
+MULTI = "multi_signal"   # problems with several signal types in the user's areas (feed/signals.py)
 # Committed mode (section 6.7): the problem's evidence, its niche, posts naming its competitors, related demand.
 EVIDENCE, FOCUS_NICHE, COMPETITOR, RELATED_DEMAND = ("committed_evidence", "committed_niche", "committed_competitor",
                                                      "committed_demand")
@@ -144,6 +145,15 @@ def generate(data: FeedData, state: UserState, config: FeedConfig, store: FeedSt
             take(nearest(data.subtree_items(node), data.industry.centroids.get(node)),
                  PIN if node in state.pins else DROP_IN, 20, node)
 
+    top_niches = sorted(((n, state.niche_affinity(n)) for n in {*state.niche, *state.pins}
+                         if n in data.industry.nodes and n not in state.removed), key=lambda x: -x[1])[:8]
+    # Problems backed by several kinds of evidence lead the feed (founder, 2026-10-30), so every one in the
+    # user's areas is considered: they are rare, and a niche's nearest posts would miss most of them.
+    if not explore_more:
+        multi = {i for node, _ in top_niches for i in data.subtree_items(node) if data.items[i].signal_types > 1}
+        take(sorted(multi, key=lambda i: (-data.items[i].signal_types, -data.items[i].problem_rank)), MULTI,
+             target // 10)
+
     shares = cfg.shares
     if explore_more:   # "Explore more" after "You're caught up": mostly outside the map
         plan = [(EXPLORE, 0.7), (TRENDING, 0.15), (NICHE, 0.15)]
@@ -152,8 +162,6 @@ def generate(data: FeedData, state: UserState, config: FeedConfig, store: FeedSt
                 (SIMILAR, shares.similar_builders * similar_builders_weight(config, state.events)),
                 (TRENDING, shares.trending_nearby),
                 (EXPLORE, max(shares.exploration, exploration_share or 0.0))]
-    top_niches = sorted(((n, state.niche_affinity(n)) for n in {*state.niche, *state.pins}
-                         if n in data.industry.nodes and n not in state.removed), key=lambda x: -x[1])[:8]
     for source, share in plan:
         quota = int(round(target * share))
         if source == NICHE:

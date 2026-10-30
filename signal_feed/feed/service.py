@@ -6,7 +6,7 @@ from __future__ import annotations
 
 from collections.abc import Callable
 import logging
-from datetime import datetime
+from datetime import datetime, timedelta
 from types import SimpleNamespace
 
 import numpy as np
@@ -218,14 +218,20 @@ class FeedService:
         candidates = generate(data, state, cfg, self.store, now, self.rng, explore_more, boost)
         scored = ranker.score(data, state, candidates, now, self.rng)
         previous = [SimpleNamespace(index=data.by_id[p].index) for p in shown[-10:] if p in data.by_id]
-        placed, caught_up = compose(scored, data, state, cfg, now, previous, explore_more, boost)
+        # Repeats are checked against the session and everything shown recently (the same window that hides
+        # items already seen), so a near-twin of yesterday's item doesn't come back either.
+        from .candidates import seen_post_ids
+        recent = seen_post_ids(self.store, user_id, now - timedelta(days=cfg.candidates.exclude_seen_days)) \
+            if state.mode != "committed" else set()      # committed mode goes deep on one problem on purpose
+        shown_idx = [data.by_id[p].index for p in dict.fromkeys([*shown, *recent]) if p in data.by_id]
+        placed, caught_up = compose(scored, data, state, cfg, now, previous, explore_more, boost, shown_idx)
         if not placed and not shown and not explore_more:
             # A session must never open empty (CLAUDE.md: "rather than leave anyone with a thin feed"): when
             # nothing on the user's map is strong enough, open with "Explore more" items instead.
             explore_more = True
             candidates = generate(data, state, cfg, self.store, now, self.rng, True)
             scored = ranker.score(data, state, candidates, now, self.rng)
-            placed, caught_up = compose(scored, data, state, cfg, now, previous, True)
+            placed, caught_up = compose(scored, data, state, cfg, now, previous, True, shown=shown_idx)
             caught_up = True
         rows = [(p.scored, p.explanation, p.forced) for p in placed]
         page = self._log(data, user_id, session_id, rows, len(shown), caught_up, calibration=False,

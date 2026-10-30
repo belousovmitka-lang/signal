@@ -68,6 +68,7 @@ class Item:
     confidence: str | None = None   # inferred only: high | medium | low (17.6)
     evidence: tuple[dict, ...] = () # inferred only: the evidence chain (url, source, what_it_shows; embed for X)
     detector_weight: float = 1.0    # inferred only: how its detector and evidence mix hold up (17.7)
+    signal_types: int = 1           # signal types behind it, with linked problems (feed/signals.py)
 
     def __post_init__(self) -> None:
         if not self.item_id:
@@ -84,6 +85,9 @@ class FeedData:
     by_niche: dict[int, list[int]] = field(default_factory=dict)    # niche id -> item indexes (direct)
     by_skill: dict[int, list[int]] = field(default_factory=dict)
     by_problem: dict[int, list[int]] = field(default_factory=dict)   # problem id -> its posts' item indexes
+    groups: list[list[int]] = field(default_factory=list)            # signal groups (feed/signals.link)
+    group_of: dict[int, int] = field(default_factory=dict)           # item index -> its group
+    links: dict[int, tuple[int, ...]] = field(default_factory=dict)  # group -> linked groups of other types
     fingerprint: tuple = ()
 
     def path(self, niche_id: int) -> list[str]:
@@ -187,6 +191,8 @@ def load(store: FeedStore, posts: PostsReader, config=None) -> FeedData:
         if it.problem_id is not None:
             by_problem[it.problem_id].append(it.index)
     data.by_niche, data.by_skill, data.by_problem = dict(by_niche), dict(by_skill), dict(by_problem)
+    from .signals import link
+    link(data, getattr(config, "signals", None))
     return data
 
 

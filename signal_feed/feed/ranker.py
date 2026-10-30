@@ -137,11 +137,14 @@ class RankerV1:
             quality = (qf.base + qf.problem_score * it.problem_rank) * (1 - qf.toxicity_penalty * it.toxicity)
             raw = sum(terms.values())
             score = raw * quality * it.detector_weight      # 1 for posts; 17.7 learning for inferred problems
+            # More kinds of evidence (pain, paid demand, tool gap, change) make a stronger problem: those lead.
+            signal_boost = 1 + self.config.signals.types_boost * (it.signal_types - 1)
             breakdown = {"ranker": self.name, "source": c.source,
                          "features": {n: round(v, 3) for n, v in feats[k].items()},
                          "probabilities": {a: round(p, 4) for a, p in probs[k].items()},
                          "terms": {a: round(t, 4) for a, t in terms.items()},
-                         "raw": round(raw, 4), "quality_factor": round(quality, 4)}
+                         "raw": round(raw, 4), "quality_factor": round(quality, 4),
+                         "signal_types": it.signal_types, "signal_boost": round(signal_boost, 3)}
             if it.item_type == "inferred":
                 breakdown["detector_weight"] = it.detector_weight
             if useful is not None:     # section 8.4: blend the value model into the score
@@ -149,6 +152,7 @@ class RankerV1:
                 score = (1 - rk.value_model_blend) * score + rk.value_model_blend * points
                 breakdown["value"] = {"p_useful": round(p_useful, 4), "points": round(points, 4),
                                       "blend": rk.value_model_blend, "model_id": self.value_model.model_id}
+            score *= signal_boost             # after the blend, so the value model can't dilute it
             ring = "core" if affinity >= rings.core_min else "regular" if affinity >= rings.regular_min else "exploring"
             breakdown["ring"] = ring
             out.append(Scored(c, round(score, 4), ring, node, similar, breakdown))

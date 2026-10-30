@@ -81,7 +81,8 @@ def test_value_model_trains_on_answers_and_blends_into_the_score(world, feed_sto
     plain = {s.index: s for s in RankerV1(feed_config).score(data, st, cands, NOW)}
     blended = RankerV1(feed_config, vm).score(data, st, cands, NOW)
     b = blended[0].breakdown["value"]
-    expected = 0.8 * plain[blended[0].index].score + 0.2 * b["points"]
+    boost = blended[0].breakdown["signal_boost"]          # applied after the blend
+    expected = (0.8 * plain[blended[0].index].score / boost + 0.2 * b["points"]) * boost
     assert blended[0].score == pytest.approx(expected, abs=1e-3) and 0 <= b["p_useful"] <= 1
 
 

@@ -358,6 +358,8 @@ composition:
   quotas:
     core_regular: 0.60
     paid_demand_min: 0.15
+    paid_demand_max: 0.30         # paid demand dominates the data (2026-10-30: half the groups): cap it
+    type_max: 0.40                # no post type over 40% of a page
     change_max: 0.20
     exploration_min: 0.10
     exploration_max: 0.15

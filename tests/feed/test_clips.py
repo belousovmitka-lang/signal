@@ -37,7 +37,8 @@ def setup(world, feed_store, feed_config, tmp_path):  # noqa: F811
     reader, nodes, skills, raw, _ = world
     data = load(feed_store, reader, feed_config)
     pharmacy = [it.index for it in data.items if it.niche_id == nodes["Healthcare > Pharmacy"]]
-    topics = {"pharmacy": data.vectors[pharmacy].mean(axis=0)}
+    topics = {"pharmacy": data.vectors[pharmacy].mean(axis=0),
+              "lighthouse": -data.vectors.mean(axis=0)}         # unlike every post: can't be placed
     uid = onboard(feed_store, feed_config, ["Legal"], [], clock=lambda: NOW)
     return reader, nodes, skills, data, uid, Store(f"sqlite:///{tmp_path / 'signal.db'}"), FakeEmbedder(topics)
 
