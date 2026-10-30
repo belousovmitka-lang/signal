@@ -601,7 +601,10 @@ function MentionsCard({ p }) {
   const ticks = [...new Set([0, Math.round(top / 2), top])];
   const delta = w[7] - w[6];
   const deltaText = delta === 0 ? "same as last week" : `${delta > 0 ? "+" : ""}${delta} on last week`;
-  const sTop = p.sources[0]?.count || 1;
+  const bySource = new Map();                       // two raw sources can share a display name
+  p.sources.forEach((x) => bySource.set(sourceName(x.source), (bySource.get(sourceName(x.source)) || 0) + x.count));
+  const sources = [...bySource].map(([name, count]) => ({ name, count })).sort((a, b) => b.count - a.count);
+  const sTop = sources[0]?.count || 1;
   return html`<section class="card" aria-labelledby="wk">
     <div class="card-h"><h2 id="wk">Mentions each week</h2>
       <span class="sub">${max ? `${plural(w[7], "post")} this week, ${deltaText}` : "None in the last 8 weeks"}</span></div>
@@ -615,7 +618,7 @@ function MentionsCard({ p }) {
       <div class="xlabels">${w.map((_, i) => html`<span>${i % 2 === 1 || i === 7 ? weekLabel(i) : ""}</span>`)}</div>
     </div>`}
     <h3 style="margin:24px 0 6px;font-size:15px;line-height:22px;font-weight:600">Where the posts come from</h3>
-    ${p.sources.map((s, i) => html`<div class=${"src-row" + (i === 0 ? " top" : "")}><span class="n">${sourceName(s.source)}</span>
+    ${sources.map((s, i) => html`<div class=${"src-row" + (i === 0 ? " top" : "")}><span class="n">${s.name}</span>
       <span class="b" aria-hidden="true" style=${`width:${(s.count / sTop * 100).toFixed(1)}%`}></span>
       <span class="c num">${s.count}</span></div>`)}
     ${p.sources_more > 0 && html`<p class="sub" style="margin-top:6px">and ${plural(p.sources_more, "more source")}</p>`}
