@@ -42,6 +42,8 @@ class FeedItem(BaseModel):
     similar_posts: int
     post_type: str
     headline: str = ""         # one plain sentence naming the problem (feed/explain.py): the card's heading
+    signals: dict[str, int] | None = None  # posts in its problem per signal type (feed/signals.py); None: inferred
+    who: str | None = None     # the poster's self-described role, if stated
     title: str | None
     summary: str | None
     url: str                   # empty for an inferred problem (its evidence carries the links)
@@ -255,11 +257,13 @@ class FeedService:
                 if row is not None and row.exposures_left > 0:
                     row.exposures_left -= 1
             from .explain import headline, headlines_for
+            from .signals import item_signals
             written = headlines_for(self.store, [it.post_id for _, _, it, _, _ in impressions])
             for imp, scored, it, explanation, breakdown in impressions:
                 inferred = it.item_type == "inferred"
                 items.append(FeedItem(
                     headline=headline(it, written, config or self.config),
+                    signals=item_signals(it, data), who=it.author_role,
                     impression_id=imp.id, position=imp.position, post_id=None if inferred else it.post_id,
                     item_type=it.item_type, item_id=it.item_id, kind="inferred" if inferred else "reported",
                     confidence=it.confidence, evidence=list(it.evidence[:3]),

@@ -83,6 +83,7 @@ class FeedData:
     skill: Tree
     by_niche: dict[int, list[int]] = field(default_factory=dict)    # niche id -> item indexes (direct)
     by_skill: dict[int, list[int]] = field(default_factory=dict)
+    by_problem: dict[int, list[int]] = field(default_factory=dict)   # problem id -> its posts' item indexes
     fingerprint: tuple = ()
 
     def path(self, niche_id: int) -> list[str]:
@@ -178,12 +179,14 @@ def load(store: FeedStore, posts: PostsReader, config=None) -> FeedData:
         m /= np.where((n := np.linalg.norm(m, axis=1, keepdims=True)) == 0, 1, n)
     data = FeedData(items=items, by_id={it.post_id: it for it in items}, vectors=m,
                     industry=Tree.load(store, INDUSTRY), skill=Tree.load(store, SKILL))
-    by_niche, by_skill = defaultdict(list), defaultdict(list)
+    by_niche, by_skill, by_problem = defaultdict(list), defaultdict(list), defaultdict(list)
     for it in items:
         by_niche[it.niche_id].append(it.index)
         for sid in it.skill_ids:
             by_skill[sid].append(it.index)
-    data.by_niche, data.by_skill = dict(by_niche), dict(by_skill)
+        if it.problem_id is not None:
+            by_problem[it.problem_id].append(it.index)
+    data.by_niche, data.by_skill, data.by_problem = dict(by_niche), dict(by_skill), dict(by_problem)
     return data
 
 

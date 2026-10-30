@@ -219,6 +219,44 @@ def test_the_item_page_explains_once_per_style_and_keeps_the_source_secondary(wo
     assert c.get(f"/item/post/{it['item_id']}", params={"user_id": "other"}).status_code == 403
 
 
+def test_signal_counts_agree_on_the_card_and_the_problem_page(world, feed_store, feed_config):  # noqa: F811
+    """The card's strip, the page's signal breakdown, its sources and its weekly bars count the same posts."""
+    from datetime import timedelta
+
+    from signal_feed.feed.data import load
+    from signal_feed.feed.signals import TYPES, members, problem_detail
+    reader = world[0]
+    data = load(feed_store, reader)
+    clustered = [it for it in data.items if it.problem_id is not None and len(members(it, data)) > 1]
+    assert clustered, "fixture has no multi-post problem"
+    for it in clustered[:20]:
+        p = problem_detail(it, data, {}, lambda q, w: q.title or "", NOW)
+        assert sum(p["signals"].values()) <= p["total"] == len(members(it, data))
+        assert sum(s["count"] for s in p["sources"]) == p["total"] or p["sources_more"] > 0
+        assert sum(p["weekly"]) <= p["total"] and len(p["weekly"]) == 8
+        assert all(e["item_id"] != it.item_id for e in p["posts"])
+        assert set(p["signals"]) == set(TYPES)
+    # A post published this week lands in the last bar; one 9 weeks old in none.
+    from signal_feed.feed.signals import weekly
+    it = clustered[0]
+    fresh = type(it)(**{**it.__dict__, "published_at": NOW - timedelta(days=2)})
+    old = type(it)(**{**it.__dict__, "published_at": NOW - timedelta(weeks=9)})
+    assert weekly([fresh, old], NOW) == [0] * 7 + [1]
+
+    mail = Mailbox()
+    app = create_app(feed_store, reader, feed_config,
+                     FeedService(feed_store, feed_config, FeedDataCache(feed_store, reader), clock=lambda: NOW, seed=1),
+                     auth=Auth(feed_store, feed_config, mail, "https://signal.example", clock=Clock()))
+    c, _ = sign_in(app, mail, "gus@example.com")
+    uid = c.post("/onboarding", json={"industries": ["Legal"]}).json()["user_id"]
+    for card in c.get("/feed", params={"user_id": uid, "session_id": "s1"}).json()["items"]:
+        if card["item_type"] != "post":
+            assert card["signals"] is None
+            continue
+        page = c.get(f"/item/post/{card['item_id']}", params={"user_id": uid}).json()
+        assert page["problem"]["signals"] == card["signals"]
+
+
 def test_every_item_gets_a_written_headline_and_falls_back_until_then(world, feed_store, feed_config):  # noqa: F811
     from signal_feed.db import EnrichedPostRow
     from signal_feed.feed.data import load

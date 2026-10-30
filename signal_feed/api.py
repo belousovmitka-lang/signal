@@ -246,6 +246,10 @@ def create_app(store: FeedStore, posts: PostsReader, config: FeedConfig, service
             out |= {"title": it.title, "url": it.url, "community": post.community if post else None,
                     "author_role": post.author_role if post else None,
                     "engagement": post.engagement if post else {}}
+            from signal_connectors.models import utcnow
+            from .feed.signals import members, problem_detail
+            written = headlines_for(store, [p.post_id for p in members(it, data)])
+            out["problem"] = problem_detail(it, data, written, lambda p, w: headline(p, w, config), utcnow())
         return out
 
     @app.post("/item/{item_type}/{item_id}/explain")
@@ -277,6 +281,7 @@ def create_app(store: FeedStore, posts: PostsReader, config: FeedConfig, service
                 .group_by(EventRow.item_type, EventRow.item_id).order_by(func.max(EventRow.at).desc()).limit(limit))
             rows = list(rows)
             from .feed.explain import headline, headlines_for
+            from .feed.signals import item_signals
             written = headlines_for(store, [item_key(t, i) for t, i, _ in rows])
             out = []
             for item_type, item_id, at in rows:
@@ -285,7 +290,8 @@ def create_app(store: FeedStore, posts: PostsReader, config: FeedConfig, service
                     out.append({"item_type": item_type, "item_id": item_id, "kind": "inferred" if item_type == "inferred"
                                 else "reported", "headline": headline(it, written, config), "title": it.title, "summary": it.summary, "url": it.url,
                                 "source": it.source, "post_type": it.post_type, "niche_path": data.path(it.niche_id),
-                                "confidence": it.confidence, "saved_at": at.isoformat()})
+                                "confidence": it.confidence, "signals": item_signals(it, data),
+                                "saved_at": at.isoformat()})
         return {"items": out}
 
     def _act(fn, *args, **kw) -> dict:
