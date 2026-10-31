@@ -18,7 +18,7 @@ async function api(path, { method = "GET", body, keepalive = false } = {}) {
   if ((r.status === 401 || r.status === 403) && !path.startsWith("/auth/")) {
     let d = "";
     try { d = (await r.clone().json()).detail; } catch { /* not JSON */ }
-    if (r.status === 401 || d === "accept the terms first" || d === "account suspended") location.reload();
+    if (r.status === 401 || d === "account suspended") location.reload();     // the gate in App() handles the terms
   }
   if (!r.ok) {
     let detail = "";
@@ -842,14 +842,14 @@ function App() {
     return () => removeEventListener("hashchange", on);
   }, []);
   useEffect(() => {                                  // what's already saved, so every bookmark shows it
-    if (!me?.user_id) return;
+    if (!me?.user_id || !me.terms_ok) return;
     api(`/saved?${qs({ user_id: me.user_id })}`).then((r) => {
       r.items.forEach((it) => savedStore.keys.add(keyOf(it)));
       savedStore.subs.forEach((f) => f());
     }).catch(() => {});
-  }, [me?.user_id]);
+  }, [me?.user_id, me?.terms_ok]);
   const itemRoute = hash.startsWith("item/") ? hash.split("/") : null;   // ["item", type, id]
-  events.userId = me?.user_id || null;
+  events.userId = (me?.terms_ok && me.user_id) || null;
 
   if (me === undefined) return html`<div class="center">Loading…</div>`;
   if (me === null) return html`<${SignIn} />`;
