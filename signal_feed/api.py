@@ -206,7 +206,7 @@ def create_app(store: FeedStore, posts: PostsReader, config: FeedConfig, service
         if clips_db_url and os.environ.get("VOYAGE_API_KEY"):      # clips move interests (feed/clips.py)
             from .enrichment.embeddings import VoyageEmbedder
             embedder = VoyageEmbedder(config.embeddings)
-        service = FeedService(store, config, FeedDataCache(store, posts), clip_embedder=embedder)
+        service = FeedService(store, config, FeedDataCache(store, posts, background=warm), clip_embedder=embedder)
     if warm:     # loading every post takes ~20 s: do it at start, not on the first person's request
         import threading
         threading.Thread(target=service.cache.get, name="warm-feed-data", daemon=True).start()
@@ -572,6 +572,9 @@ def _clip_routes(app: FastAPI, clips_db_url: str, _me) -> None:
 
 def app_from_env() -> FastAPI:
     """Factory for uvicorn: `uvicorn signal_feed.api:app_from_env --factory`."""
+    import faulthandler
+    import signal
+    faulthandler.register(signal.SIGUSR1, all_threads=True)    # `kill -USR1 <pid>`: every thread's stack to the log
     settings = FeedSettings.from_env()
     store, config = FeedStore(settings.feed_database_url), load_feed_config(settings.config_file)
     llm = None

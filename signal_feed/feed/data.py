@@ -4,10 +4,11 @@ change (a cheap fingerprint query decides)."""
 
 from __future__ import annotations
 
+import logging
 from collections import defaultdict
 from dataclasses import dataclass, field
 from datetime import datetime
-from threading import Lock
+from threading import Lock, Thread
 
 import numpy as np
 from sqlalchemy import func, select
@@ -27,6 +28,8 @@ from ..db import (
 from ..inferred.common import shown_evidence
 from ..niches.tree import INDUSTRY, SKILL, Tree
 from ..posts import PostsReader
+
+log = logging.getLogger(__name__)
 
 
 def item_key(item_type: str, item_id: str) -> str:
@@ -226,18 +229,47 @@ def _add_inferred(items: list[Item], vecs: list, inferred, evidence: dict, rows:
 
 
 class FeedDataCache:
-    """One snapshot per process, rebuilt when the fingerprint changes."""
+    """One snapshot per process, rebuilt when the fingerprint changes.
 
-    def __init__(self, store: FeedStore, posts: PostsReader, config=None) -> None:
+    With `background`, a changed fingerprint is rebuilt on a separate thread while requests keep getting the
+    current snapshot: a rebuild takes ~30 s, and the scheduled jobs change the data every 15 minutes, so
+    otherwise every request would queue behind the lock. Only the very first load makes requests wait."""
+
+    def __init__(self, store: FeedStore, posts: PostsReader, config=None, background: bool = False) -> None:
         self.config = config
         self.store, self.posts = store, posts
+        self.background = background
         self._data: FeedData | None = None
         self._lock = Lock()
+        self._refreshing = False
+
+    def _load(self, fp) -> FeedData:
+        data = load(self.store, self.posts, self.config)
+        data.fingerprint = fp
+        return data
+
+    def _refresh(self, fp) -> None:
+        try:
+            data = self._load(fp)
+            self._data = data
+        except Exception:
+            log.exception("feed data refresh failed; serving the previous snapshot")
+        finally:
+            self._refreshing = False
 
     def get(self) -> FeedData:
         fp = fingerprint(self.store)
+        current = self._data
+        if current is not None and current.fingerprint == fp:
+            return current
+        if current is not None and self.background:
+            with self._lock:
+                start = not self._refreshing
+                self._refreshing = True
+            if start:
+                Thread(target=self._refresh, args=(fp,), name="refresh-feed-data", daemon=True).start()
+            return current
         with self._lock:
             if self._data is None or self._data.fingerprint != fp:
-                self._data = load(self.store, self.posts, self.config)
-                self._data.fingerprint = fp
+                self._data = self._load(fp)
             return self._data

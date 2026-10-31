@@ -404,3 +404,34 @@ def test_problems_of_different_types_about_the_same_thing_share_their_signals(wo
     assert after[other.post_type] > before.get(other.post_type, 0) and pain.signal_types == other.signal_types >= 2
     # Unrelated industries never link, however alike.
     assert all(data.ancestors(m.niche_id)[-1] == data.ancestors(pain.niche_id)[-1] for m in members(pain, data))
+
+
+def test_a_changed_snapshot_is_rebuilt_in_the_background_while_requests_get_the_old_one(monkeypatch):
+    import threading
+    from signal_feed.feed import data as data_mod
+    fp = {"v": 1}
+    started, release = threading.Event(), threading.Event()
+
+    class Snap:
+        def __init__(self, v):
+            self.v, self.fingerprint = v, None
+
+    def fake_load(store, posts, config):
+        if fp["v"] > 1:
+            started.set()
+            release.wait(5)
+        return Snap(fp["v"])
+
+    monkeypatch.setattr(data_mod, "fingerprint", lambda store: fp["v"])
+    monkeypatch.setattr(data_mod, "load", fake_load)
+    cache = data_mod.FeedDataCache(None, None, background=True)
+    assert cache.get().v == 1                          # first load waits
+    fp["v"] = 2
+    assert cache.get().v == 1                          # the old snapshot, while the new one builds
+    assert started.wait(5) and cache.get().v == 1      # a second request starts no second rebuild
+    release.set()
+    for _ in range(100):
+        if cache.get().v == 2:
+            break
+        threading.Event().wait(0.05)
+    assert cache.get().v == 2
