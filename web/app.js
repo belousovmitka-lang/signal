@@ -15,7 +15,11 @@ async function api(path, { method = "GET", body, keepalive = false } = {}) {
     headers: body ? { "Content-Type": "application/json" } : {},
     body: body ? JSON.stringify(body) : undefined,
   });
-  if (r.status === 401 && path !== "/auth/me") location.reload();     // session ended: back to sign-in
+  if ((r.status === 401 || r.status === 403) && !path.startsWith("/auth/")) {
+    let d = "";
+    try { d = (await r.clone().json()).detail; } catch { /* not JSON */ }
+    if (r.status === 401 || d === "accept the terms first" || d === "account suspended") location.reload();
+  }
   if (!r.ok) {
     let detail = "";
     try { detail = (await r.json()).detail; } catch { /* not JSON */ }
@@ -291,8 +295,33 @@ function SignIn() {
           <button class="pill dark big" disabled=${state === "sending"}>${state === "sending" ? "Sending…" : "Email me a link"}</button>
         </div>
         ${state === "error" && html`<p class="error">${error}</p>`}
-        <p class="note">No password. We use your email only to send sign-in links.</p>
+        <p class="note">No password. We use your email only to send sign-in links.
+          See the <a href="/terms" target="_blank" rel="noopener">terms</a>.</p>
       </form>`}
+  </main>`;
+}
+
+// Brave's Search API terms (4(c)) need every user bound by Signal's terms, so nothing else shows until they agree.
+function TermsStep({ me, onDone }) {
+  const [state, setState] = useState("idle");     // idle | saving | error
+  const agree = async () => {
+    setState("saving");
+    try {
+      await api("/auth/terms", { method: "POST", body: { version: me.terms_version } });
+      onDone();
+    } catch (err) {
+      if (err.status === 409) location.reload();   // the terms changed while this page was open
+      setState("error");
+    }
+  };
+  return html`<${SoloHead} /><main class="solo signin" style="padding-top:12vh">
+    <div><h1>Before you start</h1>
+      <p class="intro">Signal shows summaries of public posts and some live search results. They are for your own
+        use: you can't store, republish or resell them, or use them to train or test AI models.</p></div>
+    <p>Read the <a href="/terms" target="_blank" rel="noopener" style="text-decoration:underline;text-underline-offset:3px">Terms of Service</a>${" "}
+      (version ${me.terms_version}). Selecting "I agree" means you accept them.</p>
+    <div><button class="pill dark big" disabled=${state === "saving"} onClick=${agree}>${state === "saving" ? "Saving…" : "I agree"}</button></div>
+    ${state === "error" && html`<p class="error">Couldn't save that. Try again.</p>`}
   </main>`;
 }
 
@@ -800,7 +829,9 @@ function App() {
   const [me, setMe] = useState(undefined);       // undefined: loading; null: signed out
   const [hash, setHash] = useState(() => location.hash.slice(1));
   const [tab, setTab] = useState(() => (location.hash.slice(1).startsWith("item/") ? "feed" : location.hash.slice(1) || "feed"));
-  useEffect(() => { api("/auth/me").then(setMe).catch(() => setMe(null)); }, []);
+  useEffect(() => {
+    api("/auth/me").then(setMe).catch((err) => setMe(err.status === 403 ? "suspended" : null));
+  }, []);
   useEffect(() => {
     const on = () => {
       const h = location.hash.slice(1);
@@ -822,6 +853,10 @@ function App() {
 
   if (me === undefined) return html`<div class="center">Loading…</div>`;
   if (me === null) return html`<${SignIn} />`;
+  if (me === "suspended") return html`<${SoloHead} /><main class="solo signin" style="padding-top:12vh">
+    <h1>Account suspended</h1><p class="intro">This account can't use Signal right now. Write to us if you think
+    this is a mistake.</p></main>`;
+  if (!me.terms_ok) return html`<${TermsStep} me=${me} onDone=${() => setMe({ ...me, terms_ok: true })} />`;
   if (!me.user_id) return html`<${Quiz} onDone=${(uid) => setMe({ ...me, user_id: uid })} />`;
 
   const views = { feed: Feed, saved: Saved, clips: Clips, areas: Areas };

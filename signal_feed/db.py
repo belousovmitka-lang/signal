@@ -626,6 +626,10 @@ class AccountRow(FeedBase):
     user_id: Mapped[str | None] = mapped_column(ForeignKey("users.id"), unique=True)
     created_at: Mapped[datetime] = mapped_column(UTCDateTime)
     last_login_at: Mapped[datetime | None] = mapped_column(UTCDateTime)
+    terms_version: Mapped[str | None] = mapped_column(String(32))      # the terms version they agreed to
+    terms_accepted_at: Mapped[datetime | None] = mapped_column(UTCDateTime)
+    suspended_at: Mapped[datetime | None] = mapped_column(UTCDateTime)  # terms section 8: no access while set
+    suspended_reason: Mapped[str | None] = mapped_column(String(200))
 
 
 class LoginLinkRow(FeedBase):

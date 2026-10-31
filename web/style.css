@@ -313,3 +313,11 @@ blockquote.clip { margin: 4px 0; padding: 10px 14px; border-radius: 12px; backgr
   .strip { gap: 6px; }
 }
 @media (max-width: 420px) { .tiles { grid-template-columns: minmax(0, 1fr); } }
+
+/* Terms page (web/terms.html) and the in-app terms step */
+.doc { max-width: 720px; gap: 28px; }
+.doc section { display: flex; flex-direction: column; gap: 10px; }
+.doc h2 { font-size: 18px; line-height: 26px; font-weight: 600; }
+.doc p, .doc li { color: var(--ink-2); }
+.doc ol { margin: 0; padding-left: 24px; display: flex; flex-direction: column; gap: 6px; }
+.doc a, .note a { text-decoration: underline; text-underline-offset: 3px; }

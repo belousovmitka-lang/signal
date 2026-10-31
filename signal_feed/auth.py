@@ -40,6 +40,8 @@ log = logging.getLogger(__name__)
 EMAIL_RE = re.compile(r"^[^@\s]{1,64}@[^@\s]{1,189}\.[^@\s.]{2,}$")
 TOKEN_RE = re.compile(r"^[A-Za-z0-9_-]{32,64}$")
 COOKIE = "signal_session"
+# web/terms.html's version. Changing it asks every user to agree again before the app shows anything else.
+TERMS_VERSION = "2026-10-31"
 
 
 class AuthError(ValueError):
@@ -135,6 +137,12 @@ class Account:
     id: str
     email: str
     user_id: str | None
+    terms_version: str | None = None
+    suspended: bool = False
+
+    @property
+    def terms_ok(self) -> bool:
+        return self.terms_version == TERMS_VERSION
 
 
 @dataclass(frozen=True)
@@ -145,7 +153,7 @@ class SignedIn:
 
 
 def _account(row: AccountRow) -> Account:
-    return Account(row.id, row.email, row.user_id)
+    return Account(row.id, row.email, row.user_id, row.terms_version, row.suspended_at is not None)
 
 
 class Auth:
@@ -216,6 +224,31 @@ class Auth:
             row = s.get(SessionRow, _hash(token))
             if row is not None and row.revoked_at is None:
                 row.revoked_at = self.clock()
+
+    def accept_terms(self, account_id: str, version: str) -> None:
+        """Record that the account agreed to this version of the terms (only the current one is accepted)."""
+        if version != TERMS_VERSION:
+            raise AuthError("these terms have been replaced; reload to see the current ones")
+        with self.store.session() as s, s.begin():
+            acct = s.get(AccountRow, account_id)
+            acct.terms_version, acct.terms_accepted_at = version, self.clock()
+
+    def suspend(self, email: str, reason: str) -> bool:
+        """Terms section 8: block the account at once (every session stops working). False if no such account."""
+        with self.store.session() as s, s.begin():
+            acct = s.scalars(select(AccountRow).where(AccountRow.email == normalize_email(email))).one_or_none()
+            if acct is None:
+                return False
+            acct.suspended_at, acct.suspended_reason = self.clock(), reason[:200]
+            return True
+
+    def unsuspend(self, email: str) -> bool:
+        with self.store.session() as s, s.begin():
+            acct = s.scalars(select(AccountRow).where(AccountRow.email == normalize_email(email))).one_or_none()
+            if acct is None:
+                return False
+            acct.suspended_at = acct.suspended_reason = None
+            return True
 
     def bind_user(self, account_id: str, user_id: str) -> None:
         with self.store.session() as s, s.begin():

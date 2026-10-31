@@ -20,7 +20,7 @@ from sqlalchemy import func, select
 
 from signal_connectors.clips import Clip, ClipIn
 
-from .auth import COOKIE, TOKEN_RE, Account, Auth, AuthError, auth_from_env
+from .auth import COOKIE, TERMS_VERSION, TOKEN_RE, Account, Auth, AuthError, auth_from_env
 from .config import FeedConfig, load_feed_config
 from .db import FeedStore
 from .enrichment.schema import niche_seeds, skill_vocabulary
@@ -113,6 +113,10 @@ class SignInStart(BaseModel):
     email: str = Field(min_length=3, max_length=254)
 
 
+class TermsAccept(BaseModel):
+    version: str = Field(min_length=1, max_length=32)
+
+
 class SignInVerify(BaseModel):
     token: str = Field(min_length=1, max_length=128)
 
@@ -138,7 +142,14 @@ def signed_in(request: Request) -> Account | None:
     account = auth.session(_session_token(request))
     if account is None:
         raise HTTPException(status_code=401, detail="sign in first")
+    if account.suspended:
+        raise HTTPException(status_code=403, detail="account suspended")
+    if not account.terms_ok and request.url.path not in TERMS_FREE:
+        raise HTTPException(status_code=403, detail="accept the terms first")
     return account
+
+
+TERMS_FREE = {"/auth/me", "/auth/terms"}       # what a signed-in account may call before agreeing to the terms
 
 
 Me = Annotated[Account | None, Depends(signed_in)]
@@ -500,7 +511,16 @@ def create_app(store: FeedStore, posts: PostsReader, config: FeedConfig, service
 
         @app.get("/auth/me")
         def get_auth_me(me: Me) -> dict:
-            return {"email": me.email, "user_id": me.user_id}
+            return {"email": me.email, "user_id": me.user_id, "terms_ok": me.terms_ok, "terms_version": TERMS_VERSION}
+
+        @app.post("/auth/terms")
+        def post_auth_terms(body: TermsAccept, me: Me) -> dict:
+            """The account agrees to the terms shown at /terms (Brave Search API terms 4(c) need this agreement)."""
+            try:
+                auth.accept_terms(me.id, body.version)
+            except AuthError as exc:
+                raise HTTPException(status_code=409, detail=str(exc)) from None
+            return {"ok": True}
 
         @app.post("/auth/sign-out")
         def post_sign_out(request: Request, response: Response) -> dict:
@@ -516,6 +536,10 @@ def create_app(store: FeedStore, posts: PostsReader, config: FeedConfig, service
         @app.get("/", include_in_schema=False)
         def index() -> FileResponse:
             return FileResponse(web_dir / "index.html", headers={"Cache-Control": "no-cache"})
+
+        @app.get("/terms", include_in_schema=False)
+        def terms() -> FileResponse:
+            return FileResponse(web_dir / "terms.html", headers={"Cache-Control": "no-cache"})
 
     return app
 

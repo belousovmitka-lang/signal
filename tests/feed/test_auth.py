@@ -8,7 +8,7 @@ from fastapi.testclient import TestClient
 from sqlalchemy import select
 
 from signal_feed.api import create_app
-from signal_feed.auth import Auth
+from signal_feed.auth import TERMS_VERSION, Auth
 from signal_feed.db import AccountRow, LoginLinkRow, SessionRow
 from signal_feed.feed.data import FeedDataCache
 from signal_feed.feed.service import FeedService
@@ -48,12 +48,42 @@ def env(world, feed_store, feed_config, tmp_path):  # noqa: F811
     return app, mail, clock
 
 
-def sign_in(app, mail, email):
+def sign_in(app, mail, email, agree=True):
     c = TestClient(app, base_url="https://signal.example")
     assert c.post("/auth/start", json={"email": email}).json() == {"ok": True}
     r = c.post("/auth/verify", json={"token": mail.token(email.lower())})
     assert r.status_code == 200
+    if agree:
+        assert c.post("/auth/terms", json={"version": TERMS_VERSION}).status_code == 200
     return c, r.json()
+
+
+def test_nothing_but_the_terms_until_the_account_agrees_and_a_suspended_account_gets_nothing(env):
+    app, mail, _ = env
+    c, _ = sign_in(app, mail, "new@example.com", agree=False)
+    me = c.get("/auth/me").json()
+    assert me["terms_ok"] is False and me["terms_version"] == TERMS_VERSION
+    r = c.post("/onboarding", json={"industries": ["Legal"]})
+    assert r.status_code == 403 and r.json()["detail"] == "accept the terms first"
+    assert c.post("/auth/terms", json={"version": "1999-01-01"}).status_code == 409    # only the current version
+    assert c.post("/auth/terms", json={"version": TERMS_VERSION}).status_code == 200
+    assert c.get("/auth/me").json()["terms_ok"] is True
+    assert c.post("/onboarding", json={"industries": ["Legal"]}).status_code == 200
+
+    auth = app.state.auth
+    assert auth.suspend("NEW@example.com", "copied search results into a spreadsheet")
+    assert c.get("/auth/me").status_code == 403
+    assert c.get("/auth/me").json()["detail"] == "account suspended"
+    assert auth.unsuspend("new@example.com") and c.get("/auth/me").status_code == 200
+    assert not auth.suspend("nobody@example.com", "x")
+
+
+def test_the_terms_page_carries_the_version_the_app_asks_for(world, feed_store, feed_config):  # noqa: F811
+    from pathlib import Path
+    page = (Path(__file__).resolve().parents[2] / "web" / "terms.html").read_text()
+    assert f"Version {TERMS_VERSION}" in page
+    for clause in ("store, cache", "derivative works", "redistribute", "artificial intelligence", "suspend"):
+        assert clause in page, clause
 
 
 def test_a_link_signs_in_once_and_onboarding_binds_the_user(env, feed_store):
@@ -73,7 +103,9 @@ def test_a_link_signs_in_once_and_onboarding_binds_the_user(env, feed_store):
     assert c.post("/auth/verify", json={"token": token}).status_code == 401           # one use
 
     # The cookie is the session; onboarding gives the account its feed user, once.
-    assert c.get("/auth/me").json() == {"email": "ana@example.com", "user_id": None}
+    assert c.get("/auth/me").json() == {"email": "ana@example.com", "user_id": None, "terms_ok": False,
+                                        "terms_version": TERMS_VERSION}
+    assert c.post("/auth/terms", json={"version": TERMS_VERSION}).status_code == 200
     uid = c.post("/onboarding", json={"industries": ["Legal"]}).json()["user_id"]
     assert c.get("/auth/me").json()["user_id"] == uid
     assert c.post("/onboarding", json={"industries": ["Legal"]}).status_code == 409
