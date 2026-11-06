@@ -345,3 +345,28 @@ def test_the_sign_in_email_has_text_and_html_with_the_same_link(monkeypatch):
     assert calls == ["starttls", "login"] and msg["To"] == "you@example.com"
     parts = {p.get_content_type(): p.get_content() for p in msg.iter_parts()}
     assert link in parts["text/plain"] and "Sign in to Signal" in parts["text/html"]
+
+
+def test_the_item_page_asks_the_live_lane_for_its_industry_and_topic(world, feed_store, feed_config):  # noqa: F811
+    reader, mail, asked = world[0], Mailbox(), []
+
+    async def lane(industry, topic):
+        asked.append((industry, topic))
+        return {"sections": [{"platform": "reddit", "label": "Reddit", "provider": "brave", "items": []}]}
+
+    def app(live):
+        return create_app(feed_store, reader, feed_config, FeedService(feed_store, feed_config,
+                          FeedDataCache(feed_store, reader), clock=lambda: NOW, seed=1),
+                          auth=Auth(feed_store, feed_config, mail, "https://signal.example", clock=Clock()), live=live)
+    c, _ = sign_in(app(lane), mail, "liv@example.com")
+    uid = c.post("/onboarding", json={"industries": ["Legal"]}).json()["user_id"]
+    it = next(i for i in c.get("/feed", params={"user_id": uid, "session_id": "s1"}).json()["items"]
+              if i["item_type"] == "post")
+    r = c.get(f"/item/post/{it['item_id']}/live", params={"user_id": uid})
+    assert r.status_code == 200 and r.json()["sections"][0]["label"] == "Reddit"
+    path = it["niche_path"]
+    assert asked == [(path[0], path[1].lower() if len(path) > 1 else None)]
+    assert c.get(f"/item/post/{it['item_id']}/live", params={"user_id": "other"}).status_code == 403
+    c2, _ = sign_in(app(None), mail, "nolive@example.com")
+    uid2 = c2.post("/onboarding", json={"industries": ["Legal"]}).json()["user_id"]
+    assert c2.get(f"/item/post/{it['item_id']}/live", params={"user_id": uid2}).json() == {"sections": []}

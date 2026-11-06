@@ -185,8 +185,10 @@ document.getElementById("go").onclick = async (e) => {
 
 def create_app(store: FeedStore, posts: PostsReader, config: FeedConfig, service: FeedService | None = None,
                clips_db_url: str | None = None, auth: Auth | None = None, web_dir: Path | None = None,
-               warm: bool = False, llm=None) -> FastAPI:
-    """`llm` (an LLMTask) writes explanations on the item page; without it only already-written ones show."""
+               warm: bool = False, llm=None, live=None) -> FastAPI:
+    """`llm` (an LLMTask) writes explanations on the item page; without it only already-written ones show.
+    `live` (async (industry name, topic or None) -> {"sections": [...]}, see signal_feed/live.py) fills the
+    item page's live results; without it that card stays empty."""
     app = FastAPI(title="Signal feed")
     app.state.auth = auth
 
@@ -272,6 +274,19 @@ def create_app(store: FeedStore, posts: PostsReader, config: FeedConfig, service
             written = headlines_for(store, [p.post_id for p in members(it, data)])
             out["problem"] = problem_detail(it, data, written, lambda p, w: headline(p, w, config), utcnow())
         return out
+
+    @app.get("/item/{item_type}/{item_id}/live")
+    async def get_item_live(item_type: Literal["post", "inferred"], item_id: str, user_id: str, me: Me) -> dict:
+        """Search results about the item's industry and topic from platforms Signal can't store (Reddit,
+        YouTube, ...), fetched now and returned as the provider gave them. Nothing is written but the cost
+        ledger (signal_connectors/live.py; Brave terms 3(b), which users accept in /terms section 5)."""
+        _user(user_id, me)
+        if live is None:
+            return {"sections": []}
+        it, data = _item(item_type, item_id), service.cache.get()
+        path = data.path(it.niche_id)
+        topic = path[1].lower() if len(path) > 1 else None
+        return await live(path[0] if path else "", topic)
 
     @app.post("/item/{item_type}/{item_id}/explain")
     def post_explain(item_type: Literal["post", "inferred"], item_id: str, body: ExplainRequest, me: Me) -> dict:
@@ -582,6 +597,10 @@ def app_from_env() -> FastAPI:
         from .enrichment.llm import AnthropicTagger
         from .llm_task import LLMTask
         llm = LLMTask(store, config.enrichment, AnthropicTagger())
+    live = None
+    if os.environ.get("SIGNAL_LIVE", "on") != "off" and os.environ.get("BRAVE_API_KEY"):
+        from .live import LiveLane
+        live = LiveLane()
     return create_app(store, PostsReader(settings.posts_database_url), config,
                       clips_db_url=settings.posts_database_url, auth=auth_from_env(store, config),
-                      web_dir=REPO_ROOT / "web", warm=True, llm=llm)
+                      web_dir=REPO_ROOT / "web", warm=True, llm=llm, live=live)

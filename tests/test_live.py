@@ -131,3 +131,19 @@ def test_amazon_and_meetup_queries():
     assert live.platform_query("amazon_sellers", shop, None, "x") == '"account suspended"'
     assert live.platform_query("meetup", shop, "Boston", "x") == '"Amazon seller" OR "FBA seller" Boston'
     assert live.platform_query("reddit", shop, None, "default") == "default"
+
+
+async def test_the_item_pages_lane_searches_the_industry_role_and_topic_and_shows_plain_text(make_services):
+    from signal_feed.live import LiveLane
+    web = Web()
+    async with make_services(CFG, web) as svc:
+        lane = LiveLane({"dental": DENTAL}, services=svc)
+        out = await lane("Dental practices", "insurance billing")
+        assert await lane("Other", None) == {"sections": []}            # no industry map: nothing searched
+        assert svc.store.count_posts() == 0
+    assert [s["platform"] for s in out["sections"]] == ["reddit", "youtube"]
+    assert out["sections"][0]["items"][0]["title"] == "Is there a tool for insurance denials?"   # no markup reaches the page
+    brave = [r for r in web.calls if r.url.host == "api.search.brave.com"]
+    assert [r.url.params["q"] for r in brave] == ["site:reddit.com dentist insurance billing"]
+    yt = next(r for r in web.calls if r.url.host == "www.googleapis.com")
+    assert yt.url.params["q"] == "dentist insurance billing"

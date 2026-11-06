@@ -670,6 +670,33 @@ function PostsCard({ p }) {
   </section>`;
 }
 
+// Search results fetched when the page opens (signal_feed/live.py): shown as the provider gave them, linked
+// to the original, never saved by Signal or tracked by URL (Brave terms 3(b); /terms section 5).
+function LiveCard({ type, id, userId }) {
+  const [live, setLive] = useState(null);
+  useEffect(() => {
+    let on = true;
+    setLive(null);
+    api(`/item/${type}/${encodeURIComponent(id)}/live?${qs({ user_id: userId })}`)
+      .then((r) => on && setLive(r.sections || [])).catch(() => on && setLive([]));
+    return () => { on = false; };
+  }, [type, id]);
+  if (live && !live.length) return null;
+  return html`<section class="card" aria-labelledby="live" aria-busy=${!live}>
+    <div class="card-h"><h2 id="live">Elsewhere right now</h2>
+      <span class="sub">${live ? "Live search results, not saved by Signal" : "Searching…"}</span></div>
+    ${(live || []).map((s) => html`<div class="live-sec">
+      <h3 class="live-l">${s.label}</h3>
+      ${s.items.map((i) => html`<a class="live-row" href=${safeUrl(i.url)} target="_blank" rel="noopener noreferrer">
+        ${i.thumbnail && html`<img src=${i.thumbnail} alt="" width="96" height="54" loading="lazy" />`}
+        <span class="grow"><span class="t">${i.title}</span>
+          ${i.snippet && html`<span class="s">${i.snippet}</span>`}
+          <span class="sub">${[i.channel, i.age && (/^\d{4}-/.test(i.age) ? ago(i.age) : i.age)].filter(Boolean).join(", ")}</span></span>
+      </a>`)}
+    </div>`)}
+  </section>`;
+}
+
 function postedBy(d) {
   const who = roleText(d.author_role) ? `a ${roleText(d.author_role)}` : null;
   const where = d.community ? `in ${d.community}` : null;
@@ -735,7 +762,8 @@ function ItemPage({ type, id, userId, me }) {
           <span class="sub num">${plural(d.evidence.length, "piece")}</span></div><${Evidence} items=${d.evidence} /></section>
         ${d.counter_evidence?.length > 0 && html`<section class="card" aria-labelledby="cev"><div class="card-h">
           <h2 id="cev">What could argue against it</h2></div><${Evidence} items=${d.counter_evidence} /></section>`}`}
-      ${p && html`<${SignalCard} p=${p} /><${MentionsCard} p=${p} /><${PostsCard} p=${p} />`}`;
+      ${p && html`<${SignalCard} p=${p} /><${MentionsCard} p=${p} /><${PostsCard} p=${p} />`}
+      <${LiveCard} type=${type} id=${id} userId=${userId} />`;
   }
 
   return html`<div class="item-page" ref=${pane} role="dialog" aria-modal="true" aria-label="Problem">

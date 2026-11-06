@@ -251,9 +251,10 @@ async def live_search(services: Services, industry: Industry, *, platforms: list
     gets an `error` and an empty section; the others still return.
     """
     query = build_query(industry, extra)
-    # YouTube search takes plain keywords: the main role plus its top pain phrase
+    # YouTube search takes plain keywords: the main role plus the extra words, else its top pain phrase
+    # (role + pain phrase + a topic returned off-topic videos, 2026-11-06)
     v = industry.vocabulary
-    yt_query = " ".join(p for p in ((v.roles[:1] or [industry.name])[0], (v.pain_phrases[:1] or [""])[0], extra) if p)
+    yt_query = " ".join(p for p in ((v.roles[:1] or [industry.name])[0], extra or (v.pain_phrases[:1] or [""])[0]) if p)
     xq = x_query(industry, extra)
     sections: list[LiveSection] = []
     for platform in platforms or DEFAULT_PLATFORMS + INDUSTRY_PLATFORMS.get(industry.industry, []):
