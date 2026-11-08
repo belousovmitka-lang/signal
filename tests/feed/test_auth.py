@@ -370,3 +370,17 @@ def test_the_item_page_asks_the_live_lane_for_its_industry_and_topic(world, feed
     c2, _ = sign_in(app(None), mail, "nolive@example.com")
     uid2 = c2.post("/onboarding", json={"industries": ["Legal"]}).json()["user_id"]
     assert c2.get(f"/item/post/{it['item_id']}/live", params={"user_id": uid2}).json() == {"sections": []}
+
+
+def test_onboarding_starts_the_targeted_search_for_the_chosen_industries(world, feed_store, feed_config):  # noqa: F811
+    reader, mail, started = world[0], Mailbox(), []
+
+    class Targeted:
+        def start(self, names):
+            started.append(list(names))
+    app = create_app(feed_store, reader, feed_config, FeedService(feed_store, feed_config,
+                     FeedDataCache(feed_store, reader), clock=lambda: NOW, seed=1),
+                     auth=Auth(feed_store, feed_config, mail, "https://signal.example", clock=Clock()), targeted=Targeted())
+    c, _ = sign_in(app, mail, "tgt@example.com")
+    assert c.post("/onboarding", json={"industries": ["Legal"], "skills": []}).status_code == 200
+    assert started == [["Legal"]]

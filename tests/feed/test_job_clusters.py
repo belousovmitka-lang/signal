@@ -58,3 +58,32 @@ def test_cores_form_clusters_and_60s_only_attach(feed_store, feed_config, tmp_pa
 def select_all(model):
     from sqlalchemy import select
     return select(model)
+
+
+def test_thin_industries_are_searched_once_per_cooldown_and_onboarding_does_not_wait(feed_store, feed_config):
+    from signal_connectors.industries import Industry, Vocabulary
+    from signal_feed.opportunities.targeted import TargetedSearch, coverage
+    with feed_store.session() as s, s.begin():
+        s.add(JobClusterRow(id=1, need="n", core_posts=1, supporting_posts=0, distinct_buyers=1, best_score=85,
+                            first_seen=NOW, last_seen=NOW, built_at=NOW))
+        s.add(EnrichedPostRow(post_id="p1", status="ok", post_type="pain", prompt_version="v9", enriched_at=NOW,
+                              industry_path=["Legal", "Litigation"]))
+    with feed_store.session() as s, s.begin():                # the cluster row exists first (foreign key)
+        s.add(JobClusterPostRow(cluster_id=1, post_id="p1", role="core", cosine=1.0))
+    assert coverage(feed_store, ["Legal > Litigation", "Logistics and trucking"]) == \
+        {"Legal": 1, "Logistics and trucking": 0}
+    maps = {k: Industry(industry=k, name=n, vocabulary=Vocabulary(roles=["r"])) for k, n in
+            [("legal", "Legal"), ("logistics", "Logistics and trucking")]}
+    asked, t = [], [0.0]
+
+    def search(industries, days, limit):
+        asked.append([i.industry for i in industries])
+        return {"hackernews:logistics": 3}
+    ts = TargetedSearch(feed_store, feed_config, maps, search=search, clock=lambda: t[0])
+    assert ts(["Legal", "Logistics and trucking"]) == {"hackernews:logistics": 3}
+    assert asked == [["legal", "logistics"]]                  # both are under min_clusters (1 < 10)
+    assert ts(["Logistics and trucking"]) == {} and len(asked) == 1        # within the cooldown
+    t[0] += feed_config.opportunities.targeted_cooldown_hours * 3600
+    ts(["Logistics and trucking"])
+    assert asked[-1] == ["logistics"]
+    assert ts(["Made-up industry"]) == {}                     # no map: nothing to search with

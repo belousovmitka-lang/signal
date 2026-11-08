@@ -185,10 +185,11 @@ document.getElementById("go").onclick = async (e) => {
 
 def create_app(store: FeedStore, posts: PostsReader, config: FeedConfig, service: FeedService | None = None,
                clips_db_url: str | None = None, auth: Auth | None = None, web_dir: Path | None = None,
-               warm: bool = False, llm=None, live=None) -> FastAPI:
+               warm: bool = False, llm=None, live=None, targeted=None) -> FastAPI:
     """`llm` (an LLMTask) writes explanations on the item page; without it only already-written ones show.
     `live` (async (industry name, topic or None) -> {"sections": [...]}, see signal_feed/live.py) fills the
-    item page's live results; without it that card stays empty."""
+    item page's live results; without it that card stays empty. `targeted` (opportunities.targeted.TargetedSearch)
+    searches a new user's thin industries after onboarding."""
     app = FastAPI(title="Signal feed")
     app.state.auth = auth
 
@@ -230,6 +231,8 @@ def create_app(store: FeedStore, posts: PostsReader, config: FeedConfig, service
             raise HTTPException(status_code=422, detail=str(exc)) from None
         if me is not None:
             auth.bind_user(me.id, user_id)
+        if targeted is not None:      # thin industries are searched now, in the background (opportunities/targeted.py)
+            targeted.start(quiz.industries)
         return Onboarded(user_id=user_id)
 
     @app.get("/feed")
@@ -601,6 +604,12 @@ def app_from_env() -> FastAPI:
     if os.environ.get("SIGNAL_LIVE", "on") != "off" and os.environ.get("BRAVE_API_KEY"):
         from .live import LiveLane
         live = LiveLane()
+    targeted = None
+    # Off unless SIGNAL_TARGETED=on: on the free APIs it finds almost nothing for non-tech industries
+    # (restaurants 2 posts, real estate 5, mostly unrelated; 2026-11-08). X is the candidate source.
+    if os.environ.get("SIGNAL_TARGETED", "off") == "on":
+        from .opportunities.targeted import TargetedSearch
+        targeted = TargetedSearch(store, config)
     return create_app(store, PostsReader(settings.posts_database_url), config,
                       clips_db_url=settings.posts_database_url, auth=auth_from_env(store, config),
-                      web_dir=REPO_ROOT / "web", warm=True, llm=llm, live=live)
+                      web_dir=REPO_ROOT / "web", warm=True, llm=llm, live=live, targeted=targeted)

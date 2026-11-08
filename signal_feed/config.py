@@ -555,6 +555,10 @@ class OpportunitiesConfig(_Strict):
     support_min_score: int = Field(60, ge=0, le=100)   # 60-79 posts may only support a cluster (founder, 2026-11-08)
     core_cosine: Fraction = Field(0.85, ge=0, le=1)    # average-linkage threshold between core needs
     attach_cosine: Fraction = Field(0.84, ge=0, le=1)  # a supporting post joins the closest cluster this close
+    min_clusters: int = Field(10, ge=0)                # fewer for a new user's industry: search for it now
+    targeted_cooldown_hours: float = Field(12, ge=0)   # one targeted search per industry in this long
+    targeted_days: int = Field(30, ge=1)               # how far back it searches
+    targeted_limit: int = Field(40, ge=1)              # posts per source query
 
 
 class FeedConfig(_Strict):

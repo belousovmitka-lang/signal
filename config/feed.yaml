@@ -413,3 +413,9 @@ opportunities:                    # OPPORTUNITIES.md (signal_feed/opportunities/
   support_min_score: 60           # 60-79 posts only support a cluster; its core is always 80+ (founder, 2026-11-08)
   core_cosine: 0.85               # 0.75 merged different needs (trucking paperwork + dock waits), 2026-11-08
   attach_cosine: 0.84             # 0.70 gave a 101-post "AI coding" blob; 0.82-0.83 attachments were still off-topic
+  # Onboarding gap check (signal_feed/opportunities/targeted.py): an industry with fewer clusters than this
+  # is searched at once on Hacker News, GitHub, Stack Exchange and Lemmy (free APIs), in the background.
+  min_clusters: 10
+  targeted_cooldown_hours: 12     # one search per industry in this long, however many people sign up
+  targeted_days: 30
+  targeted_limit: 40
