@@ -553,8 +553,8 @@ class AuthConfig(_Strict):
 class OpportunitiesConfig(_Strict):
     """OPPORTUNITIES.md: job clusters (18.4) and, later, gates and synthesis."""
     support_min_score: int = Field(60, ge=0, le=100)   # 60-79 posts may only support a cluster (founder, 2026-11-08)
-    core_cosine: Fraction = Field(0.75, ge=0, le=1)    # average-linkage threshold between core needs
-    attach_cosine: Fraction = Field(0.70, ge=0, le=1)  # a supporting post joins the closest cluster this close
+    core_cosine: Fraction = Field(0.85, ge=0, le=1)    # average-linkage threshold between core needs
+    attach_cosine: Fraction = Field(0.84, ge=0, le=1)  # a supporting post joins the closest cluster this close
 
 
 class FeedConfig(_Strict):

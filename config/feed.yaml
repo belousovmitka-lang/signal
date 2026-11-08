@@ -411,5 +411,5 @@ auth:
 
 opportunities:                    # OPPORTUNITIES.md (signal_feed/opportunities/)
   support_min_score: 60           # 60-79 posts only support a cluster; its core is always 80+ (founder, 2026-11-08)
-  core_cosine: 0.75               # need-to-need similarity for core posts to share a cluster (tune after backfill)
-  attach_cosine: 0.70             # a supporting post joins the closest cluster this close (tune after backfill)
+  core_cosine: 0.85               # 0.75 merged different needs (trucking paperwork + dock waits), 2026-11-08
+  attach_cosine: 0.84             # 0.70 gave a 101-post "AI coding" blob; 0.82-0.83 attachments were still off-topic
