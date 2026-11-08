@@ -334,12 +334,17 @@ class OpportunityFieldsPass:
         return tagged, failed, cost, running
 
     def _ask(self, row: EnrichedPostRow, post: RawPost):
+        if getattr(self, "_stopped", None):
+            return None
         user = tags_block(row) + "\n" + user_prompt(post, self.cfg.max_input_chars)
         for _ in range(1 + self.cfg.max_retries_invalid_json):
             try:
                 attempt = self.tagger.tag(self.ocfg.call, SYSTEM, user, output_model=OpportunityFields)
             except TransientError as exc:
                 log.warning("transient error on %s: %s", row.post_id, exc)
+                return None
+            except BudgetExceededError as exc:          # out of credit or budget: stop asking, keep what's done
+                self._stopped = str(exc)
                 return None
             if attempt.output is not None or attempt.error not in ("invalid_json", "max_tokens"):
                 return attempt

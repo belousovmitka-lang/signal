@@ -964,6 +964,15 @@ sources:
       - {params: {kind: repos, min_stars: 50}, limit: 100}
       - {params: {kind: discussions}, keywords: ['"feature request"'], limit: 100}
       - {params: {kind: discussions}, keywords: ['"is there a way"'], limit: 100}
+      # Unmet-need phrasings (2026-11-08): feature requests and "is there a way" gave 11-16% posts scoring 60+
+      # on the opportunity fields, the industry repos above 0-10%.
+      - {params: {kind: issues}, keywords: ['label:enhancement'], limit: 200}
+      - {params: {kind: issues}, keywords: ['"is there a tool" OR "is there any tool"'], limit: 100}
+      - {params: {kind: issues}, keywords: ['"integration with" label:"feature request"'], limit: 100}
+      - {params: {kind: discussions}, keywords: ['"any plans to support"'], limit: 100}
+      - {params: {kind: discussions}, keywords: ['"is there a tool"'], limit: 100}
+      - {params: {kind: discussions}, keywords: ['workaround'], limit: 100}
+      - {params: {kind: discussions}, keywords: ['automate'], limit: 100}
       # Issues and discussions on open-source software that clinics, shops, accountants, schools and
       # fleets run themselves (added 2026-10-30): what its users can't do or what breaks for them.
       # Several repo: qualifiers are OR'd; volumes are new issues a week, measured 2026-10-30.
