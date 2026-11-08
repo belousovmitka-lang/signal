@@ -36,6 +36,13 @@ enrichment:
   batch_discount: 0.5
   cache_write_multiplier: 1.25
   cache_read_multiplier: 0.1
+  opportunity_fields:             # OPPORTUNITIES.md 18.3, a second pass over actionable posts only
+    version: o2                   # bump to re-tag these fields; the main tags (prompt_version) stay
+    call:
+      model: claude-haiku-5-5
+      effort: medium
+      max_tokens: 3000
+    post_types: [pain, paid_demand, tool_gap, change, idea]
 
 embeddings:
   provider: voyage

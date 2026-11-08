@@ -76,6 +76,23 @@ class EnrichedPostRow(FeedBase):
     task_embedding: Mapped[list[float] | None] = mapped_column(NullableJSON)
     data_moved: Mapped[list[dict[str, Any]] | None] = mapped_column(NullableJSON)   # [{from_tool, to_tool, data}]
     obligation_ids: Mapped[list[int] | None] = mapped_column(NullableJSON)
+    # OPPORTUNITIES.md 18.3, from their own pass (enrichment/opportunity_fields.py); a re-tag at a new
+    # prompt_version replaces the row, so these go back to null and are tagged again:
+    job_statement: Mapped[str | None] = mapped_column(Text)               # "[buyer type] needs [task or deliverable]"
+    deliverable: Mapped[str | None] = mapped_column(Text)                 # paid demand: the thing being bought
+    buyer_type: Mapped[str | None] = mapped_column(String(16), index=True)
+    buyer_segment: Mapped[str | None] = mapped_column(String(200))
+    recurrence: Mapped[str | None] = mapped_column(String(16))            # once | occasional | recurring
+    one_off_request: Mapped[bool | None] = mapped_column(Boolean, nullable=True)
+    fixable_by_third_party: Mapped[str | None] = mapped_column(String(24))  # yes | platform_owner_only | unclear
+    platform_owner: Mapped[str | None] = mapped_column(String(100))
+    outside_route: Mapped[str | None] = mapped_column(String(200))        # API, extension... when one is named
+    time_cost: Mapped[dict[str, Any] | None] = mapped_column(NullableJSON)  # {hours, per} only when stated
+    plain_summary: Mapped[str | None] = mapped_column(Text)
+    opp_confidence: Mapped[float | None] = mapped_column(Float)
+    opp_version: Mapped[str | None] = mapped_column(String(32), index=True)
+    opp_model: Mapped[str | None] = mapped_column(String(64))
+    opp_cost_usd: Mapped[float | None] = mapped_column(Float)
     # A paid follow-up left for `enrich.py escalate` (batch collection makes no paid calls):
     # "retry" (invalid or cut-off output) | "escalate" (unsure or declined) | None.
     followup: Mapped[str | None] = mapped_column(String(16), nullable=True, index=True)
@@ -675,6 +692,9 @@ def _sqlite_pragmas(dbapi_conn: Any, _record: Any) -> None:
     cur = dbapi_conn.cursor()
     cur.execute("PRAGMA journal_mode=WAL")
     cur.execute("PRAGMA foreign_keys=ON")
+    # Wait for a writer instead of failing after sqlite3's 5 s default: the cron jobs' problem rescore holds
+    # the write lock longer than that (a tagging run died on "database is locked", 2026-11-08).
+    cur.execute("PRAGMA busy_timeout=60000")
     cur.close()
 
 

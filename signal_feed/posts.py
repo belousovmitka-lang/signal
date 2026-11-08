@@ -66,6 +66,12 @@ class PostsReader:
         with self.session() as s:
             return set(s.scalars(select(PostRow.id).where(cond)))
 
+    def sources_of(self, ids: Collection[str]) -> dict[str, str]:
+        """Post id -> source, for the given ids."""
+        with self.session() as s:
+            return {pid: src for part in _chunks(ids)
+                    for pid, src in s.execute(select(PostRow.id, PostRow.source).where(PostRow.id.in_(part)))}
+
     def word_counts(self, ids: Collection[str]) -> dict[str, int]:
         """Words in title + text per post, for expected reading time."""
         if not ids:

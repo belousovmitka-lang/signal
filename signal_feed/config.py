@@ -57,6 +57,14 @@ class TokenPrice(_Strict):
     output: float = Field(ge=0)
 
 
+class OpportunityFieldsConfig(_Strict):
+    """OPPORTUNITIES.md 18.3: the fields opportunities are built from, tagged by their own pass
+    (signal_feed/enrichment/opportunity_fields.py) on posts of `post_types` only."""
+    version: str = Field(min_length=1, max_length=32)    # bump to re-tag these fields (not the main tags)
+    call: ModelCall
+    post_types: list[TaggedPostType]
+
+
 class EnrichmentConfig(_Strict):
     prompt_version: str = Field(min_length=1, max_length=32)
     spam_drop_threshold: Fraction = Field(ge=0, le=1)
@@ -72,10 +80,11 @@ class EnrichmentConfig(_Strict):
     batch_discount: Fraction = Field(ge=0, le=1)
     cache_write_multiplier: float = Field(ge=0)
     cache_read_multiplier: float = Field(ge=0)
+    opportunity_fields: OpportunityFieldsConfig | None = None
 
     @model_validator(mode="after")
     def _models_priced(self) -> EnrichmentConfig:
-        for call in (self.tagger, self.escalation):
+        for call in (self.tagger, self.escalation, *([self.opportunity_fields.call] if self.opportunity_fields else [])):
             if call.model not in self.prices_per_mtok:
                 raise ValueError(f"no price for {call.model} in enrichment.prices_per_mtok")
         return self
