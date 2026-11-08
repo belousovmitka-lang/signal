@@ -115,6 +115,7 @@ def test_only_product_shaped_sure_and_open_needs_are_shown(feed_config):
     assert not shown(row(opp_confidence=0.5), cfg, today)
     assert not shown(row(deadline=date(2026, 11, 9)), cfg, today)              # closes tomorrow
     assert shown(row(deadline=date(2026, 11, 30), project_type="device"), cfg, today)
+    assert not shown(row(post_type="idea", project_score=90), cfg, today)     # a builder's own product: support only
 
 
 def test_a_non_us_post_is_shown_only_through_a_close_us_post(feed_store, feed_config, tmp_path):

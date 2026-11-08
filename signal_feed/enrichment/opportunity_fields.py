@@ -496,6 +496,11 @@ def shown(row: EnrichedPostRow, cfg, today, source: str = "") -> bool:
         return False
     if row.project_type not in PRODUCT_TYPES:
         return False
+    # Someone describing a product they build (post type "idea") shows competition, not demand: 7 of the 9
+    # idea posts scoring 80+ were vendors, listicles or builders promoting their own tool (2026-11-08).
+    # They can still be supporting evidence.
+    if row.post_type == "idea":
+        return False
     if (row.opp_confidence or 0) < cfg.min_confidence:
         return False
     if row.deadline is not None and (row.deadline - today).days < cfg.min_days_to_deadline:
