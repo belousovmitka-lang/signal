@@ -153,3 +153,47 @@ def test_a_non_us_post_is_shown_only_through_a_close_us_post(feed_store, feed_co
     row.us_match_score = 0.3
     assert not shown(row, cfg, today, "ted")
     assert not needs_us_match(rows(feed_store)[us_far.id], "hackernews")
+
+
+def test_backfill_goes_through_batches_that_the_main_collector_leaves_alone(feed_store, feed_config, three_posts):  # noqa: F811
+    from types import SimpleNamespace
+
+    from signal_feed.db import EnrichmentBatchRow
+    from signal_feed.enrichment.batch import BatchRunner
+    reader, (pain, *_) = three_posts
+    tagged(feed_store, feed_config, reader, pain)
+    answer = fields().model_dump_json()
+
+    class Batches:
+        def __init__(self):
+            self.created = []
+
+        def create(self, requests):
+            self.created.append(requests)
+            return SimpleNamespace(id="msgbatch_1")
+
+        def retrieve(self, bid):
+            return SimpleNamespace(processing_status="ended")
+
+        def results(self, bid):
+            msg = SimpleNamespace(model="claude-haiku-5-5", stop_reason="end_turn",
+                                  content=[SimpleNamespace(type="text", text=answer)],
+                                  usage=SimpleNamespace(input_tokens=1500, output_tokens=200, cache_read_input_tokens=0,
+                                                        cache_creation_input_tokens=0, iterations=None))
+            yield SimpleNamespace(custom_id=pain.id, result=SimpleNamespace(type="succeeded", message=msg))
+    client = SimpleNamespace(messages=SimpleNamespace(batches=Batches()))
+    run = OpportunityFieldsPass(feed_store, reader, feed_config, Tagger(), clock=lambda: NOW)
+    assert run.backfill_ids() == [pain.id]
+    assert run.submit([pain.id], client=client) == ["msgbatch_1"]
+    [requests] = client.messages.batches.created
+    assert requests[0]["custom_id"] == pain.id and "<earlier_tags>" in requests[0]["params"]["messages"][0]["content"]
+    with feed_store.session() as s:
+        assert s.get(EnrichmentBatchRow, "msgbatch_1").prompt_version.startswith("opp:")
+    # The main tagging collector must not touch it (it would read these answers as post tags).
+    main = BatchRunner(make(feed_store, feed_config, reader, FakeTagger()), client=client)
+    assert main.collect().ok == 0 and rows(feed_store)[pain.id].buyer_type is None
+    tagged_n, failed, cost, running = run.collect(client=client)
+    assert (tagged_n, failed, running) == (1, 0, 0) and cost > 0
+    assert rows(feed_store)[pain.id].buyer_type == "small_business" and run.pending_ids() == []
+    with feed_store.session() as s:
+        assert s.get(EnrichmentBatchRow, "msgbatch_1").status == "collected"

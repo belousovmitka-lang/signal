@@ -23,6 +23,7 @@ from .prompt import system_prompt, user_prompt
 log = logging.getLogger(__name__)
 
 MAX_REQUESTS_PER_BATCH = 5000
+BATCH_PREFIX = "opp:"        # enrichment_batches.prompt_version of opportunity-fields batches
 
 
 class BatchRunner:
@@ -70,7 +71,9 @@ class BatchRunner:
         e = self.enricher
         stats = RunStats()
         with e.store.session() as s:
-            open_batches = list(s.query(EnrichmentBatchRow).filter(EnrichmentBatchRow.status == "open"))
+            # Batches of other passes (opportunity fields, "opp:<version>") are collected by their own code.
+            open_batches = list(s.query(EnrichmentBatchRow).filter(
+                EnrichmentBatchRow.status == "open", ~EnrichmentBatchRow.prompt_version.startswith(BATCH_PREFIX)))
         for batch_row in open_batches:
             batch = self.client.messages.batches.retrieve(batch_row.id)
             if batch.processing_status != "ended":

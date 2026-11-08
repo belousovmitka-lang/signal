@@ -47,6 +47,10 @@ enrichment:
     min_confidence: 0.6           # labels this unsure are vague posts; 0.8 hid two of the founder's "Yes!!" picks (o3)
     min_days_to_deadline: 3       # a tender closing sooner is not shown
     us_match_min_cosine: 0.60     # real matches scored 0.59-0.68 on the o4 sample, unrelated ones 0.57 and below
+    # Backfill (2026-11-08): TED tenders can only be supporting evidence (non-US) and cost ~$1: later.
+    backfill_skip_sources: [ted, x]
+    # 1 of 84 sampled posts from these reached 60; only those naming software are tagged.
+    strict_sources: [sam_gov, uk_tenders, openfda, nhtsa]
 
 embeddings:
   provider: voyage
@@ -404,3 +408,8 @@ auth:
   link_minutes: 15
   session_days: 30                # sliding: each use extends it
   links_per_email_per_hour: 5
+
+opportunities:                    # OPPORTUNITIES.md (signal_feed/opportunities/)
+  support_min_score: 60           # 60-79 posts only support a cluster; its core is always 80+ (founder, 2026-11-08)
+  core_cosine: 0.75               # need-to-need similarity for core posts to share a cluster (tune after backfill)
+  attach_cosine: 0.70             # a supporting post joins the closest cluster this close (tune after backfill)

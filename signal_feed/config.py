@@ -67,6 +67,8 @@ class OpportunityFieldsConfig(_Strict):
     min_confidence: Fraction = 0.6                     # ...and only when the labels are this sure
     min_days_to_deadline: int = Field(3, ge=0)         # tenders closing sooner are not shown
     us_match_min_cosine: Fraction = 0.60               # a non-US post is shown only with a US post this close
+    backfill_skip_sources: list[str] = []              # source families the backfill leaves untagged
+    strict_sources: list[str] = []                     # ...and those tagged only when they name software
 
 
 class EnrichmentConfig(_Strict):
@@ -548,6 +550,13 @@ class AuthConfig(_Strict):
     links_per_email_per_hour: int = Field(default=5, gt=0)
 
 
+class OpportunitiesConfig(_Strict):
+    """OPPORTUNITIES.md: job clusters (18.4) and, later, gates and synthesis."""
+    support_min_score: int = Field(60, ge=0, le=100)   # 60-79 posts may only support a cluster (founder, 2026-11-08)
+    core_cosine: Fraction = Field(0.75, ge=0, le=1)    # average-linkage threshold between core needs
+    attach_cosine: Fraction = Field(0.70, ge=0, le=1)  # a supporting post joins the closest cluster this close
+
+
 class FeedConfig(_Strict):
     version: int = Field(ge=1)
     enrichment: EnrichmentConfig
@@ -568,6 +577,7 @@ class FeedConfig(_Strict):
     auth: AuthConfig = AuthConfig()
     explain: ExplainConfig = ExplainConfig()
     signals: SignalsConfig = SignalsConfig()
+    opportunities: OpportunitiesConfig = OpportunitiesConfig()
 
 
 def load_feed_config(path: Path) -> FeedConfig:

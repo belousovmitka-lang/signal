@@ -99,6 +99,7 @@ class EnrichedPostRow(FeedBase):
     us_version: Mapped[str | None] = mapped_column(Text)             # the same need as US buyers have it
     us_match_post_id: Mapped[str | None] = mapped_column(String(64))  # non-US posts: the closest US post with that need
     us_match_score: Mapped[float | None] = mapped_column(Float)      # cosine of us_version to that post
+    need_embedding: Mapped[list[float] | None] = mapped_column(NullableJSON)   # us_version (else job_statement), for job clusters
     opp_version: Mapped[str | None] = mapped_column(String(32), index=True)
     opp_model: Mapped[str | None] = mapped_column(String(64))
     opp_cost_usd: Mapped[float | None] = mapped_column(Float)
@@ -114,6 +115,41 @@ class EnrichedPostRow(FeedBase):
     embedding_model: Mapped[str | None] = mapped_column(String(64))
     cost_usd: Mapped[float] = mapped_column(Float, default=0.0)
     enriched_at: Mapped[datetime] = mapped_column(UTCDateTime, index=True)   # max() checks the feed cache
+
+
+class JobClusterRow(FeedBase):
+    """OPPORTUNITIES.md 18.4, extended to every post type (founder, 2026-11-08): posts about the same product
+    need. Only core posts (shown-eligible, project score >= 80) form a cluster; supporting posts (60-79)
+    attach to one and never form their own. Rebuilt on every run; ids are not stable yet."""
+
+    __tablename__ = "job_clusters"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    need: Mapped[str] = mapped_column(Text)                    # the best core post's us_version
+    project_idea: Mapped[str | None] = mapped_column(Text)     # the best core post's idea
+    job_statement: Mapped[str | None] = mapped_column(Text)
+    buyer_type: Mapped[str | None] = mapped_column(String(16))
+    buyer_segment: Mapped[str | None] = mapped_column(String(200))
+    core_posts: Mapped[int] = mapped_column(Integer)
+    supporting_posts: Mapped[int] = mapped_column(Integer)
+    distinct_buyers: Mapped[int] = mapped_column(Integer)
+    source_types: Mapped[list[str]] = mapped_column(JSON, default=list)
+    sources: Mapped[dict[str, int]] = mapped_column(JSON, default=dict)
+    price: Mapped[dict[str, Any] | None] = mapped_column(NullableJSON)   # USD amounts: count, median, p25, p75
+    recurring_share: Mapped[float | None] = mapped_column(Float)
+    best_score: Mapped[int] = mapped_column(Integer, index=True)
+    first_seen: Mapped[datetime] = mapped_column(UTCDateTime)
+    last_seen: Mapped[datetime] = mapped_column(UTCDateTime)
+    built_at: Mapped[datetime] = mapped_column(UTCDateTime)
+
+
+class JobClusterPostRow(FeedBase):
+    __tablename__ = "job_cluster_posts"
+
+    cluster_id: Mapped[int] = mapped_column(Integer, ForeignKey("job_clusters.id", ondelete="CASCADE"), primary_key=True)
+    post_id: Mapped[str] = mapped_column(String(64), primary_key=True, index=True)
+    role: Mapped[str] = mapped_column(String(12))              # core | supporting
+    cosine: Mapped[float] = mapped_column(Float)               # to the cluster's core centroid
 
 
 class ObligationRow(FeedBase):

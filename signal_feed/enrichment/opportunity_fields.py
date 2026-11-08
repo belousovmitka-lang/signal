@@ -26,13 +26,15 @@ from pathlib import Path
 from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
+import re
+
 from sqlalchemy import select, update
 
 from signal_connectors.models import RawPost, utcnow
 
 from ..config import FeedConfig
 from ..db import EnrichedPostRow, FeedStore
-from ..posts import PostsReader
+from ..posts import PostsReader, _chunks
 from .costs import BudgetExceededError, CostLedger, claude_usd, claude_worst_case_usd
 from .llm import Tagger, TransientError
 from .pii import scrub
@@ -41,6 +43,8 @@ from .prompt import user_prompt
 log = logging.getLogger(__name__)
 
 PURPOSE = "opportunity_fields"
+SOFTWARE_WORDS = re.compile(r"\b(software|saas|platform|apps?|portal|database|digital|automat\w*|analytics|dashboard|ai|"
+                            r"online|web\w*|cloud|it system|information system|management system)\b", re.I)
 BuyerType = Literal["consumer", "solo", "small_business", "mid_market", "enterprise", "public_sector", "developer"]
 
 
@@ -214,10 +218,7 @@ class OpportunityFieldsPass:
 
     def run(self, post_ids: Sequence[str]) -> list[Result]:
         """Tag these posts' opportunity fields. The whole run's worst case must fit the monthly budget first."""
-        with self.store.session() as s:
-            rows = {r.post_id: r for r in s.scalars(select(EnrichedPostRow).where(EnrichedPostRow.post_id.in_(post_ids)))}
-            for r in rows.values():
-                s.expunge(r)
+        rows = self._rows(post_ids)
         posts = {p.id: p for p in self.posts.get_posts(list(rows))}
         todo = [(rows[pid], posts[pid]) for pid in post_ids if pid in rows and pid in posts]
         self.ledger.check("anthropic", self.worst_case_usd(len(todo)), self.cfg.monthly_budget_usd, self.clock())
@@ -231,6 +232,106 @@ class OpportunityFieldsPass:
                 self._save(result)
                 out.append(result)
         return out
+
+    # --- backfill through the Batch API (50% off) ------------------------------------------------------
+
+    def _rows(self, ids: Sequence[str]) -> dict[str, EnrichedPostRow]:
+        out = {}
+        with self.store.session() as s:
+            for part in _chunks(list(ids)):
+                for r in s.scalars(select(EnrichedPostRow).where(EnrichedPostRow.post_id.in_(part))):
+                    s.expunge(r)
+                    out[r.post_id] = r
+        return out
+
+    def backfill_ids(self) -> list[str]:
+        """Pending posts worth tagging: none from `backfill_skip_sources`; from `strict_sources` (tenders and
+        complaint records, which almost never describe a product need) only those that name software."""
+        pending = self.pending_ids()
+        rows, sources = self._rows(pending), self.posts.sources_of(pending)
+        titles = {p.id: p.title or "" for p in self.posts.get_posts(
+            [pid for pid in pending if sources.get(pid, "").split(":")[0] in self.ocfg.strict_sources])}
+        out = []
+        for pid in pending:
+            fam = sources.get(pid, "").split(":")[0]
+            if not fam or fam in self.ocfg.backfill_skip_sources:
+                continue
+            r = rows[pid]
+            if fam in self.ocfg.strict_sources and not SOFTWARE_WORDS.search(
+                    f"{r.pain_statement or ''} {r.task or ''} {titles.get(pid, '')}"):
+                continue
+            out.append(pid)
+        return out
+
+    def submit(self, post_ids: Sequence[str], client=None) -> list[str]:
+        """Send the posts as Message Batches, reserving their worst case against the budget. `collect` finishes them."""
+        import anthropic
+
+        from ..db import EnrichmentBatchRow
+        from .batch import BATCH_PREFIX, MAX_REQUESTS_PER_BATCH
+        from .llm import request_params
+        client = client or anthropic.Anthropic(max_retries=4)
+        rows, ids = self._rows(post_ids), []
+        for i in range(0, len(post_ids), MAX_REQUESTS_PER_BATCH):
+            chunk = [p for p in self.posts.get_posts(post_ids[i:i + MAX_REQUESTS_PER_BATCH]) if p.id in rows]
+            requests, reserve = [], 0.0
+            for post in chunk:
+                user = tags_block(rows[post.id]) + "\n" + user_prompt(post, self.cfg.max_input_chars)
+                requests.append({"custom_id": post.id,
+                                 "params": request_params(self.ocfg.call, SYSTEM, user, OpportunityFields)})
+                reserve += claude_worst_case_usd(self.ocfg.call, len(SYSTEM) + len(user), self.cfg, batch=True)
+            self.ledger.check("anthropic", reserve, self.cfg.monthly_budget_usd, self.clock())
+            batch = client.messages.batches.create(requests=requests)
+            with self.store.session() as s, s.begin():
+                s.add(EnrichmentBatchRow(id=batch.id, model=self.ocfg.call.model,
+                                         prompt_version=BATCH_PREFIX + self.ocfg.version,
+                                         post_ids=[p.id for p in chunk], status="open", reserved_usd=reserve,
+                                         submitted_at=self.clock()))
+            ids.append(batch.id)
+            log.info("submitted %s: %d posts, reserved $%.2f", batch.id, len(chunk), reserve)
+        return ids
+
+    def collect(self, client=None) -> tuple[int, int, float, int]:
+        """Finish ended batches: (tagged, failed, cost, batches still running). A failed answer is left
+        pending (no opp_version), for a later sync run."""
+        import anthropic
+
+        from ..db import EnrichmentBatchRow
+        from .batch import BATCH_PREFIX
+        from .llm import read_message
+        client = client or anthropic.Anthropic(max_retries=4)
+        with self.store.session() as s:
+            open_rows = list(s.scalars(select(EnrichmentBatchRow).where(
+                EnrichmentBatchRow.status == "open", EnrichmentBatchRow.prompt_version.startswith(BATCH_PREFIX))))
+            for r in open_rows:
+                s.expunge(r)
+        tagged = failed = running = 0
+        cost = 0.0
+        for b in open_rows:
+            if client.messages.batches.retrieve(b.id).processing_status != "ended":
+                running += 1
+                continue
+            for res in client.messages.batches.results(b.id):
+                if res.result.type != "succeeded":
+                    failed += 1
+                    continue
+                attempt = read_message(res.result.message, output_model=OpportunityFields,
+                                       requested_model=self.ocfg.call.model)
+                usd = 0.0
+                for u in attempt.usages:
+                    usd += claude_usd(u, self.cfg, batch=True)
+                    self.ledger.record(provider="anthropic", purpose=PURPOSE, usage=u, usd=claude_usd(u, self.cfg, batch=True),
+                                       batch=True, post_id=res.custom_id, batch_id=b.id, at=self.clock())
+                cost += usd
+                if attempt.output is None:
+                    failed += 1
+                    continue
+                self._save(Result(res.custom_id, attempt.output, attempt.model, None, usd))
+                tagged += 1
+            with self.store.session() as s, s.begin():
+                row = s.get(EnrichmentBatchRow, b.id)
+                row.status, row.collected_at = "collected", self.clock()
+        return tagged, failed, cost, running
 
     def _ask(self, row: EnrichedPostRow, post: RawPost):
         user = tags_block(row) + "\n" + user_prompt(post, self.cfg.max_input_chars)
@@ -322,6 +423,7 @@ def sample_ids(store: FeedStore, posts: PostsReader, n: int, seed: int = 7) -> l
     return chosen[:n]
 
 
+PRODUCT_TYPES = ("software", "device", "software_and_device")
 NON_US_SOURCES = ("ted", "uk_tenders", "eurlex")      # source families whose buyers are never in the US
 
 
@@ -342,7 +444,8 @@ def match_us(store: FeedStore, posts: PostsReader, embedder, post_ids: Sequence[
     from .costs import Usage
     cfg, ecfg, ledger = config.enrichment.opportunity_fields, config.embeddings, CostLedger(store)
     with store.session() as s:
-        rows = [r for r in s.scalars(select(EnrichedPostRow).where(EnrichedPostRow.post_id.in_(post_ids)))]
+        rows = [r for part in _chunks(list(post_ids))
+                for r in s.scalars(select(EnrichedPostRow).where(EnrichedPostRow.post_id.in_(part)))]
         for r in rows:
             s.expunge(r)
     src = posts.sources_of([r.post_id for r in rows])
@@ -361,12 +464,15 @@ def match_us(store: FeedStore, posts: PostsReader, embedder, post_ids: Sequence[
     ids = [p for p, _ in pool]
     matrix = np.asarray([e for _, e in pool], dtype=np.float32)
     matrix /= np.linalg.norm(matrix, axis=1, keepdims=True)
-    texts = [r.us_version for r in todo]
-    ledger.check("voyage", sum(map(len, texts)) / 2 * ecfg.price_per_mtok / 1_000_000, ecfg.monthly_budget_usd)
-    result = embedder.embed(texts, input_type="query")
-    ledger.record(provider="voyage", purpose=PURPOSE, usage=Usage(result.model, result.total_tokens),
-                  usd=result.total_tokens * ecfg.price_per_mtok / 1_000_000)
-    queries = np.asarray(result.vectors, dtype=np.float32)
+    vectors = []
+    for i in range(0, len(todo), ecfg.batch_size):          # Voyage takes at most 1,000 texts a request
+        texts = [r.us_version for r in todo[i:i + ecfg.batch_size]]
+        ledger.check("voyage", sum(map(len, texts)) / 2 * ecfg.price_per_mtok / 1_000_000, ecfg.monthly_budget_usd)
+        result = embedder.embed(texts, input_type="query")
+        ledger.record(provider="voyage", purpose=PURPOSE, usage=Usage(result.model, result.total_tokens),
+                      usd=result.total_tokens * ecfg.price_per_mtok / 1_000_000)
+        vectors += result.vectors
+    queries = np.asarray(vectors, dtype=np.float32)
     queries /= np.linalg.norm(queries, axis=1, keepdims=True)
     sims = queries @ matrix.T
     with store.session() as s, s.begin():
@@ -383,7 +489,7 @@ def shown(row: EnrichedPostRow, cfg, today, source: str = "") -> bool:
     `min_days_to_deadline`."""
     if row.project_score is None or row.project_score < cfg.min_project_score:
         return False
-    if row.project_type not in ("software", "device", "software_and_device"):
+    if row.project_type not in PRODUCT_TYPES:
         return False
     if (row.opp_confidence or 0) < cfg.min_confidence:
         return False

@@ -2,11 +2,13 @@
 
     python scripts/opportunity_fields.py sample [--n 500] [--dry-run]   # tag a review sample, write CSV + HTML
     python scripts/opportunity_fields.py export                         # rewrite the review files
+    python scripts/opportunity_fields.py backfill [--dry-run]   # submit every pending post as Message Batches
+    python scripts/opportunity_fields.py collect                # finish ended batches, then match non-US posts
     python scripts/opportunity_fields.py status
 
 The sample's post ids are kept in data/review/opportunity_fields_sample.json, so re-running `sample` tags
 only the ones not yet tagged at the current `opportunity_fields.version`. The full backfill is not here yet:
-it waits for the sample's labels to be checked.
+`backfill` skips and filters sources as `opportunity_fields` in config/feed.yaml says.
 """
 
 import argparse
@@ -40,6 +42,9 @@ def main() -> int:
     s.add_argument("--dry-run", action="store_true", help="pick the sample and print the worst-case cost only")
     sub.add_parser("export")
     sub.add_parser("status")
+    bf = sub.add_parser("backfill")
+    bf.add_argument("--dry-run", action="store_true")
+    sub.add_parser("collect")
     args = p.parse_args()
     logging.basicConfig(level=logging.WARNING, format="%(levelname)s %(name)s: %(message)s")
     load_dotenv(REPO_ROOT / ".env")
@@ -51,6 +56,29 @@ def main() -> int:
     if args.cmd == "status":
         with store.session() as ses:
             print(dict(ses.execute(select(EnrichedPostRow.opp_version, func.count()).group_by(EnrichedPostRow.opp_version)).all()))
+        return 0
+    if args.cmd in ("backfill", "collect"):
+        if not os.environ.get("ANTHROPIC_API_KEY"):
+            raise SystemExit("ANTHROPIC_API_KEY is not set")
+        from signal_feed.enrichment.llm import AnthropicTagger
+        run = OpportunityFieldsPass(store, posts, config, AnthropicTagger())
+        if args.cmd == "backfill":
+            todo = run.backfill_ids()
+            sample_cost = 0.2997 / 500          # o4 sample, direct calls (2026-11-08)
+            print(f"{len(todo)} posts to tag: about ${len(todo) * sample_cost / 2:.2f} through batches "
+                  f"(worst case reserved ${run.worst_case_usd(len(todo)) / 2:.2f})")
+            if not args.dry_run:
+                print("submitted", run.submit(todo))
+            return 0
+        tagged, failed, cost, running = run.collect()
+        print(f"collected: tagged {tagged}, failed {failed}, cost ${cost:.4f}; batches still running: {running}")
+        if tagged and os.environ.get("VOYAGE_API_KEY"):
+            from signal_feed.enrichment.embeddings import VoyageEmbedder
+            from signal_feed.enrichment.opportunity_fields import match_us
+            with store.session() as ses:
+                done = list(ses.scalars(select(EnrichedPostRow.post_id).where(EnrichedPostRow.opp_version == version,
+                                                                              EnrichedPostRow.us_match_post_id.is_(None))))
+            print(f"matched {match_us(store, posts, VoyageEmbedder(config.embeddings), done, config)} non-US posts")
         return 0
     if args.cmd == "export":
         ids = json.loads(IDS.read_text())
