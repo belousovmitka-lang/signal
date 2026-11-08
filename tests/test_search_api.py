@@ -157,6 +157,7 @@ def test_bluesky_url_parsing():
     assert BlueskyResolver.parse("https://example.com/profile/x/post/y") is None
 
 
+@pytest.mark.usefixtures("frozen_clock")
 async def test_deletion_recheck_purges_gone_and_hidden_posts(make_services):
     api = Api(exa_urls=[f"https://bsky.app/profile/{DID}/post/{k}" for k in ("1aa", "2bb", "3cc")],
               posts=[bsky_post("1aa"), bsky_post("2bb", text="another long enough post about manual billing work"),

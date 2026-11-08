@@ -67,6 +67,7 @@ async def test_listing_pages_skips_removed_and_stops_at_since(make_services):
     assert api.calls[0].path == "/r/paralegal/new" and api.calls[0].params["raw_json"] == "1"
 
 
+@pytest.mark.usefixtures("frozen_clock")
 async def test_deletion_recheck(make_services):
     api = Api({None: {"children": [post("b1"), post("b2"), post("b3")], "after": None}})
     async with make_services(src(), api) as svc:

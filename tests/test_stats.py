@@ -56,6 +56,7 @@ async def test_sector_months_with_changes(make_services):
     assert seen["for"] == "us:*" and seen["time"].startswith("from ") and seen["key"] == "test-key"
 
 
+@pytest.mark.usefixtures("frozen_clock")
 @signal_vcr.use_cassette("census_bfs.yaml")
 async def test_cassette_census_bfs(settings, monkeypatch):
     if os.environ.get("VCR_RECORD_MODE", "none") != "none":

@@ -97,3 +97,15 @@ def _no_pacing_on_replay(request: pytest.FixtureRequest, monkeypatch: pytest.Mon
 
 def pytest_configure(config: pytest.Config) -> None:
     config.addinivalue_line("markers", "real_pacing: keep rate limits and backoff deferrals during replay")
+
+
+@pytest.fixture
+def frozen_clock(monkeypatch):
+    """Today as 2026-10-20, for tests whose fixtures were written then: the deletion re-check looks back a
+    window from today, and the Census query asks for the last 14 months (its cassette was recorded in
+    October 2026). Without this they failed once the real date moved past the window."""
+    from datetime import datetime, timezone
+    now = lambda: datetime(2026, 10, 20, 12, tzinfo=timezone.utc)  # noqa: E731
+    monkeypatch.setattr("signal_connectors.runner.utcnow", now)
+    monkeypatch.setattr("signal_connectors.connectors.stats.utcnow", now)
+    return now

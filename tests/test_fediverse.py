@@ -82,6 +82,7 @@ async def test_mastodon_tag_timeline_filters_and_pages(make_services):
     assert len(calls) == 2  # stopped at the post older than since; never asked for a third page
 
 
+@pytest.mark.usefixtures("frozen_clock")
 async def test_mastodon_recheck_purges_deleted_and_withdrawn(make_services):
     statuses = {"7": status(7), "8": status(8), "9": status(9)}
 
@@ -168,6 +169,7 @@ async def test_cassette_lemmy_search(settings):
         assert p.community and p.community.startswith("!") and p.published_at >= CASSETTE_SINCE
 
 
+@pytest.mark.usefixtures("frozen_clock")
 async def test_recheck_survives_dead_servers_and_purges_robots_blocked(make_services):
     statuses = {"1": status(1), "2": status(2, url="https://gone.example/@pat/2"),
                 "3": status(3, url="https://norobots.example/@pat/3")}
