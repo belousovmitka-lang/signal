@@ -66,6 +66,7 @@ class OpportunityFieldsConfig(_Strict):
     min_project_score: int = Field(80, ge=0, le=100)   # shown only at or above this (founder, 2026-11-08)
     min_confidence: Fraction = 0.6                     # ...and only when the labels are this sure
     min_days_to_deadline: int = Field(3, ge=0)         # tenders closing sooner are not shown
+    us_match_min_cosine: Fraction = 0.60               # a non-US post is shown only with a US post this close
 
 
 class EnrichmentConfig(_Strict):

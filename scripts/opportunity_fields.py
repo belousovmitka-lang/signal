@@ -73,6 +73,11 @@ def main() -> int:
         failed = Counter(r.error for r in results if r.output is None)
         print(f"tagged {sum(r.output is not None for r in results)}, failed {dict(failed) or 0}, "
               f"cost ${sum(r.cost for r in results):.4f}")
+    if args.cmd == "sample" and os.environ.get("VOYAGE_API_KEY"):
+        from signal_feed.enrichment.embeddings import VoyageEmbedder
+        from signal_feed.enrichment.opportunity_fields import match_us
+        print(f"matched {match_us(store, posts, VoyageEmbedder(config.embeddings), ids, config)} "
+              f"non-US posts to US posts")
     csv_path, html_path = export_review(store, posts, ids, REVIEW / f"opportunity_fields_{version}",
                                         cfg=config.enrichment.opportunity_fields)
     print(f"review: {html_path}\n        {csv_path}")

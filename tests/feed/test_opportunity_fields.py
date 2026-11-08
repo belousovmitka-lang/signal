@@ -18,7 +18,8 @@ def fields(**over):
                 outside_route="QuickBooks API", time_cost={"hours": 4, "per": "week", "quote": "four hours, call 555-123-4567"},
                 plain_summary="Bookkeepers copy invoices from email into their accounting app by hand every week.",
                 deadline=None, buyer_country="US", project_idea="invoice capture from email into QuickBooks",
-                project_type="software", project_score=85, confidence=0.8)
+                project_type="software", project_score=85, market="us", us_version="US bookkeepers re-key invoices",
+                confidence=0.8)
     return OpportunityFields(**(base | over))
 
 
@@ -114,3 +115,41 @@ def test_only_product_shaped_sure_and_open_needs_are_shown(feed_config):
     assert not shown(row(opp_confidence=0.5), cfg, today)
     assert not shown(row(deadline=date(2026, 11, 9)), cfg, today)              # closes tomorrow
     assert shown(row(deadline=date(2026, 11, 30), project_type="device"), cfg, today)
+
+
+def test_a_non_us_post_is_shown_only_through_a_close_us_post(feed_store, feed_config, tmp_path):
+    from datetime import date, datetime, timezone
+
+    from signal_connectors.models import RawPost
+    from signal_connectors.store import Store
+    from signal_feed.enrichment.embeddings import EmbedResult
+    from signal_feed.enrichment.opportunity_fields import match_us, needs_us_match, shown
+    from signal_feed.posts import PostsReader
+    url = f"sqlite:///{tmp_path / 'sig.db'}"
+    mk = lambda src, i: RawPost(source=src, source_type="community", route="own_api", url=f"https://e.example/{i}",  # noqa: E731
+                                text=f"post {i} about accreditation", is_snippet=False,
+                                published_at=datetime(2026, 10, 1, tzinfo=timezone.utc))
+    eu, us_close, us_far, eu_other = mk("ted", 1), mk("sam_gov", 2), mk("hackernews", 3), mk("uk_tenders", 4)
+    Store(url).save_posts([eu, us_close, us_far, eu_other], text_dedupe=False)
+    reader = PostsReader(url)
+    vec = {us_close.id: [1.0, 0.1, 0.0], us_far.id: [0.0, 1.0, 0.0], eu_other.id: [1.0, 0.0, 0.0],
+           eu.id: [0.5, 0.5, 0.5]}
+    with feed_store.session() as s, s.begin():
+        for pid, e in vec.items():
+            s.add(EnrichedPostRow(post_id=pid, status="ok", post_type="paid_demand", prompt_version="v9",
+                                  enriched_at=NOW, embedding=e, project_score=88, project_type="software",
+                                  opp_confidence=0.8, market="local" if pid == eu.id else "us",
+                                  us_version="US universities need accreditation tracking" if pid == eu.id else None))
+
+    class Emb:
+        def embed(self, texts, input_type="document"):
+            assert input_type == "query"
+            return EmbedResult(vectors=[[1.0, 0.0, 0.0]] * len(texts), model="voyage-test", total_tokens=10)
+    assert match_us(feed_store, reader, Emb(), [eu.id], feed_config) == 1
+    row = rows(feed_store)[eu.id]
+    assert row.us_match_post_id == us_close.id and row.us_match_score > 0.99     # never the other UK tender
+    cfg, today = feed_config.enrichment.opportunity_fields, date(2026, 11, 8)
+    assert needs_us_match(row, "ted") and shown(row, cfg, today, "ted")
+    row.us_match_score = 0.3
+    assert not shown(row, cfg, today, "ted")
+    assert not needs_us_match(rows(feed_store)[us_far.id], "hackernews")

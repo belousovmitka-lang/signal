@@ -37,7 +37,7 @@ enrichment:
   cache_write_multiplier: 1.25
   cache_read_multiplier: 0.1
   opportunity_fields:             # OPPORTUNITIES.md 18.3, a second pass over actionable posts only
-    version: o3                   # bump to re-tag these fields; the main tags (prompt_version) stay
+    version: o4                   # bump to re-tag these fields; the main tags (prompt_version) stay
     call:
       model: claude-haiku-5-5
       effort: medium
@@ -46,6 +46,7 @@ enrichment:
     min_project_score: 80         # only needs a builder can turn into a working product (founder, 2026-11-08)
     min_confidence: 0.6           # labels this unsure are vague posts; 0.8 hid two of the founder's "Yes!!" picks (o3)
     min_days_to_deadline: 3       # a tender closing sooner is not shown
+    us_match_min_cosine: 0.60     # real matches scored 0.59-0.68 on the o4 sample, unrelated ones 0.57 and below
 
 embeddings:
   provider: voyage

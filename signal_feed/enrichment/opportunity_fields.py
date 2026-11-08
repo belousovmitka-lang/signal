@@ -71,8 +71,11 @@ class OpportunityFields(BaseModel):
     deadline: str | None = Field(description="The response or application deadline the post states, YYYY-MM-DD; else null")
     buyer_country: str | None = Field(description="ISO 3166-1 alpha-2 code of the buyer's country when stated or "
                                                   "clear (a TED tender names it); else null")
-    project_idea: str | None = Field(description="The product a builder could make for this need and sell to the whole "
-                                                 "buyer segment, in one line; null when there is none")
+    market: Literal["us", "global", "local"] = Field(description="Where this need exists; see the rules")
+    us_version: str | None = Field(description="The same need as US buyers have it, one line; null when US buyers "
+                                               "don't have it")
+    project_idea: str | None = Field(description="The product a startup could make for this need and sell to many "
+                                                 "US buyers, in one line; null when there is none")
     project_type: Literal["software", "device", "software_and_device", "one_time_help", "none"]
     project_score: int = Field(ge=0, le=100, description="How well this need can become a working product project, "
                                                           "scored with the rubric")
@@ -137,11 +140,18 @@ deadline: only a date the post states for responding, applying or submitting (YY
 
 buyer_country: the buyer's country as an ISO code ("US", "PL", "GB") when the post states it or it is clear from the source; null otherwise.
 
-project_idea, project_type, project_score: Signal's users are builders who want a project: something they make once and many buyers then use. Judge the underlying need, not only this one request.
-- project_idea: the product a builder could make that serves everyone in buyer_segment with this need, in one line ("accreditation tracking software for universities", "a tool that turns label artwork into print-ready files and checks required food-label text", "a sensor that alerts farmers when a grain bin heats up"). Null when there is none.
+market and us_version: Signal's builders sell mainly to US customers.
+- us: the buyer is in the US.
+- global: the buyer is elsewhere or unknown, but US buyers clearly have the same need (developers anywhere; small shops anywhere fighting the same chore). Most online community posts are global.
+- local: the need comes from one non-US country's laws, language, public systems or institutions, or from one foreign buyer, and US buyers don't share it as stated (a Croatian ministry's records system, an EU-only directive, a Polish hospital's equipment).
+us_version: one line describing the same need as US buyers have it ("US public universities need to track evidence for accreditation reviews"). For us posts, the need itself. For local needs, the closest need US buyers really have, or null when there is none. Never invent a US need that doesn't exist.
+
+project_idea, project_type, project_score: Signal's users are startup builders, often 18-25, who want to build something interesting: a product they make once and sell to many customers, mainly in the US. Judge the underlying need, not only this one request, and judge it for US buyers (us_version).
+- project_idea: the product a startup could make that serves every US buyer with this need (for a local need, its US version), in one line ("accreditation tracking software for universities", "a tool that turns label artwork into print-ready files and checks required food-label text", "a sensor that alerts farmers when a grain bin heats up"). Null when there is none.
 - project_type: software (an app, web tool, plugin, integration, automation, API), device (hardware someone designs and builds, often with firmware), software_and_device, one_time_help (the need is met by labour, installation, repair, consulting, a design job, advice, or supplying ready-made goods or equipment, with no product to build), none (no need: news, a hire for an ordinary role, a question already answered).
 - project_score, 0-100:
-  90-100: the buyer is asking or paying for software or a device that does an ongoing job, and many similar buyers have the same need (a university tendering for accreditation management software; a city replacing its legacy archive software; a facilities department rolling out facility-management software; many shops complaining about the same manual chore with no tool for it).
+  Score as if a small startup would sell the product to every US buyer with this need. A system built for one particular organisation (one ministry, one city, one company) is interesting only if many US buyers would buy the same product; otherwise it is contract work and scores 50 or less. A local need with no US version scores 40 or less. Products with a wide US market, real money behind the need, and something new to build (automation, AI, a device, a better workflow) score highest.
+  90-100: buyers are asking or paying for software or a device that does an ongoing job, and many similar US buyers have the same need (a university tendering for accreditation management software; a city replacing its legacy archive software; a facilities department rolling out facility-management software; many shops complaining about the same manual chore with no tool for it).
   80-89: a clear repeated need that a software or device product could take over, with buyers a builder could reach.
   60-79: a product is possible but the need is narrow, vague, mostly served by existing tools, or mostly a service.
   30-59: mostly one-time help (an installation, a design job, a repair, supplying equipment, a single migration) with only a weak product angle.
@@ -257,7 +267,8 @@ class OpportunityFieldsPass:
                        "time_cost": tc, "plain_summary": scrub(o.plain_summary), "opp_confidence": o.confidence,
                        "deadline": _date(o.deadline), "buyer_country": (o.buyer_country or "")[:2].upper() or None,
                        "project_idea": scrub(o.project_idea) if o.project_idea else None,
-                       "project_type": o.project_type, "project_score": o.project_score}
+                       "project_type": o.project_type, "project_score": o.project_score,
+                       "market": o.market, "us_version": scrub(o.us_version) if o.us_version else None}
         with self.store.session() as s, s.begin():
             s.execute(update(EnrichedPostRow).where(EnrichedPostRow.post_id == r.post_id).values(**values))
 
@@ -311,7 +322,62 @@ def sample_ids(store: FeedStore, posts: PostsReader, n: int, seed: int = 7) -> l
     return chosen[:n]
 
 
-def shown(row: EnrichedPostRow, cfg, today) -> bool:
+NON_US_SOURCES = ("ted", "uk_tenders", "eurlex")      # source families whose buyers are never in the US
+
+
+def needs_us_match(row: EnrichedPostRow, source: str) -> bool:
+    """A post whose buyer isn't (or may not be) American is never shown as it is (founder, 2026-11-08):
+    only when the same need turns up in a US post (match_us)."""
+    return (source.split(":")[0] in NON_US_SOURCES or row.market == "local"
+            or (row.buyer_country is not None and row.buyer_country != "US"))
+
+
+def match_us(store: FeedStore, posts: PostsReader, embedder, post_ids: Sequence[str], config: FeedConfig) -> int:
+    """For each non-US post, find the US post closest to its `us_version`: the pool is every tagged
+    actionable post that isn't from a non-US source or tagged with a non-US buyer or a local need. Stores
+    the best match and its cosine; `shown` needs it at or above `cfg.us_match_min_cosine`. No LLM calls:
+    one Voyage embedding per us_version."""
+    import numpy as np
+
+    from .costs import Usage
+    cfg, ecfg, ledger = config.enrichment.opportunity_fields, config.embeddings, CostLedger(store)
+    with store.session() as s:
+        rows = [r for r in s.scalars(select(EnrichedPostRow).where(EnrichedPostRow.post_id.in_(post_ids)))]
+        for r in rows:
+            s.expunge(r)
+    src = posts.sources_of([r.post_id for r in rows])
+    todo = [r for r in rows if r.us_version and r.post_id in src and needs_us_match(r, src[r.post_id])]
+    if not todo:
+        return 0
+    with store.session() as s:
+        pool = list(s.execute(select(EnrichedPostRow.post_id, EnrichedPostRow.embedding, EnrichedPostRow.market,
+                                     EnrichedPostRow.buyer_country).where(
+            EnrichedPostRow.status == "ok", EnrichedPostRow.embedding.is_not(None),
+            EnrichedPostRow.post_type.in_(list(cfg.post_types)))))
+    pool_src = posts.sources_of([p for p, *_ in pool])
+    pool = [(p, e) for p, e, market, country in pool
+            if pool_src.get(p, "x").split(":")[0] not in (*NON_US_SOURCES, "x")
+            and market != "local" and country in (None, "US")]
+    ids = [p for p, _ in pool]
+    matrix = np.asarray([e for _, e in pool], dtype=np.float32)
+    matrix /= np.linalg.norm(matrix, axis=1, keepdims=True)
+    texts = [r.us_version for r in todo]
+    ledger.check("voyage", sum(map(len, texts)) / 2 * ecfg.price_per_mtok / 1_000_000, ecfg.monthly_budget_usd)
+    result = embedder.embed(texts, input_type="query")
+    ledger.record(provider="voyage", purpose=PURPOSE, usage=Usage(result.model, result.total_tokens),
+                  usd=result.total_tokens * ecfg.price_per_mtok / 1_000_000)
+    queries = np.asarray(result.vectors, dtype=np.float32)
+    queries /= np.linalg.norm(queries, axis=1, keepdims=True)
+    sims = queries @ matrix.T
+    with store.session() as s, s.begin():
+        for r, row_sims in zip(todo, sims, strict=True):
+            best = int(row_sims.argmax())
+            s.execute(update(EnrichedPostRow).where(EnrichedPostRow.post_id == r.post_id).values(
+                us_match_post_id=ids[best], us_match_score=float(row_sims[best])))
+    return len(todo)
+
+
+def shown(row: EnrichedPostRow, cfg, today, source: str = "") -> bool:
     """Whether a post may reach builders at all (founder, 2026-11-08): a product-shaped need scored at least
     `min_project_score`, labels at least `min_confidence` sure, and no deadline closing within
     `min_days_to_deadline`."""
@@ -321,10 +387,14 @@ def shown(row: EnrichedPostRow, cfg, today) -> bool:
         return False
     if (row.opp_confidence or 0) < cfg.min_confidence:
         return False
-    return row.deadline is None or (row.deadline - today).days >= cfg.min_days_to_deadline
+    if row.deadline is not None and (row.deadline - today).days < cfg.min_days_to_deadline:
+        return False
+    if needs_us_match(row, source):
+        return (row.us_match_score or 0) >= cfg.us_match_min_cosine
+    return True
 
 
-COLS = ["project_score", "shown", "project_type", "project_idea", "post_type", "source", "url", "title",
+COLS = ["project_score", "shown", "project_type", "project_idea", "market", "us_version", "us_match", "us_match_title", "post_type", "source", "url", "title",
         "pain_statement", "job_statement", "deliverable", "buyer_type", "buyer_segment", "buyer_country", "deadline",
         "recurrence", "one_off_request", "fixable_by_third_party", "platform_owner", "outside_route", "time_cost",
         "plain_summary", "opp_confidence"]
@@ -338,6 +408,7 @@ def export_review(store: FeedStore, posts: PostsReader, post_ids: Sequence[str],
     with store.session() as s:
         rows = {r.post_id: r for r in s.scalars(select(EnrichedPostRow).where(EnrichedPostRow.post_id.in_(post_ids)))}
     raw = {p.id: p for p in posts.get_posts(list(post_ids))}
+    us = {p.id: p for p in posts.get_posts([r.us_match_post_id for r in rows.values() if r.us_match_post_id])}
     records = []
     for pid in post_ids:
         r, p = rows.get(pid), raw.get(pid)
@@ -346,7 +417,10 @@ def export_review(store: FeedStore, posts: PostsReader, post_ids: Sequence[str],
         tc = r.time_cost
         records.append({
             "project_score": r.project_score if r.project_score is not None else -1,
-            "shown": "yes" if cfg is not None and shown(r, cfg, today) else "no",
+            "shown": "yes" if cfg is not None and shown(r, cfg, today, p.source) else "no",
+            "market": r.market or "", "us_version": r.us_version or "",
+            "us_match": (us.get(r.us_match_post_id) and f"{r.us_match_score:.2f} {us[r.us_match_post_id].url}") or "",
+            "us_match_title": (us.get(r.us_match_post_id) and (us[r.us_match_post_id].title or "")[:140]) or "",
             "project_type": r.project_type or "", "project_idea": r.project_idea or "",
             "post_type": r.post_type, "source": p.source, "url": p.url, "title": (p.title or "")[:160],
             "pain_statement": r.pain_statement or "", "job_statement": r.job_statement or "",
@@ -372,7 +446,7 @@ def export_review(store: FeedStore, posts: PostsReader, post_ids: Sequence[str],
 
 def _review_html(records: list[dict]) -> str:
     e = html.escape
-    filters = ["project_type", "post_type", "buyer_type", "buyer_country", "recurrence"]
+    filters = ["project_type", "market", "post_type", "buyer_type", "buyer_country"]
     options = {c: sorted({r[c] for r in records if r[c]}) for c in filters}
     sel = "".join(f'<label>{e(c.replace("_", " "))} <select data-col="{e(c)}"><option value="">all</option>' +
                   "".join(f"<option>{e(v)}</option>" for v in options[c]) + "</select></label>" for c in filters)
@@ -386,6 +460,7 @@ def _review_html(records: list[dict]) -> str:
 <div class="meta">{e(r['project_type'])} · {e(r['post_type'])} · {e(r['source'])} · confidence {e(r['opp_confidence'])}{' · ' + e(r['buyer_country']) if r['buyer_country'] else ''}{' · deadline ' + e(r['deadline']) if r['deadline'] else ''} ·
 <a href="{e(r['url'])}" target="_blank" rel="noopener noreferrer">original</a></div></div></div>
 <p class="sum">{e(r['plain_summary'])}</p>
+{f'<p class="us"><b>US version:</b> {e(r["us_version"])}<br><b>Closest US post</b> ({e(r["us_match"].split(" ")[0])}): <a href="{e(r["us_match"].split(" ", 1)[1])}" target="_blank" rel="noopener noreferrer">{e(r["us_match_title"]) or "link"}</a></p>' if r["us_match"] else (f'<p class="us"><b>US version:</b> {e(r["us_version"])}</p>' if r["us_version"] and r["market"] != "us" else "")}
 <dl><dt>need</dt><dd>{e(r['job_statement'])}</dd>
 <dt>buyer</dt><dd>{e(r['buyer_type'])}: {e(r['buyer_segment'])}</dd>
 <dt>recurrence</dt><dd>{e(r['recurrence'])}{' · one-off request' if r['one_off_request'] == 'true' else ''}</dd>
@@ -402,10 +477,10 @@ article{{background:var(--card);border:1px solid var(--line);border-radius:12px;
 .top{{display:flex;gap:12px;align-items:flex-start}}.score{{flex:none;min-width:44px;height:36px;border-radius:10px;display:grid;place-items:center;
 font-weight:700;background:var(--line);font-variant-numeric:tabular-nums}}.score.hi{{background:var(--acc);color:#fff}}
 .idea{{font-weight:600;font-size:16px}}.meta{{font-size:13px;color:var(--muted)}}.meta a{{color:inherit}}
-.sum{{margin:10px 0 8px}}dl{{display:grid;grid-template-columns:150px 1fr;gap:2px 12px;margin:0;font-size:14px}}
+.sum{{margin:10px 0 8px}}.us{{font-size:14px;margin:0 0 8px;padding:8px 10px;border-radius:8px;background:var(--bg)}}.us a{{color:inherit}}dl{{display:grid;grid-template-columns:150px 1fr;gap:2px 12px;margin:0;font-size:14px}}
 dt{{color:var(--muted)}}dd{{margin:0;overflow-wrap:anywhere}}@media(max-width:560px){{dl{{grid-template-columns:1fr}}dd{{margin-bottom:6px}}}}
 </style></head><body><main><h1>Opportunity fields: {n_shown} of {len(records)} would be shown</h1>
-<p class="meta">Shown = product score 80+, software or device, labels 0.6+ sure, deadline not within 3 days. Best first.</p>
+<p class="meta">Shown = product score 80+, software or device, labels 0.6+ sure, deadline not within 3 days; a non-US post only when a US post shows the same need. Best first.</p>
 <div class="filters"><label><input type="checkbox" id="only" checked> only what would be shown</label>{sel} <span id="n"></span></div>{''.join(body)}</main><script>
 const sels=[...document.querySelectorAll('select')],arts=[...document.querySelectorAll('article')],only=document.getElementById('only');
 const key=c=>c.replace(/_(.)/g,(m,x)=>x.toUpperCase());

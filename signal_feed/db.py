@@ -95,6 +95,10 @@ class EnrichedPostRow(FeedBase):
     project_idea: Mapped[str | None] = mapped_column(Text)           # what a builder could make for the whole segment
     project_type: Mapped[str | None] = mapped_column(String(24))     # software | device | software_and_device | one_time_help | none
     project_score: Mapped[int | None] = mapped_column(Integer, index=True)   # 0-100; the feed shows >= min_project_score
+    market: Mapped[str | None] = mapped_column(String(8))            # us | global | local
+    us_version: Mapped[str | None] = mapped_column(Text)             # the same need as US buyers have it
+    us_match_post_id: Mapped[str | None] = mapped_column(String(64))  # non-US posts: the closest US post with that need
+    us_match_score: Mapped[float | None] = mapped_column(Float)      # cosine of us_version to that post
     opp_version: Mapped[str | None] = mapped_column(String(32), index=True)
     opp_model: Mapped[str | None] = mapped_column(String(64))
     opp_cost_usd: Mapped[float | None] = mapped_column(Float)
