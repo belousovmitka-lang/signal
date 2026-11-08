@@ -1,6 +1,6 @@
 """Step 2 of OPPORTUNITIES.md: build job clusters and write a review page.
 
-    python scripts/job_clusters.py build      # embeds new needs (Voyage, cents), rebuilds every cluster
+    python scripts/job_clusters.py build      # matches new non-US posts, embeds new needs (Voyage, cents), rebuilds
     python scripts/job_clusters.py export     # rewrite data/review/job_clusters.html only
 """
 
@@ -88,6 +88,13 @@ def main() -> int:
         if os.environ.get("VOYAGE_API_KEY"):
             from signal_feed.enrichment.embeddings import VoyageEmbedder
             embedder = VoyageEmbedder(config.embeddings)
+        if embedder is not None:                 # non-US posts first need their US match (shown() reads it)
+            from signal_feed.enrichment.opportunity_fields import match_us
+            with store.session() as ses:
+                unmatched = list(ses.scalars(select(EnrichedPostRow.post_id).where(
+                    EnrichedPostRow.opp_version == config.enrichment.opportunity_fields.version,
+                    EnrichedPostRow.us_version.is_not(None), EnrichedPostRow.us_match_post_id.is_(None))))
+            print(f"matched {match_us(store, posts, embedder, unmatched, config)} non-US posts to US posts")
         clusters = JobClusterBuilder(store, posts, config, embedder=embedder).build()
         print(f"{len(clusters)} clusters; {sum(c.core_posts + c.supporting_posts > 1 for c in clusters)} with 2+ posts")
     print(f"review: {export(store, posts)}")

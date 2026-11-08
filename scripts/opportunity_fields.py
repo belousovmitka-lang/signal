@@ -44,7 +44,8 @@ def main() -> int:
     sub.add_parser("status")
     bf = sub.add_parser("backfill")
     bf.add_argument("--dry-run", action="store_true")
-    sub.add_parser("collect")
+    co = sub.add_parser("collect")
+    co.add_argument("--no-match", action="store_true", help="leave US matching to job_clusters.py build")
     args = p.parse_args()
     logging.basicConfig(level=logging.WARNING, format="%(levelname)s %(name)s: %(message)s")
     load_dotenv(REPO_ROOT / ".env")
@@ -64,6 +65,9 @@ def main() -> int:
         run = OpportunityFieldsPass(store, posts, config, AnthropicTagger())
         if args.cmd == "backfill":
             todo = run.backfill_ids()
+            if not todo:
+                print("nothing to tag")
+                return 0
             sample_cost = 0.2997 / 500          # o4 sample, direct calls (2026-11-08)
             print(f"{len(todo)} posts to tag: about ${len(todo) * sample_cost / 2:.2f} through batches "
                   f"(worst case reserved ${run.worst_case_usd(len(todo)) / 2:.2f})")
@@ -72,7 +76,7 @@ def main() -> int:
             return 0
         tagged, failed, cost, running = run.collect()
         print(f"collected: tagged {tagged}, failed {failed}, cost ${cost:.4f}; batches still running: {running}")
-        if tagged and os.environ.get("VOYAGE_API_KEY"):
+        if tagged and not args.no_match and os.environ.get("VOYAGE_API_KEY"):
             from signal_feed.enrichment.embeddings import VoyageEmbedder
             from signal_feed.enrichment.opportunity_fields import match_us
             with store.session() as ses:

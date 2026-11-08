@@ -29,7 +29,7 @@ class Recorder:
 def test_free_jobs_run_when_due_and_paid_ones_need_the_flag(feed_store, feed_config):
     clock, run = Clock(T0), Recorder()
     outcomes = tick(feed_store, feed_config, paid=False, runner=run, clock=clock)
-    assert run.ran == ["collect", "rescore", "nightly", "map", "weights"]
+    assert run.ran == ["collect", "opp_collect", "rescore", "nightly", "map", "weights"]
     assert {o.status for o in outcomes} == {"ok"}
 
     clock.t = T0 + timedelta(minutes=15)           # nothing is due again yet
@@ -38,12 +38,12 @@ def test_free_jobs_run_when_due_and_paid_ones_need_the_flag(feed_store, feed_con
 
     clock.t = T0 + timedelta(minutes=58)           # hourly jobs, with slack for cron drift
     tick(feed_store, feed_config, paid=False, runner=run, clock=clock)
-    assert run.ran == ["collect", "rescore"]
+    assert run.ran == ["collect", "opp_collect", "rescore"]
 
     clock.t = T0 + timedelta(minutes=60)
     run.ran.clear()
     tick(feed_store, feed_config, paid=True, runner=run, clock=clock)
-    assert run.ran == ["tag", "embed", "headlines", "build", "inferred"]   # in pipeline order, after the free ones
+    assert run.ran == ["tag", "embed", "headlines", "opp_fields", "clusters", "build", "inferred"]   # in pipeline order, after the free ones
 
 
 def test_a_failure_waits_for_its_next_slot_and_keeps_its_output(feed_store, feed_config):

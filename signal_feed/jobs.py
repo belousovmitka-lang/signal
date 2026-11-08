@@ -51,6 +51,10 @@ def jobs(config: FeedConfig) -> list[Job]:
                          "--limit", str(j.tag_max_posts)), paid=True),
         Job("embed", HOUR, ("enrich.py", "embed"), paid=True),                      # also learns new clips
         Job("headlines", DAY, ("feed_text.py", "headlines", "--limit", "2000"), paid=True),
+        # OPPORTUNITIES.md: score tagged posts (batches), finish them, then rebuild job clusters.
+        Job("opp_collect", HOUR, ("opportunity_fields.py", "collect", "--no-match")),   # no paid calls
+        Job("opp_fields", DAY, ("opportunity_fields.py", "backfill"), paid=True),
+        Job("clusters", DAY, ("job_clusters.py", "build"), paid=True),               # Voyage: US matches, needs
         Job("rescore", HOUR, ("problems.py", "rescore")),
         Job("nightly", DAY, ("feed_nightly.py",)),
         Job("build", WEEK, ("problems.py", "build"), paid=True),
