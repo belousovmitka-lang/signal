@@ -186,6 +186,7 @@ def test_backfill_goes_through_batches_that_the_main_collector_leaves_alone(feed
     run = OpportunityFieldsPass(feed_store, reader, feed_config, Tagger(), clock=lambda: NOW)
     assert run.backfill_ids() == [pain.id]
     assert run.submit([pain.id], client=client) == ["msgbatch_1"]
+    assert run.pending_ids() == [] and run.backfill_ids() == []     # in an open batch: never submitted twice
     [requests] = client.messages.batches.created
     assert requests[0]["custom_id"] == pain.id and "<earlier_tags>" in requests[0]["params"]["messages"][0]["content"]
     with feed_store.session() as s:

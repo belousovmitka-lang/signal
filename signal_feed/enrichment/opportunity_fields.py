@@ -207,11 +207,17 @@ class OpportunityFieldsPass:
         self.ledger, self.workers = CostLedger(store), workers
 
     def pending_ids(self) -> list[str]:
+        """Actionable posts not scored at the current version and not waiting in an open scoring batch."""
+        from ..db import EnrichmentBatchRow
+        from .batch import BATCH_PREFIX
         with self.store.session() as s:
-            return list(s.scalars(select(EnrichedPostRow.post_id).where(
+            in_flight = {pid for ids in s.scalars(select(EnrichmentBatchRow.post_ids).where(
+                EnrichmentBatchRow.status == "open", EnrichmentBatchRow.prompt_version.startswith(BATCH_PREFIX)))
+                for pid in ids}
+            return [pid for pid in s.scalars(select(EnrichedPostRow.post_id).where(
                 EnrichedPostRow.status == "ok", EnrichedPostRow.post_type.in_(self.ocfg.post_types),
                 (EnrichedPostRow.opp_version.is_(None)) | (EnrichedPostRow.opp_version != self.ocfg.version))
-                .order_by(EnrichedPostRow.post_id)))
+                .order_by(EnrichedPostRow.post_id)) if pid not in in_flight]
 
     def worst_case_usd(self, n: int) -> float:
         return n * claude_worst_case_usd(self.ocfg.call, len(SYSTEM) + self.cfg.max_input_chars + 1500, self.cfg)
