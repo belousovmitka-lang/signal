@@ -68,6 +68,14 @@ class OpportunityFields(BaseModel):
                                                   "or plugin system, an integration, an export), when one exists")
     time_cost: TimeCost | None = Field(description="Only time the post states; null otherwise")
     plain_summary: str = Field(description="One sentence a college student with no industry experience understands")
+    deadline: str | None = Field(description="The response or application deadline the post states, YYYY-MM-DD; else null")
+    buyer_country: str | None = Field(description="ISO 3166-1 alpha-2 code of the buyer's country when stated or "
+                                                  "clear (a TED tender names it); else null")
+    project_idea: str | None = Field(description="The product a builder could make for this need and sell to the whole "
+                                                 "buyer segment, in one line; null when there is none")
+    project_type: Literal["software", "device", "software_and_device", "one_time_help", "none"]
+    project_score: int = Field(ge=0, le=100, description="How well this need can become a working product project, "
+                                                          "scored with the rubric")
     confidence: float = Field(ge=0, le=1, description="How sure you are of these fields overall")
 
 
@@ -124,6 +132,21 @@ but the post or common knowledge shows a route (a public API, an app or plugin s
 system, an export or import), it is yes: name the route in outside_route.
 - When the post is not about a defect or limit inside one vendor's product (a gig, job ad, tender, rule, complaint about work itself), the question is whether an outside product could do or support the work: almost always yes.
 - unclear: only when you can't tell whether the problem sits inside one vendor's product (a vague or cut-off post). Not a fallback for posts that state no problem.
+
+deadline: only a date the post states for responding, applying or submitting (YYYY-MM-DD). Null otherwise; never guess one.
+
+buyer_country: the buyer's country as an ISO code ("US", "PL", "GB") when the post states it or it is clear from the source; null otherwise.
+
+project_idea, project_type, project_score: Signal's users are builders who want a project: something they make once and many buyers then use. Judge the underlying need, not only this one request.
+- project_idea: the product a builder could make that serves everyone in buyer_segment with this need, in one line ("accreditation tracking software for universities", "a tool that turns label artwork into print-ready files and checks required food-label text", "a sensor that alerts farmers when a grain bin heats up"). Null when there is none.
+- project_type: software (an app, web tool, plugin, integration, automation, API), device (hardware someone designs and builds, often with firmware), software_and_device, one_time_help (the need is met by labour, installation, repair, consulting, a design job, advice, or supplying ready-made goods or equipment, with no product to build), none (no need: news, a hire for an ordinary role, a question already answered).
+- project_score, 0-100:
+  90-100: the buyer is asking or paying for software or a device that does an ongoing job, and many similar buyers have the same need (a university tendering for accreditation management software; a city replacing its legacy archive software; a facilities department rolling out facility-management software; many shops complaining about the same manual chore with no tool for it).
+  80-89: a clear repeated need that a software or device product could take over, with buyers a builder could reach.
+  60-79: a product is possible but the need is narrow, vague, mostly served by existing tools, or mostly a service.
+  30-59: mostly one-time help (an installation, a design job, a repair, supplying equipment, a single migration) with only a weak product angle.
+  0-29: one-time labour or supply with no product; a bug only the vendor can fix; a personal question; news, rules or job ads with no need a product could serve; community chores (writing weekly posts).
+  A one-time request can still score high when the thing requested is itself software or a device (tendering for a new software system), or when many buyers keep requesting the same thing so a product could replace the work. Score lower when the deadline has passed or is days away, or when the post is too vague to say what to build.
 
 time_cost: only when the post states time spent ("4 hours a week", "took me three days", "every \
 morning for an hour"). Hours as a number (a day of work = 8, a week of work = 40) and how often. Null \
@@ -231,9 +254,20 @@ class OpportunityFieldsPass:
                        "fixable_by_third_party": o.fixable_by_third_party,
                        "platform_owner": (o.platform_owner or None) and o.platform_owner[:100],
                        "outside_route": (o.outside_route or None) and scrub(o.outside_route)[:200],
-                       "time_cost": tc, "plain_summary": scrub(o.plain_summary), "opp_confidence": o.confidence}
+                       "time_cost": tc, "plain_summary": scrub(o.plain_summary), "opp_confidence": o.confidence,
+                       "deadline": _date(o.deadline), "buyer_country": (o.buyer_country or "")[:2].upper() or None,
+                       "project_idea": scrub(o.project_idea) if o.project_idea else None,
+                       "project_type": o.project_type, "project_score": o.project_score}
         with self.store.session() as s, s.begin():
             s.execute(update(EnrichedPostRow).where(EnrichedPostRow.post_id == r.post_id).values(**values))
+
+
+def _date(value: str | None):
+    from datetime import date
+    try:
+        return date.fromisoformat(value[:10]) if value else None
+    except ValueError:
+        return None
 
 
 # --- the review sample -----------------------------------------------------------------------------
@@ -277,73 +311,103 @@ def sample_ids(store: FeedStore, posts: PostsReader, n: int, seed: int = 7) -> l
     return chosen[:n]
 
 
-def export_review(store: FeedStore, posts: PostsReader, post_ids: Sequence[str], path: Path) -> tuple[Path, Path]:
-    """A CSV (with an empty column for your verdict) and a readable HTML table of the sample's fields."""
+def shown(row: EnrichedPostRow, cfg, today) -> bool:
+    """Whether a post may reach builders at all (founder, 2026-11-08): a product-shaped need scored at least
+    `min_project_score`, labels at least `min_confidence` sure, and no deadline closing within
+    `min_days_to_deadline`."""
+    if row.project_score is None or row.project_score < cfg.min_project_score:
+        return False
+    if row.project_type not in ("software", "device", "software_and_device"):
+        return False
+    if (row.opp_confidence or 0) < cfg.min_confidence:
+        return False
+    return row.deadline is None or (row.deadline - today).days >= cfg.min_days_to_deadline
+
+
+COLS = ["project_score", "shown", "project_type", "project_idea", "post_type", "source", "url", "title",
+        "pain_statement", "job_statement", "deliverable", "buyer_type", "buyer_segment", "buyer_country", "deadline",
+        "recurrence", "one_off_request", "fixable_by_third_party", "platform_owner", "outside_route", "time_cost",
+        "plain_summary", "opp_confidence"]
+
+
+def export_review(store: FeedStore, posts: PostsReader, post_ids: Sequence[str], path: Path, cfg=None,
+                  today=None) -> tuple[Path, Path]:
+    """A CSV (with empty columns for your verdict) and a readable HTML page of the sample, best first."""
+    from datetime import date
+    today = today or date.today()
     with store.session() as s:
         rows = {r.post_id: r for r in s.scalars(select(EnrichedPostRow).where(EnrichedPostRow.post_id.in_(post_ids)))}
     raw = {p.id: p for p in posts.get_posts(list(post_ids))}
-    cols = ["post_type", "source", "url", "title", "pain_statement", "job_statement", "deliverable", "buyer_type",
-            "buyer_segment", "recurrence", "one_off_request", "fixable_by_third_party", "platform_owner",
-            "outside_route", "time_cost", "plain_summary", "opp_confidence"]
     records = []
     for pid in post_ids:
         r, p = rows.get(pid), raw.get(pid)
         if r is None or p is None or r.opp_version is None:
             continue
         tc = r.time_cost
-        records.append({"post_type": r.post_type, "source": p.source, "url": p.url, "title": (p.title or "")[:160],
-                        "pain_statement": r.pain_statement or "", "job_statement": r.job_statement or "",
-                        "deliverable": r.deliverable or "", "buyer_type": r.buyer_type or "",
-                        "buyer_segment": r.buyer_segment or "", "recurrence": r.recurrence or "",
-                        "one_off_request": "" if r.one_off_request is None else str(r.one_off_request).lower(),
-                        "fixable_by_third_party": r.fixable_by_third_party or "",
-                        "platform_owner": r.platform_owner or "", "outside_route": r.outside_route or "",
-                        "time_cost": f"{tc['hours']:g} h per {tc['per']} (\"{tc['quote']}\")" if tc else "",
-                        "plain_summary": r.plain_summary or "",
-                        "opp_confidence": "" if r.opp_confidence is None else f"{r.opp_confidence:.2f}"})
+        records.append({
+            "project_score": r.project_score if r.project_score is not None else -1,
+            "shown": "yes" if cfg is not None and shown(r, cfg, today) else "no",
+            "project_type": r.project_type or "", "project_idea": r.project_idea or "",
+            "post_type": r.post_type, "source": p.source, "url": p.url, "title": (p.title or "")[:160],
+            "pain_statement": r.pain_statement or "", "job_statement": r.job_statement or "",
+            "deliverable": r.deliverable or "", "buyer_type": r.buyer_type or "", "buyer_segment": r.buyer_segment or "",
+            "buyer_country": r.buyer_country or "", "deadline": r.deadline.isoformat() if r.deadline else "",
+            "recurrence": r.recurrence or "",
+            "one_off_request": "" if r.one_off_request is None else str(r.one_off_request).lower(),
+            "fixable_by_third_party": r.fixable_by_third_party or "", "platform_owner": r.platform_owner or "",
+            "outside_route": r.outside_route or "",
+            "time_cost": f"{tc['hours']:g} h per {tc['per']} (\"{tc['quote']}\")" if tc else "",
+            "plain_summary": r.plain_summary or "",
+            "opp_confidence": "" if r.opp_confidence is None else f"{r.opp_confidence:.2f}"})
+    records.sort(key=lambda x: (x["shown"] != "yes", -x["project_score"]))
     path.parent.mkdir(parents=True, exist_ok=True)
     csv_path, html_path = path.with_suffix(".csv"), path.with_suffix(".html")
     with csv_path.open("w", newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, fieldnames=[*cols, "your_verdict", "your_note"])
+        w = csv.DictWriter(f, fieldnames=[*COLS, "your_verdict", "your_note"])
         w.writeheader()
         w.writerows(records)
-    html_path.write_text(_review_html(records, cols), encoding="utf-8")
+    html_path.write_text(_review_html(records), encoding="utf-8")
     return csv_path, html_path
 
 
-def _review_html(records: list[dict], cols: list[str]) -> str:
+def _review_html(records: list[dict]) -> str:
     e = html.escape
-    filters = ["post_type", "buyer_type", "recurrence", "one_off_request", "fixable_by_third_party"]
-    options = {c: sorted({r[c] for r in records}) for c in filters}
-    sel = "".join(f'<label>{e(c)} <select data-col="{e(c)}"><option value="">all</option>' +
-                  "".join(f'<option>{e(v)}</option>' for v in options[c]) + "</select></label>" for c in filters)
+    filters = ["project_type", "post_type", "buyer_type", "buyer_country", "recurrence"]
+    options = {c: sorted({r[c] for r in records if r[c]}) for c in filters}
+    sel = "".join(f'<label>{e(c.replace("_", " "))} <select data-col="{e(c)}"><option value="">all</option>' +
+                  "".join(f"<option>{e(v)}</option>" for v in options[c]) + "</select></label>" for c in filters)
+    n_shown = sum(r["shown"] == "yes" for r in records)
     body = []
     for r in records:
-        data = " ".join(f'data-{c.replace("_", "-")}="{e(r[c])}"' for c in filters)
-        body.append(f"""<article {data}><div class="meta"><b>{e(r['post_type'])}</b> · {e(r['source'])} ·
- <a href="{e(r['url'])}" target="_blank" rel="noopener noreferrer">original</a> · confidence {e(r['opp_confidence'])}</div>
-<p class="was">{e(r['title'])}<br><i>Earlier pain statement:</i> {e(r['pain_statement'])}</p>
+        data = " ".join(f'data-{c.replace("_", "-")}="{e(str(r[c]))}"' for c in [*filters, "shown"])
+        score = r["project_score"]
+        body.append(f"""<article {data}><div class="top"><span class="score{' hi' if r['shown'] == 'yes' else ''}">{score if score >= 0 else '–'}</span>
+<div><div class="idea">{e(r['project_idea']) or '<i>No product to build</i>'}</div>
+<div class="meta">{e(r['project_type'])} · {e(r['post_type'])} · {e(r['source'])} · confidence {e(r['opp_confidence'])}{' · ' + e(r['buyer_country']) if r['buyer_country'] else ''}{' · deadline ' + e(r['deadline']) if r['deadline'] else ''} ·
+<a href="{e(r['url'])}" target="_blank" rel="noopener noreferrer">original</a></div></div></div>
 <p class="sum">{e(r['plain_summary'])}</p>
-<dl><dt>job statement</dt><dd>{e(r['job_statement'])}</dd>
-<dt>deliverable</dt><dd>{e(r['deliverable']) or '—'}</dd>
+<dl><dt>need</dt><dd>{e(r['job_statement'])}</dd>
 <dt>buyer</dt><dd>{e(r['buyer_type'])}: {e(r['buyer_segment'])}</dd>
 <dt>recurrence</dt><dd>{e(r['recurrence'])}{' · one-off request' if r['one_off_request'] == 'true' else ''}</dd>
 <dt>fixable from outside</dt><dd>{e(r['fixable_by_third_party'])}{(' (' + e(r['platform_owner']) + ')') if r['platform_owner'] else ''}{(' · route: ' + e(r['outside_route'])) if r['outside_route'] else ''}</dd>
-<dt>time cost</dt><dd>{e(r['time_cost']) or '—'}</dd></dl></article>""")
+<dt>original title</dt><dd>{e(r['title'])}</dd></dl></article>""")
     return f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Opportunity fields sample</title><style>
-:root{{--bg:#f5f5f3;--card:#fff;--ink:#141414;--muted:#5f6064;--line:#e6e6e2}}
+:root{{--bg:#f5f5f3;--card:#fff;--ink:#141414;--muted:#5f6064;--line:#e6e6e2;--acc:#e8590c}}
 @media (prefers-color-scheme:dark){{:root{{--bg:#151515;--card:#1f1f1f;--ink:#eee;--muted:#a0a0a0;--line:#333}}}}
 body{{margin:0;background:var(--bg);color:var(--ink);font:15px/22px system-ui,sans-serif}}
-main{{max-width:860px;margin:0 auto;padding:24px 16px}}h1{{font-size:22px;margin:0 0 8px}}
-.filters{{display:flex;flex-wrap:wrap;gap:8px 16px;margin:12px 0 20px;font-size:13px;color:var(--muted)}}
+main{{max-width:860px;margin:0 auto;padding:24px 16px}}h1{{font-size:22px;margin:0 0 4px}}
+.filters{{display:flex;flex-wrap:wrap;gap:8px 16px;margin:12px 0 20px;font-size:13px;color:var(--muted);align-items:center}}
 article{{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:0 0 12px}}
-.meta{{font-size:13px;color:var(--muted)}}.meta a{{color:inherit}}.was{{font-size:13px;color:var(--muted);margin:6px 0}}
-.sum{{font-weight:600;margin:8px 0}}dl{{display:grid;grid-template-columns:150px 1fr;gap:2px 12px;margin:0;font-size:14px}}
+.top{{display:flex;gap:12px;align-items:flex-start}}.score{{flex:none;min-width:44px;height:36px;border-radius:10px;display:grid;place-items:center;
+font-weight:700;background:var(--line);font-variant-numeric:tabular-nums}}.score.hi{{background:var(--acc);color:#fff}}
+.idea{{font-weight:600;font-size:16px}}.meta{{font-size:13px;color:var(--muted)}}.meta a{{color:inherit}}
+.sum{{margin:10px 0 8px}}dl{{display:grid;grid-template-columns:150px 1fr;gap:2px 12px;margin:0;font-size:14px}}
 dt{{color:var(--muted)}}dd{{margin:0;overflow-wrap:anywhere}}@media(max-width:560px){{dl{{grid-template-columns:1fr}}dd{{margin-bottom:6px}}}}
-</style></head><body><main><h1>Opportunity fields: {len(records)} posts</h1>
-<p class="meta">Mark wrong labels in the CSV next to this file (your_verdict, your_note).</p>
-<div class="filters">{sel} <span id="n"></span></div>{''.join(body)}</main><script>
-const sels=[...document.querySelectorAll('select')],arts=[...document.querySelectorAll('article')];
-function f(){{let n=0;arts.forEach(a=>{{const ok=sels.every(s=>!s.value||a.dataset[s.dataset.col.replace(/_(.)/g,(m,c)=>c.toUpperCase())]===s.value);a.hidden=!ok;n+=ok}});document.getElementById('n').textContent=n+' shown'}}
-sels.forEach(s=>s.onchange=f);f();</script></body></html>"""
+</style></head><body><main><h1>Opportunity fields: {n_shown} of {len(records)} would be shown</h1>
+<p class="meta">Shown = product score 80+, software or device, labels 0.6+ sure, deadline not within 3 days. Best first.</p>
+<div class="filters"><label><input type="checkbox" id="only" checked> only what would be shown</label>{sel} <span id="n"></span></div>{''.join(body)}</main><script>
+const sels=[...document.querySelectorAll('select')],arts=[...document.querySelectorAll('article')],only=document.getElementById('only');
+const key=c=>c.replace(/_(.)/g,(m,x)=>x.toUpperCase());
+function f(){{let n=0;arts.forEach(a=>{{const ok=(!only.checked||a.dataset.shown==='yes')&&sels.every(s=>!s.value||a.dataset[key(s.dataset.col)]===s.value);a.hidden=!ok;n+=ok}});document.getElementById('n').textContent=n+' listed'}}
+sels.forEach(s=>s.onchange=f);only.onchange=f;f();</script></body></html>"""

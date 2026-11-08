@@ -17,7 +17,8 @@ def fields(**over):
                 one_off_request=False, fixable_by_third_party="yes", platform_owner=None,
                 outside_route="QuickBooks API", time_cost={"hours": 4, "per": "week", "quote": "four hours, call 555-123-4567"},
                 plain_summary="Bookkeepers copy invoices from email into their accounting app by hand every week.",
-                confidence=0.8)
+                deadline=None, buyer_country="US", project_idea="invoice capture from email into QuickBooks",
+                project_type="software", project_score=85, confidence=0.8)
     return OpportunityFields(**(base | over))
 
 
@@ -95,3 +96,21 @@ def test_the_sample_mixes_types_and_keeps_out_x(feed_store, feed_config, tmp_pat
     src = {p.id: p.source for p in posts}
     assert got and all(src[g] != "x" for g in got) and len(set(got)) == len(got) <= 10
     assert sample_ids(feed_store, reader, 10) == got                      # same seed, same sample
+
+
+def test_only_product_shaped_sure_and_open_needs_are_shown(feed_config):
+    from datetime import date
+
+    from signal_feed.enrichment.opportunity_fields import shown
+    cfg, today = feed_config.enrichment.opportunity_fields, date(2026, 11, 8)
+
+    def row(**kw):
+        base = dict(post_id="p", status="ok", project_score=85, project_type="software", opp_confidence=0.85,
+                    deadline=None)
+        return EnrichedPostRow(**(base | kw))
+    assert shown(row(), cfg, today)
+    assert not shown(row(project_score=79), cfg, today)                       # under 80
+    assert not shown(row(project_type="one_time_help", project_score=95), cfg, today)
+    assert not shown(row(opp_confidence=0.5), cfg, today)
+    assert not shown(row(deadline=date(2026, 11, 9)), cfg, today)              # closes tomorrow
+    assert shown(row(deadline=date(2026, 11, 30), project_type="device"), cfg, today)

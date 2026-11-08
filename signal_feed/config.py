@@ -63,6 +63,9 @@ class OpportunityFieldsConfig(_Strict):
     version: str = Field(min_length=1, max_length=32)    # bump to re-tag these fields (not the main tags)
     call: ModelCall
     post_types: list[TaggedPostType]
+    min_project_score: int = Field(80, ge=0, le=100)   # shown only at or above this (founder, 2026-11-08)
+    min_confidence: Fraction = 0.6                     # ...and only when the labels are this sure
+    min_days_to_deadline: int = Field(3, ge=0)         # tenders closing sooner are not shown
 
 
 class EnrichmentConfig(_Strict):

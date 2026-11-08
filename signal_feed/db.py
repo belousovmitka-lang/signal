@@ -90,6 +90,11 @@ class EnrichedPostRow(FeedBase):
     time_cost: Mapped[dict[str, Any] | None] = mapped_column(NullableJSON)  # {hours, per} only when stated
     plain_summary: Mapped[str | None] = mapped_column(Text)
     opp_confidence: Mapped[float | None] = mapped_column(Float)
+    deadline: Mapped[date | None] = mapped_column(Date, nullable=True)   # stated response deadline
+    buyer_country: Mapped[str | None] = mapped_column(String(2))
+    project_idea: Mapped[str | None] = mapped_column(Text)           # what a builder could make for the whole segment
+    project_type: Mapped[str | None] = mapped_column(String(24))     # software | device | software_and_device | one_time_help | none
+    project_score: Mapped[int | None] = mapped_column(Integer, index=True)   # 0-100; the feed shows >= min_project_score
     opp_version: Mapped[str | None] = mapped_column(String(32), index=True)
     opp_model: Mapped[str | None] = mapped_column(String(64))
     opp_cost_usd: Mapped[float | None] = mapped_column(Float)

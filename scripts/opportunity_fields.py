@@ -73,7 +73,8 @@ def main() -> int:
         failed = Counter(r.error for r in results if r.output is None)
         print(f"tagged {sum(r.output is not None for r in results)}, failed {dict(failed) or 0}, "
               f"cost ${sum(r.cost for r in results):.4f}")
-    csv_path, html_path = export_review(store, posts, ids, REVIEW / f"opportunity_fields_{version}")
+    csv_path, html_path = export_review(store, posts, ids, REVIEW / f"opportunity_fields_{version}",
+                                        cfg=config.enrichment.opportunity_fields)
     print(f"review: {html_path}\n        {csv_path}")
     return 0
 
