@@ -41,7 +41,7 @@ from .outreach import BuilderContext as BuilderContextModel
 from .opportunities.assess import COMPETITION_POINTS, WEIGHTS, evidence_points
 from .opportunities.assess import load as load_assessments
 from .db import (AccountRow, CofounderProfileRow, EnrichedPostRow, FeedStore, IntroRequestRow, JobClusterPostRow,
-                 JobClusterRow, ProblemAssessmentRow, WorkspaceRow)
+                 JobClusterRow, ProblemAssessmentRow, WorkspaceJobRow, WorkspaceRow)
 from .posts import PostsReader, _chunks
 
 MAX_DATA_BYTES = 256_000
@@ -304,6 +304,7 @@ class OwnProblem(BaseModel):
 
 
 PANEL_DAILY_LIMIT = 10
+JOB_STALE_SECONDS = 600
 TOOL_DAILY_LIMIT = 60
 
 
@@ -313,6 +314,7 @@ class UserOnly(BaseModel):
 
 class PlanIn(BaseModel):
     user_id: str
+    more: bool = False                                                 # add to the list instead of replacing it
     exclude: list[str] = Field(default_factory=list, max_length=200)   # names already listed ("Find more")
     groups: list[str] = Field(default_factory=list, max_length=30)     # their group names, to reuse
 
@@ -320,6 +322,23 @@ class PlanIn(BaseModel):
 class ContextIn(BaseModel):
     user_id: str
     context: "BuilderContextModel"
+
+
+def merge_plan(old: dict, add: dict) -> dict:
+    """Add a "Find more" result to a list: same-named groups merge, names already listed are skipped."""
+    seen = {t["name"].lower() for g in old["groups"] for t in g["targets"]}
+    groups = [g | {"targets": list(g["targets"])} for g in old["groups"]]
+    for g in add["groups"]:
+        fresh = [t for t in g["targets"] if t["name"].lower() not in seen]
+        seen |= {t["name"].lower() for t in fresh}
+        if not fresh:
+            continue
+        same = next((x for x in groups if x["name"].lower() == g["name"].lower()), None)
+        if same:
+            same["targets"].extend(fresh)
+        else:
+            groups.append(g | {"targets": fresh})
+    return {"groups": groups, "dropped": old.get("dropped", 0) + add.get("dropped", 0), "at": add["at"]}
 
 
 class PanelIn(BaseModel):
@@ -385,6 +404,44 @@ def builder_routes(app: FastAPI, store: FeedStore, posts: PostsReader, _user: Ca
     """`tagger` (enrichment.llm.Tagger) runs the AI buyer panel; without it the panel answers 503."""
     bank = ProblemBank(store, posts)
     app.state.problem_bank = bank
+
+    # Slow actions run to the end on the server and keep their result, whatever the page does meanwhile.
+    def job_start(user_id: str, problem_id: str, kind: str) -> dict | None:
+        """Mark the job running; returns the previous result (or None). Refuses a second run at once."""
+        now = utcnow()
+        with store.session() as s, s.begin():
+            row = s.get(WorkspaceJobRow, (user_id, problem_id, kind))
+            if row is not None and row.status == "running" and (now - row.started_at).total_seconds() < JOB_STALE_SECONDS:
+                raise HTTPException(status_code=409, detail="already running")
+            prev = row.result if row is not None else None
+            s.merge(WorkspaceJobRow(user_id=user_id, problem_id=problem_id, kind=kind, status="running", result=prev,
+                                    error=None, started_at=now, finished_at=None))
+        return prev
+
+    def job_end(user_id: str, problem_id: str, kind: str, result: dict | None = None, error: str | None = None) -> None:
+        with store.session() as s, s.begin():
+            row = s.get(WorkspaceJobRow, (user_id, problem_id, kind))
+            row.status, row.finished_at = ("failed" if error else "done"), utcnow()
+            row.error = error[:200] if error else None
+            if result is not None:
+                row.result = result
+
+    @app.get("/workspaces/{problem_id}/jobs")
+    def get_jobs(problem_id: str, me: Me, user_id: str = Query(min_length=1, max_length=64)) -> dict:
+        _user(user_id, me)
+        now = utcnow()
+        with store.session() as s:
+            rows = list(s.scalars(select(WorkspaceJobRow).where(WorkspaceJobRow.user_id == user_id,
+                                                                WorkspaceJobRow.problem_id == problem_id)))
+        out = {}
+        for r in rows:
+            status = r.status
+            if status == "running" and (now - r.started_at).total_seconds() >= JOB_STALE_SECONDS:
+                status = "failed"                # the server restarted mid-run
+            out[r.kind] = {"status": status, "result": r.result, "error": r.error,
+                           "started_at": r.started_at.isoformat(),
+                           "finished_at": r.finished_at.isoformat() if r.finished_at else None}
+        return out
 
     @app.get("/problems")
     def get_problems(user_id: str, me: Me, q: str | None = Query(None, max_length=200),
@@ -500,9 +557,6 @@ def builder_routes(app: FastAPI, store: FeedStore, posts: PostsReader, _user: Ca
         """Five simulated buyers react to the idea (opportunities/assess.py). A simulation to sharpen
         questions, never evidence; metered against the Claude budget, PANEL_DAILY_LIMIT a day per user."""
         _user(body.user_id, me)
-        from .enrichment.costs import BudgetExceededError, CostLedger, claude_usd, claude_worst_case_usd
-        from .enrichment.llm import TransientError
-        from .opportunities.assess import PANEL_CALL, PANEL_SYSTEM, Panel, panel_prompt
         if tagger is None or config is None:
             raise HTTPException(status_code=503, detail="the panel is off")
         with store.session() as s:
@@ -514,14 +568,31 @@ def builder_routes(app: FastAPI, store: FeedStore, posts: PostsReader, _user: Ca
             raise HTTPException(status_code=429, detail="panel limit reached for today")
         live = bank.get(problem_id)
         problem = live or {**row.problem, "evidence": [e | {"role": "core", "tags": {}} for e in row.problem.get("evidence", [])]}
+        prev = job_start(body.user_id, problem_id, "panel")
+        try:
+            run = run_panel(problem, body, day)
+        except HTTPException as exc:
+            job_end(body.user_id, problem_id, "panel", error=str(exc.detail))
+            raise
+        except Exception:
+            job_end(body.user_id, problem_id, "panel", error="failed")
+            raise
+        result = {"runs": [run, *((prev or {}).get("runs") or [])][:3]}
+        job_end(body.user_id, problem_id, "panel", result)
+        return result
+
+    def run_panel(problem: dict, body: PanelIn, day) -> dict:
+        from .enrichment.costs import BudgetExceededError, CostLedger, claude_usd, claude_worst_case_usd
+        from .enrichment.llm import TransientError
+        from .opportunities.assess import PANEL_CALL, PANEL_SYSTEM, Panel, panel_prompt
         user = panel_prompt(problem, body.pitch, body.price)
         ledger, ecfg = CostLedger(store), config.enrichment
         try:
             ledger.check("anthropic", claude_worst_case_usd(PANEL_CALL, len(PANEL_SYSTEM) + len(user), ecfg),
                          ecfg.monthly_budget_usd)
             attempt = tagger.tag(PANEL_CALL, PANEL_SYSTEM, user, output_model=Panel)
-        except (BudgetExceededError, TransientError):
-            raise HTTPException(status_code=503, detail="the panel is busy; try again later") from None
+        except (BudgetExceededError, TransientError) as exc:
+            raise HTTPException(status_code=503, detail="AI features are paused" if isinstance(exc, BudgetExceededError) else "the panel is busy; try again later") from None
         for usage in attempt.usages:
             ledger.record(provider="anthropic", purpose="ai_panel", usage=usage, usd=claude_usd(usage, ecfg),
                           request_id=attempt.request_id)
@@ -634,8 +705,8 @@ def builder_routes(app: FastAPI, store: FeedStore, posts: PostsReader, _user: Ca
             ledger.check("anthropic", claude_worst_case_usd(TOOL_CALL, len(TOOL_SYSTEM) + len(user), ecfg),
                          ecfg.monthly_budget_usd)
             attempt = tagger.tag(TOOL_CALL, TOOL_SYSTEM, user, output_model=ToolProfile)
-        except (BudgetExceededError, TransientError):
-            raise HTTPException(status_code=503, detail="busy; try again later") from None
+        except (BudgetExceededError, TransientError) as exc:
+            raise HTTPException(status_code=503, detail="AI features are paused" if isinstance(exc, BudgetExceededError) else "busy; try again later") from None
         for usage in attempt.usages:
             ledger.record(provider="anthropic", purpose="tool_profile", usage=usage, usd=claude_usd(usage, ecfg),
                           request_id=attempt.request_id)
@@ -673,8 +744,6 @@ def builder_routes(app: FastAPI, store: FeedStore, posts: PostsReader, _user: Ca
     def post_outreach_plan(problem_id: str, body: PlanIn, me: Me) -> dict:
         """Named organizations to reach for this problem, tailored to the builder, each website checked."""
         _user(body.user_id, me)
-        from .enrichment.costs import BudgetExceededError, CostLedger, claude_usd, claude_worst_case_usd
-        from .enrichment.llm import TransientError
         if tagger is None or config is None:
             raise HTTPException(status_code=503, detail="outreach lists are off")
         with store.session() as s:
@@ -687,14 +756,34 @@ def builder_routes(app: FastAPI, store: FeedStore, posts: PostsReader, _user: Ca
             raise HTTPException(status_code=429, detail="limit reached for today")
         problem = bank.get(problem_id) or row.problem
         ctx = BuilderContext(**(ctx_row.data if ctx_row else {}))
+        prev = job_start(body.user_id, problem_id, "outreach")
+        more = bool(prev and body.more)
+        if more:            # "Find more": the server knows what is listed
+            body.exclude = [t["name"] for g in prev["groups"] for t in g["targets"]][:200]
+            body.groups = [g["name"] for g in prev["groups"]][:30]
+        try:
+            plan = build_plan(problem, ctx, body, day)
+        except HTTPException as exc:
+            job_end(body.user_id, problem_id, "outreach", error=str(exc.detail))
+            raise
+        except Exception:
+            job_end(body.user_id, problem_id, "outreach", error="failed")
+            raise
+        result = merge_plan(prev, plan) if more else plan
+        job_end(body.user_id, problem_id, "outreach", result)
+        return result
+
+    def build_plan(problem: dict, ctx, body: PlanIn, day) -> dict:
+        from .enrichment.costs import BudgetExceededError, CostLedger, claude_usd, claude_worst_case_usd
+        from .enrichment.llm import TransientError
         user = outreach_prompt(problem, ctx, body.exclude, body.groups)
         ledger, ecfg = CostLedger(store), config.enrichment
         try:
             ledger.check("anthropic", claude_worst_case_usd(OUTREACH_CALL, len(OUTREACH_SYSTEM) + len(user), ecfg),
                          ecfg.monthly_budget_usd)
             attempt = tagger.tag(OUTREACH_CALL, OUTREACH_SYSTEM, user, output_model=OutreachPlan)
-        except (BudgetExceededError, TransientError):
-            raise HTTPException(status_code=503, detail="busy; try again later") from None
+        except (BudgetExceededError, TransientError) as exc:
+            raise HTTPException(status_code=503, detail="AI features are paused" if isinstance(exc, BudgetExceededError) else "busy; try again later") from None
         for usage in attempt.usages:
             ledger.record(provider="anthropic", purpose="outreach_plan", usage=usage, usd=claude_usd(usage, ecfg),
                           request_id=attempt.request_id)

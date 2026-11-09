@@ -394,3 +394,7 @@ label.lbl span { font-weight: 400; color: var(--muted); }
 .alt.tool.althead { grid-template-columns: 220px minmax(0, 1fr) 32px; }
 @media (max-width: 800px) { .alt.tool.althead { grid-template-columns: minmax(0, 1fr) 32px; } }
 .altbody .kv span:first-child { flex: none; width: 96px; } .altbody .kv span:last-child { text-align: left; flex: 1; }
+.mark { flex: none; width: 20px; height: 20px; margin-top: 2px; border-radius: 6px; border: 1.5px solid var(--input-border);
+  background: var(--surface); display: grid; place-items: center; color: #fff; }
+.mark.on { background: var(--ink); border-color: var(--ink); }
+.step.first .mark { border-color: #0A1F4D; background: transparent; }

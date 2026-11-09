@@ -214,3 +214,38 @@ def test_find_more_tells_the_model_what_is_already_listed():
     assert "Already on the list" not in prompt(p, BuilderContext())
     assert "Already on the list (find different organizations, and new groups where useful): NACS; curl" in \
         prompt(p, BuilderContext(), ["NACS", "curl"])
+
+
+def test_slow_actions_finish_on_the_server_and_keep_their_result(feed_store, feed_config, tmp_path, user_id):
+    from signal_feed.enrichment.llm import TagAttempt
+    from signal_feed.opportunities.assess import Panel, PanelBuyer
+    from signal_feed.db import WorkspaceJobRow
+    url, posts = bank(feed_store, tmp_path)
+    buyer = PanelBuyer(persona="p", today="t", verdict="maybe", price_reaction="r", objection="o", ask_real_buyers="a")
+
+    class Fake:
+        def tag(self, call, system, user, output_model=None, fallbacks=False):
+            return TagAttempt(output=Panel(buyers=[buyer] * 5, summary="s"), model="m")
+    c = TestClient(create_app(feed_store, PostsReader(url), feed_config, llm=type("L", (), {"tagger": Fake()})()))
+    pid = posts[1].id
+    c.post(f"/workspaces/{pid}", json={"user_id": user_id})
+    assert c.get(f"/workspaces/{pid}/jobs", params={"user_id": user_id}).json() == {}
+    for _ in range(2):
+        r = c.post(f"/workspaces/{pid}/panel", json={"user_id": user_id, "price": "$49/mo"})
+        assert r.status_code == 200
+    jobs = c.get(f"/workspaces/{pid}/jobs", params={"user_id": user_id}).json()
+    assert jobs["panel"]["status"] == "done" and len(jobs["panel"]["result"]["runs"]) == 2   # kept, newest first
+    with feed_store.session() as s, s.begin():                                              # one already running
+        s.get(WorkspaceJobRow, (user_id, pid, "panel")).status = "running"
+    assert c.post(f"/workspaces/{pid}/panel", json={"user_id": user_id}).status_code == 409
+
+
+def test_find_more_merges_into_the_same_groups():
+    from signal_feed.builder import merge_plan
+    t = lambda n: {"name": n}  # noqa: E731
+    old = {"groups": [{"name": "Grocers", "targets": [t("A")]}], "dropped": 1, "at": "x"}
+    add = {"groups": [{"name": "grocers", "targets": [t("a"), t("B")]}, {"name": "Shops", "targets": [t("C")]}],
+           "dropped": 2, "at": "y"}
+    m = merge_plan(old, add)
+    assert [(g["name"], [x["name"] for x in g["targets"]]) for g in m["groups"]] == [("Grocers", ["A", "B"]), ("Shops", ["C"])]
+    assert m["dropped"] == 3 and old["groups"][0]["targets"] == [t("A")]

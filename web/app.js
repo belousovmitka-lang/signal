@@ -24,6 +24,7 @@ async function api(path, { method = "GET", body, keepalive = false } = {}) {
   if (!r.ok) {
     let detail = "";
     try { detail = (await r.json()).detail; } catch { /* not JSON */ }
+    if (detail === "AI features are paused") say("AI features are paused right now. Try again later.");
     throw new HttpError(r.status, typeof detail === "string" ? detail : "");
   }
   return r.json();
@@ -81,6 +82,8 @@ async function copy(text) {
 // A one-line status message for actions with no visible result (copied, saved).
 const toast = { msg: "", subs: new Set(), timer: null };
 function say(msg) {
+  if (toast.sticky > Date.now()) return;            // "AI features are paused" isn't replaced by a generic error
+  toast.sticky = /paused/.test(msg) ? Date.now() + 1500 : 0;
   toast.msg = msg; toast.subs.forEach((f) => f());
   clearTimeout(toast.timer);
   toast.timer = setTimeout(() => { toast.msg = ""; toast.subs.forEach((f) => f()); }, 2600);
@@ -137,6 +140,61 @@ function useLeaving(key, value) {
     return () => clearTimeout(t);
   }, [key, value]);
   return [shown, leaving];
+}
+
+// --- Page state: what's open, typed or selected on each page survives leaving it (and a reload) ------
+
+const ui = (() => { try { return JSON.parse(sessionStorage.getItem("signal_ui") || "{}"); } catch { return {}; } })();
+let uiTimer = null;
+function useUi(key, init) {
+  const [v, setV] = useState(() => (key in ui ? ui[key] : (typeof init === "function" ? init() : init)));
+  const set = (next) => setV((cur) => {
+    const val = typeof next === "function" ? next(cur) : next;
+    ui[key] = val;
+    clearTimeout(uiTimer);
+    uiTimer = setTimeout(() => { try { sessionStorage.setItem("signal_ui", JSON.stringify(ui)); } catch { /* full or private */ } }, 300);
+    return val;
+  });
+  return [v, set];
+}
+
+// --- Slow actions (outreach list, AI panel) run on the server; the page shows their state ------------
+
+const jobs = {};             // problem id -> { outreach: {status, result, error}, panel: {...} }
+const polls = {};
+const inflight = new Set();  // "pid|kind" started from this page and not answered yet
+function loadJobs(pid) {
+  return api(`/workspaces/${enc(pid)}/jobs?${qs({ user_id: store.userId })}`).then((r) => {
+    for (const kind of ["outreach", "panel"]) {      // a lookup that left before a run started mustn't hide it
+      if (inflight.has(`${pid}|${kind}`) && r[kind]?.status !== "running") r[kind] = jobs[pid]?.[kind] || { status: "running" };
+    }
+    jobs[pid] = r; notify();
+    const running = Object.values(r).some((j) => j.status === "running");
+    clearTimeout(polls[pid]);
+    if (running) polls[pid] = setTimeout(() => loadJobs(pid), 4000);
+    return r;
+  });
+}
+function useJobs(pid) {
+  useStore();
+  useEffect(() => { if (!jobs[pid]) loadJobs(pid).catch(() => {}); }, [pid]);
+  return jobs[pid] || {};
+}
+async function runJob(pid, kind, path, body) {
+  inflight.add(`${pid}|${kind}`);
+  jobs[pid] = { ...(jobs[pid] || {}), [kind]: { ...((jobs[pid] || {})[kind] || {}), status: "running", error: null } };
+  notify();
+  try {
+    const result = await api(path, { method: "POST", body }).finally(() => inflight.delete(`${pid}|${kind}`));
+    jobs[pid] = { ...(jobs[pid] || {}), [kind]: { status: "done", result, error: null } };
+    notify();
+    return result;
+  } catch (e) {
+    if (e.status === 409) { loadJobs(pid); throw e; }        // already running elsewhere: follow it
+    jobs[pid] = { ...(jobs[pid] || {}), [kind]: { ...((jobs[pid] || {})[kind] || {}), status: "failed", error: e.message } };
+    notify();
+    throw e;
+  }
 }
 
 // --- Saved problems and their workspaces (one shared store; writes are debounced) -----------------
@@ -272,7 +330,7 @@ function planSteps(d) {
       done: !!(d.offer.price.trim() && d.offer.success.trim()), action: ["Write the offer", "pilot"] },
     { phase: "Pilot", key: "commit", title: `Get ${goal} pilot commitments`, meta: `${committed} of ${goal}`,
       done: committed >= goal, action: ["Send the offer", "pilot"] },
-  ].map((s) => ({ ...s, auto: s.done, done: s.done || !!d.plan[s.key] }));
+  ];       // each step is done only by the work itself (messages sent, interviews logged...), never by a click
 }
 
 // --- Shell --------------------------------------------------------------------------------------
@@ -310,7 +368,7 @@ function Home({ me }) {
   const s = useStore();
   const items = s.items;
   const [sel, setSel] = useState(() => { try { return localStorage.getItem("signal_home_problem"); } catch { return null; } });
-  const [full, setFull] = useState(false);
+  const [full, setFull] = useUi("home:full", false);
   useEffect(() => { if (!s.cofounders) loadCofounders().catch(() => {}); }, []);
   const date = new Date().toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" });
   if (!items) return html`<div class="page"><p class="center">Loading…</p></div>`;
@@ -328,7 +386,6 @@ function Home({ me }) {
   const open = steps.filter((x) => !x.done);
   const phase = open[0]?.phase;
   const shown = open.filter((x) => x.phase === phase).slice(0, 3);
-  const toggleStep = (k) => edit(w, (dd) => { dd.plan[k] = !dd.plan[k]; });
   return html`<div class="page">
     ${header}
     <div class="ptabs" role="group" aria-label="Saved problems">
@@ -343,9 +400,9 @@ function Home({ me }) {
         ${(full ? steps : shown).map((st, i) => {
           const first = !full && i === 0;
           return html`<div class=${"step" + (first ? " first" : "") + (st.done ? " done" : "")}>
-            <input type="checkbox" class="check" checked=${st.done} disabled=${st.auto} id=${"st-" + st.key}
-              aria-label=${st.title} onChange=${() => toggleStep(st.key)} />
-            <div><label for=${"st-" + st.key}><b>${st.title}</b></label><span class="meta">${st.meta}</span>
+            <span class=${"mark" + (st.done ? " on" : "")} aria-hidden="true">${st.done && html`<svg width="12" height="12" viewBox="0 0 12 12"
+              fill="none" stroke="currentColor" stroke-width="2.2"><path d="M2.5 6.2l2.3 2.3 4.7-4.8"/></svg>`}</span>
+            <div><b>${st.title}</b><span class="sr">${st.done ? "Done." : "Not done yet."}</span><span class="meta">${st.meta}</span>
               ${first && html`<div><a class="btn primary" href=${`#/workspace/${enc(w.problem_id)}/${st.action[1]}`}>${st.action[0]}</a></div>`}
               ${!first && !st.done && html`<div><a class="textbtn" style="min-height:32px" href=${`#/workspace/${enc(w.problem_id)}/${st.action[1]}`}>${st.action[0]}</a></div>`}
             </div></div>`;
@@ -409,10 +466,10 @@ const ScoreTile = ({ score }) => html`<div class=${"stile" + (score >= 85 ? " hi
 function Problems() {
   const s = useStore();
   const [data, setData] = useState(null);
-  const [q, setQ] = useState("");
-  const [ind, setInd] = useState("");
-  const [sel, setSel] = useState(null);
-  const [adding, setAdding] = useState(false);
+  const [q, setQ] = useUi("problems:q", "");
+  const [ind, setInd] = useUi("problems:ind", "");
+  const [sel, setSel] = useUi("problems:sel", null);
+  const [adding, setAdding] = useUi("problems:adding", false);
   const [err, setErr] = useState("");
   useEffect(() => {
     let on = true;
@@ -533,9 +590,9 @@ function ProblemPage({ id }) {
   const s = useStore();
   const [p, setP] = useState(null);
   const [err, setErr] = useState("");
-  const [filter, setFilter] = useState("All");
-  const [all, setAll] = useState(false);
-  const [note, setNote] = useState("");
+  const [filter, setFilter] = useUi(`problem:${id}:filter`, "All");
+  const [all, setAll] = useUi(`problem:${id}:all`, false);
+  const [note, setNote] = useUi(`problem:${id}:note`, "");
   const [busy, setBusy] = useState(false);
   useEffect(() => {
     api(`/problems/${enc(id)}?${qs({ user_id: store.userId })}`).then(setP)
@@ -617,17 +674,19 @@ function ProblemPage({ id }) {
 }
 
 // An alternative opens in place: a tool's profile (written once, website checked), or the post a workaround came from.
+const toolInfo = {};          // profiles already loaded this session
+
 function AltTool({ p, t }) {
-  const [open, setOpen] = useState(false);
-  const [info, setInfo] = useState(null);
+  const [open, setOpen] = useUi(`alt:${p.id}:${t.name}`, false);
+  const [info, setInfoState] = useState(() => toolInfo[`${p.id}|${t.name}`] || null);
+  const setInfo = (x) => { toolInfo[`${p.id}|${t.name}`] = x; setInfoState(x); };
+  useEffect(() => { if (open && !info) load(); }, []);
   const [err, setErr] = useState("");
-  const toggle = () => {
-    setOpen(!open);
-    if (!open && !info) {
-      api(`/problems/${enc(p.id)}/tool?${qs({ user_id: store.userId, name: t.name })}`).then(setInfo)
-        .catch((e) => setErr(e.status === 429 ? "That's today's limit; try tomorrow." : "Couldn't load it. Try again."));
-    }
-  };
+  function load() {
+    api(`/problems/${enc(p.id)}/tool?${qs({ user_id: store.userId, name: t.name })}`).then(setInfo)
+      .catch((e) => setErr(e.status === 429 ? "That's today's limit; try tomorrow." : "Couldn't load it. Try again."));
+  }
+  const toggle = () => { setOpen(!open); if (!open && !info) load(); };
   return html`<div class="altrow">
     <button type="button" class="alt tool althead" aria-expanded=${open} onClick=${toggle}>
       <b style="font-weight:600">${t.name}</b><span class="muted">${t.gap || ""}</span><span class="chev" aria-hidden="true">${open ? "−" : "+"}</span></button>
@@ -650,7 +709,7 @@ function AltTool({ p, t }) {
 }
 
 function AltWorkaround({ w }) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useUi(`altw:${w.what.slice(0, 60)}`, false);
   return html`<div class="altrow">
     <button type="button" class="alt althead" aria-expanded=${open} onClick=${() => setOpen(!open)}>
       <span>${w.what}</span><span class="meta">${sourceName(w.source)}</span><span class="chev" aria-hidden="true">${open ? "−" : "+"}</span></button>
@@ -708,30 +767,14 @@ function QuickNote({ w }) {
 // website checked by Signal. Nothing unconfirmed is shown.
 function listTargets(w) {
   const added = new Set(w.data.contacts.map((c) => c.prospectKey).filter(Boolean));
-  return (w.data.outreachPlan?.groups || []).map((g, gi) => ({ ...g, targets: g.targets.map((t, ti) => ({ ...t, key: `t${gi}-${ti}-${t.name}` }))
+  return (planOf(w)?.groups || []).map((g, gi) => ({ ...g, targets: g.targets.map((t, ti) => ({ ...t, key: `t${gi}-${ti}-${t.name}` }))
     .filter((t) => !added.has(t.key)) }));
 }
 
-// "Find more" adds organizations to the list: groups with the same name merge, names already listed are skipped.
-function mergePlan(old, add) {
-  if (!old) return add;
-  const seen = new Set(old.groups.flatMap((g) => g.targets.map((t) => t.name.toLowerCase())));
-  const groups = old.groups.map((g) => ({ ...g, targets: [...g.targets] }));
-  add.groups.forEach((g) => {
-    const fresh = g.targets.filter((t) => !seen.has(t.name.toLowerCase()));
-    if (!fresh.length) return;
-    const same = groups.find((x) => x.name.toLowerCase() === g.name.toLowerCase());
-    if (same) same.targets.push(...fresh); else groups.push({ ...g, targets: fresh });
-  });
-  return { groups, dropped: (old.dropped || 0) + (add.dropped || 0), at: add.at };
-}
+const planOf = (w) => jobs[w.problem_id]?.outreach?.result || w.data.outreachPlan || null;
 
-async function buildList(w, more = false) {
-  const exclude = more ? (w.data.outreachPlan?.groups || []).flatMap((g) => g.targets.map((t) => t.name)) : [];
-  const groups = more ? (w.data.outreachPlan?.groups || []).map((g) => g.name) : [];
-  const plan = await api(`/workspaces/${enc(w.problem_id)}/outreach-plan`, { method: "POST", body: { user_id: store.userId, exclude, groups } });
-  edit(w, (d) => { d.outreachPlan = more ? mergePlan(d.outreachPlan, plan) : plan; });
-  return plan;
+function buildList(w, more = false) {
+  return runJob(w.problem_id, "outreach", `/workspaces/${enc(w.problem_id)}/outreach-plan`, { user_id: store.userId, more });
 }
 
 function addTarget(w, t) {
@@ -772,30 +815,29 @@ function shorten(text) {
 }
 
 function Outreach({ w, d, me }) {
-  const [selId, setSelId] = useState(() => sessionStorage.getItem("signal_contact") || null);
-  const [adding, setAdding] = useState(false);
-  const [learning, setLearning] = useState("");
-  useEffect(() => { sessionStorage.removeItem("signal_contact"); }, []);
+  const [selId, setSelId] = useUi(`out:${w.problem_id}:sel`, null);
+  const [adding, setAdding] = useUi(`out:${w.problem_id}:adding`, false);
+  const [learning, setLearning] = useUi(`out:${w.problem_id}:learning`, "");
+  useEffect(() => {                       // "Send a follow-up" and other links pick a person for this page
+    const pick = sessionStorage.getItem("signal_contact");
+    if (pick) { setSelId(pick); sessionStorage.removeItem("signal_contact"); }
+  }, []);
+  const job = useJobs(w.problem_id).outreach;
+  const plan = planOf(w);
   const notC = d.contacts.filter((c) => c.status !== "committed");
   const groups = listTargets(w);
   const authors = postAuthors(w);
-  const [building, setBuilding] = useState(false);
-  const [auto, setAuto] = useState(false);       // building in the background (context already given)
-  const [showPosts, setShowPosts] = useState(false);
+  const [building, setBuilding] = useUi(`out:${w.problem_id}:about`, false);
+  const auto = job?.status === "running";
+  const [showPosts, setShowPosts] = useUi(`out:${w.problem_id}:posts`, false);
   useEffect(() => {          // with "About you" already filled in, a problem's first visit builds its list
-    if (d.outreachPlan) return;
+    if (plan || !jobs[w.problem_id] || job) return;            // wait until the jobs are known
     api(`/me/context?${qs({ user_id: store.userId })}`).then((ctx) => {
-      if (!ctx.saved) return;
-      setAuto(true);
-      buildList(w).then(() => say("Your outreach list is ready.")).catch(() => {}).finally(() => setAuto(false));
+      if (ctx.saved && !planOf(w) && !jobs[w.problem_id]?.outreach) buildList(w).catch(() => {});
     }).catch(() => {});
-  }, [w.problem_id]);
-  const more = async () => {
-    setAuto(true);
-    try { const p = await buildList(w, true); say(p.groups.length ? "More organizations added." : "Couldn't confirm any new ones this time."); }
-    catch (e) { say(e.status === 429 ? "That's today's limit of lists." : "Couldn't find more. Try again."); }
-    setAuto(false);
-  };
+  }, [w.problem_id, !!jobs[w.problem_id]]);
+  const more = () => buildList(w, true).then((p) => say(p.groups.length ? "More organizations added." : "Couldn't confirm any new ones."))
+    .catch((e) => say(e.status === 429 ? "That's today's limit of lists." : e.status === 409 ? "Already finding more." : "Couldn't find more. Try again."));
   const comm = d.contacts.filter((c) => c.status === "committed");
   const c = d.contacts.find((x) => x.id === selId) || notC[0] || comm[0];
   const goal = goalOf(d);
@@ -812,17 +854,18 @@ function Outreach({ w, d, me }) {
         <p class="group">Committed · ${comm.length} of ${goal}</p>
         ${comm.map(person)}
         <div class="between" style="margin-top:16px"><p class="group" style="margin:0">Your outreach list</p>
-          ${d.outreachPlan && html`<button type="button" class="textbtn" style="min-height:32px" onClick=${() => { setSelId(null); setBuilding(true); }}>Rebuild</button>`}</div>
-        ${auto && html`<p class="meta" style="margin-top:6px">Finding organizations and checking each website… about a minute.</p>`}
-        ${!d.outreachPlan && !auto && html`<div class="srcbox" style="margin-top:6px"><p>Named organizations to contact for this problem, picked for you and checked by Signal.</p>
+          ${plan && !auto && html`<button type="button" class="textbtn" style="min-height:32px" onClick=${() => { setSelId(null); setBuilding(true); }}>Rebuild</button>`}</div>
+        ${auto && html`<p class="meta" style="margin-top:6px">Finding organizations and checking each website… about a minute. You can leave this page; it keeps going.</p>`}
+        ${job?.status === "failed" && !auto && html`<p class="error" style="margin-top:6px">The last build didn't finish${job.error ? ` (${job.error})` : ""}. Try again.</p>`}
+        ${!plan && !auto && html`<div class="srcbox" style="margin-top:6px"><p>Named organizations to contact for this problem, picked for you and checked by Signal.</p>
           <button type="button" class="btn primary small" style="margin-top:10px" onClick=${() => { setSelId(null); setBuilding(true); }}>Build my list</button></div>`}
-        ${d.outreachPlan?.dropped > 0 && html`<p class="meta">${plural(d.outreachPlan.dropped, "suggestion")} left out: Signal couldn't confirm the website.</p>`}
+        ${plan?.dropped > 0 && html`<p class="meta">${plural(plan.dropped, "suggestion")} left out: Signal couldn't confirm the website.</p>`}
         ${groups.map((g) => g.targets.length > 0 && html`<div style="margin-top:10px"><p style="font-weight:600;font-size:14px">${g.name}</p>
           <p class="meta">${g.why}</p>
           ${g.targets.map((t) => html`<button type="button" class="person" onClick=${() => setSelId(addTarget(w, t))}>
             <span style="min-width:0"><b>${t.name}</b><small>${CHANNEL[t.channel || KIND_CHANNEL[t.kind] || "email"].label} · ask for ${low(t.contact_role)}${t.near_builder ? " · near you" : ""}${t.warm_path ? " · warm path" : ""}</small></span>
             <span class="tag soft">Add</span></button>`)}</div>`)}
-        ${d.outreachPlan && !auto && html`<button type="button" class="btn small wide" style="margin-top:12px" onClick=${more}>Find more organizations</button>`}
+        ${plan && !auto && html`<button type="button" class="btn small wide" style="margin-top:12px" onClick=${more}>Find more organizations</button>`}
         ${authors.length > 0 && html`<button type="button" class="textbtn" style="margin-top:12px" aria-expanded=${showPosts}
             onClick=${() => setShowPosts(!showPosts)}>${showPosts ? "Hide" : "Also:"} reply to a post (${authors.length})</button>
           ${showPosts && html`<p class="meta">Few people answer replies to old posts. Use these after the organizations above.</p>`}
@@ -855,9 +898,9 @@ function Outreach({ w, d, me }) {
 
 // What Signal needs to know to pick who this builder should reach: asked once, editable.
 function AboutYou({ w, onDone }) {
-  const [f, setF] = useState(null);
+  const [f, setF] = useUi("aboutyou:form", null);
   const [busy, setBusy] = useState(false);
-  useEffect(() => { api(`/me/context?${qs({ user_id: store.userId })}`).then(setF).catch(() => setF({ location: "", now: "", background: "", network: "" })); }, []);
+  useEffect(() => { if (!f) api(`/me/context?${qs({ user_id: store.userId })}`).then(setF).catch(() => setF({ location: "", now: "", background: "", network: "" })); }, []);
   if (!f) return html`<section class="card"><p class="center">Loading…</p></section>`;
   const set = (k) => (e) => setF({ ...f, [k]: e.target.value });
   const build = async (e) => {
@@ -866,10 +909,10 @@ function AboutYou({ w, onDone }) {
     try {
       const { location, now, background, network } = f;
       await api("/me/context", { method: "PUT", body: { user_id: store.userId, context: { location, now, background, network } } });
-      const plan = await buildList(w);
-      say(plan.groups.length ? "Your outreach list is ready." : "Nothing could be confirmed. Add more about you and try again.");
       onDone();
-    } catch (err) { say(err.status === 429 ? "That's today's limit of lists." : "Couldn't build the list. Try again."); }
+      buildList(w).then((p) => say(p.groups.length ? "Your outreach list is ready." : "Nothing could be confirmed. Add more about you and try again."))
+        .catch((err) => say(err.status === 429 ? "That's today's limit of lists." : err.status === 409 ? "Already building." : "Couldn't build the list. Try again."));
+    } catch { say("Couldn't save. Try again."); }
     setBusy(false);
   };
   return html`<form class="card form" onSubmit=${build} aria-labelledby="ay-h">
@@ -1025,9 +1068,9 @@ function Composer({ w, c, me }) {
 // Interviews
 
 function Interviews({ w, d }) {
-  const [theme, setTheme] = useState(null);
-  const [logging, setLogging] = useState(false);
-  const [older, setOlder] = useState(false);
+  const [theme, setTheme] = useUi(`iv:${w.problem_id}:theme`, null);
+  const [logging, setLogging] = useUi(`iv:${w.problem_id}:logging`, false);
+  const [older, setOlder] = useUi(`iv:${w.problem_id}:older`, false);
   const past = pastInterviews(d);
   const counts = {};
   past.forEach((i) => (i.themes || []).forEach((t) => { counts[t] = (counts[t] || 0) + 1; }));
@@ -1097,7 +1140,7 @@ function WhoToInterview({ w, d }) {
 
 function LogInterview({ w, onDone }) {
   const d = w.data;
-  const [f, setF] = useState({ contact: "", org: "", role: "", date: todayISO(), time: "", minutes: "", summary: "", quote: "", themes: "" });
+  const [f, setF] = useUi(`iv:${w.problem_id}:form`, () => ({ contact: "", org: "", role: "", date: todayISO(), time: "", minutes: "", summary: "", quote: "", themes: "" }));
   const set = (k) => (e) => setF({ ...f, [k]: e.target.value });
   const known = [...new Set(d.interviews.flatMap((i) => i.themes || []))];
   const submit = (e) => {
@@ -1107,6 +1150,7 @@ function LogInterview({ w, onDone }) {
       date: f.time ? `${f.date}T${f.time}` : f.date, minutes: parseInt(f.minutes, 10) || null, summary: f.summary.trim(),
       quote: f.quote.trim(), themes: f.themes.split(",").map((t) => cap(t.trim())).filter(Boolean) };
     edit(w, (dd) => { dd.interviews.push(it); });
+    setF({ contact: "", org: "", role: "", date: todayISO(), time: "", minutes: "", summary: "", quote: "", themes: "" });
     onDone();
   };
   return html`<form class="card form" onSubmit=${submit}>
@@ -1239,7 +1283,7 @@ function whereList(p) { return [...new Set((p.who_to_reach || []).flatMap((x) =>
 function Validate({ w, d }) {
   const p = w.problem;
   const v = d.validation || {};
-  const [open, setOpen] = useState(null);
+  const [open, setOpen] = useUi(`val:${w.problem_id}:open`, null);
   const suggested = (p.validation || []).filter((m) => METHOD_INFO[m.method]);
   const keys = [...new Set([...suggested.map((m) => m.method), "ai_panel", ...Object.keys(METHOD_INFO)])];
   const plan = Object.fromEntries(suggested.map((m) => [m.method, m.plan]));
@@ -1323,8 +1367,8 @@ function MethodTools({ k, w, d }) {
 
 function ReviewLog({ w, d, tools }) {
   const log = d.validation?.competitor_reviews?.log || [];
-  const [tool, setTool] = useState(tools[0] || "");
-  const [text, setText] = useState("");
+  const [tool, setTool] = useUi(`rev:${w.problem_id}:tool`, tools[0] || "");
+  const [text, setText] = useUi(`rev:${w.problem_id}:text`, "");
   const add = (e) => {
     e.preventDefault();
     if (!text.trim()) return;
@@ -1356,9 +1400,9 @@ function ReviewLog({ w, d, tools }) {
 function HostedPage({ kind, w, d, where }) {
   const p = w.problem;
   const [page, setPage] = useState(undefined);       // undefined: loading; null: none yet
-  const [editing, setEditing] = useState(false);
+  const [editing, setEditing] = useUi(`page:${w.problem_id}:${kind}:editing`, false);
   const [busy, setBusy] = useState(false);
-  const [f, setF] = useState(null);
+  const [f, setF] = useUi(`page:${w.problem_id}:${kind}:form`, null);
   const load = () => api(`/workspaces/${enc(w.problem_id)}/pages?${qs({ user_id: store.userId })}`)
     .then((r) => setPage(r[kind] || null)).catch(() => setPage(null));
   useEffect(() => { load(); }, [kind]);
@@ -1434,29 +1478,27 @@ function HostedPage({ kind, w, d, where }) {
 }
 
 function PanelRunner({ w, d }) {
-  const runs = d.validation?.ai_panel?.runs || [];
-  const [pitch, setPitch] = useState(w.problem.statement || "");
-  const [price, setPrice] = useState(d.offer.price ? `${d.offer.price}/mo` : "");
-  const [busy, setBusy] = useState(false);
-  const run = async () => {
-    setBusy(true);
-    try {
-      const r = await api(`/workspaces/${enc(w.problem_id)}/panel`, { method: "POST", body: { user_id: store.userId, pitch, price: price || null } });
-      edit(w, (dd) => {
-        dd.validation = dd.validation || {};
-        const a = dd.validation.ai_panel = dd.validation.ai_panel || { status: "todo", result: "" };
-        a.runs = [r, ...(a.runs || [])].slice(0, 3);
-        if (a.status === "todo") a.status = "doing";
-      });
-    } catch (e) { say(e.status === 429 ? "That's today's limit of panels." : "The panel didn't answer. Try again."); }
-    setBusy(false);
+  const job = useJobs(w.problem_id).panel;
+  const runs = job?.result?.runs || d.validation?.ai_panel?.runs || [];
+  const [pitch, setPitch] = useUi(`panel:${w.problem_id}:pitch`, w.problem.statement || "");
+  const [price, setPrice] = useUi(`panel:${w.problem_id}:price`, d.offer.price ? `${d.offer.price}/mo` : "");
+  const busy = job?.status === "running";
+  const run = () => {
+    edit(w, (dd) => {
+      dd.validation = dd.validation || {};
+      const a = dd.validation.ai_panel = dd.validation.ai_panel || { status: "todo", result: "" };
+      if (a.status === "todo") a.status = "doing";
+    });
+    runJob(w.problem_id, "panel", `/workspaces/${enc(w.problem_id)}/panel`, { user_id: store.userId, pitch, price: price || null })
+      .catch((e) => say(e.status === 429 ? "That's today's limit of panels." : e.status === 409 ? "The panel is already running." : "The panel didn't answer. Try again."));
   };
   const VERDICT = { would_buy: ["Would buy", "accent"], maybe: ["Maybe", "info"], would_not_buy: ["Wouldn't buy", "warn"] };
   const last = runs[0];
   return html`<div class="form">
     <div class="form2"><div><label class="lbl" for="pn-p">Idea</label><input id="pn-p" class="input" maxlength="600" value=${pitch} onInput=${(e) => setPitch(e.target.value)} /></div>
       <div><label class="lbl" for="pn-c">Price <span>(optional)</span></label><input id="pn-c" class="input" maxlength="60" placeholder="e.g. $49/mo" value=${price} onInput=${(e) => setPrice(e.target.value)} /></div></div>
-    <div><button type="button" class="btn primary" disabled=${busy} onClick=${run}>${busy ? "Asking five buyers…" : runs.length ? "Run again" : "Run the panel"}</button></div>
+    <div><button type="button" class="btn primary" disabled=${busy} onClick=${run}>${busy ? "Asking five buyers…" : runs.length ? "Run again" : "Run the panel"}</button>
+      ${busy && html`<p class="meta" style="margin-top:6px">About 30 seconds. You can leave this page; the answers wait here.</p>`}</div>
     ${last && html`<div class="stack" style="gap:10px">
       <p class="meta">Simulated buyers, ${dayLabel(last.at)}. Use what they say to choose questions for real buyers.</p>
       <p>${last.summary}</p>
@@ -1479,8 +1521,8 @@ const STATUS = { confirmed: ["Confirmed", "accent"], wrong: ["Wrong", "warn"], u
 const NEXT_STATUS = { untested: "confirmed", confirmed: "wrong", wrong: "untested" };
 
 function Assumptions({ w, d }) {
-  const [editing, setEditing] = useState(null);
-  const [text, setText] = useState("");
+  const [editing, setEditing] = useUi(`asm:${w.problem_id}:editing`, null);
+  const [text, setText] = useUi(`asm:${w.problem_id}:text`, "");
   const count = (k) => d.assumptions.filter((a) => a.status === k).length;
   const risk = riskiest(d);
   const add = (e) => {
@@ -1535,8 +1577,8 @@ function Assumptions({ w, d }) {
 // Brief
 
 function Brief({ w, d }) {
-  const [editing, setEditing] = useState(null);
-  const [val, setVal] = useState("");
+  const [editing, setEditing] = useUi(`brief:${w.problem_id}:editing`, null);
+  const [val, setVal] = useUi(`brief:${w.problem_id}:val`, "");
   const done = SECTIONS.filter(([k]) => (d.brief[k] || "").trim()).length;
   const nInterviews = pastInterviews(d).length;
   const start = (k) => { setEditing(k); setVal(d.brief[k] || ""); };
@@ -1593,7 +1635,7 @@ function offerText(d, w) {
 }
 
 function Pilot({ w, d }) {
-  const [editing, setEditing] = useState(false);
+  const [editing, setEditing] = useUi(`pilot:${w.problem_id}:editing`, false);
   const comm = d.contacts.filter((c) => c.status === "committed");
   const goal = goalOf(d);
   const left = Math.max(0, goal - comm.length);
@@ -1656,8 +1698,8 @@ const FILTERS = [["best", "Best matches"], ["space", "Same problem space"], ["te
 
 function Cofounders({ me }) {
   const s = useStore();
-  const [editing, setEditing] = useState(false);
-  const [filter, setFilter] = useState("best");
+  const [editing, setEditing] = useUi("cofo:editing", false);
+  const [filter, setFilter] = useUi("cofo:filter", "best");
   const [err, setErr] = useState("");
   useEffect(() => { loadCofounders().catch(() => setErr("Couldn't load cofounders.")); }, []);
   const data = s.cofounders;

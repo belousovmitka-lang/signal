@@ -805,6 +805,22 @@ class ToolProfileRow(FeedBase):
     created_at: Mapped[datetime] = mapped_column(UTCDateTime)
 
 
+class WorkspaceJobRow(FeedBase):
+    """A slow action on a workspace (an outreach list, an AI buyer panel) and its result, kept on the server
+    so it finishes and stays there when the builder leaves the page or closes the tab."""
+
+    __tablename__ = "workspace_jobs"
+
+    user_id: Mapped[str] = mapped_column(ForeignKey("users.id"), primary_key=True)
+    problem_id: Mapped[str] = mapped_column(String(64), primary_key=True)
+    kind: Mapped[str] = mapped_column(String(16), primary_key=True)          # outreach | panel
+    status: Mapped[str] = mapped_column(String(12))                         # running | done | failed
+    result: Mapped[dict[str, Any] | None] = mapped_column(NullableJSON)     # the last finished result
+    error: Mapped[str | None] = mapped_column(String(200))
+    started_at: Mapped[datetime] = mapped_column(UTCDateTime)
+    finished_at: Mapped[datetime | None] = mapped_column(UTCDateTime)
+
+
 class CofounderProfileRow(FeedBase):
     __tablename__ = "cofounder_profiles"
 
