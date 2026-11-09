@@ -716,8 +716,9 @@ function addTarget(w, t) {
   const id = uid();
   edit(w, (d) => {
     d.contacts.push({ id, prospectKey: t.key, name: t.name, role: t.contact_role, org: "", how: "", kind: "target",
-      source: t.why, firstStep: t.how, warm: t.warm_path, url: t.url, near: t.near_builder, email: "", sourceUrl: "",
-      status: "not", channel: "email", subject: "", body: "", sentAt: null, replied: false });
+      orgKind: t.kind, source: t.why, firstStep: t.how, warm: t.warm_path, url: t.url, contactUrl: t.contact_url || null,
+      near: t.near_builder, email: "", sourceUrl: "", status: "not", channel: t.channel || KIND_CHANNEL[t.kind] || "email",
+      suggestedChannel: t.channel || null, channelDetail: t.channel_detail || "", subject: "", body: "", sentAt: null, replied: false });
   });
   return id;
 }
@@ -741,17 +742,6 @@ function addPostAuthor(w, e) {
 }
 
 const linkedinSearch = (q) => `https://www.linkedin.com/search/results/people/?keywords=${enc(q)}`;
-
-function draft(c, w, me) {
-  const first = /^[A-Z][a-z]+$/.test((c.name || "").split(" ")[0]) && c.how !== "from a post" ? c.name.split(" ")[0] : "there";
-  const topic = low(w.problem.title || "this problem");
-  const seen = c.sourceUrl ? `I saw your post on ${c.org}. I'm researching a problem it touches on: ${topic}.`
-    : c.kind === "target" ? `${c.warm ? `${c.warm}. ` : ""}I'm researching a problem I think people at ${c.name} run into: ${topic}. I'd like to talk with your ${low(c.role || "team")}.`
-    : `I'm researching a problem: ${topic}.`;
-  return `Hi ${first},\n\n${seen} I'm talking with people who deal with it.\n\n`
-    + "I'm not selling anything. Would you have 20 minutes this week to tell me how you handle it today?\n\n"
-    + `Thanks,\n${displayName(me)}`;
-}
 
 function shorten(text) {
   const parts = text.split(/\n\s*\n/);
@@ -791,7 +781,7 @@ function Outreach({ w, d, me }) {
         ${groups.map((g) => g.targets.length > 0 && html`<div style="margin-top:10px"><p style="font-weight:600;font-size:14px">${g.name}</p>
           <p class="meta">${g.why}</p>
           ${g.targets.map((t) => html`<button type="button" class="person" onClick=${() => setSelId(addTarget(w, t))}>
-            <span style="min-width:0"><b>${t.name}</b><small>Ask for: ${t.contact_role}${t.near_builder ? " · near you" : ""}${t.warm_path ? " · warm path" : ""}</small></span>
+            <span style="min-width:0"><b>${t.name}</b><small>${CHANNEL[t.channel || KIND_CHANNEL[t.kind] || "email"].label} · ask for ${low(t.contact_role)}${t.near_builder ? " · near you" : ""}${t.warm_path ? " · warm path" : ""}</small></span>
             <span class="tag soft">Add</span></button>`)}</div>`)}
         ${authors.length > 0 && html`<p class="group">Reply to a post · ${authors.length}</p>
           ${authors.map((e) => html`<button type="button" class="person" onClick=${() => setSelId(addPostAuthor(w, e))}>
@@ -875,26 +865,87 @@ function AddContact({ w, onDone }) {
   </form>`;
 }
 
+// How to reach someone depends on who they are: an association gets a formal email, a local shop a call,
+// a Slack community a post, a friend's company an intro. The list (outreach.py) picks it; the builder can change it.
+const CHANNEL = {
+  email: { label: "Email", action: "Open in email", why: "Professional organizations read their general or department email." },
+  contact_form: { label: "Their contact form", action: "Copy and open the form", why: "They take messages through their website." },
+  linkedin: { label: "LinkedIn", action: "Copy and open LinkedIn", why: "A specific role at a larger company is easiest to find there." },
+  community_post: { label: "Post in the community", action: "Copy and open the community", why: "Ask the whole group at once, within its rules." },
+  forum: { label: "Reply to the post", action: "Copy and open the post", why: "They already described the problem there." },
+  phone: { label: "Phone call", action: "Mark as called", why: "Small local businesses answer the phone faster than email." },
+  in_person: { label: "In person", action: "Mark as met", why: "You can meet them nearby; a face-to-face chat gets the most honest answers." },
+  intro: { label: "Ask for an intro", action: "Copy the intro request", why: "Someone you know can open the door." },
+};
+const KIND_CHANNEL = { association: "email", school: "email", agency: "email", publication: "email", company: "contact_form",
+                       community: "community_post", event: "in_person", other: "email" };
+const channelOf = (c) => c.channel || (c.sourceUrl ? "forum" : c.warm ? "intro" : KIND_CHANNEL[c.orgKind] || "email");
+
+function draftFor(ch, c, w, me) {
+  const topic = low(w.problem.title || "this problem").replace(/\.$/, "");
+  const area = low(w.problem.niche || w.problem.industry || "this area");
+  const me_ = displayName(me);
+  const role = low(c.role || "team");
+  switch (ch) {
+    case "forum":
+      return `Hi,\n\nI saw your post on ${c.org}. I'm researching a problem it touches on (${topic}) and talking with people who deal with it.\n\n`
+        + `I'm not selling anything. Would you have 20 minutes this week to tell me how you handle it today?\n\nThanks,\n${me_}`;
+    case "linkedin":
+      return clip(`Hi, I'm researching a problem in ${area} and would value 15 minutes with someone in your role at ${c.name}. Not selling anything, just learning how you handle it today. Open to a quick chat?`, 300);
+    case "community_post":
+      return `Question for the group: how do you handle this today?\n\nI'm researching a problem: ${topic}. If it happens to you: how often, what does it cost you, and what have you tried? `
+        + `Not selling anything; happy to share a summary of what I learn.\n\nThanks,\n${me_}`;
+    case "phone":
+      return `Call script\n\nHi, my name is ${me_}. I'm researching a problem in ${area}. Who there would know about this? Usually it's your ${role}.\n\n`
+        + `Could I ask three quick questions now, or book 15 minutes this week?\n1. When did this last happen?\n2. How long did it take, or what did it cost?\n3. What do you use for it today?\n\nThank them, and ask who else you should talk to.`;
+    case "in_person":
+      return `Talking points\n\n- Who you are: ${me_}, researching a problem: ${topic}.\n- Ask for: the ${role}.\n- Ask: when it last happened, what it cost, what they use now.\n`
+        + `- Close: can you follow up by email, and who else should you talk to?`;
+    case "intro":
+      return `Hi [NAME],\n\nCould you introduce me to someone at ${c.name}${c.role ? `, ideally their ${role}` : ""}? I'm researching a problem (${topic}) and want to learn how they handle it today. `
+        + `A short intro email is perfect.\n\nThank you!\n${me_}`;
+    case "contact_form":
+      return `Hello,\n\nI'm ${me_}, and I'm researching a problem: ${topic}. I'd like to speak with your ${role} for 20 minutes to learn how ${c.name} handles this today. I'm not selling anything.\n\n`
+        + `Could you pass this on, or tell me who to contact?\n\nThank you,\n${me_}`;
+    default:
+      return `Hello,\n\nMy name is ${me_}. I'm researching a problem: ${topic}. I'd like to speak with your ${role} for 20 minutes to learn how ${c.name} handles it today. `
+        + `I'm not selling anything.\n\nWould you have time in the next two weeks?\n\nThank you,\n${me_}`;
+  }
+}
+
 function Composer({ w, c, me }) {
   const upd = (fn) => edit(w, (d) => { fn(d.contacts.find((x) => x.id === c.id), d); });
-  const body = c.body || draft(c, w, me);
-  const subject = c.subject || (c.sourceUrl ? `Your post on ${c.org}` : `Quick question about ${low(shortTitle(w.problem))}`);
-  const channels = [["email", "Email"], ["linkedin", "LinkedIn"], ["forum", c.sourceUrl ? `Reply on ${c.org}` : "Forum message"]];
+  const ch = channelOf(c);
+  const info = CHANNEL[ch];
+  const bodies = c.bodies || (c.body ? { [c.channel || ch]: c.body } : {});
+  const body = bodies[ch] || draftFor(ch, c, w, me);
+  const setBody = (t) => upd((x) => { x.bodies = { ...(x.bodies || bodies), [ch]: t }; x.body = ""; });
+  const subject = c.subject || (c.sourceUrl ? `Your post on ${c.org}` : `Question about ${low(shortTitle(w.problem))}`);
+  const options = Object.keys(CHANNEL).filter((k) => k !== "forum" || c.sourceUrl).filter((k) => k !== "intro" || c.warm || ch === "intro");
+  const where = c.contactUrl || c.url;
   const send = async () => {
-    const ok = await copy(body);
-    if (c.channel === "email") {
-      if (!c.email) { say("Add their email first."); return; }
+    const ok = ["phone", "in_person"].includes(ch) ? true : await copy(body);
+    if (ch === "email") {
+      if (!c.email) { say("Add their email first. It's usually on their contact page."); return; }
       location.href = `mailto:${enc(c.email)}?subject=${enc(subject)}&body=${enc(body)}`;
-    } else if (c.channel === "forum" && safeUrl(c.sourceUrl)) {
-      open(c.sourceUrl, "_blank", "noopener");
+    } else if (ch === "contact_form" || ch === "community_post") {
+      if (safeUrl(where)) open(where, "_blank", "noopener");
+      say(ok ? "Message copied. Paste it there." : "Copy the message, then paste it there.");
+    } else if (ch === "forum") {
+      if (safeUrl(c.sourceUrl)) open(c.sourceUrl, "_blank", "noopener");
       say(ok ? "Message copied. Paste it as a reply." : "Copy the message, then paste it as a reply.");
+    } else if (ch === "linkedin") {
+      open(linkedinSearch(`${c.role || ""} ${c.name}`.trim()), "_blank", "noopener");
+      say(ok ? "Note copied. Paste it in your connection request." : "Copy the note first.");
+    } else if (ch === "intro") {
+      say(ok ? "Intro request copied. Send it to the person you know." : "Copy it first.");
     } else {
-      say(ok ? "Message copied. Paste it in your message." : "Copy the message first.");
+      say(ch === "phone" ? "Marked as called." : "Marked as met.");
     }
     upd((x) => { x.sentAt = new Date().toISOString(); });
   };
   return html`<section class="card" aria-labelledby="msg-h">
-    <div class="between"><h2 class="sec" id="msg-h">Message to ${c.name}</h2>
+    <div class="between"><h2 class="sec" id="msg-h">${ch === "phone" ? "Call" : ch === "in_person" ? "Meet" : "Message to"} ${c.name}</h2>
       ${c.status === "committed"
         ? html`<button type="button" class="textbtn" onClick=${() => upd((x) => { x.status = "not"; })}>Move back</button>`
         : html`<button type="button" class="btn small" onClick=${() => upd((x) => { x.status = "committed"; })}>Committed</button>`}</div>
@@ -903,30 +954,30 @@ function Composer({ w, c, me }) {
       : c.kind === "target" ? html`<div class="srcbox"><p><b style="font-weight:600">Why:</b> ${c.source}</p>
           <p style="margin-top:6px"><b style="font-weight:600">First step:</b> ${c.firstStep}</p>
           ${c.warm && html`<p style="margin-top:6px"><b style="font-weight:600">Your way in:</b> ${c.warm}</p>`}
-          <p style="margin-top:6px"><a href=${safeUrl(c.url)} target="_blank" rel="noopener noreferrer">Website</a>${" · "}<a href=${linkedinSearch(`${c.role} ${c.name}`)} target="_blank" rel="noopener noreferrer">Find the ${low(c.role || "contact")} on LinkedIn</a></p></div>`
-      : c.how?.startsWith("suggested") ? html`<div class="srcbox"><p>${c.source}</p>
-          ${c.where?.length > 0 && html`<p style="margin-top:6px">Where to find them: ${c.where.join("; ")}</p>`}
-          <p style="margin-top:6px"><a href=${linkedinSearch(c.kind === "company" ? `${c.role} ${c.name}` : c.name)} target="_blank"
-            rel="noopener noreferrer">Search LinkedIn</a>${c.kind === "company" && html` · <a href=${`https://duckduckgo.com/?q=${enc(c.name)}`}
-            target="_blank" rel="noopener noreferrer">Find their site</a>`}</p></div>`
+          <p style="margin-top:6px"><a href=${safeUrl(c.url)} target="_blank" rel="noopener noreferrer">Website</a>
+            ${safeUrl(c.contactUrl) && html`${" · "}<a href=${c.contactUrl} target="_blank" rel="noopener noreferrer">Contact page</a>`}
+            ${" · "}<a href=${linkedinSearch(`${c.role} ${c.name}`)} target="_blank" rel="noopener noreferrer">Find the ${low(c.role || "contact")} on LinkedIn</a></p></div>`
       : c.how || c.role ? html`<p class="srcbox">Source: ${[c.role, c.org, c.how].filter(Boolean).join(" · ")}</p>` : null}
-    ${c.sentAt && html`<p class="meta">Sent ${dayLabel(c.sentAt)}${c.replied ? " · replied" : ""}
+    ${c.sentAt && html`<p class="meta">${ch === "phone" ? "Called" : ch === "in_person" ? "Met" : "Sent"} ${dayLabel(c.sentAt)}${c.replied ? " · replied" : ""}
       ${!c.replied && html` · <button type="button" class="textbtn" style="min-height:24px" onClick=${() => upd((x) => { x.replied = true; })}>They replied</button>`}</p>`}
-    <div class="form2">
-      <div><label class="lbl" for="sv">Send via</label>
-        <select id="sv" class="input" value=${c.channel} onChange=${(e) => upd((x) => { x.channel = e.target.value; })}>
-          ${channels.map(([k, l]) => html`<option value=${k}>${l}</option>`)}</select></div>
+    <div><label class="lbl" for="sv">How to reach them</label>
+      <select id="sv" class="input" value=${ch} onChange=${(e) => upd((x) => { x.channel = e.target.value; })}>
+        ${options.map((k) => html`<option value=${k}>${CHANNEL[k].label}</option>`)}</select>
+      <p class="meta" style="margin-top:6px">${c.channelDetail && ch === c.suggestedChannel ? `${c.channelDetail}. ` : ""}${info.why}</p></div>
+    ${ch === "email" && html`<div class="form2">
+      <div><label class="lbl" for="em">Their email</label>
+        <input id="em" class="input" type="email" placeholder="e.g. info@…" value=${c.email} onInput=${(e) => upd((x) => { x.email = e.target.value; })} />
+        ${safeUrl(where) && html`<a class="textbtn" style="min-height:32px" href=${where} target="_blank" rel="noopener noreferrer">Find it on their ${c.contactUrl ? "contact page" : "website"}</a>`}</div>
       <div><label class="lbl" for="sj">Subject</label>
-        <input id="sj" class="input" value=${subject} onInput=${(e) => upd((x) => { x.subject = e.target.value; })} /></div>
-    </div>
-    ${c.channel === "email" && html`<div><label class="lbl" for="em">Their email</label>
-      <input id="em" class="input" type="email" value=${c.email} onInput=${(e) => upd((x) => { x.email = e.target.value; })} /></div>`}
-    <div><label class="lbl" for="mb">Message</label>
-      <textarea id="mb" class="input" style="min-height:220px" value=${body} onInput=${(e) => upd((x) => { x.body = e.target.value; })}></textarea></div>
+        <input id="sj" class="input" value=${subject} onInput=${(e) => upd((x) => { x.subject = e.target.value; })} /></div></div>`}
+    <div><label class="lbl" for="mb">${ch === "phone" ? "Call script" : ch === "in_person" ? "Talking points" : ch === "linkedin" ? "Connection note" : "Message"}
+        ${ch === "linkedin" && html` <span>(${body.length} of 300)</span>`}</label>
+      <textarea id="mb" class="input" style="min-height:${ch === "linkedin" ? 120 : 220}px" maxlength=${ch === "linkedin" ? 300 : undefined}
+        value=${body} onInput=${(e) => setBody(e.target.value)}></textarea></div>
     <div class="between"><div class="row">
-      <button type="button" class="btn" onClick=${() => upd((x) => { x.body = shorten(body); })}>Shorten</button>
+      ${!["linkedin", "phone", "in_person"].includes(ch) && html`<button type="button" class="btn" onClick=${() => setBody(shorten(body))}>Shorten</button>`}
       <button type="button" class="btn" onClick=${async () => say((await copy(body)) ? "Copied." : "Couldn't copy.")}>Copy</button></div>
-      <button type="button" class="btn primary" onClick=${send}>Send</button></div>
+      <button type="button" class="btn primary" onClick=${send}>${info.action}</button></div>
   </section>`;
 }
 

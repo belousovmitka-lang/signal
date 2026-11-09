@@ -164,7 +164,7 @@ def test_a_hosted_landing_page_counts_visits_and_collects_sign_ups(feed_store, f
 def test_outreach_lists_only_organizations_whose_websites_check_out():
     from signal_feed.outreach import Group, OutreachPlan, Target, verify
     t = lambda name, site: Target(name=name, kind="company", website=site, contact_role="Owner", why="w",  # noqa: E731
-                                  how="h", near_builder=False)
+                                  how="h", near_builder=False, channel="email", channel_detail="contact page")
     plan = OutreachPlan(groups=[Group(name="Grocers", why="y", targets=[t("Real Foods", "realfoods.example"),
                                                                      t("Made Up", "madeup.example")]),
                                 Group(name="Empty", why="y", targets=[t("Nope", "nope.example")])])
