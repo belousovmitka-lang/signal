@@ -202,6 +202,8 @@ def create_app(store: FeedStore, posts: PostsReader, config: FeedConfig, service
         if not store.user_exists(user_id):
             raise HTTPException(status_code=404, detail="unknown user")
 
+    from .builder import builder_routes      # Problems, saved problems' workspaces, cofounders (web/app.js)
+    builder_routes(app, store, posts, _user, live)
     if clips_db_url:      # "Clip to Signal" button: the connectors' per-user clips, behind the same sign-in
         _clip_routes(app, clips_db_url, _me)
     if service is None:

@@ -718,6 +718,51 @@ class SessionRow(FeedBase):
     revoked_at: Mapped[datetime | None] = mapped_column(UTCDateTime)
 
 
+# --- the builder app: saved problems, their workspaces, cofounder profiles (signal_feed/builder.py) ----
+
+class WorkspaceRow(FeedBase):
+    """A problem the user saved, and everything they do with it (outreach, interviews, assumptions, brief,
+    pilot). `problem_id` is the job cluster's best core post: cluster ids change on every rebuild, that
+    post doesn't while it stays in the bank. `problem` is a snapshot, so the workspace survives the post
+    leaving the bank. `data` is the client's document, stored as given (size-capped by the API)."""
+
+    __tablename__ = "workspaces"
+
+    user_id: Mapped[str] = mapped_column(ForeignKey("users.id"), primary_key=True)
+    problem_id: Mapped[str] = mapped_column(String(64), primary_key=True)
+    problem: Mapped[dict[str, Any]] = mapped_column(JSON)
+    note: Mapped[str | None] = mapped_column(Text)
+    data: Mapped[dict[str, Any]] = mapped_column(JSON, default=dict)
+    saved_at: Mapped[datetime] = mapped_column(UTCDateTime)
+    updated_at: Mapped[datetime] = mapped_column(UTCDateTime)
+
+
+class CofounderProfileRow(FeedBase):
+    __tablename__ = "cofounder_profiles"
+
+    user_id: Mapped[str] = mapped_column(ForeignKey("users.id"), primary_key=True)
+    name: Mapped[str] = mapped_column(String(80))
+    role: Mapped[str | None] = mapped_column(String(120))
+    location: Mapped[str | None] = mapped_column(String(120))
+    bio: Mapped[str | None] = mapped_column(String(400))
+    skills: Mapped[list[str]] = mapped_column(JSON, default=list)
+    looking_for: Mapped[list[str]] = mapped_column(JSON, default=list)
+    project: Mapped[str | None] = mapped_column(String(200))
+    commitment: Mapped[str | None] = mapped_column(String(16))     # full_time | part_time | exploring
+    visible: Mapped[bool] = mapped_column(Boolean, default=True)
+    updated_at: Mapped[datetime] = mapped_column(UTCDateTime)
+
+
+class IntroRequestRow(FeedBase):
+    """One builder asked to meet another. When both have asked, each sees the other's sign-in email."""
+
+    __tablename__ = "intro_requests"
+
+    from_user: Mapped[str] = mapped_column(ForeignKey("users.id"), primary_key=True)
+    to_user: Mapped[str] = mapped_column(ForeignKey("users.id"), primary_key=True, index=True)
+    at: Mapped[datetime] = mapped_column(UTCDateTime)
+
+
 # --- scheduled jobs (signal_feed/jobs.py) ---------------------------------------
 
 class JobRunRow(FeedBase):

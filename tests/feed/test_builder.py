@@ -1,0 +1,110 @@
+"""The builder app's routes: problems from job clusters, saved problems' workspaces, cofounder matching."""
+
+from datetime import datetime, timezone
+
+from fastapi.testclient import TestClient
+
+from signal_connectors.models import RawPost
+from signal_connectors.store import Store
+from signal_feed.api import create_app
+from signal_feed.db import EnrichedPostRow, JobClusterPostRow, JobClusterRow
+from signal_feed.posts import PostsReader
+
+NOW = datetime(2026, 11, 8, 12, tzinfo=timezone.utc)
+
+
+def bank(feed_store, tmp_path, built_at=NOW):
+    url = f"sqlite:///{tmp_path / 'sig.db'}"
+    specs = [("hackernews", "community", 85, "core", 0.8, 0.6, {"hours": 1, "per": "day"}, ["Clio"]),
+             ("github", "community", 90, "core", 0.6, 0.4, None, ["Clio", "Zapier"]),
+             ("peopleperhour", "paid_demand", 70, "supporting", 0.4, 0.9, None, [])]
+    posts = [RawPost(source=src, source_type=st, route="own_api", url=f"https://e.example/{i}", text=f"post {i}",
+                     is_snippet=False, author_hash=f"{i:064x}", author_role="paralegal" if i == 0 else None,
+                     published_at=datetime(2026, 10, 1 + i, tzinfo=timezone.utc))
+             for i, (src, st, *_) in enumerate(specs)]
+    Store(url).save_posts(posts, text_dedupe=False)
+    with feed_store.session() as s, s.begin():
+        s.add(JobClusterRow(id=7, need="US law firms need to re-key intake forms", project_idea="an intake form "
+                            "that fills the case system", buyer_type="small_business", buyer_segment="small law firms",
+                            core_posts=2, supporting_posts=1, distinct_buyers=3, sources={"hackernews": 1},
+                            best_score=90, first_seen=NOW, last_seen=NOW, built_at=built_at))
+        for p, (_, _, score, role, pain, pay, time_cost, tools) in zip(posts, specs, strict=True):
+            s.add(EnrichedPostRow(post_id=p.id, status="ok", post_type="pain", prompt_version="v9", enriched_at=NOW,
+                                  industry_path=["Legal", "Intake"], project_score=score, intensity=pain,
+                                  buyer_likelihood=pay, recurrence="recurring", time_cost=time_cost,
+                                  tools_mentioned=tools, plain_summary=f"summary {p.url}",
+                                  current_workaround="They retype it" if role == "core" else None,
+                                  money_signal={"amount_min": 300, "currency": "USD"} if role == "supporting" else None))
+    with feed_store.session() as s, s.begin():
+        for p, spec in zip(posts, specs, strict=True):
+            s.add(JobClusterPostRow(cluster_id=7, post_id=p.id, role=spec[3], cosine=0.9))
+    return url, posts
+
+
+def test_problems_are_clusters_with_numbers_from_the_posts(feed_store, feed_config, tmp_path, user_id):
+    url, posts = bank(feed_store, tmp_path)
+    c = TestClient(create_app(feed_store, PostsReader(url), feed_config))
+    r = c.get("/problems", params={"user_id": user_id}).json()
+    assert r["total"] == 1 and r["industries"] == [{"name": "Legal", "count": 1}]
+    p = r["items"][0]
+    assert p["id"] == posts[1].id                                  # the best core post: stable across rebuilds
+    assert p["title"] == "Law firms need to re-key intake forms"   # "US " dropped
+    assert p["pain"]["value"] == 6 and p["will_pay"]["value"] == 6 and p["frequency"]["label"] == "Recurring"
+    assert p["frequency"]["reason"] == "1 h per day"
+    assert p["will_pay"]["reason"] == "1 stated budget, median $300"
+    assert p["competition"] == {"label": "Medium", "reason": "Clio, Zapier"}
+    assert c.get("/problems", params={"user_id": user_id, "q": "dentist"}).json()["total"] == 0
+    d = c.get(f"/problems/{posts[0].id}", params={"user_id": user_id}).json()   # any member post finds it
+    assert d["id"] == posts[1].id and [e["role"] for e in d["evidence"]] == ["core", "core", "supporting"]
+    assert d["audience"]["role"] == "Paralegal" and d["workarounds"] == [{"what": "They retype it",
+                                                                           "source": "github"}]
+    assert c.get("/problems/nope", params={"user_id": user_id}).status_code == 404
+
+
+def test_saving_makes_a_workspace_that_keeps_its_data(feed_store, feed_config, tmp_path, user_id):
+    url, posts = bank(feed_store, tmp_path)
+    c = TestClient(create_app(feed_store, PostsReader(url), feed_config))
+    pid = posts[1].id
+    w = c.post(f"/workspaces/{pid}", json={"user_id": user_id, "note": "I was a paralegal"}).json()
+    assert w["problem_id"] == pid and w["note"] == "I was a paralegal" and w["in_bank"]
+    assert c.put(f"/workspaces/{pid}", json={"user_id": user_id, "data": {"notes": "hi"}}).status_code == 200
+    again = c.post(f"/workspaces/{posts[0].id}", json={"user_id": user_id}).json()   # same problem, another post
+    assert again["problem_id"] == pid and again["data"] == {"notes": "hi"} and again["note"] == "I was a paralegal"
+    assert [x["problem_id"] for x in c.get("/workspaces", params={"user_id": user_id}).json()["items"]] == [pid]
+    big = {"x": "a" * 300_000}
+    assert c.put(f"/workspaces/{pid}", json={"user_id": user_id, "data": big}).status_code == 413
+    with feed_store.session() as s, s.begin():                      # the cluster leaves the bank
+        s.query(JobClusterPostRow).delete()
+        s.query(JobClusterRow).delete()
+        s.add(JobClusterRow(id=8, need="other", core_posts=0, supporting_posts=0, distinct_buyers=0, best_score=80,
+                            first_seen=NOW, last_seen=NOW, built_at=datetime(2026, 11, 9, tzinfo=timezone.utc)))
+    kept = c.get("/workspaces", params={"user_id": user_id}).json()["items"][0]
+    assert not kept["in_bank"] and kept["problem"]["title"] == "Law firms need to re-key intake forms"
+    assert c.delete(f"/workspaces/{pid}", params={"user_id": user_id}).status_code == 200
+    assert c.get("/workspaces", params={"user_id": user_id}).json()["items"] == []
+
+
+def test_cofounders_match_on_skills_and_reveal_email_only_when_both_ask(feed_store, feed_config, tmp_path):
+    from signal_feed.db import AccountRow
+    url, _ = bank(feed_store, tmp_path)
+    c = TestClient(create_app(feed_store, PostsReader(url), feed_config))
+    for uid in ("a", "b", "c"):
+        feed_store.create_user(uid)
+    with feed_store.session() as s, s.begin():
+        s.add(AccountRow(id="acc-b", email="b@example.com", user_id="b", created_at=NOW))
+        s.add(AccountRow(id="acc-a", email="a@example.com", user_id="a", created_at=NOW))
+    c.put("/cofounders/me", json={"user_id": "a", "name": "Ann", "skills": ["Sales"], "looking_for": ["Full-stack engineering"],
+                                  "location": "Chicago, IL"})
+    c.put("/cofounders/me", json={"user_id": "b", "name": "Ben", "skills": ["Full-stack engineering", "TypeScript"],
+                                  "looking_for": ["Sales"], "location": "Chicago"})
+    c.put("/cofounders/me", json={"user_id": "c", "name": "Cy", "skills": ["Cooking"], "visible": True})
+    r = c.get("/cofounders", params={"user_id": "a"}).json()
+    assert [m["name"] for m in r["matches"]] == ["Ben", "Cy"]
+    ben = r["matches"][0]
+    assert ben["match"] == 80 and ben["technical"] and ben["nearby"] and ben["email"] is None
+    assert c.post("/cofounders/intro", json={"user_id": "a", "to": "b"}).status_code == 200
+    assert c.get("/cofounders", params={"user_id": "a"}).json()["matches"][0]["email"] is None   # one side only
+    assert c.get("/cofounders", params={"user_id": "b"}).json()["matches"][0]["asked_me"]
+    c.post("/cofounders/intro", json={"user_id": "b", "to": "a"})
+    assert c.get("/cofounders", params={"user_id": "a"}).json()["matches"][0]["email"] == "b@example.com"
+    assert c.post("/cofounders/intro", json={"user_id": "a", "to": "a"}).status_code == 422

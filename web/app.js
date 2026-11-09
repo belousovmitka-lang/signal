@@ -1,7 +1,8 @@
-// Signal web app (beta): sign-in, quiz, feed, problem pages, saved, clips, areas. Preact + htm, no build step.
-// Styled to the signal-design handoff (2026-10-30). The feed never says why an item is shown, and the areas
-// list never says how an area got there.
-import { html, render, useState, useEffect, useRef, useCallback } from "/static/vendor/preact-htm.js";
+// Signal web app: Home, Problems, Problem, Workspace (Outreach, Interviews, Assumptions, Brief, Pilot) and
+// Cofounders, built to the design handoff of 2026-11-08 (README in signal-handoff.zip). Preact + htm, no build step.
+// Problems are job clusters (signal_feed/builder.py): every number on them comes from the posts. Where a value
+// is missing, the page shows a placeholder like [YOUR PRICE], never an invented one.
+import { html, render, useState, useEffect, useRef, useMemo } from "/static/vendor/preact-htm.js";
 
 // --- API ----------------------------------------------------------------------------------------
 
@@ -18,7 +19,7 @@ async function api(path, { method = "GET", body, keepalive = false } = {}) {
   if ((r.status === 401 || r.status === 403) && !path.startsWith("/auth/")) {
     let d = "";
     try { d = (await r.clone().json()).detail; } catch { /* not JSON */ }
-    if (r.status === 401 || d === "account suspended") location.reload();     // the gate in App() handles the terms
+    if (r.status === 401 || d === "account suspended") location.reload();
   }
   if (!r.ok) {
     let detail = "";
@@ -28,239 +29,1134 @@ async function api(path, { method = "GET", body, keepalive = false } = {}) {
   return r.json();
 }
 
-const qs = (o) => new URLSearchParams(Object.entries(o).filter(([, v]) => v !== undefined && v !== null)).toString();
-
-function sessionId() {
-  try {
-    let id = sessionStorage.getItem("signal_session_id");
-    if (!id) { id = crypto.randomUUID(); sessionStorage.setItem("signal_session_id", id); }
-    return id;
-  } catch { return (window.__sid ||= crypto.randomUUID()); }
-}
-
-// --- Events: batched, idempotent (client_event_id), flushed every few seconds and on leaving ------
-
-const events = { userId: null, queue: [], timer: null };
-
-function track(type, item, extra = {}) {
-  if (!events.userId) return;
-  events.queue.push({
-    client_event_id: crypto.randomUUID(), session_id: sessionId(), type,
-    item_type: item.item_type || "post", item_id: String(item.item_id),
-    at: new Date().toISOString(),
-    ...(item.position !== undefined ? { position: item.position } : {}),
-    ...(item.impression_id !== undefined ? { impression_id: item.impression_id } : {}),
-    ...extra,
-  });
-  clearTimeout(events.timer);
-  events.timer = setTimeout(flush, 3000);
-}
-
-function flush(keepalive = false) {
-  if (!events.queue.length || !events.userId) return;
-  const batch = events.queue.splice(0, 200);
-  api("/events", { method: "POST", keepalive, body: { user_id: events.userId, events: batch } })
-    .catch((e) => { if (e.status !== 422) events.queue.unshift(...batch); });  // retry later; ids dedupe
-}
-document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") flush(true); });
+const qs = (o) => new URLSearchParams(Object.entries(o).filter(([, v]) => v !== undefined && v !== null && v !== "")).toString();
+const enc = encodeURIComponent;
 
 // --- Helpers ------------------------------------------------------------------------------------
 
 const safeUrl = (u) => (typeof u === "string" && /^https?:\/\//i.test(u) ? u : null);
+const uid = () => (crypto.randomUUID ? crypto.randomUUID() : String(Math.random())).slice(0, 8);
+const cap = (s) => (s ? s[0].toUpperCase() + s.slice(1) : s);
+const low = (s) => (s ? s[0].toLowerCase() + s.slice(1) : s);
+const plural = (n, w, ws = w + "s") => `${n} ${n === 1 ? w : ws}`;
+const reduceMotion = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 function ago(iso) {
   const d = (Date.now() - new Date(iso).getTime()) / 1000;
-  if (d < 3600) return `${Math.max(1, Math.round(d / 60))}m ago`;
-  if (d < 86400) return `${Math.round(d / 3600)}h ago`;
-  if (d < 86400 * 30) return `${Math.round(d / 86400)}d ago`;
-  return new Date(iso).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
+  if (d < 3600) return `${Math.max(1, Math.round(d / 60))} min ago`;
+  if (d < 86400) return plural(Math.round(d / 3600), "hour") + " ago";
+  if (d < 86400 * 14) return plural(Math.round(d / 86400), "day") + " ago";
+  if (d < 86400 * 60) return plural(Math.round(d / 86400 / 7), "week") + " ago";
+  return plural(Math.round(d / 86400 / 30), "month") + " ago";
 }
+const dayLabel = (iso) => new Date(iso.length === 10 ? iso + "T00:00" : iso).toLocaleDateString(undefined, { month: "short", day: "numeric" });
+function whenLabel(iso) {           // "Mon 10:00" within a week, else "Nov 19"
+  const d = asDate(iso);
+  const days = Math.abs(d - Date.now()) / 86400000;
+  const hasTime = iso.length > 10 && !/T00:00(:00(\.0+)?)?Z?$/.test(iso);
+  const time = hasTime ? " " + d.toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit", hour12: false }) : "";
+  return (days < 6.5 ? d.toLocaleDateString(undefined, { weekday: "short" }) : dayLabel(iso)) + time;
+}
+const todayISO = () => new Date().toLocaleDateString("en-CA");      // local YYYY-MM-DD
+const asDate = (iso) => new Date(iso.length === 10 ? iso + "T00:00" : iso);
+const isUpcoming = (i) => (i.date.length > 10 ? asDate(i.date) > Date.now() : i.date > todayISO());
 
 function sourceName(src) {
   const [family, rest] = String(src || "").split(":");
-  const names = { hn: "Hacker News", x: "X", jetstream: "Bluesky", stackexchange: "Stack Exchange",
-                  sam_gov: "SAM.gov", ted: "EU tenders", uk_tenders: "UK tenders", federal_register: "Federal Register",
-                  regulations_gov: "Regulations.gov", job_boards: "Job post", github: "GitHub", edgar: "SEC EDGAR",
-                  courtlistener: "CourtListener", openfda: "FDA", eurlex: "EU law", legiscan: "LegiScan",
-                  openstates: "Open States", mastodon: "Mastodon", lemmy: "Lemmy", app_reviews: "WordPress.org",
-                  huggingface: "Hugging Face", papers: "arXiv" };
+  const names = { hackernews: "Hacker News", hn: "Hacker News", x: "X", jetstream: "Bluesky", bluesky: "Bluesky",
+                  stackexchange: "Stack Exchange", sam_gov: "SAM.gov", ted: "EU tenders", uk_tenders: "UK tenders",
+                  federal_register: "Federal Register", regulations_gov: "Regulations.gov", job_boards: "Job post",
+                  github: "GitHub", edgar: "SEC EDGAR", courtlistener: "CourtListener", openfda: "FDA", eurlex: "EU law",
+                  legiscan: "LegiScan", openstates: "Open States", mastodon: "Mastodon", lemmy: "Lemmy",
+                  app_reviews: "WordPress.org", huggingface: "Hugging Face", papers: "arXiv", peopleperhour: "PeoplePerHour",
+                  cfpb: "CFPB", nhtsa: "NHTSA", producthunt: "Product Hunt" };
   if (family === "rss" || family === "classic_forum" || family === "brave") return rest || family;
   return names[family] || family;
 }
 
-const TYPE_LABEL = { pain: "Problem", paid_demand: "Paid demand", tool_gap: "Tool gap", change: "Change", idea: "Idea",
-                     builder: "Builder" };
-
-const CURRENCY = { USD: "$", GBP: "£", EUR: "€" };
-
-function money(m) {
-  if (!m || m.amount_min == null || !m.currency) return null;
-  const cur = m.currency || "";
-  const fmt = (n) => (n >= 1e6 ? `${(n / 1e6).toFixed(n >= 1e7 ? 0 : 1)}M` : n >= 1e4 ? `${Math.round(n / 1e3)}k`
-                      : n.toLocaleString());
-  const amt = m.amount_max && m.amount_max !== m.amount_min ? `${fmt(m.amount_min)}–${fmt(m.amount_max)}` : fmt(m.amount_min);
-  if (!(m.currency in CURRENCY) && !/^[A-Z]{3}$/.test(m.currency)) return null;
-  const per = m.period && m.period !== "once" ? `/${m.period}` : "";
-  return `${CURRENCY[cur] ?? cur + " "}${amt}${per}`;
+async function copy(text) {
+  try { await navigator.clipboard.writeText(text); return true; } catch { return false; }
 }
 
-// X evidence must be shown as X's own embed (Developer Agreement: no reworded X content).
-let xScript = null;
-function XEmbed({ url }) {
-  const ref = useRef();
-  useEffect(() => {
-    xScript ||= new Promise((ok) => {
-      const s = document.createElement("script");
-      s.src = "https://platform.twitter.com/widgets.js"; s.async = true; s.onload = ok;
-      document.head.appendChild(s);
-    });
-    xScript.then(() => window.twttr?.widgets?.load(ref.current));
-  }, [url]);
-  return html`<div class="x-embed" ref=${ref}>
-    <blockquote class="twitter-tweet" data-dnt="true"><a href=${safeUrl(url)}>A post on X</a></blockquote></div>`;
+// A one-line status message for actions with no visible result (copied, saved).
+const toast = { msg: "", subs: new Set(), timer: null };
+function say(msg) {
+  toast.msg = msg; toast.subs.forEach((f) => f());
+  clearTimeout(toast.timer);
+  toast.timer = setTimeout(() => { toast.msg = ""; toast.subs.forEach((f) => f()); }, 2600);
+}
+function Toast() {
+  const [, force] = useState(0);
+  useEffect(() => { const f = () => force((x) => x + 1); toast.subs.add(f); return () => toast.subs.delete(f); }, []);
+  return html`<div role="status" aria-live="polite" class="toast" style=${toast.msg ? "" : "display:none"}>${toast.msg}</div>`;
 }
 
-// --- Shared viewer state: what's saved, the same on every page ----------------------------------
+// --- Icons --------------------------------------------------------------------------------------
 
-const keyOf = (it) => `${it.item_type || "post"}/${it.item_id}`;
-const savedStore = { keys: new Set(), subs: new Set() };
-function markSaved(item) {
-  if (savedStore.keys.has(keyOf(item))) return;
-  track("save", item);
-  savedStore.keys.add(keyOf(item));
-  savedStore.subs.forEach((f) => f());
-}
-function useSaved(item) {
-  const [, tick] = useState(0);
-  useEffect(() => { const f = () => tick((n) => n + 1); savedStore.subs.add(f); return () => savedStore.subs.delete(f); }, []);
-  return savedStore.keys.has(keyOf(item));
-}
-
-// --- Icons (24px outline in the rail, 20px in action rows) --------------------------------------
-
-const Logo = () => html`<svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
-  <rect x="1" y="16" width="3.4" height="6" rx="1.2" fill="#141414"/><rect x="6" y="12.5" width="3.4" height="9.5" rx="1.2" fill="#141414"/>
-  <rect x="11" y="9" width="3.4" height="13" rx="1.2" fill="#141414"/><rect x="16" y="5.5" width="3.4" height="16.5" rx="1.2" fill="#141414"/>
-  <rect x="20.6" y="2" width="3.4" height="20" rx="1.2" fill="#e8590c"/></svg>`;
-const NAV_ICON = {
-  feed: html`<path d="M3.5 10.5L12 4l8.5 6.5V20h-5.5v-6h-6v6H3.5z"/>`,
-  saved: html`<path d="M6 3.5h12v17l-6-4.2-6 4.2z"/>`,
-  clips: html`<path d="M8 4.5h8M6 4.5h12v15H6z"/><path d="M9 9.5h6M9 13h6M9 16.5h3.5"/>`,
-  areas: html`<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1"/>`,
+const Logo = ({ color = "#4D8DFF" }) => html`<svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">
+  <rect x="2" y="13" width="4" height="7" rx="1.2" fill=${color}/><rect x="9" y="8.5" width="4" height="11.5" rx="1.2" fill=${color}/>
+  <rect x="16" y="3" width="4" height="17" rx="1.2" fill=${color}/></svg>`;
+const ICONS = {
+  home: "M3.5 9.2 10 4l6.5 5.2V16a1 1 0 0 1-1 1h-3.3v-4.4H7.8V17H4.5a1 1 0 0 1-1-1z",
+  problems: "M9 15a6 6 0 1 0 0-12 6 6 0 0 0 0 12zM13.5 13.5 17 17",
+  workspace: "M2.8 5.5a1 1 0 0 1 1-1h4l1.7 2h6.7a1 1 0 0 1 1 1V15a1 1 0 0 1-1 1H3.8a1 1 0 0 1-1-1z",
+  cofounders: "M7 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM13 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z",
 };
-const NavIcon = ({ name, on }) => html`<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-  stroke-width=${on ? 2 : 1.6} aria-hidden="true">${NAV_ICON[name]}</svg>`;
-const Bookmark = ({ on }) => html`<svg width="20" height="20" viewBox="0 0 20 20" fill=${on ? "#141414" : "none"}
-  stroke="#141414" stroke-width="1.6" aria-hidden="true"><path d="M5 2.8h10v14.4l-5-3.6-5 3.6z"/></svg>`;
-const OpenIcon = () => html`<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"
-  aria-hidden="true"><path d="M3 4.5h14v9H9l-4 3v-3H3z"/></svg>`;
-const NotIcon = () => html`<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"
-  aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="M5 15L15 5"/></svg>`;
-const BackIcon = () => html`<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.7"
-  aria-hidden="true"><path d="M11 4L6 9l5 5"/></svg>`;
-const OutIcon = () => html`<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"
-  aria-hidden="true"><path d="M9 3h4v4M13 3L7 9M11 9.5V13H3V5h3.5"/></svg>`;
+const Icon = ({ name, size = 20 }) => html`<svg width=${size} height=${size} viewBox="0 0 20 20" fill="none"
+  stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d=${ICONS[name]}/></svg>`;
+const Plus = () => html`<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7"
+  aria-hidden="true"><path d="M8 3v10M3 8h10"/></svg>`;
+const Back = () => html`<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7"
+  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 8H3M7 4 3 8l4 4"/></svg>`;
+const BookmarkIcon = () => html`<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"
+  stroke-linejoin="round" aria-hidden="true"><path d="M4 2.5h8v11L8 10.5l-4 3z"/></svg>`;
 
-// --- Signals: glyph and strip --------------------------------------------------------------------
-// Pain, paid demand, tool gap and change are post counts in the item's problem. Size is a market-size
-// figure Signal doesn't measure yet, so it is never lit.
+// --- Routing and the page change animation ------------------------------------------------------
 
-const SIGNALS = [["pain", "Pain"], ["paid_demand", "Paid"], ["tool_gap", "Tool gap"], ["change", "Change"], ["size", "Size"]];
-const litCount = (s) => (s ? SIGNALS.filter(([k]) => s[k] > 0).length : 0);
-const strength = (s) => `Found in ${litCount(s)} of 5 signal types`;
+function parseRoute(hash) {
+  const p = hash.replace(/^#\/?/, "").split("/").filter(Boolean).map(decodeURIComponent);
+  if (p[0] === "problems") return p[1] ? { name: "problem", id: p[1] } : { name: "problems" };
+  if (p[0] === "workspace") return { name: "workspace", id: p[1] || null, tab: p[2] || "outreach" };
+  if (p[0] === "cofounders") return { name: "cofounders" };
+  return { name: "home" };
+}
+const go = (path) => { location.hash = "#/" + path; };
+const NAV = [["home", "Home", ""], ["problems", "Problems", "problems"], ["workspace", "Workspace", "workspace"],
+             ["cofounders", "Cofounders", "cofounders"]];
 
-function Glyph({ signals, size = 44 }) {
-  const step = size === 56 ? [10, 5] : size === 36 ? [6, 3.5] : [8, 4];
-  const lit = (k) => !!signals && signals[k] > 0;
-  return html`<span class=${`glyph g${size}`} role="img" aria-label=${signals ? strength(signals) : "Inferred problem"}>
-    ${SIGNALS.map(([k], i) => html`<i class=${lit(k) ? "on" : ""} style=${`height:${step[0] + i * step[1]}px`}></i>`)}</span>`;
+// Old content fades out (140 ms), then the new content mounts and its columns fade in one after another (CSS).
+function useLeaving(key, value) {
+  const [shown, setShown] = useState(value);
+  const [leaving, setLeaving] = useState(false);
+  const last = useRef(key);
+  useEffect(() => {
+    if (key === last.current || reduceMotion()) { last.current = key; setShown(value); return undefined; }
+    last.current = key;
+    setLeaving(true);
+    const t = setTimeout(() => { setShown(value); setLeaving(false); scrollTo(0, 0); }, 140);
+    return () => clearTimeout(t);
+  }, [key, value]);
+  return [shown, leaving];
 }
 
-function Strip({ signals }) {
-  return html`<dl class="strip" aria-label=${strength(signals)}>${SIGNALS.map(([k, label]) => html`<div>
-    <span class=${"bar" + (signals[k] > 0 ? " on" : "")} aria-hidden="true"></span>
-    <dt>${label}</dt><dd class=${"num" + (signals[k] > 0 ? "" : " none")}>${signals[k] > 0 ? signals[k] : "—"}</dd></div>`)}</dl>`;
+// --- Saved problems and their workspaces (one shared store; writes are debounced) -----------------
+
+const store = { userId: null, items: null, cofounders: null, subs: new Set(), timers: {}, loading: false };
+const notify = () => store.subs.forEach((f) => f());
+
+function useStore() {
+  const [, force] = useState(0);
+  useEffect(() => { const f = () => force((x) => x + 1); store.subs.add(f); return () => store.subs.delete(f); }, []);
+  return store;
 }
 
-// --- Helpers ------------------------------------------------------------------------------------
+function loadWorkspaces() {
+  if (store.loading) return;
+  store.loading = true;
+  api(`/workspaces?${qs({ user_id: store.userId })}`).then((r) => {
+    store.items = r.items;
+    r.items.forEach((w) => { if (!w.data || !w.data.v) { w.data = seed(w); persist(w); } });
+    notify();
+  }).catch(() => { store.items = []; notify(); }).finally(() => { store.loading = false; });
+}
 
-function industryOf(it) {
-  const path = it.niche_path || [];
-  return { industry: path[0] || "", rest: path.slice(1).join(", ") };
+function loadCofounders() {
+  return api(`/cofounders?${qs({ user_id: store.userId })}`).then((r) => { store.cofounders = r; notify(); return r; });
 }
-// A self-described role, without a leading article or a trailing category code ("Drug Industry - C0022").
-const roleText = (r) => (r || "").replace(/^(an?|the)\s+/i, "").replace(/\s+-\s+[A-Z]{0,3}\d+$/, "").trim();
-function whoLine(it) {
-  const { industry, rest } = industryOf(it);
-  const who = roleText(it.who) || rest;
-  return html`<b>${industry}</b>${who && html`<span>, ${who}</span>`}`;
+
+function persist(w, keepalive = false) {
+  clearTimeout(store.timers[w.problem_id]);
+  const send = () => {
+    delete store.timers[w.problem_id];
+    return api(`/workspaces/${enc(w.problem_id)}`, { method: "PUT", keepalive, body: { user_id: store.userId, data: w.data } })
+      .catch(() => say("Couldn't save. Your last change will be retried."));
+  };
+  if (keepalive) return send();
+  store.timers[w.problem_id] = setTimeout(send, 500);
+  return null;
 }
-function findingLine(it) {
-  if (it.kind === "inferred") {
-    const n = (it.evidence?.length || 0) + (it.evidence_more || 0);
-    return `Inferred by Signal from ${n} pieces of evidence${it.confidence ? `, ${it.confidence} confidence` : ""}`;
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState !== "hidden" || !store.items) return;
+  store.items.filter((w) => store.timers[w.problem_id]).forEach((w) => persist(w, true));
+});
+
+function edit(w, fn) {
+  const d = structuredClone(w.data);
+  fn(d);
+  w.data = d;
+  notify();
+  persist(w);
+}
+
+async function saveProblem(problemId, note) {
+  const w = await api(`/workspaces/${enc(problemId)}`, { method: "POST", body: { user_id: store.userId, note: note || null } });
+  const items = store.items || [];
+  const i = items.findIndex((x) => x.problem_id === w.problem_id);
+  if (i >= 0) { items[i] = { ...items[i], note: w.note }; } else {
+    if (!w.data || !w.data.v) { w.data = seed(w); persist(w); }
+    items.push(w);
   }
-  const m = money(it.money);
-  return [TYPE_LABEL[it.post_type] ? `${TYPE_LABEL[it.post_type]} on ${sourceName(it.source)}` : sourceName(it.source), m]
-    .filter(Boolean).join(", ");
-}
-const shortAgo = (iso) => ago(iso).replace(" ago", "");
-const plural = (n, w) => `${n.toLocaleString()} ${w}${n === 1 ? "" : "s"}`;
-
-function Evidence({ items, compact = false }) {
-  return html`<ul class=${"evidence" + (compact ? " card-evidence" : "")}>${items.map((e) => html`<li>
-    ${e.embed ? html`<${XEmbed} url=${e.embed} />` : html`
-      <div>${e.what_it_shows}</div>
-      <div class="sub">${safeUrl(e.url) ? html`<a href=${safeUrl(e.url)} target="_blank" rel="noopener noreferrer"
-        style="color:var(--muted)">${sourceName(e.source)}</a>` : sourceName(e.source)}</div>`}
-  </li>`)}</ul>`;
+  store.items = [...items];
+  notify();
+  return w;
 }
 
-// --- Shell: rail, mobile top bar and menu sheet --------------------------------------------------
+const SECTIONS = [["problem", "The problem"], ["who", "Who has it"], ["cost", "What it costs them"],
+                  ["today", "What they use today"], ["why", "Why now"]];
 
-const NAV = [["feed", "Home"], ["saved", "Saved"], ["clips", "Clips"], ["areas", "Your areas"]];
-const initials = (email) => (email || "?").split("@")[0].split(/[._-]+/).filter(Boolean).slice(0, 2)
-  .map((p) => p[0].toUpperCase()).join("") || "?";
+// A new workspace starts from what the evidence already shows: the people who posted, beliefs to test, the
+// open questions, a brief drafted from the problem. Nothing is made up: unknowns stay empty or [PLACEHOLDER].
+function seed(w) {
+  const p = w.problem || {};
+  const ev = (p.evidence || []).filter((e) => safeUrl(e.url));
+  const contacts = ev.slice(0, 6).map((e) => ({
+    id: uid(), name: (cap(e.who) || "Someone").slice(0, 48), org: sourceName(e.source), how: "from a post", email: "",
+    source: e.summary, sourceUrl: e.url, sourceAt: e.published_at, status: "not", channel: "forum",
+    subject: "", body: "", sentAt: null, replied: false,
+  }));
+  const tools = p.tools || [];
+  const assumptions = [
+    { id: uid(), text: p.title || "People have this problem", status: "untested", note: "", test: "Ask in your first interviews", riskiest: false },
+    { id: uid(), text: "It happens every week or more", status: "untested", note: "", test: "Ask how often, and how long it takes", riskiest: false },
+    { id: uid(), text: `${p.audience?.payer || p.buyer || "They"} would pay to fix it`, status: "untested", note: "",
+      test: "Put a price in the pilot offer", riskiest: true },
+    { id: uid(), text: tools.length ? `${tools.slice(0, 3).join(", ")} don't solve it well` : "No existing tool solves it well",
+      status: "untested", note: "", test: "Ask what they tried before", riskiest: false },
+  ];
+  const posts = p.posts || 0;
+  const brief = {
+    problem: p.summary || p.statement || "",
+    who: [p.audience?.role, p.segment].filter(Boolean).join(". "),
+    cost: "", today: (p.workarounds || []).map((x) => x.what).join("\n"), why: "",
+  };
+  const briefSrc = {};
+  SECTIONS.forEach(([k]) => { if (brief[k]) briefSrc[k] = plural(posts, "post"); });
+  return {
+    v: 1, contacts, learnings: [], interviews: [], assumptions, brief, briefSrc, briefBy: {}, briefAt: null,
+    questions: (p.open_questions || []).map((q) => q.split("?")[0] + "?"),
+    offer: { price: "", weeks: "", success: "", goal: "3" }, pilots: {}, notes: w.note || "", plan: {},
+  };
+}
+
+const pastInterviews = (d) => d.interviews.filter((i) => !isUpcoming(i)).sort((a, b) => b.date.localeCompare(a.date));
+const upcoming = (d) => d.interviews.filter(isUpcoming).sort((a, b) => a.date.localeCompare(b.date));
+const riskiest = (d) => d.assumptions.find((a) => a.riskiest && a.status === "untested")
+  || d.assumptions.find((a) => a.status === "untested");
+const goalOf = (d) => Math.max(1, parseInt(d.offer.goal, 10) || 3);
+
+function planSteps(d) {
+  const sent = d.contacts.filter((c) => c.sentAt).length;
+  const past = pastInterviews(d).length;
+  const risk = d.assumptions.find((a) => a.riskiest);
+  const filled = SECTIONS.filter(([k]) => (d.brief[k] || "").trim()).length;
+  const committed = d.contacts.filter((c) => c.status === "committed").length;
+  const goal = goalOf(d);
+  return [
+    { phase: "Validation", key: "reach", title: "Message 5 people who have it", meta: `${Math.min(sent, 5)} of 5 sent`,
+      done: sent >= 5, action: ["Find people to interview", "outreach"] },
+    { phase: "Validation", key: "interview", title: "Run 5 interviews", meta: `${Math.min(past, 5)} of 5 done`,
+      done: past >= 5, action: ["Log an interview", "interviews"] },
+    { phase: "Validation", key: "risk", title: risk ? `Test: ${low(risk.text)}` : "Test your riskiest assumption",
+      meta: "Your riskiest assumption", done: !!risk && risk.status !== "untested", action: ["Open assumptions", "assumptions"] },
+    { phase: "Validation", key: "workarounds", title: "List the workarounds people use today", meta: "From your interview notes",
+      done: !!d.briefBy.today, action: ["Open the brief", "brief"] },
+    { phase: "Validation", key: "brief", title: "Write the one-page problem brief", meta: `${filled} of 5 sections`,
+      done: filled === 5 && Object.keys(d.briefBy).length > 0, action: ["Open the brief", "brief"] },
+    { phase: "Pilot", key: "offer", title: "Write your pilot offer", meta: d.offer.price.trim() ? "Price set" : "Price not set",
+      done: !!(d.offer.price.trim() && d.offer.success.trim()), action: ["Write the offer", "pilot"] },
+    { phase: "Pilot", key: "commit", title: `Get ${goal} pilot commitments`, meta: `${committed} of ${goal}`,
+      done: committed >= goal, action: ["Send the offer", "pilot"] },
+  ].map((s) => ({ ...s, auto: s.done, done: s.done || !!d.plan[s.key] }));
+}
+
+// --- Shell --------------------------------------------------------------------------------------
+
+const initials = (s) => (s || "?").split(/[@\s._-]+/).filter(Boolean).slice(0, 2).map((x) => x[0].toUpperCase()).join("") || "?";
+const displayName = (me) => store.cofounders?.me?.name || cap((me.email || "").split("@")[0].split(/[._-]/)[0]) || "You";
 
 function signOut() {
-  flush();
   api("/auth/sign-out", { method: "POST" }).catch(() => {}).finally(() => { location.hash = ""; location.reload(); });
 }
 
-function MeRow({ me }) {
-  return html`<div class="me-row"><span class="avatar">${initials(me.email)}</span>
-    <span class="who"><b>${me.email}</b><span>Signed in</span></span></div>`;
+function Sidebar({ me, active }) {
+  const s = useStore();
+  const [open, setOpen] = useState(false);
+  const n = s.items ? s.items.length : null;
+  return html`<aside class="side">
+    <a class="logo" href="#/"><${Logo} /><span>Signal</span></a>
+    <nav aria-label="Main">${NAV.map(([k, label, path]) => html`<a class="nav" href=${"#/" + path}
+      aria-current=${active === k ? "page" : undefined}><${Icon} name=${k} />${label}</a>`)}</nav>
+    <div class="account">
+      ${open && html`<div class="menu" role="menu"><div class="email">${me.email}</div>
+        <button type="button" role="menuitem" onClick=${() => { setOpen(false); go("cofounders"); }}>Edit my profile</button>
+        <button type="button" role="menuitem" onClick=${signOut}>Sign out</button></div>`}
+      <button type="button" aria-expanded=${open} aria-label="Account" onClick=${() => setOpen(!open)}>
+        <span class="avatar">${initials(displayName(me))}</span>
+        <span><b>${displayName(me)}</b><small class="num">${n === null ? "" : plural(n, "saved problem")}</small></span>
+      </button>
+    </div>
+  </aside>`;
 }
 
-function Rail({ me, tab }) {
-  const [sheet, setSheet] = useState(false);
-  const go = (k) => { setSheet(false); location.hash = k; };
-  const items = NAV.map(([k, label]) => html`<a class="nav" href=${"#" + k} aria-current=${tab === k ? "page" : undefined}
-    onClick=${(e) => { e.preventDefault(); go(k); }}><${NavIcon} name=${k} on=${tab === k} />${label}</a>`);
-  return html`<nav class="rail" aria-label="Main">
-    <a class="logo" href="#feed" onClick=${(e) => { e.preventDefault(); go("feed"); }}><${Logo} /><span>Signal</span></a>
-    <button class="menu-btn act" type="button" aria-label="Open menu" onClick=${() => setSheet(true)}>
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#141414" stroke-width="1.7" aria-hidden="true">
-        <path d="M3 6h14M3 10h14M3 14h14"/></svg></button>
-    <div class="rail-nav">${items}</div>
-    <div class="rail-foot"><${MeRow} me=${me} />
-      <button class="nav" type="button" onClick=${signOut} style="font-size:14px;color:var(--muted);height:40px">Sign out</button></div>
-    ${sheet && html`<div class="sheet" role="dialog" aria-modal="true" aria-label="Menu">
-      <div class="sheet-top"><span class="logo"><${Logo} /><span>Signal</span></span>
-        <button class="act icon" type="button" aria-label="Close menu" onClick=${() => setSheet(false)}>
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#141414" stroke-width="1.7" aria-hidden="true">
-            <path d="M5 5l10 10M15 5L5 15"/></svg></button></div>
-      <div style="display:flex;flex-direction:column;gap:2px">${items}</div>
-      <${MeRow} me=${me} />
-      <button class="pill" type="button" onClick=${signOut}>Sign out</button>
-    </div>`}
-  </nav>`;
+// --- Home ---------------------------------------------------------------------------------------
+
+function Home({ me }) {
+  const s = useStore();
+  const items = s.items;
+  const [sel, setSel] = useState(() => { try { return localStorage.getItem("signal_home_problem"); } catch { return null; } });
+  const [full, setFull] = useState(false);
+  useEffect(() => { if (!s.cofounders) loadCofounders().catch(() => {}); }, []);
+  const date = new Date().toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" });
+  if (!items) return html`<div class="page"><p class="center">Loading…</p></div>`;
+  const w = items.find((x) => x.problem_id === sel) || items[0];
+  const pick = (id) => { setSel(id); setFull(false); try { localStorage.setItem("signal_home_problem", id); } catch { /* private mode */ } };
+  const header = html`<div><p class="date">${date}</p><h1 class="title">Today</h1></div>`;
+  if (!w) {
+    return html`<div class="page">${header}
+      <div class="card" style="max-width:640px"><h2 class="sec">Save a problem to start</h2>
+        <p class="muted">Each saved problem gets a workspace and a short plan here.</p>
+        <a class="btn primary" href="#/problems">Browse problems</a></div></div>`;
+  }
+  const d = w.data;
+  const steps = planSteps(d);
+  const open = steps.filter((x) => !x.done);
+  const phase = open[0]?.phase;
+  const shown = open.filter((x) => x.phase === phase).slice(0, 3);
+  const toggleStep = (k) => edit(w, (dd) => { dd.plan[k] = !dd.plan[k]; });
+  return html`<div class="page">
+    ${header}
+    <div class="ptabs" role="group" aria-label="Saved problems">
+      ${items.map((x) => html`<button type="button" class="ptab" aria-pressed=${x === w} onClick=${() => pick(x.problem_id)}>
+        <span>${shortTitle(x.problem)}</span>${x.problem.score != null && html`<span class="score">${x.problem.score}</span>`}</button>`)}
+      <a class="addtab" href="#/problems" aria-label="Find another problem"><${Plus} /></a>
+    </div>
+    <div class="cols cols-home stagger" key=${w.problem_id}>
+      <section class="card" aria-labelledby="plan-h">
+        <h2 class="sec" id="plan-h">${phase || "Plan"}</h2>
+        ${!shown.length && html`<p class="muted">Every step is done.</p>`}
+        ${(full ? steps : shown).map((st, i) => {
+          const first = !full && i === 0;
+          return html`<div class=${"step" + (first ? " first" : "") + (st.done ? " done" : "")}>
+            <input type="checkbox" class="check" checked=${st.done} disabled=${st.auto} id=${"st-" + st.key}
+              aria-label=${st.title} onChange=${() => toggleStep(st.key)} />
+            <div><label for=${"st-" + st.key}><b>${st.title}</b></label><span class="meta">${st.meta}</span>
+              ${first && html`<div><a class="btn primary" href=${`#/workspace/${enc(w.problem_id)}/${st.action[1]}`}>${st.action[0]}</a></div>`}
+              ${!first && !st.done && html`<div><a class="textbtn" style="min-height:32px" href=${`#/workspace/${enc(w.problem_id)}/${st.action[1]}`}>${st.action[0]}</a></div>`}
+            </div></div>`;
+        })}
+        <button type="button" class="textbtn" onClick=${() => setFull(!full)}>
+          ${full ? "Today's steps" : `Full plan (${steps.filter((x) => x.done).length}/${steps.length})`}</button>
+      </section>
+      <${WaitingOn} w=${w} cofounders=${s.cofounders} />
+    </div>
+  </div>`;
 }
 
-// --- Sign-in ------------------------------------------------------------------------------------
+function shortTitle(p) {
+  const t = p.title || "";
+  return t.length > 42 ? t.slice(0, 40).replace(/\s+\S*$/, "") + "…" : t;
+}
+
+function WaitingOn({ w, cofounders }) {
+  const d = w.data;
+  const rows = [];
+  upcoming(d).slice(0, 2).forEach((i) => rows.push({ when: whenLabel(i.date), title: "Interview booked",
+    sub: [i.role, i.org].filter(Boolean).join(", ") }));
+  d.contacts.filter((c) => c.sentAt && !c.replied && c.status !== "committed").forEach((c) => {
+    const days = Math.floor((Date.now() - new Date(c.sentAt)) / 86400000);
+    rows.push(days >= 3
+      ? { when: plural(days, "day"), quiet: true, title: `No reply from ${c.name}`, link: ["Send a follow-up", `workspace/${enc(w.problem_id)}/outreach`, c.id] }
+      : { when: new Date(c.sentAt).toLocaleDateString(undefined, { weekday: "short" }), quiet: true, title: `Waiting on ${c.name}`, sub: `Message sent · ${c.org}` });
+  });
+  (cofounders?.matches || []).filter((m) => m.asked && !m.asked_me).slice(0, 1).forEach((m) =>
+    rows.push({ when: "", quiet: true, title: `Intro request to ${m.name}`, sub: "Cofounder match" }));
+  (cofounders?.matches || []).filter((m) => m.asked_me && !m.asked).slice(0, 1).forEach((m) =>
+    rows.push({ when: "New", title: `${m.name} asked for an intro`, link: ["Answer", "cofounders"] }));
+  return html`<section class="card" aria-labelledby="wait-h"><h2 class="sec" id="wait-h">Waiting on</h2>
+    ${rows.length ? html`<div>${rows.slice(0, 4).map((r) => html`<div class="wait">
+      <span class=${"when" + (r.quiet ? " quiet" : "")}>${r.when}</span>
+      <div><div>${r.title}</div>${r.sub && html`<div class="meta">${r.sub}</div>`}
+        ${r.link && html`<a href=${"#/" + r.link[1]} onClick=${() => { if (r.link[2]) sessionStorage.setItem("signal_contact", r.link[2]); }}
+          style="font-size:14px;text-decoration:underline;text-underline-offset:3px">${r.link[0]}</a>`}</div>
+    </div>`)}</div>` : html`<p class="muted">Nothing yet. Booked interviews and unanswered messages show up here.</p>`}
+  </section>`;
+}
+
+// --- Problems -----------------------------------------------------------------------------------
+
+function MiniBars({ p }) {
+  const vals = [["Pain", p.pain?.value], ["Frequency", p.frequency?.value], ["Will pay", p.will_pay?.value]];
+  return html`<div class="bars" aria-label=${vals.map(([k, v]) => `${k} ${v ?? "unknown"} of 10`).join(", ")}>
+    ${vals.map(([, v]) => html`<span class="bar"><i style=${`width:${(v ?? 0) * 10}%`}></i></span>`)}</div>`;
+}
+
+function evidenceLine(p) {
+  const parts = [plural(p.posts, "post"), plural(p.buyers, "buyer")];
+  if (p.price?.count) parts.push(`$${Math.round(p.price.median).toLocaleString()} median budget`);
+  else if (p.tools?.length) parts.push(plural(p.tools.length, "tool") + " named");
+  return parts.join(" · ");
+}
+
+const ScoreTile = ({ score }) => html`<div class=${"stile" + (score >= 85 ? " hi" : "")} aria-label=${`Score ${score}`}>
+  <span>${score}</span><small>score</small></div>`;
+
+function Problems() {
+  const s = useStore();
+  const [data, setData] = useState(null);
+  const [q, setQ] = useState("");
+  const [ind, setInd] = useState("");
+  const [sel, setSel] = useState(null);
+  const [adding, setAdding] = useState(false);
+  const [err, setErr] = useState("");
+  useEffect(() => {
+    let on = true;
+    const t = setTimeout(() => api(`/problems?${qs({ user_id: store.userId, q, industry: ind })}`)
+      .then((r) => { if (on) { setData(r); setErr(""); } }).catch(() => on && setErr("Couldn't load problems.")), q ? 250 : 0);
+    return () => { on = false; clearTimeout(t); };
+  }, [q, ind]);
+  const saved = new Set((s.items || []).map((w) => w.problem_id));
+  const items = data?.items || [];
+  const current = items.find((p) => p.id === sel) || items[0];
+  const chips = (data?.industries || []).slice(0, 5);
+  return html`<div class="page">
+    <div class="head"><h1 class="title">Problems</h1>
+      <button type="button" class="btn primary" onClick=${() => setAdding(!adding)} aria-expanded=${adding}>Add problem</button></div>
+    ${adding && html`<${AddProblem} onDone=${() => setAdding(false)} />`}
+    <div class="row" style="align-items:stretch">
+      <label class="search"><span class="sr">Search problems</span><${Icon} name="problems" size="18" />
+        <input class="input" type="search" placeholder="Search problems, industries, or roles" value=${q}
+          onInput=${(e) => setQ(e.target.value)} /></label>
+      <div class="chips" role="group" aria-label="Industry">
+        <button type="button" class="chip" aria-pressed=${!ind} onClick=${() => setInd("")}>All</button>
+        ${chips.map((c) => html`<button type="button" class="chip" aria-pressed=${ind === c.name}
+          onClick=${() => setInd(ind === c.name ? "" : c.name)}>${c.name}</button>`)}
+        ${ind && !chips.some((c) => c.name === ind) && html`<button type="button" class="chip" aria-pressed="true"
+          onClick=${() => setInd("")}>${ind}</button>`}
+      </div>
+    </div>
+    ${err && html`<p class="error">${err}</p>`}
+    <div class="cols cols-main">
+      <div class="stack" style="gap:12px">
+        <div class="listhead"><span class="num">${data ? `${plural(data.total, "problem")} · sorted by score` : "Loading…"}</span>
+          <span>Pain · Frequency · Will pay</span></div>
+        ${data && !items.length && html`<div class="card"><p class="muted">No problems match.</p></div>`}
+        ${items.map((p) => html`<article class="pcard" aria-current=${current?.id === p.id ? "true" : undefined}
+            onClick=${(e) => { if (e.target.closest("a")) return; if (matchMedia("(max-width: 1080px)").matches) go(`problems/${enc(p.id)}`); else setSel(p.id); }}>
+          <${ScoreTile} score=${p.score} />
+          <div style="min-width:0">
+            <h3><a href=${`#/problems/${enc(p.id)}`}>${p.title}</a></h3>
+            ${saved.has(p.id) && html`<div style="margin-top:6px"><span class="tag info">Saved</span></div>`}
+            <p class="muted" style="margin-top:6px">${[p.segment || p.buyer, p.industry].filter(Boolean).join(" · ")}</p>
+            <${MiniBars} p=${p} />
+            <p class="meta">${evidenceLine(p)}</p>
+          </div></article>`)}
+      </div>
+      ${current && html`<${Preview} p=${current} saved=${saved.has(current.id)} key=${current.id} />`}
+    </div>
+  </div>`;
+}
+
+function Preview({ p, saved }) {
+  const [busy, setBusy] = useState(false);
+  const save = async () => {
+    setBusy(true);
+    try { await saveProblem(p.id); say("Saved. It has a workspace now."); } catch { say("Couldn't save. Try again."); }
+    setBusy(false);
+  };
+  return html`<aside class="card preview" aria-label="Selected problem">
+    <h2>${p.title}</h2>
+    ${p.statement && html`<p class="muted">${p.statement}</p>`}
+    <${Stats} p=${p} />
+    ${p.evidence?.length > 0 && html`<div><h3 class="ctitle">Evidence</h3>
+      <div class="stack" style="gap:10px;margin-top:10px">${p.evidence.map((e) => html`<${EvidenceItem} e=${e} />`)}</div></div>`}
+    ${(p.workarounds?.length > 0 || p.tools?.length > 0) && html`<div><h3 class="ctitle">Alternatives</h3>
+      <div class="chips" style="margin-top:10px">${(p.tools?.length ? p.tools.slice(0, 4) : p.workarounds.map((w) => w.what))
+        .map((t) => html`<span class="tag soft" style="white-space:normal">${t}</span>`)}</div></div>`}
+    <div class="row" style="flex-wrap:nowrap">
+      <a class="btn primary" style="flex:1" href=${`#/problems/${enc(p.id)}`}>Open full problem</a>
+      ${saved ? html`<a class="btn" href=${`#/workspace/${enc(p.id)}`}>Workspace</a>`
+        : html`<button type="button" class="btn" disabled=${busy} onClick=${save}>Save</button>`}
+    </div>
+  </aside>`;
+}
+
+function Stats({ p }) {
+  const f = p.frequency || {};
+  return html`<div class="stats">
+    <div class="stat"><div class="k">Pain</div><div class="v">${p.pain?.value != null ? `${p.pain.value}/10` : "–"}</div></div>
+    <div class="stat"><div class="k">Frequency</div><div class="v">${f.label || "–"}</div></div>
+    <div class="stat"><div class="k">Will pay</div><div class="v">${p.will_pay?.value != null ? `${p.will_pay.value}/10` : "–"}</div></div>
+  </div>`;
+}
+
+function EvidenceItem({ e }) {
+  const url = safeUrl(e.url);
+  return html`<div class="quote"><p>${e.summary}</p>
+    <p class="meta">${[sourceName(e.source), cap(e.who), e.published_at && ago(e.published_at)].filter(Boolean).join(" · ")}
+      ${url && html` · <a href=${url} target="_blank" rel="noopener noreferrer">Original</a>`}</p></div>`;
+}
+
+function AddProblem({ onDone }) {
+  const [title, setTitle] = useState("");
+  const [who, setWho] = useState("");
+  const [busy, setBusy] = useState(false);
+  const submit = async (e) => {
+    e.preventDefault();
+    setBusy(true);
+    try {
+      const w = await api("/workspaces", { method: "POST", body: { user_id: store.userId, title, who: who || null } });
+      w.data = seed(w); persist(w);
+      store.items = [...(store.items || []), w]; notify();
+      onDone(); go(`workspace/${enc(w.problem_id)}`);
+    } catch { say("Couldn't add it. Try again."); setBusy(false); }
+  };
+  return html`<form class="card form" onSubmit=${submit} style="max-width:720px">
+    <div><label class="lbl" for="np-t">Problem</label>
+      <input id="np-t" class="input" required minlength="3" maxlength="200" value=${title} onInput=${(e) => setTitle(e.target.value)}
+        placeholder="e.g. Small clinics re-type paper intake forms" /></div>
+    <div><label class="lbl" for="np-w">Who has it <span>(optional)</span></label>
+      <input id="np-w" class="input" maxlength="200" value=${who} onInput=${(e) => setWho(e.target.value)} /></div>
+    <div class="row"><button class="btn primary" disabled=${busy}>Add</button>
+      <button type="button" class="btn" onClick=${onDone}>Cancel</button></div>
+  </form>`;
+}
+
+// --- Problem detail -----------------------------------------------------------------------------
+
+function ProblemPage({ id }) {
+  const s = useStore();
+  const [p, setP] = useState(null);
+  const [err, setErr] = useState("");
+  const [filter, setFilter] = useState("All");
+  const [all, setAll] = useState(false);
+  const [note, setNote] = useState("");
+  const [busy, setBusy] = useState(false);
+  useEffect(() => {
+    api(`/problems/${enc(id)}?${qs({ user_id: store.userId })}`).then(setP)
+      .catch((e) => setErr(e.status === 404 ? "This problem is no longer in the bank." : "Couldn't load it."));
+  }, [id]);
+  if (err) return html`<div class="page"><a class="backlink" href="#/problems"><${Back} />All problems</a><p class="muted">${err}</p></div>`;
+  if (!p) return html`<div class="page"><p class="center">Loading…</p></div>`;
+  const ws = (s.items || []).find((w) => w.problem_id === p.id);
+  const save = async () => {
+    setBusy(true);
+    try { const w = await saveProblem(p.id, note); go(`workspace/${enc(w.problem_id)}`); }
+    catch { say("Couldn't save. Try again."); setBusy(false); }
+  };
+  const groups = ["All", ...new Set(p.evidence.map((e) => e.group))];
+  const ev = p.evidence.filter((e) => filter === "All" || e.group === filter);
+  const f = p.frequency || {};
+  const tiles = [
+    ["Pain", p.pain?.value != null ? `${p.pain.value}/10` : "–", p.pain?.reason],
+    ["Frequency", f.label || "–", f.reason],
+    ["Will pay", p.will_pay?.value != null ? `${p.will_pay.value}/10` : "–", p.will_pay?.reason],
+    ["Competition", p.competition?.label || "–", p.competition?.reason],
+  ];
+  const share = async () => { if (await copy(location.href)) say("Link copied."); };
+  return html`<div class="page">
+    <div><a class="backlink" href="#/problems"><${Back} />All problems</a></div>
+    <div class="stack" style="gap:12px">
+      <div class="tags"><span class="tag accent">Score ${p.score}</span>${p.industry && html`<span class="tag">${p.industry}</span>`}
+        ${p.buyer && html`<span class="tag">${p.buyer}</span>`}</div>
+      <h1 class="detail-title">${p.title}</h1>
+      <div class="between" style="align-items:flex-end">
+        <div class="stack" style="gap:6px;max-width:760px">${p.statement && html`<p class="lede">${p.statement}</p>`}
+          ${p.summary && html`<p class="muted">${p.summary}</p>`}</div>
+        <div class="row"><button type="button" class="btn" onClick=${share}>Share</button>
+          ${ws ? html`<a class="btn primary" href=${`#/workspace/${enc(p.id)}`}>Open workspace</a>`
+            : html`<button type="button" class="btn primary" disabled=${busy} onClick=${save}><${BookmarkIcon} />Save problem</button>`}</div>
+      </div>
+    </div>
+    <div class="cols cols-detail stagger">
+      <div class="stack">
+        <section class="card" aria-labelledby="sc-h"><h2 class="sec" id="sc-h">Score</h2>
+          <div class="stats stats4">${tiles.map(([k, v, why]) => html`<div class="stat"><div class="k">${k}</div>
+            <div class="v">${v}</div>${why && html`<div class="why">${why}</div>`}</div>`)}</div></section>
+        <section class="card" aria-labelledby="ev-h">
+          <div class="between"><h2 class="sec" id="ev-h">Evidence</h2>
+            <div class="chips" role="group" aria-label="Filter by source">${groups.map((g) => html`<button type="button" class="chip"
+              aria-pressed=${filter === g} onClick=${() => setFilter(g)}>${g === "All" ? `All · ${p.evidence.length}` : g}</button>`)}</div></div>
+          <div class="stack" style="gap:12px">${(all ? ev : ev.slice(0, 3)).map((e) => html`<${EvidenceItem} e=${e} />`)}</div>
+          ${ev.length > 3 && !all && html`<button type="button" class="textbtn" onClick=${() => setAll(true)}>Show all ${ev.length}</button>`}
+        </section>
+        ${(p.workarounds.length > 0 || p.tools.length > 0) && html`<section class="card" aria-labelledby="alt-h">
+          <h2 class="sec" id="alt-h">Alternatives</h2>
+          <div>${p.workarounds.map((w) => html`<div class="alt"><span>${w.what}</span><span class="meta">${sourceName(w.source)}</span></div>`)}</div>
+          ${p.tools.length > 0 && html`<div><p class="meta" style="margin-bottom:8px">Tools the posts name</p>
+            <div class="chips">${p.tools.map((t) => html`<span class="tag soft">${t}</span>`)}</div></div>`}
+        </section>`}
+        <${LiveCard} id=${p.id} />
+      </div>
+      <div class="stack">
+        ${ws ? html`<section class="card dark"><h2 class="sec">Saved</h2><p class="muted">It has a workspace and a plan on Home.</p>
+            <a class="btn accent wide" href=${`#/workspace/${enc(p.id)}`}>Open workspace</a></section>`
+          : html`<section class="card dark" aria-labelledby="sv-h"><h2 class="sec" id="sv-h">Save</h2>
+            <div><label class="lbl" for="sv-note">Note <span>(optional)</span></label>
+              <textarea id="sv-note" class="input" maxlength="2000" placeholder="e.g. I worked in this job for two years" value=${note}
+                onInput=${(e) => setNote(e.target.value)}></textarea></div>
+            <button type="button" class="btn accent wide" disabled=${busy} onClick=${save}>Save problem</button></section>`}
+        <section class="card tight" aria-labelledby="who-h"><h2 class="ctitle" id="who-h">Who has it</h2>
+          <div>${[["Role", p.audience.role], ["Segment", p.audience.segment], ["Who pays", p.audience.payer],
+                  ["Where they talk", p.audience.channels.map(sourceName).join(", ")]].filter(([, v]) => v)
+            .map(([k, v]) => html`<div class="kv"><span>${k}</span><span>${v}</span></div>`)}</div></section>
+        ${p.open_questions.length > 0 && html`<section class="card tight" aria-labelledby="oq-h"><h2 class="ctitle" id="oq-h">Open questions</h2>
+          <ul class="bullets">${p.open_questions.map((q) => html`<li>${q}</li>`)}</ul></section>`}
+      </div>
+    </div>
+  </div>`;
+}
+
+// Search results from platforms Signal can't store (Reddit, YouTube), fetched now and never saved.
+function LiveCard({ id }) {
+  const [live, setLive] = useState(null);
+  useEffect(() => {
+    let on = true;
+    api(`/problems/${enc(id)}/live?${qs({ user_id: store.userId })}`).then((r) => on && setLive(r.sections || []))
+      .catch(() => on && setLive([]));
+    return () => { on = false; };
+  }, [id]);
+  if (live && !live.length) return null;
+  return html`<section class="card live" aria-labelledby="live-h" aria-busy=${!live}>
+    <div class="between"><h2 class="sec" id="live-h">Elsewhere right now</h2><span class="meta">${live ? "Live results, not saved" : "Searching…"}</span></div>
+    ${(live || []).map((sec) => html`<div><h3 class="ctitle">${sec.label}</h3>
+      ${sec.items.map((i) => html`<div class="alt" style="grid-template-columns:minmax(0,1fr)">
+        <a href=${safeUrl(i.url)} target="_blank" rel="noopener noreferrer">${i.title}</a>
+        ${i.snippet && html`<span class="meta">${i.snippet}</span>`}</div>`)}</div>`)}
+  </section>`;
+}
+
+// --- Workspace ----------------------------------------------------------------------------------
+
+const TABS = [["outreach", "Outreach"], ["interviews", "Interviews"], ["assumptions", "Assumptions"], ["brief", "Brief"], ["pilot", "Pilot"]];
+
+function Workspace({ id, tab, me }) {
+  const s = useStore();
+  const items = s.items;
+  const [shownTab, leaving] = useLeaving(tab, tab);
+  if (!items) return html`<div class="page"><p class="center">Loading…</p></div>`;
+  const w = items.find((x) => x.problem_id === id) || items[0];
+  if (!w) {
+    return html`<div class="page"><div><p class="date">Workspace</p><h1 class="ws-title">No saved problems</h1></div>
+      <div class="card" style="max-width:640px"><p class="muted">Save a problem and its workspace opens here.</p>
+        <a class="btn primary" href="#/problems">Browse problems</a></div></div>`;
+  }
+  const d = w.data;
+  const n = pastInterviews(d).length;
+  const pid = enc(w.problem_id);
+  const views = { outreach: Outreach, interviews: Interviews, assumptions: Assumptions, brief: Brief, pilot: Pilot };
+  const View = views[shownTab] || Outreach;
+  return html`<div class="page">
+    <div class="head no-print">
+      <div style="min-width:0"><p class="date">Workspace</p><h1 class="ws-title" style="max-width:820px">${w.problem.title}</h1></div>
+      <div class="switch"><label for="ws-switch">Switch problem</label>
+        <select id="ws-switch" class="input" value=${w.problem_id} onChange=${(e) => go(`workspace/${enc(e.target.value)}/${tab}`)}>
+          ${items.map((x) => html`<option value=${x.problem_id}>${shortTitle(x.problem)}</option>`)}</select></div>
+    </div>
+    ${!w.in_bank && !w.problem.own && html`<p class="meta">This problem left the bank in the last rebuild. Your work on it is kept.</p>`}
+    <nav class="tabs no-print" aria-label="Workspace">${TABS.map(([k, label]) => html`<a href=${`#/workspace/${pid}/${k}`}
+      aria-current=${tab === k ? "page" : undefined}>${k === "interviews" && n ? `${label} · ${n}` : label}</a>`)}</nav>
+    <div class=${leaving ? "leaving" : ""} key=${w.problem_id + shownTab}>
+      <${View} w=${w} d=${d} me=${me} />
+    </div>
+  </div>`;
+}
+
+function QuickNote({ w }) {
+  return html`<section class="card tight no-print"><label class="ctitle" for="qn" style="display:block;margin-bottom:12px">Quick note</label>
+    <textarea id="qn" class="input" placeholder="Anything worth remembering…" value=${w.data.notes}
+      onInput=${(e) => edit(w, (d) => { d.notes = e.target.value; })}></textarea></section>`;
+}
+
+// Outreach
+
+function draft(c, w, me) {
+  const first = /^[A-Z][a-z]+$/.test((c.name || "").split(" ")[0]) && c.how !== "from a post" ? c.name.split(" ")[0] : "there";
+  const topic = low(w.problem.title || "this problem");
+  const seen = c.sourceUrl ? `I saw your post on ${c.org}. I'm researching a problem it touches on: ${topic}.`
+    : `I'm researching a problem: ${topic}.`;
+  return `Hi ${first},\n\n${seen} I'm talking with people who deal with it.\n\n`
+    + "I'm not selling anything. Would you have 20 minutes this week to tell me how you handle it today?\n\n"
+    + `Thanks,\n${displayName(me)}`;
+}
+
+function shorten(text) {
+  const parts = text.split(/\n\s*\n/);
+  if (parts.length <= 3) return text.split(/(?<=[.?!])\s+/).slice(0, 4).join(" ");
+  return [parts[0], parts[parts.length - 2], parts[parts.length - 1]].join("\n\n");
+}
+
+function Outreach({ w, d, me }) {
+  const [selId, setSelId] = useState(() => sessionStorage.getItem("signal_contact") || null);
+  const [adding, setAdding] = useState(false);
+  const [learning, setLearning] = useState("");
+  useEffect(() => { sessionStorage.removeItem("signal_contact"); }, []);
+  const notC = d.contacts.filter((c) => c.status !== "committed");
+  const comm = d.contacts.filter((c) => c.status === "committed");
+  const c = d.contacts.find((x) => x.id === selId) || notC[0] || comm[0];
+  const goal = goalOf(d);
+  const person = (x) => html`<button type="button" class="person" aria-current=${x === c ? "true" : undefined} onClick=${() => setSelId(x.id)}>
+    <span style="min-width:0"><b>${x.name}</b><small>${[x.role, x.org, x.how].filter(Boolean).join(" · ")}</small></span>
+    ${x.status === "committed" ? html`<span class="tag accent">${d.pilots[x.id]?.status ? "Pilot" : "In"}</span>`
+      : x.sentAt ? html`<span class="meta">${x.replied ? "Replied" : "Sent"}</span>` : null}</button>`;
+  return html`<div class="cols cols-out stagger">
+    <section class="card tight" aria-labelledby="pp-h">
+      <div class="between"><h2 class="ctitle" id="pp-h">People</h2>
+        <button type="button" class="btn small" onClick=${() => setAdding(!adding)} aria-expanded=${adding}><${Plus} />Add</button></div>
+      ${adding && html`<${AddContact} w=${w} onDone=${(nid) => { setAdding(false); if (nid) setSelId(nid); }} />`}
+      <div><p class="group">Not contacted · ${notC.filter((x) => !x.sentAt).length}</p>
+        ${notC.map(person)}
+        ${!notC.length && html`<p class="meta">Add people who have this problem.</p>`}
+        <p class="group">Committed · ${comm.length} of ${goal}</p>
+        ${comm.map(person)}</div>
+    </section>
+    ${c ? html`<${Composer} w=${w} c=${c} me=${me} key=${c.id} />`
+      : html`<section class="card"><h2 class="sec">Message</h2><p class="muted">Add someone to write to.</p></section>`}
+    <div class="stack">
+      <section class="card tight" aria-labelledby="ln-h"><h2 class="ctitle" id="ln-h">Learnings</h2>
+        ${d.learnings.length > 0 && html`<ul class="bullets">${d.learnings.map((l, i) => html`<li>${l}
+          <button type="button" class="textbtn" style="min-height:24px;font-size:13px" aria-label=${"Remove learning: " + l}
+            onClick=${() => edit(w, (dd) => { dd.learnings.splice(i, 1); })}>Remove</button></li>`)}</ul>`}
+        <form class="row" style="flex-wrap:nowrap" onSubmit=${(e) => { e.preventDefault(); if (!learning.trim()) return;
+          edit(w, (dd) => { dd.learnings.push(learning.trim()); }); setLearning(""); }}>
+          <label class="sr" for="ln-in">Add a learning</label>
+          <input id="ln-in" class="input" placeholder="Add a learning" value=${learning} onInput=${(e) => setLearning(e.target.value)} />
+          <button class="btn small" style="min-height:44px">Add</button></form>
+      </section>
+      <${QuickNote} w=${w} />
+    </div>
+  </div>`;
+}
+
+function AddContact({ w, onDone }) {
+  const [f, setF] = useState({ name: "", role: "", org: "", email: "" });
+  const set = (k) => (e) => setF({ ...f, [k]: e.target.value });
+  const submit = (e) => {
+    e.preventDefault();
+    const id = uid();
+    edit(w, (d) => { d.contacts.push({ id, ...f, how: "", source: "", sourceUrl: "", status: "not", channel: f.email ? "email" : "linkedin",
+      subject: "", body: "", sentAt: null, replied: false }); });
+    onDone(id);
+  };
+  return html`<form class="form" onSubmit=${submit} style="margin-top:12px">
+    <div><label class="lbl" for="ac-n">Name</label><input id="ac-n" class="input" required maxlength="80" value=${f.name} onInput=${set("name")} /></div>
+    <div><label class="lbl" for="ac-r">Role</label><input id="ac-r" class="input" maxlength="80" value=${f.role} onInput=${set("role")} /></div>
+    <div><label class="lbl" for="ac-o">Organization</label><input id="ac-o" class="input" maxlength="80" value=${f.org} onInput=${set("org")} /></div>
+    <div><label class="lbl" for="ac-e">Email <span>(optional)</span></label><input id="ac-e" class="input" type="email" maxlength="200" value=${f.email} onInput=${set("email")} /></div>
+    <div class="row"><button class="btn primary small">Add</button><button type="button" class="btn small" onClick=${() => onDone(null)}>Cancel</button></div>
+  </form>`;
+}
+
+function Composer({ w, c, me }) {
+  const upd = (fn) => edit(w, (d) => { fn(d.contacts.find((x) => x.id === c.id), d); });
+  const body = c.body || draft(c, w, me);
+  const subject = c.subject || (c.sourceUrl ? `Your post on ${c.org}` : `Quick question about ${low(shortTitle(w.problem))}`);
+  const channels = [["email", "Email"], ["linkedin", "LinkedIn"], ["forum", c.sourceUrl ? `Reply on ${c.org}` : "Forum message"]];
+  const send = async () => {
+    const ok = await copy(body);
+    if (c.channel === "email") {
+      if (!c.email) { say("Add their email first."); return; }
+      location.href = `mailto:${enc(c.email)}?subject=${enc(subject)}&body=${enc(body)}`;
+    } else if (c.channel === "forum" && safeUrl(c.sourceUrl)) {
+      open(c.sourceUrl, "_blank", "noopener");
+      say(ok ? "Message copied. Paste it as a reply." : "Copy the message, then paste it as a reply.");
+    } else {
+      say(ok ? "Message copied. Paste it in your message." : "Copy the message first.");
+    }
+    upd((x) => { x.sentAt = new Date().toISOString(); });
+  };
+  return html`<section class="card" aria-labelledby="msg-h">
+    <div class="between"><h2 class="sec" id="msg-h">Message to ${c.name}</h2>
+      ${c.status === "committed"
+        ? html`<button type="button" class="textbtn" onClick=${() => upd((x) => { x.status = "not"; })}>Move back</button>`
+        : html`<button type="button" class="btn small" onClick=${() => upd((x) => { x.status = "committed"; })}>Committed</button>`}</div>
+    ${c.sourceUrl ? html`<p class="srcbox">Source: their post on ${c.org}${c.sourceAt ? `, ${ago(c.sourceAt)}` : ""}. ${c.source}
+        ${" "}<a href=${safeUrl(c.sourceUrl)} target="_blank" rel="noopener noreferrer">Open post</a></p>`
+      : c.how || c.role ? html`<p class="srcbox">Source: ${[c.role, c.org, c.how].filter(Boolean).join(" · ")}</p>` : null}
+    ${c.sentAt && html`<p class="meta">Sent ${dayLabel(c.sentAt)}${c.replied ? " · replied" : ""}
+      ${!c.replied && html` · <button type="button" class="textbtn" style="min-height:24px" onClick=${() => upd((x) => { x.replied = true; })}>They replied</button>`}</p>`}
+    <div class="form2">
+      <div><label class="lbl" for="sv">Send via</label>
+        <select id="sv" class="input" value=${c.channel} onChange=${(e) => upd((x) => { x.channel = e.target.value; })}>
+          ${channels.map(([k, l]) => html`<option value=${k}>${l}</option>`)}</select></div>
+      <div><label class="lbl" for="sj">Subject</label>
+        <input id="sj" class="input" value=${subject} onInput=${(e) => upd((x) => { x.subject = e.target.value; })} /></div>
+    </div>
+    ${c.channel === "email" && html`<div><label class="lbl" for="em">Their email</label>
+      <input id="em" class="input" type="email" value=${c.email} onInput=${(e) => upd((x) => { x.email = e.target.value; })} /></div>`}
+    <div><label class="lbl" for="mb">Message</label>
+      <textarea id="mb" class="input" style="min-height:220px" value=${body} onInput=${(e) => upd((x) => { x.body = e.target.value; })}></textarea></div>
+    <div class="between"><div class="row">
+      <button type="button" class="btn" onClick=${() => upd((x) => { x.body = shorten(body); })}>Shorten</button>
+      <button type="button" class="btn" onClick=${async () => say((await copy(body)) ? "Copied." : "Couldn't copy.")}>Copy</button></div>
+      <button type="button" class="btn primary" onClick=${send}>Send</button></div>
+  </section>`;
+}
+
+// Interviews
+
+function Interviews({ w, d }) {
+  const [theme, setTheme] = useState(null);
+  const [logging, setLogging] = useState(false);
+  const [older, setOlder] = useState(false);
+  const past = pastInterviews(d);
+  const counts = {};
+  past.forEach((i) => (i.themes || []).forEach((t) => { counts[t] = (counts[t] || 0) + 1; }));
+  const themes = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+  const total = past.length;
+  const list = theme ? past.filter((i) => (i.themes || []).includes(theme)) : past;
+  const next = upcoming(d)[0];
+  return html`<div class="cols cols-ws stagger">
+    <div class="stack">
+      ${themes.length > 0 && html`<section class="card" aria-labelledby="th-h"><h2 class="sec" id="th-h">Themes</h2>
+        <div>${themes.map(([t, n]) => {
+          const on = Math.round((n / Math.max(total, 1)) * 5);
+          return html`<button type="button" class="theme" aria-pressed=${theme === t} onClick=${() => setTheme(theme === t ? null : t)}>
+            <span>${t}</span><span class="segs" aria-hidden="true">${[0, 1, 2, 3, 4].map((k) => html`<i class=${k < on ? "on" : ""}></i>`)}</span>
+            <span class="meta">${n} of ${total}</span></button>`;
+        })}</div></section>`}
+      <div class="between"><h2 class="sec">Interviews${theme ? ` · ${theme}` : ""}</h2>
+        <button type="button" class="btn primary" onClick=${() => setLogging(!logging)} aria-expanded=${logging}>Log interview</button></div>
+      ${logging && html`<${LogInterview} w=${w} onDone=${() => setLogging(false)} />`}
+      ${!list.length && !logging && html`<div class="card"><p class="muted">No interviews yet. Log one after each call; tag what you heard
+        and the themes add up here.</p></div>`}
+      ${(older ? list : list.slice(0, 3)).map((i) => html`<article class="card tight iv">
+        <div class="between" style="align-items:flex-start"><h3 class="ctitle">${[i.org, i.role].filter(Boolean).join(" · ") || "Interview"}</h3>
+          <span class="meta">${dayLabel(i.date)}${i.minutes ? ` · ${i.minutes} min` : ""}</span></div>
+        ${i.summary && html`<p>${i.summary}</p>`}
+        ${i.quote && html`<p class="q">“${i.quote}”${(i.themes || []).map((t) => html` <span class="hash">#${t.replace(/\s+/g, "")}</span>`)}</p>`}
+        <button type="button" class="textbtn" style="min-height:28px;font-size:13px" onClick=${() => edit(w, (dd) => {
+          dd.interviews = dd.interviews.filter((x) => x.id !== i.id); })}>Delete</button>
+      </article>`)}
+      ${list.length > 3 && !older && html`<button type="button" class="textbtn" onClick=${() => setOlder(true)}>
+        Show ${plural(list.length - 3, "older interview")}</button>`}
+    </div>
+    <div class="stack">
+      <section class="card dark" aria-labelledby="nx-h">
+        ${next ? html`<p class="meta" style="color:#9DBEFF">${whenLabel(next.date)}</p>
+            <h2 class="ctitle" id="nx-h" style="font-size:18px">${next.org || next.role || "Next interview"}</h2>`
+          : html`<h2 class="ctitle" id="nx-h" style="font-size:18px">Next interview</h2><p class="muted">Not booked yet.</p>`}
+        ${d.questions.length > 0 && html`<ul class="bullets">${d.questions.map((q, k) => html`<li>${q}
+          <button type="button" class="textbtn" style="min-height:24px;font-size:13px" aria-label=${"Remove question: " + q}
+            onClick=${() => edit(w, (dd) => { dd.questions.splice(k, 1); })}>Remove</button></li>`)}</ul>`}
+        ${!next && html`<button type="button" class="btn ghost-dark wide" onClick=${() => setLogging(true)}>Book one</button>`}
+      </section>
+      <${QuickNote} w=${w} />
+    </div>
+  </div>`;
+}
+
+function LogInterview({ w, onDone }) {
+  const d = w.data;
+  const [f, setF] = useState({ contact: "", org: "", role: "", date: todayISO(), time: "", minutes: "", summary: "", quote: "", themes: "" });
+  const set = (k) => (e) => setF({ ...f, [k]: e.target.value });
+  const known = [...new Set(d.interviews.flatMap((i) => i.themes || []))];
+  const submit = (e) => {
+    e.preventDefault();
+    const c = d.contacts.find((x) => x.id === f.contact);
+    const it = { id: uid(), contactId: c?.id || null, org: f.org || c?.org || "", role: f.role || c?.role || c?.name || "",
+      date: f.time ? `${f.date}T${f.time}` : f.date, minutes: parseInt(f.minutes, 10) || null, summary: f.summary.trim(),
+      quote: f.quote.trim(), themes: f.themes.split(",").map((t) => cap(t.trim())).filter(Boolean) };
+    edit(w, (dd) => { dd.interviews.push(it); });
+    onDone();
+  };
+  return html`<form class="card form" onSubmit=${submit}>
+    ${d.contacts.length > 0 && html`<div><label class="lbl" for="li-c">Person <span>(optional)</span></label>
+      <select id="li-c" class="input" value=${f.contact} onChange=${set("contact")}><option value="">Someone else</option>
+        ${d.contacts.map((c) => html`<option value=${c.id}>${c.name}${c.org ? ` · ${c.org}` : ""}</option>`)}</select></div>`}
+    <div class="form2"><div><label class="lbl" for="li-o">Organization</label><input id="li-o" class="input" value=${f.org} onInput=${set("org")} /></div>
+      <div><label class="lbl" for="li-r">Role</label><input id="li-r" class="input" value=${f.role} onInput=${set("role")} /></div></div>
+    <div class="form2"><div><label class="lbl" for="li-d">Date <span>(a future date books it)</span></label>
+        <input id="li-d" class="input" type="date" required value=${f.date} onInput=${set("date")} /></div>
+      <div class="form2"><div><label class="lbl" for="li-t">Time</label><input id="li-t" class="input" type="time" value=${f.time} onInput=${set("time")} /></div>
+        <div><label class="lbl" for="li-m">Minutes</label><input id="li-m" class="input" type="number" min="1" max="600" value=${f.minutes} onInput=${set("minutes")} /></div></div></div>
+    <div><label class="lbl" for="li-s">Summary</label><textarea id="li-s" class="input" maxlength="600" value=${f.summary} onInput=${set("summary")}></textarea></div>
+    <div><label class="lbl" for="li-q">Quote <span>(optional)</span></label><input id="li-q" class="input" maxlength="300" value=${f.quote} onInput=${set("quote")} /></div>
+    <div><label class="lbl" for="li-th">Themes <span>(comma-separated${known.length ? `: ${known.slice(0, 4).join(", ")}` : ""})</span></label>
+      <input id="li-th" class="input" value=${f.themes} onInput=${set("themes")} /></div>
+    <div class="row"><button class="btn primary">Save</button><button type="button" class="btn" onClick=${onDone}>Cancel</button></div>
+  </form>`;
+}
+
+// Assumptions
+
+const STATUS = { confirmed: ["Confirmed", "accent"], wrong: ["Wrong", "warn"], untested: ["Untested", "dashed"] };
+const NEXT_STATUS = { untested: "confirmed", confirmed: "wrong", wrong: "untested" };
+
+function Assumptions({ w, d }) {
+  const [editing, setEditing] = useState(null);
+  const [text, setText] = useState("");
+  const count = (k) => d.assumptions.filter((a) => a.status === k).length;
+  const risk = riskiest(d);
+  const add = (e) => {
+    e.preventDefault();
+    if (!text.trim()) return;
+    edit(w, (dd) => { dd.assumptions.push({ id: uid(), text: text.trim(), status: "untested", note: "", test: "", riskiest: false }); });
+    setText("");
+  };
+  const upd = (id, fn) => edit(w, (dd) => { fn(dd.assumptions.find((a) => a.id === id), dd); });
+  return html`<div class="cols cols-ws stagger">
+    <section class="card" aria-labelledby="as-h">
+      <div><h2 class="sec" id="as-h">Assumptions</h2>
+        <p class="meta">${count("confirmed")} confirmed · ${count("wrong")} wrong · ${count("untested")} untested</p></div>
+      <form class="row" style="flex-wrap:nowrap" onSubmit=${add}><label class="sr" for="as-new">New assumption</label>
+        <input id="as-new" class="input" placeholder="Something you believe but haven't checked" value=${text} onInput=${(e) => setText(e.target.value)} />
+        <button class="btn primary">Add assumption</button></form>
+      <div>${d.assumptions.map((a) => {
+        const [label, cls] = STATUS[a.status];
+        const isRisk = risk && a.id === risk.id && a.status === "untested";
+        return html`<div class="asm">
+          <button type="button" class=${"tag " + cls} title="Change status" aria-label=${`Status ${label}. Change it`}
+            onClick=${() => upd(a.id, (x) => { x.status = NEXT_STATUS[x.status]; })}>${label}</button>
+          <div style="min-width:0">${a.status === "wrong" ? html`<s>${a.text}</s>` : html`<span>${a.text}</span>`}
+            <p class="meta">${a.status === "untested" ? (a.test ? `Test: ${a.test}` : "") : a.note}</p></div>
+          <div class="row" style="gap:6px">${isRisk && html`<span class="tag dark">Riskiest</span>`}
+            <button type="button" class="textbtn" style="min-height:32px" onClick=${() => setEditing(editing === a.id ? null : a.id)}>Edit</button></div>
+          ${editing === a.id && html`<div class="edit form">
+            <div><label class="lbl" for=${"at-" + a.id}>Assumption</label><input id=${"at-" + a.id} class="input" value=${a.text}
+              onInput=${(e) => upd(a.id, (x) => { x.text = e.target.value; })} /></div>
+            <div><label class="lbl" for=${"ap-" + a.id}>${a.status === "untested" ? "How you'll test it" : "What you learned"}</label>
+              <input id=${"ap-" + a.id} class="input" value=${a.status === "untested" ? a.test : a.note}
+                onInput=${(e) => upd(a.id, (x) => { if (x.status === "untested") x.test = e.target.value; else x.note = e.target.value; })} /></div>
+            <div class="row"><label class="row" style="gap:8px;min-height:44px"><input type="checkbox" class="check" checked=${a.riskiest}
+                onChange=${(e) => upd(a.id, (x, dd) => { dd.assumptions.forEach((y) => { y.riskiest = false; }); x.riskiest = e.target.checked; })} />Riskiest</label>
+              <button type="button" class="btn small" onClick=${() => setEditing(null)}>Done</button>
+              <button type="button" class="textbtn" onClick=${() => { edit(w, (dd) => { dd.assumptions = dd.assumptions.filter((x) => x.id !== a.id); }); setEditing(null); }}>Delete</button></div>
+          </div>`}
+        </div>`;
+      })}</div>
+    </section>
+    <div class="stack">
+      ${risk && html`<section class="card dark" aria-labelledby="rk-h"><p class="meta" style="color:#9DBEFF">Riskiest</p>
+        <h2 class="ctitle" id="rk-h" style="font-size:19px">${risk.text}</h2>
+        ${d.questions.includes(risk.text) ? html`<p class="muted">On the list for your next interview.</p>`
+          : html`<button type="button" class="btn accent wide" onClick=${() => edit(w, (dd) => { dd.questions.push(risk.text); })}>Add to next interview</button>`}
+      </section>`}
+      <${QuickNote} w=${w} />
+    </div>
+  </div>`;
+}
+
+// Brief
+
+function Brief({ w, d }) {
+  const [editing, setEditing] = useState(null);
+  const [val, setVal] = useState("");
+  const done = SECTIONS.filter(([k]) => (d.brief[k] || "").trim()).length;
+  const nInterviews = pastInterviews(d).length;
+  const start = (k) => { setEditing(k); setVal(d.brief[k] || ""); };
+  const save = (k) => {
+    edit(w, (dd) => {
+      dd.brief[k] = val.trim(); dd.briefBy[k] = true; dd.briefAt = new Date().toISOString();
+      dd.briefSrc[k] = nInterviews ? plural(nInterviews, "interview") : (dd.briefSrc[k] || "");
+    });
+    setEditing(null);
+  };
+  const asText = () => [w.problem.title, "", ...SECTIONS.flatMap(([k, l]) => [l, d.brief[k] || "[EMPTY]", ""])].join("\n");
+  return html`<div class="cols cols-ws stagger">
+    <article class="card doc" aria-labelledby="br-h">
+      <p class="meta">${d.briefAt ? `Updated ${dayLabel(d.briefAt)}` : "Draft from the evidence"}</p>
+      <h2 id="br-h">${w.problem.title}</h2>
+      ${SECTIONS.map(([k, label]) => {
+        const text = (d.brief[k] || "").trim();
+        if (editing === k) {
+          return html`<div class="docsec form"><label class="ctitle" for=${"bf-" + k}>${label}</label>
+            <textarea id=${"bf-" + k} class="input" style="min-height:140px" value=${val} onInput=${(e) => setVal(e.target.value)}></textarea>
+            <div class="row no-print"><button type="button" class="btn primary small" onClick=${() => save(k)}>Save</button>
+              <button type="button" class="btn small" onClick=${() => setEditing(null)}>Cancel</button></div></div>`;
+        }
+        if (!text) {
+          return html`<div class="docsec"><div class="empty"><h3 class="ctitle">${label}</h3><p class="muted" style="margin:4px 0 10px">Empty</p>
+            <button type="button" class="btn small no-print" onClick=${() => start(k)}>Write</button></div></div>`;
+        }
+        return html`<div class="docsec"><div class="between"><h3>${label}</h3><span class="meta">${d.briefSrc[k] || ""}
+            <button type="button" class="textbtn no-print" style="min-height:28px;margin-left:8px" onClick=${() => start(k)}>Edit</button></span></div>
+          <p>${text}</p></div>`;
+      })}
+    </article>
+    <div class="stack no-print">
+      <section class="card tight"><h2 class="ctitle">${done} of 5 sections done</h2>
+        <span class="segs wide" aria-hidden="true">${[0, 1, 2, 3, 4].map((k) => html`<i class=${k < done ? "on" : ""}></i>`)}</span>
+        <div class="row" style="flex-wrap:nowrap"><button type="button" class="btn" style="flex:1" onClick=${() => print()}>Export PDF</button>
+          <button type="button" class="btn primary" style="flex:1" onClick=${async () => say((await copy(asText())) ? "Brief copied as text." : "Couldn't copy.")}>Share</button></div>
+      </section>
+      <${QuickNote} w=${w} />
+    </div>
+  </div>`;
+}
+
+// Pilot
+
+const OFFER = [["price", "Price", "[YOUR PRICE]/mo"], ["weeks", "Length", "[LENGTH] weeks"], ["success", "Success means", "[WHAT CHANGES]"],
+               ["goal", "Goal", "[NUMBER] pilots"]];
+const CHECKLIST = ["Agreed on terms", "Measure the problem before you start", "Book kickoff call"];
+
+function offerText(d, w) {
+  const o = d.offer;
+  return `Pilot offer: ${w.problem.title}\n\nPrice: ${o.price ? `${o.price}/mo` : "[YOUR PRICE]/mo"}\nLength: ${o.weeks ? `${o.weeks} weeks` : "[LENGTH]"}`
+    + `\nSuccess means: ${o.success || "[WHAT CHANGES]"}`;
+}
+
+function Pilot({ w, d }) {
+  const [editing, setEditing] = useState(false);
+  const comm = d.contacts.filter((c) => c.status === "committed");
+  const goal = goalOf(d);
+  const left = Math.max(0, goal - comm.length);
+  const suggest = d.contacts.find((c) => c.status !== "committed" && c.replied) || d.contacts.find((c) => c.status !== "committed");
+  const updPilot = (cid, fn) => edit(w, (dd) => {
+    dd.pilots[cid] = dd.pilots[cid] || { status: "", checklist: CHECKLIST.map((t) => ({ text: t, done: false })) };
+    fn(dd.pilots[cid]);
+  });
+  const sendOffer = () => {
+    if (!suggest) { go(`workspace/${enc(w.problem_id)}/outreach`); return; }
+    edit(w, (dd) => {
+      const c = dd.contacts.find((x) => x.id === suggest.id);
+      c.subject = `A pilot for ${low(shortTitle(w.problem))}`;
+      c.body = `Hi ${c.name.split(" ")[0]},\n\nThanks for talking with me. I'm starting a small pilot and would like you in it.\n\n${offerText(dd, w)}\n\nWould you like to join?\n\nThanks`;
+    });
+    sessionStorage.setItem("signal_contact", suggest.id);
+    go(`workspace/${enc(w.problem_id)}/outreach`);
+  };
+  return html`<div class="stack stagger">
+    <section class="card" aria-labelledby="of-h">
+      <div class="between"><h2 class="sec" id="of-h">Offer</h2>
+        <div class="row"><button type="button" class="btn" onClick=${() => setEditing(!editing)}>${editing ? "Done" : "Edit"}</button>
+          <button type="button" class="btn" onClick=${async () => say((await copy(offerText(d, w))) ? "Offer copied." : "Couldn't copy.")}>Copy</button></div></div>
+      <div class="offer">${OFFER.map(([k, label, ph]) => html`<div class="stat"><div class="k">${label}</div>
+        ${editing ? html`<label class="sr" for=${"of-" + k}>${label}</label><input id=${"of-" + k} class="input" value=${d.offer[k]}
+            placeholder=${ph} onInput=${(e) => edit(w, (dd) => { dd.offer[k] = e.target.value; })} />`
+          : html`<div class=${k === "success" ? "why" : "v"} style=${k === "success" ? "font-size:15px;font-weight:500;color:var(--ink)" : ""}>
+            ${d.offer[k] ? (k === "price" ? `${d.offer[k]}/mo` : k === "weeks" ? `${d.offer[k]} weeks` : k === "goal" ? plural(goalOf(d), "pilot") : d.offer[k]) : ph}</div>`}
+      </div>`)}</div>
+    </section>
+    <div class="pilots">
+      ${comm.map((c) => {
+        const p = d.pilots[c.id] || { status: "", checklist: CHECKLIST.map((t) => ({ text: t, done: false })) };
+        return html`<section class="card tight" aria-label=${c.name}>
+          <div class="between" style="align-items:flex-start"><div><h3 class="ctitle">${c.name}</h3>
+            <p class="meta">${[c.role, c.org].filter(Boolean).join(" · ")}</p></div>
+            <span class=${"tag " + (p.status ? "info" : "accent")}>${p.status || "Committed"}</span></div>
+          <div><label class="lbl" for=${"ps-" + c.id}>Status</label>
+            <input id=${"ps-" + c.id} class="input" placeholder="e.g. Starts Jan 12, Letter of intent" value=${p.status}
+              onInput=${(e) => updPilot(c.id, (x) => { x.status = e.target.value; })} /></div>
+          <div>${p.checklist.map((it, k) => html`<label class="checkrow"><input type="checkbox" class="check" checked=${it.done}
+            onChange=${() => updPilot(c.id, (x) => { x.checklist[k].done = !x.checklist[k].done; })} />${it.text}</label>`)}</div>
+        </section>`;
+      })}
+      ${left > 0 && html`<section class="card dashed tight" aria-label="Open pilot slot" style="display:flex;flex-direction:column;justify-content:center">
+        <h3 class="ctitle">${plural(left, "more pilot")} needed</h3>
+        ${suggest && html`<p class="muted">Suggested: ${suggest.name}${suggest.org ? ` · ${suggest.org}` : ""}</p>`}
+        <div><button type="button" class="btn primary" onClick=${sendOffer}>${suggest ? "Send them the offer" : "Find people"}</button></div>
+      </section>`}
+    </div>
+  </div>`;
+}
+
+// --- Cofounders ---------------------------------------------------------------------------------
+
+const TINTS = [["#E8EDFF", "#16288A"], ["#FFE3CC", "#7A3300"], ["#E3F5D8", "#1F4A0E"], ["#F3E3FF", "#4B1675"], ["#E0F2F1", "#0D4A45"]];
+const tint = (s) => TINTS[[...(s || "")].reduce((a, ch) => a + ch.charCodeAt(0), 0) % TINTS.length];
+const COMMIT = { full_time: "Full-time", part_time: "Part-time", exploring: "Exploring" };
+const FILTERS = [["best", "Best matches"], ["space", "Same problem space"], ["tech", "Technical"], ["near", "Nearby"], ["full", "Full-time now"]];
+
+function Cofounders({ me }) {
+  const s = useStore();
+  const [editing, setEditing] = useState(false);
+  const [filter, setFilter] = useState("best");
+  const [err, setErr] = useState("");
+  useEffect(() => { loadCofounders().catch(() => setErr("Couldn't load cofounders.")); }, []);
+  const data = s.cofounders;
+  if (!data) return html`<div class="page"><h1 class="title">Cofounders</h1><p class=${err ? "error" : "center"}>${err || "Loading…"}</p></div>`;
+  const mine = data.me;
+  const list = data.matches.filter((m) => filter === "best" || (filter === "space" && m.shared_spaces.length)
+    || (filter === "tech" && m.technical) || (filter === "near" && m.nearby) || (filter === "full" && m.commitment === "full_time"));
+  const ask = async (m, on) => {
+    try {
+      if (on) await api("/cofounders/intro", { method: "POST", body: { user_id: store.userId, to: m.user_id } });
+      else await api(`/cofounders/intro?${qs({ user_id: store.userId, to: m.user_id })}`, { method: "DELETE" });
+      await loadCofounders();
+    } catch { say("Couldn't send that. Try again."); }
+  };
+  return html`<div class="page">
+    <div class="head"><h1 class="title">Cofounders</h1>
+      ${mine && html`<button type="button" class="btn" onClick=${() => setEditing(!editing)} aria-expanded=${editing}>Edit my profile</button>`}</div>
+    ${editing || !mine ? html`<${ProfileForm} mine=${mine} me=${me} onDone=${() => setEditing(false)} first=${!mine} />` : html`<section class="card dark strip" aria-label="My profile">
+      <div><p class="k">Skills</p><div class="chips">${mine.skills.map((x) => html`<span class="tag">${x}</span>`)}</div></div>
+      <div><p class="k">Looking for</p><div class="chips">${mine.looking_for.map((x) => html`<span class="tag accent">${x}</span>`)}</div></div>
+      <div><p class="k">Project</p><p>${[mine.project, COMMIT[mine.commitment] && low(COMMIT[mine.commitment])].filter(Boolean).join(" · ") || "Not set"}</p></div>
+    </section>`}
+    ${mine && html`<div class="chips" role="group" aria-label="Filter matches">${FILTERS.map(([k, l]) => html`<button type="button" class="chip"
+      aria-pressed=${filter === k} onClick=${() => setFilter(k)}>${l}</button>`)}</div>`}
+    ${mine && !list.length && html`<div class="card"><p class="muted">${data.matches.length ? "No matches with this filter." : "No other builders have a profile yet."}</p></div>`}
+    ${mine && list.length > 0 && html`<div class="cofo stagger">${list.map((m) => {
+      const [bg, fg] = tint(m.name);
+      const status = m.email ? html`<p class="meta" style="color:var(--info-fg)">You both asked. Write to <a href=${"mailto:" + m.email}>${m.email}</a></p>`
+        : m.asked_me ? html`<p class="meta" style="color:var(--info-fg)">Asked you for an intro</p>`
+        : m.asked ? html`<p class="meta">Intro requested. Their email shows here if they agree.</p>`
+        : m.shared_spaces.length ? html`<p class="meta">Also exploring: ${m.shared_spaces.join(", ")}</p>` : null;
+      return html`<article class="card tight">
+        <div class="row" style="flex-wrap:nowrap;align-items:flex-start">
+          <span class="big-avatar" style=${`background:${bg};color:${fg}`} aria-hidden="true">${initials(m.name)}</span>
+          <div style="flex:1;min-width:0"><h3 class="ctitle" style="font-size:17px">${m.name}</h3>
+            <p class="meta">${[m.role, m.location].filter(Boolean).join(" · ")}</p></div>
+          <span class=${"badge" + (m.match >= 80 ? " hi" : "")}>${m.match}%</span></div>
+        ${m.bio && html`<p>${m.bio}</p>`}
+        <div class="chips">${[...m.skills.slice(0, 3), COMMIT[m.commitment]].filter(Boolean).map((x) => html`<span class="tag soft">${x}</span>`)}</div>
+        ${m.project && html`<p class="meta">Project: ${m.project}</p>`}
+        ${status}
+        <div class="row" style="flex-wrap:nowrap">
+          ${m.email ? html`<a class="btn primary wide" href=${"mailto:" + m.email}>Message</a>`
+            : m.asked ? html`<button type="button" class="btn wide" onClick=${() => ask(m, false)}>Cancel request</button>`
+            : html`<button type="button" class="btn primary wide" onClick=${() => ask(m, true)}>${m.asked_me ? "Accept intro" : "Request intro"}</button>`}
+        </div>
+      </article>`;
+    })}</div>`}
+  </div>`;
+}
+
+function ProfileForm({ mine, me, onDone, first }) {
+  const [f, setF] = useState(() => ({
+    name: mine?.name || displayName(me), role: mine?.role || "", location: mine?.location || "", bio: mine?.bio || "",
+    skills: (mine?.skills || []).join(", "), looking_for: (mine?.looking_for || []).join(", "), project: mine?.project || "",
+    commitment: mine?.commitment || "", visible: mine ? mine.visible : true,
+  }));
+  const [busy, setBusy] = useState(false);
+  const set = (k) => (e) => setF({ ...f, [k]: e.target.type === "checkbox" ? e.target.checked : e.target.value });
+  const list = (s) => s.split(",").map((x) => x.trim()).filter(Boolean);
+  const submit = async (e) => {
+    e.preventDefault();
+    setBusy(true);
+    try {
+      await api("/cofounders/me", { method: "PUT", body: { user_id: store.userId, ...f, skills: list(f.skills).slice(0, 15),
+        looking_for: list(f.looking_for).slice(0, 10), commitment: f.commitment || null, role: f.role || null,
+        location: f.location || null, bio: f.bio || null, project: f.project || null } });
+      await loadCofounders();
+      onDone();
+    } catch { say("Couldn't save your profile."); }
+    setBusy(false);
+  };
+  const projects = (store.items || []).map((w) => shortTitle(w.problem));
+  return html`<form class="card form" onSubmit=${submit} style="max-width:820px">
+    ${first && html`<h2 class="sec">Your profile</h2>`}
+    <div class="form2"><div><label class="lbl" for="pf-n">Name</label><input id="pf-n" class="input" required maxlength="80" value=${f.name} onInput=${set("name")} /></div>
+      <div><label class="lbl" for="pf-r">Role</label><input id="pf-r" class="input" maxlength="120" placeholder="e.g. Full-stack engineer" value=${f.role} onInput=${set("role")} /></div></div>
+    <div class="form2"><div><label class="lbl" for="pf-l">Location</label><input id="pf-l" class="input" maxlength="120" placeholder="City, or Remote" value=${f.location} onInput=${set("location")} /></div>
+      <div><label class="lbl" for="pf-c">Commitment</label><select id="pf-c" class="input" value=${f.commitment} onChange=${set("commitment")}>
+        <option value="">Not set</option>${Object.entries(COMMIT).map(([k, l]) => html`<option value=${k}>${l}</option>`)}</select></div></div>
+    <div><label class="lbl" for="pf-s">Skills <span>(comma-separated)</span></label><input id="pf-s" class="input" value=${f.skills} onInput=${set("skills")} /></div>
+    <div><label class="lbl" for="pf-f">Looking for <span>(comma-separated)</span></label><input id="pf-f" class="input" value=${f.looking_for} onInput=${set("looking_for")} /></div>
+    <div><label class="lbl" for="pf-p">Project</label><input id="pf-p" class="input" maxlength="200" list="pf-projects" value=${f.project} onInput=${set("project")} />
+      <datalist id="pf-projects">${projects.map((p) => html`<option value=${p}></option>`)}</datalist></div>
+    <div><label class="lbl" for="pf-b">Bio <span>(one line)</span></label><input id="pf-b" class="input" maxlength="400" value=${f.bio} onInput=${set("bio")} /></div>
+    <label class="row" style="gap:8px;min-height:44px"><input type="checkbox" class="check" checked=${f.visible} onChange=${set("visible")} />
+      Show my profile to other builders</label>
+    <div class="row"><button class="btn primary" disabled=${busy}>Save</button>${!first && html`<button type="button" class="btn" onClick=${onDone}>Cancel</button>`}</div>
+  </form>`;
+}
+
+// --- Sign-in, terms, quiz -----------------------------------------------------------------------
 
 function SoloHead({ right }) {
-  return html`<header class="solo-head"><span class="logo" style="padding:0"><${Logo} /><span>Signal</span></span>
+  return html`<header class="solo-head"><span class="logo"><${Logo} /><span>Signal</span></span>
     ${right && html`<span class="num note">${right}</span>`}</header>`;
 }
 
@@ -281,18 +1177,17 @@ function SignIn() {
   };
   return html`<${SoloHead} /><main class="solo signin" style="padding-top:12vh">
     <div><h1>Real problems worth building</h1>
-      <p class="intro">Signal reads forums, job boards, tenders, reviews and new rules, and shows you the problems people
-        run into every week, matched to what you know.</p></div>
-    ${state === "sent" ? html`<div class="card" style="display:flex;flex-direction:column;gap:8px;align-items:flex-start">
-        <h2 style="font-size:17px;line-height:24px">Check your inbox</h2>
+      <p class="intro">Signal reads forums, job boards, tenders, reviews and new rules, and shows you problems people
+        would pay to have solved. Then it helps you reach your first customers.</p></div>
+    ${state === "sent" ? html`<div class="card"><h2 class="ctitle">Check your inbox</h2>
         <p>We sent a sign-in link to <b>${email}</b>. It works once, for 15 minutes.</p>
-        <button class="act" style="margin-left:-14px" onClick=${() => setState("idle")}>Use a different email</button></div>`
+        <button class="textbtn" onClick=${() => setState("idle")}>Use a different email</button></div>`
       : html`<form onSubmit=${submit} style="display:flex;flex-direction:column;gap:12px">
         <label for="email" class="sr">Email</label>
         <div class="field">
           <input id="email" class="input" type="email" required autocomplete="email" placeholder="you@example.com" value=${email}
                  onInput=${(e) => setEmail(e.target.value)} />
-          <button class="pill dark big" disabled=${state === "sending"}>${state === "sending" ? "Sending…" : "Email me a link"}</button>
+          <button class="pill dark" disabled=${state === "sending"}>${state === "sending" ? "Sending…" : "Email me a link"}</button>
         </div>
         ${state === "error" && html`<p class="error">${error}</p>`}
         <p class="note">No password. We use your email only to send sign-in links.
@@ -303,14 +1198,14 @@ function SignIn() {
 
 // Brave's Search API terms (4(c)) need every user bound by Signal's terms, so nothing else shows until they agree.
 function TermsStep({ me, onDone }) {
-  const [state, setState] = useState("idle");     // idle | saving | error
+  const [state, setState] = useState("idle");
   const agree = async () => {
     setState("saving");
     try {
       await api("/auth/terms", { method: "POST", body: { version: me.terms_version } });
       onDone();
     } catch (err) {
-      if (err.status === 409) location.reload();   // the terms changed while this page was open
+      if (err.status === 409) location.reload();
       setState("error");
     }
   };
@@ -320,579 +1215,92 @@ function TermsStep({ me, onDone }) {
         use: you can't store, republish or resell them, or use them to train or test AI models.</p></div>
     <p>Read the <a href="/terms" target="_blank" rel="noopener" style="text-decoration:underline;text-underline-offset:3px">Terms of Service</a>${" "}
       (version ${me.terms_version}). Selecting "I agree" means you accept them.</p>
-    <div><button class="pill dark big" disabled=${state === "saving"} onClick=${agree}>${state === "saving" ? "Saving…" : "I agree"}</button></div>
+    <div><button class="pill dark" disabled=${state === "saving"} onClick=${agree}>${state === "saving" ? "Saving…" : "I agree"}</button></div>
     ${state === "error" && html`<p class="error">Couldn't save that. Try again.</p>`}
   </main>`;
 }
 
-// --- Quiz ---------------------------------------------------------------------------------------
-
 function toggle(list, v) { return list.includes(v) ? list.filter((x) => x !== v) : [...list, v]; }
 
 const Tick = ({ on }) => html`<span class="tick" aria-hidden="true">${on && html`<svg width="11" height="11" viewBox="0 0 12 12"
-  fill="none" stroke="#141414" stroke-width="2.2"><path d="M2.5 6.2l2.3 2.3 4.7-4.8"/></svg>`}</span>`;
+  fill="none" stroke="#121417" stroke-width="2.2"><path d="M2.5 6.2l2.3 2.3 4.7-4.8"/></svg>`}</span>`;
 
 function Quiz({ onDone }) {
   const [opts, setOpts] = useState(null);
-  const [industries, setIndustries] = useState([]);   // "Legal" or "Legal > Litigation support"
+  const [industries, setIndustries] = useState([]);
   const [skills, setSkills] = useState([]);
-  const [worksIn, setWorksIn] = useState([]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   useEffect(() => { api("/onboarding/options").then(setOpts); }, []);
   if (!opts) return html`<${SoloHead} /><div class="center">Loading…</div>`;
-
-  const chosenRoots = [...new Set(industries.map((i) => i.split(" > ")[0]))];
-  const pickRoot = (name) => setIndustries((cur) => (cur.some((i) => i.split(" > ")[0] === name)
-    ? cur.filter((i) => i.split(" > ")[0] !== name) : [...cur, name]));
-  const pickBranch = (root, b) => setIndustries((cur) => {
-    const key = `${root} > ${b}`;
-    let next = toggle(cur, key);
-    const hasBranch = next.some((i) => i.startsWith(root + " > "));
-    next = next.filter((i) => i !== root);                         // a branch replaces the whole industry...
-    return hasBranch ? next : [...next, root];                     // ...and none left means the whole industry
-  });
   const submit = async () => {
     setBusy(true); setError("");
     try {
-      const r = await api("/onboarding", { method: "POST",
-        body: { industries: industries.slice(0, 20), skills: skills.slice(0, 20), works_in: worksIn.slice(0, 10) } });
+      const r = await api("/onboarding", { method: "POST", body: { industries: industries.slice(0, 20), skills: skills.slice(0, 20), works_in: [] } });
       onDone(r.user_id);
     } catch (e) { setError(e.message); setBusy(false); }
   };
-  const n = chosenRoots.length;
-
-  return html`<${SoloHead} right="Your first feed" /><main class="solo">
+  const n = industries.length;
+  return html`<${SoloHead} right="Getting started" /><main class="solo">
     <div><h1>Which industries do you know?</h1>
-      <p class="intro">Signal reads each industry's forums, job boards, reviews and new rules, and shows you the problems
-        people there run into every week. Pick the ones you understand, or want to.</p></div>
+      <p class="intro">Pick the ones you understand, or want to.</p></div>
     <section aria-label="Industries"><div class="tiles">${opts.industries.map((i) => {
-      const on = chosenRoots.includes(i.name);
-      return html`<button class="tile" type="button" aria-pressed=${on} onClick=${() => pickRoot(i.name)}>
+      const on = industries.includes(i.name);
+      return html`<button class="tile" type="button" aria-pressed=${on} onClick=${() => setIndustries(toggle(industries, i.name))}>
         <b>${i.name}</b><span class="sub">${i.branches.length ? plural(i.branches.length, "area") : "Whole industry"}</span>
         <${Tick} on=${on} /></button>`;
     })}</div></section>
-    ${chosenRoots.map((root) => {
-      const branches = opts.industries.find((i) => i.name === root)?.branches || [];
-      return branches.length ? html`<div class="branches"><div class="label" style="margin:0">${root}: any part in particular?</div>
-        <div class="chips">${branches.map((b) => html`<button class="chip" type="button" aria-pressed=${industries.includes(`${root} > ${b}`)}
-          onClick=${() => pickBranch(root, b)}>${b}</button>`)}</div></div>` : null;
-    })}
-    <div><div class="label">What can you build with?</div><p class="hint">Optional. Skills you'd use to solve a problem.</p>
+    <div><div class="label">What can you build with?</div><p class="hint">Optional.</p>
       <div class="chips">${opts.skills.map((s) => html`<button class="chip" type="button" title=${s.covers}
         aria-pressed=${skills.includes(s.name)} onClick=${() => setSkills(toggle(skills, s.name))}>${s.name}</button>`)}</div></div>
-    <div><div class="label">Do you work in any of these?</div>
-      <p class="hint">Optional. Now and then we'll ask whether a problem is real where you work.</p>
-      <div class="chips">${opts.industries.map((i) => html`<button class="chip" type="button" aria-pressed=${worksIn.includes(i.name)}
-        onClick=${() => setWorksIn(toggle(worksIn, i.name))}>${i.name}</button>`)}</div></div>
     ${error && html`<p class="error">${error}</p>`}
     <div class="go-row"><span class="num" aria-live="polite" style=${n ? "" : "color:var(--muted)"}>
       ${n ? `${n} ${n === 1 ? "industry" : "industries"} picked` : "Pick at least one industry"}</span>
-      <button class="pill dark big" type="button" disabled=${!n || busy} onClick=${submit}>
-        ${busy ? "Building your feed…" : "Show my feed"}</button></div>
+      <button class="pill dark" type="button" disabled=${!n || busy} onClick=${submit}>${busy ? "Saving…" : "Continue"}</button></div>
   </main>`;
-}
-
-// --- Feed ---------------------------------------------------------------------------------------
-
-const NOT_FOR_ME = [
-  ["not_my_skills", "Not my skills"], ["industry_not_interesting", "Not interested in this area"],
-  ["too_crowded", "Too crowded"], ["too_small", "Too small"], ["already_exists", "Already solved"],
-];
-
-// Dwell tracking: a card counts as read or scrolled past when it leaves the screen (the server decides).
-function useDwell(item, ref) {
-  useEffect(() => {
-    const el = ref.current;
-    if (!el || !("IntersectionObserver" in window)) return;
-    let start = null, total = 0, full = false, done = false;
-    const finish = () => {
-      if (done || (start === null && !total)) return;
-      if (start !== null) { total += Date.now() - start; start = null; }
-      done = true;
-      if (total < 1500) track("scroll_past", item, { dwell_ms: total, fully_visible: full });
-      else track("read", item, { dwell_ms: total });
-    };
-    const io = new IntersectionObserver(([e]) => {
-      if (e.intersectionRatio >= 0.99) full = true;
-      if (e.intersectionRatio >= 0.6 && start === null && !done) start = Date.now();
-      else if (e.intersectionRatio < 0.6 && start !== null) finish();
-    }, { threshold: [0, 0.6, 0.99] });
-    io.observe(el);
-    return () => { io.disconnect(); finish(); };
-  }, [item.impression_id]);
-}
-
-// Items opened from a card: the item page acts on the same card (hide, "was this useful") and sends the same event fields.
-const opened = new Map();
-const openItem = (it) => { location.hash = `item/${keyOf(it)}`; };
-
-function NotForMeMenu({ item, onHide }) {
-  const nfm = (reason) => { track("not_for_me", item, reason ? { reason } : {}); onHide(); };
-  return html`<div class="menu">
-    ${NOT_FOR_ME.map(([r, label]) => html`<button class="chip" type="button" onClick=${() => nfm(r)}>${label}</button>`)}
-    ${item.kind === "inferred" && html`<button class="chip" type="button" onClick=${() => nfm("not_true")}>Not true in my experience</button>`}
-    <button class="chip" type="button" onClick=${() => nfm(null)}>Just not for me</button>
-    ${item.kind !== "inferred" && html`<button class="chip" type="button" onClick=${() => { track("hide_source", item); onHide(); }}>
-      Hide ${sourceName(item.source)}</button>`}
-  </div>`;
-}
-
-function SaveButton({ item, onSave }) {
-  const saved = useSaved(item);
-  return html`<button class="act icon end" type="button" aria-pressed=${saved} aria-label=${saved ? "Saved" : "Save"}
-    onClick=${() => { markSaved(item); onSave?.(); }}><${Bookmark} on=${saved} /></button>`;
-}
-
-function Card({ item }) {
-  const ref = useRef();
-  useDwell(item, ref);
-  const [menu, setMenu] = useState(false);
-  const [hidden, setHidden] = useState(false);
-  const [answered, setAnswered] = useState(null);      // calibration answer
-  const [engaged, setEngaged] = useState(false);       // opened or saved: time to ask "Was this useful?"
-  const [useful, setUseful] = useState(null);
-  const inferred = item.kind === "inferred";
-  opened.set(keyOf(item), { item, setHidden, setEngaged });
-
-  if (hidden) return html`<div class="feed-card hidden-card">Hidden from your feed.</div>`;
-  const open = () => { if (item.calibration) return; track("expand", item); setEngaged(true); openItem(item); };
-  const similar = !inferred && item.similar_posts > 0 ? `${plural(item.similar_posts, "similar post")} in this problem` : "";
-
-  return html`<article class="feed-card" ref=${ref}>
-    <div class="card-head"><${Glyph} signals=${item.signals} />
-      <div class="lines"><span class="where">${whoLine(item)}</span><span class="sub">${findingLine(item)}</span></div>
-      <span class="time num">${shortAgo(item.published_at)}</span></div>
-    <div class="card-body">
-      <h2 class="card-title">${item.calibration ? item.headline : html`<a href=${"#item/" + keyOf(item)}
-        onClick=${(e) => { e.preventDefault(); open(); }}>${item.headline}</a>`}</h2>
-      ${item.summary && item.summary !== item.headline && html`<p class="summary">${item.summary}</p>`}
-    </div>
-    ${inferred ? html`<${Evidence} items=${item.evidence} compact />` : item.signals && html`<${Strip} signals=${item.signals} />`}
-
-    ${item.calibration ? html`<div class="counts" style="box-shadow:none;padding-bottom:12px">
-        ${answered ? html`<span>Thanks.</span>` : html`<span style="display:flex;gap:8px">
-          <button class="pill dark small" type="button" onClick=${() => { track("interested", item); setAnswered("yes"); }}>Interested</button>
-          <button class="pill small" type="button" onClick=${() => { track("not_for_me", item); setAnswered("no"); }}>Not for me</button></span>`}
-      </div>`
-    : html`<div class="counts"><span>${similar || (inferred ? "" : "One post so far")}</span>
-        <a href=${"#item/" + keyOf(item)} onClick=${(e) => { e.preventDefault(); open(); }} style="color:var(--muted)">Details</a></div>
-      <div class="actions">
-        <button class="act" type="button" onClick=${open}><${OpenIcon} /><span class="act-label">Read more</span></button>
-        <button class="act" type="button" aria-expanded=${menu} onClick=${() => setMenu(!menu)}>
-          <${NotIcon} /><span class="act-label">Not for me</span></button>
-        <${SaveButton} item=${item} onSave=${() => setEngaged(true)} />
-      </div>
-      ${menu && html`<${NotForMeMenu} item=${item} onHide=${() => setHidden(true)} />`}`}
-
-    ${item.ask_useful && engaged && html`<div class="well">
-      ${useful ? html`<span>Thanks, that helps.</span>` : html`
-        <span>Was this useful?</span>
-        <button class="pill small" type="button" onClick=${() => { track("useful_yes", item); setUseful("yes"); }}>Yes</button>
-        <button class="pill small" type="button" onClick=${() => { track("useful_no", item); setUseful("no"); }}>No</button>`}
-    </div>`}
-  </article>`;
-}
-
-function InsiderPrompt({ userId }) {
-  const [p, setP] = useState(null);
-  const [note, setNote] = useState("");
-  const [done, setDone] = useState(false);
-  useEffect(() => { api(`/inferred/prompt?${qs({ user_id: userId })}`).then((r) => setP(r.prompt)).catch(() => {}); }, []);
-  if (!p) return null;
-  if (done) return html`<div class="feed-card hidden-card">Thanks. Insiders like you keep these honest.</div>`;
-  const vote = async (v) => {
-    await api(`/inferred/${p.inferred_id}/vote`, { method: "POST",
-      body: { user_id: userId, vote: v, note: note.trim() || null } }).catch(() => {});
-    setDone(true);
-  };
-  const label = { yes: "Yes", partly: "Partly", no: "No" };
-  return html`<section class="card" style="display:flex;flex-direction:column;gap:10px" aria-label="A question for you">
-    <span class="sub">${p.question}</span>
-    <h2 class="card-title">${p.hypothesis}</h2>
-    <${Evidence} items=${p.evidence} />
-    <label class="sr" for="insider-note">Anything to add?</label>
-    <textarea id="insider-note" class="input" placeholder="Anything to add? (optional)" maxlength="300" value=${note}
-              onInput=${(e) => setNote(e.target.value)}></textarea>
-    <div style="display:flex;gap:8px">${p.answers.map((a, i) => html`<button class=${"pill" + (i === 0 ? " dark" : "")} type="button"
-      onClick=${() => vote(a)}>${label[a] || a}</button>`)}</div>
-  </section>`;
-}
-
-function Feed({ userId }) {
-  const [items, setItems] = useState([]);
-  const [page, setPage] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const sentinel = useRef();
-
-  const load = useCallback(async (explore = false) => {
-    setLoading(true); setError("");
-    try {
-      const p = await api(`/feed?${qs({ user_id: userId, session_id: sessionId(), explore: explore || undefined })}`);
-      setItems((cur) => [...cur, ...p.items]);
-      setPage(p);
-    } catch (e) { setError("Couldn't load the feed. Try again."); }
-    setLoading(false);
-  }, [userId]);
-
-  useEffect(() => { load(); }, [load]);
-  useEffect(() => {      // load the next page near the end, unless this page is calibration or the end
-    const el = sentinel.current;
-    if (!el || !page || page.calibration || page.caught_up || !page.items.length) return;
-    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting && !loading) load(); }, { rootMargin: "600px" });
-    io.observe(el);
-    return () => io.disconnect();
-  }, [page, loading]);
-
-  const main = html`<h1 class="sr">Home feed</h1>
-    <${InsiderPrompt} userId=${userId} />
-    ${page?.calibration && html`<p class="note" style="margin:4px 4px 0">To start, tell us which of these interest you.</p>`}
-    ${items.map((it) => html`<${Card} key=${it.impression_id} item=${it} />`)}
-    ${error && html`<div class="center"><p class="error">${error}</p><button class="pill" onClick=${() => load()}>Retry</button></div>`}
-    ${loading && html`<div class="center">Loading…</div>`}
-    ${!loading && page && (page.calibration ? html`<div class="center">
-        <button class="pill dark big" onClick=${() => load()}>Continue to my feed</button></div>`
-      : page.caught_up || !page.items.length ? html`<div class="end-line">
-        <span>You're caught up. That's the strongest for you right now.</span>
-        <button class="pill small outline" onClick=${() => load(true)}>Explore more</button></div>` : null)}
-    <div ref=${sentinel}></div>`;
-  return { main };
-}
-
-// --- Item (problem) page ------------------------------------------------------------------------
-
-const STYLE_TABS = [["overview", "Overview"], ["plain", "In plain words"], ["technical", "Technical"]];
-
-function Explanations({ data, userId }) {
-  const [style, setStyle] = useState("overview");
-  const [texts, setTexts] = useState(data.explanations || {});
-  const [state, setState] = useState({});         // style -> "loading" | error message
-  const want = async (s) => {
-    setStyle(s);
-    if (texts[s] || state[s] === "loading" || !data.can_explain) return;
-    setState((x) => ({ ...x, [s]: "loading" }));
-    try {
-      const r = await api(`/item/${data.item_type}/${encodeURIComponent(data.item_id)}/explain`,
-                          { method: "POST", body: { user_id: userId, style: s } });
-      setTexts((x) => ({ ...x, [s]: r.text }));
-      setState((x) => ({ ...x, [s]: null }));
-    } catch (e) {
-      setState((x) => ({ ...x, [s]: e.status === 429 ? "You've read a lot today. More explanations tomorrow."
-        : "Couldn't write this one right now." }));
-    }
-  };
-  useEffect(() => { want("overview"); }, [data.item_id]);
-  const text = texts[style];
-  return html`<section class="card explain" aria-labelledby="exp">
-    <div class="card-h"><h2 id="exp">What's going on</h2></div>
-    <div class="seg" role="tablist" aria-label="Explanation style">${STYLE_TABS.map(([s, label]) => html`<button role="tab"
-      type="button" class="seg-btn" aria-selected=${style === s} onClick=${() => want(s)}>${label}</button>`)}</div>
-    <div class="explain-text" aria-live="polite">${text ? text.split(/\n\s*\n/).map((para) => html`<p>${para}</p>`)
-      : state[style] === "loading" ? html`<p class="note">Writing an explanation…</p>`
-      : state[style] ? html`<p class="note">${state[style]}</p>`
-      : !data.can_explain ? html`<p class="note">Explanations aren't available on this server.</p>` : null}</div>
-  </section>`;
-}
-
-const SIGNAL_DESC = {
-  pain: "Posts where people describe the problem in their own words",
-  paid_demand: "Gigs, jobs and tenders paying someone to deal with it",
-  tool_gap: "Complaints about the tools they use for it now",
-  change: "Rules and news that change how it has to be done",
-};
-
-function SignalCard({ p }) {
-  return html`<section class="card" aria-labelledby="sig">
-    <div class="card-h"><h2 id="sig">The signal</h2><span class="sub">${plural(p.total, "post")} in this problem</span></div>
-    ${SIGNALS.map(([k, label]) => {
-      const n = k === "size" ? 0 : p.signals[k];
-      return html`<div class="sig-row">
-        <span class="l">${k === "paid_demand" ? "Paid demand" : label}</span>
-        <span class=${"v num" + (n ? "" : " none")}>${k === "size" ? "Not measured yet" : n || "None yet"}</span>
-        <span class="d">${k === "size" ? "How many people or businesses have it. Signal doesn't estimate this yet." : SIGNAL_DESC[k]}</span>
-        ${n > 0 && html`<span class="track" aria-hidden="true"><span style=${`width:${(n / p.total * 100).toFixed(1)}%`}></span></span>`}
-      </div>`;
-    })}
-  </section>`;
-}
-
-function weekLabel(i) {
-  if (i === 7) return "This week";
-  const d = new Date(Date.now() - (7 - i) * 7 * 86400000 - 6 * 86400000);
-  return d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
-}
-
-function MentionsCard({ p }) {
-  const w = p.weekly;
-  const max = Math.max(...w);
-  const top = max <= 4 ? Math.max(max, 1) : Math.ceil(max / 4) * 4;
-  const ticks = [...new Set([0, Math.round(top / 2), top])];
-  const delta = w[7] - w[6];
-  const deltaText = delta === 0 ? "same as last week" : `${delta > 0 ? "+" : ""}${delta} on last week`;
-  const bySource = new Map();                       // two raw sources can share a display name
-  p.sources.forEach((x) => bySource.set(sourceName(x.source), (bySource.get(sourceName(x.source)) || 0) + x.count));
-  const sources = [...bySource].map(([name, count]) => ({ name, count })).sort((a, b) => b.count - a.count);
-  const sTop = sources[0]?.count || 1;
-  return html`<section class="card" aria-labelledby="wk">
-    <div class="card-h"><h2 id="wk">Mentions each week</h2>
-      <span class="sub">${max ? `${plural(w[7], "post")} this week, ${deltaText}` : "None in the last 8 weeks"}</span></div>
-    ${max > 0 && html`<div class="chart" role="img" aria-label=${`Posts per week for the last 8 weeks: ${w.join(", ")}`}>
-      <div class="plot">
-        ${ticks.map((t) => html`<span class=${"grid-line" + (t === 0 ? " base" : "")} style=${`bottom:${t / top * 140}px`}></span>
-          <span class="tick num" style=${`bottom:${Math.max(0, t / top * 140 - 7)}px`}>${t}</span>`)}
-        <div class="bars">${w.map((v, i) => html`<div title=${`${weekLabel(i)}: ${plural(v, "post")}`}>
-          <span class=${i === 7 ? "now" : ""} style=${`height:${v / top * 140}px`}></span></div>`)}</div>
-      </div>
-      <div class="xlabels">${w.map((_, i) => html`<span>${i % 2 === 1 || i === 7 ? weekLabel(i) : ""}</span>`)}</div>
-    </div>`}
-    <h3 style="margin:24px 0 6px;font-size:15px;line-height:22px;font-weight:600">Where the posts come from</h3>
-    ${sources.map((s, i) => html`<div class=${"src-row" + (i === 0 ? " top" : "")}><span class="n">${s.name}</span>
-      <span class="b" aria-hidden="true" style=${`width:${(s.count / sTop * 100).toFixed(1)}%`}></span>
-      <span class="c num">${s.count}</span></div>`)}
-    ${p.sources_more > 0 && html`<p class="sub" style="margin-top:6px">and ${plural(p.sources_more, "more source")}</p>`}
-  </section>`;
-}
-
-function PostsCard({ p }) {
-  if (!p.posts.length) return null;
-  return html`<section class="card" aria-labelledby="ev">
-    <div class="card-h"><h2 id="ev">Other posts about it</h2>
-      <span class="sub">${p.posts_more > 0 ? `Latest ${p.posts.length} of ${p.posts.length + p.posts_more}` : ""}</span></div>
-    ${p.posts.map((e) => html`<div class="post-row">
-      <div class="top"><span><span class="platform">${sourceName(e.source)}</span>
-        <span class="status">${TYPE_LABEL[e.post_type] || "Post"}</span>${money(e.money) && html`<span class="status num">${money(e.money)}</span>`}</span>
-        <span class="sub num">${shortAgo(e.published_at)}</span></div>
-      <a class="h" href=${"#item/" + keyOf(e)}>${e.headline}</a>
-    </div>`)}
-    ${p.posts_alike > 0 && html`<p class="sub" style="margin-top:12px">${plural(p.posts_alike, "more post")} saying nearly the same
-      thing (often one tender republished by several buyers)</p>`}
-  </section>`;
-}
-
-// Search results fetched when the page opens (signal_feed/live.py): shown as the provider gave them, linked
-// to the original, never saved by Signal or tracked by URL (Brave terms 3(b); /terms section 5).
-function LiveCard({ type, id, userId }) {
-  const [live, setLive] = useState(null);
-  useEffect(() => {
-    let on = true;
-    setLive(null);
-    api(`/item/${type}/${encodeURIComponent(id)}/live?${qs({ user_id: userId })}`)
-      .then((r) => on && setLive(r.sections || [])).catch(() => on && setLive([]));
-    return () => { on = false; };
-  }, [type, id]);
-  if (live && !live.length) return null;
-  return html`<section class="card" aria-labelledby="live" aria-busy=${!live}>
-    <div class="card-h"><h2 id="live">Elsewhere right now</h2>
-      <span class="sub">${live ? "Live search results, not saved by Signal" : "Searching…"}</span></div>
-    ${(live || []).map((s) => html`<div class="live-sec">
-      <h3 class="live-l">${s.label}</h3>
-      ${s.items.map((i) => html`<a class="live-row" href=${safeUrl(i.url)} target="_blank" rel="noopener noreferrer">
-        ${i.thumbnail && html`<img src=${i.thumbnail} alt="" width="96" height="54" loading="lazy" />`}
-        <span class="grow"><span class="t">${i.title}</span>
-          ${i.snippet && html`<span class="s">${i.snippet}</span>`}
-          <span class="sub">${[i.channel, i.age && (/^\d{4}-/.test(i.age) ? ago(i.age) : i.age)].filter(Boolean).join(", ")}</span></span>
-      </a>`)}
-    </div>`)}
-  </section>`;
-}
-
-function postedBy(d) {
-  const who = roleText(d.author_role) ? `a ${roleText(d.author_role)}` : null;
-  const where = d.community ? `in ${d.community}` : null;
-  return [who && `Posted by ${who}`, where && (who ? where : `Posted ${where}`)].filter(Boolean).join(" ")
-    || `Posted on ${sourceName(d.source)}`;
-}
-
-function ItemPage({ type, id, userId, me }) {
-  const key = `${type}/${id}`;
-  const from = opened.get(key);
-  const base = from?.item || { item_type: type, item_id: id };
-  const [d, setD] = useState(null);
-  const [menu, setMenu] = useState(false);
-  const [hidden, setHidden] = useState(false);
-  const pane = useRef();
-  useEffect(() => {
-    if (pane.current) pane.current.scrollTop = 0;
-    document.documentElement.classList.add("pane-open");
-    return () => document.documentElement.classList.remove("pane-open");
-  }, [key]);
-  useEffect(() => {
-    api(`/item/${type}/${encodeURIComponent(id)}?${qs({ user_id: userId })}`).then(setD).catch(() => setD({ error: true }));
-  }, [key]);
-  const back = () => (from ? history.back() : (location.hash = "feed"));
-  const saved = useSaved(base);
-  const url = d && safeUrl(d.url);
-  const eng = d?.engagement || {};
-  const votes = eng.upvotes || eng.score || eng.likes || eng.reactions;
-  const stats = [eng.comments && plural(eng.comments, "comment"), votes && plural(votes, "upvote")].filter(Boolean);
-  const p = d?.problem;
-  const signals = p?.signals || null;
-  const inferred = d?.kind === "inferred";
-
-  let main;
-  if (!d) main = html`<div class="center">Loading…</div>`;
-  else if (d.error) main = html`<div class="center">This item is no longer available.</div>`;
-  else {
-    const { industry, rest } = industryOf(d);
-    const who = roleText(d.author_role) ? roleText(d.author_role) : inferred && d.who ? [].concat(d.who).join(", ") : rest;
-    const first = p?.first_seen && new Date(p.first_seen).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
-    main = html`
-      <article class="card">
-        <div class="head-row"><${Glyph} signals=${signals} size=${56} />
-          <div class="lines"><span class="where"><b>${industry}</b>${who && html`<span>, ${who}</span>`}</span>
-            <span class="sub">${inferred ? `Inferred by Signal from ${plural(d.evidence.length, "piece")} of evidence${d.confidence ? `, ${d.confidence} confidence` : ""}`
-              : `${p && p.total > 1 ? `First seen ${first}, ${plural(p.sources.length + p.sources_more, "source")}, ` : ""}${strength(signals).toLowerCase()}`}</span></div></div>
-        <h1 class="page-title">${d.headline}</h1>
-        ${!inferred && html`<p class="sub">${postedBy(d)}, ${new Date(d.published_at).toLocaleDateString(undefined,
-            { month: "long", day: "numeric", year: "numeric" })} (${ago(d.published_at)})${stats.length ? ". " + stats.join(", ") : ""}</p>`}
-        ${!inferred && d.title && d.title !== d.headline && html`<p class="sub" style="margin-top:4px">Original title: ${d.title}</p>`}
-        ${hidden ? html`<p class="note" style="margin-top:16px">Hidden from your feed.</p>` : html`<div class="head-actions">
-          <button class="pill" type="button" aria-pressed=${saved} onClick=${() => { markSaved(base); from?.setEngaged(true); }}>
-            <${Bookmark} on=${saved} />${saved ? "Saved" : "Save"}</button>
-          <button class="pill" type="button" aria-expanded=${menu} onClick=${() => setMenu(!menu)}>Not for me</button>
-          ${url && html`<a class="pill dark" style="margin-left:auto" href=${url} target="_blank" rel="noopener noreferrer"
-            onClick=${() => track("open_source", base)}>Open original <${OutIcon} /></a>`}
-        </div>
-        ${menu && html`<div style="margin:12px -16px -16px"><${NotForMeMenu} item=${{ ...base, kind: d.kind, source: d.source }}
-          onHide=${() => { setHidden(true); setMenu(false); from?.setHidden(true); }} /></div>`}`}
-      </article>
-      <${Explanations} data=${d} userId=${userId} />
-      ${inferred && html`<section class="card" aria-labelledby="evi"><div class="card-h"><h2 id="evi">Evidence</h2>
-          <span class="sub num">${plural(d.evidence.length, "piece")}</span></div><${Evidence} items=${d.evidence} /></section>
-        ${d.counter_evidence?.length > 0 && html`<section class="card" aria-labelledby="cev"><div class="card-h">
-          <h2 id="cev">What could argue against it</h2></div><${Evidence} items=${d.counter_evidence} /></section>`}`}
-      ${p && html`<${SignalCard} p=${p} /><${MentionsCard} p=${p} /><${PostsCard} p=${p} />`}
-      <${LiveCard} type=${type} id=${id} userId=${userId} />`;
-  }
-
-  return html`<div class="item-page" ref=${pane} role="dialog" aria-modal="true" aria-label="Problem">
-    <div class="wrap"><${Rail} me=${me} tab="feed" />
-      <main class="main"><button class="act back" type="button" onClick=${back}><${BackIcon} />Back</button>${main}</main>
-    </div></div>`;
-}
-
-// --- Saved, clips, areas ------------------------------------------------------------------------
-
-function Saved({ userId }) {
-  const [items, setItems] = useState(null);
-  useEffect(() => { api(`/saved?${qs({ user_id: userId })}`).then((r) => setItems(r.items)); }, []);
-  const main = html`<h1 class="page-h1">Saved</h1>
-    ${!items ? html`<div class="center">Loading…</div>` : !items.length ? html`<div class="empty">
-        <h2>Keep the problems worth a second look</h2>
-        <p>Tap the bookmark on any problem and it stays here, with its evidence, until you're ready to work on it.</p>
-        <a class="pill small" href="#feed" style="margin-top:8px">Back to your feed</a></div>`
-      : html`<div class="list-card">${items.map((it) => html`<div class="lrow"><${Glyph} signals=${it.signals} size=${36} />
-        <div class="grow"><a href=${"#item/" + keyOf(it)}>${it.headline || it.title || it.summary}</a>
-          <span class="sub">${it.niche_path[0] || ""}${it.kind === "inferred" ? ", inferred" : `, ${sourceName(it.source)}`}. Saved ${ago(it.saved_at)}</span>
-        </div></div>`)}</div>`}`;
-  return { main };
-}
-
-function Clips({ userId }) {
-  const [clips, setClips] = useState(null);
-  const [error, setError] = useState(false);
-  const load = () => api(`/clips?${qs({ user_id: userId })}`).then(setClips).catch(() => setError(true));
-  useEffect(() => { load(); }, []);
-  const remove = async (id) => {
-    await api(`/clips/${encodeURIComponent(id)}?${qs({ user_id: userId })}`, { method: "DELETE" }).catch(() => {});
-    load();
-  };
-  const main = html`<h1 class="page-h1">Clips</h1>
-    ${error ? html`<div class="empty"><p>Clips aren't available on this server.</p></div>`
-      : !clips ? html`<div class="center">Loading…</div>`
-      : !clips.length ? html`<div class="empty"><h2>Nothing clipped yet</h2>
-          <p>Select text on any page and use the Clip to Signal button. The link, the text you picked and your note land here.</p></div>`
-      : html`<div class="list-card">${clips.map((c) => html`<div class="lrow" style="align-items:flex-start"><div class="grow">
-        <a href=${safeUrl(c.url)} target="_blank" rel="noopener noreferrer">${c.title || c.url}</a>
-        ${c.text && html`<blockquote class="clip">${c.text.slice(0, 400)}</blockquote>`}
-        ${c.note && html`<span class="sub" style="color:var(--ink-2)">Your note: ${c.note}</span>`}
-        <span class="sub">${c.site}, ${ago(c.created_at)}</span></div>
-        <button class="act" type="button" onClick=${() => remove(c.id)}>Delete</button></div>`)}</div>`}`;
-  return { main };
-}
-
-function Areas({ userId }) {
-  const [map, setMap] = useState(null);
-  const [confirmReset, setConfirmReset] = useState(false);
-  const load = () => api(`/map?${qs({ user_id: userId })}`).then(setMap);
-  useEffect(() => { load(); }, []);
-  const act = async (path, body) => { await api(path, { method: "POST", body: { user_id: userId, ...body } }).catch(() => {}); load(); };
-  const groups = [["core", "Closest to you"], ["regular", "Also yours"], ["exploring", "Exploring"]];
-  const nodes = map ? [...map.nodes].sort((a, b) => b.affinity - a.affinity) : [];
-  const main = html`<h1 class="page-h1">Your areas</h1>
-    <p class="note" style="margin:0 4px 8px">Your feed comes from these. Ask for more or less of any of them.</p>
-    ${!map ? html`<div class="center">Loading…</div>` : groups.map(([ring, title]) => {
-      const here = nodes.filter((n) => n.ring === ring);
-      return here.length ? html`<section class="card" style="padding:16px 20px 4px"><div class="card-h"><h2>${title}</h2>
-          <span class="sub num">${here.length}</span></div>
-        ${here.map((n) => html`<div class=${"lrow" + (n.status === "context" ? " context" : "")}><div class="grow">
-          <span>${n.label}</span><span class="sub">${n.path.slice(0, -1).join(", ")}</span></div>
-          <span class="btns"><button class="act" type="button" aria-label=${`More ${n.label}`}
-              onClick=${() => act("/map/nudge", { node_id: n.node_id, direction: "more" })}>More</button>
-            <button class="act" type="button" aria-label=${`Less ${n.label}`}
-              onClick=${() => act("/map/nudge", { node_id: n.node_id, direction: "less" })}>Less</button>
-            <button class="act" type="button" aria-label=${`Remove ${n.label}`}
-              onClick=${() => act("/map/remove", { node_id: n.node_id })}>Remove</button></span>
-        </div>`)}</section>` : null;
-    })}
-    ${map && !nodes.length && html`<div class="empty"><p>Your areas appear here as you use the feed.</p></div>`}
-    ${map && html`<div class="end-line">${confirmReset ? html`<span>This forgets what the feed has learned about you. Sure?</span>
-        <button class="pill small dark" onClick=${() => { setConfirmReset(false); act("/map/reset", {}); }}>Yes, start over</button>
-        <button class="pill small" onClick=${() => setConfirmReset(false)}>Cancel</button>`
-      : html`<button class="act" style="margin-left:-14px" onClick=${() => setConfirmReset(true)}>Start over from my quiz answers</button>`}</div>`}`;
-  return { main };
 }
 
 // --- App ----------------------------------------------------------------------------------------
 
-// Views return { main } for the shell to place next to the rail; they're called as hooks-using functions
-// inside a component keyed by tab, so each tab keeps its own state while it's open.
-function View({ view, userId, me, tab }) {
-  const { main } = view({ userId });
-  return html`<div class="wrap"><${Rail} me=${me} tab=${tab} /><main class="main">${main}</main></div>`;
+function Shell({ me }) {
+  const [hash, setHash] = useState(location.hash);
+  useEffect(() => {
+    const on = () => setHash(location.hash);
+    addEventListener("hashchange", on);
+    return () => removeEventListener("hashchange", on);
+  }, []);
+  useEffect(() => { loadWorkspaces(); }, []);
+  const route = useMemo(() => parseRoute(hash), [hash]);
+  const key = route.name === "workspace" ? "workspace" : `${route.name}/${route.id || ""}`;
+  const [shown, leaving] = useLeaving(key, route);
+  // Within the workspace (tab or problem switch) the page stays; Workspace animates its own content.
+  const live = shown.name === "workspace" && route.name === "workspace" ? route : shown;
+  const shownKey = live.name === "workspace" ? "ws" : `${live.name}/${live.id || ""}`;
+  const active = { problem: "problems" }[live.name] || live.name;
+  let page;
+  if (live.name === "problems") page = html`<${Problems} />`;
+  else if (live.name === "problem") page = html`<${ProblemPage} id=${live.id} key=${live.id} />`;
+  else if (live.name === "workspace") page = html`<${Workspace} id=${live.id} tab=${live.tab} me=${me} />`;
+  else if (live.name === "cofounders") page = html`<${Cofounders} me=${me} />`;
+  else page = html`<${Home} me=${me} />`;
+  return html`<div class="wrap"><${Sidebar} me=${me} active=${active} />
+    <main class=${"main" + (leaving ? " leaving" : "")} key=${shownKey}>${page}</main></div><${Toast} />`;
 }
 
 function App() {
   const [me, setMe] = useState(undefined);       // undefined: loading; null: signed out
-  const [hash, setHash] = useState(() => location.hash.slice(1));
-  const [tab, setTab] = useState(() => (location.hash.slice(1).startsWith("item/") ? "feed" : location.hash.slice(1) || "feed"));
   useEffect(() => {
     api("/auth/me").then(setMe).catch((err) => setMe(err.status === 403 ? "suspended" : null));
   }, []);
-  useEffect(() => {
-    const on = () => {
-      const h = location.hash.slice(1);
-      setHash(h);
-      if (!h.startsWith("item/")) setTab(h || "feed");     // the item page opens over the tab, which keeps its place
-    };
-    addEventListener("hashchange", on);
-    return () => removeEventListener("hashchange", on);
-  }, []);
-  useEffect(() => {                                  // what's already saved, so every bookmark shows it
-    if (!me?.user_id || !me.terms_ok) return;
-    api(`/saved?${qs({ user_id: me.user_id })}`).then((r) => {
-      r.items.forEach((it) => savedStore.keys.add(keyOf(it)));
-      savedStore.subs.forEach((f) => f());
-    }).catch(() => {});
-  }, [me?.user_id, me?.terms_ok]);
-  const itemRoute = hash.startsWith("item/") ? hash.split("/") : null;   // ["item", type, id]
-  events.userId = (me?.terms_ok && me.user_id) || null;
-
   if (me === undefined) return html`<div class="center">Loading…</div>`;
   if (me === null) return html`<${SignIn} />`;
   if (me === "suspended") return html`<${SoloHead} /><main class="solo signin" style="padding-top:12vh">
     <h1>Account suspended</h1><p class="intro">This account can't use Signal right now. Write to us if you think
     this is a mistake.</p></main>`;
   if (!me.terms_ok) return html`<${TermsStep} me=${me} onDone=${() => setMe({ ...me, terms_ok: true })} />`;
-  if (!me.user_id) return html`<${Quiz} onDone=${(uid) => setMe({ ...me, user_id: uid })} />`;
-
-  const views = { feed: Feed, saved: Saved, clips: Clips, areas: Areas };
-  const current = views[tab] ? tab : "feed";
-  return html`
-    <${View} key=${current} view=${views[current]} userId=${me.user_id} me=${me} tab=${current} />
-    ${itemRoute && itemRoute.length >= 3 && html`<${ItemPage} key=${hash} type=${itemRoute[1]}
-      id=${decodeURIComponent(itemRoute.slice(2).join("/"))} userId=${me.user_id} me=${me} />`}`;
+  if (!me.user_id) return html`<${Quiz} onDone=${(id) => setMe({ ...me, user_id: id })} />`;
+  store.userId = me.user_id;
+  return html`<${Shell} me=${me} />`;
 }
 
 render(html`<${App} />`, document.getElementById("app"));

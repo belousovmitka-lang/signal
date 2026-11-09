@@ -33,7 +33,7 @@ def industry_of(label: str) -> str:
 
 def coverage(store: FeedStore, industry_names: Sequence[str]) -> dict[str, int]:
     """Job clusters per industry name: clusters with at least one core post in that industry."""
-    names = {industry_of(n) for n in industry_names}
+    names = list(dict.fromkeys(industry_of(n) for n in industry_names))     # in the order given
     with store.session() as s:
         rows = s.execute(select(JobClusterPostRow.cluster_id, EnrichedPostRow.industry_path).join(
             EnrichedPostRow, EnrichedPostRow.post_id == JobClusterPostRow.post_id).where(
