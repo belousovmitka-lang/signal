@@ -133,3 +133,50 @@ def test_the_score_is_the_weighted_tiles_and_an_assessment_replaces_the_tag_rati
     w = c.post(f"/workspaces/{posts[1].id}", json={"user_id": user_id}).json()
     assert c.post(f"/workspaces/{posts[1].id}/panel", json={"user_id": user_id}).status_code == 503   # no model here
     assert w["problem"]["validation"] == [{"method": "presell", "plan": "ask for LOIs"}]
+
+
+def test_a_hosted_landing_page_counts_visits_and_collects_sign_ups(feed_store, feed_config, tmp_path, user_id):
+    url, posts = bank(feed_store, tmp_path)
+    c = TestClient(create_app(feed_store, PostsReader(url), feed_config))
+    pid = posts[1].id
+    page = {"user_id": user_id, "kind": "landing", "landing": {"headline": "Intake <script>x</script>", "price": "$49/month"}}
+    assert c.put(f"/workspaces/{pid}/pages", json=page).status_code == 404            # save the problem first
+    c.post(f"/workspaces/{pid}", json={"user_id": user_id})
+    made = c.put(f"/workspaces/{pid}/pages", json=page).json()
+    html_ = c.get(f"/p/{made['id']}", headers={"user-agent": "Mozilla"}).text
+    assert "&lt;script&gt;" in html_ and "<script>x" not in html_                    # the builder's text is escaped
+    assert c.post(f"/p/{made['id']}", content="email=nope", headers={"content-type": "application/x-www-form-urlencoded"}).status_code == 422
+    r = c.post(f"/p/{made['id']}", content="email=a%40b.example", follow_redirects=False,
+               headers={"content-type": "application/x-www-form-urlencoded"})
+    assert r.status_code == 303
+    got = c.get(f"/workspaces/{pid}/pages", params={"user_id": user_id}).json()["landing"]
+    assert got["views"] == 1 and [x["email"] for x in got["responses"]] == ["a@b.example"]
+    survey = {"user_id": user_id, "kind": "survey", "survey": {"title": "Q", "questions": ["When?", "Cost?"]}}
+    sid = c.put(f"/workspaces/{pid}/pages", json=survey).json()["id"]
+    c.post(f"/p/{sid}", content="q0=yesterday", headers={"content-type": "application/x-www-form-urlencoded"})
+    ans = c.get(f"/workspaces/{pid}/pages", params={"user_id": user_id}).json()["survey"]["responses"]
+    assert ans[0]["answers"] == {"When?": "yesterday", "Cost?": ""}
+    for _ in range(6):                                                                # 5 an hour per visitor
+        last = c.post(f"/p/{sid}", content="q0=x", headers={"content-type": "application/x-www-form-urlencoded"})
+    assert last.status_code == 429
+
+
+def test_outreach_lists_only_organizations_whose_websites_check_out():
+    from signal_feed.outreach import Group, OutreachPlan, Target, verify
+    t = lambda name, site: Target(name=name, kind="company", website=site, contact_role="Owner", why="w",  # noqa: E731
+                                  how="h", near_builder=False)
+    plan = OutreachPlan(groups=[Group(name="Grocers", why="y", targets=[t("Real Foods", "realfoods.example"),
+                                                                     t("Made Up", "madeup.example")]),
+                                Group(name="Empty", why="y", targets=[t("Nope", "nope.example")])])
+    groups, dropped = verify(plan, fetch=lambda x: "https://realfoods.example/" if x.name == "Real Foods" else None)
+    assert dropped == 2 and [g["name"] for g in groups] == ["Grocers"]
+    assert [x["name"] for x in groups[0]["targets"]] == ["Real Foods"] and groups[0]["targets"][0]["url"]
+
+
+def test_the_builders_context_is_theirs(feed_store, feed_config, tmp_path, user_id):
+    url, _ = bank(feed_store, tmp_path)
+    c = TestClient(create_app(feed_store, PostsReader(url), feed_config))
+    assert c.get("/me/context", params={"user_id": user_id}).json()["saved"] is False
+    c.put("/me/context", json={"user_id": user_id, "context": {"location": "Nashville, TN", "now": "student"}})
+    got = c.get("/me/context", params={"user_id": user_id}).json()
+    assert got["saved"] and got["location"] == "Nashville, TN" and got["background"] == ""

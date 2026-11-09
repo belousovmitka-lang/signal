@@ -752,6 +752,47 @@ class ProblemAssessmentRow(FeedBase):
     created_at: Mapped[datetime] = mapped_column(UTCDateTime)
 
 
+class TestPageRow(FeedBase):
+    """A page Signal hosts for a builder's validation test: a landing page (smoke test) or a survey.
+    Public at /p/{id}; `content` is the builder's text, rendered escaped."""
+
+    __tablename__ = "test_pages"
+
+    id: Mapped[str] = mapped_column(String(16), primary_key=True)
+    user_id: Mapped[str] = mapped_column(ForeignKey("users.id"), index=True)
+    problem_id: Mapped[str] = mapped_column(String(64))
+    kind: Mapped[str] = mapped_column(String(12))                 # landing | survey
+    content: Mapped[dict[str, Any]] = mapped_column(JSON)
+    views: Mapped[int] = mapped_column(Integer, default=0)
+    active: Mapped[bool] = mapped_column(Boolean, default=True)
+    created_at: Mapped[datetime] = mapped_column(UTCDateTime)
+    updated_at: Mapped[datetime] = mapped_column(UTCDateTime)
+
+
+class TestPageResponseRow(FeedBase):
+    """A sign-up or survey answer, given by a visitor who was told it goes to the person running the test."""
+
+    __tablename__ = "test_page_responses"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    page_id: Mapped[str] = mapped_column(ForeignKey("test_pages.id", ondelete="CASCADE"), index=True)
+    email: Mapped[str | None] = mapped_column(String(254))
+    answers: Mapped[dict[str, Any]] = mapped_column(JSON, default=dict)
+    client_hash: Mapped[str] = mapped_column(String(16))         # salted hash of the IP, for rate limits only
+    at: Mapped[datetime] = mapped_column(UTCDateTime)
+
+
+class BuilderContextRow(FeedBase):
+    """What a builder told Signal about themselves (signal_feed/outreach.py): where they live, what they do,
+    their background, who they know. Used only to tailor their own outreach lists."""
+
+    __tablename__ = "builder_contexts"
+
+    user_id: Mapped[str] = mapped_column(ForeignKey("users.id"), primary_key=True)
+    data: Mapped[dict[str, Any]] = mapped_column(JSON)
+    updated_at: Mapped[datetime] = mapped_column(UTCDateTime)
+
+
 class CofounderProfileRow(FeedBase):
     __tablename__ = "cofounder_profiles"
 

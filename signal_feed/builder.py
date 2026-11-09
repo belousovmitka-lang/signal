@@ -36,6 +36,7 @@ from sqlalchemy import delete, func, select
 from signal_connectors.models import utcnow
 
 from .api import Me
+from .outreach import BuilderContext as BuilderContextModel
 from .opportunities.assess import COMPETITION_POINTS, WEIGHTS, evidence_points
 from .opportunities.assess import load as load_assessments
 from .db import (AccountRow, CofounderProfileRow, EnrichedPostRow, FeedStore, IntroRequestRow, JobClusterPostRow,
@@ -301,6 +302,15 @@ class OwnProblem(BaseModel):
 
 
 PANEL_DAILY_LIMIT = 10
+
+
+class UserOnly(BaseModel):
+    user_id: str
+
+
+class ContextIn(BaseModel):
+    user_id: str
+    context: "BuilderContextModel"
 
 
 class PanelIn(BaseModel):
@@ -580,4 +590,62 @@ def builder_routes(app: FastAPI, store: FeedStore, posts: PostsReader, _user: Ca
             s.execute(delete(IntroRequestRow).where(IntroRequestRow.from_user == user_id, IntroRequestRow.to_user == to))
         return {"ok": True}
 
+    # --- the builder's context and their outreach list ---
+
+    from .outreach import CALL as OUTREACH_CALL, SYSTEM as OUTREACH_SYSTEM, BuilderContext, OutreachPlan
+    from .outreach import DAILY_LIMIT as OUTREACH_LIMIT, prompt as outreach_prompt, verify as verify_plan
+    from .db import BuilderContextRow
+    plans: dict[tuple[str, str], int] = {}
+
+    @app.get("/me/context")
+    def get_context(user_id: str, me: Me) -> dict:
+        _user(user_id, me)
+        with store.session() as s:
+            row = s.get(BuilderContextRow, user_id)
+        return (row.data if row else BuilderContext().model_dump()) | {"saved": row is not None}
+
+    @app.put("/me/context")
+    def put_context(body: ContextIn, me: Me) -> dict:
+        _user(body.user_id, me)
+        with store.session() as s, s.begin():
+            s.merge(BuilderContextRow(user_id=body.user_id, data=body.context.model_dump(), updated_at=utcnow()))
+        return {"ok": True}
+
+    @app.post("/workspaces/{problem_id}/outreach-plan")
+    def post_outreach_plan(problem_id: str, body: UserOnly, me: Me) -> dict:
+        """Named organizations to reach for this problem, tailored to the builder, each website checked."""
+        _user(body.user_id, me)
+        from .enrichment.costs import BudgetExceededError, CostLedger, claude_usd, claude_worst_case_usd
+        from .enrichment.llm import TransientError
+        if tagger is None or config is None:
+            raise HTTPException(status_code=503, detail="outreach lists are off")
+        with store.session() as s:
+            row = s.get(WorkspaceRow, (body.user_id, problem_id))
+            ctx_row = s.get(BuilderContextRow, body.user_id)
+        if row is None:
+            raise HTTPException(status_code=404, detail="not saved")
+        day = (body.user_id, utcnow().date().isoformat())
+        if plans.get(day, 0) >= OUTREACH_LIMIT:
+            raise HTTPException(status_code=429, detail="limit reached for today")
+        problem = bank.get(problem_id) or row.problem
+        ctx = BuilderContext(**(ctx_row.data if ctx_row else {}))
+        user = outreach_prompt(problem, ctx)
+        ledger, ecfg = CostLedger(store), config.enrichment
+        try:
+            ledger.check("anthropic", claude_worst_case_usd(OUTREACH_CALL, len(OUTREACH_SYSTEM) + len(user), ecfg),
+                         ecfg.monthly_budget_usd)
+            attempt = tagger.tag(OUTREACH_CALL, OUTREACH_SYSTEM, user, output_model=OutreachPlan)
+        except (BudgetExceededError, TransientError):
+            raise HTTPException(status_code=503, detail="busy; try again later") from None
+        for usage in attempt.usages:
+            ledger.record(provider="anthropic", purpose="outreach_plan", usage=usage, usd=claude_usd(usage, ecfg),
+                          request_id=attempt.request_id)
+        if attempt.output is None:
+            raise HTTPException(status_code=503, detail="couldn't build the list; try again")
+        plans[day] = plans.get(day, 0) + 1
+        groups, dropped = verify_plan(attempt.output)
+        return {"groups": groups, "dropped": dropped, "at": utcnow().isoformat()}
+
+    from .test_pages import test_page_routes
+    test_page_routes(app, store, _user)
     return bank

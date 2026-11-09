@@ -662,15 +662,22 @@ function QuickNote({ w }) {
 
 // Outreach
 
-// People worth contacting beyond the post authors: the buyer roles and companies from the problem's assessment.
-function prospects(w) {
-  const p = w.problem;
+// The builder's outreach list (signal_feed/outreach.py): named organizations, grouped for this problem, each
+// website checked by Signal. Nothing unconfirmed is shown.
+function listTargets(w) {
   const added = new Set(w.data.contacts.map((c) => c.prospectKey).filter(Boolean));
-  const role = p.who_to_reach?.[0]?.title || "";
-  return [
-    ...(p.who_to_reach || []).map((x, i) => ({ key: "r" + i, name: x.title, org: x.org_type, why: x.why, where: x.where || [], kind: "role" })),
-    ...(p.companies || []).map((c, i) => ({ key: "c" + i, name: c.name, org: role, why: c.why, where: [], kind: "company" })),
-  ].filter((x) => !added.has(x.key));
+  return (w.data.outreachPlan?.groups || []).map((g, gi) => ({ ...g, targets: g.targets.map((t, ti) => ({ ...t, key: `t${gi}-${ti}-${t.name}` }))
+    .filter((t) => !added.has(t.key)) }));
+}
+
+function addTarget(w, t) {
+  const id = uid();
+  edit(w, (d) => {
+    d.contacts.push({ id, prospectKey: t.key, name: t.name, role: t.contact_role, org: "", how: "", kind: "target",
+      source: t.why, firstStep: t.how, warm: t.warm_path, url: t.url, near: t.near_builder, email: "", sourceUrl: "",
+      status: "not", channel: "email", subject: "", body: "", sentAt: null, replied: false });
+  });
+  return id;
 }
 
 // The people who wrote the evidence, where replying makes sense (forums, social, reviews).
@@ -683,20 +690,10 @@ function postAuthors(w) {
 function addPostAuthor(w, e) {
   const id = uid();
   edit(w, (d) => {
-    d.contacts.push({ id, prospectKey: "p" + e.post_id, name: (cap(e.who) || "Someone").slice(0, 48), org: sourceName(e.source),
+    d.contacts.push({ id, prospectKey: "p" + e.post_id, name: e.who ? `${cap(e.who)} on ${sourceName(e.source)}`.slice(0, 60)
+      : `Author of a ${sourceName(e.source)} post`, org: sourceName(e.source),
       how: "from a post", email: "", source: e.summary, sourceUrl: e.url, sourceAt: e.published_at, status: "not",
       channel: "forum", subject: "", body: "", sentAt: null, replied: false });
-  });
-  return id;
-}
-
-function addProspect(w, pr) {
-  const id = uid();
-  edit(w, (d) => {
-    d.contacts.push({ id, prospectKey: pr.key, name: pr.kind === "company" ? pr.name : pr.name, role: pr.kind === "company" ? pr.org : "",
-      org: pr.kind === "company" ? "" : pr.org, how: pr.kind === "company" ? "suggested company" : "suggested", source: pr.why,
-      where: pr.where, kind: pr.kind, email: "", sourceUrl: "", status: "not", channel: "linkedin", subject: "", body: "",
-      sentAt: null, replied: false });
   });
   return id;
 }
@@ -707,8 +704,8 @@ function draft(c, w, me) {
   const first = /^[A-Z][a-z]+$/.test((c.name || "").split(" ")[0]) && c.how !== "from a post" ? c.name.split(" ")[0] : "there";
   const topic = low(w.problem.title || "this problem");
   const seen = c.sourceUrl ? `I saw your post on ${c.org}. I'm researching a problem it touches on: ${topic}.`
-    : c.kind === "company" ? `I'm researching a problem I think teams like yours at ${c.name} run into: ${topic}.`
-    : `I'm researching a problem that ${low(c.name)}s${c.org ? ` at ${low(c.org)}` : ""} often run into: ${topic}.`;
+    : c.kind === "target" ? `${c.warm ? `${c.warm}. ` : ""}I'm researching a problem I think people at ${c.name} run into: ${topic}. I'd like to talk with your ${low(c.role || "team")}.`
+    : `I'm researching a problem: ${topic}.`;
   return `Hi ${first},\n\n${seen} I'm talking with people who deal with it.\n\n`
     + "I'm not selling anything. Would you have 20 minutes this week to tell me how you handle it today?\n\n"
     + `Thanks,\n${displayName(me)}`;
@@ -726,8 +723,9 @@ function Outreach({ w, d, me }) {
   const [learning, setLearning] = useState("");
   useEffect(() => { sessionStorage.removeItem("signal_contact"); }, []);
   const notC = d.contacts.filter((c) => c.status !== "committed");
-  const pros = prospects(w);
+  const groups = listTargets(w);
   const authors = postAuthors(w);
+  const [building, setBuilding] = useState(false);
   const comm = d.contacts.filter((c) => c.status === "committed");
   const c = d.contacts.find((x) => x.id === selId) || notC[0] || comm[0];
   const goal = goalOf(d);
@@ -743,19 +741,28 @@ function Outreach({ w, d, me }) {
       <div>${notC.length > 0 && html`<p class="group">Not contacted · ${notC.filter((x) => !x.sentAt).length}</p>${notC.map(person)}`}
         <p class="group">Committed · ${comm.length} of ${goal}</p>
         ${comm.map(person)}
-        ${pros.length > 0 && html`<p class="group">Suggested buyers · ${pros.length}</p>
-          ${pros.map((pr) => html`<button type="button" class="person" onClick=${() => setSelId(addProspect(w, pr))}>
-            <span style="min-width:0"><b>${pr.name}</b><small>${pr.kind === "company" ? "Company" : pr.org}</small></span>
-            <span class="tag soft">Add</span></button>`)}`}
-        ${authors.length > 0 && html`<p class="group">From the posts · ${authors.length}</p>
+        <div class="between" style="margin-top:16px"><p class="group" style="margin:0">Your outreach list</p>
+          ${d.outreachPlan && html`<button type="button" class="textbtn" style="min-height:32px" onClick=${() => { setSelId(null); setBuilding(true); }}>Rebuild</button>`}</div>
+        ${!d.outreachPlan && html`<div class="srcbox" style="margin-top:6px"><p>Named organizations to contact for this problem, picked for you and checked by Signal.</p>
+          <button type="button" class="btn primary small" style="margin-top:10px" onClick=${() => { setSelId(null); setBuilding(true); }}>Build my list</button></div>`}
+        ${d.outreachPlan?.dropped > 0 && html`<p class="meta">${plural(d.outreachPlan.dropped, "suggestion")} left out: Signal couldn't confirm the website.</p>`}
+        ${groups.map((g) => g.targets.length > 0 && html`<div style="margin-top:10px"><p style="font-weight:600;font-size:14px">${g.name}</p>
+          <p class="meta">${g.why}</p>
+          ${g.targets.map((t) => html`<button type="button" class="person" onClick=${() => setSelId(addTarget(w, t))}>
+            <span style="min-width:0"><b>${t.name}</b><small>Ask for: ${t.contact_role}${t.near_builder ? " · near you" : ""}${t.warm_path ? " · warm path" : ""}</small></span>
+            <span class="tag soft">Add</span></button>`)}</div>`)}
+        ${authors.length > 0 && html`<p class="group">Reply to a post · ${authors.length}</p>
           ${authors.map((e) => html`<button type="button" class="person" onClick=${() => setSelId(addPostAuthor(w, e))}>
-            <span style="min-width:0"><b>${(cap(e.who) || "Someone").slice(0, 48)}</b><small>${sourceName(e.source)} · wrote a post</small></span>
+            <span style="min-width:0"><b style="font-weight:500">${e.summary.length > 90 ? e.summary.slice(0, 88) + "…" : e.summary}</b>
+              <small>${e.who ? `${cap(e.who)} · ` : ""}reply on ${sourceName(e.source)}</small></span>
             <span class="tag soft">Add</span></button>`)}`}</div>
     </section>
-    ${c ? html`<${Composer} w=${w} c=${c} me=${me} key=${c.id} />`
-      : html`<section class="card"><h2 class="sec">Message</h2><p class="muted">${pros.length
-        ? "Pick someone from Suggested buyers: the roles and companies most likely to have this problem and pay to fix it."
-        : "Add someone to write to."}</p></section>`}
+    ${building ? html`<${AboutYou} w=${w} onDone=${() => setBuilding(false)} />`
+      : c ? html`<${Composer} w=${w} c=${c} me=${me} key=${c.id} />`
+      : html`<section class="card"><h2 class="sec">Message</h2><p class="muted">${groups.length
+        ? "Pick an organization from your outreach list."
+        : "Build your outreach list: tell Signal a little about you, and it finds named organizations to contact, checked one by one."}</p>
+        ${!groups.length && html`<button type="button" class="btn primary" onClick=${() => setBuilding(true)}>Build my list</button>`}</section>`}
     <div class="stack">
       <section class="card tight" aria-labelledby="ln-h"><h2 class="ctitle" id="ln-h">Learnings</h2>
         ${d.learnings.length > 0 && html`<ul class="bullets">${d.learnings.map((l, i) => html`<li>${l}
@@ -770,6 +777,41 @@ function Outreach({ w, d, me }) {
       <${QuickNote} w=${w} />
     </div>
   </div>`;
+}
+
+// What Signal needs to know to pick who this builder should reach: asked once, editable.
+function AboutYou({ w, onDone }) {
+  const [f, setF] = useState(null);
+  const [busy, setBusy] = useState(false);
+  useEffect(() => { api(`/me/context?${qs({ user_id: store.userId })}`).then(setF).catch(() => setF({ location: "", now: "", background: "", network: "" })); }, []);
+  if (!f) return html`<section class="card"><p class="center">Loading…</p></section>`;
+  const set = (k) => (e) => setF({ ...f, [k]: e.target.value });
+  const build = async (e) => {
+    e.preventDefault();
+    setBusy(true);
+    try {
+      const { location, now, background, network } = f;
+      await api("/me/context", { method: "PUT", body: { user_id: store.userId, context: { location, now, background, network } } });
+      const plan = await api(`/workspaces/${enc(w.problem_id)}/outreach-plan`, { method: "POST", body: { user_id: store.userId } });
+      edit(w, (d) => { d.outreachPlan = plan; });
+      say(plan.groups.length ? "Your outreach list is ready." : "Nothing could be confirmed. Add more about you and try again.");
+      onDone();
+    } catch (err) { say(err.status === 429 ? "That's today's limit of lists." : "Couldn't build the list. Try again."); }
+    setBusy(false);
+  };
+  return html`<form class="card form" onSubmit=${build} aria-labelledby="ay-h">
+    <h2 class="sec" id="ay-h">About you</h2>
+    <p class="muted">Signal uses this to pick organizations you can actually reach: near you, through your school or past jobs, or people you know.</p>
+    <div><label class="lbl" for="ay-l">Where you live</label><input id="ay-l" class="input" maxlength="120" placeholder="City, state" value=${f.location} onInput=${set("location")} /></div>
+    <div><label class="lbl" for="ay-n">What you do now</label><input id="ay-n" class="input" maxlength="300" placeholder="e.g. CS junior at Vanderbilt, interning at a logistics startup" value=${f.now} onInput=${set("now")} /></div>
+    <div><label class="lbl" for="ay-b">Your background <span>(or paste your resume)</span></label>
+      <textarea id="ay-b" class="input" style="min-height:140px" maxlength="6000" value=${f.background} onInput=${set("background")}></textarea></div>
+    <div><label class="lbl" for="ay-k">Who you know <span>(optional)</span></label>
+      <textarea id="ay-k" class="input" maxlength="1000" placeholder="e.g. my uncle runs a trucking company; I'm in the campus entrepreneurship club" value=${f.network} onInput=${set("network")}></textarea></div>
+    <div class="row"><button class="btn primary" disabled=${busy}>${busy ? "Finding and checking organizations…" : "Build my list"}</button>
+      <button type="button" class="btn" onClick=${onDone}>Cancel</button></div>
+    ${busy && html`<p class="meta">This takes about a minute: every organization's website is checked before it's listed.</p>`}
+  </form>`;
 }
 
 function AddContact({ w, onDone }) {
@@ -816,6 +858,10 @@ function Composer({ w, c, me }) {
         : html`<button type="button" class="btn small" onClick=${() => upd((x) => { x.status = "committed"; })}>Committed</button>`}</div>
     ${c.sourceUrl ? html`<p class="srcbox">Source: their post on ${c.org}${c.sourceAt ? `, ${ago(c.sourceAt)}` : ""}. ${c.source}
         ${" "}<a href=${safeUrl(c.sourceUrl)} target="_blank" rel="noopener noreferrer">Open post</a></p>`
+      : c.kind === "target" ? html`<div class="srcbox"><p><b style="font-weight:600">Why:</b> ${c.source}</p>
+          <p style="margin-top:6px"><b style="font-weight:600">First step:</b> ${c.firstStep}</p>
+          ${c.warm && html`<p style="margin-top:6px"><b style="font-weight:600">Your way in:</b> ${c.warm}</p>`}
+          <p style="margin-top:6px"><a href=${safeUrl(c.url)} target="_blank" rel="noopener noreferrer">Website</a>${" · "}<a href=${linkedinSearch(`${c.role} ${c.name}`)} target="_blank" rel="noopener noreferrer">Find the ${low(c.role || "contact")} on LinkedIn</a></p></div>`
       : c.how?.startsWith("suggested") ? html`<div class="srcbox"><p>${c.source}</p>
           ${c.where?.length > 0 && html`<p style="margin-top:6px">Where to find them: ${c.where.join("; ")}</p>`}
           <p style="margin-top:6px"><a href=${linkedinSearch(c.kind === "company" ? `${c.role} ${c.name}` : c.name)} target="_blank"
@@ -902,16 +948,16 @@ function WhoToInterview({ w, d }) {
     .sort((a, b) => (b.replied - a.replied) || ((b.status === "committed") - (a.status === "committed")) || (!!b.sentAt - !!a.sentAt));
   const ready = people.filter((c) => c.replied || c.status === "committed");
   const rest = [...ready, ...people.filter((c) => !ready.includes(c))].slice(0, 3);
-  const pros = prospects(w).slice(0, Math.max(0, 4 - rest.length));
+  const pros = listTargets(w).flatMap((g) => g.targets).slice(0, Math.max(0, 4 - rest.length));
   const open = (id) => { sessionStorage.setItem("signal_contact", id); go(`workspace/${enc(w.problem_id)}/outreach`); };
-  if (!rest.length && !pros.length) return null;
   return html`<section class="card tight" aria-labelledby="wi-h"><h2 class="ctitle" id="wi-h">Who to interview</h2>
     <div>${rest.map((c) => html`<div class="kv" style="align-items:center"><span style="color:var(--ink)">${c.name}
         <span class="meta" style="display:block">${c.replied ? "Replied" : c.status === "committed" ? "Committed" : c.sentAt ? "Messaged, no reply yet" : [c.role, c.org].filter(Boolean).join(" · ")}</span></span>
         <button type="button" class="btn small" onClick=${() => open(c.id)}>${c.replied || c.status === "committed" ? "Ask for a call" : c.sentAt ? "Follow up" : "Message"}</button></div>`)}
-      ${pros.map((pr) => html`<div class="kv" style="align-items:center"><span style="color:var(--ink)">${pr.name}
-        <span class="meta" style="display:block">${pr.org}</span></span>
-        <button type="button" class="btn small" onClick=${() => open(addProspect(w, pr))}>Reach out</button></div>`)}</div>
+      ${pros.map((t) => html`<div class="kv" style="align-items:center"><span style="color:var(--ink)">${t.name}
+        <span class="meta" style="display:block">Ask for: ${t.contact_role}</span></span>
+        <button type="button" class="btn small" onClick=${() => open(addTarget(w, t))}>Reach out</button></div>`)}
+      ${!rest.length && !pros.length && html`<p class="meta">Build your outreach list on the Outreach tab first.</p>`}</div>
   </section>`;
 }
 
@@ -959,7 +1005,6 @@ const METHOD_INFO = {
   competitor_reviews: ["Competitor reviews", "Read reviews of the tools they use today and list the complaints that repeat."],
   spend_check: ["Spend check", "Find job posts, contracts or budgets that show money already going to this."],
 };
-const METHOD_LINK = { interviews: ["Open interviews", "interviews"], presell: ["Open pilot", "pilot"] };
 const STAGES = [["todo", "Not started"], ["doing", "Doing"], ["done", "Done"]];
 
 function landingDraft(w, d) {
@@ -974,35 +1019,283 @@ function surveyDraft(w, d) {
     ...(d.questions || []).slice(0, 2).map((q, i) => `${6 + i}. ${q}`)].join("\n");
 }
 
+// Every method opens into a guide: why it works, the steps, what counts as a pass, and tools that do the work.
+const GUIDE = {
+  interviews: {
+    why: "People can't tell you if they'd buy, but they can tell you exactly what happened the last time. Past behavior is the evidence.",
+    steps: ["Pick 8 people from Who to interview: the ones who feel the pain and the ones who pay.",
+            "Ask for 20 minutes to learn how they handle it. Don't pitch.",
+            "Ask about the last time it happened: what they did, how long it took, what it cost, what they tried.",
+            "After each call, log it and tag what you heard. Themes add up on the Interviews tab."],
+    pass: "At least 5 of 8 describe the problem without being prompted, and some already spend time or money on it.",
+  },
+  ai_panel: {
+    why: "Five simulated buyers show you objections and price reactions in a minute, so your real interviews start sharper.",
+    steps: ["Write the idea in one sentence and, if you have one, a price.", "Run the panel.",
+            "Add the questions it raises to your next interview. Don't count the verdicts as demand."],
+    pass: "You have 3 or more new questions or objections to test with real buyers.",
+  },
+  presell: {
+    why: "A signature or a payment is the strongest signal short of a sale. Saying yes costs people nothing; signing costs something.",
+    steps: ["Write the pilot offer: price, length, what success means.", "Send it to the people who said the problem is real.",
+            "Ask for a letter of intent, or a paid pilot at a discount.", "Track who said yes on the Pilot tab."],
+    pass: "3 letters of intent or 1 paid pilot.",
+  },
+  smoke_test: {
+    why: "A page with a price and a sign-up measures whether strangers want it enough to leave an email.",
+    steps: ["Write the page below: the outcome they get, who it's for, the price.", "Publish it. Signal hosts it and counts visits and sign-ups.",
+            "Share the link where these buyers gather (below), or in replies to people who described the problem.",
+            "After 100 visits, look at the share who signed up, and write to every sign-up."],
+    pass: "At least 10% of visitors sign up, and some answer your follow-up email.",
+  },
+  survey: {
+    why: "A few questions to many people tells you how common the problem is. Ask about facts, not opinions.",
+    steps: ["Keep it to 5 questions about the last time it happened.", "Publish it. Signal hosts it and collects the answers.",
+            "Post the link where these buyers gather (below).", "Read every answer; follow up with the ones who left an email."],
+    pass: "30 answers, and at least 40% had the problem in the last month.",
+  },
+  concierge: {
+    why: "Doing the job by hand for a few customers shows what they really need before you write code, and whether they'll pay.",
+    steps: ["Offer 2 or 3 people to do the work for them manually for two weeks.", "Do it with spreadsheets, email and the tools you have.",
+            "Write down every step that takes time; that's your product spec.", "At the end, ask them to pay to continue."],
+    pass: "2 of 3 want to continue, and at least 1 pays.",
+  },
+  competitor_reviews: {
+    why: "Reviews of the tools they use today show the gaps people already complain about, for free.",
+    steps: ["Open the reviews of each tool below.", "Read the 2- and 3-star reviews first.",
+            "Log each complaint that touches this problem.", "Look for the same complaint across tools."],
+    pass: "The same complaint appears in 5 or more reviews.",
+  },
+  spend_check: {
+    why: "If money already goes to this problem (staff, contractors, tenders, tools), there's a budget to win.",
+    steps: ["Search job posts for people hired to do this work by hand.", "Search public tenders and contracts for it.",
+            "Check the prices of the tools people use now.", "Write down each piece of spend you find."],
+    pass: "You find at least 3 places where organizations already pay for this.",
+  },
+};
+
+const ddg = (q) => `https://duckduckgo.com/?q=${enc(q)}`;
+const Ext = ({ href, children }) => html`<a class="btn small" href=${href} target="_blank" rel="noopener noreferrer">${children}</a>`;
+const CopyBtn = ({ label, text, done }) => html`<button type="button" class="btn small"
+  onClick=${async () => say((await copy(typeof text === "function" ? text() : text)) ? done || "Copied." : "Couldn't copy.")}>${label}</button>`;
+
+const clip = (t, n) => (t.length <= n ? t : t.slice(0, n).replace(/[\s,;:]+\S*$/, "") + "…");
+
+function keyword(p) { return p.niche || p.industry || p.title.split(" ").slice(0, 4).join(" "); }
+
+function interviewGuide(w, d) {
+  return [`Interview guide: ${w.problem.title}`, "", "Opening: Thanks for the time. I'm not selling anything; I'm trying to understand how you handle this today.", "",
+    "1. Tell me about the last time this happened. What did you do?", "2. How long did it take? How often does it happen?",
+    "3. What did it cost you (time, money, mistakes)?", "4. What have you tried to fix it? What do you use now?",
+    "5. Have you paid for anything to solve it? How much?", "6. Who else is involved? Who decides on tools like this?",
+    ...(d.questions || []).map((q, i) => `${7 + i}. ${q}`), "", "Close: Who else should I talk to about this?"].join("\n");
+}
+function loiText(w, d) {
+  const o = d.offer;
+  return ["Letter of intent", "", `[ORGANIZATION] intends to take part in a pilot of a product that ${low(w.problem.statement || w.problem.title)}.`, "",
+    `Pilot length: ${o.weeks ? `${o.weeks} weeks` : "[LENGTH]"}`, `Price after the pilot: ${o.price ? `${o.price}/mo` : "[YOUR PRICE]/mo"}`,
+    `Success means: ${o.success || "[WHAT CHANGES]"}`, "", "This letter is not a binding contract.", "",
+    "Name, title:", "Signature, date:"].join("\n");
+}
+function conciergeText(w) {
+  return `Hi,\n\nI'm working on ${low(w.problem.title)}. For the next two weeks I'd like to do this work for you by hand, free, so I can learn exactly what a tool should do.\n\nWould that be useful?\n\nThanks`;
+}
+function whereList(p) { return [...new Set((p.who_to_reach || []).flatMap((x) => x.where || []))].slice(0, 8); }
+
 function Validate({ w, d }) {
   const p = w.problem;
   const v = d.validation || {};
+  const [open, setOpen] = useState(null);
   const suggested = (p.validation || []).filter((m) => METHOD_INFO[m.method]);
   const keys = [...new Set([...suggested.map((m) => m.method), "ai_panel", ...Object.keys(METHOD_INFO)])];
   const plan = Object.fromEntries(suggested.map((m) => [m.method, m.plan]));
   const set = (k, fn) => edit(w, (dd) => { dd.validation = dd.validation || {}; dd.validation[k] = dd.validation[k] || { status: "todo", result: "" }; fn(dd.validation[k]); });
+  const done = keys.filter((k) => v[k]?.status === "done").length;
   return html`<div class="cols cols-ws stagger">
-    <div class="stack">
+    <div class="stack" style="gap:12px">
       ${keys.map((k) => {
         const st = v[k] || { status: "todo", result: "" };
         const [label, info] = METHOD_INFO[k];
-        return html`<section class="card tight" aria-label=${label}>
-          <div class="between" style="align-items:flex-start"><div style="min-width:0"><h2 class="ctitle">${label}
-              ${plan[k] && html` <span class="tag info" style="margin-left:6px">Suggested</span>`}</h2>
-            <p class="muted" style="margin-top:4px">${plan[k] || info}</p></div>
+        const g = GUIDE[k];
+        const isOpen = open === k;
+        return html`<section class="card tight vcard" aria-label=${label}>
+          <button type="button" class="vhead" aria-expanded=${isOpen} onClick=${() => setOpen(isOpen ? null : k)}>
+            <span style="min-width:0"><span class="ctitle">${label}</span>
+              ${plan[k] && html` <span class="tag info" style="margin-left:6px">Suggested</span>`}
+              ${st.status !== "todo" && html` <span class=${"tag " + (st.status === "done" ? "accent" : "soft")} style="margin-left:6px">${st.status === "done" ? "Done" : "Doing"}</span>`}
+              <span class="muted" style="display:block;margin-top:4px;font-weight:400">${plan[k] || info}</span></span>
+            <span class="chev" aria-hidden="true">${isOpen ? "−" : "+"}</span>
+          </button>
+          ${isOpen && html`<div class="vbody">
+            <p>${g.why}</p>
+            <div><h3 class="ctitle" style="font-size:15px">How to do it</h3><ol class="bullets" style="margin-top:8px">${g.steps.map((x) => html`<li>${x}</li>`)}</ol></div>
+            <div class="vtools"><h3 class="ctitle" style="font-size:15px;margin-bottom:10px">Do it here</h3><${MethodTools} k=${k} w=${w} d=${d} /></div>
+            <p class="srcbox"><b style="font-weight:600">It passes when:</b> ${g.pass}</p>
             <div class="chips" role="group" aria-label=${label + " status"}>${STAGES.map(([sk, sl]) => html`<button type="button" class="chip"
-              style="min-height:36px" aria-pressed=${st.status === sk} onClick=${() => set(k, (x) => { x.status = sk; })}>${sl}</button>`)}</div></div>
-          ${k === "ai_panel" && html`<${PanelRunner} w=${w} d=${d} />`}
-          ${k === "smoke_test" && html`<div><button type="button" class="btn small" onClick=${async () => say((await copy(landingDraft(w, d))) ? "Landing page draft copied." : "Couldn't copy.")}>Copy a landing page draft</button></div>`}
-          ${k === "survey" && html`<div><button type="button" class="btn small" onClick=${async () => say((await copy(surveyDraft(w, d))) ? "Survey copied." : "Couldn't copy.")}>Copy survey questions</button></div>`}
-          ${METHOD_LINK[k] && html`<div><a class="textbtn" href=${`#/workspace/${enc(w.problem_id)}/${METHOD_LINK[k][1]}`}>${METHOD_LINK[k][0]}</a></div>`}
-          ${st.status !== "todo" && k !== "ai_panel" && html`<div><label class="lbl" for=${"vr-" + k}>What you found</label>
-            <textarea id=${"vr-" + k} class="input" style="min-height:72px" value=${st.result}
-              onInput=${(e) => set(k, (x) => { x.result = e.target.value; })}></textarea></div>`}
+              style="min-height:40px" aria-pressed=${st.status === sk} onClick=${() => set(k, (x) => { x.status = sk; })}>${sl}</button>`)}</div>
+            ${st.status !== "todo" && k !== "ai_panel" && html`<div><label class="lbl" for=${"vr-" + k}>What you found</label>
+              <textarea id=${"vr-" + k} class="input" style="min-height:72px" value=${st.result}
+                onInput=${(e) => set(k, (x) => { x.result = e.target.value; })}></textarea></div>`}
+          </div>`}
         </section>`;
       })}
     </div>
-    <div class="stack"><${QuickNote} w=${w} /></div>
+    <div class="stack">
+      <section class="card tight"><h2 class="ctitle">${done} of ${keys.length} methods done</h2>
+        <span class="segs wide" aria-hidden="true">${keys.map((k) => html`<i class=${v[k]?.status === "done" ? "on" : ""}></i>`)}</span>
+        <p class="meta">Open a method to see how to run it.</p></section>
+      <${QuickNote} w=${w} />
+    </div>
+  </div>`;
+}
+
+function MethodTools({ k, w, d }) {
+  const p = w.problem;
+  const goTab = (tab) => go(`workspace/${enc(w.problem_id)}/${tab}`);
+  const where = whereList(p);
+  const tools = (p.existing_tools || []).map((t) => t.name);
+  const kw = keyword(p);
+  if (k === "interviews") {
+    return html`<div class="row"><${CopyBtn} label="Copy interview guide" text=${() => interviewGuide(w, d)} done="Interview guide copied." />
+      <button type="button" class="btn small" onClick=${() => goTab("outreach")}>Find people to interview</button>
+      <button type="button" class="btn small" onClick=${() => goTab("interviews")}>Log an interview</button></div>`;
+  }
+  if (k === "ai_panel") return html`<${PanelRunner} w=${w} d=${d} />`;
+  if (k === "presell") {
+    return html`<div class="row"><${CopyBtn} label="Copy a letter of intent" text=${() => loiText(w, d)} done="Letter of intent copied." />
+      <${CopyBtn} label="Copy the pilot offer" text=${() => offerText(d, w)} done="Offer copied." />
+      <button type="button" class="btn small" onClick=${() => goTab("pilot")}>Edit the offer</button></div>`;
+  }
+  if (k === "smoke_test" || k === "survey") return html`<${HostedPage} kind=${k === "smoke_test" ? "landing" : "survey"} w=${w} d=${d} where=${where} />`;
+  if (k === "concierge") {
+    return html`<div class="row"><${CopyBtn} label="Copy the offer message" text=${() => conciergeText(w)} done="Message copied." />
+      <button type="button" class="btn small" onClick=${() => goTab("outreach")}>Pick who to offer it to</button></div>`;
+  }
+  if (k === "competitor_reviews") return html`<${ReviewLog} w=${w} d=${d} tools=${tools} />`;
+  if (k === "spend_check") {
+    const paid = (p.evidence || []).filter((e) => ["Paid demand", "Filings"].includes(e.group));
+    return html`<div class="stack" style="gap:10px">
+      <div class="row"><${Ext} href=${`https://www.linkedin.com/jobs/search/?keywords=${enc(kw)}`}>Job posts on LinkedIn</${Ext}>
+        <${Ext} href=${`https://www.indeed.com/jobs?q=${enc(kw)}`}>Job posts on Indeed</${Ext}>
+        <${Ext} href=${ddg(`site:sam.gov ${kw}`)}>Federal tenders</${Ext}>
+        <${Ext} href=${ddg(`${kw} contract award city county`)}>Local contracts</${Ext}>
+        ${tools.slice(0, 3).map((t) => html`<${Ext} href=${ddg(`${t} pricing`)}>${t} pricing</${Ext}>`)}</div>
+      ${paid.length > 0 && html`<div><p class="meta">Already in Signal's evidence:</p><ul class="bullets">${paid.map((e) => html`<li>${e.summary}
+        ${safeUrl(e.url) && html` <a href=${e.url} target="_blank" rel="noopener noreferrer">Original</a>`}</li>`)}</ul></div>`}
+    </div>`;
+  }
+  return null;
+}
+
+function ReviewLog({ w, d, tools }) {
+  const log = d.validation?.competitor_reviews?.log || [];
+  const [tool, setTool] = useState(tools[0] || "");
+  const [text, setText] = useState("");
+  const add = (e) => {
+    e.preventDefault();
+    if (!text.trim()) return;
+    edit(w, (dd) => {
+      dd.validation = dd.validation || {};
+      const r = dd.validation.competitor_reviews = dd.validation.competitor_reviews || { status: "doing", result: "" };
+      r.log = [...(r.log || []), { tool: tool.trim(), text: text.trim() }];
+      if (r.status === "todo") r.status = "doing";
+    });
+    setText("");
+  };
+  const counts = {};
+  log.forEach((x) => { const key = x.text.toLowerCase(); counts[key] = (counts[key] || 0) + 1; });
+  return html`<div class="stack" style="gap:10px">
+    ${tools.length ? html`<div class="stack" style="gap:6px">${tools.map((t) => html`<div class="row" style="gap:8px"><b style="font-weight:600;min-width:140px">${t}</b>
+        <${Ext} href=${`https://www.g2.com/search?query=${enc(t)}`}>G2 reviews</${Ext}>
+        <${Ext} href=${`https://www.capterra.com/search/?query=${enc(t)}`}>Capterra</${Ext}>
+        <${Ext} href=${ddg(`${t} review complaints`)}>Search complaints</${Ext}></div>`)}</div>`
+      : html`<p class="meta">No existing tools named yet. Search for the problem plus "software" to find them.</p>`}
+    <form class="row" style="flex-wrap:nowrap;align-items:flex-end" onSubmit=${add}>
+      <div style="width:160px"><label class="lbl" for="rl-t">Tool</label><input id="rl-t" class="input" list="rl-tools" value=${tool} onInput=${(e) => setTool(e.target.value)} />
+        <datalist id="rl-tools">${tools.map((t) => html`<option value=${t}></option>`)}</datalist></div>
+      <div style="flex:1"><label class="lbl" for="rl-c">Complaint</label><input id="rl-c" class="input" placeholder="e.g. too many false alarms" value=${text} onInput=${(e) => setText(e.target.value)} /></div>
+      <button class="btn small" style="min-height:44px">Log</button></form>
+    ${log.length > 0 && html`<ul class="bullets">${log.map((x) => html`<li>${x.text} <span class="meta">${x.tool}${counts[x.text.toLowerCase()] > 1 ? ` · ${counts[x.text.toLowerCase()]}×` : ""}</span></li>`)}</ul>`}
+  </div>`;
+}
+
+function HostedPage({ kind, w, d, where }) {
+  const p = w.problem;
+  const [page, setPage] = useState(undefined);       // undefined: loading; null: none yet
+  const [editing, setEditing] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [f, setF] = useState(null);
+  const load = () => api(`/workspaces/${enc(w.problem_id)}/pages?${qs({ user_id: store.userId })}`)
+    .then((r) => setPage(r[kind] || null)).catch(() => setPage(null));
+  useEffect(() => { load(); }, [kind]);
+  const draft = () => (kind === "landing"
+    ? { headline: clip(cap(p.statement || p.title), 90), subhead: p.segment ? `For ${low(p.segment)}.`.slice(0, 300) : "",
+        bullets: "[WHAT IT SAVES THEM]\n[HOW IT WORKS IN ONE LINE]\n[WHY IT'S BETTER THAN WHAT THEY USE]",
+        price: d.offer.price ? `${d.offer.price}/month` : "[YOUR PRICE]/month", cta: "Join the pilot" }
+    : { title: `A few questions about ${low(shortTitle(p))}`.slice(0, 120), intro: "Five short questions. Takes two minutes.",
+        questions: ["When did this last happen to you?", "How long did it take, or what did it cost?", "What do you use for it today?",
+                    "Have you paid for anything to fix it? What?", ...(d.questions || []).slice(0, 1)].join("\n"), ask_email: true });
+  const start = () => {
+    const c = page?.content;
+    setF(c ? (kind === "landing" ? { ...c, bullets: c.bullets.join("\n") } : { ...c, questions: c.questions.join("\n") }) : draft());
+    setEditing(true);
+  };
+  const publish = async () => {
+    setBusy(true);
+    const lines = (s) => s.split("\n").map((x) => x.trim()).filter(Boolean);
+    const body = kind === "landing" ? { landing: { ...f, bullets: lines(f.bullets).slice(0, 5) } }
+      : { survey: { ...f, questions: lines(f.questions).slice(0, 10) } };
+    try {
+      await api(`/workspaces/${enc(w.problem_id)}/pages`, { method: "PUT", body: { user_id: store.userId, kind, ...body } });
+      await load(); setEditing(false); say("Published.");
+      edit(w, (dd) => {
+        dd.validation = dd.validation || {};
+        const key = kind === "landing" ? "smoke_test" : "survey";
+        dd.validation[key] = dd.validation[key] || { status: "todo", result: "" };
+        if (dd.validation[key].status === "todo") dd.validation[key].status = "doing";
+      });
+    } catch (e) { say(e.status === 422 ? "Fill in the headline or title and at least one question." : "Couldn't publish. Try again."); }
+    setBusy(false);
+  };
+  if (page === undefined) return html`<p class="meta">Loading…</p>`;
+  const set = (k) => (e) => setF({ ...f, [k]: e.target.type === "checkbox" ? e.target.checked : e.target.value });
+  if (editing) {
+    return html`<div class="form">
+      ${kind === "landing" ? html`
+        <div><label class="lbl" for="hp-h">Headline <span>(the outcome they get)</span></label><input id="hp-h" class="input" maxlength="120" value=${f.headline} onInput=${set("headline")} /></div>
+        <div><label class="lbl" for="hp-s">Who it's for</label><input id="hp-s" class="input" maxlength="300" value=${f.subhead} onInput=${set("subhead")} /></div>
+        <div><label class="lbl" for="hp-b">Three short points <span>(one per line)</span></label><textarea id="hp-b" class="input" value=${f.bullets} onInput=${set("bullets")}></textarea></div>
+        <div class="form2"><div><label class="lbl" for="hp-p">Price</label><input id="hp-p" class="input" maxlength="60" value=${f.price} onInput=${set("price")} /></div>
+          <div><label class="lbl" for="hp-c">Button</label><input id="hp-c" class="input" maxlength="40" value=${f.cta} onInput=${set("cta")} /></div></div>`
+      : html`
+        <div><label class="lbl" for="hp-t">Title</label><input id="hp-t" class="input" maxlength="120" value=${f.title} onInput=${set("title")} /></div>
+        <div><label class="lbl" for="hp-i">Intro</label><input id="hp-i" class="input" maxlength="400" value=${f.intro} onInput=${set("intro")} /></div>
+        <div><label class="lbl" for="hp-q">Questions <span>(one per line, up to 10)</span></label><textarea id="hp-q" class="input" style="min-height:140px" value=${f.questions} onInput=${set("questions")}></textarea></div>
+        <label class="row" style="gap:8px;min-height:44px"><input type="checkbox" class="check" checked=${f.ask_email} onChange=${set("ask_email")} />Ask for an email to follow up</label>`}
+      ${/\[[A-Z' ]+\]/.test(JSON.stringify(f)) && html`<p class="meta">Replace the [PLACEHOLDERS] before you publish.</p>`}
+      <div class="row"><button type="button" class="btn primary" disabled=${busy || /\[[A-Z' ]+\]/.test(JSON.stringify(f))} onClick=${publish}>${page ? "Update page" : "Publish page"}</button>
+        <button type="button" class="btn" onClick=${() => setEditing(false)}>Cancel</button></div>
+    </div>`;
+  }
+  if (!page) {
+    return html`<div class="stack" style="gap:8px"><p class="muted">${kind === "landing" ? "Signal hosts the page, counts visits and collects sign-ups." : "Signal hosts the survey and collects the answers."}</p>
+      <div><button type="button" class="btn primary" onClick=${start}>${kind === "landing" ? "Write the landing page" : "Write the survey"}</button></div></div>`;
+  }
+  const n = page.responses.length;
+  return html`<div class="stack" style="gap:10px">
+    <div class="srcbox"><a href=${page.url} target="_blank" rel="noopener noreferrer" style="overflow-wrap:anywhere">${page.url}</a></div>
+    <div class="row"><${CopyBtn} label="Copy link" text=${page.url} done="Link copied." />
+      <button type="button" class="btn small" onClick=${start}>Edit</button>
+      <button type="button" class="btn small" onClick=${load}>Refresh</button></div>
+    <div class="stats"><div class="stat"><div class="k">Visits</div><div class="v">${page.views}</div></div>
+      <div class="stat"><div class="k">${kind === "landing" ? "Sign-ups" : "Answers"}</div><div class="v">${n}</div></div>
+      <div class="stat"><div class="k">${kind === "landing" ? "Sign-up rate" : "Answer rate"}</div><div class="v">${page.views ? `${Math.round((100 * n) / page.views)}%` : "–"}</div></div></div>
+    ${where.length > 0 && html`<div><p class="meta">Share it where these buyers gather:</p><ul class="bullets">${where.map((x) => html`<li>${x}</li>`)}</ul></div>`}
+    ${n > 0 && (kind === "landing"
+      ? html`<div><p class="meta">Sign-ups (write to each one):</p><ul class="bullets">${page.responses.map((r) => html`<li><a href=${"mailto:" + r.email}>${r.email}</a> <span class="meta">${dayLabel(r.at)}</span></li>`)}</ul></div>`
+      : html`<div class="stack" style="gap:8px">${page.responses.slice(0, 20).map((r) => html`<div class="quote">
+          ${Object.entries(r.answers).filter(([, a]) => a).map(([q, a]) => html`<p class="meta" style="margin-top:4px">${q}</p><p>${a}</p>`)}
+          ${r.email && html`<p class="meta" style="margin-top:6px"><a href=${"mailto:" + r.email}>${r.email}</a></p>`}</div>`)}</div>`)}
   </div>`;
 }
 
