@@ -592,10 +592,9 @@ function ProblemPage({ id }) {
         </section>
         ${(p.workarounds.length > 0 || p.existing_tools.length > 0 || p.tools.length > 0) && html`<section class="card" aria-labelledby="alt-h">
           <h2 class="sec" id="alt-h">Alternatives</h2>
-          <div>${p.existing_tools.map((t) => html`<div class="alt tool"><b style="font-weight:600">${t.name}</b><span class="muted">${t.gap}</span></div>`)}
-            ${p.workarounds.map((w) => html`<div class="alt"><span>${w.what}</span><span class="meta">${sourceName(w.source)}</span></div>`)}</div>
-          ${!p.existing_tools.length && p.tools.length > 0 && html`<div><p class="meta" style="margin-bottom:8px">Tools the posts name</p>
-            <div class="chips">${p.tools.map((t) => html`<span class="tag soft">${t}</span>`)}</div></div>`}
+          <div>${(p.existing_tools.length ? p.existing_tools : p.tools.map((name) => ({ name, gap: "" })))
+              .map((t) => html`<${AltTool} p=${p} t=${t} key=${t.name} />`)}
+            ${p.workarounds.map((w) => html`<${AltWorkaround} w=${w} key=${w.what} />`)}</div>
         </section>`}
       </div>
       <div class="stack">
@@ -614,6 +613,49 @@ function ProblemPage({ id }) {
           <ul class="bullets">${p.open_questions.map((q) => html`<li>${q}</li>`)}</ul></section>`}
       </div>
     </div>
+  </div>`;
+}
+
+// An alternative opens in place: a tool's profile (written once, website checked), or the post a workaround came from.
+function AltTool({ p, t }) {
+  const [open, setOpen] = useState(false);
+  const [info, setInfo] = useState(null);
+  const [err, setErr] = useState("");
+  const toggle = () => {
+    setOpen(!open);
+    if (!open && !info) {
+      api(`/problems/${enc(p.id)}/tool?${qs({ user_id: store.userId, name: t.name })}`).then(setInfo)
+        .catch((e) => setErr(e.status === 429 ? "That's today's limit; try tomorrow." : "Couldn't load it. Try again."));
+    }
+  };
+  return html`<div class="altrow">
+    <button type="button" class="alt tool althead" aria-expanded=${open} onClick=${toggle}>
+      <b style="font-weight:600">${t.name}</b><span class="muted">${t.gap || ""}</span><span class="chev" aria-hidden="true">${open ? "−" : "+"}</span></button>
+    ${open && html`<div class="altbody">
+      ${err ? html`<p class="error">${err}</p>` : !info ? html`<p class="meta">Reading up on ${t.name}…</p>` : html`
+        <p>${info.what_it_is}</p>
+        <div class="kv"><span>Made by</span><span>${info.made_by}</span></div>
+        <div class="kv"><span>Built for</span><span>${info.who_its_for}</span></div>
+        <div class="kv"><span>Price</span><span>${info.pricing}</span></div>
+        <div class="form2" style="margin-top:8px">
+          <div><p class="ctitle" style="font-size:14px">Does well</p><ul class="bullets">${info.strengths.map((x) => html`<li>${x}</li>`)}</ul></div>
+          <div><p class="ctitle" style="font-size:14px">Falls short here</p><ul class="bullets">${info.falls_short.map((x) => html`<li>${x}</li>`)}</ul></div></div>
+        <p class="srcbox"><b style="font-weight:600">Your opening:</b> ${info.opening}</p>
+        <div class="row">${safeUrl(info.url) && html`<${Ext} href=${info.url}>Website</${Ext}>`}
+          <${Ext} href=${`https://www.g2.com/search?query=${enc(t.name)}`}>G2 reviews</${Ext}>
+          <${Ext} href=${`https://www.capterra.com/search/?query=${enc(t.name)}`}>Capterra</${Ext}></div>
+        <p class="meta">From Signal's AI, not the vendor${info.confidence < 0.6 ? "; it isn't sure about this one, so check the website" : ""}.</p>`}
+    </div>`}
+  </div>`;
+}
+
+function AltWorkaround({ w }) {
+  const [open, setOpen] = useState(false);
+  return html`<div class="altrow">
+    <button type="button" class="alt althead" aria-expanded=${open} onClick=${() => setOpen(!open)}>
+      <span>${w.what}</span><span class="meta">${sourceName(w.source)}</span><span class="chev" aria-hidden="true">${open ? "−" : "+"}</span></button>
+    ${open && html`<div class="altbody"><p class="meta">Mentioned in a post on ${sourceName(w.source)}${w.published_at ? `, ${ago(w.published_at)}` : ""}:</p>
+      <p>${w.post || ""}</p>${safeUrl(w.url) && html`<div><${Ext} href=${w.url}>Read the original</${Ext}></div>`}</div>`}
   </div>`;
 }
 

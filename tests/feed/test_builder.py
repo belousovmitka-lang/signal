@@ -56,8 +56,8 @@ def test_problems_are_clusters_with_numbers_from_the_posts(feed_store, feed_conf
     assert c.get("/problems", params={"user_id": user_id, "q": "dentist"}).json()["total"] == 0
     d = c.get(f"/problems/{posts[0].id}", params={"user_id": user_id}).json()   # any member post finds it
     assert d["id"] == posts[1].id and [e["role"] for e in d["evidence"]] == ["core", "core", "supporting"]
-    assert d["audience"]["role"] == "Paralegal" and d["workarounds"] == [{"what": "They retype it",
-                                                                           "source": "github"}]
+    assert d["audience"]["role"] == "Paralegal"
+    assert [(x["what"], x["source"], x["url"]) for x in d["workarounds"]] == [("They retype it", "github", posts[1].url)]
     assert c.get("/problems/nope", params={"user_id": user_id}).status_code == 404
 
 
@@ -180,3 +180,29 @@ def test_the_builders_context_is_theirs(feed_store, feed_config, tmp_path, user_
     c.put("/me/context", json={"user_id": user_id, "context": {"location": "Nashville, TN", "now": "student"}})
     got = c.get("/me/context", params={"user_id": user_id}).json()
     assert got["saved"] and got["location"] == "Nashville, TN" and got["background"] == ""
+
+
+def test_a_tool_profile_is_only_for_the_problems_alternatives_and_written_once(feed_store, feed_config, tmp_path, user_id):
+    from signal_feed.enrichment.llm import TagAttempt
+    from signal_feed.tools import ToolProfile
+    url, posts = bank(feed_store, tmp_path)
+    calls = []
+
+    class Fake:
+        def tag(self, call, system, user, output_model=None, fallbacks=False):
+            calls.append(user)
+            return TagAttempt(output=ToolProfile(what_it_is="Legal practice software", made_by="Themis", who_its_for="law firms",
+                                                 pricing="not publicly listed", strengths=["s"], falls_short=["f"],
+                                                 opening="o", website="", confidence=0.8), model="m")
+    from signal_feed.api import create_app as make
+    app = make(feed_store, PostsReader(url), feed_config)
+    from signal_feed import builder
+    c = TestClient(app)
+    assert c.get(f"/problems/{posts[1].id}/tool", params={"user_id": user_id, "name": "Clio"}).status_code == 503   # no model
+    app2 = TestClient(make(feed_store, PostsReader(url), feed_config, llm=type("L", (), {"tagger": Fake()})()))
+    got = app2.get(f"/problems/{posts[1].id}/tool", params={"user_id": user_id, "name": "Clio"}).json()
+    assert got["what_it_is"] == "Legal practice software" and got["url"] is None and got["name"] == "Clio"
+    app2.get(f"/problems/{posts[1].id}/tool", params={"user_id": user_id, "name": "Clio"})
+    assert len(calls) == 1                                                     # cached
+    assert app2.get(f"/problems/{posts[1].id}/tool", params={"user_id": user_id, "name": "Excel"}).status_code == 404
+    assert builder

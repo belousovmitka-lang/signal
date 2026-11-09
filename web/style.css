@@ -382,3 +382,15 @@ label.lbl span { font-weight: 400; color: var(--muted); }
 .chev { flex: none; width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--input-border); display: grid;
   place-items: center; font-size: 18px; line-height: 1; }
 .vbody { display: flex; flex-direction: column; gap: 16px; margin-top: 14px; padding-top: 16px; border-top: 1px solid var(--divider); }
+.althead { width: 100%; border: 0; border-top: 1px solid var(--divider); background: none; text-align: left; cursor: pointer;
+  font: inherit; color: inherit; grid-template-columns: 220px minmax(0, 1fr) 32px; align-items: center; min-height: 52px;
+  border-radius: 0; transition: background-color .18s; }
+.alt.althead:not(.tool) { grid-template-columns: minmax(0, 1fr) 140px 32px; }
+.althead:hover { background: var(--bg); }
+.altbody { padding: 4px 0 18px; display: flex; flex-direction: column; gap: 10px; }
+.altbody .kv:first-of-type { border-top: 0; }
+@media (max-width: 800px) { .althead, .alt.althead:not(.tool) { grid-template-columns: minmax(0, 1fr) 32px; }
+  .althead > :nth-child(2) { grid-column: 1; grid-row: 2; } .althead .chev { grid-row: 1; grid-column: 2; } }
+.alt.tool.althead { grid-template-columns: 220px minmax(0, 1fr) 32px; }
+@media (max-width: 800px) { .alt.tool.althead { grid-template-columns: minmax(0, 1fr) 32px; } }
+.altbody .kv span:first-child { flex: none; width: 96px; } .altbody .kv span:last-child { text-align: left; flex: 1; }

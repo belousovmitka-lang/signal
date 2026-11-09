@@ -793,6 +793,18 @@ class BuilderContextRow(FeedBase):
     updated_at: Mapped[datetime] = mapped_column(UTCDateTime)
 
 
+class ToolProfileRow(FeedBase):
+    """An alternative's profile on a problem page (signal_feed/tools.py), written once per problem and tool."""
+
+    __tablename__ = "tool_profiles"
+
+    key: Mapped[str] = mapped_column(String(32), primary_key=True)     # sha256(problem id | tool name)
+    problem_id: Mapped[str] = mapped_column(String(64), index=True)
+    name: Mapped[str] = mapped_column(String(120))
+    data: Mapped[dict[str, Any]] = mapped_column(JSON)
+    created_at: Mapped[datetime] = mapped_column(UTCDateTime)
+
+
 class CofounderProfileRow(FeedBase):
     __tablename__ = "cofounder_profiles"
 

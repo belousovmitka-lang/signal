@@ -22,6 +22,7 @@ when both have asked for an intro.
 
 from __future__ import annotations
 
+import hashlib
 import re
 import statistics
 import threading
@@ -181,7 +182,8 @@ def _problem(cluster: JobClusterRow, members: list[tuple[JobClusterPostRow, Enri
         w = (r.current_workaround or "").strip()
         if w and w.lower() not in seen:
             seen.add(w.lower())
-            workarounds.append({"what": _cap(w), "source": p.source})
+            workarounds.append({"what": _cap(w), "source": p.source, "url": p.url, "post": r.plain_summary or p.title,
+                                "published_at": p.published_at.isoformat()})
     roles = Counter((p.author_role or r.who_has_pain or "").strip() for _, r, p in members)
     roles.pop("", None)
 
@@ -302,6 +304,7 @@ class OwnProblem(BaseModel):
 
 
 PANEL_DAILY_LIMIT = 10
+TOOL_DAILY_LIMIT = 60
 
 
 class UserOnly(BaseModel):
@@ -589,6 +592,55 @@ def builder_routes(app: FastAPI, store: FeedStore, posts: PostsReader, _user: Ca
         with store.session() as s, s.begin():
             s.execute(delete(IntroRequestRow).where(IntroRequestRow.from_user == user_id, IntroRequestRow.to_user == to))
         return {"ok": True}
+
+    # --- an alternative's profile (problem page) ---
+
+    from .db import ToolProfileRow
+    from .tools import CALL as TOOL_CALL, SYSTEM as TOOL_SYSTEM, ToolProfile, tool_prompt, verify_tool_site
+    tool_calls: dict[tuple[str, str], int] = {}
+
+    @app.get("/problems/{problem_id}/tool")
+    def get_tool(problem_id: str, user_id: str, me: Me, name: str = Query(min_length=1, max_length=120)) -> dict:
+        """What an existing tool is and how it serves this problem's buyers: written once per problem and tool,
+        from the model's knowledge, with its website checked."""
+        _user(user_id, me)
+        p = bank.get(problem_id)
+        if p is None:
+            raise HTTPException(status_code=404, detail="unknown problem")
+        names = {t["name"] for t in p["existing_tools"]} | set(p["tools"])
+        if name not in names:
+            raise HTTPException(status_code=404, detail="not an alternative of this problem")
+        key = hashlib.sha256(f"{p['id']}|{name.lower()}".encode()).hexdigest()[:32]
+        with store.session() as s:
+            row = s.get(ToolProfileRow, key)
+        if row is not None:
+            return row.data
+        from .enrichment.costs import BudgetExceededError, CostLedger, claude_usd, claude_worst_case_usd
+        from .enrichment.llm import TransientError
+        if tagger is None or config is None:
+            raise HTTPException(status_code=503, detail="profiles are off")
+        day = (user_id, utcnow().date().isoformat())
+        if tool_calls.get(day, 0) >= TOOL_DAILY_LIMIT:
+            raise HTTPException(status_code=429, detail="limit reached for today")
+        user = tool_prompt(p, name)
+        ledger, ecfg = CostLedger(store), config.enrichment
+        try:
+            ledger.check("anthropic", claude_worst_case_usd(TOOL_CALL, len(TOOL_SYSTEM) + len(user), ecfg),
+                         ecfg.monthly_budget_usd)
+            attempt = tagger.tag(TOOL_CALL, TOOL_SYSTEM, user, output_model=ToolProfile)
+        except (BudgetExceededError, TransientError):
+            raise HTTPException(status_code=503, detail="busy; try again later") from None
+        for usage in attempt.usages:
+            ledger.record(provider="anthropic", purpose="tool_profile", usage=usage, usd=claude_usd(usage, ecfg),
+                          request_id=attempt.request_id)
+        if attempt.output is None:
+            raise HTTPException(status_code=503, detail="couldn't write it; try again")
+        tool_calls[day] = tool_calls.get(day, 0) + 1
+        data = attempt.output.model_dump()
+        data["name"], data["url"] = name, verify_tool_site(name, data.pop("website", "") or "")
+        with store.session() as s, s.begin():
+            s.merge(ToolProfileRow(key=key, problem_id=p["id"], name=name[:120], data=data, created_at=utcnow()))
+        return data
 
     # --- the builder's context and their outreach list ---
 
