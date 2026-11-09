@@ -712,6 +712,28 @@ function listTargets(w) {
     .filter((t) => !added.has(t.key)) }));
 }
 
+// "Find more" adds organizations to the list: groups with the same name merge, names already listed are skipped.
+function mergePlan(old, add) {
+  if (!old) return add;
+  const seen = new Set(old.groups.flatMap((g) => g.targets.map((t) => t.name.toLowerCase())));
+  const groups = old.groups.map((g) => ({ ...g, targets: [...g.targets] }));
+  add.groups.forEach((g) => {
+    const fresh = g.targets.filter((t) => !seen.has(t.name.toLowerCase()));
+    if (!fresh.length) return;
+    const same = groups.find((x) => x.name.toLowerCase() === g.name.toLowerCase());
+    if (same) same.targets.push(...fresh); else groups.push({ ...g, targets: fresh });
+  });
+  return { groups, dropped: (old.dropped || 0) + (add.dropped || 0), at: add.at };
+}
+
+async function buildList(w, more = false) {
+  const exclude = more ? (w.data.outreachPlan?.groups || []).flatMap((g) => g.targets.map((t) => t.name)) : [];
+  const groups = more ? (w.data.outreachPlan?.groups || []).map((g) => g.name) : [];
+  const plan = await api(`/workspaces/${enc(w.problem_id)}/outreach-plan`, { method: "POST", body: { user_id: store.userId, exclude, groups } });
+  edit(w, (d) => { d.outreachPlan = more ? mergePlan(d.outreachPlan, plan) : plan; });
+  return plan;
+}
+
 function addTarget(w, t) {
   const id = uid();
   edit(w, (d) => {
@@ -758,6 +780,22 @@ function Outreach({ w, d, me }) {
   const groups = listTargets(w);
   const authors = postAuthors(w);
   const [building, setBuilding] = useState(false);
+  const [auto, setAuto] = useState(false);       // building in the background (context already given)
+  const [showPosts, setShowPosts] = useState(false);
+  useEffect(() => {          // with "About you" already filled in, a problem's first visit builds its list
+    if (d.outreachPlan) return;
+    api(`/me/context?${qs({ user_id: store.userId })}`).then((ctx) => {
+      if (!ctx.saved) return;
+      setAuto(true);
+      buildList(w).then(() => say("Your outreach list is ready.")).catch(() => {}).finally(() => setAuto(false));
+    }).catch(() => {});
+  }, [w.problem_id]);
+  const more = async () => {
+    setAuto(true);
+    try { const p = await buildList(w, true); say(p.groups.length ? "More organizations added." : "Couldn't confirm any new ones this time."); }
+    catch (e) { say(e.status === 429 ? "That's today's limit of lists." : "Couldn't find more. Try again."); }
+    setAuto(false);
+  };
   const comm = d.contacts.filter((c) => c.status === "committed");
   const c = d.contacts.find((x) => x.id === selId) || notC[0] || comm[0];
   const goal = goalOf(d);
@@ -775,7 +813,8 @@ function Outreach({ w, d, me }) {
         ${comm.map(person)}
         <div class="between" style="margin-top:16px"><p class="group" style="margin:0">Your outreach list</p>
           ${d.outreachPlan && html`<button type="button" class="textbtn" style="min-height:32px" onClick=${() => { setSelId(null); setBuilding(true); }}>Rebuild</button>`}</div>
-        ${!d.outreachPlan && html`<div class="srcbox" style="margin-top:6px"><p>Named organizations to contact for this problem, picked for you and checked by Signal.</p>
+        ${auto && html`<p class="meta" style="margin-top:6px">Finding organizations and checking each website… about a minute.</p>`}
+        ${!d.outreachPlan && !auto && html`<div class="srcbox" style="margin-top:6px"><p>Named organizations to contact for this problem, picked for you and checked by Signal.</p>
           <button type="button" class="btn primary small" style="margin-top:10px" onClick=${() => { setSelId(null); setBuilding(true); }}>Build my list</button></div>`}
         ${d.outreachPlan?.dropped > 0 && html`<p class="meta">${plural(d.outreachPlan.dropped, "suggestion")} left out: Signal couldn't confirm the website.</p>`}
         ${groups.map((g) => g.targets.length > 0 && html`<div style="margin-top:10px"><p style="font-weight:600;font-size:14px">${g.name}</p>
@@ -783,8 +822,11 @@ function Outreach({ w, d, me }) {
           ${g.targets.map((t) => html`<button type="button" class="person" onClick=${() => setSelId(addTarget(w, t))}>
             <span style="min-width:0"><b>${t.name}</b><small>${CHANNEL[t.channel || KIND_CHANNEL[t.kind] || "email"].label} · ask for ${low(t.contact_role)}${t.near_builder ? " · near you" : ""}${t.warm_path ? " · warm path" : ""}</small></span>
             <span class="tag soft">Add</span></button>`)}</div>`)}
-        ${authors.length > 0 && html`<p class="group">Reply to a post · ${authors.length}</p>
-          ${authors.map((e) => html`<button type="button" class="person" onClick=${() => setSelId(addPostAuthor(w, e))}>
+        ${d.outreachPlan && !auto && html`<button type="button" class="btn small wide" style="margin-top:12px" onClick=${more}>Find more organizations</button>`}
+        ${authors.length > 0 && html`<button type="button" class="textbtn" style="margin-top:12px" aria-expanded=${showPosts}
+            onClick=${() => setShowPosts(!showPosts)}>${showPosts ? "Hide" : "Also:"} reply to a post (${authors.length})</button>
+          ${showPosts && html`<p class="meta">Few people answer replies to old posts. Use these after the organizations above.</p>`}
+          ${showPosts && authors.map((e) => html`<button type="button" class="person" onClick=${() => setSelId(addPostAuthor(w, e))}>
             <span style="min-width:0"><b style="font-weight:500">${e.summary.length > 90 ? e.summary.slice(0, 88) + "…" : e.summary}</b>
               <small>${e.who ? `${cap(e.who)} · ` : ""}reply on ${sourceName(e.source)}</small></span>
             <span class="tag soft">Add</span></button>`)}`}</div>
@@ -824,8 +866,7 @@ function AboutYou({ w, onDone }) {
     try {
       const { location, now, background, network } = f;
       await api("/me/context", { method: "PUT", body: { user_id: store.userId, context: { location, now, background, network } } });
-      const plan = await api(`/workspaces/${enc(w.problem_id)}/outreach-plan`, { method: "POST", body: { user_id: store.userId } });
-      edit(w, (d) => { d.outreachPlan = plan; });
+      const plan = await buildList(w);
       say(plan.groups.length ? "Your outreach list is ready." : "Nothing could be confirmed. Add more about you and try again.");
       onDone();
     } catch (err) { say(err.status === 429 ? "That's today's limit of lists." : "Couldn't build the list. Try again."); }

@@ -311,6 +311,12 @@ class UserOnly(BaseModel):
     user_id: str
 
 
+class PlanIn(BaseModel):
+    user_id: str
+    exclude: list[str] = Field(default_factory=list, max_length=200)   # names already listed ("Find more")
+    groups: list[str] = Field(default_factory=list, max_length=30)     # their group names, to reuse
+
+
 class ContextIn(BaseModel):
     user_id: str
     context: "BuilderContextModel"
@@ -664,7 +670,7 @@ def builder_routes(app: FastAPI, store: FeedStore, posts: PostsReader, _user: Ca
         return {"ok": True}
 
     @app.post("/workspaces/{problem_id}/outreach-plan")
-    def post_outreach_plan(problem_id: str, body: UserOnly, me: Me) -> dict:
+    def post_outreach_plan(problem_id: str, body: PlanIn, me: Me) -> dict:
         """Named organizations to reach for this problem, tailored to the builder, each website checked."""
         _user(body.user_id, me)
         from .enrichment.costs import BudgetExceededError, CostLedger, claude_usd, claude_worst_case_usd
@@ -681,7 +687,7 @@ def builder_routes(app: FastAPI, store: FeedStore, posts: PostsReader, _user: Ca
             raise HTTPException(status_code=429, detail="limit reached for today")
         problem = bank.get(problem_id) or row.problem
         ctx = BuilderContext(**(ctx_row.data if ctx_row else {}))
-        user = outreach_prompt(problem, ctx)
+        user = outreach_prompt(problem, ctx, body.exclude, body.groups)
         ledger, ecfg = CostLedger(store), config.enrichment
         try:
             ledger.check("anthropic", claude_worst_case_usd(OUTREACH_CALL, len(OUTREACH_SYSTEM) + len(user), ecfg),

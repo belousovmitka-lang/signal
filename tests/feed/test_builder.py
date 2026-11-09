@@ -206,3 +206,11 @@ def test_a_tool_profile_is_only_for_the_problems_alternatives_and_written_once(f
     assert len(calls) == 1                                                     # cached
     assert app2.get(f"/problems/{posts[1].id}/tool", params={"user_id": user_id, "name": "Excel"}).status_code == 404
     assert builder
+
+
+def test_find_more_tells_the_model_what_is_already_listed():
+    from signal_feed.outreach import BuilderContext, prompt
+    p = {"title": "T", "evidence": [], "who_to_reach": []}
+    assert "Already on the list" not in prompt(p, BuilderContext())
+    assert "Already on the list (find different organizations, and new groups where useful): NACS; curl" in \
+        prompt(p, BuilderContext(), ["NACS", "curl"])

@@ -26,7 +26,7 @@ from .config import ModelCall
 
 log = logging.getLogger(__name__)
 
-CALL = ModelCall(model="claude-sonnet-5-5", effort="medium", max_tokens=8000)
+CALL = ModelCall(model="claude-sonnet-5-5", effort="medium", max_tokens=14000)
 USER_AGENT = "SignalBot/0.1 (website check for a builder's outreach list)"
 DAILY_LIMIT = 10
 
@@ -60,17 +60,17 @@ class Target(BaseModel):
 class Group(BaseModel):
     name: str = Field(description="A group chosen for this problem, e.g. 'Independent grocers in Chicago'")
     why: str = Field(description="One sentence: what reaching this group tells or gets the builder")
-    targets: list[Target] = Field(description="3 to 6")
+    targets: list[Target] = Field(description="4 to 8")
 
 
 class OutreachPlan(BaseModel):
-    groups: list[Group] = Field(description="3 to 5 groups, the most useful first")
+    groups: list[Group] = Field(description="4 to 6 groups, the most useful first")
 
 
 SYSTEM = """You build an outreach list for a startup builder (18-25) who wants to validate a problem and find
 first customers. You get the problem, the evidence, and what the builder told you about themselves.
 
-Choose 3 to 5 groups that make sense for THIS problem and THIS builder, most useful first: for example
+Choose 4 to 6 groups, with 4 to 8 targets each that make sense for THIS problem and THIS builder, most useful first: for example
 buyers who have the problem, the people who decide on purchases, associations or communities that gather
 them, partners who already sell to them, places near the builder. Don't use generic categories.
 
@@ -97,14 +97,19 @@ Never name individual people. contact_role says exactly which role to ask for. w
 the problem, not "they might be interested". how is the very first step the builder can take today."""
 
 
-def prompt(problem: dict, ctx: BuilderContext) -> str:
+def prompt(problem: dict, ctx: BuilderContext, exclude: list[str] | None = None,
+           groups: list[str] | None = None) -> str:
     ev = "\n".join(f"- [{e.get('group')}] {e.get('summary')}" for e in problem.get("evidence", [])[:8])
     reach = "\n".join(f"- {x['title']} at {x['org_type']}" for x in problem.get("who_to_reach", []))
     return (f"Problem: {problem['title']}\nProduct idea: {problem.get('statement') or '-'}\n"
             f"Buyers: {problem.get('segment') or '-'}\nIndustry: {problem.get('industry') or '-'}\n"
             f"Evidence:\n{ev or '-'}\nRoles that have it:\n{reach or '-'}\n\n"
             f"The builder:\nLives in: {ctx.location or 'not given'}\nDoes now: {ctx.now or 'not given'}\n"
-            f"Background: {ctx.background or 'not given'}\nKnows: {ctx.network or 'not given'}")
+            f"Background: {ctx.background or 'not given'}\nKnows: {ctx.network or 'not given'}"
+            + (f"\n\nAlready on the list (find different organizations, and new groups where useful): "
+               f"{'; '.join(exclude)}" if exclude else "")
+            + (f"\nExisting groups (put an organization in one of these, with the same name, when it fits; "
+               f"start a new group only for a different kind): {'; '.join(groups)}" if groups else ""))
 
 
 def _domain(website: str) -> str | None:
