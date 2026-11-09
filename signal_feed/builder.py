@@ -36,8 +36,10 @@ from sqlalchemy import delete, func, select
 from signal_connectors.models import utcnow
 
 from .api import Me
+from .opportunities.assess import COMPETITION_POINTS, WEIGHTS, evidence_points
+from .opportunities.assess import load as load_assessments
 from .db import (AccountRow, CofounderProfileRow, EnrichedPostRow, FeedStore, IntroRequestRow, JobClusterPostRow,
-                 JobClusterRow, WorkspaceRow)
+                 JobClusterRow, ProblemAssessmentRow, WorkspaceRow)
 from .posts import PostsReader, _chunks
 
 MAX_DATA_BYTES = 256_000
@@ -88,6 +90,37 @@ def _usd(m: dict | None) -> float | None:
     return sum(vals) / len(vals) if vals else None
 
 
+RATING_KEYS = {"pain": "pain", "frequency": "frequency", "will_pay": "will_pay", "market": "market",
+               "competition": "competition", "evidence": "evidence_rating"}
+
+
+def composite_score(p: dict) -> int:
+    """The weighted ratings (assess.WEIGHTS) over the ones known: the score is its tiles."""
+    known = {k: w for k, w in WEIGHTS.items() if p[RATING_KEYS[k]]["value"] is not None}
+    total = sum(known.values())
+    return round(10 * sum(w * p[RATING_KEYS[k]]["value"] for k, w in known.items()) / total) if total else 0
+
+
+FREQ_LABEL = {"daily": "Daily", "weekly": "Weekly", "monthly": "Monthly", "quarterly": "Quarterly", "rarely": "Rarely"}
+
+
+def with_assessment(p: dict, a: dict) -> dict:
+    """The problem with an assessment's ratings, prospects and validation plan."""
+    q = dict(p)
+    q["pain"] = {"value": a["pain"]["score"], "reason": a["pain"]["reason"]}
+    q["frequency"] = {"value": a["frequency"]["score"], "label": FREQ_LABEL[a["frequency_label"]],
+                      "reason": a["frequency"]["reason"]}
+    q["will_pay"] = {"value": a["will_pay"]["score"], "reason": a["will_pay"]["reason"]}
+    q["market"] = {"value": a["market"]["score"], "reason": a["market"]["reason"]}
+    q["competition"] = {"value": COMPETITION_POINTS[a["competition"]], "label": a["competition"].capitalize(),
+                        "reason": a["competition_reason"]}
+    q["score"], q["assessed"] = composite_score(q), True
+    q["existing_tools"] = a.get("existing_tools", [])
+    q["who_to_reach"], q["companies"] = a.get("who_to_reach", []), a.get("example_companies", [])
+    q["validation"] = a.get("validation", [])
+    return q
+
+
 def _problem(cluster: JobClusterRow, members: list[tuple[JobClusterPostRow, EnrichedPostRow, Any]]) -> dict:
     """One problem from a cluster and its (membership, tags, raw post) triples."""
     cores = [(m, r, p) for m, r, p in members if m.role == "core"]
@@ -112,6 +145,9 @@ def _problem(cluster: JobClusterRow, members: list[tuple[JobClusterPostRow, Enri
 
     frequency_label = None if share is None else ("Recurring" if share >= 0.67 else "Mixed" if share >= 0.34
                                                   else "Occasional")
+    comp = "low" if n_tools <= 1 else "medium" if n_tools <= 4 else "high"
+    n_posts = cluster.core_posts + cluster.supporting_posts
+    # Until the problem is assessed (opportunities/assess.py), the ratings come from the posts' own tags.
     score = {
         "pain": {"value": score10(pain), "reason": _plural(sum(r.intensity is not None for r in rows), "post")
                  if pain is not None else None},
@@ -121,8 +157,12 @@ def _problem(cluster: JobClusterRow, members: list[tuple[JobClusterPostRow, Enri
         "will_pay": {"value": score10(pay),
                      "reason": (f"{len(amounts)} stated budget{'s' if len(amounts) != 1 else ''}, median "
                                 f"${statistics.median(amounts):,.0f}") if amounts else "No price stated yet"},
-        "competition": {"label": "Low" if n_tools <= 1 else "Medium" if n_tools <= 4 else "High",
+        "market": {"value": None, "reason": "Not assessed yet"},
+        "competition": {"value": COMPETITION_POINTS[comp], "label": comp.capitalize(),
                         "reason": ", ".join(t for t, _ in tools.most_common(3)) or "No tools named"},
+        "evidence_rating": {"value": evidence_points(cluster.distinct_buyers),
+                            "reason": f"{n_posts} post{'s' if n_posts != 1 else ''}, {cluster.distinct_buyers} "
+                                      f"buyer{'s' if cluster.distinct_buyers != 1 else ''}"},
     }
 
     evidence = []
@@ -131,7 +171,9 @@ def _problem(cluster: JobClusterRow, members: list[tuple[JobClusterPostRow, Enri
             "post_id": r.post_id, "role": m.role, "summary": r.plain_summary or r.pain_statement or p.title,
             "source": p.source, "group": EVIDENCE_GROUP.get(p.source_type, "Other"),
             "who": p.author_role or r.who_has_pain, "published_at": p.published_at.isoformat(), "url": p.url,
-            "score": r.project_score})
+            "score": r.project_score,
+            "tags": {"time cost": _per(r.time_cost), "workaround": r.current_workaround, "recurs": r.recurrence,
+                     "tools named": ", ".join(r.tools_mentioned or []), "budget USD": _usd(r.money_signal)}})
 
     workarounds, seen = [], set()
     for _, r, p in sorted(members, key=lambda t: -(t[1].project_score or 0)):
@@ -159,7 +201,8 @@ def _problem(cluster: JobClusterRow, members: list[tuple[JobClusterPostRow, Enri
         "summary": best[1].plain_summary, "industry": industry,
         "niche": niche.most_common(1)[0][0] if niche else None,
         "segment": _cap(cluster.buyer_segment), "buyer": _buyer(cluster.buyer_type),
-        "score": cluster.best_score, **{k: v for k, v in score.items()},
+        "score": composite_score(score), "assessed": False, **score,
+        "who_to_reach": [], "companies": [], "validation": [], "existing_tools": [],
         "posts": cluster.core_posts + cluster.supporting_posts, "buyers": cluster.distinct_buyers,
         "price": cluster.price, "sources": cluster.sources,
         "evidence": evidence, "workarounds": workarounds[:5], "tools": [t for t, _ in tools.most_common(8)],
@@ -183,8 +226,9 @@ class ProblemBank:
 
     def _load(self) -> None:
         with self.store.session() as s:
-            key = s.execute(select(func.max(JobClusterRow.built_at), func.count(JobClusterRow.id))).one()
-            key = tuple(key)
+            key = tuple(s.execute(select(func.max(JobClusterRow.built_at), func.count(JobClusterRow.id))).one()) + tuple(
+                s.execute(select(func.max(ProblemAssessmentRow.created_at), func.count())
+                          .select_from(ProblemAssessmentRow)).one())
             if key == self._key:
                 return
             clusters = list(s.scalars(select(JobClusterRow)))
@@ -206,6 +250,8 @@ class ProblemBank:
             problems.append(p)
             for _, r, _ in members:
                 by_post[r.post_id] = p["id"]
+        assessed = load_assessments(self.store, [p["id"] for p in problems])
+        problems = [with_assessment(p, assessed[p["id"]].data) if p["id"] in assessed else p for p in problems]
         problems.sort(key=lambda p: (-p["score"], -p["posts"], p["id"]))
         self._problems, self._by_post, self._key = problems, by_post, key
 
@@ -223,9 +269,20 @@ class ProblemBank:
 
 def card(p: dict) -> dict:
     """The list's fields: no evidence beyond the two best lines."""
-    keep = ("id", "title", "statement", "summary", "industry", "niche", "segment", "buyer", "score", "pain",
-            "frequency", "will_pay", "competition", "posts", "buyers", "price", "sources", "tools", "last_seen")
-    return {k: p[k] for k in keep} | {"evidence": p["evidence"][:2], "workarounds": p["workarounds"][:3]}
+    keep = ("id", "title", "statement", "summary", "industry", "niche", "segment", "buyer", "score", "assessed",
+            "pain", "frequency", "will_pay", "market", "competition", "evidence_rating", "posts", "buyers", "price",
+            "sources", "tools", "existing_tools", "who_to_reach", "companies", "validation", "last_seen")
+    return {k: p[k] for k in keep} | {"evidence": [public(e) for e in p["evidence"][:2]],
+                                      "workarounds": p["workarounds"][:3]}
+
+
+def public(e: dict) -> dict:
+    """An evidence line without the tags that only the assessment prompt reads."""
+    return {k: v for k, v in e.items() if k != "tags"}
+
+
+def detail(p: dict) -> dict:
+    return p | {"evidence": [public(e) for e in p["evidence"]]}
 
 
 # --- API --------------------------------------------------------------------------------------------
@@ -241,6 +298,15 @@ class OwnProblem(BaseModel):
     who: str | None = Field(default=None, max_length=200)
     industry: str | None = Field(default=None, max_length=100)
     note: str | None = Field(default=None, max_length=2000)
+
+
+PANEL_DAILY_LIMIT = 10
+
+
+class PanelIn(BaseModel):
+    user_id: str
+    pitch: str | None = Field(default=None, max_length=600)
+    price: str | None = Field(default=None, max_length=60)
 
 
 class WorkspaceData(BaseModel):
@@ -295,7 +361,9 @@ def _profile_out(row: CofounderProfileRow) -> dict:
                 (row.skills or []) + [row.role or ""])))}
 
 
-def builder_routes(app: FastAPI, store: FeedStore, posts: PostsReader, _user: Callable, live=None) -> ProblemBank:
+def builder_routes(app: FastAPI, store: FeedStore, posts: PostsReader, _user: Callable, config=None,
+                   tagger=None) -> ProblemBank:
+    """`tagger` (enrichment.llm.Tagger) runs the AI buyer panel; without it the panel answers 503."""
     bank = ProblemBank(store, posts)
     app.state.problem_bank = bank
 
@@ -320,19 +388,7 @@ def builder_routes(app: FastAPI, store: FeedStore, posts: PostsReader, _user: Ca
         p = bank.get(problem_id)
         if p is None:
             raise HTTPException(status_code=404, detail="unknown problem")
-        return p
-
-    @app.get("/problems/{problem_id}/live")
-    async def get_problem_live(problem_id: str, user_id: str, me: Me) -> dict:
-        """Reddit and YouTube results for the problem's industry and niche, fetched now, never stored
-        (signal_feed/live.py, CLAUDE.md 7.5)."""
-        _user(user_id, me)
-        p = bank.get(problem_id)
-        if p is None:
-            raise HTTPException(status_code=404, detail="unknown problem")
-        if live is None or not p["industry"]:
-            return {"sections": []}
-        return await live(p["industry"], (p["niche"] or "").lower() or None)
+        return detail(p)
 
     # --- saved problems and their workspaces ---
 
@@ -417,6 +473,43 @@ def builder_routes(app: FastAPI, store: FeedStore, posts: PostsReader, _user: Ca
         if not n:
             raise HTTPException(status_code=404, detail="not saved")
         return {"ok": True}
+
+    panels: dict[tuple[str, str], int] = {}       # (user, day) -> panels run
+
+    @app.post("/workspaces/{problem_id}/panel")
+    def post_panel(problem_id: str, body: PanelIn, me: Me) -> dict:
+        """Five simulated buyers react to the idea (opportunities/assess.py). A simulation to sharpen
+        questions, never evidence; metered against the Claude budget, PANEL_DAILY_LIMIT a day per user."""
+        _user(body.user_id, me)
+        from .enrichment.costs import BudgetExceededError, CostLedger, claude_usd, claude_worst_case_usd
+        from .enrichment.llm import TransientError
+        from .opportunities.assess import PANEL_CALL, PANEL_SYSTEM, Panel, panel_prompt
+        if tagger is None or config is None:
+            raise HTTPException(status_code=503, detail="the panel is off")
+        with store.session() as s:
+            row = s.get(WorkspaceRow, (body.user_id, problem_id))
+        if row is None:
+            raise HTTPException(status_code=404, detail="not saved")
+        day = (body.user_id, utcnow().date().isoformat())
+        if panels.get(day, 0) >= PANEL_DAILY_LIMIT:
+            raise HTTPException(status_code=429, detail="panel limit reached for today")
+        live = bank.get(problem_id)
+        problem = live or {**row.problem, "evidence": [e | {"role": "core", "tags": {}} for e in row.problem.get("evidence", [])]}
+        user = panel_prompt(problem, body.pitch, body.price)
+        ledger, ecfg = CostLedger(store), config.enrichment
+        try:
+            ledger.check("anthropic", claude_worst_case_usd(PANEL_CALL, len(PANEL_SYSTEM) + len(user), ecfg),
+                         ecfg.monthly_budget_usd)
+            attempt = tagger.tag(PANEL_CALL, PANEL_SYSTEM, user, output_model=Panel)
+        except (BudgetExceededError, TransientError):
+            raise HTTPException(status_code=503, detail="the panel is busy; try again later") from None
+        for usage in attempt.usages:
+            ledger.record(provider="anthropic", purpose="ai_panel", usage=usage, usd=claude_usd(usage, ecfg),
+                          request_id=attempt.request_id)
+        if attempt.output is None:
+            raise HTTPException(status_code=503, detail="the panel didn't answer; try again")
+        panels[day] = panels.get(day, 0) + 1
+        return attempt.output.model_dump() | {"at": utcnow().isoformat(), "pitch": body.pitch, "price": body.price}
 
     # --- cofounders ---
 

@@ -52,7 +52,7 @@ def test_problems_are_clusters_with_numbers_from_the_posts(feed_store, feed_conf
     assert p["pain"]["value"] == 6 and p["will_pay"]["value"] == 6 and p["frequency"]["label"] == "Recurring"
     assert p["frequency"]["reason"] == "1 h per day"
     assert p["will_pay"]["reason"] == "1 stated budget, median $300"
-    assert p["competition"] == {"label": "Medium", "reason": "Clio, Zapier"}
+    assert p["competition"] == {"value": 5, "label": "Medium", "reason": "Clio, Zapier"}
     assert c.get("/problems", params={"user_id": user_id, "q": "dentist"}).json()["total"] == 0
     d = c.get(f"/problems/{posts[0].id}", params={"user_id": user_id}).json()   # any member post finds it
     assert d["id"] == posts[1].id and [e["role"] for e in d["evidence"]] == ["core", "core", "supporting"]
@@ -108,3 +108,28 @@ def test_cofounders_match_on_skills_and_reveal_email_only_when_both_ask(feed_sto
     c.post("/cofounders/intro", json={"user_id": "b", "to": "a"})
     assert c.get("/cofounders", params={"user_id": "a"}).json()["matches"][0]["email"] == "b@example.com"
     assert c.post("/cofounders/intro", json={"user_id": "a", "to": "a"}).status_code == 422
+
+
+def test_the_score_is_the_weighted_tiles_and_an_assessment_replaces_the_tag_ratings(feed_store, feed_config, tmp_path, user_id):
+    from signal_feed.db import ProblemAssessmentRow
+    from signal_feed.opportunities.assess import VERSION, WEIGHTS
+    url, posts = bank(feed_store, tmp_path)
+    c = TestClient(create_app(feed_store, PostsReader(url), feed_config))
+    p = c.get(f"/problems/{posts[1].id}", params={"user_id": user_id}).json()
+    assert not p["assessed"] and p["market"]["value"] is None          # unknown ratings leave the average
+    known = {"pain": 6, "frequency": 10, "will_pay": 6, "competition": 5, "evidence": 8}
+    assert p["score"] == round(10 * sum(WEIGHTS[k] * v for k, v in known.items()) / sum(WEIGHTS[k] for k in known))
+    assert "tags" not in p["evidence"][0]                              # the prompt's tags stay internal
+    rating = lambda n: {"score": n, "reason": "r"}  # noqa: E731
+    with feed_store.session() as s, s.begin():
+        s.add(ProblemAssessmentRow(problem_id=posts[1].id, members_hash="x", version=VERSION, created_at=NOW, data={
+            "pain": rating(7), "frequency": rating(8), "frequency_label": "daily", "will_pay": rating(6),
+            "market": rating(5), "competition": "high", "competition_reason": "many tools", "existing_tools": [],
+            "who_to_reach": [{"title": "Office manager", "org_type": "small law firm", "why": "w", "where": ["ABA"]}],
+            "example_companies": [], "validation": [{"method": "presell", "plan": "ask for LOIs"}], "confidence": 0.7}))
+    p = c.get(f"/problems/{posts[1].id}", params={"user_id": user_id}).json()
+    assert p["assessed"] and p["frequency"]["label"] == "Daily" and p["who_to_reach"][0]["title"] == "Office manager"
+    assert p["score"] == round(10 * (0.2 * 7 + 0.15 * 8 + 0.25 * 6 + 0.15 * 5 + 0.1 * 2 + 0.15 * 8))
+    w = c.post(f"/workspaces/{posts[1].id}", json={"user_id": user_id}).json()
+    assert c.post(f"/workspaces/{posts[1].id}/panel", json={"user_id": user_id}).status_code == 503   # no model here
+    assert w["problem"]["validation"] == [{"method": "presell", "plan": "ask for LOIs"}]

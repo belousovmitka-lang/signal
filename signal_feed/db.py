@@ -737,6 +737,21 @@ class WorkspaceRow(FeedBase):
     updated_at: Mapped[datetime] = mapped_column(UTCDateTime)
 
 
+class ProblemAssessmentRow(FeedBase):
+    """A problem's ratings, who to reach and how to validate it (opportunities/assess.py). Keyed like the
+    workspace, by the cluster's best post; `members_hash` says which posts it was made from."""
+
+    __tablename__ = "problem_assessments"
+
+    problem_id: Mapped[str] = mapped_column(String(64), primary_key=True)
+    members_hash: Mapped[str] = mapped_column(String(16))
+    version: Mapped[str] = mapped_column(String(8))
+    data: Mapped[dict[str, Any]] = mapped_column(JSON)
+    model: Mapped[str | None] = mapped_column(String(64))
+    cost_usd: Mapped[float] = mapped_column(Float, default=0.0)
+    created_at: Mapped[datetime] = mapped_column(UTCDateTime)
+
+
 class CofounderProfileRow(FeedBase):
     __tablename__ = "cofounder_profiles"
 

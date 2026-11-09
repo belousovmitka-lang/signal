@@ -372,3 +372,6 @@ label.lbl span { font-weight: 400; color: var(--muted); }
   .card { border: 0; }
   .doc { padding: 0; }
 }
+.alt.tool { grid-template-columns: 220px minmax(0, 1fr); }
+@media (max-width: 800px) { .alt.tool { grid-template-columns: minmax(0, 1fr); } }
+.kv span.meta { text-align: left; }
